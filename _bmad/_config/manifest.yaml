@@ -1,0 +1,76 @@
+installation:
+  version: 6.10.0
+  installDate: 2026-07-25T10:29:31.100Z
+  lastUpdated: 2026-07-25T10:29:31.100Z
+modules:
+  - name: core
+    version: 6.10.0
+    installDate: 2026-07-25T10:29:09.776Z
+    lastUpdated: 2026-07-25T10:29:31.009Z
+    source: built-in
+    npmPackage: null
+    repoUrl: null
+  - name: bmm
+    version: 6.10.0
+    installDate: 2026-07-25T10:29:09.543Z
+    lastUpdated: 2026-07-25T10:29:31.016Z
+    source: built-in
+    npmPackage: null
+    repoUrl: null
+  - name: bmad-loop
+    version: v0.9.0
+    installDate: 2026-07-25T10:29:09.884Z
+    lastUpdated: 2026-07-25T10:29:31.041Z
+    source: external
+    npmPackage: null
+    repoUrl: https://github.com/bmad-code-org/bmad-loop
+    channel: stable
+    sha: 72551742617b4e1c9cb72d2038dc67ce973f7eea
+  - name: tea
+    version: v1.19.1
+    installDate: 2026-07-25T10:29:17.602Z
+    lastUpdated: 2026-07-25T10:29:31.052Z
+    source: external
+    npmPackage: bmad-method-test-architecture-enterprise
+    repoUrl: https://github.com/bmad-code-org/bmad-method-test-architecture-enterprise
+    channel: stable
+    sha: 74cf6e6adf5a6f46614788f184f340ea58336157
+  - name: bmb
+    version: v2.1.0
+    installDate: 2026-07-25T10:29:19.204Z
+    lastUpdated: 2026-07-25T10:29:31.065Z
+    source: external
+    npmPackage: bmad-builder
+    repoUrl: https://github.com/bmad-code-org/bmad-builder
+    channel: stable
+    sha: d54981a8ba3b990148256455ccf4e6c1cb4918f0
+  - name: cis
+    version: v0.2.1
+    installDate: 2026-07-25T10:29:19.460Z
+    lastUpdated: 2026-07-25T10:29:31.077Z
+    source: external
+    npmPackage: bmad-creative-intelligence-suite
+    repoUrl: https://github.com/bmad-code-org/bmad-module-creative-intelligence-suite
+    channel: stable
+    sha: 07a8dd03d196a762f21c241d985293fe5b0f90e7
+  - name: gds
+    version: v0.6.0
+    installDate: 2026-07-25T10:29:23.088Z
+    lastUpdated: 2026-07-25T10:29:31.091Z
+    source: external
+    npmPackage: bmad-game-dev-studio
+    repoUrl: https://github.com/bmad-code-org/bmad-module-game-dev-studio.git
+    channel: stable
+    sha: 966fbc54db686f77fd0d68cae4164dce8cc98113
+  - name: wds
+    version: v0.4.3
+    installDate: 2026-07-25T10:29:28.049Z
+    lastUpdated: 2026-07-25T10:29:31.100Z
+    source: external
+    npmPackage: bmad-wds
+    repoUrl: https://github.com/bmad-code-org/bmad-method-wds-expansion
+    channel: stable
+    sha: cc16f09fcfab26d35635af1491f36a38a8431c8d
+ides:
+  - github-copilot
+  - antigravity
