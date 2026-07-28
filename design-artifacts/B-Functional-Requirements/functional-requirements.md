@@ -1,18 +1,18 @@
 ---
 title: "Origo Design — Functional Requirements"
-status: open-questions-resolved
-version: "0.2"
+status: all-open-questions-resolved
+version: "0.3"
 created: 2026-07-26
 updated: 2026-07-28
 source: "Product Brief (design-artifacts/A-Product-Brief/product-brief.md) + Brainstorm Session (2026-07-25)"
-resolutions: "Open-Questions-Answers.md (2026-07-28)"
+resolutions: "Open-Questions-Answers.md (2026-07-28), Open-Questions-Answers- v2.md (2026-07-28)"
 author: Patel
 ---
 
 # Origo Design — Functional Requirements
 
 > **Audience:** Technical co-founders, engineering leads, architects.
-> **Status:** Open questions resolved (v0.2) — all `[OPEN]` tags have been replaced with `[RESOLVED]` decisions. OQ-10 remains open. Architecture may begin.
+> **Status:** All open questions resolved (v0.3) — all `[OPEN]` and `[RESOLVED]` decisions are complete, including OQ-10. Architecture may begin.
 
 ---
 
@@ -543,7 +543,25 @@ Disabled because:
 
 **FR-EXT-006:** Theme overrides MUST be achievable through design token overrides alone — no forking of component stylesheets.
 
-**FR-EXT-007:** BADL MUST define a formal plugin/extension contract with semantic versioning and capability negotiation, so third-party providers can safely extend the language (new renderers, adapters, validator types, rule engine integrations) without modifying `@origo/core`. *(OQ-10 — resolution pending; see §24)*
+**FR-EXT-007:** BADL MUST define a formal plugin/extension contract with semantic versioning and capability negotiation, so third-party providers can safely extend the language (new renderers, adapters, validator types, rule engine integrations) without modifying `@origo/core`. *(resolved: OQ-10)*
+
+> **[RESOLVED — OQ-10]** **Yes — BADL MUST define a formal plugin and extension contract.** Every extension MUST declare its extension type, semantic version, supported grammar versions, capability set, dependency graph, lifecycle hooks, and required permissions. `@origo/core` MUST negotiate capabilities and validate compatibility before activation. Extensions communicate exclusively through public extension APIs and MUST NOT depend on internal implementation details. This contract enables a stable third-party ecosystem, safe upgrades, and the Phase 4 marketplace.
+
+**FR-EXT-008 — Extension Manifest:** Every extension MUST provide a manifest declaring: `id`, `name`, `version`, `extension_type`, `author`, `grammar_version_range`, `renderer_api_range`, `capabilities[]`, `dependencies[]`, and `permissions[]`.
+
+**FR-EXT-009 — Capability Negotiation:** `@origo/core` MUST negotiate supported capabilities with every extension before activation. Extensions MUST gracefully degrade when optional capabilities are unavailable.
+
+**FR-EXT-010 — Lifecycle:** Every extension MUST support the lifecycle: Initialize → Configure → Validate → Activate → Deactivate → Dispose. No extension MUST execute arbitrary startup logic outside this lifecycle.
+
+**FR-EXT-011 — Compatibility Validation:** An extension MUST fail fast with a human-readable compatibility report when its declared grammar or API version requirements cannot be satisfied.
+
+**FR-EXT-012 — Public Extension API:** Extensions MUST communicate only through stable, documented extension APIs. Access to internal `@origo/core` implementation details is prohibited.
+
+**FR-EXT-013 — Dependency Resolution:** The extension loader MUST resolve dependency graphs, detect cyclic dependencies, and report missing or incompatible dependencies before activation.
+
+**FR-EXT-014 — Security & Sandboxing:** Extensions MUST explicitly declare required permissions (filesystem, network, process execution, telemetry, etc.). Hosts MAY deny permissions or execute extensions within sandboxed environments.
+
+**Supported Extension Types:** BADL recognizes the following typed extension roles: `Renderer`, `ExperienceAdapter`, `ComponentRegistry`, `Validator`, `RuleEngine`, `GovernanceProvider`, `DataProvider`, `Importer`, `Exporter`, `ThemeProvider`, `TelemetryProvider`, `AIProvider`, `CLICommand`, `StudioExtension`, `DevToolsExtension`.
 
 ---
 
@@ -645,7 +663,7 @@ This tool makes brownfield adoption dramatically more accessible.
 
 ### Phase 3 — Metadata Platform (Months 13–18)
 
-- `@origo/core`: Business Outcomes (root), Completion Signals, full Governance chain, formal plugin/extension contract (OQ-10)
+- `@origo/core`: Business Outcomes (root), Completion Signals, full Governance chain, formal plugin/extension contract (resolved: OQ-10; see FR-EXT-007 through FR-EXT-014)
 - Metadata modularity (split-file), versioning, migration tooling, Git-diff optimization
 - YAML import/export support (`origo export yaml`)
 - AI Agent Adapter
@@ -684,11 +702,8 @@ This tool makes brownfield adoption dramatically more accessible.
 | **OQ-07** | Workflow schema designed for persistence in Phase 2; long-running runtime deferred to Phase 4 (FR-W-004) | §8 |
 | **OQ-08** | `origo migrate from-code` shipped as approximate (not lossless) migration tool (FR-ADOPT-003) | §22 |
 | **OQ-09** | Metadata-first always; visual builder is one BADL authoring surface among several (FR-AI-005) | §20 |
+| **OQ-10** | BADL MUST define a formal plugin/extension contract with typed extension roles, semantic versioning, capability negotiation, dependency resolution, lifecycle hooks, and security sandboxing (FR-EXT-007 through FR-EXT-014) | §18 |
 
-### 24.2 Open Questions (v0.2)
+### 24.2 Open Questions (v0.3)
 
-> These require resolution before the areas they block can be fully architected.
-
-| ID | Question | Blocks |
-|---|---|---|
-| **OQ-10** | Should BADL define a formal plugin/extension contract with semantic versioning and capability negotiation, so third-party providers can safely extend the language without modifying `@origo/core`? | Extension ecosystem, renderer/adapter marketplace, Phase 3+ |
+> All open questions are resolved as of v0.3. No remaining blockers for architecture.
