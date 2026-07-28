@@ -1,16 +1,18 @@
-﻿---
+---
 title: "Origo Design — Functional Requirements"
-status: draft
-version: "0.1"
+status: open-questions-resolved
+version: "0.2"
 created: 2026-07-26
+updated: 2026-07-28
 source: "Product Brief (design-artifacts/A-Product-Brief/product-brief.md) + Brainstorm Session (2026-07-25)"
+resolutions: "Open-Questions-Answers.md (2026-07-28)"
 author: Patel
 ---
 
 # Origo Design — Functional Requirements
 
 > **Audience:** Technical co-founders, engineering leads, architects.
-> **Status:** Draft — `[OPEN]` tags mark decisions that require explicit resolution before architecture begins.
+> **Status:** Open questions resolved (v0.2) — all `[OPEN]` tags have been replaced with `[RESOLVED]` decisions. OQ-10 remains open. Architecture may begin.
 
 ---
 
@@ -42,7 +44,7 @@ Its core abstraction is a framework-agnostic, technology-neutral metadata contra
 - Platform teams building internal application frameworks on top of Origo
 - AI agents generating application descriptions (BADL as AI output format)
 
-> **[OPEN — OQ-01]** Is there a self-service no-code persona in scope for v1, or developer-first exclusively?
+> **[RESOLVED — OQ-01]** **Developer-first exclusively for Phase 1–3.** Self-service no-code authoring is explicitly deferred to Phase 4 after BADL grammar stability. Rationale: BADL must mature before abstracting it; every successful no-code platform (PowerApps, Mendix, OutSystems) first stabilizes its underlying model. Supporting non-developers too early forces grammar compromises. Phase 1–3 targets developers, architects, and AI agents.
 
 ---
 
@@ -122,6 +124,7 @@ The same Interaction Contract satisfies all of them.
 
 **FR-C-001:** Each Capability MUST declare:
 - `id`, `name`, `description`
+- `type` — **`Command`** (changes business state) or **`Query`** (retrieves business state) *(resolved: OQ-02)*
 - `outcome_ref[]` — which outcomes this capability advances
 - `preconditions[]` — state predicates MUST be true before execution
 - `postconditions[]` — state predicates guaranteed after successful execution
@@ -130,6 +133,8 @@ The same Interaction Contract satisfies all of them.
 - `interaction_contract_ref` — governing Interaction Contract
 - `async` — Boolean; whether this capability resolves later (approval workflows, batch jobs)
 
+**FR-C-004:** Command capabilities MUST support: permissions, business rules, workflows, governance, and completion signals. Query capabilities MUST support: filters, projections, caching, and pagination. These behavioral contracts MUST NOT be conflated. *(resolved: OQ-02)*
+
 **FR-C-002:** Preconditions and postconditions MUST be:
 - Evaluated at runtime to gate execution
 - Surfaced in DevTools as human-readable explanations
@@ -137,7 +142,7 @@ The same Interaction Contract satisfies all of them.
 
 **FR-C-003:** The schema MUST support asynchronous capabilities (e.g., approval workflows resolving hours later).
 
-> **[OPEN — OQ-02]** Does the Capability layer need explicit CQRS support — Commands and Queries as distinct typed constructs?
+> **[RESOLVED — OQ-02]** **Yes — explicit `CapabilityType` is required.** Capabilities MUST declare a `type` of `Command` or `Query`. Commands carry permissions, business rules, workflows, governance, and completion signals. Queries carry filters, projections, caching, and pagination — without approvals, workflows, or confirmations. Merging them later would be painful; the split is made a first-class schema property from Phase 1.
 
 ---
 
@@ -165,7 +170,13 @@ Invoice.Amount: required, min=0.01
 
 **FR-R-004:** The schema MUST support rule composition: compound rules with AND / OR / NOT.
 
-> **[OPEN — OQ-03]** Should rules support references to an external rule engine (e.g., Drools), or must they be expressible inline in BADL?
+> **[RESOLVED — OQ-03]** **Both are supported.** Inline expression is mandatory; external rule engine reference is optional. BADL owns the business intent declaration; the external engine executes specialized logic. This avoids vendor lock-in while enabling enterprise integrations (e.g., Drools).
+
+**FR-R-005:** Business rules MUST support two expression modes: *(resolved: OQ-03)*
+- **Inline** — expression evaluated natively by `@origo/core` (e.g., `Invoice.Total > 0`)
+- **External** — reference to an external rule engine provider and named rule (e.g., `provider: Drools, rule: InvoiceApproval`)
+
+A rule's `type` field MUST be `Inline` or `External`. External rules MUST still declare `id`, `description`, `scope[]`, and `enforcement` in BADL — the external engine only supplies evaluation.
 
 ---
 
@@ -211,7 +222,16 @@ Invoice.Amount: required, min=0.01
 
 **FR-E-003:** Entity definitions MUST be consumable independently by the Form Engine, Grid Engine, and AI agents — without modification per consumer.
 
-> **[OPEN — OQ-06]** Should BADL entity definitions be importable from OpenAPI/Swagger, Prisma, or database ERD schemas?
+> **[RESOLVED — OQ-06]** **Yes — schema importers are a high-priority adoption accelerator.** Importers are implemented as CLI plugins that generate BADL entity definitions from external schema formats. Generated output is always BADL; importers are never a runtime dependency.
+
+**FR-E-004:** `@origo/cli` MUST ship importer plugins for: *(resolved: OQ-06)*
+- `origo import openapi` — import entities from OpenAPI / Swagger specification
+- `origo import jsonschema` — import entities from JSON Schema
+- `origo import prisma` — import entities from Prisma schema
+- `origo import efcore` — import entities from Entity Framework Core model
+- `origo import sqlserver` / `origo import postgres` / `origo import mysql` — import entities from database introspection
+
+All importers produce BADL entity files. Developers refine the generated output; importers are not lossless translators.
 
 ---
 
@@ -228,7 +248,9 @@ Invoice.Amount: required, min=0.01
 
 **FR-W-003:** Workflow state MUST be inspectable at runtime by DevTools, AI agents, and governance systems.
 
-> **[OPEN — OQ-07]** Are long-running workflows (days/weeks, persistent state) in scope for Phase 1–3, or deferred to Phase 4?
+**FR-W-004:** The Workflow schema MUST be designed from Phase 2 to accommodate long-running workflow attributes: `persistence_required`, `resume_token`, `timeout_duration`, `escalation_path`, and `compensation_steps`. Runtime execution of persisted long-running workflows is deferred to Phase 4. *(resolved: OQ-07)*
+
+> **[RESOLVED — OQ-07]** **Design for them in Phase 2; implement runtime execution in Phase 4.** Long-running workflows (days/weeks) require persistence, resumability, timers, distributed execution, compensations, and saga patterns — effectively a workflow engine. Building runtime support too early delays everything else. The schema will be designed to accommodate persistence from Phase 2; the runtime will execute persisted workflows in Phase 4.
 
 ---
 
@@ -260,7 +282,13 @@ Invoice.Amount: required, min=0.01
 - Approval timeout and escalation path
 - Audit evidence requirements (what the system must record to prove the outcome was achieved)
 
-> **[OPEN — OQ-04]** Governance chain: inline spec within BADL, or reference to an external governance policy service?
+> **[RESOLVED — OQ-04]** **Both are supported.** Default is inline; external reference is optional. SMEs and smaller teams will use inline governance chains directly in BADL. Banks and enterprises that already operate governance engines (e.g., ServiceNow, custom approval platforms) may reference them externally.
+
+**FR-G-005:** Governance chains MUST support two modes: *(resolved: OQ-04)*
+- **Inline** — approvers, sequence, minimums, timeout, and escalation declared directly in BADL
+- **External** — a reference to an external governance policy service; BADL retains the `risk_level` and audit evidence requirements; the external service owns approval routing
+
+A governance chain's `mode` field MUST be `inline` or `external`.
 
 **FR-G-003:** Every capability execution MUST produce a structured audit record: actor, timestamp, precondition state at execution, outcome state after execution, and governance chain satisfied.
 
@@ -320,7 +348,9 @@ Customer/
 - Array ordering MUST NOT be semantically significant
 - IDs MUST be stable across renames (a rename is a label change, not an ID change)
 
-> **[OPEN — OQ-05]** Should BADL support YAML as an alternative to JSON?
+> **[RESOLVED — OQ-05]** **JSON is canonical. YAML is supported only as an import/export format.** JSON provides deterministic parsing, JSON Schema tooling, IDE support, AI generation compatibility, and cleaner diffs. YAML anchors, indentation sensitivity, and parser inconsistencies introduce unnecessary risk in a metadata-first platform. YAML MUST never be stored internally.
+
+**FR-M-008:** The canonical on-disk BADL format is JSON. YAML MUST be supported only as a conversion format — `@origo/cli` MUST provide `origo export yaml` and accept YAML input that is immediately converted to canonical JSON before processing. YAML MUST NOT be stored as BADL source. *(resolved: OQ-05)*
 
 ### 12.4 Hot Reload
 
@@ -513,6 +543,8 @@ Disabled because:
 
 **FR-EXT-006:** Theme overrides MUST be achievable through design token overrides alone — no forking of component stylesheets.
 
+**FR-EXT-007:** BADL MUST define a formal plugin/extension contract with semantic versioning and capability negotiation, so third-party providers can safely extend the language (new renderers, adapters, validator types, rule engine integrations) without modifying `@origo/core`. *(OQ-10 — resolution pending; see §24)*
+
 ---
 
 ## 19. Theme & Design Token System
@@ -539,7 +571,21 @@ Disabled because:
 
 **FR-AI-004:** `@origo/core` MUST ship a formal JSON Schema definition consumable by AI tools (IDE plugins, LLMs, code completion engines) for schema-aware BADL authoring.
 
-> **[OPEN — OQ-09]** Phase 4 visual builder: drag-and-drop editor writing BADL, or metadata-first (CLI + direct file authoring) as primary authoring mode?
+> **[RESOLVED — OQ-09]** **Metadata-first, always.** The visual builder is one BADL authoring surface among several — not the primary foundation. All authoring tools (CLI, VS Code extension, AI page generator, visual builder, import wizards) write BADL files. Nothing bypasses BADL. This ensures every authoring experience produces the same consistent, validated metadata contract.
+
+**FR-AI-005:** All authoring surfaces MUST produce BADL as their only output. The authoring stack MUST follow this layering: *(resolved: OQ-09)*
+```
+CLI  →  VS Code Extension  →  AI Page Generator  →  Visual Builder  →  Import Wizards
+                                         ↓
+                                    BADL Files
+                                         ↓
+                                  @origo/core
+                                         ↓
+                               Experience Adapter
+                                         ↓
+                                     Renderer
+```
+No authoring surface MUST be able to produce renderer-specific code, bypassing BADL.
 
 ---
 
@@ -565,7 +611,15 @@ Disabled because:
 
 **FR-ADOPT-002:** The incremental adoption path MUST be documented as a first-class migration guide.
 
-> **[OPEN — OQ-08]** Should Origo ship a code-to-BADL migration tool that analyzes existing component code and generates approximate BADL metadata?
+> **[RESOLVED — OQ-08]** **Yes — ship it, explicitly documented as approximate (not lossless).** This is a high-value brownfield adoption accelerator. The tool analyzes existing component code and generates BADL entity definitions, forms, grids, permissions, and validations. Developers refine the output. The tool MUST be clearly labeled as producing a starting point, not a complete migration.
+
+**FR-ADOPT-003:** `@origo/cli` MUST ship `origo migrate from-code <path>` — a code-to-BADL migration tool that: *(resolved: OQ-08)*
+- Analyzes existing Angular, React, or Vue component code
+- Generates approximate BADL: entities, field definitions, validators, permissions, and interaction contract stubs
+- Annotates generated files with `// APPROXIMATE — developer review required` comments
+- Is explicitly documented as a starting point, not a lossless migration
+
+This tool makes brownfield adoption dramatically more accessible.
 
 ---
 
@@ -582,24 +636,29 @@ Disabled because:
 
 ### Phase 2 — Business UI (Months 7–12)
 
-- `@origo/core`: Workflows, Business Rules & Invariants, Governance chain
+- `@origo/core`: Workflows (including persistence schema for future long-running support), Business Rules & Invariants (inline + external engine), Governance chain (inline + external provider)
 - `@origo/angular-renderer`: Form Engine, Grid Engine, Layout Engine, Navigation Engine, Page Generator (List, Create, Update, Detail)
 - `@origo/react-native-renderer`: core + Mobile Experience Adapter
 - Hot reload
 - DevTools v2: permission chain + "Why is this disabled?" explainer
+- Schema importers: `origo import openapi`, `origo import prisma`, `origo import efcore`, `origo import sqlserver`
 
 ### Phase 3 — Metadata Platform (Months 13–18)
 
-- `@origo/core`: Business Outcomes (root), Completion Signals, full Governance chain
+- `@origo/core`: Business Outcomes (root), Completion Signals, full Governance chain, formal plugin/extension contract (OQ-10)
 - Metadata modularity (split-file), versioning, migration tooling, Git-diff optimization
+- YAML import/export support (`origo export yaml`)
 - AI Agent Adapter
 - BADL JSON Schema for AI tooling
 - Observability hooks
 - Semantic test selectors + test scaffold generation
+- `origo migrate from-code` — approximate code-to-BADL migration tool
 
 ### Phase 4 — Enterprise & AI (Months 19–24)
 
-- Visual page builder (writes BADL)
+- Self-service no-code authoring layer (built on BADL, deferred from Phase 1–3 per OQ-01)
+- Visual page builder (writes BADL — one authoring surface among several, per OQ-09)
+- Long-running workflow runtime execution (persistence, resumability, timers, saga patterns — per OQ-07)
 - AI page generation from entity definitions
 - Offline support
 - Plugin / component marketplace
@@ -608,18 +667,28 @@ Disabled because:
 
 ---
 
-## 24. Open Questions
+## 24. Open Questions & Resolved Decisions
 
-> These require explicit resolution before architecture begins. Each blocks one or more downstream decisions.
+### 24.1 Resolved Decisions (v0.2)
+
+> All decisions below are resolved. Each inline `[RESOLVED]` tag documents the rationale at the point of impact in the document.
+
+| ID | Decision | Resolved |
+|---|---|---|
+| **OQ-01** | Developer-first for Phase 1–3; no-code self-service deferred to Phase 4 | §1.3 |
+| **OQ-02** | `CapabilityType: Command \| Query` added as first-class schema property (FR-C-001, FR-C-004) | §4 |
+| **OQ-03** | Business rules support both inline and external rule engine modes (FR-R-005) | §5 |
+| **OQ-04** | Governance chains support both inline and external provider modes (FR-G-005) | §10 |
+| **OQ-05** | JSON is canonical; YAML supported only as import/export conversion format (FR-M-008) | §12.3 |
+| **OQ-06** | Schema importers shipped as CLI plugins for OpenAPI, JSON Schema, Prisma, EF Core, SQL DBs (FR-E-004) | §7 |
+| **OQ-07** | Workflow schema designed for persistence in Phase 2; long-running runtime deferred to Phase 4 (FR-W-004) | §8 |
+| **OQ-08** | `origo migrate from-code` shipped as approximate (not lossless) migration tool (FR-ADOPT-003) | §22 |
+| **OQ-09** | Metadata-first always; visual builder is one BADL authoring surface among several (FR-AI-005) | §20 |
+
+### 24.2 Open Questions (v0.2)
+
+> These require resolution before the areas they block can be fully architected.
 
 | ID | Question | Blocks |
 |---|---|---|
-| **OQ-01** | Is there a self-service no-code persona in v1 scope, or developer-first only? | Scope, Studio roadmap |
-| **OQ-02** | Does Capability layer need explicit CQRS (Command vs. Query types)? | @origo/core schema design |
-| **OQ-03** | Should business rules support external rule engine references, or inline-only? | Rules architecture |
-| **OQ-04** | Governance chain: inline spec in BADL, or reference to external governance policy? | Governance architecture |
-| **OQ-05** | Should BADL support YAML as alternative to JSON? | Tooling, parsing, CLI |
-| **OQ-06** | Should BADL entity definitions be importable from OpenAPI, Prisma, or DB schemas? | Adoption, CLI |
-| **OQ-07** | Long-running workflows (days/weeks) in scope for Phase 1–3? | Workflow design |
-| **OQ-08** | Should Origo ship a code-to-BADL migration tool for brownfield projects? | Adoption |
-| **OQ-09** | Phase 4 visual builder: drag-and-drop writing BADL, or metadata-first primary? | Studio roadmap |
+| **OQ-10** | Should BADL define a formal plugin/extension contract with semantic versioning and capability negotiation, so third-party providers can safely extend the language without modifying `@origo/core`? | Extension ecosystem, renderer/adapter marketplace, Phase 3+ |
