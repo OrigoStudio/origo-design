@@ -155,6 +155,13 @@ FR-OBS-003: Epic 8 - Telemetry identifiers via BADL paths
 FR-EXT-001: Epic 4 - Three-level override interfaces
 FR-EXT-002: Epic 4 - Component registry
 FR-EXT-006: Epic 4 - Theme overrides via tokens
+FR-EXT-008: Epic 4 - Extension Manifest
+FR-EXT-009: Epic 4 - Capability Negotiation
+FR-EXT-010: Epic 4 - Extension Lifecycle
+FR-EXT-011: Epic 4 - Compatibility Validation
+FR-EXT-012: Epic 4 - Public Extension API
+FR-EXT-013: Epic 4 - Dependency Resolution
+FR-EXT-014: Epic 4 - Security & Sandboxing
 FR-THEME-001: Epic 2 - Design token categories
 FR-THEME-002: Epic 2 - Semantic token usage
 FR-THEME-003: Epic 2 - Zero-code theme switching
@@ -420,6 +427,34 @@ So that invalid capability/contract setups are guaranteed to be caught at compil
 **When** the unit and integration test suite runs
 **Then** coverage is 100% for the behavior validation logic (FR-TEST-002)
 **And** the tests include validation against the complex real-world target page JSON fixture from Epic 3.
+
+#### Story 4.6: Formal Extension Manifest & Lifecycle (FR-EXT-008 to 013)
+
+As a Core Developer,
+I want the BADL parser and engine to mandate a formal Extension Manifest and Lifecycle,
+So that plugins can safely extend the language without modifying `@origo/core`.
+
+**Acceptance Criteria:**
+
+**Given** a registered extension
+**When** `@origo/core` loads it
+**Then** it validates the Extension Manifest (type, version, grammar/API ranges) (FR-EXT-008)
+**And** performs capability negotiation, failing fast if mandatory capabilities are missing (FR-EXT-009, 011)
+**And** resolves the dependency graph to prevent cyclic dependencies (FR-EXT-013)
+**And** enforces a strict Initialize → Configure → Validate → Activate lifecycle via the Public API (FR-EXT-010, 012).
+
+#### Story 4.7: Extension Security & Sandboxing (FR-EXT-014)
+
+As a Core Developer,
+I want extensions to explicitly declare required permissions,
+So that host environments can sandbox plugins safely.
+
+**Acceptance Criteria:**
+
+**Given** a loaded extension declaring required permissions (e.g., network, filesystem)
+**When** the extension attempts to execute
+**Then** the execution environment surfaces the permission requests (FR-EXT-014)
+**And** the engine enforces these bounds, denying access to unauthorized APIs.
 
 ### Epic 5: Angular Rendering Pipeline (@origo/angular-renderer)
 [Developer can render the BADL AST through a framework-native composition pipeline using Experience Adapters (starts with a representative slice of 3 primitives—layout, input, action—to unblock downstream and MUST consume tokens from Epic 2)]
