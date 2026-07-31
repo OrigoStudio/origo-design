@@ -45,7 +45,7 @@
     "@schematics/angular": "22.0.9",
     "@swc/helpers": "~0.5.18",
     "@types/jest": "30.0.0",
-    "@types/node": "18.16.9",
+    "@types/node": "^22.12.0",
     "@typescript-eslint/eslint-plugin": "8.65.0",
     "@typescript-eslint/parser": "8.65.0",
     "esbuild": "^0.27.0",
