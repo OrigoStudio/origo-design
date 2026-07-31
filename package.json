@@ -71,7 +71,7 @@
       "prettier --write"
     ],
     "*.{js,ts}": [
-      "eslint --fix"
+      "nx lint --fix"
     ]
   }
 }
