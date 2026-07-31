@@ -27,7 +27,9 @@ jobs:
           cache: 'npm'
 
       - name: Install dependencies
-        run: npm ci --legacy-peer-deps
+        # npm ci installs from lockfile verbatim; --legacy-peer-deps is not needed
+        # and masks real peer-dep problems. --no-audit skips network audit for speed.
+        run: npm ci --no-audit
 
       - name: Verify Types/Schemas Synchronization
         run: |

@@ -88,6 +88,16 @@ origo-design/
 - [x] 3. Document Branch Protection Rules
   - [x] Create a documentation file or add instructions on configuring main branch protection.
 
+### Review Findings
+
+- [ ] [Review][Decision] Lockfile OS-Binding Stripping — Optional native dependencies for Linux were deleted by npm install on Windows. Running `npm ci` on `ubuntu-latest` may fail to install native binaries.
+- [ ] [Review][Decision] Pre-commit Linter Bypasses Nx Executor — lint-staged runs `eslint --fix` directly instead of `nx lint`. This bypasses Nx caching and boundaries.
+- [ ] [Review][Patch] Nx Affected Base Ref Resolution [.github/workflows/ci.yml:43]
+- [ ] [Review][Patch] Placeholder Success Masking Failure [.github/workflows/ci.yml:32]
+- [ ] [Review][Patch] Missing Executable Permissions on Git Hook [.husky/pre-commit:1]
+- [x] [Review][Defer→Done] Path Resolution in GUI Clients [.husky/pre-commit:1] — resolved: added `#!/usr/bin/env sh` + Husky init line
+- [x] [Review][Defer→Done] Legacy Peer Deps in CI vs No-Audit [.github/workflows/ci.yml:30] — resolved: replaced `--legacy-peer-deps` with `--no-audit`
+
 ## 6. File List
 
 - `package.json` (modified)
