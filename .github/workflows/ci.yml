@@ -49,3 +49,6 @@ jobs:
 
       - name: Run Nx Build (Affected)
         run: npx nx affected -t build
+
+      - name: Run Performance Benchmark Harness (NFR-PERF-002)
+        run: npm run perf:benchmark
