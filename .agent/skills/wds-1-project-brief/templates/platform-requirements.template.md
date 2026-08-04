@@ -19,13 +19,13 @@
 
 ### Key Technologies
 
-| Layer | Technology | Rationale |
-|-------|------------|-----------|
-| **Frontend** | {{frontend_tech}} | {{frontend_rationale}} |
-| **Styling** | {{styling_tech}} | {{styling_rationale}} |
-| **CMS/Backend** | {{backend_tech}} | {{backend_rationale}} |
-{{#if database_tech}}| **Database** | {{database_tech}} | {{database_rationale}} |{{/if}}
-{{#if hosting_tech}}| **Hosting** | {{hosting_tech}} | {{hosting_rationale}} |{{/if}}
+| Layer                 | Technology        | Rationale              |
+| --------------------- | ----------------- | ---------------------- | ---------------------- | ------- |
+| **Frontend**          | {{frontend_tech}} | {{frontend_rationale}} |
+| **Styling**           | {{styling_tech}}  | {{styling_rationale}}  |
+| **CMS/Backend**       | {{backend_tech}}  | {{backend_rationale}}  |
+| {{#if database_tech}} | **Database**      | {{database_tech}}      | {{database_rationale}} | {{/if}} |
+| {{#if hosting_tech}}  | **Hosting**       | {{hosting_tech}}       | {{hosting_rationale}}  | {{/if}} |
 
 ---
 
@@ -38,7 +38,7 @@
 | {{this.name}} | {{this.purpose}} | {{this.status}} |
 {{/each}}
 {{else}}
-*To be determined during development*
+_To be determined during development_
 {{/if}}
 
 ---
@@ -48,14 +48,16 @@
 ### Required Integrations
 
 {{#each integrations}}
+
 - **{{this.name}}:** {{this.purpose}}
-{{/each}}
+  {{/each}}
 
 ### Future Integrations
 
 {{#each future_integrations}}
-- **{{this.name}}:** {{this.purpose}} *({{this.timeline}})*
-{{/each}}
+
+- **{{this.name}}:** {{this.purpose}} _({{this.timeline}})_
+  {{/each}}
 
 ---
 
@@ -68,7 +70,8 @@
 ### Contact Channels
 
 | Channel | Priority | Implementation |
-|---------|----------|----------------|
+| ------- | -------- | -------------- |
+
 {{#each contact_channels}}
 | {{this.channel}} | {{this.priority}} | {{this.implementation}} |
 {{/each}}
@@ -81,21 +84,22 @@
 
 ## UX Constraints
 
-*These constraints inform what's possible in Phase 4 (UX Design)*
+_These constraints inform what's possible in Phase 4 (UX Design)_
 
 ### Platform Limitations
 
 {{#each ux_constraints}}
+
 - {{this}}
-{{/each}}
+  {{/each}}
 
 ### Performance Targets
 
-| Metric | Target | Rationale |
-|--------|--------|-----------|
-| **Mobile First** | {{mobile_first}} | {{mobile_rationale}} |
-| **Page Load** | {{page_load_target}} | {{load_rationale}} |
-| **Offline Support** | {{offline_support}} | {{offline_rationale}} |
+| Metric              | Target               | Rationale             |
+| ------------------- | -------------------- | --------------------- |
+| **Mobile First**    | {{mobile_first}}     | {{mobile_rationale}}  |
+| **Page Load**       | {{page_load_target}} | {{load_rationale}}    |
+| **Offline Support** | {{offline_support}}  | {{offline_rationale}} |
 
 ---
 
@@ -107,13 +111,14 @@
 **Implementation:** {{multilingual_implementation}}
 
 **URL Structure:**
+
 ```
 {{url_structure}}
 ```
 
 **Translation Workflow:** {{translation_workflow}}
 {{else}}
-*Single language site*
+_Single language site_
 {{/if}}
 
 ---
@@ -123,13 +128,15 @@
 ### Technical SEO
 
 {{#each seo_requirements}}
+
 - {{this}}
-{{/each}}
+  {{/each}}
 
 ### Structured Data
 
 | Page Type | Schema Type | Key Properties |
-|-----------|-------------|----------------|
+| --------- | ----------- | -------------- |
+
 {{#each structured_data}}
 | {{this.page_type}} | {{this.schema_type}} | {{this.properties}} |
 {{/each}}
@@ -137,38 +144,39 @@
 ### Local SEO (if applicable)
 
 {{#if is_local_business}}
+
 - [ ] Google Business Profile claimed and verified
 - [ ] NAP consistency (Name, Address, Phone) across all pages
 - [ ] Business category set correctly
 - [ ] Service area defined
 - [ ] Photos uploaded
-{{else}}
-*Not a local business*
-{{/if}}
+      {{else}}
+      _Not a local business_
+      {{/if}}
 
 ### Performance & Infrastructure
 
-| Metric | Target |
-|--------|--------|
-| **Largest Contentful Paint (LCP)** | < 2.5 seconds |
-| **First Input Delay (FID)** | < 100ms |
-| **Cumulative Layout Shift (CLS)** | < 0.1 |
-| **Page Load (4G)** | < 3 seconds |
-| **Total Page Weight** | < 3MB |
-| **Individual Image Size** | < 200KB (hero < 400KB) |
-| **Mobile-Friendly** | Yes |
-| **Favicon** | All sizes (16, 32, 180, 192px) |
+| Metric                             | Target                         |
+| ---------------------------------- | ------------------------------ |
+| **Largest Contentful Paint (LCP)** | < 2.5 seconds                  |
+| **First Input Delay (FID)**        | < 100ms                        |
+| **Cumulative Layout Shift (CLS)**  | < 0.1                          |
+| **Page Load (4G)**                 | < 3 seconds                    |
+| **Total Page Weight**              | < 3MB                          |
+| **Individual Image Size**          | < 200KB (hero < 400KB)         |
+| **Mobile-Friendly**                | Yes                            |
+| **Favicon**                        | All sizes (16, 32, 180, 192px) |
 
 ### Security Headers
 
-| Header | Purpose |
-|--------|---------|
-| **Strict-Transport-Security (HSTS)** | Force HTTPS |
-| **Content-Security-Policy (CSP)** | Prevent XSS |
-| **X-Content-Type-Options** | Prevent MIME sniffing |
-| **X-Frame-Options** | Prevent clickjacking |
-| **Referrer-Policy** | Control referrer info |
-| **Permissions-Policy** | Restrict browser features |
+| Header                               | Purpose                   |
+| ------------------------------------ | ------------------------- |
+| **Strict-Transport-Security (HSTS)** | Force HTTPS               |
+| **Content-Security-Policy (CSP)**    | Prevent XSS               |
+| **X-Content-Type-Options**           | Prevent MIME sniffing     |
+| **X-Frame-Options**                  | Prevent clickjacking      |
+| **Referrer-Policy**                  | Control referrer info     |
+| **Permissions-Policy**               | Restrict browser features |
 
 ### SEO Plugin/Tools
 
@@ -178,17 +186,17 @@
 
 ## Maintenance & Ownership
 
-| Aspect | Owner | Notes |
-|--------|-------|-------|
-| **Content Updates** | {{content_owner}} | {{content_notes}} |
-| **Technical Maintenance** | {{tech_owner}} | {{tech_notes}} |
-| **Plugin Updates** | {{plugin_owner}} | {{plugin_notes}} |
+| Aspect                    | Owner             | Notes             |
+| ------------------------- | ----------------- | ----------------- |
+| **Content Updates**       | {{content_owner}} | {{content_notes}} |
+| **Technical Maintenance** | {{tech_owner}}    | {{tech_notes}}    |
+| **Plugin Updates**        | {{plugin_owner}}  | {{plugin_notes}}  |
 
 ---
 
 ## Development Handoff Notes
 
-*For Phase 6 (Deliveries)*
+_For Phase 6 (Deliveries)_
 
 ### Environment Setup
 
@@ -201,8 +209,9 @@
 ### Key Considerations
 
 {{#each dev_considerations}}
+
 - {{this}}
-{{/each}}
+  {{/each}}
 
 ---
 

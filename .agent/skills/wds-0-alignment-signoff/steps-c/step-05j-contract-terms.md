@@ -65,6 +65,7 @@ Build the Terms and Conditions section covering the legal framework including ch
 **Purpose**: Protects both parties legally
 
 **Key sections to include**:
+
 - **Changes and Modifications**: How scope changes are handled (change orders)
 - **Termination**: How to exit the contract (fair notice, payment for work done)
 - **Intellectual Property**: Who owns what (usually client owns deliverables upon payment)
@@ -75,6 +76,7 @@ Build the Terms and Conditions section covering the legal framework including ch
 **Content**: Standard terms including governing law and jurisdiction (see template)
 
 **What to ask user**:
+
 - "Which jurisdiction's laws should govern this contract? (e.g., 'State of California, USA', 'England and Wales')"
 - "What language should this contract be in? (e.g., English, Spanish, French)"
 - "If the contract is translated, which version should be the official one?"
@@ -84,11 +86,13 @@ Build the Terms and Conditions section covering the legal framework including ch
 Display: "**Select an Option:** [C] Continue to step-05k-contract-approval"
 
 #### Menu Handling Logic:
+
 - IF C: Load, read entire file, then execute {nextStepFile}
 - IF M: Return to {workflowFile}
 - IF Any other comments or queries: help user respond then [Redisplay Menu Options]
 
 #### EXECUTION RULES:
+
 - ALWAYS halt and wait for user input after presenting menu
 - ONLY proceed to next step when user selects 'C'
 - User can chat or ask questions - always respond and then redisplay menu options
@@ -102,11 +106,13 @@ ONLY WHEN the Terms and Conditions section is built and confirmed will you then 
 ## 🚨 SYSTEM SUCCESS/FAILURE METRICS
 
 ### ✅ SUCCESS:
+
 - All key legal sections are covered
 - Jurisdiction and contract language are specified
 - User confirms the terms
 
 ### ❌ SYSTEM FAILURE:
+
 - Skipping jurisdiction or language questions
 - Missing key legal sections (IP, termination, dispute resolution)
 - Not confirming terms with user

@@ -66,6 +66,7 @@ Looking at your Trigger Map and project goals, we need to identify what to desig
 <ask>**What feature or experience should this scenario cover?**
 
 Think about:
+
 - Which feature delivers the most value to your primary target group?
 - What's the core experience that serves your business goals?
 - What's the "happy path" users need?

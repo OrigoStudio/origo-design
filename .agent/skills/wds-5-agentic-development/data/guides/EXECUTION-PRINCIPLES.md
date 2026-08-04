@@ -12,13 +12,13 @@ This ensures full traceability, clean handoff, and the dialog document is always
 
 Sketches are intentional design decisions, not loose suggestions:
 
-| Element | Approach |
-|---------|----------|
-| **Text sizes** | Match relative sizes (headings vs body vs labels) |
-| **Proportions** | Preserve ratios between elements |
-| **Spacing** | Maintain visual rhythm and whitespace |
-| **Layout** | Follow the arrangement precisely |
-| **Component style** | Match the visual pattern (pills, cards, buttons) |
+| Element             | Approach                                          |
+| ------------------- | ------------------------------------------------- |
+| **Text sizes**      | Match relative sizes (headings vs body vs labels) |
+| **Proportions**     | Preserve ratios between elements                  |
+| **Spacing**         | Maintain visual rhythm and whitespace             |
+| **Layout**          | Follow the arrangement precisely                  |
+| **Component style** | Match the visual pattern (pills, cards, buttons)  |
 
 When in doubt: ask the designer. If constraints make exact matching impossible, document the deviation and explain why.
 
@@ -27,12 +27,12 @@ When in doubt: ask the designer. If constraints make exact matching impossible, 
 While working on a step, add discovered tasks as sub-steps:
 
 ```markdown
-| # | Section | Status | Notes |
-|---|---------|--------|-------|
-| 14 | Book It Button | Done | Complete |
-| 14a | Fix button alignment | Done | Added during 14 |
-| 14b | Add loading state | Done | Added during 14 |
-| 15 | Cancel Button | In Progress | |
+| #   | Section              | Status      | Notes           |
+| --- | -------------------- | ----------- | --------------- |
+| 14  | Book It Button       | Done        | Complete        |
+| 14a | Fix button alignment | Done        | Added during 14 |
+| 14b | Add loading state    | Done        | Added during 14 |
+| 15  | Cancel Button        | In Progress |                 |
 ```
 
 Sub-steps use letter suffixes (14a, 14b) to maintain parent position.
@@ -56,12 +56,14 @@ After completing each step, review and adjust the plan:
 Context windows are finite. Long sessions accumulate noise. The solution:
 
 **Planning Session:**
+
 1. Explore codebase and requirements
 2. Discuss approach with designer
 3. Write plan to dialog file
 4. End with clear handoff
 
 **Execution Session:**
+
 1. Start fresh (new conversation)
 2. Read product brief for context
 3. Read page specification for requirements

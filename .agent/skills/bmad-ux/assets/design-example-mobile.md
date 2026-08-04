@@ -84,10 +84,10 @@ Imagery follows container corners exactly.
 
 ## Do's and Don'ts
 
-| Do | Don't |
-|---|---|
-| Single accent color, used sparingly on save & primary action | Color-code by sentiment, mood, or category |
-| Text-only state indicators (`Saved.`) | Iconography for state (✓, ⚠, ●) |
-| Hairline dividers at lowest legible contrast | Card shadows, gradient fills, accent fills behind text |
-| Generous vertical rhythm in composer | Compress to fit more on screen |
-| Honor platform conventions for navigation | Override platform nav with custom drawer or hamburger |
+| Do                                                           | Don't                                                  |
+| ------------------------------------------------------------ | ------------------------------------------------------ |
+| Single accent color, used sparingly on save & primary action | Color-code by sentiment, mood, or category             |
+| Text-only state indicators (`Saved.`)                        | Iconography for state (✓, ⚠, ●)                       |
+| Hairline dividers at lowest legible contrast                 | Card shadows, gradient fills, accent fills behind text |
+| Generous vertical rhythm in composer                         | Compress to fit more on screen                         |
+| Honor platform conventions for navigation                    | Override platform nav with custom drawer or hamburger  |

@@ -60,6 +60,7 @@ Verify that page specification includes strategic context through page descripti
 Check for page description paragraph immediately after navigation section. Verify "User Situation" and "Page Purpose" sections exist with meaningful content.
 
 Validate:
+
 - Page description paragraph (1-2 paragraphs explaining what page does)
 - User Situation section (user's context, needs, emotional state)
 - Page Purpose section (what job page must accomplish)

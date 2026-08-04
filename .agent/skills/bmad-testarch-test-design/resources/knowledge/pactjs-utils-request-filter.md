@@ -116,7 +116,7 @@ const stateHandlers: StateHandlers = {
     // Auth state is handled by the request filter, not state handler
   },
   'movie exists': {
-    setup: async (params) => {
+    setup: async params => {
       await db.seed({ movies: [{ id: params?.id }] });
     },
     teardown: async () => {

@@ -93,11 +93,11 @@ If the user is improving a live product:
 
 Priority = Impact × Effort × Learning
 
-| Factor | High | Medium | Low |
-|--------|------|--------|-----|
-| **Impact** | Solves major pain | Improves experience | Nice to have |
-| **Effort** | 1-2 days | 3-5 days | 1-2 weeks |
-| **Learning** | Tests hypothesis | Validates assumption | Incremental |
+| Factor       | High              | Medium               | Low          |
+| ------------ | ----------------- | -------------------- | ------------ |
+| **Impact**   | Solves major pain | Improves experience  | Nice to have |
+| **Effort**   | 1-2 days          | 3-5 days             | 1-2 weeks    |
+| **Learning** | Tests hypothesis  | Validates assumption | Incremental  |
 
 **Document the opportunity:**
 

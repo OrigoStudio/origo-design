@@ -13,8 +13,8 @@ borrows_from: Phase 4 [H] (design delivery)
 ## INITIALIZATION
 
 ### Design Log
-Read `{output_folder}/_progress/00-design-log.md`. Check Current and Backlog for context.
 
+Read `{output_folder}/_progress/00-design-log.md`. Check Current and Backlog for context.
 
 ## Steps
 
@@ -37,6 +37,7 @@ gh pr create --title "[Improvement]: [Brief description]" --body "..."
 ```
 
 PR body includes:
+
 - **What changed** — Summary of the improvement
 - **Why** — Link to scenario and analysis
 - **How to test** — Steps from the test report
@@ -51,21 +52,26 @@ Create a delivery summary at `{output_folder}/evolution/deliveries/`:
 # Delivery: [Scenario Name]
 
 ## PR
+
 [Link to PR]
 
 ## Artifacts
+
 - Analysis: [link]
 - Scenario: [link]
 - Specification: [link]
 - Test Report: [link]
 
 ## Change Summary
+
 [What was changed and why]
 
 ## Impact
+
 [Expected improvement based on success criteria]
 
 ## Monitoring
+
 [What to watch after deployment — metrics, error rates, user feedback]
 ```
 

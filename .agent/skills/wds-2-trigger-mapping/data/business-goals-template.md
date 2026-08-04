@@ -36,6 +36,7 @@ Complete template structure for 01-Business-Goals.md
 ## Business Objectives
 
 ### ⭐ PRIMARY GOAL: [Title] (THE ENGINE)
+
 - **Statement:** [What we're building]
 - **Metric:** [How we measure it]
 - **Target:** [Specific number]
@@ -47,6 +48,7 @@ Complete template structure for 01-Business-Goals.md
 ### 🚀 [SECONDARY GOALS CATEGORY] (Driven by [Primary Goal])
 
 **Objective 1: [Title]**
+
 - **Statement:** [What we're achieving]
 - **Metric:** [How we measure]
 - **Target:** [Number]
@@ -61,6 +63,7 @@ Complete template structure for 01-Business-Goals.md
 **Note:** These are opportunities [Product] creates FOR the community members - [benefit description].
 
 **Objective X: [Title]**
+
 - **Statement:** [What members get]
 - **Metric:** [How we measure member success]
 - **Target:** [Number]
@@ -78,18 +81,21 @@ Complete template structure for 01-Business-Goals.md
 ## The Flywheel: How Goals Connect
 
 **THE ENGINE (Priority #1):**
+
 - [Primary goal number] [primary goal description]
 - Timeline: [X] months
 - These [users] [action that drives everything]
 - They create the flywheel that drives ALL other objectives
 
 **[Secondary Category] (Priority #2):**
+
 - Driven BY the [primary goal achievers]
 - [List key targets with numbers]
 - Timeline: [X] months
 - Focus: [What this tier achieves]
 
 **[Tertiary Category] (Priority #3):**
+
 - Real-world benefits FOR community members
 - [List key opportunities]
 - Timeline: [X] months
@@ -106,6 +112,7 @@ Complete template structure for 01-Business-Goals.md
 ### How Trigger Map Connects to Objectives (Properly Prioritized):
 
 **⭐ PRIMARY: Creating Awesome [Users] Who Become [Champions] → Achieves:**
+
 - ✅ **[Number] [champions]** (THE ENGINE - [Persona] becomes one of them naturally)
 - ✅ [Action 1]
 - ✅ [Action 2]
@@ -114,12 +121,14 @@ Complete template structure for 01-Business-Goals.md
 - **This drives ALL other objectives**
 
 **🚀 SECONDARY: [Champions] Drive [Product] Adoption → Achieves:**
+
 - ✅ [Objective 1] ([champions] spread the word)
 - ✅ [Objective 2] ([champions] demonstrate value)
 - ✅ [Objective 3] ([champions] create engagement)
 - **Timeline: [X] months**
 
 **🌟 TERTIARY: [Product] Success Creates Opportunities for Community → Achieves:**
+
 - ✅ [Opportunity 1] (members [benefit])
 - ✅ [Opportunity 2] (members [benefit])
 - ✅ [Opportunity 3] (members [benefit])

@@ -78,7 +78,6 @@ Before proceeding, verify:
 
 If any preflight requirement is not met, HALT and guide the user.
 
-
 ### Paths
 
 - `installed_path` = `{skill_root}`
@@ -138,7 +137,7 @@ using NUnit.Framework;
 [TestFixture]
 public class {ClassName}Tests
 {
-    private {ClassName} _sut;
+private {ClassName} \_sut;
 
     [SetUp]
     public void Setup()
@@ -164,8 +163,10 @@ public class {ClassName}Tests
         var result = _sut.{MethodName}(input);
         Assert.AreEqual(expected, result);
     }
+
 }
-```
+
+````
     </action>
   </check>
 
@@ -192,8 +193,10 @@ bool F{ClassName}{MethodName}Test::RunTest(const FString& Parameters)
     TestEqual("{assertion_message}", Result, {expected});
     return true;
 }
-```
+````
+
     </action>
+
   </check>
 
   <!-- Godot (GDScript) -->
@@ -202,31 +205,29 @@ bool F{ClassName}{MethodName}Test::RunTest(const FString& Parameters)
 ```gdscript
 extends GutTest
 
-var _sut: {ClassName}
+var \_sut: {ClassName}
 
 func before_each():
-    _sut = {ClassName}.new()
+\_sut = {ClassName}.new()
 
 func after_each():
-    _sut.free()
+\_sut.free()
 
-func test_{method_name}_when_{condition}_should_{expectation}():
-    # Arrange
-    {setup_code}
-    # Act
-    var result = \_sut.{method_name}({parameters})
-    # Assert
-    assert_eq(result, {expected}, "{assertion_message}")
+func test*{method_name}\_when*{condition}_should_{expectation}(): # Arrange
+{setup_code} # Act
+var result = \_sut.{method_name}({parameters}) # Assert
+assert_eq(result, {expected}, "{assertion_message}")
 
-func test_{method_name}_parameterized():
-    var test_cases = [
-        {"input": {input1}, "expected": {expected1}},
-        {"input": {input2}, "expected": {expected2}}
-    ]
-    for tc in test_cases:
-        var result = \_sut.{method_name}(tc.input)
-        assert_eq(result, tc.expected)
-```
+func test\_{method_name}\_parameterized():
+var test_cases = [
+{"input": {input1}, "expected": {expected1}},
+{"input": {input2}, "expected": {expected2}}
+]
+for tc in test_cases:
+var result = \_sut.{method_name}(tc.input)
+assert_eq(result, tc.expected)
+
+````
     </action>
   </check>
 
@@ -248,8 +249,10 @@ public IEnumerator {SceneName}_Loads_WithoutErrors()
         .Where(e => e.HasErrors);
     Assert.IsEmpty(errors, "Scene should load without errors");
 }
-```
+````
+
     </action>
+
   </check>
 
   <check if="engine == 'unreal'">
@@ -281,7 +284,7 @@ func test_{feature}_integration():
     </action>
   </check>
 
-  <action>Write each generated integration test file to `{test_dir}/integration/`</action>
+<action>Write each generated integration test file to `{test_dir}/integration/`</action>
 </step>
 
 <step n="3.5" goal="Generate E2E Infrastructure">
@@ -308,8 +311,10 @@ public abstract class GameE2ETestFixture
         Scenario = new {ScenarioBuilderClass}(GameState);
         yield return WaitForReady();
     }
+
 }
-```
+
+````
   </action>
   <action>Write infrastructure files to `{test_dir}/e2e/infrastructure/` or the engine-appropriate equivalent</action>
   <action>After scaffolding infrastructure, proceed to generate actual E2E tests</action>
@@ -336,17 +341,15 @@ public IEnumerator Smoke_NewGame_StartsSuccessfully()
     var player = GameObject.FindWithTag("Player");
     Assert.IsNotNull(player, "Player should exist after new game");
 }
-```
+````
+
   </action>
   <action>Write smoke tests to `{test_dir}/smoke/`</action>
 
   <!-- Anti-patterns to actively avoid -->
-  <action>Ensure generated tests do NOT:
-    - Test engine functionality (not game logic)
-    - Use hard-coded waits as primary sync (use signals/events)
-    - Depend on execution order
-    - Lack cleanup in teardown
-  </action>
+
+<action>Ensure generated tests do NOT: - Test engine functionality (not game logic) - Use hard-coded waits as primary sync (use signals/events) - Depend on execution order - Lack cleanup in teardown
+</action>
 </step>
 
 <step n="5" goal="Generate Test Report">
@@ -380,6 +383,7 @@ public IEnumerator Smoke_NewGame_StartsSuccessfully()
 3. Run tests to verify they pass
 4. Add to CI pipeline
 ```
+
   </action>
   <action>Load and apply `{validation}` checklist to verify all deliverables are complete</action>
   <action>Present the automation summary to the user</action>

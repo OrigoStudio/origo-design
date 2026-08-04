@@ -291,7 +291,7 @@ await networkRecorder.setup(context, {
 await networkRecorder.setup(context, {
   playback: {
     urlMapping: {
-      mapUrl: (url) => url.replace('staging.example.com', 'dev.example.com'),
+      mapUrl: url => url.replace('staging.example.com', 'dev.example.com'),
     },
   },
 });

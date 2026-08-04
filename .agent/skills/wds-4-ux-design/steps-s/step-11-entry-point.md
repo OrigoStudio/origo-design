@@ -62,6 +62,7 @@ Define where users arrive from for this specific page — the page-level entry p
 How do users get to this page?
 
 Examples:
+
 - Google search (external)
 - Social media ad (external)
 - Email link (external)

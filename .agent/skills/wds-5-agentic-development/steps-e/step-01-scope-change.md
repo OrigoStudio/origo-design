@@ -75,11 +75,11 @@ Define exactly what is new, what is modified, and what must remain untouched.
 
 Categorize all affected areas:
 
-| Category | Description | Examples |
-|----------|-------------|----------|
-| **New** | Does not exist yet, being added | New page, new API endpoint, new component |
-| **Modified** | Exists and will be changed | Updated component to accept new props, extended API response |
-| **Untouched** | Exists and must not change | Existing pages, unrelated features, shared utilities |
+| Category      | Description                     | Examples                                                     |
+| ------------- | ------------------------------- | ------------------------------------------------------------ |
+| **New**       | Does not exist yet, being added | New page, new API endpoint, new component                    |
+| **Modified**  | Exists and will be changed      | Updated component to accept new props, extended API response |
+| **Untouched** | Exists and must not change      | Existing pages, unrelated features, shared utilities         |
 
 ### 5. Identify Integration Points
 
@@ -102,10 +102,12 @@ Categorize all affected areas:
 Display: "**Select an Option:** [C] Continue to Step 2: Analyze Impact"
 
 #### Menu Handling Logic:
+
 - IF C: Update design log, then load, read entire file, then execute {nextStepFile}
 - IF Any other comments or queries: help user respond then [Redisplay Menu Options]
 
 #### EXECUTION RULES:
+
 - ALWAYS halt and wait for user input after presenting menu
 - ONLY proceed to next step when user selects 'C'
 - User can chat or ask questions - always respond and then redisplay menu options
@@ -119,6 +121,7 @@ ONLY WHEN the scope is fully defined with boundary map and integration points wi
 ## 🚨 SYSTEM SUCCESS/FAILURE METRICS
 
 ### ✅ SUCCESS:
+
 - Feature spec loaded and understood
 - New functionality listed
 - Existing functionality that must stay unchanged listed
@@ -127,6 +130,7 @@ ONLY WHEN the scope is fully defined with boundary map and integration points wi
 - Dialog file updated with scope definition
 
 ### ❌ SYSTEM FAILURE:
+
 - Beginning impact analysis before scope is defined
 - Not identifying what must remain untouched
 - Skipping integration point identification

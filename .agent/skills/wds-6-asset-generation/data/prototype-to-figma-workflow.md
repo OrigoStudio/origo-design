@@ -23,18 +23,21 @@ Sketch → Spec → Prototype (basic) → Figma (refine) → Design System (exte
 ### Extract When:
 
 ✅ **Visual refinement needed**
+
 - Prototype works but looks unpolished
 - Design system lacks components for this view
 - Spacing/typography needs fine-tuning
 - Color palette needs expansion
 
 ✅ **Design system gaps identified**
+
 - Missing component variants
 - Incomplete state definitions
 - Need new design tokens
 - Pattern library needs expansion
 
 ✅ **Stakeholder presentation**
+
 - Need polished visuals for approval
 - Client review requires high-fidelity
 - Marketing materials needed
@@ -42,11 +45,13 @@ Sketch → Spec → Prototype (basic) → Figma (refine) → Design System (exte
 ### Don't Extract When:
 
 ❌ **Prototype is sufficient**
+
 - Design system already covers all needs
 - Visual quality meets requirements
 - Focus is on functionality, not aesthetics
 
 ❌ **Early exploration**
+
 - Still validating concepts
 - Rapid iteration needed
 - Design decisions not finalized
@@ -60,12 +65,14 @@ Sketch → Spec → Prototype (basic) → Figma (refine) → Design System (exte
 **Input:** Specification from Phase 4C
 
 **Phase 4D: Create Prototype**
+
 ```
 Sketch → Spec → Generate HTML/CSS/JS
 Result: Functional but basic-looking prototype
 ```
 
 **Assessment:**
+
 - Does it work functionally? ✅
 - Does it look polished? ❌ (Design system incomplete)
 
@@ -87,6 +94,7 @@ Use MCP server to inject components directly into Figma:
 ```
 
 **What gets extracted:**
+
 - Specific components (not entire page)
 - Layout structure (frames, auto-layout)
 - Text content (converted to text layers)
@@ -97,6 +105,7 @@ Use MCP server to inject components directly into Figma:
 **Step 2: Refine in Figma**
 
 Designer works in Figma to:
+
 - Apply proper typography styles
 - Refine color palette
 - Adjust spacing/padding
@@ -107,6 +116,7 @@ Designer works in Figma to:
 **Step 3: Document Design Decisions**
 
 Capture in Figma:
+
 - Design tokens (colors, spacing, typography)
 - Component specifications
 - State definitions
@@ -115,6 +125,7 @@ Capture in Figma:
 **Step 4: Extract Design System Updates**
 
 From refined Figma design:
+
 - New design tokens → `D-Design-System/design-tokens.md`
 - New components → `D-Design-System/components/`
 - Updated variants → Existing component files
@@ -133,20 +144,20 @@ Apply Figma refinements to design system:
 
 Colors:
   primary:
-    50: "#f0f9ff"
-    600: "#2563eb"  # From Figma refinement
-    700: "#1d4ed8"  # New from Figma
-    
+    50: '#f0f9ff'
+    600: '#2563eb' # From Figma refinement
+    700: '#1d4ed8' # New from Figma
+
 Spacing:
   xs: 4px
   sm: 8px
-  md: 16px   # Refined in Figma
-  lg: 24px   # New from Figma
-  
+  md: 16px # Refined in Figma
+  lg: 24px # New from Figma
+
 Typography:
   heading-1:
-    font: "Inter"
-    size: 32px    # Refined in Figma
+    font: 'Inter'
+    size: 32px # Refined in Figma
     weight: 700
     line-height: 1.2
 ```
@@ -160,6 +171,7 @@ Same HTML structure + Enhanced design system = Polished prototype
 ```
 
 **Assessment:**
+
 - Does it work functionally? ✅
 - Does it look polished? ✅ (Design system now complete)
 
@@ -200,6 +212,7 @@ Choice [1/2/3]:
 **1. Analyze prototype components**
 
 Freya automatically:
+
 - Scans prototype for all components with Object IDs
 - Identifies components that need visual refinement
 - Compares against existing design system
@@ -211,11 +224,13 @@ Freya automatically:
 I've analyzed the prototype and identified components that could benefit from visual refinement:
 
 **Missing from design system:**
+
 - Login button (btn-login-submit)
 - Email input (input-email)
 - Password input (input-password)
 
 **Incomplete in design system:**
+
 - Forgot password link (link-forgot-password) - needs hover state
 
 Would you like me to inject these into Figma for refinement?
@@ -230,6 +245,7 @@ Choice:
 **3. Inject via MCP server (automated)**
 
 Freya automatically:
+
 - Determines target Figma file from project config
 - Creates/navigates to page matching scenario/page structure
 - Page naming: `[Scenario-Number]-[Scenario-Name] / [Page-Number]-[Page-Name]`
@@ -254,6 +270,7 @@ You can now refine these components in Figma. Let me know when you're ready to r
 **4. Wait for designer refinement**
 
 Freya pauses workflow and waits for user to:
+
 - Open Figma
 - Refine visual design
 - Apply design tokens
@@ -262,6 +279,7 @@ Freya pauses workflow and waits for user to:
 - Notify when complete
 
 **Output:**
+
 - Specific components injected into Figma
 - Layers named with Object IDs
 - Page structure matches specification
@@ -269,6 +287,7 @@ Freya pauses workflow and waits for user to:
 - Freya ready to read refined components back
 
 **Advantages:**
+
 - ✅ Fully automated by Freya
 - ✅ Component-level precision
 - ✅ Automatic Object ID mapping
@@ -309,6 +328,7 @@ Extracted button → Create Figma component
 **3. Refine Visual Design**
 
 Polish the design:
+
 - Typography hierarchy
 - Spacing consistency
 - Color harmony
@@ -329,6 +349,7 @@ Design Decisions:
 ```
 
 **Important:** If you discover better design solutions during refinement:
+
 - ✅ Explore new ideas and improvements
 - ✅ Document design decisions in Figma
 - ✅ **Update specifications to match new design**
@@ -336,6 +357,7 @@ Design Decisions:
 - ❌ Don't let Figma and specs diverge
 
 **Workflow for design changes:**
+
 1. Refine design in Figma (explore improvements)
 2. Document what changed and why
 3. Update specification to reflect new design
@@ -365,6 +387,7 @@ Choice:
 **2. Read refined components (automated)**
 
 Freya automatically:
+
 - Connects to Figma via MCP server
 - Reads all injected components from target page
 - Extracts design tokens (colors, spacing, typography)
@@ -387,23 +410,27 @@ Analyzing design refinements...
 **Design tokens extracted:**
 
 Colors:
+
 - primary.600: #2563eb (new)
 - primary.700: #1d4ed8 (new)
 - neutral.50: #ffffff
 
 Spacing:
+
 - spacing.md: 12px (refined from 16px)
 - spacing.lg: 16px (new)
 
 Typography:
+
 - button.font-size: 16px (new)
 - button.font-weight: 600 (new)
 
 **Component updates:**
+
 - Button component: Added primary variant, hover/active states
 - Input component: Added focus state, error state
 - Link component: Created new component with hover state
-</output>
+  </output>
 
 <ask>
 Did you make any design changes that differ from the original specification?
@@ -446,13 +473,15 @@ Freya automatically updates `D-Design-System/design-tokens.md`:
 ## Colors (Updated from Figma)
 
 ### Primary
+
 - primary.50: #f0f9ff
 - primary.600: #2563eb (refined)
 - primary.700: #1d4ed8 (new)
 
 ### Spacing (Updated from Figma)
+
 - xs: 4px
-- sm: 8px  
+- sm: 8px
 - md: 16px (refined from 12px)
 - lg: 24px (new)
 ```
@@ -469,17 +498,20 @@ Button Component [btn-001]
 **Figma Reference:** [Link to Figma component]
 
 ## Variants (From Figma refinement)
+
 - primary (updated styling)
 - secondary (new variant)
 - ghost (new variant)
 
 ## States (From Figma refinement)
+
 - default
 - hover (updated animation)
 - active (new state)
 - disabled (updated opacity)
 
 ## Styling (From Figma)
+
 - Background: {primary.600}
 - Text: {neutral.50}
 - Padding: {spacing.md} {spacing.lg}
@@ -509,10 +541,10 @@ Apply new design tokens:
 ```html
 <!-- Before -->
 <button style="background: #2563eb; padding: 12px 16px;">
-
-<!-- After (with design system) -->
-<button class="btn-primary">
-  <!-- Styled via design system tokens -->
+  <!-- After (with design system) -->
+  <button class="btn-primary">
+    <!-- Styled via design system tokens -->
+  </button>
 </button>
 ```
 
@@ -531,6 +563,7 @@ Choice [1/2/3]:
 **3. Test updated prototype**
 
 Verify:
+
 - Visual quality improved ✅
 - Functionality preserved ✅
 - Design system applied correctly ✅
@@ -572,6 +605,7 @@ Choice [1/2/3]:
 **Purpose:** Convert HTML prototypes to Figma
 
 **Features:**
+
 - Preserves layout structure
 - Converts CSS to Figma styles
 - Maintains element hierarchy
@@ -579,6 +613,7 @@ Choice [1/2/3]:
 - Creates Figma components
 
 **Usage:**
+
 ```
 1. Upload HTML file
 2. Configure conversion options
@@ -587,10 +622,12 @@ Choice [1/2/3]:
 ```
 
 **Best Practices:**
+
 - Clean HTML structure before extraction
 - Use semantic HTML elements
 - Include Object IDs in data attributes
 - Document area tags for image sections
+
 ### NanoBanana (Optional)
 
 **Purpose:** Agent-driven asset creation and design inspiration tool
@@ -604,6 +641,7 @@ Choice [1/2/3]:
 ### Features
 
 **Asset Creation:**
+
 - Visual design generation
 - Design inspiration and variations
 - Asset creation (images, graphics, icons)
@@ -613,6 +651,7 @@ Choice [1/2/3]:
 ### Integration with WDS
 
 **Workflow:**
+
 ```
 Design Concept
     → NanoBanana (create assets/inspiration)
@@ -622,6 +661,7 @@ Design Concept
 ```
 
 **When to use:**
+
 - Need visual design inspiration
 - Creating custom graphics/assets
 - Exploring design variations
@@ -629,6 +669,7 @@ Design Concept
 - Creating placeholder assets
 
 **When to Skip:**
+
 - Have existing design assets
 - Working with established brand guidelines
 - Simple text/layout-only designs
@@ -637,6 +678,7 @@ Design Concept
 ### Best Practices
 
 **DO ✅**
+
 - Use for design exploration and inspiration
 - Generate multiple variations
 - Refine AI-generated assets in Figma
@@ -644,11 +686,13 @@ Design Concept
 - Export and integrate into design system
 
 **DON'T ❌**
+
 - Use as replacement for design thinking
 - Skip refinement of generated assets
 - Ignore brand guidelines
 - Use without customization
 - Rely solely on AI-generated designs
+
 ### Design System Updates
 
 ```
@@ -752,6 +796,7 @@ D-Design-System/
 **Problem:** html.to.design doesn't preserve layout
 
 **Solution:**
+
 - Use semantic HTML structure
 - Avoid complex CSS positioning
 - Simplify before extraction
@@ -762,6 +807,7 @@ D-Design-System/
 **Problem:** Object IDs lost in extraction
 
 **Solution:**
+
 - Add Object IDs to data attributes
 - Use as CSS classes
 - Include in element IDs
@@ -774,6 +820,7 @@ D-Design-System/
 **Problem:** Can't match design system tokens
 
 **Solution:**
+
 - Create Figma variables first
 - Map extracted values to variables
 - Document token mappings
@@ -784,6 +831,7 @@ D-Design-System/
 **Problem:** Components don't match code structure
 
 **Solution:**
+
 - Align Figma component hierarchy with HTML
 - Use same naming conventions
 - Document component boundaries
@@ -796,6 +844,7 @@ D-Design-System/
 **Problem:** Design system changes break prototype
 
 **Solution:**
+
 - Test incrementally
 - Update one token at a time
 - Verify after each change
@@ -806,6 +855,7 @@ D-Design-System/
 **Problem:** Prototype loses functionality after re-render
 
 **Solution:**
+
 - Preserve JavaScript logic
 - Don't change HTML structure
 - Only update styling
@@ -841,6 +891,7 @@ D-Design-System/
 **Input:** Login page specification
 
 **Output:** Functional HTML prototype
+
 - Form works
 - Validation functions
 - But looks basic (incomplete design system)
@@ -852,11 +903,13 @@ D-Design-System/
 ### Iteration 2: Figma Refinement
 
 **Extract to Figma:**
+
 - Upload to html.to.design
 - Import to Figma
 - Structure preserved
 
 **Refine in Figma:**
+
 - Apply proper typography (Inter font)
 - Refine color palette (brand colors)
 - Add button variants (primary, secondary)
@@ -864,6 +917,7 @@ D-Design-System/
 - Add visual polish (shadows, borders)
 
 **Extract to Design System:**
+
 - New tokens: colors, spacing, typography
 - New components: Button [btn-001], Input [inp-001]
 - Updated: design-tokens.md, components/
@@ -873,11 +927,13 @@ D-Design-System/
 ### Iteration 3: Re-render
 
 **Update Prototype:**
+
 - Apply new design tokens
 - Use new component classes
 - Regenerate with design system
 
 **Result:**
+
 - Same functionality ✅
 - Polished visuals ✅
 - Design system extended ✅

@@ -66,6 +66,7 @@ Acknowledge the specific problem, analyze why it is happening, and describe the 
 ### 3. Update Story File with Learning
 
 Add to story file `stories/[View].[N]-[section-name].md`:
+
 - Problem: What was wrong
 - Root cause: Why it happened
 - Solution: What was changed
@@ -94,10 +95,12 @@ Present the fix, explain what changed, why it works now, and request re-testing.
 Display: "**Select an Option:** [C] Continue to Step 4d: Present for Testing (re-test)"
 
 #### Menu Handling Logic:
+
 - IF C: Update design log, then load, read entire file, then execute `./4d-present-for-testing.md`
 - IF Any other comments or queries: help user respond then [Redisplay Menu Options]
 
 #### EXECUTION RULES:
+
 - ALWAYS halt and wait for user input after presenting menu
 - ONLY proceed to next step when user selects 'C'
 - User can chat or ask questions - always respond and then redisplay menu options
@@ -111,6 +114,7 @@ ONLY WHEN the issue is fixed and re-verified will you then loop back to present 
 ## 🚨 SYSTEM SUCCESS/FAILURE METRICS
 
 ### ✅ SUCCESS:
+
 - Issue acknowledged and analyzed
 - Root cause identified
 - Focused fix implemented
@@ -118,6 +122,7 @@ ONLY WHEN the issue is fixed and re-verified will you then loop back to present 
 - Re-verified with Puppeteer before re-presenting
 
 ### ❌ SYSTEM FAILURE:
+
 - Not acknowledging or analyzing the issue
 - Fix does not address root cause
 - Not updating story file with learning

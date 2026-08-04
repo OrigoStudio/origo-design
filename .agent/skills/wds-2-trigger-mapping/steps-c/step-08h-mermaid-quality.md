@@ -130,11 +130,13 @@ The professional Mermaid diagram can now be inserted into 00-Trigger-Map-Poster.
 Display: "**Select an Option:** [C] Continue to Finalize Hub | [M] Return to Activity Menu"
 
 #### Menu Handling Logic:
+
 - IF C: Load and execute {nextStepFile}
 - IF M: Return to {activityWorkflowFile}
 - IF Any other comments or queries: help user respond then [Redisplay Menu Options]
 
 #### EXECUTION RULES:
+
 - ALWAYS halt and wait for user input after presenting menu
 - User can chat or ask questions - always respond and then redisplay menu options
 
@@ -147,6 +149,7 @@ ONLY WHEN user selects [C] will you load the next step file. All quality checks 
 ## 🚨 SYSTEM SUCCESS/FAILURE METRICS
 
 ### ✅ SUCCESS:
+
 - All quality dimensions checked
 - All issues found were fixed
 - Re-verification passed after fixes
@@ -155,6 +158,7 @@ ONLY WHEN user selects [C] will you load the next step file. All quality checks 
 - All specifications exactly met
 
 ### ❌ SYSTEM FAILURE:
+
 - Skipping quality dimensions
 - Approving with known issues
 - Not fixing found issues

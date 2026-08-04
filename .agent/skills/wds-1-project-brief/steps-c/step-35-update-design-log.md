@@ -11,11 +11,13 @@ activityWorkflowFile: '../workflow.md'
 # Step 35: Update Design Log
 
 ## STEP GOAL:
+
 Document Phase 1 completion in the project design log - the project's memory.
 
 ## MANDATORY EXECUTION RULES (READ FIRST):
 
 ### Universal Rules:
+
 - NEVER generate content without user input
 - CRITICAL: Read the complete step file before taking any action
 - CRITICAL: When loading next step with 'C', ensure entire file is read
@@ -23,6 +25,7 @@ Document Phase 1 completion in the project design log - the project's memory.
 - YOU MUST ALWAYS SPEAK OUTPUT in your Agent communication style with the config `{communication_language}`
 
 ### Role Reinforcement:
+
 - You are a Strategic Business Analyst documenting project progress for future reference
 - If you already have been given a name, communication_style and persona, continue to use those while playing this new role
 - We engage in collaborative dialogue, not command-response
@@ -30,16 +33,19 @@ Document Phase 1 completion in the project design log - the project's memory.
 - Maintain collaborative and strategic tone throughout
 
 ### Step-Specific Rules:
+
 - Focus: Append progress entry, record key decisions, list ALL artifacts
 - FORBIDDEN: Do not skip listing every artifact file - do not summarize with "etc."
 - Approach: Read current log, append progress entry, record key decisions, verify
 
 ## EXECUTION PROTOCOLS:
+
 - Primary goal: Design log updated with Phase 1 completion entry
 - Save/document outputs appropriately
 - Do not skip this step
 
 ## CONTEXT BOUNDARIES:
+
 - Available context: All Phase 1 artifacts and decisions
 - Focus: Design log update
 - Limits: Documenting what happened, not new work
@@ -71,6 +77,7 @@ Add the following under the `## Progress` section (after the last entry):
 ```
 
 **Rules:**
+
 - List every artifact file - do not summarize with "etc."
 - Summary must mention specific business context, not generic statements
 - Use the actual date, not a placeholder
@@ -84,6 +91,7 @@ Add rows to the `## Key Decisions` table for any significant choices made during
 ```
 
 Examples of key decisions worth logging:
+
 - Brief level choice (standard vs simplified)
 - Tech stack decisions
 - Scope boundaries defined
@@ -99,18 +107,22 @@ If no significant decisions were made, skip this section.
 - [ ] Key decisions recorded (if any)
 
 ### N. Present MENU OPTIONS
+
 Display: "**Select an Option:** [C] Continue to next step"
 
 #### Menu Handling Logic:
+
 - IF C: Load, read entire file, then execute {nextStepFile}
 - IF M: Return to {workflowFile} or {activityWorkflowFile}
 - IF Any other comments or queries: help user respond then [Redisplay Menu Options]
 
 #### EXECUTION RULES:
+
 - ALWAYS halt and wait for user input after presenting menu
 - User can chat or ask questions - always respond and then redisplay menu options
 
 ## CRITICAL STEP COMPLETION NOTE
+
 ONLY WHEN step objectives are met and user confirms will you then load and read fully `{nextStepFile}`.
 
 ---
@@ -118,6 +130,7 @@ ONLY WHEN step objectives are met and user confirms will you then load and read 
 ## SYSTEM SUCCESS/FAILURE METRICS
 
 ### SUCCESS:
+
 - Design log updated with progress entry
 - All artifacts listed individually
 - Summary is specific to this project
@@ -125,6 +138,7 @@ ONLY WHEN step objectives are met and user confirms will you then load and read 
 - Verification checklist passed
 
 ### FAILURE:
+
 - Summarized artifacts with "etc."
 - Used generic summary
 - Overwrote existing entries

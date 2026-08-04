@@ -58,19 +58,21 @@ Based on the path forward, the following deliverables will be provided:
 
 **What it does**: Defines when and how payments will be made.
 
-**Purpose**: 
+**Purpose**:
+
 - Ensures service provider receives fair compensation for work
 - Provides client with clear payment expectations
 - Protects both parties from payment disputes
 - For fixed-price agreements, upfront payment is fair since service provider assumes cost overrun risk
 
 **Payment Terms Details**:
+
 - **Payment Method**: {{payment_method}} (check, wire transfer, credit card, etc.)
 - **Payment Due Dates**: {{payment_due_dates}}
 - **Late Payment**: {{late_payment_terms}} (e.g., interest charges, work suspension)
 - **Payment Conditions**: {{payment_conditions}} (e.g., payment required before work begins, payment tied to deliverables)
 
-**For Fixed-Price Agreements**: 
+**For Fixed-Price Agreements**:
 This is a fixed-price agreement, meaning the service provider commits to deliver specified work for the agreed price, regardless of actual costs. Since the service provider assumes the risk of cost overruns, upfront payment (50-100%) is standard and fair. This demonstrates client commitment and enables the service provider to deliver quality work without cash flow concerns.
 
 ---
@@ -79,7 +81,7 @@ This is a fixed-price agreement, meaning the service provider commits to deliver
 
 {{timeline}}
 
-*Note: Timeline is based on the path forward outlined above and may be adjusted based on project requirements.*
+_Note: Timeline is based on the path forward outlined above and may be adjusted based on project requirements._
 
 ---
 
@@ -106,6 +108,7 @@ This is a fixed-price agreement, meaning the service provider commits to deliver
 ### Deliverable Acceptance
 
 Deliverables will be considered accepted upon:
+
 - Completion according to specifications
 - Review and approval by client
 - Any requested revisions completed
@@ -145,6 +148,7 @@ Both parties agree to:
 - Maintain confidentiality obligations even after project completion
 
 **Exceptions**:
+
 - Information already publicly known
 - Information independently developed
 - Information required by law to be disclosed
@@ -161,7 +165,8 @@ Both parties agree to:
 
 **What it does**: States that total costs will not exceed a specified amount without prior written approval.
 
-**Purpose**: 
+**Purpose**:
+
 - Protects both parties from unexpected cost overruns
 - Ensures budget control
 - **Prevents scope creep** - Any work beyond the original scope requires approval and may affect the budget cap
@@ -174,6 +179,7 @@ Both parties agree to:
 - This cap includes all fees, expenses, and costs related to the project
 
 **Change Orders and Scope Control**:
+
 - Any changes to scope that affect cost must be documented in a written change order
 - Change orders must be signed by both parties before work begins
 - Change orders may adjust the not-to-exceed amount if agreed upon
@@ -192,12 +198,14 @@ Both parties agree to:
 
 **What it does**: Defines the start date or conditions that must be met before work begins.
 
-**Purpose**: 
+**Purpose**:
+
 - Prevents unauthorized work before agreement is fully executed
 - Establishes clear timeline expectations
 - Protects both parties by ensuring work only begins after proper authorization
 
 **Initiation conditions** (select applicable):
+
 - Upon full execution of this agreement (signatures from both parties)
 - On a specific date: {{specific_start_date}}
 - Upon receipt of initial payment/deposit
@@ -252,15 +260,15 @@ Any disputes arising from this agreement shall be resolved through {{dispute_res
 
 **Client/Owner Approval**:
 
-Signature: _________________  
+Signature: ********\_********  
 Name: {{client_name}}  
-Date: _______________
+Date: ******\_\_\_******
 
 **Service Provider Approval**:
 
-Signature: _________________  
+Signature: ********\_********  
 Name: {{service_provider_name}}  
-Date: _______________
+Date: ******\_\_\_******
 
 ---
 
@@ -273,5 +281,4 @@ Date: _______________
 
 ---
 
-*This service agreement is based on the project pitch dated {{date}}.*
-
+_This service agreement is based on the project pitch dated {{date}}._

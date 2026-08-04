@@ -128,30 +128,35 @@ This system creates **production-ready, self-contained interactive prototypes** 
 ## 🎨 Key Principles
 
 ### 1. Tailwind First
+
 - Use Tailwind CDN
 - Inline config for project colors
 - Custom CSS only for what Tailwind can't do
 - No separate CSS files
 
 ### 2. Pages in Root
+
 - All HTML files in Prototype root
 - Easy to find and open
 - Simple relative paths
 - No nested page folders
 
 ### 3. ONE COPY of Shared Code
+
 - `shared/` contains ONE copy of each utility
 - `components/` contains ONE copy of each component
 - Update once → affects all pages
 - Zero duplication
 
 ### 4. Self-Contained
+
 - Zip entire Prototype folder
 - Works on any computer
 - No server needed
 - No setup needed
 
 ### 5. Section-by-Section
+
 - Break page into 4-8 sections
 - Build one section at a time
 - Test after each section
@@ -159,12 +164,14 @@ This system creates **production-ready, self-contained interactive prototypes** 
 - Prevents errors from compounding
 
 ### 6. Just-in-Time Stories
+
 - Create story file RIGHT BEFORE implementing each section
 - Not all at once upfront
 - Allows flexibility to adjust based on feedback
 - Documents exactly what was built (including changes)
 
 ### 7. Build in Final Location
+
 - No temp folder
 - Create file in root from start
 - Add sections incrementally
@@ -176,15 +183,18 @@ This system creates **production-ready, self-contained interactive prototypes** 
 ## 🛠️ Tools & Technologies
 
 **Required**:
+
 - Tailwind CSS (via CDN)
 - Vanilla JavaScript (no frameworks)
 - SessionStorage (for demo data)
 
 **Optional**:
+
 - Google Fonts (Inter recommended)
 - Custom fonts in `assets/fonts/`
 
 **Not Needed**:
+
 - Node.js / npm
 - Build process
 - CSS preprocessors
@@ -195,14 +205,17 @@ This system creates **production-ready, self-contained interactive prototypes** 
 ## 📚 For Agents
 
 ### Freya (UX/UI Designer)
+
 **Primary role**: Create interactive prototypes
 
 **Read**:
+
 1. `FREYA-WORKFLOW-INSTRUCTIONS.md` (complete step-by-step)
 2. `templates/` (use these for all work)
 3. Dog Week examples (reference implementations)
 
 **Create**:
+
 1. Work files (planning)
 2. Story files (just-in-time)
 3. HTML pages (section-by-section)
@@ -211,14 +224,17 @@ This system creates **production-ready, self-contained interactive prototypes** 
 ---
 
 ### Saga (Analyst)
+
 **Role in prototypes**: Provide specifications, validate requirements
 
 **Read**:
+
 1. Work files (understand planned sections)
 2. Story files (review implementation details)
 3. Completed prototypes (validate against requirements)
 
 **Create**:
+
 1. Page specifications (source for work files)
 2. User flow documentation
 3. Success criteria definitions
@@ -230,6 +246,7 @@ This system creates **production-ready, self-contained interactive prototypes** 
 ## 🎓 Learning Path
 
 ### Week 1: Understand the System
+
 - Read this guide
 - Read `FREYA-WORKFLOW-INSTRUCTIONS.md`
 - Open Dog Week prototypes
@@ -237,6 +254,7 @@ This system creates **production-ready, self-contained interactive prototypes** 
 - Check console logs
 
 ### Week 2: Study Examples
+
 - Read 1.2-Sign-In.html (simple)
 - Read 1.6-Add-Dog.html (medium)
 - Read 3.1-Calendar.html (complex)
@@ -244,12 +262,14 @@ This system creates **production-ready, self-contained interactive prototypes** 
 - Review story files
 
 ### Week 3: Modify Example
+
 - Copy existing prototype
 - Change fields, text, colors
 - Test modifications
 - Understand file relationships
 
 ### Week 4: Create New Prototype
+
 - Start with simple page
 - Follow workflow exactly
 - Build section-by-section
@@ -262,6 +282,7 @@ This system creates **production-ready, self-contained interactive prototypes** 
 Every prototype must have:
 
 **Functionality**:
+
 - [ ] All interactions work
 - [ ] Form validation correct
 - [ ] Loading states display
@@ -270,6 +291,7 @@ Every prototype must have:
 - [ ] Data persists
 
 **Code Quality**:
+
 - [ ] All Object IDs present
 - [ ] Tailwind classes used properly
 - [ ] Console logs helpful
@@ -278,12 +300,14 @@ Every prototype must have:
 - [ ] Functions documented
 
 **Mobile**:
+
 - [ ] Tested at target width
 - [ ] Touch targets min 44px
 - [ ] No horizontal scroll
 - [ ] Text readable
 
 **Documentation**:
+
 - [ ] Work file complete
 - [ ] Story files for all sections
 - [ ] Changes documented
@@ -293,13 +317,13 @@ Every prototype must have:
 
 ## 🚀 Benefits
 
-| Aspect | Benefit |
-|--------|---------|
-| **For Designers** | No coding complexity, visual results fast |
-| **For Users** | Real interactions, usable for testing |
-| **For Developers** | Clear implementation reference |
-| **For Stakeholders** | Works immediately, no setup |
-| **For Project** | Self-contained, easy to share |
+| Aspect               | Benefit                                   |
+| -------------------- | ----------------------------------------- |
+| **For Designers**    | No coding complexity, visual results fast |
+| **For Users**        | Real interactions, usable for testing     |
+| **For Developers**   | Clear implementation reference            |
+| **For Stakeholders** | Works immediately, no setup               |
+| **For Project**      | Self-contained, easy to share             |
 
 ---
 
@@ -320,7 +344,8 @@ Every prototype must have:
 **Answer**: Read `FREYA-WORKFLOW-INSTRUCTIONS.md` and follow step-by-step
 
 **Question**: "Which template do I use?"  
-**Answer**: 
+**Answer**:
+
 - Planning → `work-file-template.yaml`
 - Implementing → `story-file-template.md` (just-in-time)
 - Coding → `page-template.html`
@@ -342,7 +367,7 @@ Every prototype must have:
 **Add section**: Create story → Implement → Test → Get approval → Next section  
 **Fix issue**: Update HTML → Re-test → Get approval  
 **Complete prototype**: Final integration test → Update status → Done  
-**Share prototype**: Zip Prototype folder → Send  
+**Share prototype**: Zip Prototype folder → Send
 
 ---
 
@@ -364,4 +389,3 @@ Every prototype must have:
 **You are ready to create production-ready interactive prototypes!** 🚀
 
 For detailed step-by-step instructions, see: `FREYA-WORKFLOW-INSTRUCTIONS.md`
-

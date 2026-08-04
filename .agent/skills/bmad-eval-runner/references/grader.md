@@ -22,7 +22,6 @@ The grader receives:
 2. List and read the artifacts. Walk `artifacts_dir` and open the files each expectation implicates. Read their contents rather than trusting filenames, and note modification times when ordering or read-only behavior is in scope.
 
 3. Grade each expectation independently. Identify what kind of check it is and gather the matching evidence:
-
    - Artifact existence + content ("brief.md exists AND names X") → open the file, read it, check the content matches; existence alone never passes a content claim.
    - Transcript tool-call patterns ("transcript contains a Skill call to X") → scan for `tool_use` events with the matching `name` and `input`; quote the matching event.
    - Phase ordering ("the polish call occurs after the Write and before the final JSON block") → find each landmark's line number or event index and verify the order.

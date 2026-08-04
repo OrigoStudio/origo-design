@@ -90,7 +90,6 @@ This uses **step-file architecture** for disciplined execution:
 - NEVER mention time estimates
 - NEVER generate narrative content without user input — always facilitate THEIR story
 
-
 ## INITIALIZATION SEQUENCE
 
 ### 1. Configuration Loading

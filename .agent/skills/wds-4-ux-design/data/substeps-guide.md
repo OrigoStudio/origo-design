@@ -7,9 +7,11 @@ This folder contains reusable workshop micro-instructions for scenario and page 
 ## Structure
 
 ### scenario-init/
+
 **Reusable scenario definition workshop** (7 micro-steps)
 
 Used to define a scenario (user flow context):
+
 - Core feature/experience
 - User entry point
 - Mental state at entry
@@ -19,6 +21,7 @@ Used to define a scenario (user flow context):
 - Create scenario folder structure
 
 **Usage:**
+
 - **Single page projects:** NOT USED (no scenarios)
 - **Single scenario projects:** Used ONCE (defines the one scenario)
 - **Multiple scenarios projects:** Used MULTIPLE TIMES (scenario 1, 2, 3...)
@@ -28,9 +31,11 @@ After completion, automatically routes to `page-init/`.
 ---
 
 ### page-init/
+
 **Reusable page definition workshop** (8 micro-steps)
 
 Used to define an individual page:
+
 - Page context (determine scenario, page number)
 - Page name
 - Page purpose/goal
@@ -41,6 +46,7 @@ Used to define an individual page:
 - Create page folder and initial specification document
 
 **Usage:**
+
 - **Single page projects:** Used MULTIPLE TIMES (separate pages or variants)
 - **Single scenario projects:** Used MULTIPLE TIMES (page 1.1, 1.2, 1.3...)
 - **Multiple scenarios projects:** Used MULTIPLE TIMES (page 1.1, 1.2, 2.1, 2.2...)
@@ -52,6 +58,7 @@ The page-init workshop is the fundamental reusable building block for ALL page d
 ## Flow
 
 ### Single Page Projects
+
 ```
 step-02-setup-scenario-structure.md
     ↓
@@ -63,6 +70,7 @@ page-init/ (page 2)
 ```
 
 ### Single Scenario Projects
+
 ```
 step-02-setup-scenario-structure.md
     ↓
@@ -76,6 +84,7 @@ page-init/ (page 1.2)
 ```
 
 ### Multiple Scenarios Projects
+
 ```
 step-02-setup-scenario-structure.md
     ↓
@@ -107,4 +116,3 @@ page-init/ (page 2.1)
 ---
 
 **Last Updated:** 2025-12-27
-

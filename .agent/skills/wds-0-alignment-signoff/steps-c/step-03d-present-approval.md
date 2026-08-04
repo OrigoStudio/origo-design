@@ -63,6 +63,7 @@ Present the completed alignment document and guide the user through the stakehol
 This alignment document is ready to share with your stakeholders. It's designed to be clear, brief, and compelling - readable in just 2-3 minutes.
 
 **Next steps**:
+
 1. Share the alignment document with stakeholders for review
 2. Gather their feedback - we can negotiate and make changes
 3. Update the alignment document until everyone is on board
@@ -73,6 +74,7 @@ This alignment document is ready to share with your stakeholders. It's designed 
 **Remember**: The alignment phase is collaborative - we can negotiate and iterate until everyone is on the same page. The signoff document comes after acceptance to formalize the commitment. WDS has your back - we'll help you get alignment and secure commitment before starting the work!
 
 Would you like to:
+
 - Review the alignment document together and make any adjustments before sharing?
 - Proceed to share it with stakeholders for feedback?
 - Make changes based on stakeholder feedback?
@@ -81,6 +83,7 @@ Would you like to:
 ### 2. Handle Decision Point
 
 **If user wants to make changes**:
+
 - Update the alignment document
 - Return to this step after changes
 
@@ -95,11 +98,13 @@ Proceed to Project Brief workflow
 Display: "**Select an Option:** [C] Continue to step-04a-offer-signoff"
 
 #### Menu Handling Logic:
+
 - IF C: Load, read entire file, then execute {nextStepFile}
 - IF M: Return to {workflowFile}
 - IF Any other comments or queries: help user respond then [Redisplay Menu Options]
 
 #### EXECUTION RULES:
+
 - ALWAYS halt and wait for user input after presenting menu
 - ONLY proceed to next step when user selects 'C'
 - User can chat or ask questions - always respond and then redisplay menu options
@@ -113,11 +118,13 @@ ONLY WHEN the alignment document is accepted by stakeholders will you then load 
 ## 🚨 SYSTEM SUCCESS/FAILURE METRICS
 
 ### ✅ SUCCESS:
+
 - Alignment document is presented clearly with next steps
 - User understands the feedback and iteration process
 - Stakeholder acceptance is confirmed before proceeding
 
 ### ❌ SYSTEM FAILURE:
+
 - Rushing past the approval process
 - Not supporting iteration based on feedback
 - Creating signoff document before alignment is accepted

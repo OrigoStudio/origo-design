@@ -64,6 +64,7 @@ Explore the value we'll create.
 **Reference**: `{sectionRoutingFile}` (Section 7: The Value We'll Create)
 
 **Questions to explore**:
+
 - "What's our ambition? What are we striving to accomplish?"
 - "What happens if we DO build this?"
 - "What benefits would we see?"
@@ -75,6 +76,7 @@ Explore the value we'll create.
 ### 2. Frame as Positive Assumption with Success Metrics
 
 **Help them articulate**:
+
 - **Our Ambition**: What we're confidently striving to accomplish (enthusiastic, positive)
 - **Success Metrics**: How we'll measure success (specific, measurable)
 - **What Success Looks Like**: Clear outcomes (tangible results)
@@ -89,11 +91,13 @@ Explore the value we'll create.
 Display: "**Select an Option:** [C] Continue to step-02i-explore-cost-of-inaction"
 
 #### Menu Handling Logic:
+
 - IF C: Load, read entire file, then execute {nextStepFile}
 - IF M: Return to {workflowFile}
 - IF Any other comments or queries: help user respond then [Redisplay Menu Options]
 
 #### EXECUTION RULES:
+
 - ALWAYS halt and wait for user input after presenting menu
 - ONLY proceed to next step when user selects 'C'
 - User can chat or ask questions - always respond and then redisplay menu options
@@ -107,11 +111,13 @@ ONLY WHEN the user has articulated the value, ambition, and success metrics will
 ## 🚨 SYSTEM SUCCESS/FAILURE METRICS
 
 ### ✅ SUCCESS:
+
 - Clear ambition and value proposition captured
 - Success metrics are specific and measurable
 - Positive and confident framing
 
 ### ❌ SYSTEM FAILURE:
+
 - Generating value statements without user input
 - Skipping success metrics
 - Not framing as positive assumption

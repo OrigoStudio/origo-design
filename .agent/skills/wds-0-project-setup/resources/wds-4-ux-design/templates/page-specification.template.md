@@ -23,15 +23,15 @@
 
 ## Page Metadata
 
-| Property | Value |
-|----------|-------|
-| **Scenario** | {scenario-name} |
-| **Page Number** | {page-number} |
-| **Platform** | {Mobile web / Desktop / PWA / Native} |
-| **Page Type** | {Full Page / Modal / Drawer / Popup} |
-| **Viewport** | {Mobile-first / Desktop-first} |
-| **Interaction** | {Touch-first / Mouse+keyboard} |
-| **Visibility** | {Public / Authenticated / Admin} |
+| Property        | Value                                 |
+| --------------- | ------------------------------------- |
+| **Scenario**    | {scenario-name}                       |
+| **Page Number** | {page-number}                         |
+| **Platform**    | {Mobile web / Desktop / PWA / Native} |
+| **Page Type**   | {Full Page / Modal / Drawer / Popup}  |
+| **Viewport**    | {Mobile-first / Desktop-first}        |
+| **Interaction** | {Touch-first / Mouse+keyboard}        |
+| **Visibility**  | {Public / Authenticated / Admin}      |
 
 ---
 
@@ -44,9 +44,11 @@
 **Success Criteria:** {How will we know this page succeeded?}
 
 **Entry Points:**
+
 - {How users arrive}
 
 **Exit Points:**
+
 - {Where users go next}
 
 ---
@@ -54,13 +56,16 @@
 ## Reference Materials
 
 **Strategic Foundation:**
+
 - [Product Brief]({path}) - {brief description}
 - [Trigger Map]({path}) - {brief description}
 
 **Related Pages:**
+
 - [{Related Page}]({path})
 
 **Design System:**
+
 - [{Component}]({path})
 
 ---
@@ -93,12 +98,12 @@
 
 **Scale:** [Spacing Scale](../../D-Design-System/00-design-system.md#spacing-scale)
 
-| Property | Token |
-|----------|-------|
-| Page padding (horizontal) | {e.g., space-md mobile / space-lg desktop} |
-| Section gap | {e.g., space-xl} |
-| Element gap (default within sections) | {e.g., space-md} |
-| Component gap (within groups) | {e.g., space-sm} |
+| Property                              | Token                                      |
+| ------------------------------------- | ------------------------------------------ |
+| Page padding (horizontal)             | {e.g., space-md mobile / space-lg desktop} |
+| Section gap                           | {e.g., space-xl}                           |
+| Element gap (default within sections) | {e.g., space-md}                           |
+| Component gap (within groups)         | {e.g., space-sm}                           |
 
 ---
 
@@ -116,12 +121,12 @@
 
 **Scale:** [Type Scale](../../D-Design-System/00-design-system.md#type-scale)
 
-| Element | Semantic | Size | Weight | Typeface |
-|---------|----------|------|--------|----------|
-| {Page title} | H1 | {e.g., text-2xl} | {e.g., bold} | {e.g., display / default} |
-| {Section heading} | H2 | {e.g., text-xl} | {e.g., semibold} | {default} |
-| {Body text} | p | text-md | normal | {default} |
-| {Caption/helper} | p | {e.g., text-xs} | normal | {default} |
+| Element           | Semantic | Size             | Weight           | Typeface                  |
+| ----------------- | -------- | ---------------- | ---------------- | ------------------------- |
+| {Page title}      | H1       | {e.g., text-2xl} | {e.g., bold}     | {e.g., display / default} |
+| {Section heading} | H2       | {e.g., text-xl}  | {e.g., semibold} | {default}                 |
+| {Body text}       | p        | text-md          | normal           | {default}                 |
+| {Caption/helper}  | p        | {e.g., text-xs}  | normal           | {default}                 |
 
 ---
 
@@ -131,11 +136,11 @@
 
 **OBJECT ID:** `{page-name}-{section-name}`
 
-| Property | Value |
-|----------|-------|
-| Purpose | {What this section does} |
-| Component | [{Design System Component}]({path}) |
-| Padding | {e.g., space-lg space-md} |
+| Property    | Value                                                 |
+| ----------- | ----------------------------------------------------- |
+| Purpose     | {What this section does}                              |
+| Component   | [{Design System Component}]({path})                   |
+| Padding     | {e.g., space-lg space-md}                             |
 | Element gap | {e.g., space-md — or "default" if same as page-level} |
 
 ---
@@ -144,13 +149,13 @@
 
 **OBJECT ID:** `{page-name}-{object-name}`
 
-| Property | Value |
-|----------|-------|
-| Component | [{Component}]({path}) |
-| Translation Key | `{translation.key}` |
-| SE | "{Swedish text}" |
-| EN | "{English text}" |
-| Behavior | {onClick / onChange / etc.} |
+| Property        | Value                       |
+| --------------- | --------------------------- |
+| Component       | [{Component}]({path})       |
+| Translation Key | `{translation.key}`         |
+| SE              | "{Swedish text}"            |
+| EN              | "{English text}"            |
+| Behavior        | {onClick / onChange / etc.} |
 
 #### ↕ `{page}-{v|h}-{type}-{size}` — {reason}
 
@@ -184,12 +189,12 @@
 
 **OBJECT ID:** `{page-name}-{object-name-2}`
 
-| Property | Value |
-|----------|-------|
-| Component | [{Component}]({path}) |
-| Translation Key | `{translation.key}` |
-| SE | "{Swedish text}" |
-| EN | "{English text}" |
+| Property        | Value                 |
+| --------------- | --------------------- |
+| Component       | [{Component}]({path}) |
+| Translation Key | `{translation.key}`   |
+| SE              | "{Swedish text}"      |
+| EN              | "{English text}"      |
 
 ---
 
@@ -197,22 +202,22 @@
 
 **OBJECT ID:** `{page-name}-{group-name}`
 
-| Property | Value |
-|----------|-------|
+| Property  | Value                           |
+| --------- | ------------------------------- |
 | Component | [{Container Component}]({path}) |
-| Purpose | {Groups related objects} |
-| Layout | {Horizontal / Vertical / Grid} |
+| Purpose   | {Groups related objects}        |
+| Layout    | {Horizontal / Vertical / Grid}  |
 
 ##### {Object in Group}
 
 **OBJECT ID:** `{page-name}-{group-name}-{object}`
 
-| Property | Value |
-|----------|-------|
-| Component | [{Component}]({path}) |
-| Translation Key | `{translation.key}` |
-| SE | "{Swedish text}" |
-| EN | "{English text}" |
+| Property        | Value                 |
+| --------------- | --------------------- |
+| Component       | [{Component}]({path}) |
+| Translation Key | `{translation.key}`   |
+| SE              | "{Swedish text}"      |
+| EN              | "{English text}"      |
 
 ##### ↕ `{page-name}-{group-name}-{obj1}-{obj2}-gap` — {spacing token}
 
@@ -220,24 +225,24 @@
 
 **OBJECT ID:** `{page-name}-{group-name}-{object-2}`
 
-| Property | Value |
-|----------|-------|
-| Component | [{Component}]({path}) |
-| Translation Key | `{translation.key}` |
-| SE | "{Swedish text}" |
-| EN | "{English text}" |
+| Property        | Value                 |
+| --------------- | --------------------- |
+| Component       | [{Component}]({path}) |
+| Translation Key | `{translation.key}`   |
+| SE              | "{Swedish text}"      |
+| EN              | "{English text}"      |
 
 ---
 
 ## Page States
 
-| State | When | Appearance | Actions |
-|-------|------|------------|---------|
+| State   | When        | Appearance    | Actions             |
+| ------- | ----------- | ------------- | ------------------- |
 | Default | {condition} | {description} | {available actions} |
 | Loading | {condition} | {description} | {available actions} |
-| Empty | {condition} | {description} | {available actions} |
-| Error | {condition} | {description} | {recovery actions} |
-| Success | {condition} | {description} | {next steps} |
+| Empty   | {condition} | {description} | {available actions} |
+| Error   | {condition} | {description} | {recovery actions}  |
+| Success | {condition} | {description} | {next steps}        |
 
 ---
 
@@ -245,16 +250,16 @@
 
 Include these micro-instructions when applicable:
 
-| Condition | Include |
-|-----------|---------|
-| Public page (SEO needed) | → [meta-content.instructions.md](instructions/meta-content.instructions.md) |
-| Public page (SEO needed) | → [seo-content.instructions.md](instructions/seo-content.instructions.md) |
-| Has forms/inputs | → [form-validation.instructions.md](instructions/form-validation.instructions.md) |
-| Needs API data | → [data-api.instructions.md](instructions/data-api.instructions.md) |
-| Multiple breakpoints | → [responsive.instructions.md](instructions/responsive.instructions.md) |
-| Final review | → [accessibility.instructions.md](instructions/accessibility.instructions.md) |
-| Multiple sketches | → [storyboard-specification.template.md](storyboard-specification.template.md) |
-| **Always (spec creation/audit)** | → [open-questions.instructions.md](instructions/open-questions.instructions.md) |
+| Condition                        | Include                                                                           |
+| -------------------------------- | --------------------------------------------------------------------------------- |
+| Public page (SEO needed)         | → [meta-content.instructions.md](instructions/meta-content.instructions.md)       |
+| Public page (SEO needed)         | → [seo-content.instructions.md](instructions/seo-content.instructions.md)         |
+| Has forms/inputs                 | → [form-validation.instructions.md](instructions/form-validation.instructions.md) |
+| Needs API data                   | → [data-api.instructions.md](instructions/data-api.instructions.md)               |
+| Multiple breakpoints             | → [responsive.instructions.md](instructions/responsive.instructions.md)           |
+| Final review                     | → [accessibility.instructions.md](instructions/accessibility.instructions.md)     |
+| Multiple sketches                | → [storyboard-specification.template.md](storyboard-specification.template.md)    |
+| **Always (spec creation/audit)** | → [open-questions.instructions.md](instructions/open-questions.instructions.md)   |
 
 ---
 

@@ -10,11 +10,13 @@ activityWorkflowFile: '../workflow-validate.md'
 # Validation Step 06: Platform Requirements
 
 ## STEP GOAL:
+
 Verify technical platform requirements are specified and consistent with project scope, then compile the final validation report.
 
 ## MANDATORY EXECUTION RULES (READ FIRST):
 
 ### Universal Rules:
+
 - NEVER generate content without user input
 - CRITICAL: Read the complete step file before taking any action
 - CRITICAL: When loading next step with 'C', ensure entire file is read
@@ -22,6 +24,7 @@ Verify technical platform requirements are specified and consistent with project
 - YOU MUST ALWAYS SPEAK OUTPUT in your Agent communication style with the config `{communication_language}`
 
 ### Role Reinforcement:
+
 - You are a Strategic Business Analyst completing the final validation of Phase 1
 - If you already have been given a name, communication_style and persona, continue to use those while playing this new role
 - We engage in collaborative dialogue, not command-response
@@ -29,16 +32,19 @@ Verify technical platform requirements are specified and consistent with project
 - Maintain collaborative and strategic tone throughout
 
 ### Step-Specific Rules:
+
 - Focus: Tech stack, integrations, contact strategy, multilingual, final validation report
 - FORBIDDEN: Do not skip compiling the final validation report across all 6 steps
 - Approach: Check prerequisites, validate platform sections, compile final report, save
 
 ## EXECUTION PROTOCOLS:
+
 - Primary goal: Platform requirements validated and final validation report compiled
 - Save/document outputs appropriately
 - Avoid generating content without user input
 
 ## CONTEXT BOUNDARIES:
+
 - Available context: Platform Requirements document, all previous validation results
 - Focus: Platform validation and final report compilation
 - Limits: Validation only, not modification
@@ -121,17 +127,21 @@ Compile results from all 6 validation steps:
 Save report to `{output_folder}/A-Product-Brief/validation-report.md`
 
 ### N. Present MENU OPTIONS
+
 Display: "**Select an Option:** [M] Return to workflow menu"
 
 #### Menu Handling Logic:
+
 - IF M: Return to {workflowFile} or {activityWorkflowFile}
 - IF Any other comments or queries: help user respond then [Redisplay Menu Options]
 
 #### EXECUTION RULES:
+
 - ALWAYS halt and wait for user input after presenting menu
 - User can chat or ask questions - always respond and then redisplay menu options
 
 ## CRITICAL STEP COMPLETION NOTE
+
 This is the FINAL step of the Phase 1 Validation workflow. Validation is complete.
 
 ---
@@ -139,6 +149,7 @@ This is the FINAL step of the Phase 1 Validation workflow. Validation is complet
 ## SYSTEM SUCCESS/FAILURE METRICS
 
 ### SUCCESS:
+
 - Prerequisites checked
 - Platform requirements validated
 - Final validation report compiled across all 6 steps
@@ -146,6 +157,7 @@ This is the FINAL step of the Phase 1 Validation workflow. Validation is complet
 - User informed of validation results
 
 ### FAILURE:
+
 - Skipped prerequisite check
 - Did not compile final validation report
 - Left platform sections unverified

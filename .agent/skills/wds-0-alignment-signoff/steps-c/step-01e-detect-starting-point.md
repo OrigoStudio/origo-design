@@ -63,12 +63,14 @@ Ask where they'd like to start:
 ### 2. Handle Decision Point
 
 **If user starts with realization**:
+
 - Explore the realization first
 - Then naturally move to "why it matters" and "who we help"
 - Then explore solutions
 - Route to step-02a-explore-realization.md
 
 **If user starts with solution**:
+
 - Capture the solution idea
 - Then explore "what realization does this address?"
 - Then explore "why it matters" and "who we help"
@@ -76,6 +78,7 @@ Ask where they'd like to start:
 - Route to step-02b-explore-solution.md
 
 **If user starts elsewhere**:
+
 - Follow their lead
 - Guide them through remaining sections naturally
 - Route to appropriate section exploration step
@@ -85,11 +88,13 @@ Ask where they'd like to start:
 Display: "**Select an Option:** [C] Continue to step-02a-explore-realization (or step-02b-explore-solution based on user choice)"
 
 #### Menu Handling Logic:
+
 - IF C: Load, read entire file, then execute {nextStepFile} (or step-02b if starting with solution)
 - IF M: Return to {workflowFile}
 - IF Any other comments or queries: help user respond then [Redisplay Menu Options]
 
 #### EXECUTION RULES:
+
 - ALWAYS halt and wait for user input after presenting menu
 - ONLY proceed to next step when user selects 'C'
 - User can chat or ask questions - always respond and then redisplay menu options
@@ -103,11 +108,13 @@ ONLY WHEN the user's starting point is identified will you then load and read fu
 ## 🚨 SYSTEM SUCCESS/FAILURE METRICS
 
 ### ✅ SUCCESS:
+
 - User's natural starting point is identified
 - User is routed to the correct exploration step
 - User feels their preferred approach is respected
 
 ### ❌ SYSTEM FAILURE:
+
 - Forcing a specific starting section
 - Skipping the detection and jumping to a section
 - Not respecting the user's preferred starting point

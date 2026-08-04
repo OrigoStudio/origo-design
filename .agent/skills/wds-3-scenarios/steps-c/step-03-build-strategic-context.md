@@ -64,6 +64,7 @@ Business Goal → Persona → Driving Force → Transaction → Scenario
 ```
 
 **Example:**
+
 ```
 BG01: Reduce info calls by 40%
   → Hasse (Primary - stressed tourist)
@@ -81,21 +82,22 @@ For **each business goal** from the Trigger Map:
 
 **For each scenario chain, answer the Decision Matrix (all 7 required):**
 
-| # | Question | Answer |
-|---|----------|--------|
-| 1 | Which business goal? | [Specific goal from Trigger Map] |
-| 2 | Which persona? | [Name + priority level] |
-| 3 | Which driving force? | [Specific want or fear] |
-| 4 | What's the transaction? | [Concrete action user takes] |
-| 5 | Where does user come from? | [Natural starting point - be specific] |
-| 6 | What value does user get? | [Tangible outcome] |
-| 7 | What value does business get? | [Measurable result] |
+| #   | Question                      | Answer                                 |
+| --- | ----------------------------- | -------------------------------------- |
+| 1   | Which business goal?          | [Specific goal from Trigger Map]       |
+| 2   | Which persona?                | [Name + priority level]                |
+| 3   | Which driving force?          | [Specific want or fear]                |
+| 4   | What's the transaction?       | [Concrete action user takes]           |
+| 5   | Where does user come from?    | [Natural starting point - be specific] |
+| 6   | What value does user get?     | [Tangible outcome]                     |
+| 7   | What value does business get? | [Measurable result]                    |
 
 ### 2. Assign Pages to Scenario Chains
 
 For each scenario chain, list which pages from the inventory (Step 02) the user visits.
 
 **Rules:**
+
 - Each page appears in exactly ONE scenario chain (no repetition)
 - If a page could fit multiple scenarios, assign it to the highest-priority one
 - Shared elements (navigation, footer) are excluded from page assignment
@@ -105,14 +107,17 @@ For each scenario chain, list which pages from the inventory (Step 02) the user 
 Rank the scenario chains:
 
 **Priority 1 — Critical Path:**
+
 - Top business goal + primary persona + core product value
 - These scenarios are created first and in most detail
 
 **Priority 2 — Supporting:**
+
 - Secondary persona scenarios, alternative entry paths
 - Important but not the strategic core
 
 **Priority 3 — Edge Cases:**
+
 - Admin tasks, rare user segments, error recovery
 - May be deferred to later phases
 

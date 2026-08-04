@@ -11,6 +11,7 @@ Synthesize what you heard into positioning components and get user confirmation 
 Present the positioning components you captured:
 
 **Format:**
+
 > "Here's what I'm hearing about your positioning:
 >
 > **Target Customer:** [who you heard]
@@ -25,9 +26,11 @@ Present the positioning components you captured:
 ### 2. Handle User Response
 
 **If user confirms:**
+
 - → Proceed to Substep 4 (synthesize final statement)
 
 **If user corrects:**
+
 - Listen carefully to what they adjust
 - Update your understanding
 - Reflect back the correction: "Got it - so [corrected understanding]"
@@ -35,6 +38,7 @@ Present the positioning components you captured:
 - Once confirmed → Proceed to Substep 4
 
 **If user says "I don't know" or seems uncertain:**
+
 - Help them think through it: "Let's think about [component] - based on what you told me about [context], what would make sense?"
 - Guide them to clarity, don't force a template answer
 
@@ -43,6 +47,7 @@ Present the positioning components you captured:
 **For design log `07-positioning.md`:**
 
 In the Reflection Checkpoint section, record:
+
 - Your synthesis (what you presented)
 - Whether user confirmed or corrected
 - **If corrected:** What you got wrong and what the actual answer was
@@ -73,6 +78,7 @@ Am I capturing this right?"
 **Agent:** [Updates understanding, proceeds to Substep 4]
 
 **Design Log Update (`dialog/07-positioning.md`):**
+
 ```markdown
 ### Reflection Checkpoint
 
@@ -87,6 +93,7 @@ Differentiator: Only comprehensive northern Öland option, all vehicles, certifi
 **User Response:** Corrected
 
 **What Was Misunderstood:**
+
 - Agent emphasized tourists over locals
 - Actual: Locals are primary customer base, tourists are seasonal (but visible/stressed)
 ```

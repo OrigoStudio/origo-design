@@ -51,9 +51,11 @@ agentic-development/
 ### Core Documentation
 
 #### `AGENTIC-DEVELOPMENT-GUIDE.md`
+
 **Purpose**: Complete system overview
 **For**: All agents (Freya, Saga)
 **Contains**:
+
 - System overview
 - Folder structure
 - Complete workflow summary
@@ -66,9 +68,11 @@ agentic-development/
 ---
 
 #### `workflow.md`
+
 **Purpose**: Workflow overview with phase navigation
 **For**: Freya (primary), other agents (reference)
 **Contains**:
+
 - Overview of all phases
 - Clear links to step files
 - When to use each phase
@@ -81,6 +85,7 @@ agentic-development/
 ### Step Files
 
 #### `steps-p/1-prototype-setup.md`
+
 **Purpose**: Environment setup instructions
 **Contains**: Device compatibility, design fidelity, languages, demo data creation
 **Next**: Phase 2
@@ -88,6 +93,7 @@ agentic-development/
 ---
 
 #### `steps-p/2-scenario-analysis.md`
+
 **Purpose**: Scenario analysis and view identification
 **Contains**: Spec analysis, logical view mapping
 **Next**: Phase 3
@@ -95,6 +101,7 @@ agentic-development/
 ---
 
 #### `steps-p/3-logical-view-breakdown.md`
+
 **Purpose**: Break view into implementable sections
 **Contains**: Section breakdown, work file creation
 **Next**: Phase 4
@@ -102,6 +109,7 @@ agentic-development/
 ---
 
 #### `steps-p/4a-4g-*.md` (Phase 4 Loop)
+
 **Purpose**: Section-by-section implementation
 **Contains**: Announce, create story, implement, test, handle feedback, approve
 **Flow**: 4a → 4b → 4c → 4d → [4e/4f loop] → 4g → [next section]
@@ -109,6 +117,7 @@ agentic-development/
 ---
 
 #### `steps-p/5-finalization.md`
+
 **Purpose**: Integration test and completion
 **Contains**: Final test, quality checklist, next steps
 **Next**: New page (Phase 3) or new scenario (Phase 1)
@@ -118,10 +127,12 @@ agentic-development/
 ### Templates
 
 #### `templates/work-file-template.yaml`
+
 **Purpose**: Planning document
 **When to use**: Start of EVERY implementation
 **Created**: Once per page at beginning
 **Contains**:
+
 - Metadata (page info, device compatibility)
 - Design tokens (Tailwind config)
 - Page requirements (from spec)
@@ -135,10 +146,12 @@ agentic-development/
 ---
 
 #### `templates/story-file-template.md`
+
 **Purpose**: Section implementation guide
 **When to use**: Just-in-time (right before implementing each section)
 **Created**: Once per section (4-8 per page)
 **Contains**:
+
 - Section goal
 - What to build (HTML/JS)
 - Tailwind classes to use
@@ -152,10 +165,12 @@ agentic-development/
 ---
 
 #### `templates/page-template.html`
+
 **Purpose**: Complete HTML page structure
 **When to use**: Creating new HTML page
 **Created**: Once per page (at start of Section 1)
 **Contains**:
+
 - Complete HTML structure
 - Tailwind CDN setup
 - Tailwind config inline
@@ -169,18 +184,21 @@ agentic-development/
 ## 🎯 Which File When?
 
 ### Starting New Scenario
+
 1. Read: `workflow.md` (understand phases)
 2. Follow: `steps-p/1-prototype-setup.md` (setup)
 3. Use: `PROTOTYPE-ROADMAP-template.md` → Create roadmap
 4. Use: `demo-data-template.json` → Create demo data
 
 ### Starting New Page
+
 1. Follow: `steps-p/2-scenario-analysis.md` (analyze)
 2. Follow: `steps-p/3-logical-view-breakdown.md` (break down)
 3. Use: `work-file-template.yaml` → Create work file
 4. Get approval
 
 ### Implementing Each Section
+
 1. Follow: `steps-p/4a-4g-*.md` (loop)
 2. Use: `story-file-template.md` → Create story file (just-in-time)
 3. Implement in HTML (incrementally)
@@ -189,6 +207,7 @@ agentic-development/
 6. Repeat for next section
 
 ### Finishing Page
+
 1. Follow: `steps-p/5-finalization.md` (integration test)
 2. Get final approval
 3. Choose: New page, new scenario, or done
@@ -197,13 +216,13 @@ agentic-development/
 
 ## 📝 Template Usage Summary
 
-| Template | When Created | How Many | Purpose |
-|----------|--------------|----------|---------|
-| work-file | Start of page | 1 per page | Complete plan |
-| story-file | Before each section | 4-8 per page | Section implementation |
-| page | Start of Section 1 | 1 per page | HTML structure |
-| roadmap | Start of scenario | 1 per scenario | Scenario overview |
-| demo-data | Setup scenario | 1 per scenario | Auto-loading data |
+| Template   | When Created        | How Many       | Purpose                |
+| ---------- | ------------------- | -------------- | ---------------------- |
+| work-file  | Start of page       | 1 per page     | Complete plan          |
+| story-file | Before each section | 4-8 per page   | Section implementation |
+| page       | Start of Section 1  | 1 per page     | HTML structure         |
+| roadmap    | Start of scenario   | 1 per scenario | Scenario overview      |
+| demo-data  | Setup scenario      | 1 per scenario | Auto-loading data      |
 
 ---
 

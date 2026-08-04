@@ -4,12 +4,12 @@
 
 ## Feedback Types
 
-| Type | What It Is | When to Address |
-|------|------------|-----------------|
-| **Bug/Issue** | Something broken, error, not working | Now — fix immediately, iterate until resolved |
-| **Quick Adjustment** | Small tweak, change X to Y | Now — implement immediately |
-| **Addition** | New requirement that fits current dialog | Later step — add to plan |
-| **Change Request** | Outside current dialog scope | Future session — document in Change Requests |
+| Type                 | What It Is                               | When to Address                               |
+| -------------------- | ---------------------------------------- | --------------------------------------------- |
+| **Bug/Issue**        | Something broken, error, not working     | Now — fix immediately, iterate until resolved |
+| **Quick Adjustment** | Small tweak, change X to Y               | Now — implement immediately                   |
+| **Addition**         | New requirement that fits current dialog | Later step — add to plan                      |
+| **Change Request**   | Outside current dialog scope             | Future session — document in Change Requests  |
 
 ## The 2-Minute Rule (GTD)
 
@@ -17,12 +17,12 @@
 
 From David Allen's "Getting Things Done": planning overhead should not exceed task complexity.
 
-| Situation | Action |
-|-----------|--------|
+| Situation               | Action                   |
+| ----------------------- | ------------------------ |
 | Missing condition check | Fix now, log as sub-step |
-| Wrong variable name | Fix now, log as sub-step |
-| Needs new component | Add to plan |
-| Architectural change | Add to plan |
+| Wrong variable name     | Fix now, log as sub-step |
+| Needs new component     | Add to plan              |
+| Architectural change    | Add to plan              |
 
 **Pattern:** Do the fix → Log as sub-step (e.g., 20a-1) → Continue main task
 
@@ -41,12 +41,14 @@ When user reports something:
 **User says:** "This is broken" / "Error occurred" / "Not working"
 
 **Agent response:**
+
 ```
 This is a bug — [brief description].
 Let's call it 10A and let me add it to the plan, then fix it.
 ```
 
 Required sequence:
+
 1. Identify — Understand and describe the bug
 2. Document — Add to dialog plan as sub-step (e.g., 21a, 21b)
 3. Execute — Fix and iterate until resolved
@@ -71,6 +73,7 @@ If user reports multiple issues: list each separately, add ALL to plan first, th
 **User says:** "We need a settings page"
 
 **Agent response:**
+
 ```
 This is outside the current dialog scope.
 It doesn't block {feature name}.

@@ -66,6 +66,7 @@ Read all persona files from `{output_folder}/B-Trigger-Map/`.
 ### 3. Verify Per Group
 
 For each target group/persona:
+
 - Has at least 3 positive driving forces (wants)
 - Has at least 3 negative driving forces (fears)
 - Each driving force has a specific Product Promise
@@ -91,11 +92,13 @@ For each target group/persona:
 Display: "**Select an Option:** [C] Continue to Prioritization Integrity | [M] Return to Activity Menu"
 
 #### Menu Handling Logic:
+
 - IF C: Load and execute {nextStepFile}
 - IF M: Return to {activityWorkflowFile}
 - IF Any other comments or queries: help user respond then [Redisplay Menu Options]
 
 #### EXECUTION RULES:
+
 - ALWAYS halt and wait for user input after presenting menu
 - User can chat or ask questions - always respond and then redisplay menu options
 
@@ -108,6 +111,7 @@ ONLY WHEN user selects [C] will you load the next step file. Coverage report mus
 ## 🚨 SYSTEM SUCCESS/FAILURE METRICS
 
 ### ✅ SUCCESS:
+
 - All personas checked against all dimensions
 - Coverage report generated with clear status per persona
 - Gaps identified and listed
@@ -115,6 +119,7 @@ ONLY WHEN user selects [C] will you load the next step file. Coverage report mus
 - Report shows exact counts for forces, promises, answers
 
 ### ❌ SYSTEM FAILURE:
+
 - Skipping personas in verification
 - Not checking all dimensions per persona
 - Not generating tabular report

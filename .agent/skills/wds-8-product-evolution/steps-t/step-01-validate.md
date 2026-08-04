@@ -88,6 +88,7 @@ Ready for your validation!
 Guide user to open: `test-scenarios/TS-XXX.yaml`
 
 **Review test focus areas:**
+
 - New functionality (what changed)
 - Regression testing (what should stay the same)
 - Edge cases specific to the update
@@ -107,6 +108,7 @@ For each test (HP-001, HP-002, etc.):
 ## New Functionality Tests
 
 ### HP-001: [Test name from TS file]
+
 - Action: [Perform action from test]
 - Expected: [Expected result from test]
 - Actual: [What actually happened - USER PROVIDES]
@@ -125,6 +127,7 @@ For each test (REG-001, REG-002, etc.):
 ## Regression Tests
 
 ### REG-001: [Test name from TS file]
+
 - Action: [Use existing feature from test]
 - Expected: [Works as before from test]
 - Actual: [What happened - USER PROVIDES]
@@ -143,6 +146,7 @@ For each test (EC-001, EC-002, etc.):
 ## Edge Case Tests
 
 ### EC-001: [Test name from TS file]
+
 - Action: [Perform edge case scenario]
 - Expected: [Expected handling]
 - Actual: [What happened - USER PROVIDES]
@@ -161,6 +165,7 @@ For each test (A11Y-001, A11Y-002, etc.):
 ## Accessibility Tests
 
 ### A11Y-001: [Test name from TS file]
+
 - Check: [Accessibility requirement]
 - Expected: [Accessible behavior]
 - Actual: [What happened - USER PROVIDES]
@@ -182,24 +187,30 @@ Help user create report with:
 **Result:** [PASS | FAIL]
 
 **New Functionality:**
+
 - Summary of all HP tests with results
 - Any notes or observations
 
 **Regression Testing:**
+
 - Summary of all REG tests with results
 - Confirmation existing features unchanged
 
 **Edge Cases:**
+
 - Summary of all EC tests with results
 
 **Accessibility:**
+
 - Summary of all A11Y tests with results
 
 **Issues Found:**
+
 - Total count
 - List each issue if any (ID, description, severity)
 
 **Recommendation:**
+
 - [APPROVED | NOT APPROVED]
 - Brief explanation
 
@@ -293,10 +304,12 @@ delivery:
 Display: "**Select an Option:** [M] Return to Activity Menu (suggest [P] Deploy if approved, or [A] Analyze for next cycle)"
 
 #### Menu Handling Logic:
+
 - IF M: Return to {workflowFile} or {activityWorkflowFile}
 - IF Any other comments or queries: help user respond then [Redisplay Menu Options]
 
 #### EXECUTION RULES:
+
 - ALWAYS halt and wait for user input after presenting menu
 - User can chat or ask questions - always respond and then redisplay menu options
 
@@ -309,6 +322,7 @@ ONLY WHEN user selects [M] and validation is complete will you then return to th
 ## 🚨 SYSTEM SUCCESS/FAILURE METRICS
 
 ### ✅ SUCCESS:
+
 - All test types executed (happy path, regression, edge cases, accessibility)
 - Results documented clearly for each test
 - Validation report created following template
@@ -321,6 +335,7 @@ ONLY WHEN user selects [M] and validation is complete will you then return to th
 - Validation report filed in test-reports directory
 
 ### ❌ SYSTEM FAILURE:
+
 - Approving without executing all tests
 - Skipping regression tests (critical failure)
 - Not documenting test results

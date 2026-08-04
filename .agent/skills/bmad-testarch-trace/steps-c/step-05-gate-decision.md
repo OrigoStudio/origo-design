@@ -51,7 +51,7 @@ const matrixPath = frontmatter.tempCoverageMatrixPath;
 if (!matrixPath) {
   throw new Error(
     '❌ tempCoverageMatrixPath not found in progress frontmatter. ' +
-      'Step 4 must record the resolved temp file path before Step 5 can proceed.',
+      'Step 4 must record the resolved temp file path before Step 5 can proceed.'
   );
 }
 const coverageMatrix = JSON.parse(fs.readFileSync(matrixPath, 'utf8'));
@@ -86,7 +86,7 @@ if (
 ) {
   throw new Error(
     'Phase 1 coverage_statistics.priority_breakdown is missing or incomplete. ' +
-      'Step 4 must emit P0-P3 totals and coverage percentages before Step 5 can proceed.',
+      'Step 4 must emit P0-P3 totals and coverage percentages before Step 5 can proceed.'
   );
 }
 const priorityBreakdown = stats.priority_breakdown;
@@ -96,14 +96,16 @@ const hasP1Requirements = (priorityBreakdown.P1.total || 0) > 0;
 const effectiveP1Coverage = hasP1Requirements ? p1Coverage : 100;
 const overallCoverage = stats.overall_coverage_percentage;
 const criticalGaps = (coverageMatrix.gap_analysis?.critical_gaps || []).length;
-const isUnresolved = (value) => typeof value === 'string' && value.startsWith('{') && value.endsWith('}');
-const normalizeResolvedToken = (value) => {
+const isUnresolved = value =>
+  typeof value === 'string' && value.startsWith('{') && value.endsWith('}');
+const normalizeResolvedToken = value => {
   if (value === undefined || value === null) return null;
   const normalized = String(value).trim().toLowerCase();
   if (!normalized || normalized === 'auto' || isUnresolved(normalized)) return null;
   return normalized;
 };
-const oracleResolutionMode = normalizeResolvedToken(coverageMatrix.oracle?.resolution_mode) || 'formal_requirements';
+const oracleResolutionMode =
+  normalizeResolvedToken(coverageMatrix.oracle?.resolution_mode) || 'formal_requirements';
 const coverageBasis =
   normalizeResolvedToken(coverageMatrix.coverage_basis) ||
   {
@@ -122,16 +124,18 @@ const oracleConfidence =
     synthetic_source: 'medium',
   }[oracleResolutionMode] ||
   'medium';
-const syntheticOracle = coverageMatrix.oracle?.synthetic === true || ['synthetic_requirements', 'user_journeys'].includes(coverageBasis);
-const deriveActiveTestCasesFromRequirements = (requirements) => {
+const syntheticOracle =
+  coverageMatrix.oracle?.synthetic === true ||
+  ['synthetic_requirements', 'user_journeys'].includes(coverageBasis);
+const deriveActiveTestCasesFromRequirements = requirements => {
   const uniqueTests = new Map();
 
-  (requirements || []).forEach((req) => {
-    (req.tests || []).forEach((test) => {
+  (requirements || []).forEach(req => {
+    (req.tests || []).forEach(test => {
       const stableId =
         test.id ||
         [test.file, test.title || test.name, test.line]
-          .filter((value) => value !== undefined && value !== null && value !== '')
+          .filter(value => value !== undefined && value !== null && value !== '')
           .join(':') ||
         null;
 
@@ -154,7 +158,7 @@ const deriveActiveTestCasesFromRequirements = (requirements) => {
     });
   });
 
-  return [...uniqueTests.values()].filter((status) => status === 'active').length;
+  return [...uniqueTests.values()].filter(status => status === 'active').length;
 };
 const summarizedTestInventory = coverageMatrix.test_inventory?.summary || null;
 const activeTestCases =
@@ -165,7 +169,7 @@ const activeTestCases =
         (summarizedTestInventory.cases || 0) -
           (summarizedTestInventory.skipped_cases || 0) -
           (summarizedTestInventory.fixme_cases || 0) -
-          (summarizedTestInventory.pending_cases || 0),
+          (summarizedTestInventory.pending_cases || 0)
       );
 let effectiveOracleConfidence = oracleConfidence;
 if (effectiveOracleConfidence === 'high' && activeTestCases === 0) {
@@ -182,7 +186,9 @@ const normalizeBoolean = (value, defaultValue = true) => {
   return Boolean(value);
 };
 
-const collectionMode = String(!isUnresolved(coverageMatrix.collection_mode) ? coverageMatrix.collection_mode : 'contract_static')
+const collectionMode = String(
+  !isUnresolved(coverageMatrix.collection_mode) ? coverageMatrix.collection_mode : 'contract_static'
+)
   .trim()
   .toLowerCase();
 const rawAllowGate = !isUnresolved(coverageMatrix.allow_gate) ? coverageMatrix.allow_gate : true;
@@ -247,7 +253,11 @@ if (!gateEligible) {
     rationale =
       `Coverage traced against inferred ${coverageBasis.replace('_', ' ')} with ${effectiveOracleConfidence} confidence. ` +
       `Base coverage meets PASS thresholds, but confidence is not high enough for an unconditional PASS.`;
-  } else if (syntheticOracle && effectiveOracleConfidence === 'low' && gateDecision === 'NOT_EVALUATED') {
+  } else if (
+    syntheticOracle &&
+    effectiveOracleConfidence === 'low' &&
+    gateDecision === 'NOT_EVALUATED'
+  ) {
     gateDecision = 'CONCERNS';
     rationale =
       `Coverage traced against inferred ${coverageBasis.replace('_', ' ')} with low confidence. ` +
@@ -279,7 +289,8 @@ const gateReport = {
         p1_coverage_target: '90%',
         p1_coverage_minimum: '80%',
         p1_coverage_actual: `${effectiveP1Coverage}%`,
-        p1_status: effectiveP1Coverage >= 90 ? 'MET' : effectiveP1Coverage >= 80 ? 'PARTIAL' : 'NOT_MET',
+        p1_status:
+          effectiveP1Coverage >= 90 ? 'MET' : effectiveP1Coverage >= 80 ? 'PARTIAL' : 'NOT_MET',
 
         overall_coverage_minimum: '80%',
         overall_coverage_actual: `${overallCoverage}%`,
@@ -287,7 +298,9 @@ const gateReport = {
       }
     : null,
 
-  uncovered_requirements: (coverageMatrix.gap_analysis?.critical_gaps || []).concat(coverageMatrix.gap_analysis?.high_gaps || []),
+  uncovered_requirements: (coverageMatrix.gap_analysis?.critical_gaps || []).concat(
+    coverageMatrix.gap_analysis?.high_gaps || []
+  ),
 
   recommendations: coverageMatrix.recommendations,
 };
@@ -313,12 +326,12 @@ const buildFallbackInventory = () => {
   const coverageEligibleStatuses = new Set(['FULL', 'PARTIAL', 'UNIT-ONLY', 'INTEGRATION-ONLY']);
   const uniqueTests = new Map();
 
-  (coverageMatrix.requirements || []).forEach((req) => {
-    (req.tests || []).forEach((test) => {
+  (coverageMatrix.requirements || []).forEach(req => {
+    (req.tests || []).forEach(test => {
       const stableId =
         test.id ||
         [test.file, test.title || test.name, test.line]
-          .filter((value) => value !== undefined && value !== null && value !== '')
+          .filter(value => value !== undefined && value !== null && value !== '')
           .join(':') ||
         null; // unresolvable — skip rather than manufacture a key
 
@@ -347,42 +360,43 @@ const buildFallbackInventory = () => {
         fixme: status === 'fixme',
         pending: status === 'pending',
         status: status,
-        blocker_reason: test.skip_reason || test.blocker_reason || test.fixme_reason || test.pending_reason || '',
+        blocker_reason:
+          test.skip_reason || test.blocker_reason || test.fixme_reason || test.pending_reason || '',
       });
     });
 
     if (!coverageEligibleStatuses.has(req.coverage)) return;
     const requirementLevels = new Set(
-      (req.tests || []).map((test) => {
+      (req.tests || []).map(test => {
         const level = String(test.level || '')
           .trim()
           .toLowerCase();
         return byLevel[level] ? level : 'other';
-      }),
+      })
     );
-    requirementLevels.forEach((level) => {
+    requirementLevels.forEach(level => {
       byLevel[level].criteria_covered += 1;
     });
   });
 
   const deduplicatedTests = [...uniqueTests.values()];
-  deduplicatedTests.forEach((test) => {
+  deduplicatedTests.forEach(test => {
     const bucket = byLevel[test.level] ? test.level : 'other';
     byLevel[bucket].tests += 1;
   });
 
   return {
     summary: {
-      files: [...new Set(deduplicatedTests.map((test) => test.file).filter(Boolean))].length,
+      files: [...new Set(deduplicatedTests.map(test => test.file).filter(Boolean))].length,
       cases: deduplicatedTests.length,
-      skipped_cases: deduplicatedTests.filter((test) => test.skipped).length,
-      fixme_cases: deduplicatedTests.filter((test) => test.fixme).length,
-      pending_cases: deduplicatedTests.filter((test) => test.pending).length,
+      skipped_cases: deduplicatedTests.filter(test => test.skipped).length,
+      fixme_cases: deduplicatedTests.filter(test => test.fixme).length,
+      pending_cases: deduplicatedTests.filter(test => test.pending).length,
       by_level: byLevel,
     },
     blockers: deduplicatedTests
-      .filter((test) => ['skipped', 'pending', 'fixme'].includes(test.status))
-      .map((test) => ({
+      .filter(test => ['skipped', 'pending', 'fixme'].includes(test.status))
+      .map(test => ({
         id: test.id,
         severity: test.status === 'skipped' ? 'high' : 'medium',
         reason: test.blocker_reason || `Test marked ${test.status} during trace collection`,
@@ -394,7 +408,8 @@ const buildFallbackInventory = () => {
 
 const fallbackInventory = buildFallbackInventory();
 const testInventory = coverageMatrix.test_inventory?.summary || fallbackInventory.summary;
-const blockers = coverageMatrix.blockers || coverageMatrix.test_inventory?.blockers || fallbackInventory.blockers;
+const blockers =
+  coverageMatrix.blockers || coverageMatrix.test_inventory?.blockers || fallbackInventory.blockers;
 
 const heuristicCounts = coverageMatrix.coverage_heuristics?.counts || {};
 const endpointGapCount = heuristicCounts.endpoints_without_tests ?? 0;
@@ -480,8 +495,10 @@ const e2eTraceSummary = {
 
   heuristics: {
     endpoint_gaps: endpointGapCount,
-    auth_negative_path_status: authGapCount === 0 ? 'present' : authGapCount <= 2 ? 'partial' : 'none',
-    error_path_status: errorPathGapCount === 0 ? 'present' : errorPathGapCount <= 2 ? 'partial' : 'none',
+    auth_negative_path_status:
+      authGapCount === 0 ? 'present' : authGapCount <= 2 ? 'partial' : 'none',
+    error_path_status:
+      errorPathGapCount === 0 ? 'present' : errorPathGapCount <= 2 ? 'partial' : 'none',
     ui_journey_status: mapOptionalHeuristicStatus(uiJourneyGapCount, syntheticOracle),
     ui_state_status: mapOptionalHeuristicStatus(uiStateGapCount, syntheticOracle),
   },
@@ -506,7 +523,8 @@ if (gateEligible) {
     p1_coverage_target: '90%',
     p1_coverage_minimum: '80%',
     p1_coverage_actual: `${effectiveP1Coverage}%`,
-    p1_status: effectiveP1Coverage >= 90 ? 'MET' : effectiveP1Coverage >= 80 ? 'PARTIAL' : 'NOT_MET',
+    p1_status:
+      effectiveP1Coverage >= 90 ? 'MET' : effectiveP1Coverage >= 80 ? 'PARTIAL' : 'NOT_MET',
     overall_coverage_minimum: '80%',
     overall_coverage_actual: `${overallCoverage}%`,
     overall_status: overallCoverage >= 80 ? 'MET' : 'NOT_MET',

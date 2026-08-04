@@ -62,6 +62,7 @@ Determine where the user first encounters this scenario — their entry point in
 <ask>**Where does the user first encounter this?**
 
 What's their entry point?
+
 - Google search?
 - Friend recommendation?
 - App store?

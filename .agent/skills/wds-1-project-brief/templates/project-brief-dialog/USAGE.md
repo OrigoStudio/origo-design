@@ -3,11 +3,13 @@
 ## Quick Start
 
 **Copy to project:**
+
 ```bash
 cp -r workflows/wds-1-project-brief/templates/project-brief-dialog projects/{{slug}}/dialog
 ```
 
 **Update as you progress:**
+
 - Complete each file when the corresponding PB step finishes
 - Update README.md progress tracker
 - Append to decisions.md whenever key decisions are made
@@ -17,6 +19,7 @@ cp -r workflows/wds-1-project-brief/templates/project-brief-dialog projects/{{sl
 ## What to Capture
 
 ### DO:
+
 - Key questions + user responses (not full transcript)
 - Signal-based follow-ups that revealed insights
 - Reflection checkpoint (synthesis + confirmation + corrections)
@@ -24,6 +27,7 @@ cp -r workflows/wds-1-project-brief/templates/project-brief-dialog projects/{{sl
 - WHY decisions were made
 
 ### DON'T:
+
 - Verbatim transcripts
 - Procedural agent actions
 - Implementation details
@@ -34,6 +38,7 @@ cp -r workflows/wds-1-project-brief/templates/project-brief-dialog projects/{{sl
 ## Mandatory Checkpoints
 
 **Document EVERY reflection:**
+
 1. Agent's synthesis (2-3 sentences)
 2. User confirmed or corrected?
 3. What was misunderstood? (if corrected)
@@ -48,6 +53,7 @@ cp -r workflows/wds-1-project-brief/templates/project-brief-dialog projects/{{sl
 ## Design Log Update
 
 Before marking complete:
+
 1. Update `dialog/{{step}}-{{name}}.md`
 2. Document reflection checkpoint
 3. Record final synthesis
@@ -69,6 +75,7 @@ All dialog files: 65-86 lines (well under 100-line target)
 **Location:** `{{root_folder}}/_progress/00-design-log.md`
 
 **Update Protocol:**
+
 1. Complete current task
 2. Update design log with changes
 3. Show git diff to user

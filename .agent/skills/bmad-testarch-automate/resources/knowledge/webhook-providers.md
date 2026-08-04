@@ -84,13 +84,17 @@ Implement `WebhookProvider` for any backend that exposes a queryable request log
 
 ```typescript
 // support/providers/custom-webhook-provider.ts
-import type { WebhookProvider, ReceivedWebhook, WebhookQueryFilter } from '@seontechnologies/playwright-utils/webhook';
+import type {
+  WebhookProvider,
+  ReceivedWebhook,
+  WebhookQueryFilter,
+} from '@seontechnologies/playwright-utils/webhook';
 import type { APIRequestContext } from '@playwright/test';
 
 export class CustomWebhookProvider implements WebhookProvider {
   constructor(
     private readonly baseUrl: string,
-    private readonly request: APIRequestContext,
+    private readonly request: APIRequestContext
   ) {}
 
   async getReceivedWebhooks(filter?: WebhookQueryFilter): Promise<ReceivedWebhook[]> {

@@ -37,6 +37,7 @@ Phase 8 is **menu-driven**, not linear. Each activity is a compressed version of
 ### 1. Configuration Loading
 
 Load and read full config from `{project-root}/_bmad/wds/config.yaml` and resolve:
+
 - `project_name`, `output_folder`, `user_name`
 - `communication_language`, `document_output_language`
 
@@ -59,27 +60,27 @@ What would you like to do?
 
 ### Activity Routing
 
-| Choice | Workflow File | Steps | Borrows From |
-|--------|--------------|-------|--------------|
-| [A] | workflow-analyze.md | steps-a/ | Phase 3 (scenarios) |
-| [S] | workflow-scope.md | Inline | Phase 3 (scenarios) |
-| [D] | workflow-design.md | steps-d/ | Phase 4 (UX design) |
-| [I] | workflow-implement.md | Inline | Phase 5 (development) |
-| [T] | workflow-test.md | steps-t/ | Phase 5 [T] (testing) |
-| [P] | workflow-deploy.md | steps-p/ | Phase 4 [H] (delivery) |
+| Choice | Workflow File         | Steps    | Borrows From           |
+| ------ | --------------------- | -------- | ---------------------- |
+| [A]    | workflow-analyze.md   | steps-a/ | Phase 3 (scenarios)    |
+| [S]    | workflow-scope.md     | Inline   | Phase 3 (scenarios)    |
+| [D]    | workflow-design.md    | steps-d/ | Phase 4 (UX design)    |
+| [I]    | workflow-implement.md | Inline   | Phase 5 (development)  |
+| [T]    | workflow-test.md      | steps-t/ | Phase 5 [T] (testing)  |
+| [P]    | workflow-deploy.md    | steps-p/ | Phase 4 [H] (delivery) |
 
 ---
 
 ## REFERENCE CONTENT
 
-| Location | Purpose |
-|----------|---------|
-| `data/kaizen-principles.md` | Kaizen philosophy and patterns |
-| `data/existing-product-guide.md` | Brownfield project guide |
-| `data/context-templates.md` | Context gathering templates |
-| `data/design-templates.md` | Design update templates |
-| `data/delivery-templates.md` | Delivery packaging templates |
-| `data/monitoring-templates.md` | Monitoring and impact templates |
+| Location                         | Purpose                         |
+| -------------------------------- | ------------------------------- |
+| `data/kaizen-principles.md`      | Kaizen philosophy and patterns  |
+| `data/existing-product-guide.md` | Brownfield project guide        |
+| `data/context-templates.md`      | Context gathering templates     |
+| `data/design-templates.md`       | Design update templates         |
+| `data/delivery-templates.md`     | Delivery packaging templates    |
+| `data/monitoring-templates.md`   | Monitoring and impact templates |
 
 ---
 

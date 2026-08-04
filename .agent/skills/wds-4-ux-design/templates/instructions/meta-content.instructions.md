@@ -5,6 +5,7 @@
 ---
 
 ## Page Title
+
 **Limit:** 55-60 characters
 
 `{title}`
@@ -12,6 +13,7 @@
 ---
 
 ## Meta Description
+
 **Limit:** 150-160 characters
 
 `{description}`
@@ -20,12 +22,12 @@
 
 ## Social Sharing
 
-| Property | Value |
-|----------|-------|
-| Title | {60-70 chars, can differ from page title} |
-| Description | {120-150 chars} |
-| Image | 1200x630px, `/images/social/{page-name}.jpg` |
-| Image Alt | {alt text} |
+| Property    | Value                                        |
+| ----------- | -------------------------------------------- |
+| Title       | {60-70 chars, can differ from page title}    |
+| Description | {120-150 chars}                              |
+| Image       | 1200x630px, `/images/social/{page-name}.jpg` |
+| Image Alt   | {alt text}                                   |
 
 ---
 

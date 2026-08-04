@@ -57,6 +57,7 @@ Read `{output_folder}/_progress/00-design-log.md`. Check Current and Backlog for
 ### 3. Mode Determination
 
 **Check invocation:**
+
 - "validate" / -v → Load and execute `./workflow-validate.md`
 - "existing" / from docs → Load and execute `./steps-c/step-00a-documentation-synthesis.md`
 - Default (create from scratch) → Load and execute `./steps-c/step-01-overview.md`
@@ -65,12 +66,12 @@ Read `{output_folder}/_progress/00-design-log.md`. Check Current and Backlog for
 
 ## REFERENCE CONTENT
 
-| Location | Purpose |
-|----------|---------|
-| `data/business-goals-template.md` | Business goals template |
-| `data/key-insights-structure.md` | Key insights structure |
+| Location                           | Purpose                    |
+| ---------------------------------- | -------------------------- |
+| `data/business-goals-template.md`  | Business goals template    |
+| `data/key-insights-structure.md`   | Key insights structure     |
 | `data/mermaid-formatting-guide.md` | Mermaid diagram formatting |
-| `data/quality-checklist.md` | Quality checklist |
+| `data/quality-checklist.md`        | Quality checklist          |
 
 ---
 

@@ -62,13 +62,18 @@ const orchestrationContext = {
   timestamp: new Date().toISOString().replace(/[:.]/g, '-'),
 };
 
-const normalizeUserExecutionMode = (mode) => {
+const normalizeUserExecutionMode = mode => {
   if (typeof mode !== 'string') return null;
   const normalized = mode.trim().toLowerCase().replace(/[-_]/g, ' ').replace(/\s+/g, ' ');
 
   if (normalized === 'auto') return 'auto';
   if (normalized === 'sequential') return 'sequential';
-  if (normalized === 'subagent' || normalized === 'sub agent' || normalized === 'subagents' || normalized === 'sub agents') {
+  if (
+    normalized === 'subagent' ||
+    normalized === 'sub agent' ||
+    normalized === 'subagents' ||
+    normalized === 'sub agents'
+  ) {
     return 'subagent';
   }
   if (normalized === 'agent team' || normalized === 'agent teams' || normalized === 'agentteam') {
@@ -78,7 +83,7 @@ const normalizeUserExecutionMode = (mode) => {
   return null;
 };
 
-const normalizeConfigExecutionMode = (mode) => {
+const normalizeConfigExecutionMode = mode => {
   if (mode === 'subagent') return 'subagent';
   if (mode === 'auto' || mode === 'sequential' || mode === 'subagent' || mode === 'agent-team') {
     return mode;
@@ -87,9 +92,14 @@ const normalizeConfigExecutionMode = (mode) => {
 };
 
 // Explicit user instruction in the active run takes priority over config.
-const explicitModeFromUser = normalizeUserExecutionMode(runtime.getExplicitExecutionModeHint?.() || null);
+const explicitModeFromUser = normalizeUserExecutionMode(
+  runtime.getExplicitExecutionModeHint?.() || null
+);
 
-const requestedMode = explicitModeFromUser || normalizeConfigExecutionMode(orchestrationContext.config.execution_mode) || 'auto';
+const requestedMode =
+  explicitModeFromUser ||
+  normalizeConfigExecutionMode(orchestrationContext.config.execution_mode) ||
+  'auto';
 const probeEnabled = orchestrationContext.config.capability_probe;
 
 const supports = { subagent: false, agentTeam: false };
@@ -121,18 +131,18 @@ Resolution precedence:
 **Identify uncovered requirements:**
 
 ```javascript
-const uncoveredRequirements = traceabilityMatrix.filter((req) => req.coverage === 'NONE');
-const partialCoverage = traceabilityMatrix.filter((req) => req.coverage === 'PARTIAL');
-const unitOnlyCoverage = traceabilityMatrix.filter((req) => req.coverage === 'UNIT-ONLY');
+const uncoveredRequirements = traceabilityMatrix.filter(req => req.coverage === 'NONE');
+const partialCoverage = traceabilityMatrix.filter(req => req.coverage === 'PARTIAL');
+const unitOnlyCoverage = traceabilityMatrix.filter(req => req.coverage === 'UNIT-ONLY');
 ```
 
 **Prioritize gaps by risk:**
 
 ```javascript
-const criticalGaps = uncoveredRequirements.filter((req) => req.priority === 'P0');
-const highGaps = uncoveredRequirements.filter((req) => req.priority === 'P1');
-const mediumGaps = uncoveredRequirements.filter((req) => req.priority === 'P2');
-const lowGaps = uncoveredRequirements.filter((req) => req.priority === 'P3');
+const criticalGaps = uncoveredRequirements.filter(req => req.priority === 'P0');
+const highGaps = uncoveredRequirements.filter(req => req.priority === 'P1');
+const mediumGaps = uncoveredRequirements.filter(req => req.priority === 'P2');
+const lowGaps = uncoveredRequirements.filter(req => req.priority === 'P3');
 ```
 
 ---
@@ -170,8 +180,9 @@ const progressDoc = fs.existsSync('{outputFile}') ? fs.readFileSync('{outputFile
 const progressFrontmatterMatch = progressDoc.match(/^---\n([\s\S]*?)\n---/);
 const progressFrontmatter = progressFrontmatterMatch ? yaml.parse(progressFrontmatterMatch[1]) : {};
 
-const isUnresolved = (value) => typeof value === 'string' && value.startsWith('{') && value.endsWith('}');
-const normalizeResolvedToken = (value) => {
+const isUnresolved = value =>
+  typeof value === 'string' && value.startsWith('{') && value.endsWith('}');
+const normalizeResolvedToken = value => {
   if (value === undefined || value === null) return null;
   const normalized = String(value).trim().toLowerCase();
   if (!normalized || normalized === 'auto' || isUnresolved(normalized)) return null;
@@ -186,7 +197,10 @@ const firstResolvedToken = (...values) => {
 };
 
 const oracleResolutionMode =
-  firstResolvedToken(runtime.getOracleResolutionMode?.(), progressFrontmatter.oracleResolutionMode) || 'formal_requirements';
+  firstResolvedToken(
+    runtime.getOracleResolutionMode?.(),
+    progressFrontmatter.oracleResolutionMode
+  ) || 'formal_requirements';
 const resolvedCoverageBasis =
   firstResolvedToken(runtime.getResolvedCoverageBasis?.(), progressFrontmatter.coverageBasis) ||
   {
@@ -197,7 +211,10 @@ const resolvedCoverageBasis =
   }[oracleResolutionMode] ||
   'acceptance_criteria';
 const resolvedOracleConfidence =
-  firstResolvedToken(runtime.getResolvedOracleConfidence?.(), progressFrontmatter.oracleConfidence) ||
+  firstResolvedToken(
+    runtime.getResolvedOracleConfidence?.(),
+    progressFrontmatter.oracleConfidence
+  ) ||
   {
     formal_requirements: 'high',
     spec_artifact: 'high',
@@ -207,7 +224,10 @@ const resolvedOracleConfidence =
   'medium';
 const oracleSources = runtime.getOracleSources?.() || progressFrontmatter.oracleSources || [];
 const externalPointerStatus =
-  firstResolvedToken(runtime.getExternalPointerStatus?.(), progressFrontmatter.externalPointerStatus) || 'not_used';
+  firstResolvedToken(
+    runtime.getExternalPointerStatus?.(),
+    progressFrontmatter.externalPointerStatus
+  ) || 'not_used';
 const recommendations = [];
 
 // Critical gaps (P0)
@@ -215,7 +235,7 @@ if (criticalGaps.length > 0) {
   recommendations.push({
     priority: 'URGENT',
     action: `Run /bmad:tea:atdd for ${criticalGaps.length} P0 requirements`,
-    requirements: criticalGaps.map((r) => r.id),
+    requirements: criticalGaps.map(r => r.id),
   });
 }
 
@@ -224,7 +244,7 @@ if (highGaps.length > 0) {
   recommendations.push({
     priority: 'HIGH',
     action: `Run /bmad:tea:automate to expand coverage for ${highGaps.length} P1 requirements`,
-    requirements: highGaps.map((r) => r.id),
+    requirements: highGaps.map(r => r.id),
   });
 }
 
@@ -233,7 +253,7 @@ if (partialCoverage.length > 0) {
   recommendations.push({
     priority: 'MEDIUM',
     action: `Complete coverage for ${partialCoverage.length} partially covered requirements`,
-    requirements: partialCoverage.map((r) => r.id),
+    requirements: partialCoverage.map(r => r.id),
   });
 }
 
@@ -241,7 +261,7 @@ if (endpointCoverageGaps.length > 0) {
   recommendations.push({
     priority: 'HIGH',
     action: `Add API tests for ${endpointCoverageGaps.length} uncovered endpoint(s)`,
-    requirements: endpointCoverageGaps.map((r) => r.id || r.endpoint || 'unknown'),
+    requirements: endpointCoverageGaps.map(r => r.id || r.endpoint || 'unknown'),
   });
 }
 
@@ -249,7 +269,7 @@ if (authCoverageGaps.length > 0) {
   recommendations.push({
     priority: 'HIGH',
     action: `Add negative-path auth/authz tests for ${authCoverageGaps.length} requirement(s)`,
-    requirements: authCoverageGaps.map((r) => r.id || 'unknown'),
+    requirements: authCoverageGaps.map(r => r.id || 'unknown'),
   });
 }
 
@@ -257,7 +277,7 @@ if (errorPathGaps.length > 0) {
   recommendations.push({
     priority: 'MEDIUM',
     action: `Add error/edge scenario tests for ${errorPathGaps.length} happy-path-only criterion/criteria`,
-    requirements: errorPathGaps.map((r) => r.id || 'unknown'),
+    requirements: errorPathGaps.map(r => r.id || 'unknown'),
   });
 }
 
@@ -265,7 +285,7 @@ if (uiJourneyGaps.length > 0) {
   recommendations.push({
     priority: 'HIGH',
     action: `Add E2E or component coverage for ${uiJourneyGaps.length} inferred UI journey(s)`,
-    requirements: uiJourneyGaps.map((r) => r.id || r.route || r.journey || 'unknown'),
+    requirements: uiJourneyGaps.map(r => r.id || r.route || r.journey || 'unknown'),
   });
 }
 
@@ -273,7 +293,7 @@ if (uiStateGaps.length > 0) {
   recommendations.push({
     priority: 'MEDIUM',
     action: `Add loading/empty/error/permission state coverage for ${uiStateGaps.length} UI journey(s)`,
-    requirements: uiStateGaps.map((r) => r.id || r.route || r.journey || 'unknown'),
+    requirements: uiStateGaps.map(r => r.id || r.route || r.journey || 'unknown'),
   });
 }
 
@@ -287,8 +307,9 @@ recommendations.push({
 if (oracleResolutionMode === 'synthetic_source') {
   recommendations.push({
     priority: 'MEDIUM',
-    action: 'Promote inferred journeys into formal acceptance criteria when the team confirms they reflect intended behavior',
-    requirements: traceabilityMatrix.map((r) => r.id),
+    action:
+      'Promote inferred journeys into formal acceptance criteria when the team confirms they reflect intended behavior',
+    requirements: traceabilityMatrix.map(r => r.id),
   });
 }
 ```
@@ -299,21 +320,31 @@ if (oracleResolutionMode === 'synthetic_source') {
 
 ```javascript
 const totalRequirements = traceabilityMatrix.length;
-const coveredRequirements = traceabilityMatrix.filter((r) => r.coverage === 'FULL' || r.coverage === 'PARTIAL').length;
-const fullyCovered = traceabilityMatrix.filter((r) => r.coverage === 'FULL').length;
+const coveredRequirements = traceabilityMatrix.filter(
+  r => r.coverage === 'FULL' || r.coverage === 'PARTIAL'
+).length;
+const fullyCovered = traceabilityMatrix.filter(r => r.coverage === 'FULL').length;
 
 const safePct = (covered, total) => (total > 0 ? Math.round((covered / total) * 100) : 100);
 const coveragePercentage = safePct(fullyCovered, totalRequirements);
 
 // Priority-specific coverage
-const p0Total = traceabilityMatrix.filter((r) => r.priority === 'P0').length;
-const p0Covered = traceabilityMatrix.filter((r) => r.priority === 'P0' && r.coverage === 'FULL').length;
-const p1Total = traceabilityMatrix.filter((r) => r.priority === 'P1').length;
-const p1Covered = traceabilityMatrix.filter((r) => r.priority === 'P1' && r.coverage === 'FULL').length;
-const p2Total = traceabilityMatrix.filter((r) => r.priority === 'P2').length;
-const p2Covered = traceabilityMatrix.filter((r) => r.priority === 'P2' && r.coverage === 'FULL').length;
-const p3Total = traceabilityMatrix.filter((r) => r.priority === 'P3').length;
-const p3Covered = traceabilityMatrix.filter((r) => r.priority === 'P3' && r.coverage === 'FULL').length;
+const p0Total = traceabilityMatrix.filter(r => r.priority === 'P0').length;
+const p0Covered = traceabilityMatrix.filter(
+  r => r.priority === 'P0' && r.coverage === 'FULL'
+).length;
+const p1Total = traceabilityMatrix.filter(r => r.priority === 'P1').length;
+const p1Covered = traceabilityMatrix.filter(
+  r => r.priority === 'P1' && r.coverage === 'FULL'
+).length;
+const p2Total = traceabilityMatrix.filter(r => r.priority === 'P2').length;
+const p2Covered = traceabilityMatrix.filter(
+  r => r.priority === 'P2' && r.coverage === 'FULL'
+).length;
+const p3Total = traceabilityMatrix.filter(r => r.priority === 'P3').length;
+const p3Covered = traceabilityMatrix.filter(
+  r => r.priority === 'P3' && r.coverage === 'FULL'
+).length;
 
 const p0CoveragePercentage = safePct(p0Covered, p0Total);
 const p1CoveragePercentage = safePct(p1Covered, p1Total);
@@ -337,7 +368,7 @@ const byLevel = {
   other: { tests: 0, criteria_covered: 0 }, // captures tests with unrecognized or empty level
 };
 
-const normalizeTestStatus = (test) => {
+const normalizeTestStatus = test => {
   const explicitStatus = String(test.status || '')
     .trim()
     .toLowerCase();
@@ -349,14 +380,16 @@ const normalizeTestStatus = (test) => {
 };
 
 const uniqueTests = new Map();
-(traceabilityMatrix || []).forEach((req) => {
+(traceabilityMatrix || []).forEach(req => {
   (req.tests || []).forEach((test, index) => {
     // Do NOT use the per-requirement `index` as a fallback — the same test can appear
     // at different indices across requirements, producing spurious duplicate entries.
     // Use only stable, test-intrinsic fields; omit line when unavailable.
     const stableId =
       test.id ||
-      [test.file, test.title || test.name, test.line].filter((value) => value !== undefined && value !== null && value !== '').join(':') ||
+      [test.file, test.title || test.name, test.line]
+        .filter(value => value !== undefined && value !== null && value !== '')
+        .join(':') ||
       null; // unresolvable — skip rather than manufacture a key
 
     if (stableId === null || uniqueTests.has(stableId)) return;
@@ -373,30 +406,33 @@ const uniqueTests = new Map();
       skipped: status === 'skipped',
       fixme: status === 'fixme',
       pending: status === 'pending',
-      blocker_reason: test.skip_reason || test.blocker_reason || test.fixme_reason || test.pending_reason || '',
+      blocker_reason:
+        test.skip_reason || test.blocker_reason || test.fixme_reason || test.pending_reason || '',
     });
   });
 });
 
-[...uniqueTests.values()].forEach((test) => {
+[...uniqueTests.values()].forEach(test => {
   const bucket = byLevel[test.level] ? test.level : 'other';
   if (bucket === 'other' && test.level) {
-    console.warn(`[trace] unknown test level "${test.level}" for test "${test.id}" — counted in "other"`);
+    console.warn(
+      `[trace] unknown test level "${test.level}" for test "${test.id}" — counted in "other"`
+    );
   }
   byLevel[bucket].tests += 1;
 });
 
-(traceabilityMatrix || []).forEach((req) => {
+(traceabilityMatrix || []).forEach(req => {
   if (!coverageEligibleStatuses.has(req.coverage)) return;
   const requirementLevels = new Set(
-    (req.tests || []).map((test) => {
+    (req.tests || []).map(test => {
       const level = String(test.level || '')
         .trim()
         .toLowerCase();
       return byLevel[level] ? level : 'other';
-    }),
+    })
   );
-  requirementLevels.forEach((level) => {
+  requirementLevels.forEach(level => {
     byLevel[level].criteria_covered += 1;
   });
 });
@@ -404,17 +440,17 @@ const uniqueTests = new Map();
 const deduplicatedTests = [...uniqueTests.values()];
 const deduplicatedTestInventory = {
   summary: {
-    files: [...new Set(deduplicatedTests.map((test) => test.file).filter(Boolean))].length,
+    files: [...new Set(deduplicatedTests.map(test => test.file).filter(Boolean))].length,
     cases: deduplicatedTests.length,
-    skipped_cases: deduplicatedTests.filter((test) => test.skipped).length,
-    fixme_cases: deduplicatedTests.filter((test) => test.fixme).length,
-    pending_cases: deduplicatedTests.filter((test) => test.pending).length,
+    skipped_cases: deduplicatedTests.filter(test => test.skipped).length,
+    fixme_cases: deduplicatedTests.filter(test => test.fixme).length,
+    pending_cases: deduplicatedTests.filter(test => test.pending).length,
     by_level: byLevel,
   },
   tests: deduplicatedTests,
   blockers: deduplicatedTests
-    .filter((test) => ['skipped', 'pending', 'fixme'].includes(test.status))
-    .map((test) => ({
+    .filter(test => ['skipped', 'pending', 'fixme'].includes(test.status))
+    .map(test => ({
       id: test.id,
       severity: test.status === 'skipped' ? 'high' : 'medium',
       reason: test.blocker_reason || `Test marked ${test.status} during trace collection`,

@@ -14,6 +14,7 @@ description: Design and run acceptance tests from specification criteria
 ## INITIALIZATION
 
 ### Design Log
+
 Read `{output_folder}/_progress/00-design-log.md`. Check Current and Backlog for context.
 
 ---
@@ -22,15 +23,16 @@ Read `{output_folder}/_progress/00-design-log.md`. Check Current and Backlog for
 
 Execute steps in `./steps-t/`:
 
-| Step | File | Purpose |
-|------|------|---------|
-| 01 | step-01-prepare.md | Gather materials, set up environment |
-| 02 | step-02-execute.md | Run all test categories |
-| 03 | step-03-document-issues.md | Create issue tickets |
-| 04 | step-04-report.md | Compile test report |
-| 05 | step-05-iterate.md | Iterate fixes or approve |
+| Step | File                       | Purpose                              |
+| ---- | -------------------------- | ------------------------------------ |
+| 01   | step-01-prepare.md         | Gather materials, set up environment |
+| 02   | step-02-execute.md         | Run all test categories              |
+| 03   | step-03-document-issues.md | Create issue tickets                 |
+| 04   | step-04-report.md          | Compile test report                  |
+| 05   | step-05-iterate.md         | Iterate fixes or approve             |
 
 **Reference data:**
+
 - `./data/testing-guide.md`
 - `./data/test-result-templates.md`
 - `./data/issue-templates.md`
@@ -58,7 +60,7 @@ Design log updated with `approved` status (see above). Present the transition:
 
 1. **Explore the next scenario step** — [next page name]
 2. **Design delivery** — package for development handoff (Phase 4 [H])
-</output>
+   </output>
 
 **If issues found:**
 
@@ -69,4 +71,4 @@ Status stays `built`. Present:
 
 1. **Fix the issues** — route to bugfixing
 2. **Explore the next scenario step** — fix later, continue designing
-</output>
+   </output>

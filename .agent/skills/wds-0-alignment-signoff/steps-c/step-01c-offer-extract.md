@@ -61,6 +61,7 @@ Ask if they have relevant communications or documents:
 "Do you have any email threads, chat conversations, documents, or other materials from clients or stakeholders about this project?
 
 If you do, I can extract key information from them - things like:
+
 - Realizations or observations they've mentioned
 - Requirements they've discussed
 - Concerns or questions they've raised
@@ -82,11 +83,13 @@ Skip to step-01e-detect-starting-point.md
 Display: "**Select an Option:** [C] Continue to step-01d-extract-info (if documents provided) or step-01e-detect-starting-point (if skipping)"
 
 #### Menu Handling Logic:
+
 - IF C: Load, read entire file, then execute {nextStepFile} (or step-01e if skipping extraction)
 - IF M: Return to {workflowFile}
 - IF Any other comments or queries: help user respond then [Redisplay Menu Options]
 
 #### EXECUTION RULES:
+
 - ALWAYS halt and wait for user input after presenting menu
 - ONLY proceed to next step when user selects 'C'
 - User can chat or ask questions - always respond and then redisplay menu options
@@ -100,11 +103,13 @@ ONLY WHEN the user has decided whether to provide documents or skip will you the
 ## 🚨 SYSTEM SUCCESS/FAILURE METRICS
 
 ### ✅ SUCCESS:
+
 - User is offered the extraction option clearly
 - User's decision (provide or skip) is respected
 - Correct routing based on user's choice
 
 ### ❌ SYSTEM FAILURE:
+
 - Pressuring user to provide documents
 - Skipping the offer entirely
 - Proceeding without user input on their choice

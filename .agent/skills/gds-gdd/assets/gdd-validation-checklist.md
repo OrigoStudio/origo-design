@@ -15,7 +15,7 @@ The genre and game-type checks (`G-1`, `G-2`) require the validator to read `ass
 
 ## Discipline
 
-- **D-1. No engine-implementation leakage.** Mechanics and systems specify WHAT the player experiences and WHAT a system must achieve, not HOW it is built. Flag engine internals (GameObject, MonoBehaviour, Rigidbody, Actor, Blueprint, Node2D, `_process`), scripting/code patterns, shader/rendering internals, netcode library names, and data-format internals. Target engine, platform, and hard certification constraints in Technical Specifications are acceptable — that is *on what* it runs, not *how* it is built.
+- **D-1. No engine-implementation leakage.** Mechanics and systems specify WHAT the player experiences and WHAT a system must achieve, not HOW it is built. Flag engine internals (GameObject, MonoBehaviour, Rigidbody, Actor, Blueprint, Node2D, `_process`), scripting/code patterns, shader/rendering internals, netcode library names, and data-format internals. Target engine, platform, and hard certification constraints in Technical Specifications are acceptable — that is _on what_ it runs, not _how_ it is built.
 - **D-2. Input fidelity.** Content from input documents (game brief, brainstorming, research, prior GDD) is still in scope or explicitly handled via Out of Scope or `[ASSUMPTION]`. Core fantasy, called-out mechanics, target platforms, and design pillars from the brief are honored or the deviation is documented.
 - **D-3. Technical Specifications stay GDD-level.** Performance, platform, and asset-budget requirements only — no architecture-level system or engine design (that is `gds-game-architecture`'s job).
 - **D-4. No innovation theater.** USP and novelty claims are real, not invented pitch language.

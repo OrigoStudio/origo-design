@@ -33,10 +33,10 @@ Developers define
 
 ```json
 {
-  "type":"textbox",
-  "label":"Customer Name",
-  "required":true,
-  "maxlength":150
+  "type": "textbox",
+  "label": "Customer Name",
+  "required": true,
+  "maxlength": 150
 }
 ```
 
@@ -379,26 +379,26 @@ entity="Customer"
 
 Capabilities should include:
 
-* Sorting
-* Filtering
-* Grouping
-* Column chooser
-* Frozen columns
-* Inline edit
-* Batch edit
-* Tree grid
-* Aggregation
-* Export
-* Print
-* Responsive mode
-* Virtual scrolling
-* Infinite scrolling
-* Row actions
-* Bulk actions
-* Keyboard navigation
-* Accessibility
-* Column templates
-* Cell templates
+- Sorting
+- Filtering
+- Grouping
+- Column chooser
+- Frozen columns
+- Inline edit
+- Batch edit
+- Tree grid
+- Aggregation
+- Export
+- Print
+- Responsive mode
+- Virtual scrolling
+- Infinite scrolling
+- Row actions
+- Bulk actions
+- Keyboard navigation
+- Accessibility
+- Column templates
+- Cell templates
 
 ---
 
@@ -722,13 +722,13 @@ A monorepo (for example, with Nx or Turborepo) will help keep shared packages al
 
 Enterprise applications always need customization. Build extension points into the architecture:
 
-* Component registry for custom controls.
-* Pluggable data providers (REST, GraphQL, local, offline).
-* Custom validation rules.
-* Event hooks before/after render and submit.
-* Theme overrides without forking.
-* Slot-based layout composition.
-* Custom page templates and generators.
+- Component registry for custom controls.
+- Pluggable data providers (REST, GraphQL, local, offline).
+- Custom validation rules.
+- Event hooks before/after render and submit.
+- Theme overrides without forking.
+- Slot-based layout composition.
+- Custom page templates and generators.
 
 ---
 
@@ -738,36 +738,36 @@ Do **not** start with 100 components. Build a vertical slice that proves the arc
 
 **Phase 1 (Foundation)**
 
-* Design tokens.
-* Theme engine.
-* 20–25 primitive components.
-* Documentation site.
-* Playground.
-* CLI for scaffolding.
+- Design tokens.
+- Theme engine.
+- 20–25 primitive components.
+- Documentation site.
+- Playground.
+- CLI for scaffolding.
 
 **Phase 2 (Business UI)**
 
-* Dynamic form engine.
-* Data grid.
-* Layout engine.
-* Navigation.
-* Authentication layouts.
+- Dynamic form engine.
+- Data grid.
+- Layout engine.
+- Navigation.
+- Authentication layouts.
 
 **Phase 3 (Metadata Platform)**
 
-* JSON schema.
-* Page generator.
-* Dashboard generator.
-* Rule engine.
-* Permissions.
-* Localization.
+- JSON schema.
+- Page generator.
+- Dashboard generator.
+- Rule engine.
+- Permissions.
+- Localization.
 
 **Phase 4 (Enterprise Features)**
 
-* Offline support.
-* Plugin marketplace.
-* Visual page builder.
-* AI-assisted page generation from entity definitions.
+- Offline support.
+- Plugin marketplace.
+- Visual page builder.
+- AI-assisted page generation from entity definitions.
 
 ## One architectural recommendation
 

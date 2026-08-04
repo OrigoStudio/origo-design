@@ -71,30 +71,32 @@ This workflow detects the game engine and creates all necessary test infrastruct
 **Primary Output**: `{test_dir}/README.md`
 
 **Supporting Components**:
+
 - Validation: `{installed_path}/checklist.md`
 
 **Knowledge Base References**:
+
 - `knowledge/unity-testing.md`
 - `knowledge/unreal-testing.md`
 - `knowledge/godot-testing.md`
 
-
 Load and resolve configuration from `{module_config}`:
 
 ```yaml
-output_folder: {from config}
-user_name: {from config}
-communication_language: {from config}
-document_output_language: {from config}
-game_dev_experience: {from config}
-date: {system-generated}
+output_folder: { from config }
+user_name: { from config }
+communication_language: { from config }
+document_output_language: { from config }
+game_dev_experience: { from config }
+date: { system-generated }
 ```
 
 Resolve workflow variables:
+
 ```yaml
-test_dir: "{project-root}/tests"    # Root test directory
-game_engine: "auto"                  # auto | unity | unreal | godot
-test_framework: "auto"               # auto | gut (godot) | unity-test-framework | unreal-automation
+test_dir: '{project-root}/tests' # Root test directory
+game_engine: 'auto' # auto | unity | unreal | godot
+test_framework: 'auto' # auto | gut (godot) | unity-test-framework | unreal-automation
 ```
 
 ---

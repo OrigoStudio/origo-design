@@ -83,11 +83,13 @@ Route to Project Brief workflow.
 Display: "**Select an Option:** [C] Continue to step-01c-offer-extract"
 
 #### Menu Handling Logic:
+
 - IF C: Load, read entire file, then execute {nextStepFile}
 - IF M: Return to {workflowFile}
 - IF Any other comments or queries: help user respond then [Redisplay Menu Options]
 
 #### EXECUTION RULES:
+
 - ALWAYS halt and wait for user input after presenting menu
 - ONLY proceed to next step when user selects 'C'
 - User can chat or ask questions - always respond and then redisplay menu options
@@ -101,11 +103,13 @@ ONLY WHEN the routing decision is confirmed will you then load and read fully `{
 ## 🚨 SYSTEM SUCCESS/FAILURE METRICS
 
 ### ✅ SUCCESS:
+
 - User is correctly routed based on their stated situation
 - Users who don't need alignment are directed to Project Brief
 - Users who need alignment understand the process ahead
 
 ### ❌ SYSTEM FAILURE:
+
 - Forcing alignment workflow on users with full autonomy
 - Skipping the routing decision
 - Proceeding without confirming the user's path

@@ -10,9 +10,9 @@ One memlog per party: `{workflow.memory_dir}/{active}/.memlog.md`, where `{activ
 
 ## Read it on entry — distill, don't dump
 
-The log is append-only and grows every session, so don't pull the raw file into the party. Hand a reader subagent the memlog path (`{workflow.memory_dir}/{active}/.memlog.md`) and have it return a compact brief — a few hundred tokens of *where things stand now*, ready to play in character.
+The log is append-only and grows every session, so don't pull the raw file into the party. Hand a reader subagent the memlog path (`{workflow.memory_dir}/{active}/.memlog.md`) and have it return a compact brief — a few hundred tokens of _where things stand now_, ready to play in character.
 
-Then let the brief shape the room from the first beat, **in character**: behavioral state resumes (a cold pair opens cold, an alliance opens warm), threads pick up, callbacks land when they fit — organically, not recited on sight. Never break the fourth wall: the room *remembers*; it never announces it loaded anything, and forces nothing that doesn't fit.
+Then let the brief shape the room from the first beat, **in character**: behavioral state resumes (a cold pair opens cold, an alliance opens warm), threads pick up, callbacks land when they fit — organically, not recited on sight. Never break the fourth wall: the room _remembers_; it never announces it loaded anything, and forces nothing that doesn't fit.
 
 ## When to write
 
@@ -25,7 +25,7 @@ Writes are silent. The room never announces "noted" or "I'll remember".
 
 ## What's worth remembering
 
-The test for every entry: *would this color a future session, or make a callback land, or improve the party?* If not, leave it out. A handful of entries, never a recap, never a transcript. keep each entry as brief as possible but usable by future llm.
+The test for every entry: _would this color a future session, or make a callback land, or improve the party?_ If not, leave it out. A handful of entries, never a recap, never a transcript. keep each entry as brief as possible but usable by future llm.
 
 ## New faces
 
@@ -48,4 +48,4 @@ If `memlog.py` is unavailable or a write errors, skip it silently and never stal
 
 The memlog is append-only by design — no surgical delete. To wipe a party's memory, delete its folder (`{workflow.memory_dir}/{active}/`). To correct a wrong memory, append a new entry that supersedes it; the room reads the latest state.
 
-Keep entries sparse. The distilled read keeps the *room* lean no matter how big the log gets, but the on-disk file still grows append-only.
+Keep entries sparse. The distilled read keeps the _room_ lean no matter how big the log gets, but the on-disk file still grows append-only.

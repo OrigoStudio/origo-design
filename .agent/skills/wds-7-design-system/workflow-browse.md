@@ -12,8 +12,8 @@ description: Generate a disposable localhost app to explore tokens, components, 
 ## INITIALIZATION
 
 ### Design Log
-Read `{output_folder}/_progress/00-design-log.md`. Check Current and Backlog for context.
 
+Read `{output_folder}/_progress/00-design-log.md`. Check Current and Backlog for context.
 
 ## Steps
 
@@ -32,22 +32,26 @@ Parse into structured data: tokens with categories, components with dependencies
 Build a single-page localhost app with four views:
 
 **Token Explorer**
+
 - Airtable-style table: filterable by category, sortable by name/value
 - Live preview column: colors show swatches, spacing shows bars, typography shows rendered text
 - Search: filter by name, value, or category
 
 **Component Catalog**
+
 - Grid of all components with thumbnail previews
 - Click to expand: all variants, all states, token dependencies
 - Filter by category (navigation, forms, content, layout)
 
 **Relationship Viewer**
+
 - Interactive graph: nodes are tokens and components
 - Click a component → highlight all tokens it uses
 - Click a token → highlight all components that reference it
 - "Show me what uses --color-primary" → highlights the chain
 
 **Intent Search**
+
 - Natural language input: "I need a background for warning messages"
 - Matches against token names, descriptions, categories, and component usage
 - Shows results with live previews and copy-ready token names
@@ -84,4 +88,4 @@ If the user identifies changes while browsing:
 
 1. Update design log
 1. Stop localhost server, discard generated app
-2. Return to Phase 7 Activity Menu
+1. Return to Phase 7 Activity Menu

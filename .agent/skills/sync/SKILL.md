@@ -1,6 +1,6 @@
 ---
 name: sync
-version: "1.0.0"
+version: '1.0.0'
 description: Syncs WDS skills from the current project (_bmad/wds/) to ~/.claude/commands/ so they work in any project. Called automatically on every agent activation.
 agents: [saga, freya, mimir]
 ---
@@ -15,6 +15,7 @@ Agents call this silently on every activation. Users can also call it directly.
 ## Entry points
 
 **On agent activation — silent mode**
+
 - First time (no global commands exist): ask the user once, then sync.
 - Subsequent activations: compare files, sync silently if changed, skip if identical.
 - Never block activation. If sync fails for any reason, continue.
@@ -30,6 +31,7 @@ Agents call this silently on every activation. Users can also call it directly.
 Find `_bmad/wds/` relative to the current project root.
 
 If `_bmad/wds/` does not exist:
+
 - Silent mode: stop silently.
 - Verbose mode: `⚠️ WDS not installed in this project. Run: npx bmad-method install`
 
@@ -48,9 +50,10 @@ $HOME_DIR = $env:USERPROFILE
 ```
 
 Destination directories:
+
 - Commands: `{HOME_DIR}/.claude/commands/`
-- Tools:    `{HOME_DIR}/.claude/wds/tools/memory/`
-- Data:     `{HOME_DIR}/.claude/wds/data/`
+- Tools: `{HOME_DIR}/.claude/wds/tools/memory/`
+- Data: `{HOME_DIR}/.claude/wds/data/`
 
 ---
 
@@ -108,8 +111,8 @@ New-Item -ItemType Directory -Force "{HOME_DIR}\.claude\wds\data"
 
 Copy agent commands:
 
-| Source | Destination |
-|--------|-------------|
+| Source                                 | Destination                              |
+| -------------------------------------- | ---------------------------------------- |
 | `{WDS_SRC}/skills/saga.activation.md`  | `{HOME_DIR}/.claude/commands/saga.md`    |
 | `{WDS_SRC}/skills/freya.activation.md` | `{HOME_DIR}/.claude/commands/freya.md`   |
 | `{WDS_SRC}/skills/mimir.activation.md` | `{HOME_DIR}/.claude/commands/mimir.md`   |
@@ -119,12 +122,12 @@ Copy agent commands:
 
 Copy tools and data:
 
-| Source | Destination |
-|--------|-------------|
-| `{WDS_SRC}/tools/memory/SKILL.md`    | `{HOME_DIR}/.claude/wds/tools/memory/SKILL.md`    |
-| `{WDS_SRC}/data/wds-glossary.md`     | `{HOME_DIR}/.claude/wds/data/wds-glossary.md`     |
-| `{WDS_SRC}/data/agent-contracts.md`  | `{HOME_DIR}/.claude/wds/data/agent-contracts.md`  |
-| `{WDS_SRC}/data/shared-activation.md`| `{HOME_DIR}/.claude/wds/data/shared-activation.md`|
+| Source                                | Destination                                        |
+| ------------------------------------- | -------------------------------------------------- |
+| `{WDS_SRC}/tools/memory/SKILL.md`     | `{HOME_DIR}/.claude/wds/tools/memory/SKILL.md`     |
+| `{WDS_SRC}/data/wds-glossary.md`      | `{HOME_DIR}/.claude/wds/data/wds-glossary.md`      |
+| `{WDS_SRC}/data/agent-contracts.md`   | `{HOME_DIR}/.claude/wds/data/agent-contracts.md`   |
+| `{WDS_SRC}/data/shared-activation.md` | `{HOME_DIR}/.claude/wds/data/shared-activation.md` |
 
 Skip any source file that does not exist — do not error.
 
@@ -133,17 +136,20 @@ Skip any source file that does not exist — do not error.
 ### 6 — Report
 
 **First-time / direct call:**
+
 ```
 ✓ WDS skills synced to ~/.claude/commands/
   /saga  /freya  /mimir  /start  /wrap  /handoff
 ```
 
 **Silent update (changes detected):**
+
 ```
 ✓ WDS skills updated.
 ```
 
 **No changes (direct call only):**
+
 ```
 WDS skills are up to date.
 ```

@@ -34,7 +34,7 @@ test.describe('Race Condition Prevention Patterns', () => {
     // BAD: Navigation starts before interception ready
     await page.goto('/products'); // ⚠️ Race! API might load before route is set
 
-    await context.route('**/api/products', (route) => {
+    await context.route('**/api/products', route => {
       route.fulfill({ status: 200, body: JSON.stringify({ products: [] }) });
     });
 
@@ -43,7 +43,7 @@ test.describe('Race Condition Prevention Patterns', () => {
 
   test('✅ Pattern: Intercept BEFORE navigate (deterministic)', async ({ page, context }) => {
     // GOOD: Interception ready before navigation
-    await context.route('**/api/products', (route) => {
+    await context.route('**/api/products', route => {
       route.fulfill({
         status: 200,
         contentType: 'application/json',
@@ -137,7 +137,9 @@ test.describe('Deterministic Waiting Patterns', () => {
   });
 
   test('waitForResponse() with predicate function', async ({ page }) => {
-    const responsePromise = page.waitForResponse((resp) => resp.url().includes('/api/search') && resp.status() === 200);
+    const responsePromise = page.waitForResponse(
+      resp => resp.url().includes('/api/search') && resp.status() === 200
+    );
 
     await page.goto('/search');
     await page.getByPlaceholder('Search').fill('laptop');

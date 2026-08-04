@@ -61,22 +61,25 @@ Analyze documentation for vision and objectives.
 
 **If clear vision found:**
 Present: "Your documentation suggests this vision:
+
 > {{extracted_vision}}
-Is this the aspirational goal you're working toward?"
+> Is this the aspirational goal you're working toward?"
 
 Ask: "Does this capture your vision, or should we refine it?"
 
 **If vague vision found:**
 Present: "I found some aspirational language in your documentation. It seems like your vision is:
+
 > {{interpreted_vision}}
-But this isn't explicitly stated. Is this accurate?"
+> But this isn't explicitly stated. Is this accurate?"
 
 Ask: "Should we use this, or define a clearer vision statement?"
 
 **If no vision found:**
 Present: "I don't see an explicit vision statement in your documentation. However, based on your objectives and plans, the implied vision seems to be:
+
 > {{inferred_vision}}
-This is reverse-engineered from what you're trying to achieve."
+> This is reverse-engineered from what you're trying to achieve."
 
 Ask: "Does this capture your aspirational goal? Or should we define it differently?"
 
@@ -117,11 +120,13 @@ Next, we'll identify who can help you achieve these goals."
 Display: "**Select an Option:** [C] Continue to Target Groups Extraction | [M] Return to Activity Menu"
 
 #### Menu Handling Logic:
+
 - IF C: Load and execute {nextStepFile}
 - IF M: Return to {activityWorkflowFile}
 - IF Any other comments or queries: help user respond then [Redisplay Menu Options]
 
 #### EXECUTION RULES:
+
 - ALWAYS halt and wait for user input after presenting menu
 - User can chat or ask questions - always respond and then redisplay menu options
 
@@ -134,6 +139,7 @@ ONLY WHEN user selects [C] will you load the next step file. Vision and objectiv
 ## 🚨 SYSTEM SUCCESS/FAILURE METRICS
 
 ### ✅ SUCCESS:
+
 - Vision statement extracted or created through dialogue
 - Strategic objectives validated as SMART (Specific, Measurable, Achievable, Relevant, Time-bound)
 - Vague goals transformed into measurable objectives
@@ -142,6 +148,7 @@ ONLY WHEN user selects [C] will you load the next step file. Vision and objectiv
 - Results stored for subsequent steps
 
 ### ❌ SYSTEM FAILURE:
+
 - Inventing business goals not supported by documentation
 - Skipping vision statement
 - Accepting vague goals without making them SMART

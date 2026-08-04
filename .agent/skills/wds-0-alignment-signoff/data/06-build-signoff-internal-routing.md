@@ -14,10 +14,10 @@ web_bundle: true
 
 ## Steps
 
-| # | File | Purpose |
-|---|------|---------|
-| 01 | [Build Internal Signoff](01-build-internal-signoff.md) | Build the internal signoff document |
-| 02 | [Finalize Signoff](02-finalize-signoff.md) | Finalize and present signoff document |
+| #   | File                                                   | Purpose                               |
+| --- | ------------------------------------------------------ | ------------------------------------- |
+| 01  | [Build Internal Signoff](01-build-internal-signoff.md) | Build the internal signoff document   |
+| 02  | [Finalize Signoff](02-finalize-signoff.md)             | Finalize and present signoff document |
 
 **Template:** `../../wds-1-project-brief/templates/signoff.template.md`
 

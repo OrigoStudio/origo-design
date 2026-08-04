@@ -64,6 +64,7 @@ Activation is complete. If `activation_steps_prepend` or `activation_steps_appen
 ## CONFIGURATION
 
 Load config from `{module_config}` and resolve:
+
 - `project_name`, `output_folder`, `planning_artifacts`, `user_name`
 - `communication_language`, `document_output_language`, `game_dev_experience`
 - `date` as a system-generated value
@@ -75,6 +76,7 @@ Load config from `{module_config}` and resolve:
 **What game domain, genre, platform, or sector do you want to research?**
 
 For example:
+
 - 'The battle royale genre on PC and console'
 - 'Age ratings and content regulations for games in Europe'
 - 'The mobile free-to-play games sector'
@@ -83,6 +85,7 @@ For example:
 ### Topic Clarification
 
 Based on the user's topic, briefly clarify:
+
 1. **Core Domain**: "What specific aspect of [domain] are you most interested in?"
 2. **Research Goals**: "What do you hope to achieve with this research?"
 3. **Scope**: "Should we focus broadly or dive deep into specific aspects (e.g., particular platforms, regions, or player demographics)?"

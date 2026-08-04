@@ -9,6 +9,7 @@
 <ask>**Which page is this similar to?**
 
 Provide:
+
 - Page name or URL
 - What file path (if internal project)
 - Or description of reference page
@@ -43,10 +44,11 @@ If internal reference exists:
   4. Preserve navigation pattern
 
 If external reference:
-  1. Describe reference structure
-  2. Note differences
-  3. Create conceptual specification
-  4. Recommend creating sketch showing changes
+
+1. Describe reference structure
+2. Note differences
+3. Create conceptual specification
+4. Recommend creating sketch showing changes
 
 Generate specification document
 </action>
@@ -62,6 +64,7 @@ Generate specification document
 **Key differences noted:** {{differences}}
 
 **Next steps:**
+
 - Review generated specification
 - Create sketch showing unique elements
 - Run Page Process Workshop to refine

@@ -95,11 +95,13 @@ Check if `{output_folder}/B-Trigger-Map/feature-impact-analysis.md` (or 06-Featu
 Display: "**Select an Option:** [C] Continue to Cross-Document Coherence | [M] Return to Activity Menu"
 
 #### Menu Handling Logic:
+
 - IF C: Load and execute {nextStepFile}
 - IF M: Return to {activityWorkflowFile}
 - IF Any other comments or queries: help user respond then [Redisplay Menu Options]
 
 #### EXECUTION RULES:
+
 - ALWAYS halt and wait for user input after presenting menu
 - User can chat or ask questions - always respond and then redisplay menu options
 
@@ -112,6 +114,7 @@ ONLY WHEN user selects [C] will you load the next step file. Feature impact alig
 ## 🚨 SYSTEM SUCCESS/FAILURE METRICS
 
 ### ✅ SUCCESS:
+
 - Feature impact existence checked
 - If present: all scoring dimensions verified
 - If not present: clearly noted as "Not run"
@@ -120,6 +123,7 @@ ONLY WHEN user selects [C] will you load the next step file. Feature impact alig
 - Alignment report generated
 
 ### ❌ SYSTEM FAILURE:
+
 - Not checking if feature impact exists
 - Skipping scoring verification when present
 - P1-critical feature allowed as "Defer"

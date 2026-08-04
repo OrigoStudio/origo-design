@@ -60,6 +60,7 @@ Understand the user's mental state when arriving at this specific page — what 
 <ask>**What's the user's mental state when arriving?**
 
 Consider:
+
 - What just happened? (trigger)
 - What are they hoping for?
 - What are they worried about?

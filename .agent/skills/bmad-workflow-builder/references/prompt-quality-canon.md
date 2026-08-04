@@ -53,12 +53,12 @@ Your reader is a model whose entire world is what you wrote — no author in the
 
 You cannot judge structure from inside a single run — the output looks the same whether the model did its best work or settled. Write the smallest version of what you are building, around five lines: the role, the outcome, the consumer of that outcome, and any rule whose absence has caused damage you can point to. Run both versions on the same input and read the verdict.
 
-| What you see | What it means |
-| --- | --- |
-| Small one wins | The structure was a straitjacket. Cut it. |
-| They tie | The structure is decoration. Defend each line or kill it. |
+| What you see                                           | What it means                                                             |
+| ------------------------------------------------------ | ------------------------------------------------------------------------- |
+| Small one wins                                         | The structure was a straitjacket. Cut it.                                 |
+| They tie                                               | The structure is decoration. Defend each line or kill it.                 |
 | Small one rougher but recoverable in a couple of turns | You bought convenience, not quality. Allowed, if you are honest about it. |
-| Small one materially worse and stays worse | The structure earned its keep, for now. |
+| Small one materially worse and stays worse             | The structure earned its keep, for now.                                   |
 
 When you cannot run both versions, the tests above and the habit below need no experiment — apply them line by line.
 

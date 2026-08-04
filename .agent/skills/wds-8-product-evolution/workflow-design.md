@@ -13,8 +13,8 @@ borrows_from: Phase 4 (UX design)
 ## INITIALIZATION
 
 ### Design Log
-Read `{output_folder}/_progress/00-design-log.md`. Check Current and Backlog for context.
 
+Read `{output_folder}/_progress/00-design-log.md`. Check Current and Backlog for context.
 
 ## Steps
 
@@ -54,21 +54,27 @@ Create a mini page-spec at `{output_folder}/evolution/specs/`:
 # [Page/View Name] — Update Specification
 
 ## Change Summary
+
 [One paragraph describing the change]
 
 ## Before
+
 [Current state description or reference]
 
 ## After
+
 [Detailed specification of the new state]
 
 ## Components
+
 [List each component with its new properties/behavior]
 
 ## Responsive Behavior
+
 [How the change adapts across breakpoints]
 
 ## Acceptance Criteria
+
 [Testable criteria from the scenario]
 ```
 

@@ -74,6 +74,7 @@ From the Trigger Map driving forces: **"By taking this action, how does the user
 ### 4. Determine Essential Information
 
 Work backward from the action:
+
 - To do the action, the user must understand X
 - To understand X, they need to know Y
 - To know Y, we must tell them Z
@@ -93,26 +94,26 @@ For each barrier, identify what content removes it.
 ```yaml
 action_filter:
   required_action:
-    description: "[Specific action user must be able to take]"
-    success_criteria: "[How we know they can do it]"
+    description: '[Specific action user must be able to take]'
+    success_criteria: '[How we know they can do it]'
   business_impact:
-    connection: "[How this action drives the business goal]"
-    logic: "[Action → Outcome → Goal]"
+    connection: '[How this action drives the business goal]'
+    logic: '[Action → Outcome → Goal]'
   user_motivation:
-    positive_driver: "[How action satisfies their wish]"
-    negative_driver: "[How action addresses their fear]"
+    positive_driver: '[How action satisfies their wish]'
+    negative_driver: '[How action addresses their fear]'
   essential_information:
-    - "[Information element 1 — WHY needed for action]"
-    - "[Information element 2 — WHY needed for action]"
-    - "[Information element 3 — WHY needed for action]"
+    - '[Information element 1 — WHY needed for action]'
+    - '[Information element 2 — WHY needed for action]'
+    - '[Information element 3 — WHY needed for action]'
   cut_list:
     - "[Nice-to-know info that doesn't enable action]"
-    - "[Impressive but irrelevant content]"
+    - '[Impressive but irrelevant content]'
   action_barriers:
-    - barrier: "[e.g., confusion about next steps]"
-      solution: "[Content that removes this barrier]"
-    - barrier: "[e.g., fear of commitment]"
-      solution: "[Content that addresses this fear]"
+    - barrier: '[e.g., confusion about next steps]'
+      solution: '[Content that removes this barrier]'
+    - barrier: '[e.g., fear of commitment]'
+      solution: '[Content that addresses this fear]'
 ```
 
 ### 7. Present MENU OPTIONS

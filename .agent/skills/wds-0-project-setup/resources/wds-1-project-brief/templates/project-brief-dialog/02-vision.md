@@ -19,16 +19,19 @@
 ## Conversation Highlights
 
 ### Key Exchange 1
+
 **Agent:** {{question_or_followup}}
 **User:** {{response}}
 **Signal detected:** {{signal_type}} — {{what_this_revealed}}
 
 ### Key Exchange 2
+
 **Agent:** {{question_or_followup}}
 **User:** {{response}}
 **Signal detected:** {{signal_type}} — {{what_this_revealed}}
 
 ### Key Exchange 3
+
 **Agent:** {{question_or_followup}}
 **User:** {{response}}
 **Signal detected:** {{signal_type}} — {{what_this_revealed}}
@@ -50,6 +53,7 @@
 {{what_im_hearing_is}}
 
 **User response:**
+
 - [x] Confirmed
 - [ ] Corrected
 

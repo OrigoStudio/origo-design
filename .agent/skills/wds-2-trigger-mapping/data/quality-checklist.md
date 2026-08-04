@@ -62,27 +62,32 @@
 **Check links in each document:**
 
 **00-trigger-map.md:**
+
 - [ ] Links to 01-Business-Goals.md
 - [ ] Links to all persona docs (02, 03, 04...)
 - [ ] Links to 05-Key-Insights.md
 - [ ] All links use correct file names
 
 **01-Business-Goals.md:**
+
 - [ ] Links back to 00-trigger-map.md
 - [ ] Links to all persona docs
 - [ ] Links to 05-Key-Insights.md
 
 **Persona documents (02, 03, 04...):**
+
 - [ ] Each links back to 00-trigger-map.md
 - [ ] Each links to OTHER persona docs
 - [ ] Each links to 05-Key-Insights.md
 
 **05-Key-Insights.md:**
+
 - [ ] Links back to 00-trigger-map.md
 - [ ] Links to 01-Business-Goals.md
 - [ ] Links to all persona docs
 
 **06-Feature-Impact.md (if exists):**
+
 - [ ] Links back to 00-trigger-map.md
 - [ ] Links to 01-Business-Goals.md
 - [ ] Links to all persona docs

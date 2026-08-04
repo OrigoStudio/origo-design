@@ -58,6 +58,7 @@ Initiate a structured handoff conversation with the BMad Architect to transfer d
 ### 1. Pre-Handoff Check
 
 Verify prerequisites:
+
 - Design Delivery file ready: `deliveries/DD-XXX-name.yaml`
 - Test Scenario file ready: `test-scenarios/TS-XXX-name.yaml`
 - 20-30 minutes available for focused conversation
@@ -66,18 +67,18 @@ Verify prerequisites:
 
 **Reference:** [data/handoff-dialog-scripts.md](../data/handoff-dialog-scripts.md) for detailed conversation scripts
 
-| Phase | Duration | Focus |
-|-------|----------|-------|
-| 1. Introduction | 2 min | Greet, state delivery ID, overview |
-| 2. User Value | 3 min | Problem, solution, success criteria |
-| 3. Scenario Walkthrough | 8 min | User flow, screens, specifications |
-| 4. Technical Requirements | 4 min | Platform, integrations, data models |
-| 5. Design System Components | 3 min | Components used, design tokens |
-| 6. Acceptance Criteria | 3 min | Functional, non-functional, edge cases |
-| 7. Testing Approach | 2 min | Test scenarios, validation process |
-| 8. Complexity Estimate | 2 min | Size, effort, risk, dependencies |
-| 9. Special Considerations | 2 min | Important notes, potential gotchas |
-| 10. Confirmation | 1 min | Confirm understanding, next steps |
+| Phase                       | Duration | Focus                                  |
+| --------------------------- | -------- | -------------------------------------- |
+| 1. Introduction             | 2 min    | Greet, state delivery ID, overview     |
+| 2. User Value               | 3 min    | Problem, solution, success criteria    |
+| 3. Scenario Walkthrough     | 8 min    | User flow, screens, specifications     |
+| 4. Technical Requirements   | 4 min    | Platform, integrations, data models    |
+| 5. Design System Components | 3 min    | Components used, design tokens         |
+| 6. Acceptance Criteria      | 3 min    | Functional, non-functional, edge cases |
+| 7. Testing Approach         | 2 min    | Test scenarios, validation process     |
+| 8. Complexity Estimate      | 2 min    | Size, effort, risk, dependencies       |
+| 9. Special Considerations   | 2 min    | Important notes, potential gotchas     |
+| 10. Confirmation            | 1 min    | Confirm understanding, next steps      |
 
 ### 3. Document Handoff Log
 

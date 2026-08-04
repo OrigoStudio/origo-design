@@ -15,7 +15,8 @@
 {{existing_assets_summary}}
 
 | Asset | Status | Location |
-|-------|--------|----------|
+| ----- | ------ | -------- |
+
 {{#each existing_assets}}
 | {{this.asset}} | {{this.status}} | {{this.location}} |
 {{/each}}
@@ -23,8 +24,9 @@
 ### Brand Constraints
 
 {{#each brand_constraints}}
+
 - {{this}}
-{{/each}}
+  {{/each}}
 
 ---
 
@@ -34,6 +36,7 @@
 
 {{#each reference_sites}}
 **[{{this.name}}]({{this.url}})**
+
 - What we like: {{this.what_we_like}}
 - Relevance: {{this.relevance}}
 
@@ -57,8 +60,9 @@
 
 **Characteristics:**
 {{#each ui_style_characteristics}}
+
 - {{this}}
-{{/each}}
+  {{/each}}
 
 ### Design Aesthetic
 
@@ -76,19 +80,19 @@
 
 ### Palette Direction
 
-| Role | Direction | Notes |
-|------|-----------|-------|
-| **Primary** | {{color_primary}} | {{color_primary_notes}} |
-| **Secondary** | {{color_secondary}} | {{color_secondary_notes}} |
-| **Accent** | {{color_accent}} | {{color_accent_notes}} |
+| Role           | Direction            | Notes                      |
+| -------------- | -------------------- | -------------------------- |
+| **Primary**    | {{color_primary}}    | {{color_primary_notes}}    |
+| **Secondary**  | {{color_secondary}}  | {{color_secondary_notes}}  |
+| **Accent**     | {{color_accent}}     | {{color_accent_notes}}     |
 | **Background** | {{color_background}} | {{color_background_notes}} |
-| **Text** | {{color_text}} | {{color_text_notes}} |
+| **Text**       | {{color_text}}       | {{color_text_notes}}       |
 
 ### Color Scheme Type
 
 **Type:** {{color_scheme_type}}
 
-*Reference: [Color Terminology](../../../docs/models/design-nomenclature/color-terminology.md)*
+_Reference: [Color Terminology](../../../docs/models/design-nomenclature/color-terminology.md)_
 
 ---
 
@@ -100,13 +104,13 @@
 
 ### Font Direction
 
-| Role | Style | Examples | Rationale |
-|------|-------|----------|-----------|
+| Role          | Style              | Examples              | Rationale              |
+| ------------- | ------------------ | --------------------- | ---------------------- |
 | **Headlines** | {{headline_style}} | {{headline_examples}} | {{headline_rationale}} |
-| **Body** | {{body_style}} | {{body_examples}} | {{body_rationale}} |
-| **UI** | {{ui_font_style}} | {{ui_font_examples}} | {{ui_font_rationale}} |
+| **Body**      | {{body_style}}     | {{body_examples}}     | {{body_rationale}}     |
+| **UI**        | {{ui_font_style}}  | {{ui_font_examples}}  | {{ui_font_rationale}}  |
 
-*Reference: [Typography Classification](../../../docs/models/design-nomenclature/typography-classification.md)*
+_Reference: [Typography Classification](../../../docs/models/design-nomenclature/typography-classification.md)_
 
 ---
 
@@ -118,14 +122,14 @@
 
 ### Key Layout Elements
 
-| Element | Approach | Notes |
-|---------|----------|-------|
-| **Hero Section** | {{hero_approach}} | {{hero_notes}} |
+| Element            | Approach           | Notes             |
+| ------------------ | ------------------ | ----------------- |
+| **Hero Section**   | {{hero_approach}}  | {{hero_notes}}    |
 | **Content Layout** | {{content_layout}} | {{content_notes}} |
-| **Navigation** | {{nav_approach}} | {{nav_notes}} |
-| **Cards/Modules** | {{card_approach}} | {{card_notes}} |
+| **Navigation**     | {{nav_approach}}   | {{nav_notes}}     |
+| **Cards/Modules**  | {{card_approach}}  | {{card_notes}}    |
 
-*Reference: [Layout Terminology](../../../docs/models/design-nomenclature/layout-terminology.md)*
+_Reference: [Layout Terminology](../../../docs/models/design-nomenclature/layout-terminology.md)_
 
 ---
 
@@ -138,12 +142,13 @@
 ### Specific Effects
 
 | Effect | Usage | Notes |
-|--------|-------|-------|
+| ------ | ----- | ----- |
+
 {{#each effects}}
 | {{this.effect}} | {{this.usage}} | {{this.notes}} |
 {{/each}}
 
-*Reference: [Visual Effects](../../../docs/models/design-nomenclature/visual-effects.md)*
+_Reference: [Visual Effects](../../../docs/models/design-nomenclature/visual-effects.md)_
 
 ---
 
@@ -156,7 +161,8 @@
 ### Image Sources
 
 | Type | Source | Notes |
-|------|--------|-------|
+| ---- | ------ | ----- |
+
 {{#each image_sources}}
 | {{this.type}} | {{this.source}} | {{this.notes}} |
 {{/each}}
@@ -164,18 +170,20 @@
 ### Image Guidelines
 
 {{#each image_guidelines}}
+
 - {{this}}
-{{/each}}
+  {{/each}}
 
 ---
 
 ## Design Constraints
 
-*From Platform Requirements and brand needs*
+_From Platform Requirements and brand needs_
 
 {{#each design_constraints}}
+
 - {{this}}
-{{/each}}
+  {{/each}}
 
 ---
 

@@ -314,7 +314,7 @@ export const test = base.extend({
   page: async ({ page }, use, testInfo) => {
     const logs: string[] = [];
 
-    page.on('console', (msg) => {
+    page.on('console', msg => {
       logs.push(`[${msg.type()}] ${msg.text()}`);
     });
 

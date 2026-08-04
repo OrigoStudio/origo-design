@@ -56,6 +56,7 @@ Read all prerequisite artifacts (Product Brief, Trigger Map) and detect whether 
 ### 1. Read Configuration
 
 Read `{project-root}/_bmad/wds/config.yaml` and extract:
+
 - `project_name`
 - `output_folder`
 - `user_name`
@@ -67,6 +68,7 @@ Read `{project-root}/_bmad/wds/config.yaml` and extract:
 Read `{output_folder}/A-Product-Brief/product-brief.md`
 
 **Extract and note:**
+
 - Site/app type (marketing site, SaaS, booking system, portfolio, etc.)
 - Business context and constraints
 - Technical platform (WordPress, custom, etc.)
@@ -78,6 +80,7 @@ Read `{output_folder}/A-Product-Brief/product-brief.md`
 Read `{output_folder}/B-Trigger-Map/trigger-map.md` (the hub document)
 
 **Extract and note:**
+
 - **Business Goals:** Vision statement, all objectives with priority tiers (Primary/Secondary/Tertiary)
 - **Personas:** For each persona:
   - Name and role
@@ -87,6 +90,7 @@ Read `{output_folder}/B-Trigger-Map/trigger-map.md` (the hub document)
   - Role in flywheel
 
 **Also read persona documents** if they exist:
+
 - `{output_folder}/B-Trigger-Map/02-*.md` (Primary persona)
 - `{output_folder}/B-Trigger-Map/03-*.md` (Secondary persona)
 - `{output_folder}/B-Trigger-Map/04-*.md` (Tertiary persona, if exists)
@@ -94,11 +98,13 @@ Read `{output_folder}/B-Trigger-Map/trigger-map.md` (the hub document)
 ### 4. Check for Existing Work
 
 **Check for resume situation:**
+
 - Does `{output_folder}/C-UX-Scenarios/` exist?
 - Are there any scenario files already?
 - Is there in-progress work in the design log (`{output_folder}/_progress/00-design-log.md`)?
 
 **If existing work found:**
+
 ```
 "I see we have existing scenario work:
 - [list what exists]
@@ -108,6 +114,7 @@ Should I:
 2. Review and adjust existing scenarios
 3. Start fresh"
 ```
+
 Wait for user response before proceeding.
 
 **If starting fresh:** Continue to next instruction.
@@ -115,6 +122,7 @@ Wait for user response before proceeding.
 ### 5. Present Context Summary
 
 Present to user:
+
 ```
 "Here's what I'm working with:
 

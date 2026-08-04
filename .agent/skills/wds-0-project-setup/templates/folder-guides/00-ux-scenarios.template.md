@@ -13,6 +13,7 @@
 Scenarios organize the product into meaningful user journeys. Each scenario groups related pages. Each page gets a full specification that a developer can build from.
 
 **Folder structure per scenario:**
+
 ```
 C-UX-Scenarios/
 ├── 00-ux-scenarios.md          ← This file (scenario guide + page index)
@@ -32,6 +33,7 @@ C-UX-Scenarios/
 ```
 
 **Learn more:**
+
 - WDS Course Module 08: Outline Scenarios — Design Experiences Not Screens
 - WDS Course Module 09: Conceptual Sketching
 - WDS Course Module 10: Storyboarding
@@ -43,10 +45,12 @@ C-UX-Scenarios/
 ## For Agents
 
 ### Scenario Outline (Saga)
+
 **Workflow:** `skill:wds-3-scenarios`
 **Agent trigger:** `SC` (Saga)
 
 ### Page Specifications (Freya)
+
 **Workflow:** `skill:wds-4-ux-design`
 **Agent trigger:** `UX` (Freya)
 **Page template:** `./resources/wds-4-ux-design/templates/page-specification.template.md`
@@ -55,10 +59,12 @@ C-UX-Scenarios/
 **Object types:** `./resources/wds-4-ux-design/object-types/`
 
 ### Specification Audit (Freya)
+
 **Workflow:** `skill:wds-4-ux-design`
 **Agent trigger:** `SA` (Freya)
 
 **Before writing any page specification:**
+
 1. Read `B-Trigger-Map/` — know the personas and their driving forces
 2. Read the page specification template — use it as your scaffold, not memory
 3. Discuss the page purpose with the user before filling in details

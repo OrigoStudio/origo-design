@@ -49,6 +49,7 @@ Capture the designer's STRUCTURAL vision - the founding principle or key feature
 {{understanding_of_concept}}
 
 **User response:**
+
 - [ ] Confirmed
 - [ ] Corrected
 
@@ -72,6 +73,7 @@ Capture the designer's STRUCTURAL vision - the founding principle or key feature
 ## Related Features
 
 Features that stem from this concept:
+
 1. {{feature_1}}
 2. {{feature_2}}
 3. {{feature_3}}

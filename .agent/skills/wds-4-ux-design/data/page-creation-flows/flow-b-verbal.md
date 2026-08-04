@@ -9,6 +9,7 @@
 <output>**Great! Let's build the page concept through conversation.**
 
 We'll define:
+
 - Page sections (what areas exist?)
 - Section purposes (why does each section exist?)
 - Key objects (what interactive elements?)
@@ -23,6 +24,7 @@ This creates a conceptual specification - the page where concept meets descripti
 <ask>**What are the main SECTIONS of this page?**
 
 Think about areas/blocks, like:
+
 - Header/Navigation
 - Hero/Banner
 - Content areas
@@ -44,14 +46,15 @@ For each section in sections_list:
   <ask>
   **{{section.name}}**
 
-  What is the PURPOSE of this section?
-  - What should the user understand/do here?
-  - Why does this section exist?
+What is the PURPOSE of this section?
 
-  Purpose:
-  </ask>
+- What should the user understand/do here?
+- Why does this section exist?
 
-  Store section.purpose
+Purpose:
+</ask>
+
+Store section.purpose
 End
 </action>
 
@@ -62,6 +65,7 @@ End
 <ask>**What are the KEY INTERACTIVE OBJECTS on this page?**
 
 Think about:
+
 - Buttons (CTAs, actions)
 - Forms (inputs, selectors)
 - Links (navigation, external)
@@ -118,6 +122,7 @@ Save to: C-UX-Scenarios/{{scenario_path}}/{{page_number}}-{{page_slug}}/{{page_n
 <output>✅ **Conceptual page specification created!**
 
 **What we defined:**
+
 - {{sections_list.length}} sections with purposes
 - {{key_objects.length}} key interactive objects
 - Complete user flow
@@ -125,6 +130,7 @@ Save to: C-UX-Scenarios/{{scenario_path}}/{{page_number}}-{{page_slug}}/{{page_n
 **Status:** CONCEPTUAL - Ready for visualization
 
 **Next steps:**
+
 1. Create sketch/wireframe based on this concept
 2. Upload visualization
 3. Run Page Process Workshop to enhance specification

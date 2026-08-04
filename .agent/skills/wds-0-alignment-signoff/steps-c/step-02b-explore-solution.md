@@ -77,11 +77,13 @@ If user starts with a solution idea:
 Display: "**Select an Option:** [C] Continue to step-02c-explore-why-it-matters"
 
 #### Menu Handling Logic:
+
 - IF C: Load, read entire file, then execute {nextStepFile}
 - IF M: Return to {workflowFile}
 - IF Any other comments or queries: help user respond then [Redisplay Menu Options]
 
 #### EXECUTION RULES:
+
 - ALWAYS halt and wait for user input after presenting menu
 - ONLY proceed to next step when user selects 'C'
 - User can chat or ask questions - always respond and then redisplay menu options
@@ -95,11 +97,13 @@ ONLY WHEN the solution idea and underlying realization are captured will you the
 ## 🚨 SYSTEM SUCCESS/FAILURE METRICS
 
 ### ✅ SUCCESS:
+
 - Solution idea is clearly captured
 - Underlying realization is identified and connected to the solution
 - User sees the relationship between their solution and the problem it addresses
 
 ### ❌ SYSTEM FAILURE:
+
 - Skipping the exploration of the underlying realization
 - Critiquing or dismissing the user's solution idea
 - Moving forward without connecting solution to realization

@@ -12,8 +12,8 @@ description: Preview selected design system components rendered in localhost
 ## INITIALIZATION
 
 ### Design Log
-Read `{output_folder}/_progress/00-design-log.md`. Check Current and Backlog for context.
 
+Read `{output_folder}/_progress/00-design-log.md`. Check Current and Backlog for context.
 
 ## Steps
 
@@ -65,4 +65,4 @@ If the user notes issues or desired changes:
 
 1. Update design log
 1. Stop localhost server
-2. Return to Phase 7 Activity Menu
+1. Return to Phase 7 Activity Menu

@@ -4,7 +4,7 @@ Load this file ONLY when bmad-brainstorming is invoked headless. It is quarantin
 
 ## Detection
 
-**If a human is sending messages in this session, you are interactive — no payload shape or phrasing overrides that.** Headless requires the *absence* of an interactive user. It is in effect only when one of these unambiguous machine signals holds:
+**If a human is sending messages in this session, you are interactive — no payload shape or phrasing overrides that.** Headless requires the _absence_ of an interactive user. It is in effect only when one of these unambiguous machine signals holds:
 
 - the caller sets a `headless: true` flag (or the equivalent argument the harness exposes),
 - the invocation comes from another skill or a non-interactive runner (no TTY, no user message stream),

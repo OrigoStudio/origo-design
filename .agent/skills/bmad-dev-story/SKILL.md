@@ -8,6 +8,7 @@ description: 'Execute story implementation following a context filled story spec
 **Goal:** Execute story implementation following a context filled story spec file.
 
 **Your Role:** Developer implementing the story.
+
 - Communicate all responses in {communication_language} and language MUST be tailored to {user_skill_level}
 - Generate all documents in {document_output_language}
 - Only modify the story file in these areas: YAML frontmatter `baseline_commit`, Tasks/Subtasks checkboxes, Dev Agent Record (Debug Log, Completion Notes), File List, Change Log, and Status
@@ -205,6 +206,7 @@ Activation is complete. If `activation_steps_prepend` or `activation_steps_appen
     </action>
     <action if="story file inaccessible">HALT: "Cannot develop story without access to story file"</action>
     <action if="incomplete task or subtask requirements ambiguous">ASK user to clarify or HALT</action>
+
   </step>
 
   <step n="2" goal="Load project context and story information">
@@ -218,6 +220,7 @@ Activation is complete. If `activation_steps_prepend` or `activation_steps_appen
     <output>✅ **Context Loaded**
       Story and project context available for implementation
     </output>
+
   </step>
 
   <step n="3" goal="Detect review continuation and extract review context">
@@ -258,6 +261,7 @@ Activation is complete. If `activation_steps_prepend` or `activation_steps_appen
         First incomplete task: {{first_task_description}}
       </output>
     </check>
+
   </step>
 
   <step n="4" goal="Mark story in-progress" tag="sprint-status">
@@ -307,6 +311,7 @@ Activation is complete. If `activation_steps_prepend` or `activation_steps_appen
       <output>ℹ️ No sprint status file exists - story progress will be tracked in story file only</output>
       <action>Set {{current_sprint_status}} = "no-sprint-tracking"</action>
     </check>
+
   </step>
 
   <step n="5" goal="Implement task following red-green-refactor cycle">
@@ -338,6 +343,7 @@ Activation is complete. If `activation_steps_prepend` or `activation_steps_appen
     <critical>NEVER proceed to next task until current task/subtask is complete AND tests pass</critical>
     <critical>Execute continuously without pausing until all tasks/subtasks are complete or explicit HALT condition</critical>
     <critical>Do NOT propose to pause for review until Step 9 completion gates are satisfied</critical>
+
   </step>
 
   <step n="6" goal="Author comprehensive tests">
@@ -406,6 +412,7 @@ Activation is complete. If `activation_steps_prepend` or `activation_steps_appen
     <action if="no tasks remain">
       <goto step="9">Completion</goto>
     </action>
+
   </step>
 
   <step n="9" goal="Story completion and mark for review" tag="sprint-status">
@@ -457,6 +464,7 @@ Activation is complete. If `activation_steps_prepend` or `activation_steps_appen
     <action if="regression failures exist">HALT - Fix regression issues before completing</action>
     <action if="File List is incomplete">HALT - Update File List with all changed files</action>
     <action if="definition-of-done validation fails">HALT - Address DoD failures before completing</action>
+
   </step>
 
   <step n="10" goal="Completion communication and user support">
@@ -494,7 +502,8 @@ Activation is complete. If `activation_steps_prepend` or `activation_steps_appen
       <action>Suggest checking {sprint_status} to see project progress</action>
     </check>
     <action>Remain flexible - allow user to choose their own path or ask for other assistance</action>
-  <action>Run: `python3 {project-root}/_bmad/scripts/resolve_customization.py --skill {skill-root} --key workflow.on_complete` — if the resolved value is non-empty, follow it as the final terminal instruction before exiting.</action>
-  </step>
+
+<action>Run: `python3 {project-root}/_bmad/scripts/resolve_customization.py --skill {skill-root} --key workflow.on_complete` — if the resolved value is non-empty, follow it as the final terminal instruction before exiting.</action>
+</step>
 
 </workflow>

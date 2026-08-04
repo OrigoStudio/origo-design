@@ -77,7 +77,6 @@ Before proceeding, verify:
 - Representative content available for testing
 - Profiling tools accessible
 
-
 ### Paths
 
 - `installed_path` = `{skill_root}`
@@ -112,9 +111,9 @@ Before proceeding, verify:
 | Mobile (High)     | 60         | 30          | Device dependent   |
 | Mobile (Standard) | 30         | 30          | Thermal throttling |
 
-  Filter this table to the user's actual target platforms. Adjust targets based on game genre and user input.
-  </action>
-  <action>Establish memory budgets per target platform:
+Filter this table to the user's actual target platforms. Adjust targets based on game genre and user input.
+</action>
+<action>Establish memory budgets per target platform:
 
 | Platform      | Total RAM | Game Budget | Notes               |
 | ------------- | --------- | ----------- | ------------------- |
@@ -134,8 +133,8 @@ Before proceeding, verify:
 | Fast travel  | < 5s   | 10s     |
 | Respawn      | < 3s   | 5s      |
 
-  Adjust based on genre (e.g., fast travel may not apply to linear games).
-  </action>
+Adjust based on genre (e.g., fast travel may not apply to linear games).
+</action>
 </step>
 
 <step n="2" goal="Identify Test Scenarios">
@@ -149,51 +148,56 @@ SCENARIO: Maximum Entity Count
   AND audio doesn't stutter
 
 SCENARIO: Particle System Stress
-  GIVEN combat with multiple effects
-  WHEN 20+ particle systems active
-  THEN frame rate degradation < 20%
-  AND memory allocation stable
+GIVEN combat with multiple effects
+WHEN 20+ particle systems active
+THEN frame rate degradation < 20%
+AND memory allocation stable
 
 SCENARIO: Draw Call Stress
-  GIVEN level with maximum visible geometry
-  WHEN camera shows worst-case view
-  THEN frame rate stays above minimum
-  AND no hitching or stuttering
+GIVEN level with maximum visible geometry
+WHEN camera shows worst-case view
+THEN frame rate stays above minimum
+AND no hitching or stuttering
+
 ```
   </action>
   <action>Define memory test scenarios:
 ```
+
 SCENARIO: Extended Play Session
-  GIVEN game running for 4+ hours
-  WHEN normal gameplay occurs
-  THEN memory usage remains stable
-  AND no memory leaks detected
-  AND no crash from fragmentation
+GIVEN game running for 4+ hours
+WHEN normal gameplay occurs
+THEN memory usage remains stable
+AND no memory leaks detected
+AND no crash from fragmentation
 
 SCENARIO: Level Transition
-  GIVEN player completes level
-  WHEN transitioning to new level
-  THEN previous level fully unloaded
-  AND memory baseline returns
-  AND no cumulative growth
+GIVEN player completes level
+WHEN transitioning to new level
+THEN previous level fully unloaded
+AND memory baseline returns
+AND no cumulative growth
+
 ```
   </action>
   <action>Define loading test scenarios:
 ```
+
 SCENARIO: Cold Boot
-  GIVEN game not in memory
-  WHEN launching game
-  THEN reaches interactive state in < target
-  AND loading feedback shown
-  AND no apparent hang
+GIVEN game not in memory
+WHEN launching game
+THEN reaches interactive state in < target
+AND loading feedback shown
+AND no apparent hang
 
 SCENARIO: Save/Load Performance
-  GIVEN large save file (max progress)
-  WHEN loading save
-  THEN completes in < target
-  AND no corruption
-  AND gameplay resumes smoothly
-```
+GIVEN large save file (max progress)
+WHEN loading save
+THEN completes in < target
+AND no corruption
+AND gameplay resumes smoothly
+
+````
   </action>
   <action>Adapt scenario details to match the specific game type and identified systems</action>
 </step>
@@ -215,8 +219,10 @@ public IEnumerator Performance_CombatScene_MaintainsFPS()
     var metrics = Measure.Custom(new SampleGroupDefinition("FPS"));
     Assert.Greater(metrics.Median, 30, "FPS should stay above 30");
 }
-```
+````
+
     </action>
+
   </check>
 
   <check if="engine == 'unreal'">
@@ -252,24 +258,27 @@ func test_performance_entity_stress():
     </action>
   </check>
 
-  <action>Define manual profiling checklists:
+<action>Define manual profiling checklists:
 
 **CPU Profiling**
+
 - [ ] Identify hotspots using engine profiler
 - [ ] Check GC frequency and allocation pressure
 - [ ] Verify multithreading usage and thread contention
 
 **GPU Profiling**
+
 - [ ] Draw call count at target scenes
 - [ ] Overdraw analysis on complex areas
 - [ ] Shader complexity assessment
 
 **Memory Profiling**
+
 - [ ] Heap allocation patterns over a 30-minute session
 - [ ] Asset memory usage by category
 - [ ] Leak detection across multiple level loads
-  </action>
-</step>
+      </action>
+      </step>
 
 <step n="4" goal="Create Benchmark Suite">
   <action>Define the benchmark levels and their purpose:
@@ -281,14 +290,10 @@ func test_performance_entity_stress():
 | Menu Navigation | UI performance           | 30s      |
 | Save/Load       | Persistence performance  | 30s      |
 
-  Adapt benchmark names and durations to match the actual game content.
-  </action>
-  <action>Define baseline capture process:
-    1. Run benchmarks on reference hardware (document hardware specs)
-    2. Record baseline metrics (avg FPS, P95 frame time, peak memory)
-    3. Set regression thresholds (e.g., 10% FPS degradation = fail, 5% memory growth = fail)
-    4. Integrate benchmarks into CI pipeline as gated checks
-  </action>
+Adapt benchmark names and durations to match the actual game content.
+</action>
+<action>Define baseline capture process: 1. Run benchmarks on reference hardware (document hardware specs) 2. Record baseline metrics (avg FPS, P95 frame time, peak memory) 3. Set regression thresholds (e.g., 10% FPS degradation = fail, 5% memory growth = fail) 4. Integrate benchmarks into CI pipeline as gated checks
+</action>
 </step>
 
 <step n="5" goal="Platform-Specific Testing">
@@ -330,6 +335,7 @@ func test_performance_entity_stress():
 # Performance Test Plan: {project_name}
 
 ## Performance Targets
+
 [FPS tables filtered to target platforms]
 [Memory budget tables]
 [Loading time targets]
@@ -337,40 +343,50 @@ func test_performance_entity_stress():
 ## Test Scenarios
 
 ### Frame Rate Tests
+
 [Stress test scenarios from Step 2]
 
 ### Memory Tests
+
 [Extended play and leak detection scenarios]
 
 ### Loading Tests
+
 [Boot, level load, save/load scenarios]
 
 ## Methodology
 
 ### Automated Tests
+
 [Engine-specific code examples]
 [CI integration instructions]
 
 ### Manual Profiling
+
 [Checklists from Step 3]
 [Tools to use per engine]
 
 ## Benchmark Suite
+
 [Benchmark definitions from Step 4]
 [Baseline capture process]
 [Regression thresholds]
 
 ## Platform Matrix
+
 [Platform-specific requirements from Step 5]
 
 ## Regression Criteria
+
 [Quantified thresholds: FPS drop %, memory growth %, load time delta]
 [CI gate configuration]
 
 ## Schedule
+
 [When performance tests run: nightly, per-sprint, pre-release]
 [Who reviews results and owns regressions]
 ```
+
   </action>
   <action>Load and apply `{validation}` checklist to verify all deliverables are complete</action>
   <action>Present a summary of what was produced and the recommended next steps to the user</action>

@@ -69,17 +69,21 @@ Create an agent experience file to track this visual generation session.
 # Visual Generation: {page-name}
 
 ## Inputs
+
 - **Page spec:** {path to page spec}
 - **Visual direction:** {path or "not available"}
 - **Design tokens:** {path or "not available"}
 
 ## Image Descriptions Extracted
+
 {filled in step B}
 
 ## Creative Direction
+
 {filled in step C -- user overrides recorded here}
 
 ## Generation Log
+
 {each generation appended here in step H}
 ```
 
@@ -96,8 +100,10 @@ Create an agent experience file to track this visual generation session.
 Scan the page specification for all objects that contain image descriptions in their **Content** fields. These are natural prompt seeds.
 
 **Look for patterns like:**
+
 ```markdown
 **Content:**
+
 - **Image:** [description of what the image shows]
 ```
 
@@ -155,16 +161,17 @@ What would you like to generate?
 
 **Scope determines prompt strategy:**
 
-| Scope | Prompt content | Best for |
-|-------|---------------|----------|
-| Full page | All sections compressed, layout focus | Understanding overall flow |
-| Section focus | One section expanded, full detail | Detailed design of key areas |
-| Image asset | Single image description + style context | Generating actual visual assets |
-| Wireframe | Layout structure only, grayscale boxes | Layout validation, pipeline step 1 |
+| Scope         | Prompt content                           | Best for                           |
+| ------------- | ---------------------------------------- | ---------------------------------- |
+| Full page     | All sections compressed, layout focus    | Understanding overall flow         |
+| Section focus | One section expanded, full detail        | Detailed design of key areas       |
+| Image asset   | Single image description + style context | Generating actual visual assets    |
+| Wireframe     | Layout structure only, grayscale boxes   | Layout validation, pipeline step 1 |
 
 **Recommended pipeline for full-page mockups:**
 
 If the user selects [P], recommend the **two-step wireframe pipeline** (see `NANO-BANANA-PROMPT-GUIDE.md`):
+
 1. First generate a clean wireframe [W] from the spec
 2. Then transform the wireframe into a polished mockup using edit mode
 
@@ -188,6 +195,7 @@ Provide file paths, or skip:
 Map provided paths to `input_image_path_1`, `input_image_path_2`, `input_image_path_3`.
 
 **Slot priority for edit mode:**
+
 - **Slot 1 = layout source** -- the image whose structure you want to preserve (wireframe, sketch, or previous mockup)
 - **Slot 2-3 = style references** -- photos, logos, or mood images that influence visual treatment
 - In edit mode, slot 1 controls layout; in generate mode, all slots influence style/subject equally
@@ -219,20 +227,22 @@ Follow the compression strategy from `NANO-BANANA-PROMPT-GUIDE.md`.
 7. **Brand atmosphere** -- mood words from visual direction
 
 **Compose system_instruction** (max 512 chars):
+
 - Brand voice + style direction
 - Technical constraints (viewport, style)
 
 **Set parameters:**
 
-| Parameter | Value |
-|-----------|-------|
-| `aspect_ratio` | Full page scroll: `9:16`, Desktop viewport: `16:9`, Tablet: `3:4`, Image asset: per spec. **CRITICAL in edit mode:** always pin this or model may change it and lose content |
-| `model_tier` | `pro` for first generation and wireframes, `flash` for quick iterations |
-| `mode` | `generate` for new images/wireframes, `edit` for wireframe->mockup or refinement |
-| `negative_prompt` | Generate: "lorem ipsum, placeholder, watermark". Edit from wireframe: "wireframe style, gray boxes, placeholder text, section labels" |
-| `output_path` | `{output_folder}/D-Design-System/01-Visual-Design/design-concepts/` |
+| Parameter         | Value                                                                                                                                                                        |
+| ----------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `aspect_ratio`    | Full page scroll: `9:16`, Desktop viewport: `16:9`, Tablet: `3:4`, Image asset: per spec. **CRITICAL in edit mode:** always pin this or model may change it and lose content |
+| `model_tier`      | `pro` for first generation and wireframes, `flash` for quick iterations                                                                                                      |
+| `mode`            | `generate` for new images/wireframes, `edit` for wireframe->mockup or refinement                                                                                             |
+| `negative_prompt` | Generate: "lorem ipsum, placeholder, watermark". Edit from wireframe: "wireframe style, gray boxes, placeholder text, section labels"                                        |
+| `output_path`     | `{output_folder}/D-Design-System/01-Visual-Design/design-concepts/`                                                                                                          |
 
 **Verify:** Total prompt must be under 8192 characters. If over:
+
 1. Drop section descriptions (keep names only)
 2. Drop secondary content (keep headlines, drop body text)
 3. Drop footer details
@@ -282,6 +292,7 @@ How does this look?
 
 **On [R] Refine:** Ask what to change, update prompt, regenerate from scratch.
 **On [E] Edit:** Use the generated image as `input_image_path_1` in edit mode with targeted instructions. Follow these rules:
+
 - **Always pin `aspect_ratio`** to match the current image -- omitting it causes content loss
 - **Be specific:** "Add a blue navigation bar with links Hem, Nyheter, Om oss, Hitta hit to the header" works better than "improve the header"
 - **One change at a time:** targeted edits succeed; broad "make it better" instructions cause section loss
@@ -296,11 +307,13 @@ How does this look?
 For projects with many similar pages (e.g., 11 vehicle type pages, 6 service pages, 4 seasonal articles), batch mode generates visuals across a page sequence.
 
 **When to Use Batch Mode:**
+
 - **Same layout, different content** -- Vehicle types, service pages, article pages
 - **Shared design system** -- All pages use the same colors, fonts, component patterns
 - **Image asset sequences** -- Hero images for a set of similar pages
 
 **When NOT to Use Batch Mode:**
+
 - Pages with significantly different layouts
 - First-time visual exploration (establish template first)
 - Pages where creative direction varies significantly

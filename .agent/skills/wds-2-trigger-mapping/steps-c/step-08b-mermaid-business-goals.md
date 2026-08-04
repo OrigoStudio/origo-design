@@ -58,11 +58,13 @@ Create properly formatted business goals nodes with emojis, ALL CAPS titles, key
 ### 1. Format Each Business Goal Node
 
 **Node Structure Template:**
+
 ```
 BGX["<br/>EMOJI TITLE<br/><br/>Point 1<br/>Point 2<br/>Point 3<br/><br/>"]
 ```
 
 **Required elements per node:**
+
 1. Start with `<br/>` (top padding)
 2. Emoji + Title in ALL CAPS
 3. Blank line (`<br/><br/>`)
@@ -72,6 +74,7 @@ BGX["<br/>EMOJI TITLE<br/><br/>Point 1<br/>Point 2<br/>Point 3<br/><br/>"]
 ### 2. Choose Appropriate Emoji
 
 Based on goal theme:
+
 - Revenue/Profitability: money bag
 - Customer Satisfaction: happy face
 - Efficiency/Speed: lightning bolt
@@ -103,11 +106,13 @@ Store business_goals_nodes and business_goals_count.
 Display: "**Select an Option:** [C] Continue to Format Platform Node | [M] Return to Activity Menu"
 
 #### Menu Handling Logic:
+
 - IF C: Load and execute {nextStepFile}
 - IF M: Return to {activityWorkflowFile}
 - IF Any other comments or queries: help user respond then [Redisplay Menu Options]
 
 #### EXECUTION RULES:
+
 - ALWAYS halt and wait for user input after presenting menu
 - User can chat or ask questions - always respond and then redisplay menu options
 
@@ -120,6 +125,7 @@ ONLY WHEN user selects [C] will you load the next step file. All business goal n
 ## 🚨 SYSTEM SUCCESS/FAILURE METRICS
 
 ### ✅ SUCCESS:
+
 - All business goal nodes formatted following template
 - Proper padding at top and bottom
 - Emoji + ALL CAPS titles
@@ -129,6 +135,7 @@ ONLY WHEN user selects [C] will you load the next step file. All business goal n
 - Nodes stored for assembly
 
 ### ❌ SYSTEM FAILURE:
+
 - Missing padding
 - HTML tags in nodes
 - Titles not in ALL CAPS

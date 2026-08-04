@@ -13,6 +13,7 @@
 The Design System captures reusable patterns that emerge during UX Design (Phase 4). It is not designed upfront — it crystallizes from real page specifications.
 
 **What goes here:**
+
 - **Design Tokens** — Colors, spacing, typography, shadows
 - **Components** — Buttons, inputs, cards, navigation elements
 - **Patterns** — Layouts, form structures, content blocks
@@ -20,15 +21,18 @@ The Design System captures reusable patterns that emerge during UX Design (Phase
 - **Assets** — Logos, icons, images, graphics
 
 **What does NOT go here:**
+
 - Page-specific content (that lives in `C-UX-Scenarios/`)
 - Business logic or API specs (that's BMM territory)
 - Aspirational components nobody uses yet
 
 **When to skip this phase:**
+
 - Using shadcn/ui or Material UI → the library IS your design system
 - Simple sites with Tailwind → tokens in `tailwind.config` are enough
 
 **Learn more:**
+
 - WDS Course Module 12: Functional Components — Patterns Emerge
 - WDS Course Module 13: Design System
 
@@ -75,6 +79,7 @@ D-Design-System/
 **Guide:** `./resources/agent-guides/freya/design-system.md`
 
 **Before creating any component:**
+
 1. Check if it already exists in the chosen component library
 2. Look at actual usage in `C-UX-Scenarios/` page specs — extract, don't invent
 3. Load the component template from the workflow templates folder
@@ -101,17 +106,17 @@ Nine tokens, symmetric around `space-md` (the baseline). Freya will propose pixe
 
 `space-md` is to spacing what `text-md` is to typography — the default you reach for first. It's the gap between paragraphs, between form fields, between list items. Everything else is relative to it: `space-sm` is tighter, `space-lg` is more generous.
 
-| Token | Value | Use |
-|-------|-------|-----|
-| space-3xs | — | Hairline gaps (icon-to-label, inline elements) |
-| space-2xs | — | Minimal spacing (badge padding, tight lists) |
-| space-xs | — | Tight spacing (within compact groups) |
-| space-sm | — | Small gaps (between related elements) |
-| **space-md** | — | **Default element spacing (the baseline)** |
-| space-lg | — | Comfortable spacing (card padding, form fields) |
-| space-xl | — | Section padding |
-| space-2xl | — | Section gaps |
-| space-3xl | — | Page-level breathing room |
+| Token        | Value | Use                                             |
+| ------------ | ----- | ----------------------------------------------- |
+| space-3xs    | —     | Hairline gaps (icon-to-label, inline elements)  |
+| space-2xs    | —     | Minimal spacing (badge padding, tight lists)    |
+| space-xs     | —     | Tight spacing (within compact groups)           |
+| space-sm     | —     | Small gaps (between related elements)           |
+| **space-md** | —     | **Default element spacing (the baseline)**      |
+| space-lg     | —     | Comfortable spacing (card padding, form fields) |
+| space-xl     | —     | Section padding                                 |
+| space-2xl    | —     | Section gaps                                    |
+| space-3xl    | —     | Page-level breathing room                       |
 
 ### Optical adjustments
 
@@ -127,6 +132,7 @@ In page specs, always annotate why:
 | Padding top | **space-lg - space-3xs** (optical: circular image adds perceived whitespace) |
 
 **Rules:**
+
 - Adjustments always use token math: `base ± correction`
 - Always annotate the reason — future readers need to know this wasn't a mistake
 - If adjusting by more than one step, the base token is probably wrong — reconsider
@@ -160,17 +166,17 @@ Replace the table below with your system's type tokens.
 
 Nine tokens, symmetric around `text-md` (body text). Freya will propose sizes during the first design session.
 
-| Token | Value | Use |
-|-------|-------|-----|
-| text-3xs | — | Fine print, legal text |
-| text-2xs | — | Metadata, timestamps |
-| text-xs | — | Captions, helper text |
-| text-sm | — | Labels, secondary text |
-| text-md | — | Body text (the baseline) |
-| text-lg | — | Emphasis, lead paragraphs |
-| text-xl | — | Subheadings |
-| text-2xl | — | Section titles, display text |
-| text-3xl | — | Hero headings, page titles |
+| Token    | Value | Use                          |
+| -------- | ----- | ---------------------------- |
+| text-3xs | —     | Fine print, legal text       |
+| text-2xs | —     | Metadata, timestamps         |
+| text-xs  | —     | Captions, helper text        |
+| text-sm  | —     | Labels, secondary text       |
+| text-md  | —     | Body text (the baseline)     |
+| text-lg  | —     | Emphasis, lead paragraphs    |
+| text-xl  | —     | Subheadings                  |
+| text-2xl | —     | Section titles, display text |
+| text-3xl | —     | Hero headings, page titles   |
 
 <!--
   text-md (body text) is typically 16px or 14px — the most common baseline on the web.

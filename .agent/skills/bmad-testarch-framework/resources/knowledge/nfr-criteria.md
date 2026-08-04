@@ -75,7 +75,7 @@ test.describe('Security NFR: Authentication & Authorization', () => {
 
     // Monitor console for password leaks
     const consoleLogs: string[] = [];
-    page.on('console', (msg) => consoleLogs.push(msg.text()));
+    page.on('console', msg => consoleLogs.push(msg.text()));
 
     await page.getByRole('button', { name: 'Sign In' }).click();
 
@@ -200,8 +200,8 @@ export default function () {
   // Test 1: Homepage load performance
   const homepageResponse = http.get(`${__ENV.BASE_URL}/`);
   check(homepageResponse, {
-    'homepage status is 200': (r) => r.status === 200,
-    'homepage loads in <2s': (r) => r.timings.duration < 2000,
+    'homepage status is 200': r => r.status === 200,
+    'homepage loads in <2s': r => r.timings.duration < 2000,
   });
   errorRate.add(homepageResponse.status !== 200);
 
@@ -210,8 +210,8 @@ export default function () {
     headers: { Authorization: `Bearer ${__ENV.API_TOKEN}` },
   });
   check(apiResponse, {
-    'API status is 200': (r) => r.status === 200,
-    'API responds in <500ms': (r) => r.timings.duration < 500,
+    'API status is 200': r => r.status === 200,
+    'API responds in <500ms': r => r.timings.duration < 500,
   });
   apiDuration.add(apiResponse.timings.duration);
   errorRate.add(apiResponse.status !== 200);
@@ -219,9 +219,9 @@ export default function () {
   // Test 3: Search endpoint under load
   const searchResponse = http.get(`${__ENV.BASE_URL}/api/search?q=laptop&limit=100`);
   check(searchResponse, {
-    'search status is 200': (r) => r.status === 200,
-    'search responds in <1s': (r) => r.timings.duration < 1000,
-    'search returns results': (r) => JSON.parse(r.body).results.length > 0,
+    'search status is 200': r => r.status === 200,
+    'search responds in <1s': r => r.timings.duration < 1000,
+    'search returns results': r => JSON.parse(r.body).results.length > 0,
   });
   errorRate.add(searchResponse.status !== 200);
 
@@ -302,7 +302,7 @@ import { test, expect } from '@playwright/test';
 test.describe('Reliability NFR: Error Handling & Recovery', () => {
   test('app remains functional when API returns 500 error', async ({ page, context }) => {
     // Mock API failure
-    await context.route('**/api/products', (route) => {
+    await context.route('**/api/products', route => {
       route.fulfill({ status: 500, body: JSON.stringify({ error: 'Internal Server Error' }) });
     });
 
@@ -320,7 +320,7 @@ test.describe('Reliability NFR: Error Handling & Recovery', () => {
   test('API client retries on transient failures (3 attempts)', async ({ page, context }) => {
     let attemptCount = 0;
 
-    await context.route('**/api/checkout', (route) => {
+    await context.route('**/api/checkout', route => {
       attemptCount++;
 
       // Fail first 2 attempts, succeed on 3rd
@@ -349,7 +349,9 @@ test.describe('Reliability NFR: Error Handling & Recovery', () => {
     await page.getByRole('button', { name: 'Refresh Data' }).click();
 
     // User sees offline indicator (not crash)
-    await expect(page.getByText('You are offline. Changes will sync when reconnected.')).toBeVisible();
+    await expect(
+      page.getByText('You are offline. Changes will sync when reconnected.')
+    ).toBeVisible();
 
     // Reconnect
     await context.setOffline(false);
@@ -383,7 +385,7 @@ test.describe('Reliability NFR: Error Handling & Recovery', () => {
   test('circuit breaker opens after 5 consecutive failures', async ({ page, context }) => {
     let failureCount = 0;
 
-    await context.route('**/api/recommendations', (route) => {
+    await context.route('**/api/recommendations', route => {
       failureCount++;
       route.fulfill({ status: 500, body: JSON.stringify({ error: 'Service Error' }) });
     });
@@ -391,7 +393,9 @@ test.describe('Reliability NFR: Error Handling & Recovery', () => {
     await page.goto('/product/123');
 
     // Wait for circuit breaker to open (fallback UI appears)
-    await expect(page.getByText('Recommendations temporarily unavailable')).toBeVisible({ timeout: 10000 });
+    await expect(page.getByText('Recommendations temporarily unavailable')).toBeVisible({
+      timeout: 10000,
+    });
 
     // Verify circuit breaker stopped making requests after threshold (should be ≤5)
     expect(failureCount).toBeLessThanOrEqual(5);
@@ -400,7 +404,7 @@ test.describe('Reliability NFR: Error Handling & Recovery', () => {
   test('rate limiting gracefully handles 429 responses', async ({ page, context }) => {
     let requestCount = 0;
 
-    await context.route('**/api/search', (route) => {
+    await context.route('**/api/search', route => {
       requestCount++;
 
       if (requestCount > 10) {
@@ -538,19 +542,22 @@ test.describe('Maintainability NFR: Observability Validation', () => {
     await context.addInitScript(() => {
       (window as any).Sentry = {
         captureException: (error: Error) => {
-          console.log('SENTRY_CAPTURE:', JSON.stringify({ message: error.message, stack: error.stack }));
+          console.log(
+            'SENTRY_CAPTURE:',
+            JSON.stringify({ message: error.message, stack: error.stack })
+          );
         },
       };
     });
 
-    page.on('console', (msg) => {
+    page.on('console', msg => {
       if (msg.text().includes('SENTRY_CAPTURE:')) {
         sentryEvents.push(JSON.parse(msg.text().replace('SENTRY_CAPTURE:', '')));
       }
     });
 
     // Trigger error by mocking API failure
-    await context.route('**/api/products', (route) => {
+    await context.route('**/api/products', route => {
       route.fulfill({ status: 500, body: JSON.stringify({ error: 'Database Error' }) });
     });
 

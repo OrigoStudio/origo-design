@@ -13,8 +13,8 @@ borrows_from: Phase 5 (development)
 ## INITIALIZATION
 
 ### Design Log
-Read `{output_folder}/_progress/00-design-log.md`. Check Current and Backlog for context.
 
+Read `{output_folder}/_progress/00-design-log.md`. Check Current and Backlog for context.
 
 ## Steps
 
@@ -47,6 +47,7 @@ Before writing code, understand what exists:
 4. Note any existing design tokens or theme configuration
 
 Present a brief implementation plan:
+
 - Which files will change
 - What new files are needed (if any)
 - Estimated complexity

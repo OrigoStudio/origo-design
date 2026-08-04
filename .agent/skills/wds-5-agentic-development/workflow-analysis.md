@@ -22,6 +22,7 @@ description: Understand an existing codebase through systematic exploration
 ## INITIALIZATION
 
 ### Design Log
+
 Read `{output_folder}/_progress/00-design-log.md`. Check Current and Backlog for context.
 
 ### Essential Guides
@@ -35,12 +36,12 @@ Read `{output_folder}/_progress/00-design-log.md`. Check Current and Backlog for
 
 Execute steps in `./steps-a/`:
 
-| Step | File | Purpose |
-|------|------|---------|
-| 01 | step-01-define-question.md | Articulate the question, define scope and output |
-| 02 | step-02-scan-codebase.md | Scan structure, tech stack, entry points |
-| 03 | step-03-map-architecture.md | Map components, data flow, dependencies |
-| 04 | step-04-document-findings.md | Create architecture document with diagrams |
+| Step | File                         | Purpose                                          |
+| ---- | ---------------------------- | ------------------------------------------------ |
+| 01   | step-01-define-question.md   | Articulate the question, define scope and output |
+| 02   | step-02-scan-codebase.md     | Scan structure, tech stack, entry points         |
+| 03   | step-03-map-architecture.md  | Map components, data flow, dependencies          |
+| 04   | step-04-document-findings.md | Create architecture document with diagrams       |
 
 **Flow:** 01 → 02 → 03 → 04
 

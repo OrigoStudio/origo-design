@@ -67,12 +67,14 @@ Complete    Is design system incomplete?
 **Decision:** ✅ **Extract to Figma**
 
 **Reason:** Need to establish design foundation
+
 - Define color palette
 - Set typography scale
 - Create spacing system
 - Build first components
 
 **Workflow:**
+
 1. Create basic prototype (functional)
 2. Extract to Figma
 3. Define complete design system
@@ -88,11 +90,13 @@ Complete    Is design system incomplete?
 **Decision:** ❌ **Don't Extract**
 
 **Reason:** Design system sufficient
+
 - Reuse existing components
 - Apply existing tokens
 - Minor variations can be CSS tweaks
 
 **Workflow:**
+
 1. Create prototype with design system
 2. Test functionality
 3. Make minor CSS adjustments if needed
@@ -107,12 +111,14 @@ Complete    Is design system incomplete?
 **Decision:** ✅ **Extract to Figma**
 
 **Reason:** Need to design new component properly
+
 - Define component structure
 - Create variants and states
 - Document design tokens
 - Add to design system
 
 **Workflow:**
+
 1. Create basic prototype
 2. Extract to Figma
 3. Design new component thoroughly
@@ -129,12 +135,14 @@ Complete    Is design system incomplete?
 **Decision:** ✅ **Extract to Figma**
 
 **Reason:** Need polished visuals for presentation
+
 - Apply professional styling
 - Refine visual hierarchy
 - Add polish (shadows, effects)
 - Create presentation-ready mockups
 
 **Workflow:**
+
 1. Extract current prototype
 2. Polish in Figma quickly
 3. Present Figma mockups
@@ -150,11 +158,13 @@ Complete    Is design system incomplete?
 **Decision:** ❌ **Don't Extract**
 
 **Reason:** Too early for polish
+
 - Focus on functionality
 - Validate concepts first
 - Avoid polishing throwaway work
 
 **Workflow:**
+
 1. Create basic prototypes
 2. Test with users
 3. Iterate on functionality
@@ -189,12 +199,14 @@ Complete    Is design system incomplete?
 ### Benefits of Extracting
 
 **Design Quality:**
+
 - Professional visual polish
 - Consistent design system
 - Reusable components
 - Better stakeholder buy-in
 
 **Long-term Efficiency:**
+
 - Design system grows
 - Future prototypes faster
 - Reduced design debt
@@ -203,6 +215,7 @@ Complete    Is design system incomplete?
 ### Costs of Extracting
 
 **Time Investment:**
+
 - Extraction process: 15-30 min
 - Figma refinement: 1-3 hours
 - Design system update: 30-60 min
@@ -210,6 +223,7 @@ Complete    Is design system incomplete?
 - **Total: 2-5 hours per page**
 
 **Workflow Overhead:**
+
 - Context switching
 - Tool learning curve
 - Sync maintenance
@@ -222,6 +236,7 @@ Complete    Is design system incomplete?
 ### High Priority: Extract
 
 **These pages justify the time investment:**
+
 - Landing pages (first impression)
 - Onboarding flows (user retention)
 - Checkout/payment (conversion critical)
@@ -231,6 +246,7 @@ Complete    Is design system incomplete?
 ### Lower Priority: Skip
 
 **These pages can stay basic:**
+
 - Admin panels (internal use)
 - Error pages (rare views)
 - Settings pages (utility focus)
@@ -243,11 +259,13 @@ Complete    Is design system incomplete?
 ### Extract When:
 
 **Designer-Developer Collaboration:**
+
 - Designer needs to define visual direction
 - Developer needs clear component specs
 - Team needs shared design language
 
 **Stakeholder Communication:**
+
 - Client needs to approve visuals
 - Marketing needs branded materials
 - Sales needs demo materials
@@ -255,11 +273,13 @@ Complete    Is design system incomplete?
 ### Skip When:
 
 **Solo Development:**
+
 - One person doing design + dev
 - Direct implementation faster
 - No handoff needed
 
 **Internal Tools:**
+
 - Team understands context
 - Functionality over aesthetics
 - Rapid iteration valued
@@ -271,6 +291,7 @@ Complete    Is design system incomplete?
 ### Extract if Prototype Has:
 
 **Visual Issues:**
+
 - Inconsistent spacing
 - Poor typography hierarchy
 - Clashing colors
@@ -278,6 +299,7 @@ Complete    Is design system incomplete?
 - Unclear visual hierarchy
 
 **Missing Design Elements:**
+
 - No hover states
 - Missing loading states
 - Incomplete error states
@@ -285,6 +307,7 @@ Complete    Is design system incomplete?
 - Basic placeholder styling
 
 **Component Gaps:**
+
 - Custom components needed
 - Existing components insufficient
 - New patterns required
@@ -293,6 +316,7 @@ Complete    Is design system incomplete?
 ### Don't Extract if Prototype Has:
 
 **Sufficient Quality:**
+
 - Consistent spacing
 - Clear hierarchy
 - Appropriate colors
@@ -300,6 +324,7 @@ Complete    Is design system incomplete?
 - Professional appearance
 
 **Complete Design System Coverage:**
+
 - All components available
 - States defined
 - Variants sufficient
@@ -312,6 +337,7 @@ Complete    Is design system incomplete?
 ### First Iteration
 
 **Always extract if:**
+
 - Establishing design foundation
 - First page in project
 - Setting visual direction
@@ -319,6 +345,7 @@ Complete    Is design system incomplete?
 ### Subsequent Iterations
 
 **Extract only if:**
+
 - Significant design system gaps
 - New component types needed
 - Visual quality insufficient
@@ -326,6 +353,7 @@ Complete    Is design system incomplete?
 ### Final Iteration
 
 **Extract if:**
+
 - Stakeholder presentation
 - Production launch
 - Marketing materials needed
@@ -337,11 +365,13 @@ Complete    Is design system incomplete?
 ### Example 1: E-commerce Product Page
 
 **Phase 1: Sketch (Concept)**
+
 - Designer creates hand-drawn sketch of product page
 - Shows product gallery, reviews section, rating display
 - Rough layout and component placement
 
 **Phase 2: Specification (Phase 4C)**
+
 - Freya analyzes sketch
 - Creates detailed specification:
   - Product gallery: Image carousel with thumbnails
@@ -351,11 +381,13 @@ Complete    Is design system incomplete?
 - Content and interactions specified
 
 **Phase 3: Prototype (Phase 4D)**
+
 - Freya builds functional HTML prototype
 - Uses existing design system (buttons, inputs, cards)
 - Product gallery, reviews, ratings are basic/functional but unpolished
 
 **Initial Assessment:**
+
 - Prototype works functionally ✅
 - Design system has: buttons, inputs, cards
 - Missing: product gallery, reviews component, rating stars (visual refinement needed)
@@ -365,32 +397,22 @@ Complete    Is design system incomplete?
 **Phase 4: Figma Refinement**
 
 Freya automatically:
+
 1. Analyzes prototype components
 2. Identifies missing components (gallery, reviews, ratings)
 3. Injects to Figma via MCP server
 4. Page: `02-Product-Catalog / 2.3-Product-Detail`
 
-Designer in Figma:
-5. Designs product gallery component (image zoom, transitions)
-6. Designs reviews component (typography, spacing, layout)
-7. Designs rating component (star icons, colors, states)
-8. Applies design tokens (colors, spacing, typography)
+Designer in Figma: 5. Designs product gallery component (image zoom, transitions) 6. Designs reviews component (typography, spacing, layout) 7. Designs rating component (star icons, colors, states) 8. Applies design tokens (colors, spacing, typography)
 
 **Phase 5: Design System Update**
 
-Freya automatically:
-9. Reads refined components from Figma
-10. Extracts design tokens
-11. Updates design system:
-    - `D-Design-System/components/product-gallery.md`
-    - `D-Design-System/components/review-card.md`
-    - `D-Design-System/components/rating-stars.md`
+Freya automatically: 9. Reads refined components from Figma 10. Extracts design tokens 11. Updates design system: - `D-Design-System/components/product-gallery.md` - `D-Design-System/components/review-card.md` - `D-Design-System/components/rating-stars.md`
 
-**Phase 6: Re-render**
-12. Freya re-renders prototype with enhanced design system
-13. Prototype now polished and professional
+**Phase 6: Re-render** 12. Freya re-renders prototype with enhanced design system 13. Prototype now polished and professional
 
-**Result:** 
+**Result:**
+
 - ✅ Polished product page
 - ✅ 3 new reusable components in design system
 - ✅ Specification updated (if design evolved)
@@ -401,11 +423,13 @@ Freya automatically:
 ### Example 2: Settings Page
 
 **Phase 1: Sketch (Concept)**
+
 - Designer creates simple sketch of settings page
 - Shows form fields, toggles, save button
 - Standard layout, no custom components
 
 **Phase 2: Specification (Phase 4C)**
+
 - Freya analyzes sketch
 - Creates specification:
   - Form fields: Email, password, notifications
@@ -414,6 +438,7 @@ Freya automatically:
 - All components exist in design system
 
 **Phase 3: Prototype (Phase 4D)**
+
 - Freya builds HTML prototype
 - Uses existing design system components:
   - Form inputs (already designed)
@@ -422,6 +447,7 @@ Freya automatically:
 - Prototype looks polished immediately
 
 **Initial Assessment:**
+
 - Prototype works functionally ✅
 - Prototype looks polished ✅
 - Design system has: forms, toggles, buttons
@@ -431,12 +457,14 @@ Freya automatically:
 **Decision:** ❌ Don't Extract
 
 **Actions:**
+
 1. Apply existing design system ✅ (already done)
 2. Minor CSS tweaks for spacing (if needed)
 3. Test functionality ✅
 4. Complete ✅
 
-**Result:** 
+**Result:**
+
 - ✅ Functional, polished page in 30 minutes
 - ✅ No Figma extraction needed
 - ✅ Design system reuse successful
@@ -446,6 +474,7 @@ Freya automatically:
 ### Example 3: Landing Page
 
 **Phase 1: Sketch (Concept)**
+
 - Designer creates detailed sketch of landing page
 - Hero section with headline, subtext, CTA
 - Feature cards with icons and descriptions
@@ -453,6 +482,7 @@ Freya automatically:
 - Multiple CTA sections throughout
 
 **Phase 2: Specification (Phase 4C)**
+
 - Freya analyzes sketch
 - Creates comprehensive specification:
   - Hero section: Large headline, supporting text, primary CTA
@@ -463,12 +493,14 @@ Freya automatically:
 - Multi-language content specified
 
 **Phase 3: Prototype (Phase 4D)**
+
 - Freya builds functional HTML prototype
 - Uses basic design system components
 - Hero, features, testimonials are functional but basic
 - Client presentation in one week (high priority!)
 
 **Initial Assessment:**
+
 - Prototype works functionally ✅
 - Design system has basic components
 - Needs visual refinement: hero section, feature cards, testimonials, CTA sections
@@ -479,34 +511,22 @@ Freya automatically:
 **Phase 4: Figma Refinement**
 
 Freya automatically:
+
 1. Analyzes prototype components
 2. Identifies components needing refinement (hero, features, testimonials, CTAs)
 3. Injects to Figma via MCP server
 4. Page: `01-Marketing / 1.1-Landing-Page`
 
-Designer in Figma:
-5. Designs hero component (brand-critical, high impact)
-6. Designs feature cards (icons, layout, spacing)
-7. Designs testimonial component (photos, typography)
-8. Polishes CTA sections (visual hierarchy, contrast)
-9. Applies brand colors, typography, spacing tokens
+Designer in Figma: 5. Designs hero component (brand-critical, high impact) 6. Designs feature cards (icons, layout, spacing) 7. Designs testimonial component (photos, typography) 8. Polishes CTA sections (visual hierarchy, contrast) 9. Applies brand colors, typography, spacing tokens
 
 **Phase 5: Design System Update**
 
-Freya automatically:
-10. Reads refined components from Figma
-11. Extracts design tokens and components
-12. Updates design system:
-    - `D-Design-System/components/hero-section.md`
-    - `D-Design-System/components/feature-card.md`
-    - `D-Design-System/components/testimonial.md`
-    - `D-Design-System/components/cta-section.md`
+Freya automatically: 10. Reads refined components from Figma 11. Extracts design tokens and components 12. Updates design system: - `D-Design-System/components/hero-section.md` - `D-Design-System/components/feature-card.md` - `D-Design-System/components/testimonial.md` - `D-Design-System/components/cta-section.md`
 
-**Phase 6: Re-render for Presentation**
-13. Freya re-renders prototype with enhanced design system
-14. Prototype now presentation-ready
+**Phase 6: Re-render for Presentation** 13. Freya re-renders prototype with enhanced design system 14. Prototype now presentation-ready
 
-**Result:** 
+**Result:**
+
 - ✅ Polished, professional landing page
 - ✅ 4 new reusable components for future marketing pages
 - ✅ Client presentation ready
@@ -544,16 +564,16 @@ Freya automatically:
 
 ## Decision Matrix
 
-| Factor | Extract | Don't Extract |
-|--------|---------|---------------|
-| **Design System Maturity** | Empty/Growing | Mature |
-| **Visual Quality** | Needs polish | Sufficient |
-| **Component Coverage** | Gaps exist | Complete |
-| **Stakeholder Needs** | Presentation | Internal |
-| **Time Available** | 2-5 hours | < 1 hour |
-| **Page Importance** | High priority | Low priority |
-| **Iteration Phase** | First/Final | Middle |
-| **Team Size** | Collaborative | Solo |
+| Factor                     | Extract       | Don't Extract |
+| -------------------------- | ------------- | ------------- |
+| **Design System Maturity** | Empty/Growing | Mature        |
+| **Visual Quality**         | Needs polish  | Sufficient    |
+| **Component Coverage**     | Gaps exist    | Complete      |
+| **Stakeholder Needs**      | Presentation  | Internal      |
+| **Time Available**         | 2-5 hours     | < 1 hour      |
+| **Page Importance**        | High priority | Low priority  |
+| **Iteration Phase**        | First/Final   | Middle        |
+| **Team Size**              | Collaborative | Solo          |
 
 **Score:** 5+ "Extract" factors → Extract to Figma
 **Score:** 5+ "Don't Extract" factors → Skip extraction
@@ -641,6 +661,7 @@ Before deciding, ask yourself:
 ## Summary
 
 **Extract to Figma when:**
+
 - Design system is incomplete
 - Prototype needs visual polish
 - New components required
@@ -649,6 +670,7 @@ Before deciding, ask yourself:
 - Time available for refinement
 
 **Skip extraction when:**
+
 - Design system covers all needs
 - Prototype looks sufficient
 - Rapid iteration more important

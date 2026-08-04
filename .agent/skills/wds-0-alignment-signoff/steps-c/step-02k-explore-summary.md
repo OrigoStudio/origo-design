@@ -64,6 +64,7 @@ Explore the summary.
 **Reference**: `{sectionRoutingFile}` (Section 10: Summary)
 
 **Questions to explore**:
+
 - "What are the key points?"
 - "What should stakeholders remember?"
 - "What's the main takeaway?"
@@ -75,11 +76,13 @@ Explore the summary.
 Display: "**Select an Option:** [C] Continue to step-03a-reflect-back"
 
 #### Menu Handling Logic:
+
 - IF C: Load, read entire file, then execute {nextStepFile}
 - IF M: Return to {workflowFile}
 - IF Any other comments or queries: help user respond then [Redisplay Menu Options]
 
 #### EXECUTION RULES:
+
 - ALWAYS halt and wait for user input after presenting menu
 - ONLY proceed to next step when user selects 'C'
 - User can chat or ask questions - always respond and then redisplay menu options
@@ -93,11 +96,13 @@ ONLY WHEN the user has identified key summary points will you then load and read
 ## 🚨 SYSTEM SUCCESS/FAILURE METRICS
 
 ### ✅ SUCCESS:
+
 - Key takeaways from all sections are identified
 - Summary is brief and compelling
 - User feels all sections are well represented
 
 ### ❌ SYSTEM FAILURE:
+
 - Writing the summary without user input
 - Creating an overly long summary
 - Missing key points from explored sections

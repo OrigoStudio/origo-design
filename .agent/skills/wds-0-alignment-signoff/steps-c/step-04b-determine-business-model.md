@@ -94,11 +94,13 @@ Which model fits your situation?"
 Display: "**Select an Option:** [C] Continue to step-05a-contract-overview"
 
 #### Menu Handling Logic:
+
 - IF C: Load, read entire file, then execute {nextStepFile}
 - IF M: Return to {workflowFile}
 - IF Any other comments or queries: help user respond then [Redisplay Menu Options]
 
 #### EXECUTION RULES:
+
 - ALWAYS halt and wait for user input after presenting menu
 - ONLY proceed to next step when user selects 'C'
 - User can chat or ask questions - always respond and then redisplay menu options
@@ -112,11 +114,13 @@ ONLY WHEN the business model is selected and confirmed will you then load and re
 ## 🚨 SYSTEM SUCCESS/FAILURE METRICS
 
 ### ✅ SUCCESS:
+
 - All business model options are clearly presented with examples
 - User's selection is captured and confirmed
 - Implications for contract structure are understood
 
 ### ❌ SYSTEM FAILURE:
+
 - Choosing the business model for the user
 - Not explaining what each model means for the contract
 - Proceeding without confirmation

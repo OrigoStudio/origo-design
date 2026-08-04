@@ -13,12 +13,12 @@ The runner is platform-agnostic. Everything runtime-specific (how a skill is inv
 
 Each mode answers a different question about a skill. Pick the one that matches what the user is asking, or run several.
 
-| Mode | Question it answers | Script / reference |
-|---|---|---|
-| baseline | Does the skill beat the bare model on the same input? | `references/eval-format.md`, `scripts/run_evals.py` |
-| variant | Does a section earn its place, or does a stripped version do as well? | `references/eval-format.md`, `scripts/run_evals.py` |
-| quality | Does the output meet the named rubric? | `references/grader.md`, `references/eval-format.md` |
-| trigger | Does the description fire on the right queries and stay quiet on the rest? | `references/platform-adapter.md`, `scripts/run_triggers.py` |
+| Mode     | Question it answers                                                        | Script / reference                                          |
+| -------- | -------------------------------------------------------------------------- | ----------------------------------------------------------- |
+| baseline | Does the skill beat the bare model on the same input?                      | `references/eval-format.md`, `scripts/run_evals.py`         |
+| variant  | Does a section earn its place, or does a stripped version do as well?      | `references/eval-format.md`, `scripts/run_evals.py`         |
+| quality  | Does the output meet the named rubric?                                     | `references/grader.md`, `references/eval-format.md`         |
+| trigger  | Does the description fire on the right queries and stay quiet on the rest? | `references/platform-adapter.md`, `scripts/run_triggers.py` |
 
 Baseline runs every case twice — once with the skill staged into the clean working directory and once with nothing staged — so the bare model is measured as the long-term floor under identical conditions. Variant runs the full skill against a stripped smallest-version of itself to settle whether a section is doing real work. Quality grades one config's output against a rubric with the read-only grader. Trigger measures real firing through the adapter and can optimize the description across rounds; the optimization loop lives in `references/description-optimization.md`.
 

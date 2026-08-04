@@ -60,7 +60,7 @@ async function getMagicLinkFromEmail(email: string): Promise<string> {
     },
     {
       timeout: 30000, // 30 seconds
-    },
+    }
   );
 
   // Mailosaur extracts links automatically - no parsing needed!
@@ -164,7 +164,7 @@ describe('Magic Link Authentication', () => {
     cy.mailosaurGetMessage(serverId, { sentTo: testEmail })
       .its('html.links.0.href') // Mailosaur extracts links automatically!
       .should('exist')
-      .then((magicLink) => {
+      .then(magicLink => {
         cy.log(`Magic link: ${magicLink}`);
         cy.visit(magicLink);
       });
@@ -262,7 +262,7 @@ import { dataSession } from 'cypress-data-session';
  * - First run: Requests email, extracts link, authenticates
  * - Subsequent runs: Reuses cached session (no email)
  */
-Cypress.Commands.add('authViaMagicLink', (email) => {
+Cypress.Commands.add('authViaMagicLink', email => {
   return dataSession({
     name: `magic-link-${email}`,
 
@@ -278,7 +278,7 @@ Cypress.Commands.add('authViaMagicLink', (email) => {
       })
         .its('html.links.0.href')
         .should('exist')
-        .then((magicLink) => {
+        .then(magicLink => {
           cy.visit(magicLink);
         });
 
@@ -286,18 +286,18 @@ Cypress.Commands.add('authViaMagicLink', (email) => {
       cy.get('[data-cy="user-menu"]', { timeout: 10000 }).should('be.visible');
 
       // Preserve authentication state
-      return cy.getAllLocalStorage().then((storage) => {
+      return cy.getAllLocalStorage().then(storage => {
         return { storage, email };
       });
     },
 
     // Validate cached session is still valid
-    validate: (cached) => {
+    validate: cached => {
       return cy.wrap(Boolean(cached?.storage));
     },
 
     // Recreate session from cache (no email needed)
-    recreate: (cached) => {
+    recreate: cached => {
       // Restore localStorage
       cy.setLocalStorage(cached.storage);
       cy.visit('/dashboard');
@@ -365,7 +365,7 @@ test.describe('Email Auth Negative Flows', () => {
       JSON.stringify({
         email: 'test@example.com',
         exp: Date.now() - 24 * 60 * 60 * 1000, // 24 hours ago
-      }),
+      })
     ).toString('base64');
 
     const expiredLink = `http://localhost:3000/auth/verify?token=${expiredToken}`;
@@ -485,7 +485,9 @@ test.describe('Email Auth Negative Flows', () => {
 
       if (errorVisible) {
         console.log(`Rate limit hit after ${i + 1} requests`);
-        await expect(page.getByTestId('rate-limit-error')).toContainText(/too many.*requests|rate.*limit/i);
+        await expect(page.getByTestId('rate-limit-error')).toContainText(
+          /too many.*requests|rate.*limit/i
+        );
         return;
       }
     }
@@ -543,7 +545,7 @@ function confirmRegistration(email) {
   return cy
     .mailosaurGetMessage(Cypress.env('MAILOSAUR_SERVERID'), { sentTo: email })
     .its('html.codes.0.value') // Mailosaur auto-extracts codes!
-    .then((code) => {
+    .then(code => {
       cy.intercept('POST', 'https://cognito-idp*').as('cognito');
       cy.get('#verification-code').type(code, { delay: 0 });
       cy.contains('button', 'Confirm registration').click();

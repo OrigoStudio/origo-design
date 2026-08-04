@@ -25,6 +25,7 @@ Design is not a handoff between phases. It's a loop: discuss → visualize → a
 ```
 
 Steps 4 and 8 are the iteration loops:
+
 - **Step 4** is fast — Excalidraw JSON manipulation, seconds per change
 - **Step 8** is real — actual browser rendering, actual responsive breakpoints
 
@@ -49,6 +50,7 @@ Nobody argues about 2px of padding in a sketchy wireframe. People focus on the r
 Excalidraw files are plain JSON. The agent generates wireframes programmatically (creating rectangles, text, groups). The user opens the same file in VS Code's Excalidraw extension and drags elements around visually. Both can modify the same artifact.
 
 No other design tool offers this:
+
 - Figma requires API access
 - Pencil uses encrypted files
 - AI image generators produce dead images that can't be edited
@@ -58,6 +60,7 @@ No other design tool offers this:
 The agent can read and write `.excalidraw` JSON, but it cannot export to PNG — that requires the Excalidraw UI. This limitation is a feature: the manual export becomes an approval gate.
 
 **The pattern:**
+
 1. Agent creates/edits the `.excalidraw` file (JSON)
 2. User reviews in Excalidraw, can tweak things directly
 3. When agreed → user exports PNG and saves it alongside the `.excalidraw` file
@@ -93,6 +96,7 @@ space-3xs  space-2xs  space-xs  space-sm  space-md  space-lg  space-xl  space-2x
 ```
 
 **The rules:**
+
 - Specs always use token names, never raw pixel values
 - Every section in a page spec declares its padding and element gap using tokens
 - If a spacing value isn't in the scale, it doesn't belong in the spec
@@ -104,13 +108,13 @@ space-3xs  space-2xs  space-xs  space-sm  space-md  space-lg  space-xl  space-2x
 
 ## Tool Roles
 
-| Tool | Role | When |
-|------|------|------|
-| **Excalidraw** | Wireframes and layout iteration | Steps 3-5 |
-| **Puppeteer** | Browser screenshots for visual review | Step 8 |
-| **Nano Banana** | Image asset generation (photos, illustrations) | Asset creation only |
-| **Design tokens** | Heading scale, spacing scale, component tokens | Step 9 |
-| **Page specs** | Source of truth for structure, content, and spacing | Steps 2, 6 |
+| Tool              | Role                                                | When                |
+| ----------------- | --------------------------------------------------- | ------------------- |
+| **Excalidraw**    | Wireframes and layout iteration                     | Steps 3-5           |
+| **Puppeteer**     | Browser screenshots for visual review               | Step 8              |
+| **Nano Banana**   | Image asset generation (photos, illustrations)      | Asset creation only |
+| **Design tokens** | Heading scale, spacing scale, component tokens      | Step 9              |
+| **Page specs**    | Source of truth for structure, content, and spacing | Steps 2, 6          |
 
 ### Tool boundaries
 
@@ -125,6 +129,7 @@ space-3xs  space-2xs  space-xs  space-sm  space-md  space-lg  space-xl  space-2x
 When the wireframe and spec disagree, the spec must be updated before implementation begins.
 
 **The sequence:**
+
 1. Wireframe changes during iteration (step 4)
 2. Agent and user agree on the wireframe
 3. Agent updates the spec to match (step 5)
@@ -157,6 +162,7 @@ When the user requests a spacing adjustment, the agent's job is to **observe and
 The designer nods or corrects. The agent records it. The pattern table in the design system builds itself as a byproduct of doing the work.
 
 **The process:**
+
 1. User says "more space between the photo and the cards"
 2. Agent fixes it: `space-lg + space-xs`
 3. Agent reflects: "So when an image-with-text block sits above a card row, the default gap isn't enough."

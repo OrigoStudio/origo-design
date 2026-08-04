@@ -31,6 +31,7 @@ the family concept and abandon during setup."
 
 Example:
 "- 60% of new users never reach the dashboard
+
 - Acquisition cost is wasted on users who drop off
 - Growth is limited by poor onboarding
 - Estimated revenue loss: $50K/month"
@@ -40,6 +41,7 @@ Example:
 
 Example:
 "- 'Family' concept is unclear (Swedish cultural context)
+
 - Too many steps feel like homework
 - No sense of progress or achievement
 - Value proposition not clear upfront"
@@ -52,6 +54,7 @@ Example:
 
 Example:
 "We need expert UX design to:
+
 - Understand user psychology and motivation
 - Redesign onboarding flow for clarity
 - Balance business goals with user needs
@@ -65,6 +68,7 @@ Example:
 
 Example:
 "Redesign onboarding flow (4 screens):
+
 - Welcome screen (update copy and visuals)
 - Family setup (simplify and clarify concept)
 - Dog addition (make it optional for MVP)
@@ -74,6 +78,7 @@ Example:
 
 Example:
 "- Tech stack: React Native + Supabase (already built)
+
 - Brand: Colors and logo are fixed
 - Other features: Only touch onboarding
 - Timeline: 2 weeks to design + implement"
@@ -86,6 +91,7 @@ Example:
 
 Example:
 "- Onboarding completion rate > 80% (from 40%)
+
 - Time to complete < 2 minutes
 - User satisfaction score > 4.5/5
 - 30-day retention > 60%"
@@ -98,6 +104,7 @@ Example:
 
 Example:
 "- Tech stack: React Native + Supabase
+
 - Brand: Colors, logo, typography fixed
 - Timeline: 2 weeks total
 - Budget: No additional development resources
@@ -156,11 +163,13 @@ retention and satisfaction."
 ## Data
 
 **Analytics:**
+
 - Feature X usage: 15% (target: 60%)
 - Drop-off at Feature X: 40%
 - Time spent: 30 seconds (too short)
 
 **User Feedback:**
+
 - "I don't understand how to use Feature X" (12 mentions)
 - "Feature X seems broken" (3 mentions)
 
@@ -176,12 +185,14 @@ no onboarding or guidance.
 
 Example:
 "Add inline onboarding to Feature X:
+
 - Tooltip on first use explaining purpose
 - Step-by-step guide for first action
 - Success celebration when completed
 - Help button for future reference"
 
 **Expected Impact:**
+
 - Feature X usage: 15% → 60%
 - Drop-off: 40% → 10%
 - User satisfaction: +1.5 points
@@ -200,6 +211,7 @@ Example:
 ## Success Metrics
 
 **How will we measure success?**
+
 - Feature X usage > 60% (within 2 weeks)
 - Drop-off < 10%
 - User feedback mentions decrease
@@ -278,10 +290,7 @@ Example:
 **What happens now?**
 
 Example:
-"1. Welcome screen (confusing value prop)
-2. Family setup (unclear what 'family' means)
-3. Dog addition (forced, feels like homework)
-4. 60% drop off before reaching dashboard"
+"1. Welcome screen (confusing value prop) 2. Family setup (unclear what 'family' means) 3. Dog addition (forced, feels like homework) 4. 60% drop off before reaching dashboard"
 
 ---
 
@@ -301,6 +310,7 @@ reaches dashboard feeling confident and excited"
 
 Example:
 "- Unclear value proposition
+
 - 'Family' concept is confusing (cultural context)
 - Forced dog addition feels like work
 - No sense of progress or achievement
@@ -314,6 +324,7 @@ Example:
 
 Example:
 "- Clarify value prop on welcome screen
+
 - Simplify family concept explanation
 - Make dog addition optional
 - Add progress indicators
@@ -362,15 +373,18 @@ Power users understand it. Suggests onboarding gap.
 ## Themes
 
 ### Confusion (12 mentions)
+
 - "I don't understand how to use Feature X"
 - "Feature X seems broken"
 - "What is Feature X for?"
 
 ### Requests (8 mentions)
+
 - "Can Feature X do Y?"
 - "Wish Feature X had Z"
 
 ### Praise (4 mentions)
+
 - "Once I figured it out, Feature X is great!"
 - "Feature X saves me time"
 

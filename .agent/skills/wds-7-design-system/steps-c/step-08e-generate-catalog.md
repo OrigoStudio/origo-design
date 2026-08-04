@@ -355,16 +355,28 @@ For each component, generate interactive showcase:
     <div class="mt-4">
       <p class="text-sm text-gray-600 mb-2">Try it:</p>
       <div class="flex gap-2 mb-4">
-        <button onclick="toggleState(this, 'demo-button', 'default')" class="px-3 py-1 rounded text-sm bg-blue-500 text-white">
+        <button
+          onclick="toggleState(this, 'demo-button', 'default')"
+          class="px-3 py-1 rounded text-sm bg-blue-500 text-white"
+        >
           Default
         </button>
-        <button onclick="toggleState(this, 'demo-button', 'hover')" class="px-3 py-1 rounded text-sm bg-gray-200 text-gray-700">
+        <button
+          onclick="toggleState(this, 'demo-button', 'hover')"
+          class="px-3 py-1 rounded text-sm bg-gray-200 text-gray-700"
+        >
           Hover
         </button>
-        <button onclick="toggleState(this, 'demo-button', 'active')" class="px-3 py-1 rounded text-sm bg-gray-200 text-gray-700">
+        <button
+          onclick="toggleState(this, 'demo-button', 'active')"
+          class="px-3 py-1 rounded text-sm bg-gray-200 text-gray-700"
+        >
           Active
         </button>
-        <button onclick="toggleState(this, 'demo-button', 'disabled')" class="px-3 py-1 rounded text-sm bg-gray-200 text-gray-700">
+        <button
+          onclick="toggleState(this, 'demo-button', 'disabled')"
+          class="px-3 py-1 rounded text-sm bg-gray-200 text-gray-700"
+        >
           Disabled
         </button>
       </div>
@@ -511,11 +523,17 @@ Input [inp-001] → figma://file/abc123/node/456:790
 ```html
 <h3 class="text-lg font-semibold mb-4">Figma Components</h3>
 <div class="space-y-2">
-  <a href="figma://file/abc123/node/456:789" class="flex items-center gap-2 text-blue-600 hover:text-blue-800">
+  <a
+    href="figma://file/abc123/node/456:789"
+    class="flex items-center gap-2 text-blue-600 hover:text-blue-800"
+  >
     <svg><!-- Figma icon --></svg>
     Button [btn-001]
   </a>
-  <a href="figma://file/abc123/node/456:790" class="flex items-center gap-2 text-blue-600 hover:text-blue-800">
+  <a
+    href="figma://file/abc123/node/456:790"
+    class="flex items-center gap-2 text-blue-600 hover:text-blue-800"
+  >
     <svg><!-- Figma icon --></svg>
     Input [inp-001]
   </a>

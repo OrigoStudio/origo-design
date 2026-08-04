@@ -47,7 +47,12 @@ When invoked headless, do not ask. Complete the intent using what is provided, w
   "memlog": "{doc_workspace}/.memlog.md",
   "open_questions": [],
   "external_handoffs": [
-    {"directive": "Confluence upload", "tool": "corp:confluence_upload", "url": "https://confluence.corp/PROD/123", "status": "ok"}
+    {
+      "directive": "Confluence upload",
+      "tool": "corp:confluence_upload",
+      "url": "https://confluence.corp/PROD/123",
+      "status": "ok"
+    }
   ]
 }
 ```
@@ -64,7 +69,7 @@ Omit keys for artifacts that were not produced.
 
 ## Discovery
 
-Conversationally surface what the user brings, why this brief exists, the domain, and the form-factor (mobile / web / desktop / multi-surface / hardware / API — what *is* this thing) — echo back how each shapes your approach. Open with space for the full picture: invite a brain dump and ask up front for any source material they already have (memo, deck, transcript, prior brief, slack thread). Read what exists first; ask only what is missing. After the dump, a simple "anything else?" often surfaces what they almost forgot. Drill into specifics only after the broad shape is on the table; premature granular questions interrupt the dump and miss the room. Get a read on stakes early (passion project, internal pitch, investor input, public launch), and let that calibrate how hard you push. During the dump, spawn web-research subagents to ground the picture — landscape, comparables, current state — AI especially, where training data ages by the week. Subagent searches; parent gets a digest. Deep work (full market sizing, exhaustive teardowns) → suggest `bmad-market-research` or `bmad-domain-research`.
+Conversationally surface what the user brings, why this brief exists, the domain, and the form-factor (mobile / web / desktop / multi-surface / hardware / API — what _is_ this thing) — echo back how each shapes your approach. Open with space for the full picture: invite a brain dump and ask up front for any source material they already have (memo, deck, transcript, prior brief, slack thread). Read what exists first; ask only what is missing. After the dump, a simple "anything else?" often surfaces what they almost forgot. Drill into specifics only after the broad shape is on the table; premature granular questions interrupt the dump and miss the room. Get a read on stakes early (passion project, internal pitch, investor input, public launch), and let that calibrate how hard you push. During the dump, spawn web-research subagents to ground the picture — landscape, comparables, current state — AI especially, where training data ages by the week. Subagent searches; parent gets a digest. Deep work (full market sizing, exhaustive teardowns) → suggest `bmad-market-research` or `bmad-domain-research`.
 
 Once stakes are read and the dump is captured, offer the working mode in the user's language:
 
@@ -77,7 +82,7 @@ The workspace persists; stop and resume freely. The opener's philosophy (not in 
 
 - **Right-size to purpose.** A passion project does not need investor-grade rigor. A VC pitch input does. Read the room.
 - **Persistence is real-time.** Once Create intent is confirmed, the workspace (run folder, `brief.md` skeleton with `status: draft`, `.memlog.md` seeded via `memlog.py init`) exists on disk and the user knows the path.
-- **File roles.** `.memlog.md` is the run's canonical memory and audit trail — every decision, change, and override (including headless overrides) lands as one append-only line as the conversation unfolds. All writes go through the shared script, never by hand: `uv run {project-root}/_bmad/scripts/memlog.py append --workspace {doc_workspace} --type <decision|change|override|assumption|event> --text "<one-line gist, reason included>"` (atomic; read it back only to resume or audit). The brief is distilled toward it; whatever isn't logged is lost on resume. `addendum.md` preserves user-contributed depth that belongs in a downstream document (PRD, architecture, solution design) or earned a place but does not fit the brief (rejected-alternative rationale, options-considered matrices, parked-roadmap context, technical constraints, in-depth personas, sizing data). Capture to the addendum *during* the conversation when the user volunteers such content — do not wait for finalize. Audit and override information never goes in the addendum.
+- **File roles.** `.memlog.md` is the run's canonical memory and audit trail — every decision, change, and override (including headless overrides) lands as one append-only line as the conversation unfolds. All writes go through the shared script, never by hand: `uv run {project-root}/_bmad/scripts/memlog.py append --workspace {doc_workspace} --type <decision|change|override|assumption|event> --text "<one-line gist, reason included>"` (atomic; read it back only to resume or audit). The brief is distilled toward it; whatever isn't logged is lost on resume. `addendum.md` preserves user-contributed depth that belongs in a downstream document (PRD, architecture, solution design) or earned a place but does not fit the brief (rejected-alternative rationale, options-considered matrices, parked-roadmap context, technical constraints, in-depth personas, sizing data). Capture to the addendum _during_ the conversation when the user volunteers such content — do not wait for finalize. Audit and override information never goes in the addendum.
 - **Continuity across sessions.** If a prior in-progress draft for this project exists, the user is offered to resume.
 - **Extract, don't ingest.** Source artifacts (provided by the user or discovered during the run — transcripts, brainstorms, research reports, code, web results, prior briefs) enter the parent conversation as relevance-filtered extracts, not loaded wholesale. Subagents do the extraction against the user's stated focus; the parent context stays lean.
 - **Length and coherence.** Aim for 1-2 pages — if it is longer, the detail belongs in the addendum. Structure in service of the product; downstream consumers (PRD workflow, etc.) read this, so coherent shape matters.

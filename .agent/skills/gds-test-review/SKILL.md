@@ -72,29 +72,31 @@ This workflow analyzes the existing test suite and produces a comprehensive revi
 **Primary Output**: `{output_folder}/test-review-report.md`
 
 **Supporting Components**:
+
 - Validation: `{installed_path}/checklist.md`
 - Template: `{installed_path}/test-review-template.md`
 
 **Knowledge Base References**:
+
 - `knowledge/regression-testing.md`
 - `knowledge/test-priorities.md`
-
 
 Load and resolve configuration from `{module_config}`:
 
 ```yaml
-output_folder: {from config}
-user_name: {from config}
-communication_language: {from config}
-document_output_language: {from config}
-game_dev_experience: {from config}
-date: {system-generated}
+output_folder: { from config }
+user_name: { from config }
+communication_language: { from config }
+document_output_language: { from config }
+game_dev_experience: { from config }
+date: { system-generated }
 ```
 
 Resolve workflow variables:
+
 ```yaml
-review_scope: "full"    # full | targeted | quick
-game_engine: "auto"     # auto | unity | unreal | godot
+review_scope: 'full' # full | targeted | quick
+game_engine: 'auto' # auto | unity | unreal | godot
 ```
 
 Search the project for existing test files and results before proceeding.
@@ -106,6 +108,7 @@ Search the project for existing test files and results before proceeding.
 ### Preflight Requirements
 
 Verify before proceeding:
+
 - Test suite exists (some tests to review)
 - Access to test execution results
 - Understanding of game features
@@ -236,21 +239,25 @@ Assertion-free tests:
 #### Common Recommendations
 
 **For Flaky Tests**:
+
 - Replace `Thread.Sleep` with explicit waits
 - Add proper synchronization
 - Isolate test state
 
 **For Slow Tests**:
+
 - Move to nightly builds
 - Optimize test setup
 - Mock expensive dependencies
 
 **For Coverage Gaps**:
+
 - Prioritize P0/P1 features
 - Add smoke tests first
 - Use test-design workflow
 
 **For Maintenance Issues**:
+
 - Refactor common patterns
 - Create test utilities
 - Improve documentation
@@ -335,11 +342,11 @@ Write `{output_folder}/test-review-report.md` using the `test-review-template.md
 
 ## Review Frequency
 
-| Review Type | Frequency | Scope                   | Owner     |
-| ----------- | --------- | ----------------------- | --------- |
-| Quick Check | Weekly    | Pass rates, flaky tests | QA        |
-| Full Review | Monthly   | Coverage, quality       | Tech Lead |
-| Deep Dive   | Quarterly | Infrastructure, strategy| Team      |
+| Review Type | Frequency | Scope                    | Owner     |
+| ----------- | --------- | ------------------------ | --------- |
+| Quick Check | Weekly    | Pass rates, flaky tests  | QA        |
+| Full Review | Monthly   | Coverage, quality        | Tech Lead |
+| Deep Dive   | Quarterly | Infrastructure, strategy | Team      |
 
 ---
 

@@ -90,9 +90,10 @@ Output: "{{mode}} selected. I'll generate the Trigger Map using WDS methodology 
 
 Inform user: "I'm creating a design log to track my learning, research, generation, and self-review process."
 
-Create session log at {output_folder}/_progress/agent-experiences/{date}-trigger-map-{{mode}}.md
+Create session log at {output_folder}/\_progress/agent-experiences/{date}-trigger-map-{{mode}}.md
 
 Execute Layer 1: Learn WDS Form (Static - loaded once)
+
 - Read docs/method/phase-wds-2-trigger-mapping-guide.md
 - Read docs/quick-start/0wds-2-trigger-mapping.md
 - Read src/data/agent-guides/saga/trigger-mapping.md
@@ -102,6 +103,7 @@ Execute Layer 1: Learn WDS Form (Static - loaded once)
 - Document in design log "Layer 1: WDS Form Learned" section
 
 Execute Layer 2: Project Context (Initial load, grows with each step)
+
 - Read {output_folder}/A-Product-Brief/product-brief.md
 - Read {output_folder}/A-Product-Brief/content-language.md
 - Read {output_folder}/A-Product-Brief/platform-requirements.md
@@ -112,30 +114,34 @@ Execute Layer 2: Project Context (Initial load, grows with each step)
 
 For EACH step (Business Goals, Target Groups, Driving Forces, Prioritization):
 
-  Execute Layer 3: Domain Research (per step)
-  - WebSearch relevant to current step
-  - Look for industry insights, user reviews, behavioral patterns
-  - Document findings in design log
+Execute Layer 3: Domain Research (per step)
 
-  Execute Layer 4: Generate
-  - Apply WDS Form (Layer 1) with ALL Project Context (Layer 2 cumulative)
-  - Enhanced by Domain Research (Layer 3)
-  - Create this step's artifact
+- WebSearch relevant to current step
+- Look for industry insights, user reviews, behavioral patterns
+- Document findings in design log
 
-  Execute Layer 5: Self-Review
-  - Check against rubric (completeness, quality, mistakes, practices)
-  - Calculate quality score, identify gaps
-  - Document in design log
+Execute Layer 4: Generate
 
-  If gaps exist: Create refinement plan, regenerate (max 5 iterations per step)
+- Apply WDS Form (Layer 1) with ALL Project Context (Layer 2 cumulative)
+- Enhanced by Domain Research (Layer 3)
+- Create this step's artifact
 
-  If mode == S (Suggest): Show user what was created, learning/research applied, self-review results. Wait for approval/feedback.
-  If mode == D (Dream): Show progress update, continue autonomously.
+Execute Layer 5: Self-Review
 
-  When step threshold met: Add to Layer 2, proceed to next step.
-  If 5 iterations without threshold: Offer to switch to Workshop Mode for this step.
+- Check against rubric (completeness, quality, mistakes, practices)
+- Calculate quality score, identify gaps
+- Document in design log
+
+If gaps exist: Create refinement plan, regenerate (max 5 iterations per step)
+
+If mode == S (Suggest): Show user what was created, learning/research applied, self-review results. Wait for approval/feedback.
+If mode == D (Dream): Show progress update, continue autonomously.
+
+When step threshold met: Add to Layer 2, proceed to next step.
+If 5 iterations without threshold: Offer to switch to Workshop Mode for this step.
 
 When all steps complete:
+
 - Assemble complete trigger-map.md at {output_folder}/B-Trigger-Map/trigger-map.md
 - Create persona documents if needed
 - Create mermaid diagram if generated
@@ -149,11 +155,13 @@ Skip to handover after generation complete.
 Display: "**Select an Option:** [C] Continue to Business Goals Workshop | [M] Return to Activity Menu"
 
 #### Menu Handling Logic:
+
 - IF C: Load and execute {nextStepFile}
 - IF M: Return to {activityWorkflowFile}
 - IF Any other comments or queries: help user respond then [Redisplay Menu Options]
 
 #### EXECUTION RULES:
+
 - ALWAYS halt and wait for user input after presenting menu
 - User can chat or ask questions - always respond and then redisplay menu options
 
@@ -166,6 +174,7 @@ ONLY WHEN user selects [C] will you load the next step file. Mode must be select
 ## 🚨 SYSTEM SUCCESS/FAILURE METRICS
 
 ### ✅ SUCCESS:
+
 - Overview presented clearly with value proposition
 - All three engagement modes offered with time estimates
 - User explicitly selected a mode
@@ -175,6 +184,7 @@ ONLY WHEN user selects [C] will you load the next step file. Mode must be select
 - User confirmed and ready to proceed
 
 ### ❌ SYSTEM FAILURE:
+
 - Auto-selecting a mode without user input
 - Not presenting all three mode options
 - Not explaining what each mode involves

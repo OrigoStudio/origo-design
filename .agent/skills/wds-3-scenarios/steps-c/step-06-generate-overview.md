@@ -74,17 +74,18 @@ Use the following structure:
 
 ## Scenario Summary
 
-| ID | Scenario | Persona | Pages | Priority | Status |
-|----|----------|---------|-------|----------|--------|
-| 01 | [Name] | [Persona] | [count] | ⭐ P1 | ✅ Outlined |
-| 02 | [Name] | [Persona] | [count] | ⭐ P1 | ✅ Outlined |
-| 03 | [Name] | [Persona] | [count] | P2 | ✅ Outlined |
+| ID  | Scenario | Persona   | Pages   | Priority | Status      |
+| --- | -------- | --------- | ------- | -------- | ----------- |
+| 01  | [Name]   | [Persona] | [count] | ⭐ P1    | ✅ Outlined |
+| 02  | [Name]   | [Persona] | [count] | ⭐ P1    | ✅ Outlined |
+| 03  | [Name]   | [Persona] | [count] | P2       | ✅ Outlined |
 
 ---
 
 ## Scenarios
 
 ### [01: Scenario Name](01-slug/01-slug.md)
+
 **Persona:** [Name] — [Driving Force]
 **Pages:** [comma-separated list]
 **User Value:** [one line]
@@ -93,18 +94,19 @@ Use the following structure:
 ---
 
 ### [02: Scenario Name](02-slug/02-slug.md)
+
 [Same format...]
 
 ---
 
 ## Page Coverage Matrix
 
-| Page | Scenario | Purpose in Flow |
-|------|----------|----------------|
-| [Page 1] | 01 | [What user does here] |
-| [Page 2] | 01 | [What user does here] |
-| [Page 3] | 02 | [What user does here] |
-| ... | ... | ... |
+| Page     | Scenario | Purpose in Flow       |
+| -------- | -------- | --------------------- |
+| [Page 1] | 01       | [What user does here] |
+| [Page 2] | 01       | [What user does here] |
+| [Page 3] | 02       | [What user does here] |
+| ...      | ...      | ...                   |
 
 **Coverage:** [X/Y] pages assigned to scenarios
 
@@ -113,6 +115,7 @@ Use the following structure:
 ## Next Phase
 
 These scenario outlines feed into **Phase 4: UX Design** where each page gets:
+
 - Detailed page specifications
 - Wireframe sketches
 - Component definitions

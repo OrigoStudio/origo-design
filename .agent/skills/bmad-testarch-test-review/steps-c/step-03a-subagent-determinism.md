@@ -104,7 +104,8 @@ if (testFileContent.includes('waitForTimeout')) {
     severity: 'MEDIUM',
     category: 'hard-wait',
     description: 'Test uses waitForTimeout - creates flakiness',
-    suggestion: 'Replace with expect(locator).toBeVisible() or interceptNetworkCall-based network waits',
+    suggestion:
+      'Replace with expect(locator).toBeVisible() or interceptNetworkCall-based network waits',
   });
 }
 
@@ -119,7 +120,10 @@ Vitest configs vary widely — `defineConfig({ test: { ... } })`, `mergeConfig(b
 // Resolve the config file(s). For consumer: scripts.test:pact:consumer:run in package.json
 // usually points at `vitest run --config <path>`. For provider: `vitest run --config <path>`.
 // If neither script exists but `.pacttest.ts` files exist, default to 'vitest.config.pact.ts'.
-const configPath = resolveVitestConfigPath({ scriptName: 'test:pact:consumer:run', fallback: 'vitest.config.pact.ts' });
+const configPath = resolveVitestConfigPath({
+  scriptName: 'test:pact:consumer:run',
+  fallback: 'vitest.config.pact.ts',
+});
 const src = fs.readFileSync(configPath, 'utf8');
 
 // 1. Literal-match the two mandatory lines. Tolerate single or double quotes and whitespace.

@@ -139,11 +139,13 @@ Mutual success — user AND business. Both specific and measurable.
 The linear sunshine path. Numbered steps, each with page name + what the user accomplishes.
 
 **Rules:**
+
 - Completely linear — ZERO "if" statements, ZERO branches
 - Minimum viable steps — can you remove any step without breaking the flow?
 - Each step moves meaningfully toward success
 
 **Format:**
+
 ```
 1. **[Page Name]** — [What user sees/does/achieves here]
 2. **[Page Name]** — [What user sees/does/achieves here]
@@ -185,6 +187,7 @@ After the scenario file is saved (Q1-Q8 answered, quality gates passed), begin o
 #### Automatic First Step
 
 Process the first scenario step from Q8 automatically:
+
 1. Name it using Q8's first step name
 2. Create the page folder (see Page Folder Structure below)
 3. Fill first-step metadata from Q3 (user situation), Q4 (mental state), Q5 (device), Q6 (entry point)
@@ -208,6 +211,7 @@ Step [NN.X] "[step-name]" outlined!
 ```
 
 **Adaptive labels:**
+
 - Option 1 shows the name of the next step from Q8
 - When all Q8 steps are outlined: Option 1 becomes unavailable — show "All [X] scenario steps outlined!"
 - Option 2: **"Start designing"** when only 1 step is outlined. **"Start designing pages"** when 2+ steps are outlined.
@@ -232,15 +236,18 @@ For each step after the first, refine Q8's outline into a concrete scenario step
 **1. "What's the point of this step?"**
 
 What does the user need to accomplish here? This becomes the step purpose.
+
 - e.g., "See a list of news articles" or "Find the phone number and opening hours"
 
 **2. "What does the user do to move forward?"**
 
 What interaction takes them to the next step? This defines the exit action.
+
 - e.g., "Selects 'News' in the menu" → next step
 - e.g., "Clicks 'Read more' on an article" → next step
 
 **Two types of interactions:**
+
 - **Leaves the step** → new scenario step (new page folder, next number)
 - **Stays on the step** → storyboard item (documented within the page spec as an on-page interaction)
 
@@ -265,11 +272,11 @@ Each page folder contains:
 
 ## Page Metadata
 
-| Property | Value |
-|----------|-------|
-| **Scenario** | {scenario-name} |
-| **Page Number** | {NN}.{step} |
-| **Platform** | {Device from Q5} |
+| Property        | Value            |
+| --------------- | ---------------- |
+| **Scenario**    | {scenario-name}  |
+| **Page Number** | {NN}.{step}      |
+| **Platform**    | {Device from Q5} |
 
 ## Overview
 
@@ -280,10 +287,12 @@ Each page folder contains:
 **Exit Action:** {What the user does to move to the next step}
 
 **On-Page Interactions:**
+
 - {Any interactions that keep the user on this page — storyboard items}
 ```
 
 The **first step** additionally includes:
+
 - **User Situation** from Q3
 - **Mental State** (hope + worry) from Q4
 - **Discovery Method** from Q6

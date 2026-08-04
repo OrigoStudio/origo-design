@@ -26,7 +26,7 @@ Before starting page design, verify that a scenario exists for the selected scen
 1. Look for scenario files in `{output_folder}/C-UX-Scenarios/[NN-slug]/[NN-slug].md`
 2. **If a Phase 3 scenario exists** → Skip to **Process** below. The scenario's 8-question answers, shortest path, and first page specification provide everything needed.
 3. **If NO scenario exists** → Do NOT attempt to define the scenario here. Instead:
-   - Inform the user: *"Before we design pages, we need a scenario outline. This gives us the user's device, mental state, entry point, and the shortest path — all essential for good page design."*
+   - Inform the user: _"Before we design pages, we need a scenario outline. This gives us the user's device, mental state, entry point, and the shortest path — all essential for good page design."_
    - Suggest returning to Phase 3 to outline the scenario using the 8-question dialog
    - The user can then return here with [D] from the Phase 3 post-scenario menu
 
@@ -35,6 +35,7 @@ Before starting page design, verify that a scenario exists for the selected scen
 ### Phase 3 Handover Context
 
 When entering from Phase 3's [D] option (start designing), the scenario file and page folders already exist. Use:
+
 - **Page folders** from `{output_folder}/C-UX-Scenarios/[NN-slug]/pages/[NN].1-[page-slug]/` — each page has a boilerplate `.md` and a `Sketches/` subfolder
 - **First page spec** (`[NN].1-*.md`) has full entry context (device, arrival, mental state) from Q4, Q5, Q6
 - **Shortest path** from Q8 to know the full page sequence
@@ -59,6 +60,7 @@ The Dream workflow uses the same steps as Suggest (`./steps-s/`) but with **auto
 Step files in `./steps-s/` contain rules like "ALWAYS halt and wait for user input" and "NEVER generate content without user input." **These rules apply ONLY in Suggest mode.**
 
 In Dream mode:
+
 - **OVERRIDE** all "halt and wait" rules — auto-proceed after completing each step
 - **OVERRIDE** "NEVER generate content without user input" — generate based on context and WDS patterns
 - **DO NOT** display menus or wait for menu selections between steps
@@ -67,6 +69,7 @@ In Dream mode:
 - The user can type **"stop"** or **"pause"** at any time to interrupt and switch to Suggest mode
 
 **Reference data:**
+
 - `./data/scenario-init/` — scenario guides and examples
 - `./data/page-creation-flows/` — page creation approaches
 
@@ -91,11 +94,11 @@ When Dream mode completes all pages in the scenario, present a summary for revie
 <output>
 **Dream complete! Here's what I created for [Scenario Name]:**
 
-| Step | Page | Status | Key Decisions |
-|------|------|--------|---------------|
+| Step   | Page        | Status    | Key Decisions   |
+| ------ | ----------- | --------- | --------------- |
 | [NN.1] | [page name] | specified | [brief summary] |
 | [NN.2] | [page name] | specified | [brief summary] |
-| ... | ... | ... | ... |
+| ...    | ...         | ...       | ...             |
 
 **Shared components extracted:** [list if any]
 
@@ -103,7 +106,7 @@ Review the pages and let me know what to adjust. When you're happy:
 
 1. **Start building** — hand the first page to agentic development
 2. **Explore responsive states / storyboard** — if any pages need detail work
-</output>
+   </output>
 
 ### Per-Page Mode (user interrupted or reviewing one at a time)
 
@@ -118,7 +121,7 @@ This page has [responsive states / storyboard items / complex functionality] tha
 
 1. **Explore [responsive states / storyboard / functionality]** — define the details
 2. **Explore the next scenario step** — [next page name]
-</output>
+   </output>
 
 **If simple page:**
 
@@ -127,11 +130,12 @@ This page has [responsive states / storyboard items / complex functionality] tha
 
 1. **Build it** — start agentic development
 2. **Explore the next scenario step** — [next page name]
-</output>
+   </output>
 
 ### Component Extraction (Dream Mode)
 
 In Dream mode, component extraction runs automatically:
+
 1. Scan completed page specs silently after each page
 2. If shared elements found, auto-extract as shared components (log decisions)
 3. Reference shared components in subsequent page specs instead of duplicating

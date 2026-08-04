@@ -17,10 +17,10 @@ Template for generating page placeholder documents in page-init-lightweight work
 ← [{{previous_page}}](../{{previous_page_slug}}/{{previous_page_slug}}.md)
 {{/if}}
 {{#if next_page != "none" and next_page != "TBD"}}
- | [{{next_page}}](../{{next_page_slug}}/{{next_page_slug}}.md) →
+| [{{next_page}}](../{{next_page_slug}}/{{next_page_slug}}.md) →
 {{/if}}
 {{#if next_page == "TBD"}}
- | Next: TBD
+| Next: TBD
 {{/if}}
 
 ![{{page_name}}](sketches/{{page_slug}}-concept.jpg)
@@ -29,7 +29,7 @@ Template for generating page placeholder documents in page-init-lightweight work
 ← [{{previous_page}}](../{{previous_page_slug}}/{{previous_page_slug}}.md)
 {{/if}}
 {{#if next_page != "none" and next_page != "TBD"}}
- | [{{next_page}}](../{{next_page_slug}}/{{next_page_slug}}.md) →
+| [{{next_page}}](../{{next_page_slug}}/{{next_page_slug}}.md) →
 {{/if}}
 
 # {{page_number}} {{page_name}}
@@ -43,6 +43,7 @@ Template for generating page placeholder documents in page-init-lightweight work
 ## Status
 
 ⚠️ **PLACEHOLDER** - This page needs:
+
 - [ ] Sketch or screenshot
 - [ ] Section breakdown
 - [ ] Object specifications
@@ -123,12 +124,14 @@ _Placeholder created using Whiteport Design Studio (WDS) methodology_
 ## Key Principles
 
 ### ✅ **Navigation is Critical**
+
 - Appears three times (above sketch, below sketch, document bottom)
 - Links to previous/next pages
 - Creates navigable flow
 - Essential for comprehension
 
 ### ✅ **Open Questions Ready**
+
 - Section included from start
 - Reference `open-questions.instructions.md` during spec creation
 - Auto-populate based on page characteristics

@@ -58,6 +58,7 @@ Verify and add bidirectional navigation links to ALL trigger map documents, ensu
 ### 1. Add Links to Each Document
 
 In each document, add:
+
 - Back link to 00-trigger-map.md
 - Forward link to next document (if sequential)
 - Related documents section at bottom
@@ -65,6 +66,7 @@ In each document, add:
 ### 2. Verify Navigation
 
 Verify:
+
 - All persona docs link to each other
 - All docs link back to hub
 - Hub links to all docs
@@ -75,11 +77,13 @@ Verify:
 Display: "**Select an Option:** [C] Continue to Quality Check | [M] Return to Activity Menu"
 
 #### Menu Handling Logic:
+
 - IF C: Load and execute {nextStepFile}
 - IF M: Return to {activityWorkflowFile}
 - IF Any other comments or queries: help user respond then [Redisplay Menu Options]
 
 #### EXECUTION RULES:
+
 - ALWAYS halt and wait for user input after presenting menu
 - User can chat or ask questions - always respond and then redisplay menu options
 
@@ -92,6 +96,7 @@ ONLY WHEN user selects [C] will you load the next step file. All cross-reference
 ## 🚨 SYSTEM SUCCESS/FAILURE METRICS
 
 ### ✅ SUCCESS:
+
 - Every document has back link to hub
 - Hub links to all sub-documents
 - Persona docs link to each other
@@ -99,6 +104,7 @@ ONLY WHEN user selects [C] will you load the next step file. All cross-reference
 - No isolated documents
 
 ### ❌ SYSTEM FAILURE:
+
 - Documents without hub links
 - Hub missing links to documents
 - One-way navigation only

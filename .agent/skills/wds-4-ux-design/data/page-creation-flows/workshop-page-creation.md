@@ -19,6 +19,7 @@
 <ask>**What is this page about?**
 
 Tell me in your own words:
+
 - What is this page called?
 - What should it accomplish?
 - Who uses it and why?
@@ -49,13 +50,13 @@ Choice:</ask>
 
 Based on user choice, load the appropriate flow:
 
-| Choice | Flow | File |
-|--------|------|------|
-| **A** | Sketch Path | [flow-a-sketch.md](flow-a-sketch.md) |
-| **B** | Verbal Specification | [flow-b-verbal.md](flow-b-verbal.md) |
-| **C** | ASCII Layout | [flow-c-ascii.md](flow-c-ascii.md) |
-| **D** | Reference Page | [flow-d-reference.md](flow-d-reference.md) |
-| **E** | HTML Prototype | [flow-e-html.md](flow-e-html.md) |
+| Choice | Flow                 | File                                       |
+| ------ | -------------------- | ------------------------------------------ |
+| **A**  | Sketch Path          | [flow-a-sketch.md](flow-a-sketch.md)       |
+| **B**  | Verbal Specification | [flow-b-verbal.md](flow-b-verbal.md)       |
+| **C**  | ASCII Layout         | [flow-c-ascii.md](flow-c-ascii.md)         |
+| **D**  | Reference Page       | [flow-d-reference.md](flow-d-reference.md) |
+| **E**  | HTML Prototype       | [flow-e-html.md](flow-e-html.md)           |
 
 <action>Load and execute the selected flow substep</action>
 
@@ -87,6 +88,7 @@ Choice:</output>
 ### ✅ **Page-Centric Thinking**
 
 The **page** is the conceptual entity:
+
 - Has a purpose
 - Serves users
 - Contains sections
@@ -94,6 +96,7 @@ The **page** is the conceptual entity:
 - Exists in a flow
 
 The **visualization** is one representation:
+
 - Sketch (preferred)
 - Wireframe
 - ASCII (last resort)
@@ -105,6 +108,7 @@ The **visualization** is one representation:
 ### ✅ **Flexible Methods**
 
 Different projects need different approaches:
+
 - Early concept → Verbal/ASCII → Sketch later
 - Clear vision → Sketch directly
 - Existing patterns → Reference + differences
@@ -117,11 +121,13 @@ Different projects need different approaches:
 ## INTEGRATION
 
 This workshop creates:
+
 1. **Conceptual page specification** (always)
 2. **Placeholder for visualization** (always)
 3. **Guidance for next steps** (always)
 
 Next workshops use:
+
 - **workshop-page-process.md** - When sketch is ready
 - **page-init-lightweight.md** - For quick structure
 - **4b-sketch-analysis.md** - For detailed analysis

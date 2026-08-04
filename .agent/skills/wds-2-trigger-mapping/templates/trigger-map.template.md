@@ -73,20 +73,20 @@ flowchart LR
     {{#each business_goals}}
     BG{{@index}}["<br/>{{this.emoji}} {{this.title}}<br/><br/>{{#each this.points}}{{this}}<br/>{{/each}}<br/>"]
     {{/each}}
-    
+
     %% Central Platform
     PLATFORM["<br/>{{platform_emoji}} {{platform_name}}<br/><br/>{{platform_tagline}}<br/><br/>{{platform_transformation}}<br/><br/>"]
-    
+
     %% Target Groups
     {{#each target_groups}}
     TG{{@index}}["<br/>{{this.emoji}} {{this.name}}<br/>{{this.priority}}<br/><br/>{{#each this.profile}}{{this}}<br/>{{/each}}<br/>"]
     {{/each}}
-    
+
     %% Driving Forces
     {{#each target_groups}}
     DF{{@index}}["<br/>{{this.emoji}} {{this.name}}'S DRIVERS<br/><br/>WANTS<br/>{{#each this.positive_drivers}}✅ {{this}}<br/>{{/each}}<br/>FEARS<br/>{{#each this.negative_drivers}}❌ {{this}}<br/>{{/each}}<br/>"]
     {{/each}}
-    
+
     %% Connections
     {{#each business_goals}}
     BG{{@index}} --> PLATFORM
@@ -101,7 +101,7 @@ flowchart LR
     classDef platform fill:#e5e7eb,color:#111827,stroke:#9ca3af,stroke-width:3px
     classDef targetGroup fill:#f9fafb,color:#1f2937,stroke:#d1d5db,stroke-width:2px
     classDef drivingForces fill:#f3f4f6,color:#1f2937,stroke:#d1d5db,stroke-width:2px
-    
+
     {{#each business_goals}}
     class BG{{@index}} businessGoal
     {{/each}}

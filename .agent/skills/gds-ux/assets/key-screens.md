@@ -15,6 +15,7 @@ Inline CSS, system fonts, no JS, no network. The mock must render fully offline.
 ## What to return
 
 A compact summary to the parent:
+
 - file path per screen
 - one-line caption per screen ("Today picker at rest; accent on Thought record")
 - which spine sections each mock illustrates (Component Patterns rows, State Patterns rows, Flow steps)

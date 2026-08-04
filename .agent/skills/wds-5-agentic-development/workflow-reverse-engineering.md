@@ -10,6 +10,7 @@ description: Analyze any software or website to extract specifications and desig
 **When to use:** Need to understand an existing product (yours or public). Want to create WDS specifications from existing software. Competitive analysis through design extraction. Migrating or rebuilding an existing product.
 
 **Two modes:**
+
 - **Internal:** Analyze your own codebase (source code access)
 - **External:** Analyze any public website (browser-based, no source needed)
 
@@ -26,6 +27,7 @@ description: Analyze any software or website to extract specifications and desig
 ## INITIALIZATION
 
 ### Design Log
+
 Read `{output_folder}/_progress/00-design-log.md`. Check Current and Backlog for context.
 
 ### Essential Guides
@@ -39,12 +41,12 @@ Read `{output_folder}/_progress/00-design-log.md`. Check Current and Backlog for
 
 Execute steps in `./steps-r/`:
 
-| Step | File | Purpose |
-|------|------|---------|
-| 01 | step-01-identify-target.md | Define target, access method, extraction goals |
-| 02 | step-02-explore-and-capture.md | Explore structure, capture patterns and inventory |
-| 03 | step-03-generate-specs.md | Generate WDS-format page specifications |
-| 04 | step-04-extract-design-system.md | Extract design tokens and component catalog |
+| Step | File                             | Purpose                                           |
+| ---- | -------------------------------- | ------------------------------------------------- |
+| 01   | step-01-identify-target.md       | Define target, access method, extraction goals    |
+| 02   | step-02-explore-and-capture.md   | Explore structure, capture patterns and inventory |
+| 03   | step-03-generate-specs.md        | Generate WDS-format page specifications           |
+| 04   | step-04-extract-design-system.md | Extract design tokens and component catalog       |
 
 **Flow:** 01 → 02 → 03 → 04
 

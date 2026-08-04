@@ -68,6 +68,7 @@ The aha moment is a perspective shift, not just understanding. It unlocks confid
 Ask: **"How do we frame this content to highlight THEIR capability, not our features?"**
 
 Transform feature-focused language to capability-focused language:
+
 - Before: "Our AI analyzes 10,000 sources"
 - After: "You'll spot trends before your competitors"
 
@@ -95,32 +96,32 @@ Not "using our platform" but "staying current effortlessly" or "becoming the loc
 empowerment_frame:
   transformation:
     current_state:
-      description: "[Where user is now]"
-      feelings: ["frustrated", "uncertain", "behind"]
+      description: '[Where user is now]'
+      feelings: ['frustrated', 'uncertain', 'behind']
       capabilities: "[What they can't do yet]"
     badass_state:
       description: "[Where they're going]"
-      feelings: ["confident", "capable", "ahead"]
+      feelings: ['confident', 'capable', 'ahead']
       capabilities: "[What they'll be able to do]"
-    visibility: "[How we make the transformation visible and achievable]"
+    visibility: '[How we make the transformation visible and achievable]'
   aha_moment:
-    insight: "[Key realization that shifts perspective]"
-    why_powerful: "[Why this unlocks confidence]"
+    insight: '[Key realization that shifts perspective]'
+    why_powerful: '[Why this unlocks confidence]'
   capability_framing:
-    - feature: "[Product feature]"
-      reframed: "[What USER can do because of it]"
-    - feature: "[Product feature]"
-      reframed: "[What USER can do because of it]"
+    - feature: '[Product feature]'
+      reframed: '[What USER can do because of it]'
+    - feature: '[Product feature]'
+      reframed: '[What USER can do because of it]'
   cognitive_load:
     potential_issues:
-      - issue: "[Where content might overwhelm]"
-        solution: "[How we reduce load]"
+      - issue: '[Where content might overwhelm]'
+        solution: '[How we reduce load]'
     simplifications:
-      - "[What we simplified or cut]"
+      - '[What we simplified or cut]'
   skill_focus:
-    primary_skill: "[Main capability user develops]"
-    supporting_skills: ["[Related capabilities]"]
-    tools_secondary: "[Tools are means to skill, not the focus]"
+    primary_skill: '[Main capability user develops]'
+    supporting_skills: ['[Related capabilities]']
+    tools_secondary: '[Tools are means to skill, not the focus]'
 ```
 
 ### 8. Present MENU OPTIONS

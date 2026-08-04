@@ -68,12 +68,12 @@ Templates for creating issue tickets and test reports.
 
 ## Severity Levels
 
-| Severity | Description | Fix Timeline |
-|----------|-------------|--------------|
-| **Critical** | App crashes, data loss, security issue | Immediate |
-| **High** | Major functionality broken, blocking | This release |
-| **Medium** | Feature works but wrong, confusing UX | This release |
-| **Low** | Minor polish, nice to have | Future release |
+| Severity     | Description                            | Fix Timeline   |
+| ------------ | -------------------------------------- | -------------- |
+| **Critical** | App crashes, data loss, security issue | Immediate      |
+| **High**     | Major functionality broken, blocking   | This release   |
+| **Medium**   | Feature works but wrong, confusing UX  | This release   |
+| **Low**      | Minor polish, nice to have             | Future release |
 
 ---
 
@@ -100,21 +100,21 @@ Templates for creating issue tickets and test reports.
 
 ## Test Coverage
 
-| Category | Passed | Failed | Total |
-|----------|--------|--------|-------|
-| Happy Path | X | X | X |
-| Error States | X | X | X |
-| Edge Cases | X | X | X |
-| Design System | X | X | X |
-| Accessibility | X | X | X |
-| **Total** | X | X | X |
+| Category      | Passed | Failed | Total |
+| ------------- | ------ | ------ | ----- |
+| Happy Path    | X      | X      | X     |
+| Error States  | X      | X      | X     |
+| Edge Cases    | X      | X      | X     |
+| Design System | X      | X      | X     |
+| Accessibility | X      | X      | X     |
+| **Total**     | X      | X      | X     |
 
 ## Issues Found
 
-| ID | Severity | Description | Status |
-|----|----------|-------------|--------|
-| ISS-001 | High | [Description] | Open |
-| ISS-002 | Medium | [Description] | Open |
+| ID      | Severity | Description   | Status |
+| ------- | -------- | ------------- | ------ |
+| ISS-001 | High     | [Description] | Open   |
+| ISS-002 | Medium   | [Description] | Open   |
 
 ## Sign-Off Recommendation
 
@@ -146,10 +146,10 @@ Templates for creating issue tickets and test reports.
 
 ## Fixed Issues Verification
 
-| ID | Description | Fixed? |
-|----|-------------|--------|
-| ISS-001 | [Description] | ✓ Yes |
-| ISS-002 | [Description] | ✓ Yes |
+| ID      | Description   | Fixed? |
+| ------- | ------------- | ------ |
+| ISS-001 | [Description] | ✓ Yes  |
+| ISS-002 | [Description] | ✓ Yes  |
 
 ## Regression Check
 

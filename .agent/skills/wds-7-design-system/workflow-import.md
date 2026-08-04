@@ -12,8 +12,8 @@ description: Import an existing design system into the WDS format
 ## INITIALIZATION
 
 ### Design Log
-Read `{output_folder}/_progress/00-design-log.md`. Check Current and Backlog for context.
 
+Read `{output_folder}/_progress/00-design-log.md`. Check Current and Backlog for context.
 
 ## Steps
 
@@ -76,4 +76,4 @@ Present validation report. Fix issues interactively.
 
 1. Update design log
 1. Suggest running [B] Browse Design System to explore the import
-2. Return to Phase 7 Activity Menu
+1. Return to Phase 7 Activity Menu

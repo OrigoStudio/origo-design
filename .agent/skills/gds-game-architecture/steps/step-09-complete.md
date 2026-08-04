@@ -98,6 +98,7 @@ The following MCP servers were selected during architecture to enhance AI-assist
 
 | MCP Server | Purpose | Install Type |
 | ---------- | ------- | ------------ |
+
 {{mcp_table_rows}}
 
 **Setup:**

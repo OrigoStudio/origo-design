@@ -14,14 +14,15 @@ description: AI-assisted UI design using Google Stitch from specifications and s
 ## INITIALIZATION
 
 ### Design Log
-Read `{output_folder}/_progress/00-design-log.md`. Check Current and Backlog for context.
 
+Read `{output_folder}/_progress/00-design-log.md`. Check Current and Backlog for context.
 
 ## OVERVIEW
 
 Google Stitch transforms text prompts, sketches, and reference images into responsive interfaces.
 
 **Input Formula:**
+
 ```
 Visual Reference + Sketch + Specification = Stitch Generation
 ```
@@ -33,12 +34,14 @@ Visual Reference + Sketch + Specification = Stitch Generation
 ## WHEN TO USE
 
 **Use Stitch when:**
+
 - New page with detailed specification ready
 - Have a visual reference (existing design or screenshot)
 - Have a sketch showing layout structure
 - Want rapid visual design iteration
 
 **Skip when:**
+
 - Building design system components (use tokens instead)
 - Minor updates to existing designs
 - No specification exists yet (write spec first)
@@ -65,18 +68,18 @@ Create a Stitch generation log in the agent experiences folder.
 
 For each potential screen, decide:
 
-| Question | Columns |
-|----------|---------|
+| Question            | Columns                                        |
+| ------------------- | ---------------------------------------------- |
 | Generate in Stitch? | Screen, Has Code?, Has Sketch?, Generate?, Why |
-| What reference? | Screen, Reference, Source |
+| What reference?     | Screen, Reference, Source                      |
 
 ### Step 3: Gather Inputs
 
-| Input | Action |
-|-------|--------|
+| Input                | Action                                    |
+| -------------------- | ----------------------------------------- |
 | **Visual Reference** | Take screenshot OR locate existing design |
-| **Sketch** | Locate in spec's `Sketches/` folder |
-| **Prompt** | Prepare using template below |
+| **Sketch**           | Locate in spec's `Sketches/` folder       |
+| **Prompt**           | Prepare using template below              |
 
 ### Step 3a: Prepare the Prompt
 
@@ -98,22 +101,22 @@ Include: Project Context, Design System, Component Styles, Screen Content (ONE l
 
 ### Step 5: Review Against Spec
 
-| Check | Pass? |
-|-------|-------|
-| Content/copy matches spec | |
-| Layout follows sketch | |
-| Visual style matches reference | |
-| All key elements present | |
+| Check                          | Pass? |
+| ------------------------------ | ----- |
+| Content/copy matches spec      |       |
+| Layout follows sketch          |       |
+| Visual style matches reference |       |
+| All key elements present       |       |
 
 If issues: Re-prompt with specific corrections or edit in Stitch.
 
 ### Step 6: Export & Store
 
-| Format | When | Destination |
-|--------|------|-------------|
-| **Figma** | Team collaboration | Figma project |
-| **HTML/CSS** | Code reference | `{spec-folder}/Visual-Design/` |
-| **Screenshot** | Documentation | `{spec-folder}/Visual-Design/` |
+| Format         | When               | Destination                    |
+| -------------- | ------------------ | ------------------------------ |
+| **Figma**      | Team collaboration | Figma project                  |
+| **HTML/CSS**   | Code reference     | `{spec-folder}/Visual-Design/` |
+| **Screenshot** | Documentation      | `{spec-folder}/Visual-Design/` |
 
 **Naming:** `{screen-name}-stitch-v{#}.{ext}`
 

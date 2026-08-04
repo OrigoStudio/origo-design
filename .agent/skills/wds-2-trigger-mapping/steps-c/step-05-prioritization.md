@@ -61,6 +61,7 @@ Output:
 "**Workshop 4: Prioritization**
 
 Now we make the hard choices. We'll prioritize:
+
 1. Business goals (visions)
 2. Objectives under each goal
 3. Target groups
@@ -135,6 +136,7 @@ Output:
 "**Workshop 4 Complete!**
 
 **Your Strategic Focus:**
+
 - Design primarily for **{{top_group.name}}**
 - Address: {{top_drivers_summary}}
 
@@ -149,11 +151,13 @@ Store all prioritized outputs.
 Display: "**Select an Option:** [C] Continue to Feature Impact Workshop | [M] Return to Activity Menu"
 
 #### Menu Handling Logic:
+
 - IF C: Load and execute {nextStepFile}
 - IF M: Return to {activityWorkflowFile}
 - IF Any other comments or queries: help user respond then [Redisplay Menu Options]
 
 #### EXECUTION RULES:
+
 - ALWAYS halt and wait for user input after presenting menu
 - User can chat or ask questions - always respond and then redisplay menu options
 
@@ -166,6 +170,7 @@ ONLY WHEN user selects [C] will you load the next step file. All priorities and 
 ## 🚨 SYSTEM SUCCESS/FAILURE METRICS
 
 ### ✅ SUCCESS:
+
 - Business goals prioritized with reasoning
 - Objectives ranked with reasoning
 - Target groups prioritized with challenged reasoning
@@ -175,6 +180,7 @@ ONLY WHEN user selects [C] will you load the next step file. All priorities and 
 - User confirmed all rankings and focus statement
 
 ### ❌ SYSTEM FAILURE:
+
 - Accepting priorities without "why" reasoning
 - Not challenging priority decisions
 - Allowing "gut feel" prioritization without reasoning

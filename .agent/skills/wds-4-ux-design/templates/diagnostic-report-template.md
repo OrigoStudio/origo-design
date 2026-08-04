@@ -6,12 +6,13 @@
 
 ## Step-Specific Diagnostic Report
 
-```markdown
+````markdown
 🔍 [Step Name] Audit
 
 **Status:** ✅ PASS / ⚠️ WARNING / ❌ CRITICAL
 
 **Issues Found:**
+
 1. [Issue type] [Description]
    - Location: Line X-Y
    - Current: [what exists now]
@@ -28,12 +29,15 @@
 [Specific actionable fix with examples]
 
 **Example of Correct Format:**
+
 ```[language]
 [code example showing correct implementation]
 ```
+````
 
 Would you like me to fix this?
-```
+
+````
 
 ---
 
@@ -45,23 +49,26 @@ Would you like me to fix this?
   field_2: [true/false]
   field_3: [true/false]
   status: [pass/warning/critical]
-```
+````
 
 ---
 
 ## Issue Severity Levels
 
 ### ✅ PASS
+
 - All checks passed
 - No issues found
 - Specification meets standards
 
 ### ⚠️ WARNING
+
 - Non-critical issues found
 - Specification functional but could be improved
 - Recommended fixes, not required
 
 ### ❌ CRITICAL
+
 - Critical issues that must be fixed
 - Missing required sections
 - Specification incomplete or non-compliant
@@ -72,47 +79,57 @@ Would you like me to fix this?
 ## Common Issue Types
 
 ### Missing Section
+
 ```markdown
 ❌ Missing required section: [Section Name]
-   - Location: Should appear after [Previous Section]
-   - Why: [Explanation of why this section is required]
-   - Example: [Show what the section should look like]
+
+- Location: Should appear after [Previous Section]
+- Why: [Explanation of why this section is required]
+- Example: [Show what the section should look like]
 ```
 
 ### Incorrect Format
+
 ```markdown
 ⚠️ Incorrect format: [Element Name]
-   - Location: Line X
-   - Current: [what's there now]
-   - Should be: [correct format]
-   - Why: [Explanation of why format matters]
+
+- Location: Line X
+- Current: [what's there now]
+- Should be: [correct format]
+- Why: [Explanation of why format matters]
 ```
 
 ### Missing Object ID
+
 ```markdown
 ❌ Missing Object ID: [Component Name]
-   - Location: Line X
-   - Current: Component has no OBJECT ID declaration
-   - Should be: **OBJECT ID**: `component-name`
-   - Why: Object IDs enable traceability from spec → code → Figma
+
+- Location: Line X
+- Current: Component has no OBJECT ID declaration
+- Should be: **OBJECT ID**: `component-name`
+- Why: Object IDs enable traceability from spec → code → Figma
 ```
 
 ### Design System Violation
+
 ```markdown
 ❌ Design System violation: CSS details in page spec
-   - Location: Line X-Y
-   - Current: Contains hex codes, pixel values, CSS classes
-   - Should be: Component references with Design System links
-   - Why: Page specs focus on WHAT/WHY, Design System handles HOW
+
+- Location: Line X-Y
+- Current: Contains hex codes, pixel values, CSS classes
+- Should be: Component references with Design System links
+- Why: Page specs focus on WHAT/WHY, Design System handles HOW
 ```
 
 ### Incomplete Coverage
+
 ```markdown
 ⚠️ Incomplete Object Registry coverage
-   - Missing: [list of Object IDs not in registry]
-   - Orphaned: [list of Object IDs in registry but not in sections]
-   - Coverage: X% (should be 100%)
-   - Why: Registry must be single source of truth for all elements
+
+- Missing: [list of Object IDs not in registry]
+- Orphaned: [list of Object IDs in registry but not in sections]
+- Coverage: X% (should be 100%)
+- Why: Registry must be single source of truth for all elements
 ```
 
 ---
@@ -120,7 +137,8 @@ Would you like me to fix this?
 ## Recommendation Format
 
 ### Simple Fix
-```markdown
+
+````markdown
 **Recommendation:**
 Add the missing section after [Previous Section]:
 
@@ -129,9 +147,11 @@ Add the missing section after [Previous Section]:
 
 [Content template]
 ```
+````
 
 Would you like me to add this section?
-```
+
+````
 
 ### Complex Fix
 ```markdown
@@ -147,7 +167,7 @@ Would you like me to add this section?
 - Update page spec to reference Design System components
 
 Would you like me to help extract these styles to the Design System?
-```
+````
 
 ---
 
@@ -161,27 +181,34 @@ Would you like me to help extract these styles to the Design System?
 **Overall Status:** ✅ PASS / ⚠️ NEEDS WORK / ❌ CRITICAL ISSUES
 
 ## Executive Summary
+
 [Brief overview of specification quality]
 
 ## Critical Issues (Must Fix Before Handoff)
+
 [List critical issues from all steps]
 
 ## Warnings (Should Fix)
+
 [List warnings from all steps]
 
 ## Info (Nice to Have)
+
 [List informational items]
 
 ## Coverage Metrics
+
 - Object Registry Coverage: X%
 - Sketch Coverage: X%
 - Design System References: X%
 - Platform Metadata: Complete/Incomplete
 
 ## Recommendations
+
 [Prioritized list of fixes]
 
 ## Next Steps
+
 [What to do next based on findings]
 ```
 
@@ -200,12 +227,13 @@ Would you like me to help extract these styles to the Design System?
 
 ## Example Complete Report
 
-```markdown
+````markdown
 🔍 Page Metadata Audit
 
 **Status:** ⚠️ WARNING
 
 **Issues Found:**
+
 1. ⚠️ Missing scenario inheritance reference (Line 17-23)
    - Location: Page Metadata section
    - Current: All platform fields present but no inheritance link
@@ -220,8 +248,12 @@ Add inheritance reference after Navigation Context:
 
 **Inherits From**: Scenario 03 Platform Strategy (see scenario overview)
 ```
+````
 
 This creates explicit traceability chain and ensures platform context is properly inherited.
 
 Would you like me to add this reference?
+
+```
+
 ```

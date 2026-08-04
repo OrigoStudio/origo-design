@@ -82,19 +82,21 @@ The following work is explicitly NOT included in this contract:
 
 **What it does**: Defines when and how payments will be made.
 
-**Purpose**: 
+**Purpose**:
+
 - Ensures supplier receives fair compensation for work
 - Provides client with clear payment expectations
 - Protects both parties from payment disputes
 - For fixed-price contracts, upfront payment is fair since supplier assumes cost overrun risk
 
 **Payment Terms Details**:
+
 - **Payment Method**: {{payment_method}} (check, wire transfer, credit card, etc.)
 - **Payment Due Dates**: {{payment_due_dates}}
 - **Late Payment**: {{late_payment_terms}} (e.g., interest charges, work suspension)
 - **Payment Conditions**: {{payment_conditions}} (e.g., payment required before work begins, payment tied to deliverables)
 
-**For Fixed-Price Contracts**: 
+**For Fixed-Price Contracts**:
 This is a fixed-price contract, meaning the contractor commits to deliver specified work for the agreed price, regardless of actual costs. Since the contractor assumes the risk of cost overruns, upfront payment (50-100%) is standard and fair. This demonstrates client commitment and enables the contractor to deliver quality work without cash flow concerns.
 
 ---
@@ -103,7 +105,7 @@ This is a fixed-price contract, meaning the contractor commits to deliver specif
 
 {{timeline}}
 
-*Note: Timeline is based on the work plan outlined above and may be adjusted based on project requirements.*
+_Note: Timeline is based on the work plan outlined above and may be adjusted based on project requirements._
 
 ---
 
@@ -150,6 +152,7 @@ Both parties agree to:
 - Maintain confidentiality obligations even after project completion
 
 **Exceptions**:
+
 - Information already publicly known
 - Information independently developed
 - Information required by law to be disclosed
@@ -166,7 +169,8 @@ Both parties agree to:
 
 **What it does**: States that total costs will not exceed a specified amount without prior written approval.
 
-**Purpose**: 
+**Purpose**:
+
 - Protects both parties from unexpected cost overruns
 - Ensures budget control
 - **Prevents scope creep** - Any work beyond the original scope requires approval and may affect the budget cap
@@ -179,6 +183,7 @@ Both parties agree to:
 - This cap includes all fees, expenses, and costs related to the project
 
 **Change Orders and Scope Control**:
+
 - Any changes to scope that affect cost must be documented in a written change order
 - Change orders must be signed by both parties before work begins
 - Change orders may adjust the not-to-exceed amount if agreed upon
@@ -197,12 +202,14 @@ Both parties agree to:
 
 **What it does**: Defines the start date or conditions that must be met before work begins.
 
-**Purpose**: 
+**Purpose**:
+
 - Prevents unauthorized work before contract is fully executed
 - Establishes clear timeline expectations
 - Protects both parties by ensuring work only begins after proper authorization
 
 **Initiation conditions** (select applicable):
+
 - Upon full execution of this contract (signatures from both parties)
 - On a specific date: {{specific_start_date}}
 - Upon receipt of initial payment/deposit
@@ -216,6 +223,7 @@ This project is initiated upon approval of the project pitch. Project initiation
 ### Next Steps
 
 After contract approval:
+
 1. Proceed to full Project Brief development
 2. Execute work plan as outlined above
 3. Deliverables will be provided according to the agreed timeline
@@ -272,15 +280,15 @@ Any disputes arising from this contract shall be resolved through {{dispute_reso
 
 **Client Approval**:
 
-Signature: _________________  
+Signature: ********\_********  
 Name: {{client_name}}  
-Date: _______________
+Date: ******\_\_\_******
 
 **Contractor Approval**:
 
-Signature: _________________  
+Signature: ********\_********  
 Name: {{contractor_name}}  
-Date: _______________
+Date: ******\_\_\_******
 
 ---
 
@@ -293,5 +301,4 @@ Date: _______________
 
 ---
 
-*This contract is based on the project pitch dated {{date}}.*
-
+_This contract is based on the project pitch dated {{date}}._

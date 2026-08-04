@@ -13,24 +13,29 @@ Reference: `src/data/agent-guides/saga/conversational-followups.md`
 Listen for signals and respond:
 
 **If they mention USERS:**
+
 - "Tell me more about them - who are they?"
 - "What frustrates them today?"
 
 **If they mention BUSINESS VALUE:**
+
 - "How do you see that translating to revenue/efficiency/growth?"
 - "What would success look like in 6 months?"
 
 **If they mention a FEATURE:**
+
 - "What problem does that solve?"
 - "Why is that important to you?"
 
 **If they're VAGUE:**
+
 - "Can you paint me a picture - what does that actually look like?"
 - "Give me a specific example"
 
 ### 2. Know When to Stop
 
 You're ready when you can answer:
+
 - ✅ What are they building?
 - ✅ Why does it matter?
 - ✅ Who is it for?
@@ -61,6 +66,7 @@ You're ready when you can answer:
 **User:** "Maybe pictures of all the different types? So they see we're serious."
 
 **Agent thinks:**
+
 - ✅ What: Professional website showing service breadth
 - ✅ Why: Reduce unnecessary calls, show credibility
 - ✅ Who: Summer tourists (stressed, need fast answers)

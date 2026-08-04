@@ -30,6 +30,7 @@ Before you write any specification, ask:
 **Area Labels follow a consistent hierarchical pattern to identify UI locations across sketch, specification, and code.**
 
 ### Structural Area Labels (Containers)
+
 These define the page architecture and visual grouping:
 
 - `{page-name}-page` - Top-level page wrapper
@@ -42,6 +43,7 @@ These define the page architecture and visual grouping:
 **Purpose:** Organize page structure, enable Figma layer naming (via aria-label), support testing selectors (via id attribute)
 
 ### Interactive Area Labels (Components)
+
 These identify specific interactive elements:
 
 - `{page-name}-{section}-{element}` - Standard pattern
@@ -58,18 +60,21 @@ These identify specific interactive elements:
 **Name components by FUNCTION, not CONTENT**
 
 ### Good (Function)
+
 - `hero-headline` - Describes its role on the page
 - `primary-cta` - Describes its function in the flow
 - `feature-benefit-section` - Describes what it does
 - `form-validation-error` - Describes when it appears
 
 ### Bad (Content)
+
 - `welcome-message` - What if the message changes?
 - `blue-button` - What if we change colors?
 - `first-paragraph` - Position isn't purpose
 - `email-error-text` - Too specific, not reusable
 
 **Why this matters:**
+
 - Content changes, function rarely does
 - Makes specs maintainable
 - Helps developers understand intent
@@ -83,6 +88,7 @@ These identify specific interactive elements:
 **Every component needs a clear job description:**
 
 ### Template
+
 ```markdown
 ### [Component Name]
 
@@ -93,6 +99,7 @@ These identify specific interactive elements:
 ```
 
 ### Example
+
 ```markdown
 ### Primary CTA Button
 
@@ -109,6 +116,7 @@ These identify specific interactive elements:
 **Understand the WHOLE before detailing the PARTS**
 
 ### Wrong Approach (Bottom-Up)
+
 1. Design individual components
 2. Try to arrange them into sections
 3. Hope the page makes sense
@@ -116,6 +124,7 @@ These identify specific interactive elements:
 5. Start over
 
 ### Right Approach (Top-Down)
+
 1. **Define structural containers** - Page, header, main, sections
 2. **Assign structural Area Labels** - `{page}-page`, `{page}-header`, etc.
 3. **Identify page sections** - What major areas exist?
@@ -128,6 +137,7 @@ These identify specific interactive elements:
 **Result:** Logical flow, no gaps, confident specifications, complete Area Label coverage
 
 ### Area Label Coverage Checklist
+
 - [ ] Page container (`{page}-page`)
 - [ ] Header section (`{page}-header`)
 - [ ] Main content area (`{page}-main`)
@@ -143,10 +153,12 @@ These identify specific interactive elements:
 **Never design in one language only**
 
 ### Grouped Translations
+
 ```markdown
 #### Hero Headline
 
 **Content:**
+
 - EN: "Stop losing clients to poor proposals"
 - SE: "Sluta förlora kunder på dåliga offerter"
 - NO: "Slutt å miste kunder på dårlige tilbud"
@@ -155,6 +167,7 @@ These identify specific interactive elements:
 ```
 
 ### Why This Matters
+
 - Prevents "English-first" bias
 - Reveals translation issues early
 - Shows if message works across cultures
@@ -167,6 +180,7 @@ These identify specific interactive elements:
 Before marking a spec "complete":
 
 ### Core Quality
+
 - [ ] **Logical Explanation** - Can I explain WHY and HOW?
 - [ ] **Purpose-Based Names** - Named by function, not content?
 - [ ] **Clear Purpose** - Every component has a job description?
@@ -175,12 +189,14 @@ Before marking a spec "complete":
 - [ ] **No Hand-Waving** - No "probably" or "maybe" or "users will figure it out"?
 
 ### Area Labels
+
 - [ ] **Structural Area Labels** - Page, header, main, sections all have labels?
 - [ ] **Interactive Area Labels** - All buttons, inputs, links have labels?
 - [ ] **Area Label Hierarchy** - Labels follow `{page}-{section}-{element}` pattern?
 - [ ] **Figma-Ready** - Area Labels support html.to.design layer naming?
 
 ### Accessibility
+
 - [ ] **ARIA Labels** - All interactive elements have aria-label attributes?
 - [ ] **Alt Text** - All images have descriptive alt attributes?
 - [ ] **Form Labels** - All inputs have associated labels?
@@ -191,6 +207,7 @@ Before marking a spec "complete":
 - [ ] **Heading Hierarchy** - Logical H1-H6 structure documented?
 
 ### SEO (Public Pages)
+
 - [ ] **H1 Present** - Exactly one H1 on the page, contains primary keyword?
 - [ ] **Heading Hierarchy** - Logical H1 → H2 → H3, no skipped levels?
 - [ ] **URL Slug** - Defined, keyword-rich, matches project brief keyword map?
@@ -202,6 +219,7 @@ Before marking a spec "complete":
 - [ ] **Structured Data** - Schema type specified per project brief plan?
 
 ### Content Completeness
+
 - [ ] **All Text Defined** - No placeholder content?
 - [ ] **Error Messages** - All error states have messages in all languages?
 - [ ] **Success Messages** - Confirmation messages defined?
@@ -211,6 +229,7 @@ Before marking a spec "complete":
 - [ ] **Social Sharing** - Social media title, description, and image for public pages?
 
 ### Implementation Ready
+
 - [ ] **Developer-Ready** - Could someone build this confidently?
 - [ ] **Component References** - All design system components linked?
 - [ ] **API Endpoints** - Data requirements documented?
@@ -238,6 +257,7 @@ Before marking a spec "complete":
 ## The Developer Trust Test
 
 **Imagine handing your spec to a developer who:**
+
 - Has never seen your sketches
 - Doesn't know the business context
 - Speaks a different language
@@ -258,5 +278,4 @@ Before marking a spec "complete":
 
 ---
 
-*Quality specifications are the foundation of confident implementation.*
-
+_Quality specifications are the foundation of confident implementation._

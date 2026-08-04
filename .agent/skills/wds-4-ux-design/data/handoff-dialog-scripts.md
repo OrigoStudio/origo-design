@@ -7,6 +7,7 @@ Detailed conversation scripts for each phase of the handoff dialog.
 ## Phase 1: Introduction (2 min)
 
 **You say:**
+
 ```
 "Hey Architect! I've completed the design for [Flow Name].
  I'd like to walk you through Design Delivery DD-XXX.
@@ -24,6 +25,7 @@ Detailed conversation scripts for each phase of the handoff dialog.
 ## Phase 2: User Value (3 min)
 
 **You say:**
+
 ```
 "First, let me explain what problem we're solving:
 
@@ -46,6 +48,7 @@ This is critical because [business value]."
 ## Phase 3: Scenario Walkthrough (8 min)
 
 **You say:**
+
 ```
 "Let me walk you through the user flow:
 
@@ -69,6 +72,7 @@ The complete flow is:
 ## Phase 4: Technical Requirements (4 min)
 
 **You say:**
+
 ```
 "Technical requirements:
 
@@ -99,6 +103,7 @@ Security:
 ## Phase 5: Design System Components (3 min)
 
 **You say:**
+
 ```
 "Design system components used:
 
@@ -126,6 +131,7 @@ All components follow our design tokens:
 ## Phase 6: Acceptance Criteria (3 min)
 
 **You say:**
+
 ```
 "Acceptance criteria:
 
@@ -150,6 +156,7 @@ All criteria are testable and defined in TS-XXX.yaml"
 ## Phase 7: Testing Approach (2 min)
 
 **You say:**
+
 ```
 "Testing approach:
 
@@ -172,6 +179,7 @@ When you're done implementing, I'll:
 ## Phase 8: Complexity Estimate (2 min)
 
 **You say:**
+
 ```
 "My complexity estimate:
 
@@ -195,6 +203,7 @@ Does this align with your technical assessment?"
 ## Phase 9: Special Considerations (2 min)
 
 **You say:**
+
 ```
 "Special considerations:
 
@@ -211,6 +220,7 @@ Questions or concerns?"
 ## Phase 10: Confirmation & Next Steps (1 min)
 
 **You say:**
+
 ```
 "So to confirm:
 - You have DD-XXX.yaml (Design Delivery)
@@ -236,6 +246,7 @@ File: `deliveries/DD-XXX-handoff-log.md`
 **Date:** [Date]
 **Duration:** [Duration] minutes
 **Participants:**
+
 - WDS UX Expert: [Your name]
 - BMad Architect: [Architect name]
 

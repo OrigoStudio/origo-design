@@ -200,7 +200,7 @@ export default config;
 import { runBurnIn } from '@seontechnologies/playwright-utils/burn-in';
 
 async function main() {
-  const shardArg = process.argv.find((arg) => arg.startsWith('--shard='));
+  const shardArg = process.argv.find(arg => arg.startsWith('--shard='));
 
   if (shardArg) {
     process.env.PW_SHARD = shardArg.split('=')[1];

@@ -27,6 +27,7 @@ File: `C-UX-Scenarios/{{scenario_path}}/{{page.number}}-{{page.slug}}/{{page.num
 ## Status
 
 ⚠️ **PLACEHOLDER** - This page needs:
+
 - [ ] Sketch or screenshot
 - [ ] Section breakdown
 - [ ] Object specifications
@@ -80,7 +81,9 @@ File: `C-UX-Scenarios/{{scenario_path}}/00-{{scenario_slug}}-scenario.md`
 ## Scenario Steps
 
 {{#each page in pages_list}}
+
 ### **{{page.number}} {{page.name}}**
+
 **Purpose**: {{page.purpose}}
 **Status**: ⚠️ Placeholder
 **Files**: [{{page.number}}-{{page.slug}}.md]({{page.number}}-{{page.slug}}/{{page.number}}-{{page.slug}}.md)
@@ -88,11 +91,12 @@ File: `C-UX-Scenarios/{{scenario_path}}/00-{{scenario_slug}}-scenario.md`
 {{/each}}
 
 ## User Journey Flow
-
 ```
+
 {{#each page in pages_list}}
 {{page.number}}-{{page.slug}}{{#unless @last}} → {{/unless}}
 {{/each}}
+
 ```
 
 ## Status
@@ -135,6 +139,7 @@ created_date: "{{date}}"
 ## When to Use Placeholders
 
 **Advantages:**
+
 - Quick mapping of entire flow
 - Clear navigation before details
 - Easy to see gaps or redundancies
@@ -142,12 +147,14 @@ created_date: "{{date}}"
 - Team can work on different pages in parallel
 
 **Use when:**
+
 - New projects starting from scratch
 - Complex multi-page scenarios
 - When need for early stakeholder review
 - Before diving into visual design
 
 **Don't use when:**
+
 - Single page projects
 - When sketch already exists (use Workshop A)
 - Small modifications to existing flow

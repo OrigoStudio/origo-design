@@ -95,7 +95,6 @@ Unless the user explicitly asked to skip it (e.g. `skills only` / `--no-tool`), 
 1. **Check what's already on PATH:** run `bmad-loop --version`. A version printing here does **not** mean this project is set up — it only means _some_ `bmad-loop` is importable in the current environment. Before trusting it, run `uv tool list` and look for `bmad-loop`: if it's absent (the on-PATH copy comes from a source checkout or an unrelated virtualenv), warn the user that the active environment is shadowing a clean install and that the project would be relying on that checkout. Unless the user explicitly declines, install/upgrade from the canonical source below so the project doesn't depend on an incidental dev environment. Only skip the install if the user confirms the on-PATH copy is the one they want this project to use.
 
 2. **Install or upgrade from the Git repository** (the `[tui]` extra pulls in the Textual dashboard so `bmad-loop tui` works). `uv tool install` puts `bmad-loop` in uv's own managed environment, so there's no PEP 668 externally-managed conflict and no need for `--user`, an activated virtualenv, or `--break-system-packages`.
-
    - **Renamed from bmad-auto** (`uv tool list` shows `bmad-auto`, not `bmad-loop`): uv can't rename a package in place, so `uv tool upgrade` won't move you across the rename. Record `bmad-auto --version` first (for the delta), then uninstall the old tool and install the new one fresh:
 
      ```bash
@@ -114,7 +113,6 @@ Unless the user explicitly asked to skip it (e.g. `skills only` / `--no-tool`), 
      Pin a release tag for reproducibility by appending `@v<X.Y.Z>` to the Git URL.
 
    - **Upgrade** (uv already manages `bmad-loop`, per the "On Activation" decision):
-
      1. Record the current version first so you can report the delta: `bmad-loop --version`.
      2. Default — follow `main` (or the currently pinned tag):
 

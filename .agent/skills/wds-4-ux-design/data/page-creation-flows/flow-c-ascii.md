@@ -19,6 +19,7 @@ We'll create a basic box-and-text layout to show structure.</output>
 <ask>**What are the main sections from top to bottom?**
 
 Example:
+
 - Header
 - Hero
 - Features (3 columns)
@@ -78,11 +79,13 @@ Save as conceptual specification with ASCII visualization
 ⚠️ **Remember:** This is a rough structural guide.
 
 **Recommended next steps:**
+
 1. Use this ASCII as a reference
 2. Create a proper sketch/wireframe
 3. Upload and run Page Process Workshop
 
 **ASCII is helpful for structure, but lacks:**
+
 - Visual hierarchy
 - Spacing and proportions
 - Typography details

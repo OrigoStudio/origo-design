@@ -65,12 +65,14 @@ Build the Confidentiality clause protecting sensitive information shared during 
 **Purpose**: Protects proprietary information, business strategies, and trade secrets - mutual protection builds trust
 
 **Why this matters**:
+
 - Without this clause, either party could share sensitive project details with competitors
 - Protects your business secrets, customer data, and strategic plans
 - Builds trust by showing mutual respect for confidentiality
 - Prevents legal disputes about information sharing
 
 **User options**:
+
 - **Standard confidentiality** (recommended): Both parties keep all project information confidential
 - **Limited confidentiality**: Only specific information types are confidential (e.g., financial data only)
 - **One-way confidentiality**: Only one party is bound (rare, usually for public projects)
@@ -88,11 +90,13 @@ Build the Confidentiality clause protecting sensitive information shared during 
 Display: "**Select an Option:** [C] Continue to step-05h-contract-not-to-exceed"
 
 #### Menu Handling Logic:
+
 - IF C: Load, read entire file, then execute {nextStepFile}
 - IF M: Return to {workflowFile}
 - IF Any other comments or queries: help user respond then [Redisplay Menu Options]
 
 #### EXECUTION RULES:
+
 - ALWAYS halt and wait for user input after presenting menu
 - ONLY proceed to next step when user selects 'C'
 - User can chat or ask questions - always respond and then redisplay menu options
@@ -106,12 +110,14 @@ ONLY WHEN the Confidentiality section is built and confirmed will you then load 
 ## 🚨 SYSTEM SUCCESS/FAILURE METRICS
 
 ### ✅ SUCCESS:
+
 - Confidentiality level is appropriate for the project
 - Duration and exceptions are defined
 - Mutual protection is emphasized
 - User confirms the clause
 
 ### ❌ SYSTEM FAILURE:
+
 - Skipping confidentiality discussion
 - Assuming confidentiality level without asking
 - Not emphasizing mutual protection

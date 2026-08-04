@@ -16,10 +16,10 @@ After implementing a section, the agent uses Puppeteer to open the browser, navi
 
 ## Responsibility Split
 
-| Responsibility | Owner | Examples |
-|---------------|-------|----------|
-| **Measurable criteria** | Agent (Puppeteer) | Text content matches spec, colors match hex values, touch targets >= 44px, error states display correctly, element visibility, layout positioning |
-| **Qualitative judgment** | Human | Flow feels natural, visual hierarchy works, user understands next steps, pacing feels right, overall consistency |
+| Responsibility           | Owner             | Examples                                                                                                                                          |
+| ------------------------ | ----------------- | ------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Measurable criteria**  | Agent (Puppeteer) | Text content matches spec, colors match hex values, touch targets >= 44px, error states display correctly, element visibility, layout positioning |
+| **Qualitative judgment** | Human             | Flow feels natural, visual hierarchy works, user understands next steps, pacing feels right, overall consistency                                  |
 
 **The agent never asks the user to verify something it can measure itself.**
 
@@ -27,13 +27,13 @@ After implementing a section, the agent uses Puppeteer to open the browser, navi
 
 ## When to Test
 
-| Trigger | Action |
-|---------|--------|
-| Section implementation complete (4c done) | Run Puppeteer verification before presenting (4d) |
-| Public page implementation complete | Run SEO validation → [SEO-VALIDATION-GUIDE.md](SEO-VALIDATION-GUIDE.md) |
-| Issue fixed (4e done) | Re-verify the fix + check for regressions before re-presenting |
-| Modifying existing feature | Capture baseline BEFORE making changes |
-| Integration test (Phase 5) | Verify all states across all sections |
+| Trigger                                   | Action                                                                  |
+| ----------------------------------------- | ----------------------------------------------------------------------- |
+| Section implementation complete (4c done) | Run Puppeteer verification before presenting (4d)                       |
+| Public page implementation complete       | Run SEO validation → [SEO-VALIDATION-GUIDE.md](SEO-VALIDATION-GUIDE.md) |
+| Issue fixed (4e done)                     | Re-verify the fix + check for regressions before re-presenting          |
+| Modifying existing feature                | Capture baseline BEFORE making changes                                  |
+| Integration test (Phase 5)                | Verify all states across all sections                                   |
 
 ---
 
@@ -104,6 +104,7 @@ Result: 8/9 criteria pass. 1 mismatch found.
 ```
 
 **Rules:**
+
 - Always state both actual and expected values
 - Always group by category for readability
 - Always end with a summary line (X/Y criteria pass)
@@ -123,13 +124,13 @@ Story files split acceptance criteria into two categories. This is the format:
 
 Measurable criteria the agent checks itself:
 
-| # | Criterion | Element | Expected | How to Verify |
-|---|-----------|---------|----------|---------------|
-| 1 | Headline text | `[data-object-id="section-title"]` | "Boka promenad" | Read textContent |
-| 2 | Button color | `[data-object-id="submit-btn"]` | bg: #2563EB | Read computed backgroundColor |
-| 3 | Touch target | `[data-object-id="submit-btn"]` | >= 44x44px | Read offsetWidth, offsetHeight |
-| 4 | Error display | `#emailError` | Visible when email invalid | Trigger error, check visibility |
-| 5 | Loading state | `[data-object-id="submit-btn"]` | Disabled + spinner | Click submit, check disabled attr |
+| #   | Criterion     | Element                            | Expected                   | How to Verify                     |
+| --- | ------------- | ---------------------------------- | -------------------------- | --------------------------------- |
+| 1   | Headline text | `[data-object-id="section-title"]` | "Boka promenad"            | Read textContent                  |
+| 2   | Button color  | `[data-object-id="submit-btn"]`    | bg: #2563EB                | Read computed backgroundColor     |
+| 3   | Touch target  | `[data-object-id="submit-btn"]`    | >= 44x44px                 | Read offsetWidth, offsetHeight    |
+| 4   | Error display | `#emailError`                      | Visible when email invalid | Trigger error, check visibility   |
+| 5   | Loading state | `[data-object-id="submit-btn"]`    | Disabled + spinner         | Click submit, check disabled attr |
 
 ### User-Evaluable (Qualitative)
 
@@ -165,13 +166,13 @@ Criteria only the human can judge:
 
 ## Distinction from Phase 7 Testing
 
-| Aspect | Inline Testing (This Guide) | Phase 7 Testing |
-|--------|----------------------------|-----------------|
-| **When** | During development, per section | After development complete |
-| **Who tests** | Agent (automated via Puppeteer) | Designer (manual validation) |
-| **What** | Measurable spec conformity | Full design vision validation |
-| **Scope** | Single section at a time | Entire feature/delivery |
-| **Outcome** | Agent fixes before showing user | Issues documented for developer |
+| Aspect        | Inline Testing (This Guide)     | Phase 7 Testing                 |
+| ------------- | ------------------------------- | ------------------------------- |
+| **When**      | During development, per section | After development complete      |
+| **Who tests** | Agent (automated via Puppeteer) | Designer (manual validation)    |
+| **What**      | Measurable spec conformity      | Full design vision validation   |
+| **Scope**     | Single section at a time        | Entire feature/delivery         |
+| **Outcome**   | Agent fixes before showing user | Issues documented for developer |
 
 These are complementary, not competing. Inline testing catches measurable issues early. Phase 7 testing validates the complete feature against the full design vision.
 
@@ -187,4 +188,4 @@ These are complementary, not competing. Inline testing catches measurable issues
 
 ---
 
-*Test as you build. Fix before you present. Let the human focus on what only humans can judge.*
+_Test as you build. Fix before you present. Let the human focus on what only humans can judge._

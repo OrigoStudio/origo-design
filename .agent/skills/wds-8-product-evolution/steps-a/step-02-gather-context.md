@@ -63,6 +63,7 @@ Understand the existing product context deeply before designing improvements - w
 **Clarify user's situation:**
 
 Are you:
+
 - **A) Joining an existing product** (first time working on this product)
 - **B) Continuous improvement** (you designed this product, now improving it)
 
@@ -76,11 +77,11 @@ Guide user to appropriate section below.
 
 **Help user collect everything:**
 
-| Category | Upload To | Review For |
-|----------|-----------|------------|
+| Category     | Upload To                                    | Review For                                      |
+| ------------ | -------------------------------------------- | ----------------------------------------------- |
 | **Business** | `A-Project-Brief/existing-context/business/` | Why product exists, business model, competitors |
-| **Users** | `A-Project-Brief/existing-context/users/` | Who are users, needs, pain points |
-| **Product** | `A-Project-Brief/existing-context/product/` | Features, tech stack, constraints |
+| **Users**    | `A-Project-Brief/existing-context/users/`    | Who are users, needs, pain points               |
+| **Product**  | `A-Project-Brief/existing-context/product/`  | Features, tech stack, constraints               |
 
 **Prompt user to upload materials they have available.**
 
@@ -89,6 +90,7 @@ Guide user to appropriate section below.
 **Critical: Experience it yourself!**
 
 Guide user through:
+
 1. Download/access the product
 2. Create an account, go through onboarding
 3. Use all major features
@@ -105,6 +107,7 @@ Guide user through:
 **Reference:** Use Focused Trigger Map template from {contextTemplates}
 
 Help user identify:
+
 - Trigger moment (when does this happen?)
 - Current experience (what happens now?)
 - Desired outcome (what should happen?)
@@ -122,6 +125,7 @@ Focus on the specific feature/flow you're improving.
 **Reference:** Use Analytics template from {contextTemplates}
 
 Help user analyze:
+
 - Usage metrics for specific feature
 - User segments (new vs returning vs power users)
 - Drop-off points
@@ -135,6 +139,7 @@ Categorize feedback about this specific feature.
 **Reference:** Use User Feedback template from {contextTemplates}
 
 Guide user to identify:
+
 - Themes (confusion, requests, praise)
 - Frequency of mentions
 - Specific quotes
@@ -143,6 +148,7 @@ Guide user to identify:
 #### 3c. Review Original Design Intent
 
 **Ask user to reflect:**
+
 - Why did you design it this way?
 - What assumptions did you make?
 - What constraints existed?
@@ -151,6 +157,7 @@ Guide user to identify:
 #### 3d. Competitive Analysis
 
 **Guide user to research:**
+
 - How do competitors handle this?
 - What patterns work well?
 - What can we learn?
@@ -163,6 +170,7 @@ Guide user to identify:
 **Reference:** Use Context Synthesis template from {contextTemplates}
 
 Help user create synthesis with:
+
 - **What we know** (key insights from all sources)
 - **Root cause** (why is this happening?)
 - **Hypothesis** (what will solve it?)
@@ -175,10 +183,12 @@ Help user create synthesis with:
 Display: "**Select an Option:** [M] Return to Activity Menu (suggest [S] Scope Improvement)"
 
 #### Menu Handling Logic:
+
 - IF M: Return to {workflowFile} or {activityWorkflowFile}
 - IF Any other comments or queries: help user respond then [Redisplay Menu Options]
 
 #### EXECUTION RULES:
+
 - ALWAYS halt and wait for user input after presenting menu
 - User can chat or ask questions - always respond and then redisplay menu options
 
@@ -191,6 +201,7 @@ ONLY WHEN user selects [M] and context gathering is complete will you then retur
 ## 🚨 SYSTEM SUCCESS/FAILURE METRICS
 
 ### ✅ SUCCESS:
+
 - All relevant materials gathered (Context A) or fresh data collected (Context B)
 - Product experienced firsthand (Context A required)
 - Focused trigger map created (Context A) or analytics analyzed (Context B)
@@ -201,6 +212,7 @@ ONLY WHEN user selects [M] and context gathering is complete will you then retur
 - Context synthesis document complete
 
 ### ❌ SYSTEM FAILURE:
+
 - Not using the product yourself (Context A)
 - Relying only on documentation without firsthand experience
 - Ignoring user feedback or analytics data

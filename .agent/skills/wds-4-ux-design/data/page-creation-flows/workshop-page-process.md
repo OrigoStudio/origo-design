@@ -11,6 +11,7 @@
 **Intelligence:** Detects if this is a new page or update to existing specification.
 
 **Behavior:**
+
 - New page → Full analysis
 - Updated page → Change detection, incremental update
 - Partial completion → Specify ready sections, mark TBD
@@ -26,22 +27,22 @@
 2. Check for existing sketch versions
 3. Identify project structure (scenarios, pages)
 4. Store context information
-</action>
+   </action>
 
 <check if="!page_spec_exists">
   <output>**This is the first sketch for this page!**
 
-  Let me analyze what you've drawn and create the initial specification.</output>
+Let me analyze what you've drawn and create the initial specification.</output>
 
-  <action>Route to: `../../steps-k/step-01-sketch-analysis.md` (existing workflow)</action>
+<action>Route to: `../../steps-k/step-01-sketch-analysis.md` (existing workflow)</action>
 </check>
 
 <check if="page_spec_exists">
   <output>**I see we already have specifications for this page.**
 
-  Let me compare this sketch to what we have...</output>
+Let me compare this sketch to what we have...</output>
 
-  <action>Proceed to STEP 2: Change Detection</action>
+<action>Proceed to STEP 2: Change Detection</action>
 </check>
 
 ---
@@ -61,19 +62,20 @@
    - TBD sections now complete
    - Complete sections now TBD
 4. Calculate confidence for each comparison
-</action>
+   </action>
 
 <output>**Comparison Results:**
 
 **See:** [page-process-templates.md](page-process-templates.md) for output templates
 
 Display:
+
 - Unchanged sections (✅)
 - Modified sections (✏️)
 - New sections added (➕)
 - TBD sections now complete (✨)
 - Sections removed (⚠️)
-</output>
+  </output>
 
 ---
 
@@ -149,6 +151,7 @@ End
 **See:** [page-process-templates.md](page-process-templates.md) for comparison template
 
 Display for each modified section:
+
 - Current specification summary
 - New sketch interpretation
 - Detected changes
@@ -171,10 +174,11 @@ After reviewing, what would you like to do?
 <output>✅ **Page specification updated!**
 
 **Summary:**
-- [X] sections updated
-- [X] sections added
-- [X] sections preserved (unchanged)
-- [X] sections removed
+
+- [x] sections updated
+- [x] sections added
+- [x] sections preserved (unchanged)
+- [x] sections removed
 
 **Updated file:** `{{page_spec_path}}`
 **Sketch saved to:** `{{sketch_path}}`
@@ -204,16 +208,19 @@ Based on user choice:
 ## KEY FEATURES
 
 ### ✅ **Intelligent Context Detection**
+
 - Automatically knows if new or update
 - Compares sketches to existing specs
 - Identifies unchanged sections
 
 ### ✅ **Incremental Updates**
+
 - Only updates what changed
 - Preserves existing work
 - No data loss
 
 ### ✅ **Flexible Control**
+
 - Update all or select specific
 - See detailed comparison
 - Cancel anytime
@@ -223,10 +230,11 @@ Based on user choice:
 ## INTEGRATION
 
 This workshop uses:
+
 - **4b-sketch-analysis.md** - For actual section analysis
 - **guides/SKETCH-TEXT-ANALYSIS-GUIDE.md** - For reading text markers
 - **page-specification.template.md** - For document structure
-- **object-types/*.md** - For component specifications
+- **object-types/\*.md** - For component specifications
 
 ---
 

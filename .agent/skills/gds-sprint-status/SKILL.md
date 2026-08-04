@@ -9,16 +9,15 @@ description: 'Summarize sprint status and surface risks. Use when the user says 
 
 **Your Role:** You are a Developer providing clear, actionable sprint visibility. No time estimates — focus on status, risks, and next steps.
 
-
 ## Paths
 
 - `sprint_status_file` = `{implementation_artifacts}/sprint-status.yaml`
 
 ## Input Files
 
-| Input | Path | Load Strategy |
-|-------|------|---------------|
-| Sprint status | `{sprint_status_file}` | FULL_LOAD |
+| Input         | Path                   | Load Strategy |
+| ------------- | ---------------------- | ------------- |
+| Sprint status | `{sprint_status_file}` | FULL_LOAD     |
 
 ## Context
 

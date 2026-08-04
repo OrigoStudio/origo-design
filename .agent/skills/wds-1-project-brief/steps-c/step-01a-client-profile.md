@@ -10,11 +10,13 @@ workflowFile: '../workflow.md'
 # Step 1a: Client Profile
 
 ## STEP GOAL:
+
 Understand the client as an organisation and as people. This is NOT about their product or their customers — it's about who we are working with, how they operate, and what drives them internally.
 
 ## MANDATORY EXECUTION RULES (READ FIRST):
 
 ### Universal Rules:
+
 - 🛑 NEVER generate content without user input
 - 📖 CRITICAL: Read the complete step file before taking any action
 - 🔄 CRITICAL: When loading next step with 'C', ensure entire file is read
@@ -22,23 +24,27 @@ Understand the client as an organisation and as people. This is NOT about their 
 - ✅ YOU MUST ALWAYS SPEAK OUTPUT in your Agent communication style with the config `{communication_language}`
 
 ### Role Reinforcement:
+
 - ✅ You are Saga, building a working relationship — not interrogating the client
 - ✅ Keep the tone warm and curious, not clinical
 - ✅ Many answers will come naturally from conversation — don't ask mechanically through a checklist
 - ✅ The goal is a picture of the organisation and the people, not a form filled in
 
 ### Step-Specific Rules:
+
 - 🎯 Focus on the client as organisation and humans — NOT on their product, vision, or target users (those come later)
 - 🚫 FORBIDDEN to ask about product vision or positioning here
 - 💬 Approach: Conversational. One topic at a time. Build on what they say.
 - 📋 If answers came up naturally during init (step-01), carry them forward — do not re-ask
 
 ## EXECUTION PROTOCOLS:
+
 - 🎯 Build a clear picture across four areas: Organisation, People, Working Style, Internal Driver
 - 💾 Write completed profile to `dialog/client-profile.md` using the client-profile template
 - 🚫 Do not confuse "business customers" (their customers) with the client organisation itself
 
 ## CONTEXT BOUNDARIES:
+
 - Available context: Project config, any context from step-01 init
 - Focus: The client organisation and the humans commissioning this project
 - Limits: Not their product, not their end users, not their market — those are next
@@ -49,6 +55,7 @@ Understand the client as an organisation and as people. This is NOT about their 
 ### 0. Check Prior Context
 
 Before asking anything, review what is already known from step-01:
+
 - Did the user mention their role or organisation during init?
 - Did they provide any materials that reveal organisation type or stakeholder structure?
 
@@ -103,15 +110,18 @@ Mark Step 1a complete in `dialog/progress-tracker.md`.
 Display: "**Select an Option:** [C] Continue to Vision"
 
 #### Menu Handling Logic:
+
 - IF C: Load, read entire file, then execute {nextStepFile}
 - IF M: Return to {workflowFile}
 - IF Any other comments or queries: help user respond then [Redisplay Menu Options]
 
 #### EXECUTION RULES:
+
 - ALWAYS halt and wait for user input after presenting menu
 - User can chat or ask questions - always respond and then redisplay menu options
 
 ## CRITICAL STEP COMPLETION NOTE
+
 ONLY WHEN client profile is documented and user confirms will you then load and read fully `{nextStepFile}`.
 
 ---
@@ -119,6 +129,7 @@ ONLY WHEN client profile is documented and user confirms will you then load and 
 ## 🚨 SYSTEM SUCCESS/FAILURE METRICS
 
 ### ✅ SUCCESS:
+
 - Organisation type and maturity captured
 - Key people and their roles/mandates identified
 - Decision culture understood
@@ -127,6 +138,7 @@ ONLY WHEN client profile is documented and user confirms will you then load and 
 - Design log updated
 
 ### ❌ SYSTEM FAILURE:
+
 - Asked about product vision or target users in this step
 - Generated profile content without user input
 - Re-asked questions already answered in step-01

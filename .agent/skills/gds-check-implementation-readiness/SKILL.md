@@ -84,7 +84,6 @@ Activation is complete. If `activation_steps_prepend` or `activation_steps_appen
 - ⏸️ **ALWAYS** halt at menus and wait for user input
 - 📋 **NEVER** create mental todo lists from future steps
 
-
 ## INITIALIZATION SEQUENCE
 
 ### 1. Module Configuration Loading

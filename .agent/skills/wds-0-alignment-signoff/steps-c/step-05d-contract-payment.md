@@ -65,6 +65,7 @@ Build the payment terms section tailored to the selected business model, coverin
 **Purpose**: Clear financial expectations - transparency builds trust
 
 **Why this matters**:
+
 - Protects supplier from non-payment risk
 - Ensures client commits financially to the project
 - Provides cash flow for supplier to deliver quality work
@@ -73,6 +74,7 @@ Build the payment terms section tailored to the selected business model, coverin
 **Adapt based on business model**:
 
 **If Fixed-Price Project**:
+
 - **User options for payment structure**:
   - **50% upfront, 50% on completion**: Fair split, supplier gets commitment, client retains leverage
   - **100% upfront**: Full commitment, supplier assumes all risk, client gets best price
@@ -88,14 +90,17 @@ Build the payment terms section tailored to the selected business model, coverin
 - **What to ask user**: "For fixed-price contracts, upfront payment is fair since you're assuming the risk. Would you like 50% upfront and 50% on completion, or 100% upfront?"
 
 **If Hourly/Time-Based**:
+
 - Billing frequency, payment terms (Net 15, Net 30), time tracking, invoice format
 - **What to ask user**: "How often would you like to be invoiced? What payment terms work for you?"
 
 **If Retainer**:
+
 - Monthly retainer amount, due date, minimum hours, overage billing, hour rollover
 - **What to ask user**: "When should the retainer be due each month? How should we handle unused hours?"
 
 **If Hybrid**:
+
 - Combine payment terms from each component
 
 **Content**: Pull from alignment document (our_commitment), add payment schedule and terms based on business model
@@ -107,11 +112,13 @@ Build the payment terms section tailored to the selected business model, coverin
 Display: "**Select an Option:** [C] Continue to step-05e-contract-timeline"
 
 #### Menu Handling Logic:
+
 - IF C: Load, read entire file, then execute {nextStepFile}
 - IF M: Return to {workflowFile}
 - IF Any other comments or queries: help user respond then [Redisplay Menu Options]
 
 #### EXECUTION RULES:
+
 - ALWAYS halt and wait for user input after presenting menu
 - ONLY proceed to next step when user selects 'C'
 - User can chat or ask questions - always respond and then redisplay menu options
@@ -125,12 +132,14 @@ ONLY WHEN the Payment Terms section is built and confirmed will you then load an
 ## 🚨 SYSTEM SUCCESS/FAILURE METRICS
 
 ### ✅ SUCCESS:
+
 - Payment terms are tailored to business model
 - Specific amounts, schedules, and terms are captured
 - Fairness is explained transparently
 - User confirms the terms
 
 ### ❌ SYSTEM FAILURE:
+
 - Using generic payment terms not tailored to model
 - Skipping fairness explanation
 - Not gathering specific payment details from user

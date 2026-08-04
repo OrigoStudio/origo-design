@@ -23,13 +23,14 @@ Load page specification from `{output_folder}/C-UX-Scenarios/`.
 
 Execute steps in `./steps-w/`:
 
-| Step | File | Purpose |
-|------|------|---------|
-| 01 | step-01-visual-approach.md | Choose visual tool and approach |
-| 02 | step-02-generate-visual.md | Create visual representation |
-| 03 | step-03-review-integrate.md | Review result and integrate into spec |
+| Step | File                        | Purpose                               |
+| ---- | --------------------------- | ------------------------------------- |
+| 01   | step-01-visual-approach.md  | Choose visual tool and approach       |
+| 02   | step-02-generate-visual.md  | Create visual representation          |
+| 03   | step-03-review-integrate.md | Review result and integrate into spec |
 
 **Supported tools:**
+
 - **Nano Banana** — AI image generation for mockups
 - **Figma** — Professional design tool integration
 - **Stitch** — Component-based design
@@ -37,6 +38,7 @@ Execute steps in `./steps-w/`:
 - **HTML prototype** — Code-based visual design
 
 **Reference data:**
+
 - `./data/guides/HTML-VS-VISUAL-STYLES.md` — choosing between approaches
 - `./data/guides/NANO-BANANA-PROMPT-GUIDE.md` — prompt composition for AI image generation
 

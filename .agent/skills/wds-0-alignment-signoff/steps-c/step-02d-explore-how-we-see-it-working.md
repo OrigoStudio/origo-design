@@ -64,6 +64,7 @@ Explore how they see it working.
 **Reference**: `{sectionRoutingFile}` (Section 3: How We See It Working)
 
 **Questions to explore**:
+
 - "How do you envision this working?"
 - "What's the general approach?"
 - "Walk me through how you see it addressing the realization"
@@ -78,11 +79,13 @@ Explore how they see it working.
 Display: "**Select an Option:** [C] Continue to step-02e-explore-paths-we-explored"
 
 #### Menu Handling Logic:
+
 - IF C: Load, read entire file, then execute {nextStepFile}
 - IF M: Return to {workflowFile}
 - IF Any other comments or queries: help user respond then [Redisplay Menu Options]
 
 #### EXECUTION RULES:
+
 - ALWAYS halt and wait for user input after presenting menu
 - ONLY proceed to next step when user selects 'C'
 - User can chat or ask questions - always respond and then redisplay menu options
@@ -96,11 +99,13 @@ ONLY WHEN the user has articulated how they see it working will you then load an
 ## 🚨 SYSTEM SUCCESS/FAILURE METRICS
 
 ### ✅ SUCCESS:
+
 - High-level vision is captured
 - Core concept is understood
 - General approach is clear without getting into detailed specs
 
 ### ❌ SYSTEM FAILURE:
+
 - Diving into detailed specifications
 - Generating the vision without user input
 - Skipping this section

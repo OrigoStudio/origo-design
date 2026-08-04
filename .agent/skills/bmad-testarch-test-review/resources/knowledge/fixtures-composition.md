@@ -60,7 +60,7 @@ test('all utilities available', async ({
 
   await recurse(
     () => apiRequest({ method: 'GET', path: `/status/${body.id}` }),
-    (res) => res.body.ready === true,
+    res => res.body.ready === true
   );
 });
 ```
@@ -111,7 +111,7 @@ import { test as customFixtures } from './custom-fixtures';
 export const test = mergeTests(
   apiRequestFixture,
   authFixture,
-  customFixtures, // Your project fixtures
+  customFixtures // Your project fixtures
 );
 
 export { expect } from '@playwright/test';
@@ -167,7 +167,14 @@ import { test as networkRecorderFixture } from '@seontechnologies/playwright-uti
 import { test as customFixtures } from './custom-fixtures';
 
 // Merge everything
-export const test = mergeTests(apiRequestFixture, authFixture, interceptFixture, recurseFixture, networkRecorderFixture, customFixtures);
+export const test = mergeTests(
+  apiRequestFixture,
+  authFixture,
+  interceptFixture,
+  recurseFixture,
+  networkRecorderFixture,
+  customFixtures
+);
 
 export { expect } from '@playwright/test';
 ```

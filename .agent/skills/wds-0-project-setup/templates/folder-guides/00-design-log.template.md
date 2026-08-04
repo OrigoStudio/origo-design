@@ -19,8 +19,8 @@
 ## Current
 
 | Task | Started | Agent |
-|------|---------|-------|
-| — | — | — |
+| ---- | ------- | ----- |
+| —    | —       | —     |
 
 **Rules:** Mark what you start. Complete it when done (move to Log). One task at a time per agent.
 
@@ -31,11 +31,12 @@
 > Per-page design progress. Updated by agents at every design transition.
 
 | Scenario | Step | Page | Status | Updated |
-|----------|------|------|--------|---------|
+| -------- | ---- | ---- | ------ | ------- |
 
 **Status values:** `discussed` → `wireframed` → `specified` → `explored` → `building` → `built` → `approved` | `removed`
 
 **How to use:**
+
 - **Append a row** when a page reaches a new status (do not overwrite — latest row per page is current status)
 - **Read on startup** to see where the project stands and what to suggest next
 
@@ -44,6 +45,7 @@
 ## Log
 
 ### {{date}} — Project initialized (Phase 0)
+
 - Type: {{greenfield/brownfield}}
 - Complexity: {{product_complexity}}
 - Tech stack: {{tech_stack}}

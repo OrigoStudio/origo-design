@@ -2,6 +2,7 @@
 name: gds-gdd
 description: Create, update, or validate a game's Game Design Document. Use when the user wants help producing, editing, or validating a GDD — the primary design artifact covering pillars, mechanics, progression, levels, art, audio, and development epics.
 ---
+
 # Game GDD
 
 ## Overview
@@ -35,7 +36,7 @@ At the opening greeting, let the user know they can invoke the skills `bmad-part
 
 **Update.** Reconcile an existing GDD with a change signal. Orient via source extractors (see `## Constraints` → Extract, don't ingest) against the GDD, `epics.md`, `decision-log.md`, and original inputs (game brief, brainstorming) — then run the `## Discovery` posture against the change signal. Surface conflicts with prior design decisions before changing — a mechanic change can ripple through pillars, the core loop, and epics. If the change is fundamental (a pillar or the core loop is being rethought), offer Create instead of patching. When changes are applied, proceed to `## Finalize`.
 
-**Validate** (or *analyze*). Critique an existing GDD against `{workflow.validation_checklist}`. Standalone — does NOT enter `## Finalize`. Orient via source extractors against `decision-log.md` and any original inputs to give the validator context. Spawn the validator subagent against `gdd.md` (and `epics.md` if present); produce findings and a validation report per `references/validation-render.md`. The checklist carries GDD-specific checks — genre compliance and game-type cross-reference — so the validator must read `assets/game-types.csv` and `assets/genre-complexity.csv` to run them. Always offer to roll findings into an Update.
+**Validate** (or _analyze_). Critique an existing GDD against `{workflow.validation_checklist}`. Standalone — does NOT enter `## Finalize`. Orient via source extractors against `decision-log.md` and any original inputs to give the validator context. Spawn the validator subagent against `gdd.md` (and `epics.md` if present); produce findings and a validation report per `references/validation-render.md`. The checklist carries GDD-specific checks — genre compliance and game-type cross-reference — so the validator must read `assets/game-types.csv` and `assets/genre-complexity.csv` to run them. Always offer to roll findings into an Update.
 
 ## Discovery
 
@@ -70,7 +71,7 @@ In both modes, resolve decisions conversationally rather than silently deferring
 - **The traceability chain holds the GDD together.** Core Fantasy / Vision → Game Pillars → Core Gameplay Loop → Mechanics & Systems → Development Epics. Each pillar embodies the vision; the loop reinforces the pillars; each mechanic serves the loop or a pillar; each epic delivers mechanics. A mechanic that serves no pillar is scope creep in disguise — surface it.
 - **2–4 game pillars, each game-defining and distinct.** Pillars are the fundamental gameplay elements the whole design answers to. They must be specific enough to steer decisions, not slogans.
 - **Mechanics are measurable player-facing capabilities.** Describe what the player can do and the concrete numbers behind it — timings, damages, costs, ranges, cooldowns, feel parameters (jump height, coyote time, input buffer frames, hit windows). "The jump feels good" is not a spec; "jump height 3 tiles, air time 0.55s, coyote time 6 frames, buffer window 8 frames" is. Replace vague quantifiers ("many enemies", "several weapons") with counts.
-- **No engine-implementation leakage.** The GDD specifies WHAT the player experiences and WHAT a system must achieve, not HOW it is built. Engine APIs, node/class names, shaders, netcode libraries, component patterns belong in the architecture document. Target engine, platform, and hard certification constraints are fine in Technical Specifications — that is *on what* it runs, not *how* mechanics are built.
+- **No engine-implementation leakage.** The GDD specifies WHAT the player experiences and WHAT a system must achieve, not HOW it is built. Engine APIs, node/class names, shaders, netcode libraries, component patterns belong in the architecture document. Target engine, platform, and hard certification constraints are fine in Technical Specifications — that is _on what_ it runs, not _how_ mechanics are built.
 - **Genre conventions are documented, not assumed.** High- and medium-complexity genres carry expectations (RPG stat system and leveling curve; roguelike run structure and seed determinism; fighting frame data and netcode model; shooter weapon-feel table). Missing genre conventions surface as emergencies during production — the genre guide and `genre-complexity.csv` name them.
 - **Technical Specifications stay GDD-level.** Performance targets, platform requirements, and asset budgets — measurable ("60 FPS sustained on Steam Deck at 720p, measured over a 10-minute combat loop"), not architecture. Engine and system design are `gds-game-architecture`'s job.
 - **Information density.** Every sentence carries design weight. Strip pitch-deck language, marketing copy, and conversational filler — "The player will be able to..." becomes "The player can...".

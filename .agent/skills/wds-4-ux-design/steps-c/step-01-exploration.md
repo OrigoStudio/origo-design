@@ -58,6 +58,7 @@ Lead the designer through a focused creative dialog for the current page. Two qu
 ### 1. Load Context
 
 Read the scenario file and current page boilerplate. Determine:
+
 - Which page in the scenario flow this is (first, middle, last)
 - What the scenario's driving forces are (Q4: hopes and worries)
 - What the previous page's exit action was (if not first page)
@@ -102,6 +103,7 @@ Now they're on [page name].
 <action>Challenge the page's existence. Can the previous page handle this? Can we combine steps? Every page must justify itself — same philosophy as Q8's "minimum viable steps."</action>
 
 **If the user decides to eliminate the step:**
+
 1. Update the scenario outline (remove/merge the step)
 2. Remove the page folder
 3. Append status `removed` to `{output_folder}/_progress/00-design-log.md` Design Loop Status table:
@@ -146,7 +148,7 @@ When the discussion feels complete, summarize:
 1. **Should I wireframe it for you?** — I'll create an Excalidraw wireframe based on our discussion
 2. **Do you want to provide a sketch?** — Bring your own sketch and I'll analyze it
 3. **Add specification without a sketch** — Go directly to detailed specification
-</ask>
+   </ask>
 
 #### IF 1 (Wireframe):
 
@@ -202,11 +204,12 @@ After each completed stage, present the two-option transition. The "next logical
 
 1. **Write the detailed specification** — content, interactions, states
 2. **Explore the next scenario step** — [next page name]
-</output>
+   </output>
 
 **After specification complete:**
 
 The agent checks what was identified during discussion and specification:
+
 - **Web platform?** → Responsive content decisions are needed
 - **Storyboard items identified?** → On-page interactions need exploring
 - **Complex functionality?** → Forms, validation, dynamic content need detail
@@ -220,7 +223,7 @@ This page has [responsive states / storyboard items / complex functionality] tha
 
 1. **Explore [responsive states / storyboard / functionality]** — define the details
 2. **Explore the next scenario step** — [next page name]
-</output>
+   </output>
 
 If none exist (simple page, single-device platform):
 
@@ -229,7 +232,7 @@ If none exist (simple page, single-device platform):
 
 1. **Build it** — start agentic development
 2. **Explore the next scenario step** — [next page name]
-</output>
+   </output>
 
 **After responsive/storyboard/functionality exploration:**
 
@@ -238,7 +241,7 @@ If none exist (simple page, single-device platform):
 
 1. **Build it** — start agentic development
 2. **Explore the next scenario step** — [next page name]
-</output>
+   </output>
 
 #### Transition Handling:
 
@@ -268,6 +271,7 @@ At every transition, append a row to the **Design Loop Status** table in `{outpu
 ```
 
 **Example:**
+
 ```
 | 01-hasses-emergency-search | 1.1 | Start Page | discussed | 2026-02-26 |
 | 01-hasses-emergency-search | 1.1 | Start Page | wireframed | 2026-02-26 |
@@ -276,18 +280,19 @@ At every transition, append a row to the **Design Loop Status** table in `{outpu
 
 **Status values and when to log:**
 
-| Status | When logged |
-|--------|------------|
-| `discussed` | D1 + D2 complete, discussion findings saved to spec |
-| `wireframed` | Wireframe created and agreed, spec synced |
-| `specified` | Detailed specification complete |
-| `explored` | Responsive states / storyboard / functionality mapped |
-| `building` | Handed to Phase 5 for implementation |
-| `built` | Implementation complete |
-| `approved` | User approved after browser review |
-| `removed` | Step eliminated during D2 challenge |
+| Status       | When logged                                           |
+| ------------ | ----------------------------------------------------- |
+| `discussed`  | D1 + D2 complete, discussion findings saved to spec   |
+| `wireframed` | Wireframe created and agreed, spec synced             |
+| `specified`  | Detailed specification complete                       |
+| `explored`   | Responsive states / storyboard / functionality mapped |
+| `building`   | Handed to Phase 5 for implementation                  |
+| `built`      | Implementation complete                               |
+| `approved`   | User approved after browser review                    |
+| `removed`    | Step eliminated during D2 challenge                   |
 
 **Rules:**
+
 - Do NOT overwrite previous rows — append only. The latest row per page is the current status.
 - Do NOT skip this step. The design log drives the adaptive dashboard when Freya starts up. Without it, the agent has no memory of where things stand.
 - Update BEFORE presenting the transition options to the user.

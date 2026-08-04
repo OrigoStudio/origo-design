@@ -417,17 +417,17 @@ function runShard(shardIndex) {
     let stdout = '';
     let stderr = '';
 
-    child.stdout.on('data', (data) => {
+    child.stdout.on('data', data => {
       stdout += data.toString();
       process.stdout.write(data);
     });
 
-    child.stderr.on('data', (data) => {
+    child.stderr.on('data', data => {
       stderr += data.toString();
       process.stderr.write(data);
     });
 
-    child.on('close', (code) => {
+    child.on('close', code => {
       // Save shard results
       const resultFile = path.join(RESULTS_DIR, `shard-${shardIndex}.json`);
       try {
@@ -441,7 +441,7 @@ function runShard(shardIndex) {
       }
     });
 
-    child.on('error', (error) => {
+    child.on('error', error => {
       console.error(`❌ Shard ${shardId} process error:`, error.message);
       reject({ shardIndex, error });
     });
@@ -539,7 +539,7 @@ async function main() {
   process.exit(0);
 }
 
-main().catch((error) => {
+main().catch(error => {
   console.error('Fatal error:', error);
   process.exit(1);
 });

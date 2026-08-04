@@ -75,6 +75,7 @@ Present what was built, listing new features with Object IDs and files updated.
 ### 2. Present Verification Results & Request Qualitative Review
 
 Present Puppeteer verification results, then ask user to evaluate qualitative aspects:
+
 - Feel the flow: Does the interaction feel natural?
 - Visual hierarchy: Does your eye go to the right place first?
 - Clarity: Is it immediately clear what to do?
@@ -83,6 +84,7 @@ Present Puppeteer verification results, then ask user to evaluate qualitative as
 ### 3. Wait for User Feedback
 
 **User will respond with one of**:
+
 - Approved: "Looks good!" / "Y" / "Perfect!" -> Go to `4g-section-approved.md`
 - Issue: "The button doesn't..." / "I see a problem with..." -> Go to `4e-handle-issue.md`
 - Improvement: "Could we make it..." / "What if we..." -> Go to `4f-handle-improvement.md`
@@ -90,15 +92,18 @@ Present Puppeteer verification results, then ask user to evaluate qualitative as
 ### 4. Present MENU OPTIONS
 
 Display based on user feedback:
+
 - **If approved**: "[C] Continue to Step 4g: Section Approved"
 - **If issue reported**: "[C] Continue to Step 4e: Handle Issue"
 - **If improvement suggested**: "[C] Continue to Step 4f: Handle Improvement"
 
 #### Menu Handling Logic:
+
 - IF C: Update design log, then load, read entire file, then execute the appropriate next step file
 - IF Any other comments or queries: help user respond then [Redisplay Menu Options]
 
 #### EXECUTION RULES:
+
 - ALWAYS halt and wait for user input after presenting menu
 - ONLY proceed to next step when user selects 'C'
 - User can chat or ask questions - always respond and then redisplay menu options
@@ -112,6 +117,7 @@ ONLY WHEN user has provided feedback will you then load and read fully the appro
 ## 🚨 SYSTEM SUCCESS/FAILURE METRICS
 
 ### ✅ SUCCESS:
+
 - Agent self-verification completed before presenting
 - All agent-verifiable criteria pass
 - Implementation presented clearly with Object IDs
@@ -119,6 +125,7 @@ ONLY WHEN user has provided feedback will you then load and read fully the appro
 - User feedback captured and routed correctly
 
 ### ❌ SYSTEM FAILURE:
+
 - Presenting to user without self-verification
 - Skipping Puppeteer verification
 - Not requesting qualitative review

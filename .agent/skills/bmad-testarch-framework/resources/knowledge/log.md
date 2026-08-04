@@ -211,12 +211,18 @@ const createDefaultTodos = functionTestStep('Create default todos', async (page:
   await log.success('Created all default todos');
 });
 
-const checkNumberOfTodosInLocalStorage = functionTestStep('Check total todos count fn-step', async (page: Page, expected: number) => {
-  await log.info(`Verifying todo count: ${expected}`);
-  const result = await page.waitForFunction((e) => JSON.parse(localStorage['react-todos']).length === e, expected);
-  await log.success(`Verified todo count: ${expected}`);
-  return result;
-});
+const checkNumberOfTodosInLocalStorage = functionTestStep(
+  'Check total todos count fn-step',
+  async (page: Page, expected: number) => {
+    await log.info(`Verifying todo count: ${expected}`);
+    const result = await page.waitForFunction(
+      e => JSON.parse(localStorage['react-todos']).length === e,
+      expected
+    );
+    await log.success(`Verified todo count: ${expected}`);
+    return result;
+  }
+);
 ```
 
 ### Example 5: File Logging
@@ -422,5 +428,5 @@ for (const item of items) {
 
 ```typescript
 await log.step(`Processing ${items.length} items`);
-await log.debug({ itemIds: items.map((i) => i.id) }); // One log entry
+await log.debug({ itemIds: items.map(i => i.id) }); // One log entry
 ```

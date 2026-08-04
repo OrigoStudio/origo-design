@@ -384,7 +384,7 @@ test:
 
 ## End-to-End Testing
 
-For comprehensive E2E testing patterns, infrastructure scaffolding, and 
+For comprehensive E2E testing patterns, infrastructure scaffolding, and
 scenario builders, see **knowledge/e2e-testing.md**.
 
 ### Quick E2E Checklist for Unity

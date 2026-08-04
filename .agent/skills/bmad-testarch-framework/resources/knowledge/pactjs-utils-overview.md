@@ -108,7 +108,7 @@ it('should get user by id', async () => {
     .uponReceiving('a request for user 1')
     .withRequest({ method: 'GET', path: '/users/1' })
     .willRespondWith({ status: 200, body: { id: 1, name: 'John' } })
-    .executeTest(async (mockServer) => {
+    .executeTest(async mockServer => {
       const res = await fetch(`${mockServer.url}/users/1`);
       expect(res.status).toBe(200);
     });
@@ -126,7 +126,7 @@ const opts = buildVerifierOptions({
   port: '3001',
   includeMainAndDeployed: true,
   stateHandlers: {
-    'user exists': async (params) => {
+    'user exists': async params => {
       await db.seed({ users: [{ id: params?.id }] });
     },
   },

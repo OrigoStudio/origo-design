@@ -106,7 +106,7 @@ Acknowledge each input shape — record location, scope, time window only; bulk 
 - **Code area name** (no symptom). Record entry point.
 - **Recent commit area.** Record commit range.
 
-If the user arrived with a hypothesis, register it as Hypothesis #1. Find the stronghold *independently*; the user's
+If the user arrived with a hypothesis, register it as Hypothesis #1. Find the stronghold _independently_; the user's
 hypothesis is one of the things the stronghold validates or refutes.
 
 Find a stronghold: a Confirmed piece of evidence (error message, function name, HTTP route, config parameter, test

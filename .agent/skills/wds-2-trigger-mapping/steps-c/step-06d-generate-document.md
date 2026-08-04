@@ -60,6 +60,7 @@ Generate the complete Feature Impact Analysis document with the confirmed assess
 Use the template: `../templates/feature-impact.template.md`
 
 Include:
+
 1. **Header** with project name, date, and scoring legend
 2. **Prioritized Features Table** with all scores
 3. **Feature Details & Rationale** for each feature (especially top scorers)
@@ -69,14 +70,17 @@ Include:
 **Prioritization Logic:**
 
 **Must Have MVP:**
+
 - Any feature where Primary Persona scored HIGH (5 pts)
 - OR features with score >= (max_possible - 3)
 
 **Consider for MVP:**
+
 - Mid-range scores
 - Strategic value but not critical
 
 **Defer:**
+
 - Low scores
 - Minimal strategic value
 
@@ -95,20 +99,24 @@ Output:
 
 **Must Have MVP Features ({{must_have_count}}):**
 {{#each must_have}}
+
 - {{this.name}} (Score: {{this.score}})
-{{/each}}
+  {{/each}}
 
 **Consider for MVP ({{consider_count}}):**
 {{#each consider}}
+
 - {{this.name}} (Score: {{this.score}})
-{{/each}}
+  {{/each}}
 
 **Key Insights:**
+
 - [Strategic insight 1]
 - [Strategic insight 2]
 - [Strategic insight 3]
 
 This Feature Impact Analysis serves as your **Design Brief** - it guides:
+
 - **Phase 4: UX Design** - Which scenarios to design first
 - **Phase 6: PRD/Development** - Epic and story prioritization
 
@@ -125,11 +133,13 @@ If user requests changes: Update document, regenerate, show summary again.
 Display: "**Select an Option:** [C] Continue to Workshop Wrap-Up | [M] Return to Activity Menu"
 
 #### Menu Handling Logic:
+
 - IF C: Load and execute {nextStepFile}
 - IF M: Return to {activityWorkflowFile}
 - IF Any other comments or queries: help user respond then [Redisplay Menu Options]
 
 #### EXECUTION RULES:
+
 - ALWAYS halt and wait for user input after presenting menu
 - User can chat or ask questions - always respond and then redisplay menu options
 
@@ -142,6 +152,7 @@ ONLY WHEN user selects [C] will you load the next step file. Document must be ge
 ## 🚨 SYSTEM SUCCESS/FAILURE METRICS
 
 ### ✅ SUCCESS:
+
 - Document generated following template structure
 - All sections included (header, table, rationale, implications, questions)
 - Prioritization tiers applied correctly (Must Have/Consider/Defer)
@@ -150,6 +161,7 @@ ONLY WHEN user selects [C] will you load the next step file. Document must be ge
 - User confirmed or adjustments made and re-confirmed
 
 ### ❌ SYSTEM FAILURE:
+
 - Document missing required sections
 - Incorrect prioritization tier assignment
 - Not saving to correct location

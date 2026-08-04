@@ -1,4 +1,4 @@
-I reviewed the updated **v0.2** document. The architecture is now significantly more consistent than v0.1. The resolved questions reinforce the core philosophy that **BADL is the platform, everything else is an adapter or authoring surface**. The only remaining architectural decision is **OQ-10**, which is referenced in the Extensibility, Phase 3, and Open Questions sections.    
+I reviewed the updated **v0.2** document. The architecture is now significantly more consistent than v0.1. The resolved questions reinforce the core philosophy that **BADL is the platform, everything else is an adapter or authoring surface**. The only remaining architectural decision is **OQ-10**, which is referenced in the Extensibility, Phase 3, and Open Questions sections.
 
 I think OQ-10 is actually more important than it appears. If Origo intends to become a platform rather than just a renderer, then a formal extension model is not optional—it is foundational.
 
@@ -18,14 +18,14 @@ This should become a core architectural principle.
 
 Everything else you've designed is already becoming pluggable:
 
-* Renderers
-* Experience Adapters
-* Validators
-* Rule Engines
-* Data Providers
-* CLI Importers
-* AI Adapters
-* Future Marketplace
+- Renderers
+- Experience Adapters
+- Validators
+- Rule Engines
+- Data Providers
+- CLI Importers
+- AI Adapters
+- Future Marketplace
 
 Without a formal extension contract every extension will invent its own API.
 
@@ -337,15 +337,15 @@ Studio can warn users before installation.
 
 # Marketplace Readiness
 
-Your Phase 4 roadmap already mentions a marketplace. 
+Your Phase 4 roadmap already mentions a marketplace.
 
 A marketplace is nearly impossible without:
 
-* version compatibility
-* dependency resolution
-* capability negotiation
-* security boundaries
-* lifecycle management
+- version compatibility
+- dependency resolution
+- capability negotiation
+- security boundaries
+- lifecycle management
 
 Those are exactly what OQ-10 should establish.
 
@@ -363,16 +363,16 @@ Those are exactly what OQ-10 should establish.
 
 Every extension MUST provide a manifest containing:
 
-* `id`
-* `name`
-* `version`
-* `extension_type`
-* `author`
-* `grammar_version_range`
-* `renderer_api_range`
-* `capabilities[]`
-* `dependencies[]`
-* `permissions[]`
+- `id`
+- `name`
+- `version`
+- `extension_type`
+- `author`
+- `grammar_version_range`
+- `renderer_api_range`
+- `capabilities[]`
+- `dependencies[]`
+- `permissions[]`
 
 ---
 
@@ -386,12 +386,12 @@ Every extension MUST provide a manifest containing:
 
 Every extension MUST support the lifecycle:
 
-* Initialize
-* Configure
-* Validate
-* Activate
-* Deactivate
-* Dispose
+- Initialize
+- Configure
+- Validate
+- Activate
+- Deactivate
+- Dispose
 
 ---
 

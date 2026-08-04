@@ -19,6 +19,7 @@
 <ask>**What's the name of this page?**
 
 Examples:
+
 - "Start Page"
 - "Sign In"
 - "Dashboard"
@@ -65,14 +66,15 @@ User situation:</ask>
 <check if="multiple_scenarios_exist">
   <ask>**Which scenario does this page belong to?**
 
-  Existing scenarios:
-  {{#each scenario in existing_scenarios}}
-  - {{scenario.number}}: {{scenario.name}}
+Existing scenarios:
+{{#each scenario in existing_scenarios}}
+
+- {{scenario.number}}: {{scenario.name}}
   {{/each}}
 
-  Choose scenario [number] or "new" for a new scenario:</ask>
+Choose scenario [number] or "new" for a new scenario:</ask>
 
-  <action>Store scenario_number</action>
+<action>Store scenario_number</action>
 </check>
 
 <check if="single_scenario or no_scenarios">
@@ -123,6 +125,7 @@ Next page:</ask>
 Path: `C-UX-Scenarios/{{scenario_path}}/{{page_number}}-{{page_slug}}/`
 
 Create:
+
 1. Page folder: `{{page_number}}-{{page_slug}}/`
 2. Sketches folder: `{{page_number}}-{{page_slug}}/sketches/`
 3. Placeholder document using template
@@ -150,16 +153,19 @@ Create:
 <output>✅ **Page initialized!**
 
 **Created:**
+
 - Folder: `{{page_number}}-{{page_slug}}/`
 - Document: `{{page_number}}-{{page_slug}}.md`
 - Sketches folder: `sketches/`
 
 **Page details:**
+
 - **Number:** {{page_number}}
 - **Name:** {{page_name}}
 - **Purpose:** {{page_purpose}}
 
 **Navigation:**
+
 - Previous: {{previous_page}} {{#if linked}}✅ linked{{/if}}
 - Next: {{next_page}}
 

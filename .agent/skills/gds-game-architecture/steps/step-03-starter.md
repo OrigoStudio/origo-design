@@ -102,13 +102,13 @@ Search the web to verify:
 
 Based on requirements, search for appropriate options:
 
-| Game Type    | Recommended Options         |
-| ------------ | --------------------------- |
-| **2D Indie** | Godot, Unity 2D, Phaser          |
-| **3D Indie** | Godot, Unity, Unreal             |
-| **Web Game** | Phaser, PixiJS, Three.js         |
-| **Mobile**   | Unity, Godot, Flutter Flame      |
-| **VR/AR**    | Unity, Unreal                    |
+| Game Type           | Recommended Options         |
+| ------------------- | --------------------------- |
+| **2D Indie**        | Godot, Unity 2D, Phaser     |
+| **3D Indie**        | Godot, Unity, Unreal        |
+| **Web Game**        | Phaser, PixiJS, Three.js    |
+| **Mobile**          | Unity, Godot, Flutter Flame |
+| **VR/AR**           | Unity, Unreal               |
 | **Social/Platform** | Roblox Studio               |
 
 Search web: "{{recommended_engine}} game engine {{current_year}} version features"
@@ -198,6 +198,7 @@ Search web: "{{selected_engine}} MCP server Model Context Protocol {{current_yea
 **Verify the repos listed in the knowledge base are still active and maintained.** The MCP ecosystem moves fast - confirm star counts, recent commits, and compatibility with the user's engine version before recommending.
 
 **If multiple MCPs exist for the engine, present the default recommendation first** (per `recommendation_rules.multiple_options` in the knowledge base), then mention alternatives. Include:
+
 - Repo name and link
 - Key capabilities (3-5 bullet points)
 - Requirements (engine version, Node.js, Python, etc.)
@@ -209,8 +210,8 @@ For **expert** users:
 
 "**Available MCPs for {{selected_engine}}:**
 
-| MCP | Repo | Install | Requirements |
-| --- | ---- | ------- | ------------ |
+| MCP          | Repo     | Install          | Requirements     |
+| ------------ | -------- | ---------------- | ---------------- |
 | {{mcp_name}} | {{repo}} | {{install_type}} | {{requirements}} |
 
 Key capabilities: {{capability_summary}}
@@ -235,6 +236,7 @@ Include MCP setup in your architecture? [y/n]"
 **If user accepts MCPs:**
 
 Record selected MCPs for inclusion in Development Environment section:
+
 - MCP name, repo, install steps, requirements
 - These will be included in the final architecture document
 

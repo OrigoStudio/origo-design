@@ -66,6 +66,7 @@ Explore the path forward.
 **Purpose**: Explain how the work will be done practically - which WDS phases will be used and the workflow approach.
 
 **Questions to explore**:
+
 - "How do you envision the work being done?"
 - "Which WDS phases do you think we'll need?"
 - "What's the practical workflow you're thinking?"
@@ -77,6 +78,7 @@ Explore the path forward.
 **Keep it brief** - High-level plan of the work approach
 
 **Help them think**:
+
 - Which WDS phases apply (Trigger Mapping, Platform Requirements, UX Design, Design System, etc.)
 - Practical workflow (research -> design -> handoff, or skip research, etc.)
 - Level of detail needed
@@ -87,11 +89,13 @@ Explore the path forward.
 Display: "**Select an Option:** [C] Continue to step-02h-explore-value-we-create"
 
 #### Menu Handling Logic:
+
 - IF C: Load, read entire file, then execute {nextStepFile}
 - IF M: Return to {workflowFile}
 - IF Any other comments or queries: help user respond then [Redisplay Menu Options]
 
 #### EXECUTION RULES:
+
 - ALWAYS halt and wait for user input after presenting menu
 - ONLY proceed to next step when user selects 'C'
 - User can chat or ask questions - always respond and then redisplay menu options
@@ -105,11 +109,13 @@ ONLY WHEN the user has articulated the practical path forward will you then load
 ## 🚨 SYSTEM SUCCESS/FAILURE METRICS
 
 ### ✅ SUCCESS:
+
 - High-level work approach is captured
 - WDS phases and workflow are identified
 - Path forward is practical and actionable
 
 ### ❌ SYSTEM FAILURE:
+
 - Creating detailed project plans without user input
 - Dictating a specific phase sequence
 - Skipping this section

@@ -82,7 +82,6 @@ This uses **step-file architecture** for disciplined execution:
 - **ALWAYS** follow the exact instructions in the step file
 - **ALWAYS** halt at checkpoints and wait for human input
 
-
 ## INITIALIZATION SEQUENCE
 
 ### 1. Configuration Loading

@@ -7,6 +7,7 @@
 ## 1. Synthesize All Context
 
 Before generating, review and confirm you understand:
+
 - [ ] WHO the user is and what drives them (Trigger Map)
 - [ ] WHERE they are in awareness (START → END)
 - [ ] WHAT action this content must enable (Action Filter)
@@ -20,20 +21,24 @@ Before generating, review and confirm you understand:
 Create **2-3 content variations** that differ in:
 
 **Variation A: Wish-Focused**
+
 - Emphasizes positive driving forces
 - Aspirational tone
 - "Become the authority," "Stay ahead," "Impress your clients"
 
 **Variation B: Fear-Focused**
+
 - Addresses negative driving forces
 - Problem-recognition tone
 - "Stop feeling behind," "Never miss a trend," "No more embarrassment"
 
 **Variation C: Balanced OR Awareness-Shifted** (choose one):
+
 - **Balanced:** Combines wish + fear naturally
 - **Awareness-Shifted:** Uses different starting awareness level (if user was uncertain)
 
 **For each variation, include:**
+
 - Complete content (headlines, body, CTA)
 - Rationale explaining the approach
 - Why this might resonate
@@ -69,11 +74,13 @@ Use this format:
 ---
 
 ## Variation B: [Name]
+
 [Same structure]
 
 ---
 
 ## Variation C: [Name]
+
 [Same structure]
 
 ---
@@ -84,6 +91,7 @@ Use this format:
 ## 4. Explain Strategic Choices
 
 For each variation, show how you applied the strategic context:
+
 - "This opens with [X] because the user is Problem Aware—they need problem validation first"
 - "This uses 'you'll be able to' framing because of Badass Users principle"
 - "This puts social proof before CTA because Action Filter identified trust as a barrier"

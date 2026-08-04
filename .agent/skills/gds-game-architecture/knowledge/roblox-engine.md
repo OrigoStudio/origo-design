@@ -10,20 +10,20 @@ Roblox is a cloud-based game platform and engine where every game runs across a 
 
 The `game` global is the root of the DataModel. All game content lives inside top-level **Services**, each with a specific purpose and replication behavior:
 
-| Service | Accessible By | Purpose |
-|---|---|---|
-| `Workspace` | Server + Client | Physical game world — Parts, Models, Terrain |
-| `ReplicatedStorage` | Server + Client | Shared modules, RemoteEvents, shared assets |
-| `ReplicatedFirst` | Server + Client | Runs on client before anything else (loading screens) |
-| `ServerScriptService` | Server only | Server scripts — never sent to clients |
-| `ServerStorage` | Server only | Server-only assets, never replicated |
-| `StarterGui` | Server (templates) | UI templates cloned to each player's `PlayerGui` |
-| `StarterPack` | Server (templates) | Tools cloned to each player's `Backpack` |
-| `StarterPlayer` | Server (templates) | `StarterPlayerScripts` and `StarterCharacterScripts` cloned per player |
-| `Players` | Server + Client | Connected player instances |
-| `Lighting` | Server + Client | Visual settings, sky, atmosphere |
-| `SoundService` | Server + Client | Global audio settings |
-| `Teams` | Server + Client | Team assignments |
+| Service               | Accessible By      | Purpose                                                                |
+| --------------------- | ------------------ | ---------------------------------------------------------------------- |
+| `Workspace`           | Server + Client    | Physical game world — Parts, Models, Terrain                           |
+| `ReplicatedStorage`   | Server + Client    | Shared modules, RemoteEvents, shared assets                            |
+| `ReplicatedFirst`     | Server + Client    | Runs on client before anything else (loading screens)                  |
+| `ServerScriptService` | Server only        | Server scripts — never sent to clients                                 |
+| `ServerStorage`       | Server only        | Server-only assets, never replicated                                   |
+| `StarterGui`          | Server (templates) | UI templates cloned to each player's `PlayerGui`                       |
+| `StarterPack`         | Server (templates) | Tools cloned to each player's `Backpack`                               |
+| `StarterPlayer`       | Server (templates) | `StarterPlayerScripts` and `StarterCharacterScripts` cloned per player |
+| `Players`             | Server + Client    | Connected player instances                                             |
+| `Lighting`            | Server + Client    | Visual settings, sky, atmosphere                                       |
+| `SoundService`        | Server + Client    | Global audio settings                                                  |
+| `Teams`               | Server + Client    | Team assignments                                                       |
 
 **Canonical DataModel structure:**
 
@@ -63,15 +63,16 @@ game (DataModel)
 
 Roblox has three script types. Every script runs in a context determined by its type and `RunContext` property:
 
-| Script Type | RunContext | Where it runs |
-|---|---|---|
-| `Script` | `Legacy` (default) | Server only — must be in a server container (`ServerScriptService`, `Workspace`) |
-| `Script` | `Server` | Server only — can also live in `ReplicatedStorage` (not recommended there) |
-| `Script` | `Client` | Client only — can live in `ReplicatedStorage` alongside client ModuleScripts |
-| `LocalScript` | n/a | Client only — legacy placement in `StarterGui`, `StarterPlayerScripts`, etc. |
-| `ModuleScript` | n/a | No context — runs inside whichever script `require()`s it |
+| Script Type    | RunContext         | Where it runs                                                                    |
+| -------------- | ------------------ | -------------------------------------------------------------------------------- |
+| `Script`       | `Legacy` (default) | Server only — must be in a server container (`ServerScriptService`, `Workspace`) |
+| `Script`       | `Server`           | Server only — can also live in `ReplicatedStorage` (not recommended there)       |
+| `Script`       | `Client`           | Client only — can live in `ReplicatedStorage` alongside client ModuleScripts     |
+| `LocalScript`  | n/a                | Client only — legacy placement in `StarterGui`, `StarterPlayerScripts`, etc.     |
+| `ModuleScript` | n/a                | No context — runs inside whichever script `require()`s it                        |
 
 **The modern recommended layout** (from the official scripting docs):
+
 - Server logic: `Script` (`RunContext: Server`) in `ServerScriptService` alongside server-only `ModuleScript`s
 - Client logic: `Script` (`RunContext: Client`) in `ReplicatedStorage` alongside client-only `ModuleScript`s
 - Shared code: `ModuleScript`s in `ReplicatedStorage`
@@ -254,10 +255,10 @@ end
 
 `Workspace.SignalBehavior` controls when event handlers run. New places created from templates default to `Enum.SignalBehavior.Deferred`, which is the recommended setting. The legacy `Immediate` behavior will eventually be retired.
 
-| Behavior | What happens |
-|---|---|
+| Behavior                 | What happens                                                                                                                                        |
+| ------------------------ | --------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `Deferred` (recommended) | Event handlers are queued and run at the next engine resumption point. The engine runs serial batches between physics, rendering, and input phases. |
-| `Immediate` | Event handlers run synchronously, inline inside whatever code triggered the event — can cause re-entrancy and subtle ordering bugs. |
+| `Immediate`              | Event handlers run synchronously, inline inside whatever code triggered the event — can cause re-entrancy and subtle ordering bugs.                 |
 
 **Why Deferred is better:** With Immediate behavior, triggering 1,000 property changes causes 1,000 event callbacks to interleave before anything else runs. Deferred batches them, giving the engine consistent windows for physics and rendering. It also eliminates a class of re-entrancy bugs where a changed event fires before the change has fully applied.
 
@@ -591,19 +592,19 @@ PlayerGui (auto-created per player)
 
 **Key ScreenGui properties:**
 
-| Property | Use |
-|---|---|
+| Property               | Use                                               |
+| ---------------------- | ------------------------------------------------- |
 | `ResetOnSpawn = false` | Keep GUI across respawns — use for persistent HUD |
-| `DisplayOrder` | Higher value renders on top |
-| `IgnoreGuiInset` | Extend into the top safe area |
+| `DisplayOrder`         | Higher value renders on top                       |
+| `IgnoreGuiInset`       | Extend into the top safe area                     |
 
 **UI frameworks:**
 
-| Option | Best For |
-|---|---|
-| Vanilla Roblox UI | Simple, few screens |
-| **Fusion** | Modern reactive UI, clean state management |
-| **Roact** | React-style declarative UI (older, widely documented) |
+| Option            | Best For                                              |
+| ----------------- | ----------------------------------------------------- |
+| Vanilla Roblox UI | Simple, few screens                                   |
+| **Fusion**        | Modern reactive UI, clean state management            |
+| **Roact**         | React-style declarative UI (older, widely documented) |
 
 **UI → Server communication rule:** LocalScript fires `RemoteEvent` → server validates → server updates authoritative state → replication propagates result to clients. Never apply gameplay state changes in a LocalScript based on UI input alone.
 
@@ -631,6 +632,7 @@ Always provide a timeout to `WaitForChild`. An infinite wait silently hangs when
 Roblox enforces server-authoritative gameplay. Clients cannot be trusted for anything that affects game state.
 
 **Authoritative flow:**
+
 ```
 Client Input → RemoteEvent → Server Validates → Apply State → Replicate to Clients
 ```
@@ -640,10 +642,12 @@ Client Input → RemoteEvent → Server Validates → Apply State → Replicate 
 `UnreliableRemoteEvent` has the same API as `RemoteEvent` (FireServer/FireClient/FireAllClients, OnServerEvent/OnClientEvent) but drops the guarantee of delivery and ordering. The engine can drop packets or deliver them out of order. In exchange, it has lower latency and lower bandwidth overhead.
 
 **Use UnreliableRemoteEvent for:**
+
 - Continuous position or state that will be overwritten on the next update anyway (character animations, projectile positions, HUD value pings)
 - Visual effects where a missed packet is invisible (particle triggers, non-gameplay sounds)
 
 **Use RemoteEvent (reliable) for:**
+
 - Authoritative game state changes (damage dealt, item granted, round started)
 - Anything the player needs to receive exactly once (a loot drop, a purchase confirmation)
 
@@ -803,19 +807,21 @@ end)
 
 **Thread safety levels** (check the API reference for each property/function):
 
-| Level | Can read in parallel | Can write in parallel |
-|---|---|---|
-| `Safe` | Yes | Yes |
-| `Read Parallel` | Yes | No |
-| `Local Safe` | Yes (own Actor only) | No (from other Actors) |
-| `Unsafe` | No | No |
+| Level           | Can read in parallel | Can write in parallel  |
+| --------------- | -------------------- | ---------------------- |
+| `Safe`          | Yes                  | Yes                    |
+| `Read Parallel` | Yes                  | No                     |
+| `Local Safe`    | Yes (own Actor only) | No (from other Actors) |
+| `Unsafe`        | No                   | No                     |
 
 **Key constraints:**
+
 - `require()` cannot be called inside a desynchronized (parallel) phase — require all modules before calling `task.desynchronize()`
 - Scripts within the same Actor always execute sequentially — give each independently parallel unit its own Actor
 - Use `task.desynchronize()` to enter parallel and `task.synchronize()` to return to serial
 
 **Cross-Actor communication options:**
+
 - `Actor:SendMessage(topic, ...)` / `script:BindToMessage(topic, fn)` — lightweight message passing between Actors
 - `SharedTable` — a special table type that can be safely read/written from multiple Actors simultaneously (for sharing large amounts of data efficiently)
 - Read-only DataModel access — all Actors can read `Read Parallel` properties directly
@@ -826,13 +832,13 @@ Parallel Luau adds real complexity. Profile first — most games never need it. 
 
 Roblox Studio has no CLI test runner. The official primary testing approach is Studio's built-in playtest modes:
 
-| Mode | How to Access | What It Tests |
-|---|---|---|
-| **Play** | F5 or Play button | Local single-player — client + server on one machine |
-| **Play Here** | Right-click a location | Spawns at a specific point |
-| **Team Test** | Test tab → Team Test | Starts a real server + one or more connected clients; closest to production |
-| **MCP `execute_luau`** | AI agent tool | Run assertions in the live game context without leaving the session |
-| **`TestService`** | `game:GetService("TestService")` | Server-side assertion logging; used by CI integrations |
+| Mode                   | How to Access                    | What It Tests                                                               |
+| ---------------------- | -------------------------------- | --------------------------------------------------------------------------- |
+| **Play**               | F5 or Play button                | Local single-player — client + server on one machine                        |
+| **Play Here**          | Right-click a location           | Spawns at a specific point                                                  |
+| **Team Test**          | Test tab → Team Test             | Starts a real server + one or more connected clients; closest to production |
+| **MCP `execute_luau`** | AI agent tool                    | Run assertions in the live game context without leaving the session         |
+| **`TestService`**      | `game:GetService("TestService")` | Server-side assertion logging; used by CI integrations                      |
 
 Studio also provides a **Client/Server toggle** during playtesting — switch the Explorer and Output between the server context and any client to inspect state on both sides.
 
@@ -863,23 +869,23 @@ Studio is the only required tool for Roblox development. Everything below is opt
 
 ### Optional External Tooling
 
-| Tool | What it adds | Worth it when... |
-|---|---|---|
-| **Rojo** | Syncs a filesystem project into Studio — enables `git` version control and external editor support | Team of 2+, or you want git history over Studio's built-in version history |
-| **Wally** | Package manager for community libraries (analogous to npm) | You're adopting multiple community libraries and want dependency pinning |
-| **Roblox LSP** | Luau language server for VS Code (type hints, autocomplete outside Studio) | You prefer writing code in an external editor alongside Rojo |
-| **TestEZ** | Structured unit testing framework (Roblox GitHub org) | You want a spec-style test suite beyond Studio's playtest modes |
+| Tool           | What it adds                                                                                       | Worth it when...                                                           |
+| -------------- | -------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------- |
+| **Rojo**       | Syncs a filesystem project into Studio — enables `git` version control and external editor support | Team of 2+, or you want git history over Studio's built-in version history |
+| **Wally**      | Package manager for community libraries (analogous to npm)                                         | You're adopting multiple community libraries and want dependency pinning   |
+| **Roblox LSP** | Luau language server for VS Code (type hints, autocomplete outside Studio)                         | You prefer writing code in an external editor alongside Rojo               |
+| **TestEZ**     | Structured unit testing framework (Roblox GitHub org)                                              | You want a spec-style test suite beyond Studio's playtest modes            |
 
 ### Optional Community Libraries
 
 These are not part of the Roblox engine. Each adds capability at the cost of a dependency:
 
-| Library | What it adds | Worth it when... |
-|---|---|---|
-| **Fusion** | Reactive, state-driven UI | UI is complex enough that manual state sync becomes painful |
-| **Roact** | React-style declarative UI | Team already knows React patterns |
-| **ProfileService** | DataStore session locking + loss protection | Production game where data integrity is critical |
-| **Knit** | Service/controller framework with auto-wired RemoteEvents | Larger codebase that benefits from enforced structure |
+| Library            | What it adds                                              | Worth it when...                                            |
+| ------------------ | --------------------------------------------------------- | ----------------------------------------------------------- |
+| **Fusion**         | Reactive, state-driven UI                                 | UI is complex enough that manual state sync becomes painful |
+| **Roact**          | React-style declarative UI                                | Team already knows React patterns                           |
+| **ProfileService** | DataStore session locking + loss protection               | Production game where data integrity is critical            |
+| **Knit**           | Service/controller framework with auto-wired RemoteEvents | Larger codebase that benefits from enforced structure       |
 
 ## AI-Assisted Development
 
@@ -887,29 +893,29 @@ Roblox Studio has an **MCP (Model Context Protocol)** server that gives AI agent
 
 Available tools through the Roblox Studio MCP (21 total):
 
-| Tool | What it does |
-|---|---|
-| `explore_subagent` | Investigate the place in parallel and return a compact summary |
-| `search_game_tree` | Explore the instance hierarchy as a flat JSON array |
-| `inspect_instance` | Inspect any Instance's properties and children |
-| `script_read` | Read a Script, LocalScript, or ModuleScript |
-| `script_grep` | Search script content by pattern |
-| `script_search` | Find scripts by name |
-| `multi_edit` | Apply multiple edits to a script atomically |
-| `execute_luau` | Run arbitrary Luau in the live game context |
-| `console_output` | Retrieve output logs while the game is running |
-| `start_stop_play` | Start or stop a playtest session |
-| `playtest_subagent` | Spawn a test character that runs gameplay scenarios in its own context |
-| `character_navigation` | Move the player character to a position or Instance |
-| `keyboard_input` | Simulate key presses, key holds, and text input |
-| `mouse_input` | Simulate mouse clicks, movement, and scrolling |
-| `screen_capture` | Capture the current Studio viewport in Play mode |
-| `generate_mesh` | Generate a textured 3D mesh from a text prompt |
-| `generate_material` | Generate a custom material or texture |
-| `generate_procedural_model` | Generate procedural models that scale and adapt automatically |
-| `insert_from_creator_store` | Insert assets, plugins, and models from the Creator Store |
-| `list_roblox_studios` | List connected Studio sessions |
-| `set_active_studio` | Switch between connected Studio instances |
+| Tool                        | What it does                                                           |
+| --------------------------- | ---------------------------------------------------------------------- |
+| `explore_subagent`          | Investigate the place in parallel and return a compact summary         |
+| `search_game_tree`          | Explore the instance hierarchy as a flat JSON array                    |
+| `inspect_instance`          | Inspect any Instance's properties and children                         |
+| `script_read`               | Read a Script, LocalScript, or ModuleScript                            |
+| `script_grep`               | Search script content by pattern                                       |
+| `script_search`             | Find scripts by name                                                   |
+| `multi_edit`                | Apply multiple edits to a script atomically                            |
+| `execute_luau`              | Run arbitrary Luau in the live game context                            |
+| `console_output`            | Retrieve output logs while the game is running                         |
+| `start_stop_play`           | Start or stop a playtest session                                       |
+| `playtest_subagent`         | Spawn a test character that runs gameplay scenarios in its own context |
+| `character_navigation`      | Move the player character to a position or Instance                    |
+| `keyboard_input`            | Simulate key presses, key holds, and text input                        |
+| `mouse_input`               | Simulate mouse clicks, movement, and scrolling                         |
+| `screen_capture`            | Capture the current Studio viewport in Play mode                       |
+| `generate_mesh`             | Generate a textured 3D mesh from a text prompt                         |
+| `generate_material`         | Generate a custom material or texture                                  |
+| `generate_procedural_model` | Generate procedural models that scale and adapt automatically          |
+| `insert_from_creator_store` | Insert assets, plugins, and models from the Creator Store              |
+| `list_roblox_studios`       | List connected Studio sessions                                         |
+| `set_active_studio`         | Switch between connected Studio instances                              |
 
 **Key advantage over other engine MCPs:** `execute_luau` lets you run Luau directly in the live game — inspect live state, test function behavior, fire remote events, and assert game invariants without leaving the AI session.
 

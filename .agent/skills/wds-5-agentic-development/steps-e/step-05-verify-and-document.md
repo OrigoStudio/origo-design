@@ -114,10 +114,12 @@ Comprehensive verification of all new and existing functionality, then document 
 Display: "**Select an Option:** [M] Return to Activity Menu"
 
 #### Menu Handling Logic:
+
 - IF M: Update design log, then load, read entire file, then execute {activityWorkflowFile}
 - IF Any other comments or queries: help user respond then [Redisplay Menu Options]
 
 #### EXECUTION RULES:
+
 - ALWAYS halt and wait for user input after presenting menu
 - ONLY proceed when user selects 'M'
 - User can chat or ask questions - always respond and then redisplay menu options
@@ -131,6 +133,7 @@ ONLY WHEN all verification is complete, changes documented, and PR created will 
 ## 🚨 SYSTEM SUCCESS/FAILURE METRICS
 
 ### ✅ SUCCESS:
+
 - All new functionality tested and working
 - Regression suite passes
 - Backward compatibility verified
@@ -139,6 +142,7 @@ ONLY WHEN all verification is complete, changes documented, and PR created will 
 - PR created with clear description
 
 ### ❌ SYSTEM FAILURE:
+
 - Not running regression suite
 - Not verifying backward compatibility
 - Skipping performance check

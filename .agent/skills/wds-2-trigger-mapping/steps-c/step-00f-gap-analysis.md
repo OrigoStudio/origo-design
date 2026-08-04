@@ -81,6 +81,7 @@ If note for later: Document gaps in handover notes.
 ### 4. Strategic Alignment Check
 
 Reverse engineer alignment: Does the plan match the vision?
+
 - Compare stated vision to implied vision from plans
 - Check if objectives align with vision
 - Verify target groups serve objectives
@@ -95,6 +96,7 @@ Discuss and resolve misalignments if needed.
 ### 5. Present Accomplishment Summary
 
 Output what was accomplished:
+
 - Clear Vision (statement)
 - Strategic Objectives (count and SMART status)
 - Prioritized Target Groups (count with behavioral profiles)
@@ -113,11 +115,13 @@ Store gap_analysis and alignment_check.
 Display: "**Select an Option:** [C] Continue to Overview | [M] Return to Activity Menu"
 
 #### Menu Handling Logic:
+
 - IF C: Load and execute {nextStepFile}
 - IF M: Return to {activityWorkflowFile}
 - IF Any other comments or queries: help user respond then [Redisplay Menu Options]
 
 #### EXECUTION RULES:
+
 - ALWAYS halt and wait for user input after presenting menu
 - User can chat or ask questions - always respond and then redisplay menu options
 
@@ -130,6 +134,7 @@ ONLY WHEN user selects [C] will you load the next step file. Gap analysis and al
 ## 🚨 SYSTEM SUCCESS/FAILURE METRICS
 
 ### ✅ SUCCESS:
+
 - Documentation strengths clearly identified
 - Gaps identified with impact assessment
 - Critical gaps addressed or documented for later
@@ -140,6 +145,7 @@ ONLY WHEN user selects [C] will you load the next step file. Gap analysis and al
 - gap_analysis and alignment_check stored
 
 ### ❌ SYSTEM FAILURE:
+
 - Skipping gap analysis
 - Not checking strategic alignment
 - Glossing over contradictions in documentation

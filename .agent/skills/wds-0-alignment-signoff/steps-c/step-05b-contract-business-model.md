@@ -69,21 +69,25 @@ Build the Business Model section based on the user's selected model, explaining 
 **For each business model, include**:
 
 **If Fixed-Price Project**:
+
 - Model name: "Fixed-Price Project"
 - Description: "This contract uses a fixed-price model. The contractor commits to deliver the specified scope of work for the agreed price, regardless of actual time or costs incurred."
 - Key terms: Total project price, what price includes/excludes, payment structure, not-to-exceed applies
 
 **If Hourly/Time-Based**:
+
 - Model name: "Hourly/Time-Based"
 - Description: "This contract uses an hourly billing model. The client pays for actual time worked at the agreed hourly rate."
 - Key terms: Hourly rate, estimated hours, estimated total, time tracking method, billing frequency, optional not-to-exceed
 
 **If Retainer**:
+
 - Model name: "Monthly Retainer"
 - Description: "This contract uses a retainer model. The client pays a fixed monthly amount for a minimum number of hours, with additional hours billed at the overage rate."
 - Key terms: Monthly retainer amount, minimum hours, effective hourly rate, overage rate, availability, retainer period, hour rollover, billing due date
 
 **If Hybrid**:
+
 - Model name: "Hybrid Model"
 - Description: "This contract combines multiple payment structures."
 - Key terms: Combine terms from each component
@@ -93,11 +97,13 @@ Build the Business Model section based on the user's selected model, explaining 
 Display: "**Select an Option:** [C] Continue to step-05c-contract-scope"
 
 #### Menu Handling Logic:
+
 - IF C: Load, read entire file, then execute {nextStepFile}
 - IF M: Return to {workflowFile}
 - IF Any other comments or queries: help user respond then [Redisplay Menu Options]
 
 #### EXECUTION RULES:
+
 - ALWAYS halt and wait for user input after presenting menu
 - ONLY proceed to next step when user selects 'C'
 - User can chat or ask questions - always respond and then redisplay menu options
@@ -111,11 +117,13 @@ ONLY WHEN the Business Model section is built and confirmed will you then load a
 ## 🚨 SYSTEM SUCCESS/FAILURE METRICS
 
 ### ✅ SUCCESS:
+
 - Business Model section matches the selected model
 - Key terms are clearly defined
 - User confirms the section accurately reflects their arrangement
 
 ### ❌ SYSTEM FAILURE:
+
 - Changing the user's business model selection
 - Missing key terms for the selected model
 - Not gathering specific values from the user

@@ -9,7 +9,6 @@ description: 'Generate sprint status tracking from epics. Use when the user says
 
 **Your Role:** You are a Developer generating and maintaining sprint tracking. Parse epic files, detect story statuses, and produce a structured sprint-status.yaml.
 
-
 ## Paths
 
 - `tracking_system` = `file-system`
@@ -22,9 +21,9 @@ description: 'Generate sprint status tracking from epics. Use when the user says
 
 ## Input Files
 
-| Input | Path | Load Strategy |
-|-------|------|---------------|
-| Epics | `{planning_artifacts}/*epic*.md` (whole) or `{planning_artifacts}/*epic*/*.md` (sharded) | FULL_LOAD |
+| Input | Path                                                                                     | Load Strategy |
+| ----- | ---------------------------------------------------------------------------------------- | ------------- |
+| Epics | `{planning_artifacts}/*epic*.md` (whole) or `{planning_artifacts}/*epic*/*.md` (sharded) | FULL_LOAD     |
 
 ## Context
 
@@ -255,8 +254,8 @@ development_status:
 2. Use this file to track development progress
 3. Agents will update statuses as they work
 4. Re-run this workflow to refresh auto-detected statuses
-<action>Run: `python3 {project-root}/_bmad/scripts/resolve_customization.py --skill {skill-root} --key workflow.on_complete` — if the resolved value is non-empty, follow it as the final terminal instruction before exiting.</action>
-</step>
+   <action>Run: `python3 {project-root}/_bmad/scripts/resolve_customization.py --skill {skill-root} --key workflow.on_complete` — if the resolved value is non-empty, follow it as the final terminal instruction before exiting.</action>
+   </step>
 
 </workflow>
 

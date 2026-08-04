@@ -65,9 +65,9 @@ Activation is complete. If `activation_steps_prepend` or `activation_steps_appen
 
 ## Input Files
 
-| Input | Path | Load Strategy |
-|-------|------|---------------|
-| Sprint status | `{sprint_status_file}` | FULL_LOAD |
+| Input         | Path                   | Load Strategy |
+| ------------- | ---------------------- | ------------- |
+| Sprint status | `{sprint_status_file}` | FULL_LOAD     |
 
 ## Execution
 

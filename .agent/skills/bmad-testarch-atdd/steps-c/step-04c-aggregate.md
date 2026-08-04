@@ -76,15 +76,19 @@ const e2eTestsOutput = JSON.parse(fs.readFileSync(e2eTestsPath, 'utf8'));
 **Check API tests:**
 
 ```javascript
-apiTestsOutput.tests.forEach((test) => {
+apiTestsOutput.tests.forEach(test => {
   // Verify test.skip() is present
   if (!test.content.includes('test.skip(')) {
-    throw new Error(`ATDD ERROR: ${test.file} missing test.skip() - tests MUST be skipped in red phase!`);
+    throw new Error(
+      `ATDD ERROR: ${test.file} missing test.skip() - tests MUST be skipped in red phase!`
+    );
   }
 
   // Verify not placeholder assertions
   if (test.content.includes('expect(true).toBe(true)')) {
-    throw new Error(`ATDD ERROR: ${test.file} has placeholder assertions - must assert EXPECTED behavior!`);
+    throw new Error(
+      `ATDD ERROR: ${test.file} has placeholder assertions - must assert EXPECTED behavior!`
+    );
   }
 
   // Verify expected_to_fail flag
@@ -97,10 +101,12 @@ apiTestsOutput.tests.forEach((test) => {
 **Check E2E tests:**
 
 ```javascript
-e2eTestsOutput.tests.forEach((test) => {
+e2eTestsOutput.tests.forEach(test => {
   // Same validation as API tests
   if (!test.content.includes('test.skip(')) {
-    throw new Error(`ATDD ERROR: ${test.file} missing test.skip() - tests MUST be skipped in red phase!`);
+    throw new Error(
+      `ATDD ERROR: ${test.file} missing test.skip() - tests MUST be skipped in red phase!`
+    );
   }
 
   if (test.content.includes('expect(true).toBe(true)')) {
@@ -129,7 +135,7 @@ e2eTestsOutput.tests.forEach((test) => {
 **Write API test files:**
 
 ```javascript
-apiTestsOutput.tests.forEach((test) => {
+apiTestsOutput.tests.forEach(test => {
   fs.writeFileSync(test.file, test.content, 'utf8');
   console.log(`✅ Created (RED): ${test.file}`);
 });
@@ -138,7 +144,7 @@ apiTestsOutput.tests.forEach((test) => {
 **Write E2E test files:**
 
 ```javascript
-e2eTestsOutput.tests.forEach((test) => {
+e2eTestsOutput.tests.forEach(test => {
   fs.writeFileSync(test.file, test.content, 'utf8');
   console.log(`✅ Created (RED): ${test.file}`);
 });
@@ -267,10 +273,13 @@ const summary = {
   expected_to_fail: true,
   fixtures_created: uniqueFixtures.length,
   acceptance_criteria_covered: [
-    ...apiTestsOutput.tests.flatMap((t) => t.acceptance_criteria_covered),
-    ...e2eTestsOutput.tests.flatMap((t) => t.acceptance_criteria_covered),
+    ...apiTestsOutput.tests.flatMap(t => t.acceptance_criteria_covered),
+    ...e2eTestsOutput.tests.flatMap(t => t.acceptance_criteria_covered),
   ],
-  knowledge_fragments_used: [...apiTestsOutput.knowledge_fragments_used, ...e2eTestsOutput.knowledge_fragments_used],
+  knowledge_fragments_used: [
+    ...apiTestsOutput.knowledge_fragments_used,
+    ...e2eTestsOutput.knowledge_fragments_used,
+  ],
   subagent_execution: subagentExecutionLabel,
   performance_gain: performanceGainLabel,
 };
@@ -279,7 +288,11 @@ const summary = {
 **Store summary for Step 5:**
 
 ```javascript
-fs.writeFileSync('/tmp/tea-atdd-summary-{{timestamp}}.json', JSON.stringify(summary, null, 2), 'utf8');
+fs.writeFileSync(
+  '/tmp/tea-atdd-summary-{{timestamp}}.json',
+  JSON.stringify(summary, null, 2),
+  'utf8'
+);
 ```
 
 ---

@@ -9,6 +9,7 @@
 <output>**Perfect! Let's set up for your sketch.**
 
 I'll create:
+
 1. Page placeholder with navigation
 2. Sketches folder ready for upload
 3. Basic page structure

@@ -102,10 +102,12 @@ If you skipped the Feature Impact workshop, you can run it now before starting U
 Display: "**Select an Option:** [M] Return to Activity Menu"
 
 #### Menu Handling Logic:
+
 - IF M: Return to {activityWorkflowFile}
 - IF Any other comments or queries: help user respond then [Redisplay Menu Options]
 
 #### EXECUTION RULES:
+
 - ALWAYS halt and wait for user input after presenting menu
 - User can chat or ask questions - always respond and then redisplay menu options
 
@@ -118,6 +120,7 @@ This is the LAST step in the Phase 2 workflow. ONLY the [M] Return option is ava
 ## 🚨 SYSTEM SUCCESS/FAILURE METRICS
 
 ### ✅ SUCCESS:
+
 - Clear activation instructions provided for UX Designer
 - Alternative paths presented (Platform Requirements, Feature Impact)
 - Continuous delivery approach explained
@@ -126,6 +129,7 @@ This is the LAST step in the Phase 2 workflow. ONLY the [M] Return option is ava
 - Only [M] Return option available (last step)
 
 ### ❌ SYSTEM FAILURE:
+
 - Missing activation instructions
 - Auto-activating next phase
 - Not presenting alternative paths

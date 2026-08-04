@@ -12,8 +12,8 @@ description: Open design system components in Figma for visual editing
 ## INITIALIZATION
 
 ### Design Log
-Read `{output_folder}/_progress/00-design-log.md`. Check Current and Backlog for context.
 
+Read `{output_folder}/_progress/00-design-log.md`. Check Current and Backlog for context.
 
 ## Steps
 
@@ -77,5 +77,5 @@ Report any issues for resolution.
 
 1. Update design log
 1. Run catalog generation to update component catalog
-2. Suggest [V] View Components to verify changes
-3. Return to Phase 7 Activity Menu
+1. Suggest [V] View Components to verify changes
+1. Return to Phase 7 Activity Menu

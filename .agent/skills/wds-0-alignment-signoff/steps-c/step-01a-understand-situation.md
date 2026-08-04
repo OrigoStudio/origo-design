@@ -61,6 +61,7 @@ Ask the user to clarify their situation:
 "I'd like to understand your situation first. This will help me guide you efficiently.
 
 **Are you:**
+
 - A consultant proposing a solution to a client?
 - A business owner hiring consultants/suppliers to build software?
 - A manager or employee seeking approval for an internal project?
@@ -73,11 +74,13 @@ Let's get clear on what you need so we can move forward."
 Display: "**Select an Option:** [C] Continue to step-01b-determine-if-needed"
 
 #### Menu Handling Logic:
+
 - IF C: Load, read entire file, then execute {nextStepFile}
 - IF M: Return to {workflowFile}
 - IF Any other comments or queries: help user respond then [Redisplay Menu Options]
 
 #### EXECUTION RULES:
+
 - ALWAYS halt and wait for user input after presenting menu
 - ONLY proceed to next step when user selects 'C'
 - User can chat or ask questions - always respond and then redisplay menu options
@@ -91,10 +94,12 @@ ONLY WHEN the user's situation is clearly understood will you then load and read
 ## 🚨 SYSTEM SUCCESS/FAILURE METRICS
 
 ### ✅ SUCCESS:
+
 - User's situation and role are clearly identified
 - User feels heard and understood before moving forward
 
 ### ❌ SYSTEM FAILURE:
+
 - Skipping situation assessment and assuming the user's role
 - Proceeding without user input
 - Generating alignment content prematurely

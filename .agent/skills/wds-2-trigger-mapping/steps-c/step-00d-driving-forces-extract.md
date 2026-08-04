@@ -61,6 +61,7 @@ Output:
 "**Mapping Psychological Drivers**
 
 For each persona, we need to understand BOTH sides of motivation:
+
 - **Positive drivers** (what they want to achieve)
 - **Negative drivers** (what they fear or want to avoid)
 
@@ -97,8 +98,9 @@ Output:
 
 **Driving Forces Mapped:**
 {{#each personas}}
+
 - **{{this.name}}**: {{this.positive_count}} positive drivers, {{this.negative_count}} negative drivers
-{{/each}}
+  {{/each}}
 
 Next, we'll prioritize which groups and drivers matter most."
 
@@ -107,11 +109,13 @@ Next, we'll prioritize which groups and drivers matter most."
 Display: "**Select an Option:** [C] Continue to Prioritization Extraction | [M] Return to Activity Menu"
 
 #### Menu Handling Logic:
+
 - IF C: Load and execute {nextStepFile}
 - IF M: Return to {activityWorkflowFile}
 - IF Any other comments or queries: help user respond then [Redisplay Menu Options]
 
 #### EXECUTION RULES:
+
 - ALWAYS halt and wait for user input after presenting menu
 - User can chat or ask questions - always respond and then redisplay menu options
 
@@ -124,6 +128,7 @@ ONLY WHEN user selects [C] will you load the next step file. Both positive and n
 ## 🚨 SYSTEM SUCCESS/FAILURE METRICS
 
 ### ✅ SUCCESS:
+
 - Both positive AND negative driving forces extracted for every persona
 - Drivers are specific to usage context (not general life goals)
 - Pain points transformed into psychological negative drivers
@@ -133,6 +138,7 @@ ONLY WHEN user selects [C] will you load the next step file. Both positive and n
 - Results stored for subsequent steps
 
 ### ❌ SYSTEM FAILURE:
+
 - Skipping negative drivers for any persona
 - Accepting vague or general driving forces
 - Not probing for negative drivers when documentation lacks them

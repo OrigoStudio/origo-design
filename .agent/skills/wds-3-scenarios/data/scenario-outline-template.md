@@ -79,6 +79,7 @@
 **Persona:** [Name] ([Priority level])
 
 **Driving Forces Addressed:**
+
 - ✅ **Want:** [Specific positive driver from Trigger Map]
 - ❌ **Fear:** [Specific negative driver from Trigger Map]
 
@@ -90,11 +91,11 @@
 
 Steps are outlined one at a time after scenario creation. The first step is processed automatically.
 
-| Step | Folder | Purpose | Exit Action |
-|------|--------|---------|-------------|
+| Step   | Folder                | Purpose        | Exit Action                           |
+| ------ | --------------------- | -------------- | ------------------------------------- |
 | [NN].1 | `[NN].1-[page-slug]/` | [Step purpose] | [Interaction that leads to next step] |
 | [NN].2 | `[NN].2-[page-slug]/` | [Step purpose] | [Interaction that leads to next step] |
-| [NN].3 | `[NN].3-[page-slug]/` | [Step purpose] | [Final — scenario success] ✓ |
+| [NN].3 | `[NN].3-[page-slug]/` | [Step purpose] | [Final — scenario success] ✓          |
 
 **First step** ([NN].1) includes full entry context (Q3 + Q4 + Q5 + Q6).
 **On-step interactions** (that don't leave the step) are documented as storyboard items within each page spec.

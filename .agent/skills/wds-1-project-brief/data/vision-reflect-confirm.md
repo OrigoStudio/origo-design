@@ -9,6 +9,7 @@ Synthesize understanding into 2-3 sentences and get user confirmation before pro
 ### 1. Synthesize Conversation
 
 Capture the essence in 2-3 sentences:
+
 - The product concept
 - The core value/impact
 - The unique angle or aspiration

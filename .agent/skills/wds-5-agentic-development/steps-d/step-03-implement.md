@@ -70,15 +70,15 @@ Do not jump ahead. Do not implement multiple items simultaneously. Finishing one
 
 Before writing new code, study how the existing codebase handles the same concerns:
 
-| Concern | Look At |
-|---------|---------|
-| **File naming** | How are existing components/pages named? |
-| **Component structure** | Props interface, state management, lifecycle |
-| **Styling approach** | CSS modules, Tailwind, styled-components, etc. |
-| **Error handling** | How do existing features handle errors? |
-| **Data fetching** | What patterns are used for API calls? |
-| **State management** | Local state, context, store — what is the convention? |
-| **Testing patterns** | How are existing tests structured? |
+| Concern                 | Look At                                               |
+| ----------------------- | ----------------------------------------------------- |
+| **File naming**         | How are existing components/pages named?              |
+| **Component structure** | Props interface, state management, lifecycle          |
+| **Styling approach**    | CSS modules, Tailwind, styled-components, etc.        |
+| **Error handling**      | How do existing features handle errors?               |
+| **Data fetching**       | What patterns are used for API calls?                 |
+| **State management**    | Local state, context, store — what is the convention? |
+| **Testing patterns**    | How are existing tests structured?                    |
 
 Match these patterns. Consistency with the codebase is more important than what you consider "better."
 
@@ -142,10 +142,12 @@ Write clear commit messages that reference what was built. Do not accumulate lar
 Display: "**Select an Option:** [C] Continue to Step 4: Verify"
 
 #### Menu Handling Logic:
+
 - IF C: Update design log, then load, read entire file, then execute {nextStepFile}
 - IF Any other comments or queries: help user respond then [Redisplay Menu Options]
 
 #### EXECUTION RULES:
+
 - ALWAYS halt and wait for user input after presenting menu
 - ONLY proceed to next step when user selects 'C'
 - User can chat or ask questions - always respond and then redisplay menu options
@@ -159,6 +161,7 @@ ONLY WHEN all plan items are implemented, tested, and committed will you then lo
 ## 🚨 SYSTEM SUCCESS/FAILURE METRICS
 
 ### ✅ SUCCESS:
+
 - All plan items implemented in dependency order
 - Spec re-read before each item implementation
 - Existing codebase patterns followed
@@ -168,6 +171,7 @@ ONLY WHEN all plan items are implemented, tested, and committed will you then lo
 - Commits are incremental and logically scoped
 
 ### ❌ SYSTEM FAILURE:
+
 - Implementing items out of order or simultaneously
 - Not re-reading spec before implementation
 - Hardcoding values instead of using design tokens

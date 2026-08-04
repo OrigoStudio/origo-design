@@ -98,10 +98,12 @@ Implement the minimal fix targeting the root cause.
 Display: "**Select an Option:** [C] Continue to Step 4: Verify"
 
 #### Menu Handling Logic:
+
 - IF C: Update design log, then load, read entire file, then execute {nextStepFile}
 - IF Any other comments or queries: help user respond then [Redisplay Menu Options]
 
 #### EXECUTION RULES:
+
 - ALWAYS halt and wait for user input after presenting menu
 - ONLY proceed to next step when user selects 'C'
 - User can chat or ask questions - always respond and then redisplay menu options
@@ -115,6 +117,7 @@ ONLY WHEN the fix is implemented, test passes, and reproduction case is resolved
 ## 🚨 SYSTEM SUCCESS/FAILURE METRICS
 
 ### ✅ SUCCESS:
+
 - Fix branch created
 - Test written that catches the bug (fails before fix, passes after)
 - Minimal fix implemented targeting root cause
@@ -122,6 +125,7 @@ ONLY WHEN the fix is implemented, test passes, and reproduction case is resolved
 - Reproduction case passes with the fix
 
 ### ❌ SYSTEM FAILURE:
+
 - Implementing fix without writing a regression test first
 - Including refactoring or unrelated improvements
 - Fix does not target root cause (treats symptom only)

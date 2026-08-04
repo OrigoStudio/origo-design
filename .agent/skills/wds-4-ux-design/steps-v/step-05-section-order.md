@@ -73,6 +73,7 @@ Scan document structure and compare against standard section order:
 ### 2. Check for Duplicates and Redundancies
 
 Identify:
+
 - Sections that are out of order
 - Missing required sections
 - Duplicate sections

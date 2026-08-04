@@ -64,6 +64,7 @@ Explore the recommended solution.
 **Reference**: `{sectionRoutingFile}` (Section 5: Recommended Solution)
 
 **Questions to explore**:
+
 - "Which approach do you prefer?"
 - "Why this one over the others?"
 - "What makes this the right solution?"
@@ -75,11 +76,13 @@ Explore the recommended solution.
 Display: "**Select an Option:** [C] Continue to step-02g-explore-path-forward"
 
 #### Menu Handling Logic:
+
 - IF C: Load, read entire file, then execute {nextStepFile}
 - IF M: Return to {workflowFile}
 - IF Any other comments or queries: help user respond then [Redisplay Menu Options]
 
 #### EXECUTION RULES:
+
 - ALWAYS halt and wait for user input after presenting menu
 - ONLY proceed to next step when user selects 'C'
 - User can chat or ask questions - always respond and then redisplay menu options
@@ -93,11 +96,13 @@ ONLY WHEN the user has articulated their preferred approach and reasoning will y
 ## 🚨 SYSTEM SUCCESS/FAILURE METRICS
 
 ### ✅ SUCCESS:
+
 - Preferred approach is clearly identified
 - Reasoning for the recommendation is captured
 - User owns the recommendation
 
 ### ❌ SYSTEM FAILURE:
+
 - Choosing the solution for the user
 - Skipping this section
 - Not capturing the reasoning behind the choice

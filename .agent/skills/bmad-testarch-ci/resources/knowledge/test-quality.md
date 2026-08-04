@@ -48,7 +48,9 @@ test('user can view dashboard', async ({ page, apiRequest }) => {
   await apiRequest.post('/api/users', { data: user });
 
   // Network-first: Intercept BEFORE navigate
-  const dashboardPromise = page.waitForResponse((resp) => resp.url().includes('/api/dashboard') && resp.status() === 200);
+  const dashboardPromise = page.waitForResponse(
+    resp => resp.url().includes('/api/dashboard') && resp.status() === 200
+  );
 
   await page.goto('/dashboard');
 
@@ -78,7 +80,7 @@ describe('Dashboard', () => {
     cy.visit('/dashboard');
 
     // Deterministic wait for response
-    cy.wait('@getDashboard').then((interception) => {
+    cy.wait('@getDashboard').then(interception => {
       const dashboard = interception.response.body;
 
       // Explicit assertions
@@ -178,7 +180,7 @@ describe('Admin User Management', () => {
 
   afterEach(() => {
     // Cleanup: Delete all users created during test
-    createdUserIds.forEach((userId) => {
+    createdUserIds.forEach(userId => {
       cy.task('db:delete', { table: 'users', id: userId });
     });
     createdUserIds.length = 0;
@@ -289,7 +291,7 @@ describe('User API', () => {
   it('should create user with explicit assertions', () => {
     const userData = createUser({ email: 'test@example.com' });
 
-    cy.request('POST', '/api/users', userData).then((response) => {
+    cy.request('POST', '/api/users', userData).then(response => {
       // All assertions visible in test
       expect(response.status).to.equal(201);
       expect(response.body.id).to.exist;
@@ -520,7 +522,7 @@ test('user completes order', async ({ page, apiRequest }) => {
           emailVerified: true, // Skip verification
         }),
       })
-      .then((r) => r.json()),
+      .then(r => r.json()),
 
     // Create product via API (fast)
     apiRequest
@@ -531,7 +533,7 @@ test('user completes order', async ({ page, apiRequest }) => {
           stock: 10,
         }),
       })
-      .then((r) => r.json()),
+      .then(r => r.json()),
   ]);
 
   // Step 2: Auth setup via storage state (instant, 0 seconds)

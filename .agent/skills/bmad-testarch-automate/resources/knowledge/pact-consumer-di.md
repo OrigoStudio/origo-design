@@ -224,7 +224,12 @@ describe('Transaction Statistics - Count Endpoint', () => {
       })
       .executeTest(async (mockServer: V3MockServer) => {
         const context = createTestContext(mockServer.url);
-        const result = await makeApiRequestWithContext<CountStatistics>(context, '/transactions/statistics/count', 'POST', statsRequest);
+        const result = await makeApiRequestWithContext<CountStatistics>(
+          context,
+          '/transactions/statistics/count',
+          'POST',
+          statsRequest
+        );
         expect(result.count).toBeDefined();
       });
   });
@@ -258,7 +263,7 @@ expect(response.status).toBe(200);
 
 ```typescript
 // BAD: ESM hoisting makes this non-obvious and brittle
-vi.mock('../../src/constants.js', async (importOriginal) => ({
+vi.mock('../../src/constants.js', async importOriginal => ({
   ...(await importOriginal()),
   get API_BASE_URL() {
     return mockBaseUrl;

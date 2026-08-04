@@ -58,6 +58,7 @@ Create the PRIMARY persona document with full transformation journey, champion c
 ### 1. Gather Input
 
 From trigger map data:
+
 - targetGroups.primary section
 - Name, role, type, roleInFlywheel
 - 6 drivingForces (3 wants, 3 fears)
@@ -83,6 +84,7 @@ This template provides the complete structure for sections 1-13.
 **Primary-Specific Section:** Include "Role in Flywheel: Creating Awesome [Personas] Who Become [Champions]"
 
 Show:
+
 - The natural evolution from user to champion
 - What they need to see on product page
 - Focus on transformation and champion creation
@@ -99,11 +101,13 @@ Output: "Primary persona document created: 02-[Name]-the-[Role].md"
 Display: "**Select an Option:** [C] Continue to Secondary Persona | [M] Return to Activity Menu"
 
 #### Menu Handling Logic:
+
 - IF C: Load and execute {nextStepFile}
 - IF M: Return to {activityWorkflowFile}
 - IF Any other comments or queries: help user respond then [Redisplay Menu Options]
 
 #### EXECUTION RULES:
+
 - ALWAYS halt and wait for user input after presenting menu
 - User can chat or ask questions - always respond and then redisplay menu options
 
@@ -116,6 +120,7 @@ ONLY WHEN user selects [C] will you load the next step file. Primary persona doc
 ## 🚨 SYSTEM SUCCESS/FAILURE METRICS
 
 ### ✅ SUCCESS:
+
 - All 13 sections from template included
 - 6 driving forces with Product Promises (3 wants, 3 fears)
 - Full BEFORE/AFTER transformation section
@@ -126,6 +131,7 @@ ONLY WHEN user selects [C] will you load the next step file. Primary persona doc
 - Saved with correct filename
 
 ### ❌ SYSTEM FAILURE:
+
 - Missing required sections
 - Driving forces without Product Promises
 - Using "converting" language

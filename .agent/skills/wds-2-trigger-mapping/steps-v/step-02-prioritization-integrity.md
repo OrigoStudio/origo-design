@@ -58,6 +58,7 @@ Verify prioritization rankings match stated rationale and are internally consist
 ### 1. Priority Tier Consistency
 
 Check:
+
 - Exactly one Primary persona (P1)
 - Reasonable distribution across tiers (not all P1)
 - Priority rationale documented (why P1 > P2 > P3)
@@ -66,6 +67,7 @@ Check:
 ### 2. Driving Force Rankings
 
 For each persona:
+
 - Driving forces have relative importance ranking
 - Top driving forces align with business goals
 - Negative forces are genuinely opposite/complementary to positives
@@ -74,6 +76,7 @@ For each persona:
 ### 3. Focus Statement
 
 Check:
+
 - Focus statement exists
 - Focus statement references P1 persona
 - Focus statement aligns with business goals
@@ -95,11 +98,13 @@ Check:
 Display: "**Select an Option:** [C] Continue to Persona Consistency | [M] Return to Activity Menu"
 
 #### Menu Handling Logic:
+
 - IF C: Load and execute {nextStepFile}
 - IF M: Return to {activityWorkflowFile}
 - IF Any other comments or queries: help user respond then [Redisplay Menu Options]
 
 #### EXECUTION RULES:
+
 - ALWAYS halt and wait for user input after presenting menu
 - User can chat or ask questions - always respond and then redisplay menu options
 
@@ -112,6 +117,7 @@ ONLY WHEN user selects [C] will you load the next step file. Prioritization inte
 ## 🚨 SYSTEM SUCCESS/FAILURE METRICS
 
 ### ✅ SUCCESS:
+
 - Priority tier distribution verified
 - Rationale checked for each priority decision
 - Driving force rankings verified per persona
@@ -120,6 +126,7 @@ ONLY WHEN user selects [C] will you load the next step file. Prioritization inte
 - Integrity report generated
 
 ### ❌ SYSTEM FAILURE:
+
 - Not checking for exactly one P1
 - Not verifying focus statement
 - Missing driving force ranking check

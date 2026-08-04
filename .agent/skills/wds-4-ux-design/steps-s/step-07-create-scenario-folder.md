@@ -75,6 +75,7 @@ Create the physical folder structure and overview documents for the scenario bas
 File: `C-UX-Scenarios/{{scenario_num}}-{{scenario-slug}}/00-scenario-overview.md`
 
 Content:
+
 ```markdown
 # Scenario {{scenario_num}}: {{scenario_name}}
 
@@ -99,6 +100,7 @@ Content:
 {{mental_state}}
 
 When users arrive, they are feeling:
+
 - **Trigger:** [what just happened]
 - **Hope:** [what they're hoping for]
 - **Worry:** [what they're worried about]
@@ -128,8 +130,9 @@ When users arrive, they are feeling:
 ## Pages in This Scenario
 
 {{#each page in pages_list}}
+
 - `{{scenario_num}}.{{@index + 1}}-{{page.slug}}/`
-{{/each}}
+  {{/each}}
 
 ---
 
@@ -148,6 +151,7 @@ When users arrive, they are feeling:
 File: `C-UX-Scenarios/{{scenario_num}}-{{scenario-slug}}/scenario-tracking.yaml`
 
 Content:
+
 ```yaml
 scenario_number: {{scenario_num}}
 scenario_name: "{{scenario_name}}"
@@ -176,18 +180,22 @@ total_pages: {{pages_list.length}}
 **Scenario {{scenario_num}}:** {{scenario_name}}
 
 **Folder:**
+
 - `C-UX-Scenarios/{{scenario_num}}-{{scenario-slug}}/`
 
 **Documents:**
+
 - `00-scenario-overview.md` (detailed scenario metadata)
 - `scenario-tracking.yaml` (progress tracking)
 
 **Journey Overview:**
+
 - **Start:** {{entry_point}} ({{mental_state}})
 - **End:** {{business_success}} + {{user_success}}
 - **Pages planned:** {{pages_list.length}}
 
 **Next Step:**
+
 - Run the page-init workshop to define and create the first page in this scenario
 
 The scenario container is ready!</output>

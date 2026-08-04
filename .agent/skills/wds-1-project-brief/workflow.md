@@ -40,6 +40,7 @@ Read `{output_folder}/_progress/00-design-log.md`. Check Current and Backlog for
 ### 3. Mode Determination
 
 **Check invocation:**
+
 - "validate" / -v → Load and execute `./workflow-validate.md`
 - Default (create) → Continue to step 3
 
@@ -56,56 +57,56 @@ Based on `brief_level`:
 
 ### Complete Brief Flow
 
-| Step | Name | Purpose |
-|------|------|---------|
-| 01 | Init | Load context, confirm readiness |
-| 01a | Client Profile | Who the client is — organisation, people, decision culture, internal driver |
-| 02 | Vision | Explore and document project vision |
-| 03 | Positioning | Define market positioning |
-| 05 | Business Model | Define revenue/business model |
-| 06 | Business Customers | Identify B2B customers (if applicable) |
-| 07 | Target Users | Define end users |
-| 07a | Product Concept | Clarify product concept |
-| 08 | Success Criteria | Define measurable success metrics |
-| 09 | Competitive Landscape | Analyze competition |
-| 10 | Constraints | Document project constraints |
-| 10a | Platform Strategy | Define platform approach |
-| 11 | Tone of Voice | Establish brand voice |
-| 12 | Create Product Brief | Generate the Product Brief document |
-| 13 | Content Init | Initialize content & language strategy |
-| 14 | Personality | Define brand personality |
-| 15 | Tone | Refine tone guidelines |
-| 16 | Languages | Language strategy |
-| 17 | SEO Keywords | Define keyword map |
-| 17a | Content Structure | Content architecture |
-| 18 | Create Content Document | Generate Content & Language document |
-| 19 | Inspiration Workshop | Analyze reference sites |
-| 20 | Visual Init | Initialize visual direction |
-| 21 | Existing Brand | Document existing brand assets |
-| 22 | References | Collect visual references |
-| 23 | Design Style | Define design style |
-| 24 | Layout & Effects | Layout patterns and effects |
-| 25 | Imagery | Photography and illustration direction |
-| 26 | Create Visual Document | Generate Visual Direction document |
-| 27 | Platform Init | Initialize platform requirements |
-| 28 | Tech Stack | Define technology choices |
-| 29 | Integrations | Third-party integrations |
-| 30 | Contact Strategy | Contact forms and communication |
-| 31 | Multilingual | Multi-language setup |
-| 32 | Create Platform Document | Generate Platform Requirements document |
-| 33 | Analyze Brief | Review all Phase 1 artifacts |
-| 34 | Create Summary | Generate handover summary |
-| 35 | Update Design Log | Record Phase 1 decisions |
-| 36 | Provide Activation | Activation prompt for Phase 2 |
+| Step | Name                     | Purpose                                                                     |
+| ---- | ------------------------ | --------------------------------------------------------------------------- |
+| 01   | Init                     | Load context, confirm readiness                                             |
+| 01a  | Client Profile           | Who the client is — organisation, people, decision culture, internal driver |
+| 02   | Vision                   | Explore and document project vision                                         |
+| 03   | Positioning              | Define market positioning                                                   |
+| 05   | Business Model           | Define revenue/business model                                               |
+| 06   | Business Customers       | Identify B2B customers (if applicable)                                      |
+| 07   | Target Users             | Define end users                                                            |
+| 07a  | Product Concept          | Clarify product concept                                                     |
+| 08   | Success Criteria         | Define measurable success metrics                                           |
+| 09   | Competitive Landscape    | Analyze competition                                                         |
+| 10   | Constraints              | Document project constraints                                                |
+| 10a  | Platform Strategy        | Define platform approach                                                    |
+| 11   | Tone of Voice            | Establish brand voice                                                       |
+| 12   | Create Product Brief     | Generate the Product Brief document                                         |
+| 13   | Content Init             | Initialize content & language strategy                                      |
+| 14   | Personality              | Define brand personality                                                    |
+| 15   | Tone                     | Refine tone guidelines                                                      |
+| 16   | Languages                | Language strategy                                                           |
+| 17   | SEO Keywords             | Define keyword map                                                          |
+| 17a  | Content Structure        | Content architecture                                                        |
+| 18   | Create Content Document  | Generate Content & Language document                                        |
+| 19   | Inspiration Workshop     | Analyze reference sites                                                     |
+| 20   | Visual Init              | Initialize visual direction                                                 |
+| 21   | Existing Brand           | Document existing brand assets                                              |
+| 22   | References               | Collect visual references                                                   |
+| 23   | Design Style             | Define design style                                                         |
+| 24   | Layout & Effects         | Layout patterns and effects                                                 |
+| 25   | Imagery                  | Photography and illustration direction                                      |
+| 26   | Create Visual Document   | Generate Visual Direction document                                          |
+| 27   | Platform Init            | Initialize platform requirements                                            |
+| 28   | Tech Stack               | Define technology choices                                                   |
+| 29   | Integrations             | Third-party integrations                                                    |
+| 30   | Contact Strategy         | Contact forms and communication                                             |
+| 31   | Multilingual             | Multi-language setup                                                        |
+| 32   | Create Platform Document | Generate Platform Requirements document                                     |
+| 33   | Analyze Brief            | Review all Phase 1 artifacts                                                |
+| 34   | Create Summary           | Generate handover summary                                                   |
+| 35   | Update Design Log        | Record Phase 1 decisions                                                    |
+| 36   | Provide Activation       | Activation prompt for Phase 2                                               |
 
 ---
 
 ## REFERENCE CONTENT
 
-| Location | Purpose |
-|----------|---------|
-| `data/vision-*.md` | Vision workshop guides |
-| `data/positioning-*.md` | Positioning workshop guides |
+| Location                  | Purpose                              |
+| ------------------------- | ------------------------------------ |
+| `data/vision-*.md`        | Vision workshop guides               |
+| `data/positioning-*.md`   | Positioning workshop guides          |
 | `data/tone-of-voice-*.md` | Tone of voice templates and examples |
 
 ---

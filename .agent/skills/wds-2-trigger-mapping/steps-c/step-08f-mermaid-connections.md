@@ -70,6 +70,7 @@ Connect each TG to its corresponding DF (matching IDs: TG0->DF0, TG1->DF1, etc.)
 ### 4. Verify Connection Count
 
 **Count check:**
+
 - BG connections = number of business goals
 - Platform-to-TG connections = number of personas
 - TG-to-DF connections = number of personas
@@ -83,11 +84,13 @@ Store connections and connection_count.
 Display: "**Select an Option:** [C] Continue to Apply Styling | [M] Return to Activity Menu"
 
 #### Menu Handling Logic:
+
 - IF C: Load and execute {nextStepFile}
 - IF M: Return to {activityWorkflowFile}
 - IF Any other comments or queries: help user respond then [Redisplay Menu Options]
 
 #### EXECUTION RULES:
+
 - ALWAYS halt and wait for user input after presenting menu
 - User can chat or ask questions - always respond and then redisplay menu options
 
@@ -100,6 +103,7 @@ ONLY WHEN user selects [C] will you load the next step file. All connections mus
 ## 🚨 SYSTEM SUCCESS/FAILURE METRICS
 
 ### ✅ SUCCESS:
+
 - All BG nodes connected to PLATFORM
 - PLATFORM connected to all TG nodes
 - Each TG connected to matching DF
@@ -109,6 +113,7 @@ ONLY WHEN user selects [C] will you load the next step file. All connections mus
 - No broken connections
 
 ### ❌ SYSTEM FAILURE:
+
 - Missing connections
 - Fancy arrow styling
 - TG-DF mismatch (TG0->DF1 etc.)

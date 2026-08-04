@@ -31,7 +31,7 @@ Read outputs from 4 parallel NFR evidence audit subagents, calculate overall ris
 const domains = ['security', 'performance', 'reliability', 'scalability'];
 const assessments = {};
 
-domains.forEach((domain) => {
+domains.forEach(domain => {
   const outputPath = `/tmp/tea-nfr-${domain}-{{timestamp}}.json`;
   assessments[domain] = JSON.parse(fs.readFileSync(outputPath, 'utf8'));
 });
@@ -45,9 +45,9 @@ domains.forEach((domain) => {
 
 ```javascript
 const riskLevels = { HIGH: 3, MEDIUM: 2, LOW: 1, NONE: 0 };
-const domainRisks = domains.map((d) => assessments[d].risk_level);
-const maxRiskValue = Math.max(...domainRisks.map((r) => riskLevels[r]));
-const overallRisk = Object.keys(riskLevels).find((k) => riskLevels[k] === maxRiskValue);
+const domainRisks = domains.map(d => assessments[d].risk_level);
+const maxRiskValue = Math.max(...domainRisks.map(r => riskLevels[r]));
+const overallRisk = Object.keys(riskLevels).find(k => riskLevels[k] === maxRiskValue);
 ```
 
 **Risk assessment:**
@@ -63,7 +63,7 @@ const overallRisk = Object.keys(riskLevels).find((k) => riskLevels[k] === maxRis
 ```javascript
 const allCompliance = {};
 
-domains.forEach((domain) => {
+domains.forEach(domain => {
   const compliance = assessments[domain].compliance;
   Object.entries(compliance).forEach(([standard, status]) => {
     if (!allCompliance[standard]) {
@@ -76,8 +76,8 @@ domains.forEach((domain) => {
 // Determine overall compliance per standard
 const complianceSummary = {};
 Object.entries(allCompliance).forEach(([standard, statuses]) => {
-  const hasFail = statuses.some((s) => s.status === 'FAIL');
-  const hasPartial = statuses.some((s) => s.status === 'PARTIAL' || s.status === 'CONCERN');
+  const hasFail = statuses.some(s => s.status === 'FAIL');
+  const hasPartial = statuses.some(s => s.status === 'PARTIAL' || s.status === 'CONCERN');
 
   complianceSummary[standard] = hasFail ? 'FAIL' : hasPartial ? 'PARTIAL' : 'PASS';
 });
@@ -93,8 +93,8 @@ Object.entries(allCompliance).forEach(([standard, statuses]) => {
 const crossDomainRisks = [];
 
 // Example: Performance + Scalability issue
-const perfConcerns = assessments.performance.findings.filter((f) => f.status !== 'PASS');
-const scaleConcerns = assessments.scalability.findings.filter((f) => f.status !== 'PASS');
+const perfConcerns = assessments.performance.findings.filter(f => f.status !== 'PASS');
+const scaleConcerns = assessments.scalability.findings.filter(f => f.status !== 'PASS');
 if (perfConcerns.length > 0 && scaleConcerns.length > 0) {
   crossDomainRisks.push({
     domains: ['performance', 'scalability'],
@@ -104,8 +104,8 @@ if (perfConcerns.length > 0 && scaleConcerns.length > 0) {
 }
 
 // Example: Security + Reliability issue
-const securityFails = assessments.security.findings.filter((f) => f.status === 'FAIL');
-const reliabilityConcerns = assessments.reliability.findings.filter((f) => f.status !== 'PASS');
+const securityFails = assessments.security.findings.filter(f => f.status === 'FAIL');
+const reliabilityConcerns = assessments.reliability.findings.filter(f => f.status !== 'PASS');
 if (securityFails.length > 0 && reliabilityConcerns.length > 0) {
   crossDomainRisks.push({
     domains: ['security', 'reliability'],
@@ -120,12 +120,12 @@ if (securityFails.length > 0 && reliabilityConcerns.length > 0) {
 ### 5. Aggregate Priority Actions
 
 ```javascript
-const allPriorityActions = domains.flatMap((domain) =>
-  assessments[domain].priority_actions.map((action) => ({
+const allPriorityActions = domains.flatMap(domain =>
+  assessments[domain].priority_actions.map(action => ({
     domain,
     action,
     urgency: assessments[domain].risk_level === 'HIGH' ? 'URGENT' : 'NORMAL',
-  })),
+  }))
 );
 
 // Sort by urgency
@@ -178,7 +178,11 @@ const executiveSummary = {
 };
 
 // Save for Step 5 (report generation)
-fs.writeFileSync('/tmp/tea-nfr-summary-{{timestamp}}.json', JSON.stringify(executiveSummary, null, 2), 'utf8');
+fs.writeFileSync(
+  '/tmp/tea-nfr-summary-{{timestamp}}.json',
+  JSON.stringify(executiveSummary, null, 2),
+  'utf8'
+);
 ```
 
 ---

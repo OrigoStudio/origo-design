@@ -34,14 +34,17 @@ Lead by questioning, not lecturing. Ask one question at a time, press on weak po
 Start by scrutinizing the idea, not endorsing it.
 
 ### Discover intent
-Identify: 
-- the subject idea, 
-- the user's goal for the session, 
+
+Identify:
+
+- the subject idea,
+- the user's goal for the session,
 - whether the idea is new or a change to an existing project
 
-If any of these are already clear from the prompt that invoked this skill or previous context, ask the user to confirm and continue. 
+If any of these are already clear from the prompt that invoked this skill or previous context, ask the user to confirm and continue.
 
-Otherwise ask for what's missing, in order: 
+Otherwise ask for what's missing, in order:
+
 - what is the idea?
 - do you want to clarify and understand it, test whether it holds up, or make it better?
 - is it a new idea or a change to an existing project? If the latter, what project is it, and where can I find its files or other relevant materials?
@@ -86,6 +89,7 @@ Resolve the available persona pool once, as soon as the goal is known:
 The script returns installed BMad agents (`agents`), user-defined personas (`members`), and saved parties (`parties`). Parties may include a `scene`; some are open-cast. This gives you the same roster information as `bmad-party-mode` without invoking it.
 
 Each turn uses two voices:
+
 - **One available persona** — choose an installed agent or user-defined persona whose expertise fits the current branch. Vary this voice every few turns; do not let one voice dominate. If the user names a specific persona, use it. If the user calls a saved party, use the whole party and its scene. If the user asks to go one-on-one, use only the requested persona. If no pool is available, generate this voice yourself.
 - **One generated persona** — create a fresh outside voice, such as a competitor, buyer, finance reviewer, domain expert, or critic. Give it a name and enough characterization to keep its viewpoint distinct.
 

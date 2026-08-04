@@ -2,6 +2,7 @@
 name: gds-prd
 description: Create, update, validate, or analyze a game project's PRD. Use when the user wants help producing, editing, validating, or analyzing a PRD — often derived from a GDD or prepared for external-tool integration.
 ---
+
 # Game PRD
 
 ## Overview
@@ -45,7 +46,7 @@ You are a facilitator, not a form. The user is the author; you are the structure
 
 **Update.** Reconcile an existing PRD with a change signal. Orient via source extractors (see `## Constraints` → Extract, don't ingest) against the PRD, addendum, `decision-log.md`, and original inputs — then run the `## Discovery` posture against the change signal. Before applying any change that contradicts a recorded decision, surface the conflict inline: name the prior decision, cite where it is recorded (`decision-log.md` entry or PRD section), and ask the user to confirm the override before editing. Log the override. If the change is fundamental, offer Create instead of patching. When changes are applied, proceed to `## Finalize`.
 
-**Validate** (or *analyze*). Critique an existing PRD against `{workflow.validation_checklist}`. Standalone — does NOT enter `## Finalize`. Orient via source extractors against `decision-log.md` and any original inputs to give the validator context. Run the Validate playbook in `references/validate.md`: spawn the validator subagent against `prd.md` (and `addendum.md` if present), produce findings, and render a validation report. Always offer to roll findings into an Update.
+**Validate** (or _analyze_). Critique an existing PRD against `{workflow.validation_checklist}`. Standalone — does NOT enter `## Finalize`. Orient via source extractors against `decision-log.md` and any original inputs to give the validator context. Run the Validate playbook in `references/validate.md`: spawn the validator subagent against `prd.md` (and `addendum.md` if present), produce findings, and render a validation report. Always offer to roll findings into an Update.
 
 ## Discovery
 
@@ -59,13 +60,13 @@ Discovery is a posture, not a script. Open wide, read the situation, then conver
 
 - **Stakes.** Calibrates rigor, section depth, and which adapt-in clusters apply.
 - **Audience.** Drives tone, evidence requirements, and approval sections.
-- **Existing inputs.** Existing artifacts mean those parts of the PRD reference, not relitigate. **A GDD is the highest-value input** — when one exists, this is brownfield: the GDD already holds the game's design, so the PRD focuses on formal requirements, player journeys, technical constraints, success metrics, and scope. Offer a *From GDD* path — have a subagent extract the GDD's sections, map them onto the PRD structure, pre-populate the draft, and flag the gaps the GDD does not cover. When project-context, prior PRDs, or existing UX/architecture are present, frame Discovery around what is new or changing.
+- **Existing inputs.** Existing artifacts mean those parts of the PRD reference, not relitigate. **A GDD is the highest-value input** — when one exists, this is brownfield: the GDD already holds the game's design, so the PRD focuses on formal requirements, player journeys, technical constraints, success metrics, and scope. Offer a _From GDD_ path — have a subagent extract the GDD's sections, map them onto the PRD structure, pre-populate the draft, and flag the gaps the GDD does not cover. When project-context, prior PRDs, or existing UX/architecture are present, frame Discovery around what is new or changing.
 - **Downstream depth.** Whole spec for a small build, or top of a chain through UX → architecture → epics → stories? Affects how much the PRD encodes vs. defers. If platform/form-factor is not stated in the sources, probe it — PC / console / handheld / mobile / VR / multi-surface — since it shapes requirements.
 
 **Right-skill check.** Once the situation is read, sanity-check that a PRD is the best tool. Three cases where it isn't:
 
 - **Game design work** → suggest `gds-gdd`. If the user wants mechanics, levels, art direction, audio, or progression captured, that is the Game Design Document's job — the PRD references those decisions, it does not own them.
-- **Small scope + wants a captured artifact** (small tweak to an existing codebase, single doc to point at) → stay here and produce an *all-inclusive document*: lean spine plus inline Stories via the adapt-in Stories cluster.
+- **Small scope + wants a captured artifact** (small tweak to an existing codebase, single doc to point at) → stay here and produce an _all-inclusive document_: lean spine plus inline Stories via the adapt-in Stories cluster.
 - **Express implementation** (wants to build now, no planning chain or captured artifact needed) → suggest `gds-quick-dev`.
 
 Surface these honestly and let the user choose; if they prefer this skill anyway, proceed with the right-sized version.
@@ -89,7 +90,7 @@ Three clusters: how the artifact is shaped, what makes the substance sound, and 
 **Substance.**
 
 - **Capabilities, not implementation.** FRs describe what players or systems can do, not how. Tech choices go in the addendum.
-- **Personas, when used, are research-grounded or marked `[ILLUSTRATIVE]`.** Invented detail is *persona theater* — false specificity the team builds for. Personas must drive decisions; two to four max.
+- **Personas, when used, are research-grounded or marked `[ILLUSTRATIVE]`.** Invented detail is _persona theater_ — false specificity the team builds for. Personas must drive decisions; two to four max.
 - **Domain awareness.** Regulatory, platform, storefront, or compliance constraints surface in the PRD, not deferred to architecture.
 - **No innovation theater.** Don't fabricate novelty; add a differentiation section only when Discovery surfaced something genuinely novel.
 

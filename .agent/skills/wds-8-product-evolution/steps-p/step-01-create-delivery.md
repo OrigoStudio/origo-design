@@ -62,15 +62,16 @@ Package your incremental improvement as a Design Delivery (DD-XXX) for BMad - us
 **Explain to user:**
 
 All design work uses Design Deliveries (DD-XXX), whether it's:
+
 - ✅ Complete new user flows (large scope)
 - ✅ Incremental improvements (small scope)
 
 **The format is the same - only the scope and content differ!**
 
-| Scope | Description | Effort |
-|-------|-------------|--------|
-| **Large** (New Flows) | Multiple scenarios, complete user flow | Weeks |
-| **Small** (Improvements) | Targeted changes, focused improvement | Days |
+| Scope                    | Description                            | Effort |
+| ------------------------ | -------------------------------------- | ------ |
+| **Large** (New Flows)    | Multiple scenarios, complete user flow | Weeks  |
+| **Small** (Improvements) | Targeted changes, focused improvement  | Days   |
 
 **User is creating a small scope delivery.**
 
@@ -102,6 +103,7 @@ delivery:
 #### 2b. Improvement Section
 
 Help user write:
+
 - **summary**: 2-3 sentences (what's changing and why)
 - **problem**: What problem does this solve? (with metrics)
 - **solution**: What's the solution? (specific changes)
@@ -110,6 +112,7 @@ Help user write:
 #### 2c. Changes Section
 
 Guide user to specify:
+
 - **screens_affected**: List screens
 - **features_affected**: List features
 - **components_new**: New components with IDs and file paths
@@ -120,6 +123,7 @@ Guide user to specify:
 #### 2d. Design Artifacts Section
 
 Help user link all artifacts:
+
 - **specifications**: Path to specifications.md
 - **change-scope**: Path to change-scope.md
 - **before-after**: Path to before-after.md
@@ -130,6 +134,7 @@ Help user link all artifacts:
 #### 2e. Technical Requirements Section
 
 Guide user to document:
+
 - **frontend**: List frontend implementation tasks
 - **backend**: List backend changes (if any)
 - **data**: List data model changes (if any)
@@ -138,6 +143,7 @@ Guide user to document:
 #### 2f. Acceptance Criteria Section
 
 Help user define testable criteria:
+
 - Each criterion has: id (AC-001, AC-002...), description, verification method
 - Criteria must be objective and testable
 - Cover new functionality, edge cases, persistence
@@ -145,6 +151,7 @@ Help user define testable criteria:
 #### 2g. Metrics Section
 
 Guide user to specify:
+
 - **baseline**: Current metrics with targets
 - **measurement_period**: Typically "2 weeks after release"
 - **success_threshold**: Minimum acceptable improvements
@@ -155,6 +162,7 @@ Guide user to specify:
 #### 2h. Effort Estimate Section
 
 Help user estimate:
+
 - Design (already done)
 - Frontend implementation
 - Backend implementation (if any)
@@ -164,6 +172,7 @@ Help user estimate:
 #### 2i. Timeline Section
 
 Work with user to define:
+
 - design_complete (today)
 - handoff_date (today or soon)
 - development_start (estimated)
@@ -175,6 +184,7 @@ Work with user to define:
 #### 2j. Handoff Section
 
 Specify:
+
 - architect: BMad Architect name
 - developer: BMad Developer name
 - handoff_dialog_required: false (for small updates)
@@ -183,6 +193,7 @@ Specify:
 #### 2k. Related Section
 
 Link related files:
+
 - improvement_file (from step 01)
 - analytics_report (if exists)
 - user_feedback (if exists)
@@ -212,6 +223,7 @@ test_scenario:
 #### 3b. Test Focus
 
 List key focus areas:
+
 - New functionality (what changed)
 - Regression testing (what should stay the same)
 - Edge cases specific to update
@@ -220,6 +232,7 @@ List key focus areas:
 #### 3c. Happy Path Tests
 
 Define tests for new functionality:
+
 - Each test has: id (HP-001, HP-002...), name, steps
 - Steps have: action, expected result
 - Cover the primary user flow through new feature
@@ -227,6 +240,7 @@ Define tests for new functionality:
 #### 3d. Regression Tests
 
 Define tests for existing functionality:
+
 - Each test has: id (REG-001, REG-002...), name, steps
 - Verify existing features work exactly as before
 - Focus on areas adjacent to changes
@@ -234,12 +248,14 @@ Define tests for existing functionality:
 #### 3e. Edge Cases
 
 Define edge case tests:
+
 - Each test has: id (EC-001, EC-002...), name, steps
 - Cover unusual scenarios (dismissal persistence, multiple devices, cleared cache, etc.)
 
 #### 3f. Accessibility
 
 Define accessibility checks:
+
 - Each test has: id (A11Y-001, A11Y-002...), name, checks
 - Screen reader compatibility
 - Keyboard navigation
@@ -265,10 +281,12 @@ Define accessibility checks:
 Display: "**Select an Option:** [C] Continue to step-02-hand-off.md (next step in this activity)"
 
 #### Menu Handling Logic:
+
 - IF C: Update design log, then load, read entire file, then execute {nextStepFile}
 - IF Any other comments or queries: help user respond then [Redisplay Menu Options]
 
 #### EXECUTION RULES:
+
 - ALWAYS halt and wait for user input after presenting menu
 - ONLY proceed to next step when user selects 'C'
 - User can chat or ask questions - always respond and then redisplay menu options
@@ -282,6 +300,7 @@ ONLY WHEN user selects [C] and delivery packaging is complete will you then load
 ## 🚨 SYSTEM SUCCESS/FAILURE METRICS
 
 ### ✅ SUCCESS:
+
 - Design Delivery file (DD-XXX) created following template exactly
 - All sections complete with no placeholders
 - Change scope clearly defined in delivery
@@ -294,6 +313,7 @@ ONLY WHEN user selects [C] and delivery packaging is complete will you then load
 - Ready for handoff to BMad
 
 ### ❌ SYSTEM FAILURE:
+
 - Vague change description or missing sections
 - Missing artifacts or broken file paths
 - No success metrics or rollback criteria defined

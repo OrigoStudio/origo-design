@@ -18,10 +18,10 @@ Run three questions over any step you are about to write as a prompt instruction
 
 The boundary between the two:
 
-| Scripts handle | Prompts handle |
-| --- | --- |
-| Fetch, transform, validate | Interpret, classify when ambiguous |
-| Count, parse, compare | Create, decide on incomplete info |
+| Scripts handle                   | Prompts handle                       |
+| -------------------------------- | ------------------------------------ |
+| Fetch, transform, validate       | Interpret, classify when ambiguous   |
+| Count, parse, compare            | Create, decide on incomplete info    |
 | Extract, format, check structure | Evaluate quality, synthesize meaning |
 
 ## The signal-verb scan
@@ -30,17 +30,17 @@ When a draft's instructions contain these verbs, look for a script first: valida
 
 ## Opportunity categories
 
-| Category | What it does | Example |
-| --- | --- | --- |
-| Validation | Check structure, format, schema, naming | Confirm frontmatter fields exist |
-| Data extraction | Pull structured data without interpreting meaning | Extract every `{variable}` reference from markdown |
-| Transformation | Convert between known formats | Markdown table to JSON |
-| Metrics | Count, tally, aggregate | Token count per file via count_tokens.py |
-| Comparison | Diff, cross-reference, verify consistency | Cross-ref prompt names against SKILL.md references |
-| Structure checks | Verify directory layout, file existence | Confirm a skill folder has its required files |
-| Dependency analysis | Trace references, imports, relationships | Build a skill reference graph |
-| Pre-processing | Extract compact data from large files before the model reads them | Pre-extract file metrics into JSON for a scanner |
-| Post-processing | Verify model output meets structural requirements | Confirm generated YAML parses |
+| Category            | What it does                                                      | Example                                            |
+| ------------------- | ----------------------------------------------------------------- | -------------------------------------------------- |
+| Validation          | Check structure, format, schema, naming                           | Confirm frontmatter fields exist                   |
+| Data extraction     | Pull structured data without interpreting meaning                 | Extract every `{variable}` reference from markdown |
+| Transformation      | Convert between known formats                                     | Markdown table to JSON                             |
+| Metrics             | Count, tally, aggregate                                           | Token count per file via count_tokens.py           |
+| Comparison          | Diff, cross-reference, verify consistency                         | Cross-ref prompt names against SKILL.md references |
+| Structure checks    | Verify directory layout, file existence                           | Confirm a skill folder has its required files      |
+| Dependency analysis | Trace references, imports, relationships                          | Build a skill reference graph                      |
+| Pre-processing      | Extract compact data from large files before the model reads them | Pre-extract file metrics into JSON for a scanner   |
+| Post-processing     | Verify model output meets structural requirements                 | Confirm generated YAML parses                      |
 
 ## The pre-pass JSON pattern
 

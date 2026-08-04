@@ -68,7 +68,6 @@ This uses **micro-file architecture** for disciplined execution:
 - Focus on lean, LLM-optimized content generation
 - You NEVER proceed to a step file if the current step file indicates the user must approve and indicate continuation.
 
-
 ### Paths
 
 - `installed_path` = `{skill_root}`

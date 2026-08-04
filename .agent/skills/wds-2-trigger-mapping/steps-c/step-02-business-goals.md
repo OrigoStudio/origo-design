@@ -75,6 +75,7 @@ Ask:
 Think big. If everything goes perfectly, what position do you want to hold?
 
 Examples:
+
 - 'Be the most trusted platform for dog owners in Sweden'
 - 'The go-to tool for indie designers'
 - 'Make project management actually enjoyable'"
@@ -94,6 +95,7 @@ Ask:
 "**How would you measure progress toward this vision?**
 
 Think about:
+
 - User metrics (adoption, engagement, retention)
 - Business metrics (revenue, growth, market share)
 - Quality metrics (satisfaction, referrals, reviews)
@@ -101,6 +103,7 @@ Think about:
 What numbers would make you confident you're on track?"
 
 For each metric mentioned, help make it SMART:
+
 - **S**pecific - What exactly?
 - **M**easurable - What number?
 - **A**chievable - Is this realistic?
@@ -114,6 +117,7 @@ Aim for 3-5 clear objectives.
 Output: "Let me help sharpen these into SMART objectives."
 
 Walk through each objective with example transformation:
+
 - Vague: "Get influential users"
 - SMART: "Onboard 10 verified dog trainers with 1000+ followers by Q4 2026"
 
@@ -145,11 +149,13 @@ Store vision_statement and objectives for next workshop.
 Display: "**Select an Option:** [C] Continue to Target Groups Workshop | [M] Return to Activity Menu"
 
 #### Menu Handling Logic:
+
 - IF C: Load and execute {nextStepFile}
 - IF M: Return to {activityWorkflowFile}
 - IF Any other comments or queries: help user respond then [Redisplay Menu Options]
 
 #### EXECUTION RULES:
+
 - ALWAYS halt and wait for user input after presenting menu
 - User can chat or ask questions - always respond and then redisplay menu options
 
@@ -162,6 +168,7 @@ ONLY WHEN user selects [C] will you load the next step file. Vision and objectiv
 ## 🚨 SYSTEM SUCCESS/FAILURE METRICS
 
 ### ✅ SUCCESS:
+
 - Vision statement captured from user input (not generated)
 - 3-5 SMART objectives defined and confirmed
 - Each objective is Specific, Measurable, Achievable, Relevant, Time-bound
@@ -170,6 +177,7 @@ ONLY WHEN user selects [C] will you load the next step file. Vision and objectiv
 - Results stored for subsequent workshops
 
 ### ❌ SYSTEM FAILURE:
+
 - Generating vision without user input
 - Accepting vague, unmeasurable objectives
 - Having fewer than 3 or more than 5 objectives without discussion
