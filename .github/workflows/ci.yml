@@ -52,3 +52,6 @@ jobs:
 
       - name: Run Nx Build (Affected)
         run: npx nx affected -t build --base=${{ env.NX_BASE }} --head=${{ env.NX_HEAD }}
+
+      - name: Run Performance Benchmark Harness (NFR-PERF-002)
+        run: npm run perf:benchmark

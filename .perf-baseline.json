@@ -1,0 +1,12 @@
+{
+  "timestamp": "2026-07-31T17:11:23.750Z",
+  "entityCount": 500,
+  "totalAstNodes": 115505,
+  "iterations": 50,
+  "totalValidationMs": 178.62,
+  "avgValidationMs": 3.572,
+  "p50Ms": 0.738,
+  "p95Ms": 20.349,
+  "opsPerSec": 279.92,
+  "heapUsedMb": 123.84
+}

@@ -8,6 +8,8 @@
     "test": "nx test",
     "lint": "nx lint",
     "e2e": "nx e2e",
+    "perf:benchmark": "ts-node tools/benchmarks/compare-baseline.ts",
+    "perf:test": "ts-node tools/benchmarks/run-tests.ts",
     "prepare": "husky"
   },
   "private": true,
@@ -71,7 +73,7 @@
       "prettier --write"
     ],
     "*.{js,ts}": [
-      "nx lint --fix"
+      "eslint --fix"
     ]
   }
 }
