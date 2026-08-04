@@ -1,5 +1,5 @@
 ---
-status: in-progress
+status: done
 baseline_commit: 8bd8a002c98d6c054fecdb4521473fb46e04d49a
 story_id: 1.4
 story_key: 1-4-documentation-site-starlight
@@ -8,7 +8,7 @@ epic: 1
 
 # Story 1.4: Documentation Site (Starlight)
 
-Status: in-progress
+Status: done
 
 ## Story
 
@@ -100,3 +100,14 @@ origo-design/
 
 ---
 *Completion Note: Ultimate context engine analysis completed - comprehensive developer guide created*
+
+## File List
+- `apps/docs/astro.config.mjs`
+- `apps/docs/project.json`
+- `apps/docs/src/content.config.ts`
+
+## Dev Agent Record
+### Completion Notes
+- Verified that `nx build docs` completes successfully after fetching the latest fixes from `main`.
+- All high/medium review findings were successfully addressed in the latest commit.
+- Story is fully implemented and passes acceptance criteria.
