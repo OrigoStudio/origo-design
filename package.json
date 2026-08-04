@@ -5,7 +5,7 @@
   "scripts": {
     "start": "nx serve origo-design",
     "build": "nx build",
-    "test": "nx test",
+    "test": "nx run-many -t test",
     "lint": "nx lint",
     "e2e": "nx e2e",
     "perf:benchmark": "ts-node tools/benchmarks/compare-baseline.ts",
@@ -22,6 +22,7 @@
     "@angular/platform-browser": "22.0.8",
     "@angular/platform-browser-dynamic": "22.0.8",
     "@angular/router": "22.0.8",
+    "ajv": "^8.20.0",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0"
   },

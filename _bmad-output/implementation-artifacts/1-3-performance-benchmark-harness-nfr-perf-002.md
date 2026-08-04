@@ -136,6 +136,9 @@ Gemini 3.6 Flash (High)
 - ✅ Configured `"perf:benchmark"` and `"perf:test"` scripts in `package.json`.
 - ✅ Integrated `Run Performance Benchmark Harness (NFR-PERF-002)` step in `.github/workflows/ci.yml`.
 - ✅ All self-tests passed and Prettier formatting verified.
+- ✅ **Review Follow-up:** Integrated `ajv` into `perf-runner.ts` and successfully distinguished schema compilation time (`ajv.compile()`) from instance validation time.
+- ✅ **Review Follow-up:** Fixed `npm test` pipeline failure by converting `"test"` script from `nx test` to `nx run-many -t test` for empty workspaces.
+- ✅ **Review Follow-up:** Refactored `run-tests.ts` to use Node.js `assert` module for standardized unit test assertions rather than ad-hoc console logs.
 
 ### File List
 

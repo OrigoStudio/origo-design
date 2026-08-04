@@ -1,3 +1,4 @@
+import assert from 'assert';
 import { generateHeavyAstFixture, countAstNodes } from './fixtures/heavy-ast-fixture';
 import { runPerformanceBenchmark } from './perf-runner';
 import { evaluatePerformanceMetrics } from './compare-baseline';
@@ -9,25 +10,19 @@ function runUnitTests() {
   const fixture1 = generateHeavyAstFixture(500);
   const fixture2 = generateHeavyAstFixture(500);
 
-  if (fixture1.schemaVersion !== '1.0.0' || fixture1.entities.length !== 500) {
-    throw new Error('Test failed: Fixture schemaVersion or entity count mismatch');
-  }
-
-  if (JSON.stringify(fixture1) !== JSON.stringify(fixture2)) {
-    throw new Error('Test failed: Fixture generation is non-deterministic');
-  }
+  assert.strictEqual(fixture1.schemaVersion, '1.0.0', 'Fixture schemaVersion mismatch');
+  assert.strictEqual(fixture1.entities.length, 500, 'Fixture entity count mismatch');
+  assert.deepStrictEqual(fixture1, fixture2, 'Fixture generation is non-deterministic');
 
   const nodeCount = countAstNodes(fixture1);
-  if (nodeCount < 10000) {
-    throw new Error(`Test failed: Expected >= 10,000 AST nodes, got ${nodeCount}`);
-  }
+  assert.ok(nodeCount >= 10000, `Expected >= 10,000 AST nodes, got ${nodeCount}`);
   console.log(`  ✓ Heavy AST Fixture generator verified (500 entities, ${nodeCount} AST nodes)`);
 
   // Test 2: Perf Runner Execution
   const metrics = runPerformanceBenchmark({ entityCount: 50, iterations: 10 });
-  if (metrics.entityCount !== 50 || metrics.iterations !== 10 || metrics.avgValidationMs <= 0) {
-    throw new Error('Test failed: Performance runner metrics invalid');
-  }
+  assert.strictEqual(metrics.entityCount, 50, 'Performance runner entityCount invalid');
+  assert.strictEqual(metrics.iterations, 10, 'Performance runner iterations invalid');
+  assert.ok(metrics.avgValidationMs > 0, 'Performance runner avgValidationMs <= 0');
   console.log(
     `  ✓ Performance runner metrics collection verified (${metrics.avgValidationMs} ms/iter)`
   );
@@ -50,18 +45,14 @@ function runUnitTests() {
     maxRegressionPercent: 15,
     maxSlaMs: 30000,
   });
-  if (!passResult.success) {
-    throw new Error('Test failed: Evaluation gate failed valid test case');
-  }
+  assert.ok(passResult.success, 'Evaluation gate failed valid test case');
 
   // Test 4: Evaluation Gate (Regression Failure)
   const failResult = evaluatePerformanceMetrics({ ...baseline, avgValidationMs: 2.8 }, baseline, {
     maxRegressionPercent: 15,
     maxSlaMs: 30000,
   });
-  if (failResult.success) {
-    throw new Error('Test failed: Evaluation gate missed regression failure case');
-  }
+  assert.strictEqual(failResult.success, false, 'Evaluation gate missed regression failure case');
 
   // Test 5: Evaluation Gate (SLA Ceiling Failure)
   const slaFailResult = evaluatePerformanceMetrics(
@@ -72,9 +63,7 @@ function runUnitTests() {
       maxSlaMs: 30000,
     }
   );
-  if (slaFailResult.success) {
-    throw new Error('Test failed: Evaluation gate missed SLA ceiling breach');
-  }
+  assert.strictEqual(slaFailResult.success, false, 'Evaluation gate missed SLA ceiling breach');
   console.log('  ✓ Baseline comparison & SLA gate evaluation logic verified');
 
   console.log('✅ ALL BENCHMARK HARNESS UNIT TESTS PASSED!');

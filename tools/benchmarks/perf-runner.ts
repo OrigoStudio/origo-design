@@ -1,6 +1,7 @@
 import { performance } from 'perf_hooks';
 import * as fs from 'fs';
 import * as path from 'path';
+import Ajv from 'ajv';
 import {
   generateHeavyAstFixture,
   countAstNodes,
@@ -18,6 +19,7 @@ export interface PerfMetrics {
   p95Ms: number;
   opsPerSec: number;
   heapUsedMb: number;
+  schemaCompileMs?: number;
 }
 
 export interface PerfOptions {
@@ -27,25 +29,78 @@ export interface PerfOptions {
   baselinePath?: string;
 }
 
-/**
- * Simulates Ajv 8 / BADL AST validation pass against payload AST structure.
- */
-function validateBadlAst(payload: BadlAstPayload): boolean {
-  if (!payload || payload.schemaVersion !== '1.0.0' || !Array.isArray(payload.entities)) {
-    return false;
-  }
-  for (const entity of payload.entities) {
-    if (!entity.id || !entity.name || !entity.domain || !Array.isArray(entity.fields)) {
-      return false;
-    }
-    for (const field of entity.fields) {
-      if (!field.name || !field.type || !field.metadata_path) {
-        return false;
-      }
-    }
-  }
-  return true;
-}
+const BADL_SCHEMA = {
+  type: 'object',
+  properties: {
+    schemaVersion: { type: 'string' },
+    application: { type: 'string' },
+    generatedAt: { type: 'string' },
+    entities: {
+      type: 'array',
+      items: {
+        type: 'object',
+        properties: {
+          id: { type: 'string' },
+          name: { type: 'string' },
+          domain: { type: 'string' },
+          description: { type: 'string' },
+          fields: {
+            type: 'array',
+            items: {
+              type: 'object',
+              properties: {
+                name: { type: 'string' },
+                type: { type: 'string' },
+                label: { type: 'string' },
+                required: { type: 'boolean' },
+                metadata_path: { type: 'string' },
+                validation: {
+                  type: 'array',
+                  items: {
+                    type: 'object',
+                    properties: {
+                      rule: { type: 'string' },
+                      value: { type: ['string', 'number'] },
+                    },
+                    required: ['rule'],
+                  },
+                },
+              },
+              required: ['name', 'type', 'label', 'required', 'metadata_path'],
+            },
+          },
+          capabilities: {
+            type: 'array',
+            items: {
+              type: 'object',
+              properties: {
+                id: { type: 'string' },
+                name: { type: 'string' },
+                type: { type: 'string' },
+                async: { type: 'boolean' },
+                preconditions: { type: 'array', items: { type: 'string' } },
+                postconditions: { type: 'array', items: { type: 'string' } },
+                permissions: { type: 'array', items: { type: 'string' } },
+              },
+              required: [
+                'id',
+                'name',
+                'type',
+                'async',
+                'preconditions',
+                'postconditions',
+                'permissions',
+              ],
+            },
+          },
+          contracts: { type: 'array', items: { type: 'string' } },
+        },
+        required: ['id', 'name', 'domain', 'description', 'fields', 'capabilities', 'contracts'],
+      },
+    },
+  },
+  required: ['schemaVersion', 'application', 'generatedAt', 'entities'],
+};
 
 /**
  * Runs performance benchmark for BADL grammar validation (NFR-PERF-002).
@@ -57,22 +112,30 @@ export function runPerformanceBenchmark(options: PerfOptions = {}): PerfMetrics 
   const payload = generateHeavyAstFixture(entityCount);
   const totalAstNodes = countAstNodes(payload);
 
+  const ajv = new Ajv();
+
+  const compileStart = performance.now();
+  const validate = ajv.compile(BADL_SCHEMA);
+  const schemaCompileMs = performance.now() - compileStart;
+
   const runDurations: number[] = [];
 
   // Warmup runs (10 iterations) to let V8 JIT optimize execution path
   for (let w = 0; w < 10; w++) {
-    validateBadlAst(payload);
+    validate(payload);
   }
 
   const startTime = performance.now();
 
   for (let i = 0; i < iterations; i++) {
     const iterStart = performance.now();
-    const isValid = validateBadlAst(payload);
+    const isValid = validate(payload);
     const iterEnd = performance.now();
 
     if (!isValid) {
-      throw new Error('Benchmark payload validation failed: AST payload invalid');
+      throw new Error(
+        `Benchmark payload validation failed: AST payload invalid. ${JSON.stringify(validate.errors)}`
+      );
     }
     runDurations.push(iterEnd - iterStart);
   }
@@ -99,6 +162,7 @@ export function runPerformanceBenchmark(options: PerfOptions = {}): PerfMetrics 
     p95Ms: Math.round(p95Ms * 1000) / 1000,
     opsPerSec: Math.round(opsPerSec * 100) / 100,
     heapUsedMb,
+    schemaCompileMs: Math.round(schemaCompileMs * 100) / 100,
   };
 
   if (options.saveBaseline) {
