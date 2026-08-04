@@ -87,13 +87,18 @@ const subagentContext = {
 ### 2. Resolve Execution Mode with Capability Probe
 
 ```javascript
-const normalizeUserExecutionMode = (mode) => {
+const normalizeUserExecutionMode = mode => {
   if (typeof mode !== 'string') return null;
   const normalized = mode.trim().toLowerCase().replace(/[-_]/g, ' ').replace(/\s+/g, ' ');
 
   if (normalized === 'auto') return 'auto';
   if (normalized === 'sequential') return 'sequential';
-  if (normalized === 'subagent' || normalized === 'sub agent' || normalized === 'subagents' || normalized === 'sub agents') {
+  if (
+    normalized === 'subagent' ||
+    normalized === 'sub agent' ||
+    normalized === 'subagents' ||
+    normalized === 'sub agents'
+  ) {
     return 'subagent';
   }
   if (normalized === 'agent team' || normalized === 'agent teams' || normalized === 'agentteam') {
@@ -103,7 +108,7 @@ const normalizeUserExecutionMode = (mode) => {
   return null;
 };
 
-const normalizeConfigExecutionMode = (mode) => {
+const normalizeConfigExecutionMode = mode => {
   if (mode === 'subagent') return 'subagent';
   if (mode === 'auto' || mode === 'sequential' || mode === 'subagent' || mode === 'agent-team') {
     return mode;
@@ -112,9 +117,14 @@ const normalizeConfigExecutionMode = (mode) => {
 };
 
 // Explicit user instruction in the active run takes priority over config.
-const explicitModeFromUser = normalizeUserExecutionMode(runtime.getExplicitExecutionModeHint?.() || null);
+const explicitModeFromUser = normalizeUserExecutionMode(
+  runtime.getExplicitExecutionModeHint?.() || null
+);
 
-const requestedMode = explicitModeFromUser || normalizeConfigExecutionMode(subagentContext.config.execution_mode) || 'auto';
+const requestedMode =
+  explicitModeFromUser ||
+  normalizeConfigExecutionMode(subagentContext.config.execution_mode) ||
+  'auto';
 const probeEnabled = subagentContext.config.capability_probe;
 
 const supports = {
@@ -143,7 +153,8 @@ subagentContext.execution = {
 
 if (!probeEnabled && (requestedMode === 'agent-team' || requestedMode === 'subagent')) {
   const unsupportedRequestedMode =
-    (requestedMode === 'agent-team' && !supports.agentTeam) || (requestedMode === 'subagent' && !supports.subagent);
+    (requestedMode === 'agent-team' && !supports.agentTeam) ||
+    (requestedMode === 'subagent' && !supports.subagent);
 
   if (unsupportedRequestedMode) {
     subagentContext.execution.error = `Requested execution mode "${requestedMode}" is unavailable because capability probing is disabled.`;

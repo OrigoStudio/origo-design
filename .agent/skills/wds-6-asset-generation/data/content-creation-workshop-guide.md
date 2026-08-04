@@ -19,6 +19,7 @@ The Content Creation Workshop is a disciplined, multi-model framework for genera
 ## When to Use
 
 **Use this workshop whenever creating:**
+
 - Page headlines and hero content
 - Section content and feature descriptions
 - Value propositions and benefit statements
@@ -31,6 +32,7 @@ The Content Creation Workshop is a disciplined, multi-model framework for genera
 - Any user-facing text where **purpose and context matter**
 
 **Skip this workshop for:**
+
 - ❌ Standard UI microcopy (form labels, generic buttons, tooltips)
 - ❌ System messages (loading, generic errors, confirmations)
 - ❌ Navigation labels
@@ -41,6 +43,7 @@ The Content Creation Workshop is a disciplined, multi-model framework for genera
 - ❌ Placeholder content during prototyping
 
 **For UI microcopy:** Use **Tone of Voice** guidelines (defined in Product Brief)
+
 - Form labels: "Email" vs "Email address" (tone-dependent)
 - Buttons: "Submit" vs "Continue" vs "Let's go" (tone-dependent)
 - Errors: "Invalid input" vs "Hmm, that doesn't look right" (tone-dependent)
@@ -51,26 +54,32 @@ The Content Creation Workshop is a disciplined, multi-model framework for genera
 ## The Five-Model Framework
 
 ### 0. Content Purpose = The Job To Do
+
 - Defines: WHAT must this content accomplish? HOW will we know it worked?
 - Answers: What's the measurable outcome? Which models should we emphasize?
 
 ### 1. Trigger Map = Strategic Foundation
+
 - Provides: Business goal, solution, user, driving forces, customer awareness positioning
 - Answers: WHO are we serving? WHAT motivates them? WHERE are they in their journey?
 
 ### 2. Customer Awareness Cycle = Content Strategy
+
 - Provides: Language appropriate to awareness level, information priorities, required proof
 - Answers: WHAT can they understand? WHAT do they need to know? WHAT will they believe?
 
 ### 3. Action Mapping = Content Filter
+
 - Provides: Required user action, relevance test
 - Answers: WHAT must they DO after reading this? Is this content necessary?
 
 ### 4. Badass Users = Tone & Frame
+
 - Provides: Empowerment framing, transformation narrative, cognitive load reduction
 - Answers: HOW does this make them feel capable? WHAT's the "aha moment"?
 
 ### 5. Golden Circle = Structural Order
+
 - Provides: WHY → HOW → WHAT sequence
 - Answers: WHAT order creates the most persuasive flow?
 
@@ -91,6 +100,7 @@ The workshop follows **7 sequential considerations** (agents can adapt flow natu
 **Duration:** 15-30 minutes per content section
 
 **Mode Options:**
+
 - **Quick Mode:** Agent synthesizes internally, presents reasoning + variants
 - **Workshop Mode:** Collaborative conversation through each consideration
 
@@ -165,6 +175,7 @@ You control the strategic context and mode:
 6. **Content is documented** in page specification
 
 **Granularity Options:**
+
 - **Element-by-element:** For critical content (hero headline, primary CTA)
 - **Section-level:** For cohesive blocks (feature section, testimonials)
 - **Batch:** For repetitive elements (form labels, tooltips)
@@ -203,12 +214,14 @@ DESIGNER: "Make headline more fear-focused"
 ### In Phase 4: UX Design - Page Specifications
 
 **When creating page specifications:**
+
 - Hero sections → Purpose-driven content generation
 - Key feature descriptions → Purpose-driven content generation
 - CTAs and conversion points → Purpose-driven content generation
 - Error/empty state messages → Purpose-driven content generation
 
 **When working with Freya:**
+
 - Freya identifies text elements in sketches
 - Suggests purposes automatically
 - Generates content after confirmation
@@ -217,6 +230,7 @@ DESIGNER: "Make headline more fear-focused"
 ### In Phase 1: Product Brief (Pitch)
 
 **When creating pitch deck content:**
+
 - Problem statement → Run this workshop
 - Solution description → Run this workshop
 - Value propositions → Run this workshop
@@ -258,18 +272,21 @@ DESIGNER: "Make headline more fear-focused"
 ⚠️ **This workshop is in Alpha** - first real-world usage pending.
 
 **What this means:**
+
 - Structure is theoretically sound but untested in practice
 - Steps may need refinement based on actual usage
 - Timing estimates may be inaccurate
 - You may discover missing elements or unnecessary steps
 
 **Please provide feedback:**
+
 - What worked well?
 - What felt clunky or unnecessary?
 - What's missing?
 - How could this be more efficient?
 
 **Alpha will be removed when:**
+
 - Successfully used in 3+ real projects
 - Timing validated and adjusted
 - Feedback integrated
@@ -280,9 +297,11 @@ DESIGNER: "Make headline more fear-focused"
 ## Files
 
 **Entry Point:**
+
 - `content-creation-workshop.md` - Start here
 
 **Micro-Steps:**
+
 - `steps/workflow.md` - Sequential execution guide
 - `steps/step-00-define-purpose.md`
 - `steps/step-01-load-trigger-map-context.md`
@@ -293,6 +312,7 @@ DESIGNER: "Make headline more fear-focused"
 - `steps/step-06-generate-content.md`
 
 **Output Template:**
+
 - `content-output.template.md` - Structured output format
 
 ---
@@ -300,20 +320,22 @@ DESIGNER: "Make headline more fear-focused"
 ## Related Resources
 
 **Strategic Models:**
+
 - [Customer Awareness Cycle](../../../docs/models/customer-awareness-cycle.md)
 - [Golden Circle](../../../docs/models/golden-circle.md)
 - [Action Mapping](../../../docs/models/action-mapping.md)
 - [Kathy Sierra Badass Users](../../../docs/models/kathy-sierra-badass-users.md)
 
 **Whiteport Methods:**
+
 - [Trigger Mapping Guide](../../../docs/method/trigger-mapping-guide.md)
 - [Content Purpose Guide](../../../docs/method/content-purpose-guide.md) - **Start here for content effectiveness**
 
 **Workflows:**
+
 - [Phase 4: UX Design](../../../docs/method/phase-wds-4-ux-design-guide.md)
 - [Phase 1: Product Exploration](../../../docs/method/phase-1-product-exploration-guide.md)
 
 ---
 
 **Let's create strategically grounded content, not guesswork.** 🎯
-

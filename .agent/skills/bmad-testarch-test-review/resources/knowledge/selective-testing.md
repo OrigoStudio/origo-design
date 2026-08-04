@@ -256,7 +256,7 @@ if (components.length === 0) {
 }
 
 // Convert component names to glob patterns
-const patterns = components.map((comp) => `**/*${comp}*.spec.ts`).join(' ');
+const patterns = components.map(comp => `**/*${comp}*.spec.ts`).join(' ');
 
 console.log(`🧩 Running tests for components: ${components.join(', ')}`);
 console.log(`Patterns: ${patterns}`);

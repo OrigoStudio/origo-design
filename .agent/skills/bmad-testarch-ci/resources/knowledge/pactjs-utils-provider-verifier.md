@@ -32,7 +32,7 @@ import type { StateHandlers } from '@seontechnologies/pactjs-utils';
 
 const stateHandlers: StateHandlers = {
   'movie with id 1 exists': {
-    setup: async (params) => {
+    setup: async params => {
       await db.seed({ movies: [{ id: params?.id ?? 1, name: 'Inception' }] });
     },
     teardown: async () => {
@@ -89,7 +89,7 @@ const opts = buildVerifierOptions({
   // Specify local pact files directly — skips broker entirely
   pactUrls: ['./pacts/movie-web-SampleMoviesAPI.json'],
   stateHandlers: {
-    'movie exists': async (params) => {
+    'movie exists': async params => {
       await db.seed({ movies: [{ id: params?.id }] });
     },
   },
@@ -122,7 +122,7 @@ const opts = buildMessageVerifierOptions({
     }),
   },
   stateHandlers: {
-    'order exists': async (params) => {
+    'order exists': async params => {
       await db.seed({ orders: [{ id: params?.orderId }] });
     },
   },

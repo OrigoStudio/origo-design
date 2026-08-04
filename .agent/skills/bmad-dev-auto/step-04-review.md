@@ -50,6 +50,7 @@ Launch Blind Hunter and Edge Case Hunter in parallel without prior conversation 
 4. Append a new entry to the `## Review Triage Log` section in `{spec_file}`, in this format:
    ```markdown
    ### {date} — Review pass
+
    - intent_gap: count
    - bad_spec: count
    - patch: count
@@ -79,6 +80,7 @@ Launch Blind Hunter and Edge Case Hunter in parallel without prior conversation 
 ## Finalize
 
 Prepare `Auto Run Result` details:
+
 - Summary of implemented change
 - Files changed with one-line descriptions
 - Review findings breakdown: patches applied, items deferred, items rejected

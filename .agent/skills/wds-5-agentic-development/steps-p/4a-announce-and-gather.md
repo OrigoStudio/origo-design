@@ -80,10 +80,12 @@ Present requirements summary to user including object count, specifications refe
 Display: "**Select an Option:** [C] Continue to Step 4b: Create Story File"
 
 #### Menu Handling Logic:
+
 - IF C: Update design log, then load, read entire file, then execute {nextStepFile}
 - IF Any other comments or queries: help user respond then [Redisplay Menu Options]
 
 #### EXECUTION RULES:
+
 - ALWAYS halt and wait for user input after presenting menu
 - ONLY proceed to next step when user selects 'C'
 - User can chat or ask questions - always respond and then redisplay menu options
@@ -97,12 +99,14 @@ ONLY WHEN all requirements are gathered from specifications will you then load a
 ## 🚨 SYSTEM SUCCESS/FAILURE METRICS
 
 ### ✅ SUCCESS:
+
 - Section announced with clear scope
 - All relevant specifications read
 - Object IDs, behaviors, and states extracted
 - Requirements summary presented to user
 
 ### ❌ SYSTEM FAILURE:
+
 - Creating story file before requirements are gathered
 - Not reading all relevant specifications
 - Missing object IDs or state behaviors

@@ -23,11 +23,12 @@ User provides sketch (image file, photo, or description of sketch).
 
 Execute steps in `./steps-k/`:
 
-| Step | File | Purpose |
-|------|------|---------|
-| 01 | step-01-sketch-analysis.md | Analyze and interpret the sketch |
+| Step | File                       | Purpose                          |
+| ---- | -------------------------- | -------------------------------- |
+| 01   | step-01-sketch-analysis.md | Analyze and interpret the sketch |
 
 **Reference data:**
+
 - `./data/guides/SKETCH-TEXT-ANALYSIS-GUIDE.md` — sketch analysis methodology
 - `./data/guides/SKETCH-TEXT-QUICK-REFERENCE.md` — quick reference
 - `./data/object-types/` — component identification

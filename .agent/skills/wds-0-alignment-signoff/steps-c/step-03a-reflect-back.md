@@ -83,11 +83,13 @@ If user wants adjustments, make them and re-reflect until confirmed.
 Display: "**Select an Option:** [C] Continue to step-03b-synthesize-document"
 
 #### Menu Handling Logic:
+
 - IF C: Load, read entire file, then execute {nextStepFile}
 - IF M: Return to {workflowFile}
 - IF Any other comments or queries: help user respond then [Redisplay Menu Options]
 
 #### EXECUTION RULES:
+
 - ALWAYS halt and wait for user input after presenting menu
 - ONLY proceed to next step when user selects 'C'
 - User can chat or ask questions - always respond and then redisplay menu options
@@ -101,11 +103,13 @@ ONLY WHEN the user has confirmed the reflected understanding is accurate will yo
 ## 🚨 SYSTEM SUCCESS/FAILURE METRICS
 
 ### ✅ SUCCESS:
+
 - Complete understanding is reflected back to user
 - User confirms accuracy or adjustments are made
 - All sections are represented in the reflection
 
 ### ❌ SYSTEM FAILURE:
+
 - Skipping the reflection and jumping to document creation
 - Not asking for confirmation
 - Missing sections in the reflection

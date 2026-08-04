@@ -379,53 +379,53 @@ private IEnumerator LoadSceneAsync(string sceneName)
 
 ### Essential Development
 
-| Package | Purpose | Source |
-|---|---|---|
-| **DOTween** | Tweening and animation | Asset Store (free) |
-| **UniTask** | Zero-allocation async/await | OpenUPM / GitHub |
-| **NaughtyAttributes** | Inspector enhancement (buttons, labels) | OpenUPM / GitHub |
-| **Odin Inspector** | Advanced Inspector/serialization | Asset Store (paid) |
-| **VContainer** | Lightweight DI container | OpenUPM |
+| Package               | Purpose                                 | Source             |
+| --------------------- | --------------------------------------- | ------------------ |
+| **DOTween**           | Tweening and animation                  | Asset Store (free) |
+| **UniTask**           | Zero-allocation async/await             | OpenUPM / GitHub   |
+| **NaughtyAttributes** | Inspector enhancement (buttons, labels) | OpenUPM / GitHub   |
+| **Odin Inspector**    | Advanced Inspector/serialization        | Asset Store (paid) |
+| **VContainer**        | Lightweight DI container                | OpenUPM            |
 
 ### Gameplay Systems
 
-| Package | Purpose | Source |
-|---|---|---|
-| **Cinemachine** | Camera system (Unity package) | Package Manager |
-| **Input System** | Modern input handling (Unity package) | Package Manager |
-| **ProBuilder** | In-editor level prototyping (Unity package) | Package Manager |
-| **Yarn Spinner** | Dialogue and branching narrative | OpenUPM / GitHub |
-| **Ink** | Narrative scripting language | GitHub + Unity integration |
+| Package          | Purpose                                     | Source                     |
+| ---------------- | ------------------------------------------- | -------------------------- |
+| **Cinemachine**  | Camera system (Unity package)               | Package Manager            |
+| **Input System** | Modern input handling (Unity package)       | Package Manager            |
+| **ProBuilder**   | In-editor level prototyping (Unity package) | Package Manager            |
+| **Yarn Spinner** | Dialogue and branching narrative            | OpenUPM / GitHub           |
+| **Ink**          | Narrative scripting language                | GitHub + Unity integration |
 
 ### Visual and Audio
 
-| Package | Purpose | Source |
-|---|---|---|
-| **Shader Graph** | Visual shader authoring (Unity package) | Package Manager |
-| **VFX Graph** | GPU particle system (Unity package) | Package Manager |
-| **FMOD for Unity** | Professional audio middleware | FMOD website (free for indie) |
-| **Master Audio** | Audio management suite | Asset Store (paid) |
-| **Feel / Nice Vibrations** | Game juice and haptic feedback | Asset Store |
+| Package                    | Purpose                                 | Source                        |
+| -------------------------- | --------------------------------------- | ----------------------------- |
+| **Shader Graph**           | Visual shader authoring (Unity package) | Package Manager               |
+| **VFX Graph**              | GPU particle system (Unity package)     | Package Manager               |
+| **FMOD for Unity**         | Professional audio middleware           | FMOD website (free for indie) |
+| **Master Audio**           | Audio management suite                  | Asset Store (paid)            |
+| **Feel / Nice Vibrations** | Game juice and haptic feedback          | Asset Store                   |
 
 ### Networking
 
-| Package | Purpose | Source |
-|---|---|---|
-| **Netcode for GameObjects** | Unity's official networking | Package Manager |
-| **Photon Fusion/Quantum** | Hosted multiplayer solution | Photon website |
-| **Mirror** | Open-source networking (Fork of UNet) | Asset Store (free) |
-| **FishNet** | High-performance open-source networking | Asset Store (free) |
-| **Steamworks.NET** | Steam API integration | GitHub |
+| Package                     | Purpose                                 | Source             |
+| --------------------------- | --------------------------------------- | ------------------ |
+| **Netcode for GameObjects** | Unity's official networking             | Package Manager    |
+| **Photon Fusion/Quantum**   | Hosted multiplayer solution             | Photon website     |
+| **Mirror**                  | Open-source networking (Fork of UNet)   | Asset Store (free) |
+| **FishNet**                 | High-performance open-source networking | Asset Store (free) |
+| **Steamworks.NET**          | Steam API integration                   | GitHub             |
 
 ### Infrastructure
 
-| Package | Purpose | Source |
-|---|---|---|
-| **Addressables** | Async asset management (Unity package) | Package Manager |
-| **Unity Test Framework** | NUnit-based testing (Unity package) | Package Manager |
-| **Zenject/Extenject** | Full DI framework | OpenUPM |
-| **R3 (Reactive Extensions)** | Reactive programming (successor to UniRx) | NuGet / GitHub |
-| **MessagePipe** | High-performance pub/sub messaging | NuGet / GitHub |
+| Package                      | Purpose                                   | Source          |
+| ---------------------------- | ----------------------------------------- | --------------- |
+| **Addressables**             | Async asset management (Unity package)    | Package Manager |
+| **Unity Test Framework**     | NUnit-based testing (Unity package)       | Package Manager |
+| **Zenject/Extenject**        | Full DI framework                         | OpenUPM         |
+| **R3 (Reactive Extensions)** | Reactive programming (successor to UniRx) | NuGet / GitHub  |
+| **MessagePipe**              | High-performance pub/sub messaging        | NuGet / GitHub  |
 
 ## AI-Assisted Development
 
@@ -528,11 +528,11 @@ public class BootLoader : MonoBehaviour
 
 ## Rendering Pipeline Selection
 
-| Pipeline | Use Case | Trade-offs |
-|---|---|---|
-| **URP** | Most projects, mobile, 2D, stylized 3D | Good performance, extensible, growing feature set |
-| **HDRP** | High-fidelity 3D, PC/console | Best visuals, highest hardware requirements |
-| **Built-in** | Legacy projects only | Deprecated for new projects, limited future support |
+| Pipeline     | Use Case                               | Trade-offs                                          |
+| ------------ | -------------------------------------- | --------------------------------------------------- |
+| **URP**      | Most projects, mobile, 2D, stylized 3D | Good performance, extensible, growing feature set   |
+| **HDRP**     | High-fidelity 3D, PC/console           | Best visuals, highest hardware requirements         |
+| **Built-in** | Legacy projects only                   | Deprecated for new projects, limited future support |
 
 **Default recommendation:** URP for all new projects unless targeting AAA-quality visuals on high-end hardware.
 

@@ -96,10 +96,10 @@ Compile findings into these inventories:
 
 #### Page Inventory
 
-| # | Page | URL / Route | Type | Key Sections |
-|---|------|-------------|------|--------------|
-| 1 | Home | / | Landing | Hero, Features, Testimonials, CTA |
-| 2 | About | /about | Content | Story, Team, Values |
+| #   | Page  | URL / Route | Type    | Key Sections                      |
+| --- | ----- | ----------- | ------- | --------------------------------- |
+| 1   | Home  | /           | Landing | Hero, Features, Testimonials, CTA |
+| 2   | About | /about      | Content | Story, Team, Values               |
 
 #### Navigation Structure
 
@@ -108,17 +108,17 @@ Primary nav, secondary nav, footer nav, mobile nav
 #### Component Inventory
 
 | Component | Variants | Used On |
-|-----------|----------|---------|
+| --------- | -------- | ------- |
 
 #### Color Palette
 
 | Name | Value | Usage |
-|------|-------|-------|
+| ---- | ----- | ----- |
 
 #### Typography Scale
 
 | Level | Size | Weight | Line Height | Usage |
-|-------|------|--------|-------------|-------|
+| ----- | ---- | ------ | ----------- | ----- |
 
 #### Spacing Patterns
 
@@ -139,10 +139,12 @@ Note the base spacing unit and common values.
 Display: "**Select an Option:** [C] Continue to Step 3: Generate Specs"
 
 #### Menu Handling Logic:
+
 - IF C: Update design log, then load, read entire file, then execute {nextStepFile}
 - IF Any other comments or queries: help user respond then [Redisplay Menu Options]
 
 #### EXECUTION RULES:
+
 - ALWAYS halt and wait for user input after presenting menu
 - ONLY proceed to next step when user selects 'C'
 - User can chat or ask questions - always respond and then redisplay menu options
@@ -156,6 +158,7 @@ ONLY WHEN all inventories are captured and documented will you then load and rea
 ## 🚨 SYSTEM SUCCESS/FAILURE METRICS
 
 ### ✅ SUCCESS:
+
 - All pages discovered and inventoried
 - Navigation structure documented
 - Component inventory created
@@ -165,6 +168,7 @@ ONLY WHEN all inventories are captured and documented will you then load and rea
 - Interactive patterns observed
 
 ### ❌ SYSTEM FAILURE:
+
 - Beginning spec generation before exploration is complete
 - Missing pages or components in inventory
 - Not extracting design tokens

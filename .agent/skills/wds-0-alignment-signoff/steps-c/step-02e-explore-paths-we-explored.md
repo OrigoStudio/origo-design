@@ -64,6 +64,7 @@ Explore paths they explored.
 **Reference**: `{sectionRoutingFile}` (Section 4: Paths We Explored)
 
 **Questions to explore**:
+
 - "What other ways could we approach this?"
 - "Are there alternative paths?"
 - "What options have you considered?"
@@ -77,11 +78,13 @@ Explore paths they explored.
 Display: "**Select an Option:** [C] Continue to step-02f-explore-recommended-solution"
 
 #### Menu Handling Logic:
+
 - IF C: Load, read entire file, then execute {nextStepFile}
 - IF M: Return to {workflowFile}
 - IF Any other comments or queries: help user respond then [Redisplay Menu Options]
 
 #### EXECUTION RULES:
+
 - ALWAYS halt and wait for user input after presenting menu
 - ONLY proceed to next step when user selects 'C'
 - User can chat or ask questions - always respond and then redisplay menu options
@@ -95,11 +98,13 @@ ONLY WHEN the user has explored alternative paths (or confirmed only one path) w
 ## 🚨 SYSTEM SUCCESS/FAILURE METRICS
 
 ### ✅ SUCCESS:
+
 - Alternative approaches are captured (or single path acknowledged)
 - User feels the exploration was thorough but not forced
 - Section is brief and relevant
 
 ### ❌ SYSTEM FAILURE:
+
 - Fabricating alternatives the user hasn't considered
 - Forcing multiple paths when user only has one
 - Skipping this section entirely

@@ -47,9 +47,9 @@ Confirm that the html.to.design MCP server is configured in the IDE:
 
 ## Troubleshooting
 
-| Issue | Solution |
-|-------|----------|
-| Plugin not found in Community | Search "html to design" (without dots) |
-| Plugin panel doesn't appear | Try closing and reopening Figma |
-| MCP server not connecting | Verify Figma plugin is running and panel is open |
-| Test export fails | Check both plugin and MCP server are active |
+| Issue                         | Solution                                         |
+| ----------------------------- | ------------------------------------------------ |
+| Plugin not found in Community | Search "html to design" (without dots)           |
+| Plugin panel doesn't appear   | Try closing and reopening Figma                  |
+| MCP server not connecting     | Verify Figma plugin is running and panel is open |
+| Test export fails             | Check both plugin and MCP server are active      |

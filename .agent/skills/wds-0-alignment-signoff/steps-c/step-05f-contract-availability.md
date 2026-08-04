@@ -65,11 +65,13 @@ Build the Availability section for retainer contracts, defining when the contrac
 **Purpose**: Ensures client knows when they can expect work to be done
 
 **Why this matters**:
+
 - Retainer clients need to know when contractor is available
 - Sets realistic expectations for response times
 - Prevents misunderstandings about availability
 
 **What to include**:
+
 - **Business hours**: (e.g., "Monday-Friday, 9am-5pm EST")
 - **Response time**: (e.g., "2-3 business days for non-urgent requests")
 - **Availability for meetings**: (e.g., "Available for scheduled calls during business hours")
@@ -84,11 +86,13 @@ Build the Availability section for retainer contracts, defining when the contrac
 Display: "**Select an Option:** [C] Continue to step-05g-contract-confidentiality"
 
 #### Menu Handling Logic:
+
 - IF C: Load, read entire file, then execute {nextStepFile}
 - IF M: Return to {workflowFile}
 - IF Any other comments or queries: help user respond then [Redisplay Menu Options]
 
 #### EXECUTION RULES:
+
 - ALWAYS halt and wait for user input after presenting menu
 - ONLY proceed to next step when user selects 'C'
 - User can chat or ask questions - always respond and then redisplay menu options
@@ -102,11 +106,13 @@ ONLY WHEN the Availability section is built (if applicable) will you then load a
 ## 🚨 SYSTEM SUCCESS/FAILURE METRICS
 
 ### ✅ SUCCESS:
+
 - Availability expectations are clearly defined for retainer
 - Business hours, response times, and meeting availability are captured
 - User confirms the expectations are realistic
 
 ### ❌ SYSTEM FAILURE:
+
 - Setting availability expectations without user input
 - Applying this section to non-retainer contracts
 - Skipping key availability definitions

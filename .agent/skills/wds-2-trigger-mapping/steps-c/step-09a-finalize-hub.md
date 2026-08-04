@@ -60,6 +60,7 @@ Generate the complete trigger map documentation structure including the hub with
 Load and execute the document generation sequence starting with step-07a-generate-hub.md.
 
 This will create all documents following the standard trigger map structure:
+
 - `00-trigger-map.md` (Hub with Mermaid diagram)
 - `01-Business-Goals.md`
 - `02-XX-Persona.md` (for each persona)
@@ -71,15 +72,18 @@ This will create all documents following the standard trigger map structure:
 Verify ALL required documents have been generated:
 
 **Mandatory files in `{output_folder}/B-Trigger-Map/`:**
+
 - [ ] `00-trigger-map.md` — Hub document with Mermaid diagram
 - [ ] `01-Business-Goals.md` — Vision + SMART objectives
 - [ ] One persona document per target group (`02-XX.md`, `03-XX.md`, etc.)
 - [ ] `05-Key-Insights.md` — Strategic insights summary
 
 **Conditional files:**
+
 - [ ] `06-Feature-Impact.md` — Only if feature impact workshop was completed
 
 **Validation rules:**
+
 - Each file must be non-empty (contains actual content, not just headers)
 - Hub document must contain a Mermaid code block
 - Persona count must match the number of target groups from workshops
@@ -91,11 +95,13 @@ Verify ALL required documents have been generated:
 Display: "**Select an Option:** [C] Continue to Add Cross-References | [M] Return to Activity Menu"
 
 #### Menu Handling Logic:
+
 - IF C: Load and execute {nextStepFile}
 - IF M: Return to {activityWorkflowFile}
 - IF Any other comments or queries: help user respond then [Redisplay Menu Options]
 
 #### EXECUTION RULES:
+
 - ALWAYS halt and wait for user input after presenting menu
 - User can chat or ask questions - always respond and then redisplay menu options
 
@@ -108,6 +114,7 @@ ONLY WHEN user selects [C] will you load the next step file. All documents must 
 ## 🚨 SYSTEM SUCCESS/FAILURE METRICS
 
 ### ✅ SUCCESS:
+
 - All required documents generated
 - Documents saved to correct locations
 - Standard structure followed
@@ -115,6 +122,7 @@ ONLY WHEN user selects [C] will you load the next step file. All documents must 
 - Feature Impact included if workshop was run
 
 ### ❌ SYSTEM FAILURE:
+
 - Missing required documents
 - Documents saved to wrong locations
 - Not following standard structure

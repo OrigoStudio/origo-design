@@ -11,11 +11,13 @@ activityWorkflowFile: '../workflow.md'
 # Step 22: Visual References
 
 ## STEP GOAL:
+
 Gather inspiration and reference sites that represent the desired visual direction.
 
 ## MANDATORY EXECUTION RULES (READ FIRST):
 
 ### Universal Rules:
+
 - NEVER generate content without user input
 - CRITICAL: Read the complete step file before taking any action
 - CRITICAL: When loading next step with 'C', ensure entire file is read
@@ -23,6 +25,7 @@ Gather inspiration and reference sites that represent the desired visual directi
 - YOU MUST ALWAYS SPEAK OUTPUT in your Agent communication style with the config `{communication_language}`
 
 ### Role Reinforcement:
+
 - You are a Strategic Business Analyst helping articulate visual preferences through references
 - If you already have been given a name, communication_style and persona, continue to use those while playing this new role
 - We engage in collaborative dialogue, not command-response
@@ -30,16 +33,19 @@ Gather inspiration and reference sites that represent the desired visual directi
 - Maintain collaborative and strategic tone throughout
 
 ### Step-Specific Rules:
+
 - Focus: Reference sites, specific element preferences, mood keywords, negative references
 - FORBIDDEN: Do not accept vague "I like it" without probing for specifics
 - Approach: Collect references, probe for specifics on each, include negative references, synthesize mood
 
 ## EXECUTION PROTOCOLS:
+
 - Primary goal: Visual references collected with specific preferences and mood keywords
 - Save/document outputs appropriately
 - Avoid generating content without user input
 
 ## CONTEXT BOUNDARIES:
+
 - Available context: Product Brief, existing brand assets, inspiration analysis
 - Focus: Visual references and specific element preferences
 - Limits: Gathering preferences, not making design decisions
@@ -52,6 +58,7 @@ Gather inspiration and reference sites that represent the desired visual directi
 Ask: "Are there any websites you like the look of? They don't have to be in the same industry."
 
 For each site provided:
+
 - Visit the URL (use WebFetch if needed)
 - Ask: "What specifically do you like about this site?"
 - Document the specific elements they're drawn to
@@ -59,6 +66,7 @@ For each site provided:
 ### 2. Probe for Specifics
 
 For each reference, identify:
+
 - **Layout:** How content is organized
 - **Colors:** Palette, mood, contrast
 - **Typography:** Font styles, sizes, weight
@@ -81,20 +89,24 @@ Knowing what to avoid is as valuable as knowing what to pursue.
 ### 5. Synthesize Mood Keywords
 
 Based on references, identify 3-5 mood keywords:
+
 - Example: "Professional, modern, warm, trustworthy, local"
 
 Validate with user: "Would you say the visual direction should feel [keywords]?"
 
 ### 6. Document in Output
+
 - Fill in Visual References section
 - Add each reference with URL and what we like
 - Capture mood description and keywords
 
 ### 7. Design Log Update
+
 After completing this step, update the design log:
 
 ```markdown
 ### Step 22: Visual References
+
 **Q:** Reference sites and what specifically you like about them?
 **A:** [User responses - summarized]
 **Documented in:** visual-direction.md (Visual References section)
@@ -104,18 +116,22 @@ After completing this step, update the design log:
 ```
 
 ### N. Present MENU OPTIONS
+
 Display: "**Select an Option:** [C] Continue to next step"
 
 #### Menu Handling Logic:
+
 - IF C: Load, read entire file, then execute {nextStepFile}
 - IF M: Return to {workflowFile} or {activityWorkflowFile}
 - IF Any other comments or queries: help user respond then [Redisplay Menu Options]
 
 #### EXECUTION RULES:
+
 - ALWAYS halt and wait for user input after presenting menu
 - User can chat or ask questions - always respond and then redisplay menu options
 
 ## CRITICAL STEP COMPLETION NOTE
+
 ONLY WHEN step objectives are met and user confirms will you then load and read fully `{nextStepFile}`.
 
 ---
@@ -123,6 +139,7 @@ ONLY WHEN step objectives are met and user confirms will you then load and read 
 ## SYSTEM SUCCESS/FAILURE METRICS
 
 ### SUCCESS:
+
 - Reference sites collected with specific element preferences
 - Negative references captured
 - Mood keywords synthesized and validated
@@ -130,6 +147,7 @@ ONLY WHEN step objectives are met and user confirms will you then load and read 
 - Documented in output
 
 ### FAILURE:
+
 - Accepted vague preferences without probing
 - Skipped negative references
 - Generated mood keywords without user validation

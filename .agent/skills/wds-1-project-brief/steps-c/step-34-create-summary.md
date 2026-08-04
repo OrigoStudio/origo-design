@@ -11,11 +11,13 @@ activityWorkflowFile: '../workflow.md'
 # Step 34: Create Handover Summary
 
 ## STEP GOAL:
+
 Create a concise summary of the product brief for Phase 2 handover.
 
 ## MANDATORY EXECUTION RULES (READ FIRST):
 
 ### Universal Rules:
+
 - NEVER generate content without user input
 - CRITICAL: Read the complete step file before taking any action
 - CRITICAL: When loading next step with 'C', ensure entire file is read
@@ -23,6 +25,7 @@ Create a concise summary of the product brief for Phase 2 handover.
 - YOU MUST ALWAYS SPEAK OUTPUT in your Agent communication style with the config `{communication_language}`
 
 ### Role Reinforcement:
+
 - You are a Strategic Business Analyst preparing the handover package for Phase 2
 - If you already have been given a name, communication_style and persona, continue to use those while playing this new role
 - We engage in collaborative dialogue, not command-response
@@ -30,16 +33,19 @@ Create a concise summary of the product brief for Phase 2 handover.
 - Maintain collaborative and strategic tone throughout
 
 ### Step-Specific Rules:
+
 - Focus: Concise handover summary with vision, audience, differentiator, success metric, positioning
 - FORBIDDEN: Do not skip explaining what Phase 2 will do
 - Approach: Present summary, explain next phase
 
 ## EXECUTION PROTOCOLS:
+
 - Primary goal: Handover package presented to user
 - Save/document outputs appropriately
 - Avoid generating content without user input
 
 ## CONTEXT BOUNDARIES:
+
 - Available context: Analysis from step 33
 - Focus: Creating handover summary
 - Limits: Summary, not new analysis
@@ -70,6 +76,7 @@ Create a concise summary of the product brief for Phase 2 handover.
 Saga the Analyst will facilitate **Trigger Mapping** to connect your business goals to user psychology.
 
 Through 5 focused workshops, you'll explore:
+
 - **WHY** users engage with your product
 - **WHAT** motivates them (positive drivers)
 - **WHAT** they want to avoid (negative drivers)
@@ -78,18 +85,22 @@ Through 5 focused workshops, you'll explore:
 This creates a strategic foundation that ensures every design decision serves both business goals and user needs.
 
 ### N. Present MENU OPTIONS
+
 Display: "**Select an Option:** [C] Continue to next step"
 
 #### Menu Handling Logic:
+
 - IF C: Load, read entire file, then execute {nextStepFile}
 - IF M: Return to {workflowFile} or {activityWorkflowFile}
 - IF Any other comments or queries: help user respond then [Redisplay Menu Options]
 
 #### EXECUTION RULES:
+
 - ALWAYS halt and wait for user input after presenting menu
 - User can chat or ask questions - always respond and then redisplay menu options
 
 ## CRITICAL STEP COMPLETION NOTE
+
 ONLY WHEN step objectives are met and user confirms will you then load and read fully `{nextStepFile}`.
 
 ---
@@ -97,12 +108,14 @@ ONLY WHEN step objectives are met and user confirms will you then load and read 
 ## SYSTEM SUCCESS/FAILURE METRICS
 
 ### SUCCESS:
+
 - Concise handover summary created
 - All key elements included
 - Phase 2 explanation provided
 - User confirmed understanding
 
 ### FAILURE:
+
 - Skipped explaining Phase 2
 - Summary missing key elements
 - Generated without user acknowledgment

@@ -60,7 +60,7 @@ await pact
         status: 200,
         data: { id: integer(), ...propMatcherNoId(movieWithoutId) },
       },
-    }),
+    })
   );
 ```
 
@@ -81,7 +81,7 @@ await pact
         status: 200,
         data: zodToPactMatchers(ConsumerMovieSchema, { id: 1, ...movieWithoutId }),
       },
-    }),
+    })
   );
 ```
 
@@ -106,9 +106,11 @@ await pact
     setJsonContent({
       body: {
         status: 200,
-        data: eachLike(zodToPactMatchers(ConsumerMovieSchema, movie) as Parameters<typeof eachLike>[0]),
+        data: eachLike(
+          zodToPactMatchers(ConsumerMovieSchema, movie) as Parameters<typeof eachLike>[0]
+        ),
       },
-    }),
+    })
   );
 // data expands to: eachLike({ id: integer(1), name: string('My movie'), year: integer(1999), rating: decimal(8.5), director: string('John Doe') })
 ```
@@ -134,7 +136,7 @@ const movieValue = zodToPactMatchers(ConsumerMovieSchema, {
 await messagePact
   .addAsynchronousInteraction()
   .given('An existing movie exists')
-  .expectsToReceive('a movie-created event', (builder) => {
+  .expectsToReceive('a movie-created event', builder => {
     builder.withJSONContent({
       topic: string('movie-created'),
       messages: [{ key: string('1'), value: movieValue }],

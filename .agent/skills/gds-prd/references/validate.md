@@ -38,7 +38,7 @@ Per-finding fields: `id` (checklist item ID), `category` (optional), `title`, `s
 
 After the subagent writes findings, the parent fills `{workflow.validation_report_template}` directly — read the findings JSON, populate the skeleton's placeholders (header with PRD name/path, overall synthesis, findings grouped by category, pass/warn/fail counts, a derived grade), and write the result to `{doc_workspace}/validation-report.html`. Write a markdown twin to `{doc_workspace}/validation-report.md` (same content, grouped by severity — this is the canonical form Update mode reads when rolling findings into a revision).
 
-Grade derivation: *Excellent* = no fails, no high/critical findings · *Good* = no critical findings, at most minor fails · *Fair* = any high finding or several fails · *Poor* = any critical finding.
+Grade derivation: _Excellent_ = no fails, no high/critical findings · _Good_ = no critical findings, at most minor fails · _Fair_ = any high finding or several fails · _Poor_ = any critical finding.
 
 For interactive runs, open the HTML:
 

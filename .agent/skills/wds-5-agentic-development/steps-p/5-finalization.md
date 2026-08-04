@@ -60,11 +60,13 @@ Present all completed sections, files created, and states covered.
 ### 2. Integration Test Instructions
 
 Provide test instructions for each state:
+
 - Clear browser data between states
 - Actions to trigger each state
 - Expected results for each state
 
 **Check**:
+
 - All Object IDs present
 - State transitions work smoothly
 - No console errors
@@ -75,6 +77,7 @@ Provide test instructions for each state:
 **If user reports issues**: Fix issues, update story files with learnings, update specifications if needed, re-test, loop until approved.
 
 **If user approves**: Present complete summary including:
+
 - View name and HTML file
 - Sections completed count
 - Object IDs implemented count
@@ -84,6 +87,7 @@ Provide test instructions for each state:
 - All files created
 
 Present options:
+
 - Build another logical view in this scenario?
 - Start a new scenario?
 - Refine this view?
@@ -91,6 +95,7 @@ Present options:
 ### 4. Scenario Completion Check
 
 When all logical views complete, review `work/Logical-View-Map.md`:
+
 - Are all logical views built?
 - Are all scenario steps covered?
 - Are all states working?
@@ -102,10 +107,12 @@ If YES: Scenario prototype complete!
 Display: "**Select an Option:** [M] Return to Activity Menu"
 
 #### Menu Handling Logic:
+
 - IF M: Update design log, then load, read entire file, then execute {activityWorkflowFile}
 - IF Any other comments or queries: help user respond then [Redisplay Menu Options]
 
 #### EXECUTION RULES:
+
 - ALWAYS halt and wait for user input after presenting menu
 - ONLY proceed when user selects 'M'
 - User can chat or ask questions - always respond and then redisplay menu options
@@ -119,6 +126,7 @@ ONLY WHEN the integration test passes and logical view is approved will you then
 ## 🚨 SYSTEM SUCCESS/FAILURE METRICS
 
 ### ✅ SUCCESS:
+
 - All sections complete and integrated
 - All states tested and working
 - All Object IDs present
@@ -128,6 +136,7 @@ ONLY WHEN the integration test passes and logical view is approved will you then
 - Complete summary presented to user
 
 ### ❌ SYSTEM FAILURE:
+
 - Not testing all states
 - Skipping integration test
 - Not presenting complete summary

@@ -60,6 +60,7 @@ Verify that page specification declares platform, page type, viewport, and inter
 Check if Page Metadata section exists immediately after page title and frontmatter. Verify all required fields are present and properly inherited from scenario platform strategy.
 
 Required fields:
+
 - Platform declaration (from Product Brief/Scenario)
 - Page type (Full Page, Modal, Drawer, etc.)
 - Primary viewport (Mobile-first, Desktop-first, etc.)
@@ -72,6 +73,7 @@ Required fields:
 If Page Metadata section is missing, report as CRITICAL issue. If section exists but fields are incomplete or don't reference scenario inheritance, report as WARNING.
 
 Generate diagnostic report showing:
+
 - What's missing or incomplete
 - Where it should be located (after page title)
 - Example of correct Page Metadata section

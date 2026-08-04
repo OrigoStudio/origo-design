@@ -100,11 +100,13 @@ Present to user in this exact format:
 Scenario names MUST use persona names:
 
 **Good:**
+
 - "Hasse's Emergency Search"
 - "Lars Checks Workshop Hours"
 - "Åke Coordinates Fleet Service"
 
 **Bad:**
+
 - "Emergency Booking Flow"
 - "Hours Lookup"
 - "Service Scheduling"
@@ -122,6 +124,7 @@ Scenario names MUST use persona names:
 **CHECKPOINT — Wait for user response.**
 
 User may:
+
 - **"Looks good, proceed"** → Continue to menu options
 - **"Combine X and Y"** → Adjust and re-present
 - **"Add a scenario for [purpose]"** → Add scenario chain and re-present
@@ -133,6 +136,7 @@ User may:
 ### 5. Record Approved Plan
 
 After user approval, record:
+
 - Final scenario count
 - Final page assignments
 - Any user adjustments and reasoning

@@ -58,11 +58,13 @@ Create driving forces nodes with WANTS (checkmark) and FEARS (X) sections for ea
 ### 1. Format Each Driving Forces Node
 
 **Node Structure Template:**
+
 ```
 DFX["<br/>EMOJI PERSONA'S DRIVERS<br/><br/>WANTS<br/>checkmark Positive driver 1<br/>checkmark Positive driver 2<br/>checkmark Positive driver 3<br/><br/>FEARS<br/>X Negative driver 1<br/>X Negative driver 2<br/>X Negative driver 3<br/><br/>"]
 ```
 
 **Required elements per node:**
+
 1. Start with `<br/>` (top padding)
 2. **Same emoji as corresponding TG node** + "PERSONA'S DRIVERS" in ALL CAPS
 3. Blank line (`<br/><br/>`)
@@ -76,12 +78,14 @@ DFX["<br/>EMOJI PERSONA'S DRIVERS<br/><br/>WANTS<br/>checkmark Positive driver 1
 ### 2. Critical Emoji Rules
 
 **Matching emoji:**
+
 - DF node MUST use same emoji as corresponding TG node
 - TG0 emoji -> DF0 (same emoji)
 - TG1 emoji -> DF1 (same emoji)
 - TG2 emoji -> DF2 (same emoji)
 
 **Driver emojis:**
+
 - Checkmark for all positive drivers
 - X for all negative drivers
 - NO emojis on "WANTS" and "FEARS" headers
@@ -89,6 +93,7 @@ DFX["<br/>EMOJI PERSONA'S DRIVERS<br/><br/>WANTS<br/>checkmark Positive driver 1
 ### 3. Driver Formatting
 
 Each driver:
+
 - Starts with emoji (checkmark or X)
 - One space after emoji
 - Concise text (keep under 40 characters if possible)
@@ -119,11 +124,13 @@ Store driving_forces_nodes and verify emoji matching with TG nodes.
 Display: "**Select an Option:** [C] Continue to Create Connections | [M] Return to Activity Menu"
 
 #### Menu Handling Logic:
+
 - IF C: Load and execute {nextStepFile}
 - IF M: Return to {activityWorkflowFile}
 - IF Any other comments or queries: help user respond then [Redisplay Menu Options]
 
 #### EXECUTION RULES:
+
 - ALWAYS halt and wait for user input after presenting menu
 - User can chat or ask questions - always respond and then redisplay menu options
 
@@ -136,6 +143,7 @@ ONLY WHEN user selects [C] will you load the next step file. All DF nodes must b
 ## 🚨 SYSTEM SUCCESS/FAILURE METRICS
 
 ### ✅ SUCCESS:
+
 - All DF nodes formatted with matching TG emojis
 - Exactly 3 positive and 3 negative drivers per persona
 - WANTS and FEARS headers plain text (no emojis)
@@ -144,6 +152,7 @@ ONLY WHEN user selects [C] will you load the next step file. All DF nodes must b
 - Emoji matching verified
 
 ### ❌ SYSTEM FAILURE:
+
 - Different emoji than corresponding TG node
 - More or fewer than 3 drivers per category
 - Emojis on WANTS/FEARS headers

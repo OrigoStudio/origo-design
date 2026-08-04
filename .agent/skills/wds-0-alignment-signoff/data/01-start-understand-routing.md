@@ -14,13 +14,13 @@ web_bundle: true
 
 ## Steps
 
-| # | File | Purpose |
-|---|------|---------|
-| 01 | [Understand Situation](01-understand-situation.md) | Clarify user's situation and context |
-| 02 | [Determine If Needed](02-determine-if-needed.md) | Determine if alignment & signoff is needed |
-| 03 | [Offer Extract Communications](03-offer-extract-communications.md) | Offer to extract info from existing communications |
-| 04 | [Extract Info](04-extract-info.md) | Extract information from provided materials |
-| 05 | [Detect Starting Point](05-detect-starting-point.md) | Detect where user wants to start in the exploration |
+| #   | File                                                               | Purpose                                             |
+| --- | ------------------------------------------------------------------ | --------------------------------------------------- |
+| 01  | [Understand Situation](01-understand-situation.md)                 | Clarify user's situation and context                |
+| 02  | [Determine If Needed](02-determine-if-needed.md)                   | Determine if alignment & signoff is needed          |
+| 03  | [Offer Extract Communications](03-offer-extract-communications.md) | Offer to extract info from existing communications  |
+| 04  | [Extract Info](04-extract-info.md)                                 | Extract information from provided materials         |
+| 05  | [Detect Starting Point](05-detect-starting-point.md)               | Detect where user wants to start in the exploration |
 
 ---
 

@@ -59,12 +59,14 @@ Create the alignment document from all explored sections, using framework thinki
 **After confirming understanding**:
 
 Help crystallize into a clear, compelling narrative using framework thinking:
+
 - **Realization -> Why It Matters -> How We See It Working -> Value We'll Create**
 - **Realization -> Agitate (Cost of Inaction) -> Solve (Solution) -> Commitment**
 
 ### 2. Framework Check
 
 **Framework check**: Does the alignment document flow logically?
+
 - Realization is clear and evidence-backed
 - Why it matters and who we help is understood
 - Solution addresses the realization
@@ -89,11 +91,13 @@ Help crystallize into a clear, compelling narrative using framework thinking:
 Display: "**Select an Option:** [C] Continue to Present for Approval"
 
 #### Menu Handling Logic:
+
 - IF C: Load, read entire file, then execute {nextStepFile}
 - IF M: Return to {workflowFile}
 - IF Any other comments or queries: help user respond then [Redisplay Menu Options]
 
 #### EXECUTION RULES:
+
 - ALWAYS halt and wait for user input after presenting menu
 - ONLY proceed to next step when user selects 'C'
 - User can chat or ask questions - always respond and then redisplay menu options
@@ -107,12 +111,14 @@ ONLY WHEN the alignment document is created and user is satisfied will you then 
 ## 🚨 SYSTEM SUCCESS/FAILURE METRICS
 
 ### ✅ SUCCESS:
+
 - Alignment document is created with all confirmed content
 - Document flows logically and is compelling
 - Document is brief and readable in 2-3 minutes
 - User confirms the document presents their idea well
 
 ### ❌ SYSTEM FAILURE:
+
 - Adding content not confirmed in the reflection step
 - Creating a document that's too long or unfocused
 - Not saving to the correct output location

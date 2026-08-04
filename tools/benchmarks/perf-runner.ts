@@ -1,12 +1,9 @@
 import { performance } from 'perf_hooks';
 import * as fs from 'fs';
 import * as path from 'path';
+import * as v8 from 'v8';
 import Ajv from 'ajv';
-import {
-  generateHeavyAstFixture,
-  countAstNodes,
-  BadlAstPayload,
-} from './fixtures/heavy-ast-fixture';
+import { generateHeavyAstFixture, countAstNodes } from './fixtures/heavy-ast-fixture';
 
 export interface PerfMetrics {
   timestamp: string;
@@ -29,6 +26,7 @@ export interface PerfOptions {
   baselinePath?: string;
 }
 
+// TODO: Replace this hardcoded schema with import from @origo/core once AD-3 is fully unblocked
 const BADL_SCHEMA = {
   type: 'object',
   properties: {
@@ -149,7 +147,7 @@ export function runPerformanceBenchmark(options: PerfOptions = {}): PerfMetrics 
   const p50Ms = runDurations[Math.floor(runDurations.length * 0.5)] ?? avgValidationMs;
   const p95Ms = runDurations[Math.floor(runDurations.length * 0.95)] ?? avgValidationMs;
   const opsPerSec = (iterations / totalValidationMs) * 1000;
-  const heapUsedMb = Math.round((process.memoryUsage().heapUsed / 1024 / 1024) * 100) / 100;
+  const heapUsedMb = Math.round((v8.getHeapStatistics().used_heap_size / 1024 / 1024) * 100) / 100;
 
   const metrics: PerfMetrics = {
     timestamp: new Date().toISOString(),

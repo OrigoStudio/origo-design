@@ -65,6 +65,7 @@ Build the Project Overview section of the contract, pulling the realization and 
 **Purpose**: Sets clear expectations and context
 
 **Content**: Pull from alignment document (pitch):
+
 - **The Realization**: {{realization}}
 - **Recommended Solution**: {{recommended_solution}}
 
@@ -75,11 +76,13 @@ Build the Project Overview section of the contract, pulling the realization and 
 Display: "**Select an Option:** [C] Continue to step-05b-contract-business-model"
 
 #### Menu Handling Logic:
+
 - IF C: Load, read entire file, then execute {nextStepFile}
 - IF M: Return to {workflowFile}
 - IF Any other comments or queries: help user respond then [Redisplay Menu Options]
 
 #### EXECUTION RULES:
+
 - ALWAYS halt and wait for user input after presenting menu
 - ONLY proceed to next step when user selects 'C'
 - User can chat or ask questions - always respond and then redisplay menu options
@@ -93,11 +96,13 @@ ONLY WHEN the Project Overview section is built and confirmed will you then load
 ## 🚨 SYSTEM SUCCESS/FAILURE METRICS
 
 ### ✅ SUCCESS:
+
 - Project Overview accurately reflects alignment document
 - Realization and recommended solution are clearly stated
 - User confirms the section
 
 ### ❌ SYSTEM FAILURE:
+
 - Adding content not in the alignment document
 - Skipping user confirmation
 - Not pulling from the correct alignment document sections

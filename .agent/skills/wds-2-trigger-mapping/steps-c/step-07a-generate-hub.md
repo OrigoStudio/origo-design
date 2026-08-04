@@ -90,6 +90,7 @@ Create header with project name, date, author, and methodology credit.
 Load and execute the mermaid generation sequence starting with step-08a-mermaid-init-structure.md.
 
 **Requirements:**
+
 - Light gray professional styling (consistent for all business goals)
 - All nodes have proper padding (`<br/>`)
 - Emojis: checkmark for wants, X for fears
@@ -99,6 +100,7 @@ Load and execute the mermaid generation sequence starting with step-08a-mermaid-
 ### 3. Generate Summary Section
 
 Include:
+
 - Primary Target with one-line transformation
 - The Flywheel (numbered steps with priority emojis)
 - Key Transformation statement
@@ -106,11 +108,13 @@ Include:
 ### 4. Generate Detailed Documentation Menu
 
 For each section, provide:
+
 - Link to document with description
 - On-page content (key information visible without clicking)
 - Proper formatting with bold, bullets, clear structure
 
 Include sections for:
+
 - Business Strategy (01-Business-Goals.md)
 - Target Users (persona documents)
 - Strategic Implications (05-Key-Insights.md)
@@ -126,6 +130,7 @@ Include WDS framework credit and Effect Mapping methodology credits.
 ### 6b. Cross-Validation Check
 
 Before saving, verify data consistency:
+
 - [ ] Vision in hub matches vision from Business Goals workshop exactly
 - [ ] Persona names in hub match names used in individual persona documents
 - [ ] Driver count in Mermaid diagram matches drivers in per-persona workshop outputs
@@ -144,11 +149,13 @@ Output: "Hub document created with diagram and navigation!"
 Display: "**Select an Option:** [C] Continue to Business Goals Document | [M] Return to Activity Menu"
 
 #### Menu Handling Logic:
+
 - IF C: Load and execute {nextStepFile}
 - IF M: Return to {activityWorkflowFile}
 - IF Any other comments or queries: help user respond then [Redisplay Menu Options]
 
 #### EXECUTION RULES:
+
 - ALWAYS halt and wait for user input after presenting menu
 - User can chat or ask questions - always respond and then redisplay menu options
 
@@ -161,6 +168,7 @@ ONLY WHEN user selects [C] will you load the next step file. Hub document must b
 ## 🚨 SYSTEM SUCCESS/FAILURE METRICS
 
 ### ✅ SUCCESS:
+
 - Hub document created with all required sections
 - Mermaid diagram generated with proper styling
 - On-page summaries included for all sections
@@ -172,6 +180,7 @@ ONLY WHEN user selects [C] will you load the next step file. Hub document must b
 - ~220-250 lines total
 
 ### ❌ SYSTEM FAILURE:
+
 - Missing Mermaid diagram
 - Missing on-page summaries (requiring clicks to see content)
 - Missing navigation links

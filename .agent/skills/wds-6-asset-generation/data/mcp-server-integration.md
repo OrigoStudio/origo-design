@@ -45,10 +45,12 @@ Re-render prototype with enhanced design system
 ### MCP Server Role
 
 **Bidirectional Bridge:**
+
 - **WDS → Figma:** Inject components for refinement
 - **Figma → WDS:** Read refined components back
 
 **Capabilities:**
+
 - Read HTML/CSS structure
 - Convert to Figma nodes
 - Create frames, auto-layout, text layers
@@ -65,11 +67,13 @@ Re-render prototype with enhanced design system
 ### Extract Component to Figma
 
 **Command:**
+
 ```bash
 wds figma inject <component-id> [options]
 ```
 
 **Parameters:**
+
 - `component-id`: Object ID of component to extract (e.g., "btn-login-submit")
 - `--file <file-id>`: Target Figma file ID
 - `--page <page-name>`: Target page within Figma file
@@ -77,6 +81,7 @@ wds figma inject <component-id> [options]
 - `--batch <file>`: Extract multiple components from list
 
 **Example:**
+
 ```bash
 # Inject single component (page name matches specification)
 wds figma inject btn-login-submit --file abc123 --page "01-Customer-Onboarding / 1.2-Sign-In"
@@ -86,12 +91,14 @@ wds figma inject --batch components-to-refine.txt --file abc123 --page "01-Custo
 ```
 
 **Page Naming Convention:**
+
 - Format: `[Scenario-Number]-[Scenario-Name] / [Page-Number]-[Page-Name]`
 - Example: `01-Customer-Onboarding / 1.2-Sign-In`
 - Matches WDS specification structure in `docs/C-UX-Scenarios/`
 - Maintains traceability from spec → prototype → Figma
 
 **Output:**
+
 ```
 ✓ Component btn-login-submit extracted from prototype
 ✓ Converted to Figma format
@@ -105,17 +112,20 @@ wds figma inject --batch components-to-refine.txt --file abc123 --page "01-Custo
 ### Extract Section to Figma
 
 **Command:**
+
 ```bash
 wds figma inject-section <section-name> [options]
 ```
 
 **Parameters:**
+
 - `section-name`: Section identifier from specification
 - `--file <file-id>`: Target Figma file ID
 - `--page <page-name>`: Target page within Figma file
 - `--include-children`: Include all child components
 
 **Example:**
+
 ```bash
 # Inject entire login form section
 wds figma inject-section login-form --file abc123 --include-children
@@ -126,23 +136,27 @@ wds figma inject-section login-form --file abc123 --include-children
 ### Read Refined Component from Figma
 
 **Command:**
+
 ```bash
 wds figma read <component-id> [options]
 ```
 
 **Parameters:**
+
 - `component-id`: Object ID of component in Figma
 - `--file <file-id>`: Source Figma file ID
 - `--extract-tokens`: Extract design tokens
 - `--update-design-system`: Automatically update design system
 
 **Example:**
+
 ```bash
 # Read refined component and update design system
 wds figma read btn-login-submit --file abc123 --extract-tokens --update-design-system
 ```
 
 **Output:**
+
 ```
 ✓ Component btn-login-submit read from Figma
 ✓ Design tokens extracted:
@@ -158,16 +172,19 @@ wds figma read btn-login-submit --file abc123 --extract-tokens --update-design-s
 ### Batch Operations
 
 **Command:**
+
 ```bash
 wds figma batch <operation> --list <file>
 ```
 
 **Operations:**
+
 - `inject`: Inject multiple components
 - `read`: Read multiple refined components
 - `sync`: Bidirectional sync
 
 **Example batch file (components-to-refine.txt):**
+
 ```
 btn-login-submit
 btn-signup-cta
@@ -177,6 +194,7 @@ link-forgot-password
 ```
 
 **Command:**
+
 ```bash
 wds figma batch inject --list components-to-refine.txt --file abc123
 ```
@@ -271,11 +289,13 @@ Choice:
 ### Setup
 
 **1. Install MCP Server**
+
 ```bash
 npm install -g @wds/figma-mcp-server
 ```
 
 **2. Configure Figma API Access**
+
 ```bash
 # Set Figma personal access token
 export FIGMA_ACCESS_TOKEN="your-token-here"
@@ -285,11 +305,13 @@ FIGMA_ACCESS_TOKEN=your-token-here
 ```
 
 **3. Initialize MCP Server**
+
 ```bash
 wds figma init
 ```
 
 **4. Test Connection**
+
 ```bash
 wds figma test-connection
 ```
@@ -303,30 +325,30 @@ wds figma test-connection
 ```yaml
 figma:
   access_token: ${FIGMA_ACCESS_TOKEN}
-  default_file_id: "abc123def456"
-  default_page: "WDS Components"
-  
+  default_file_id: 'abc123def456'
+  default_page: 'WDS Components'
+
 extraction:
   preserve_object_ids: true
   extract_design_tokens: true
   convert_to_components: true
   maintain_hierarchy: true
-  
+
 injection:
   auto_layout: true
   responsive_constraints: true
-  component_naming: "object-id"
-  page_naming: "scenario-page"  # Matches WDS spec structure
-  
+  component_naming: 'object-id'
+  page_naming: 'scenario-page' # Matches WDS spec structure
+
 sync:
   bidirectional: true
   auto_update_design_system: false
-  conflict_resolution: "manual"
+  conflict_resolution: 'manual'
 
 naming_conventions:
-  page_format: "{scenario-number}-{scenario-name} / {page-number}-{page-name}"
-  example: "01-Customer-Onboarding / 1.2-Sign-In"
-  source: "docs/C-UX-Scenarios/"
+  page_format: '{scenario-number}-{scenario-name} / {page-number}-{page-name}'
+  example: '01-Customer-Onboarding / 1.2-Sign-In'
+  source: 'docs/C-UX-Scenarios/'
 ```
 
 ---
@@ -355,12 +377,14 @@ naming_conventions:
 ```
 
 **Benefits:**
+
 - Direct mapping to WDS specifications
 - Easy to locate components by scenario/page
 - Maintains project structure consistency
 - Clear handoff to developers
 
 **Page Naming:**
+
 - Use exact scenario and page numbers from specs
 - Format: `[Number]-[Name]` (e.g., `1.2-Sign-In`)
 - Matches folder structure in `docs/C-UX-Scenarios/`
@@ -374,6 +398,7 @@ naming_conventions:
 **When to use:** Specific components need refinement
 
 **Process:**
+
 ```bash
 # Inject one component at a time
 wds figma inject btn-login-submit --file abc123
@@ -381,6 +406,7 @@ wds figma inject input-email --file abc123
 ```
 
 **Advantages:**
+
 - Precise control
 - Focused refinement
 - Easy to track changes
@@ -392,6 +418,7 @@ wds figma inject input-email --file abc123
 **When to use:** Related components need consistent refinement
 
 **Process:**
+
 ```bash
 # Create component group file
 echo "btn-login-submit
@@ -403,6 +430,7 @@ wds figma batch inject --list login-buttons.txt --file abc123
 ```
 
 **Advantages:**
+
 - Consistent design decisions
 - Efficient batch processing
 - Related components together
@@ -414,12 +442,14 @@ wds figma batch inject --list login-buttons.txt --file abc123
 **When to use:** Entire section needs refinement
 
 **Process:**
+
 ```bash
 # Inject entire section with all components
 wds figma inject-section login-form --file abc123 --include-children
 ```
 
 **Advantages:**
+
 - Complete context
 - Layout refinement
 - Holistic design decisions
@@ -431,6 +461,7 @@ wds figma inject-section login-form --file abc123 --include-children
 **When to use:** Multiple refinement cycles needed
 
 **Process:**
+
 ```bash
 # Iteration 1: Inject basic components
 wds figma inject btn-login-submit --file abc123
@@ -447,6 +478,7 @@ wds figma inject btn-login-submit --file abc123 --version 2
 ```
 
 **Advantages:**
+
 - Incremental improvement
 - Design system grows with each iteration
 - Reduced rework
@@ -458,19 +490,20 @@ wds figma inject btn-login-submit --file abc123 --version 2
 ### Preservation Strategy
 
 **In HTML Prototype:**
+
 ```html
-<button data-object-id="btn-login-submit" class="btn-primary">
-  Log In
-</button>
+<button data-object-id="btn-login-submit" class="btn-primary">Log In</button>
 ```
 
 **In Figma (after injection):**
+
 ```
 Layer name: "btn-login-submit"
 Description: "Object ID: btn-login-submit"
 ```
 
 **In Design System:**
+
 ```yaml
 # D-Design-System/components/button.md
 Button Component [btn-001]
@@ -485,12 +518,14 @@ Object ID Mapping:
 ### Traceability
 
 **Benefits:**
+
 - Track component from spec → prototype → Figma → design system
 - Identify which Figma components map to which code elements
 - Update specific components without affecting others
 - Maintain consistency across iterations
 
 **Workflow:**
+
 ```
 Specification: "Login button" (conceptual)
     ↓
@@ -510,6 +545,7 @@ Re-rendered Prototype: class="btn-primary" (enhanced code)
 ### Automatic Token Detection
 
 **MCP Server analyzes:**
+
 - Colors used in component
 - Spacing/padding values
 - Typography styles
@@ -519,6 +555,7 @@ Re-rendered Prototype: class="btn-primary" (enhanced code)
 **Example extraction:**
 
 **From Figma component:**
+
 ```
 Background: #2563eb
 Text: #ffffff
@@ -528,12 +565,13 @@ Font: Inter, 16px, 600
 ```
 
 **To Design Tokens:**
+
 ```yaml
 colors:
   primary:
-    600: "#2563eb"
+    600: '#2563eb'
   neutral:
-    50: "#ffffff"
+    50: '#ffffff'
 
 spacing:
   md: 12px
@@ -544,7 +582,7 @@ radius:
 
 typography:
   button:
-    font-family: "Inter"
+    font-family: 'Inter'
     font-size: 16px
     font-weight: 600
 ```
@@ -554,6 +592,7 @@ typography:
 ### Token Mapping
 
 **MCP Server can:**
+
 - Detect similar colors and suggest token names
 - Identify spacing patterns
 - Recognize typography scales
@@ -587,6 +626,7 @@ Choice:
 ### Common Issues
 
 **Issue: Component not found in prototype**
+
 ```
 Error: Component with Object ID "btn-login-submit" not found in prototype
 
@@ -597,6 +637,7 @@ Solution:
 ```
 
 **Issue: Figma file access denied**
+
 ```
 Error: Cannot access Figma file abc123
 
@@ -607,6 +648,7 @@ Solution:
 ```
 
 **Issue: Component structure too complex**
+
 ```
 Warning: Component has deeply nested structure (8 levels)
 This may not convert cleanly to Figma
@@ -624,6 +666,7 @@ Suggestion:
 **Scenario: Component exists in both prototype and Figma**
 
 **Options:**
+
 ```
 Component btn-login-submit already exists in Figma.
 
@@ -636,6 +679,7 @@ Choice:
 ```
 
 **Merge strategy:**
+
 - Preserve Figma refinements
 - Apply new structural changes
 - Prompt for conflicts
@@ -647,14 +691,17 @@ Choice:
 ### DO ✅
 
 **1. Use Object IDs consistently**
+
 ```html
 <!-- Good: Clear, consistent Object IDs -->
 <button data-object-id="btn-login-submit">
-<input data-object-id="input-email">
-<a data-object-id="link-forgot-password">
+  <input data-object-id="input-email" />
+  <a data-object-id="link-forgot-password"></a>
+</button>
 ```
 
 **2. Extract components incrementally**
+
 ```bash
 # Start with critical components
 wds figma inject btn-login-submit --file abc123
@@ -664,21 +711,25 @@ wds figma inject input-email --file abc123
 ```
 
 **3. Document extraction decisions**
+
 ```markdown
 # extraction-log.md
 
 ## 2026-01-08: Login Page Components
 
 Extracted to Figma:
+
 - btn-login-submit: Needs brand color refinement
 - input-email: Needs focus state design
 - input-password: Needs show/hide icon
 
 Skipped:
+
 - link-terms: Standard link, no refinement needed
 ```
 
 **4. Sync regularly**
+
 ```bash
 # After designer completes refinement
 wds figma read btn-login-submit --file abc123 --update-design-system
@@ -692,6 +743,7 @@ wds prototype render login-page --with-design-system
 ### DON'T ❌
 
 **1. Don't inject entire pages**
+
 ```bash
 # Avoid: Too broad, loses precision
 wds figma inject-page login --file abc123
@@ -701,15 +753,17 @@ wds figma inject btn-login-submit --file abc123
 ```
 
 **2. Don't skip Object ID mapping**
+
 ```html
 <!-- Avoid: No traceability -->
 <button class="btn-primary">
-
-<!-- Better: Clear Object ID -->
-<button data-object-id="btn-login-submit" class="btn-primary">
+  <!-- Better: Clear Object ID -->
+  <button data-object-id="btn-login-submit" class="btn-primary"></button>
+</button>
 ```
 
 **3. Don't forget to read back**
+
 ```bash
 # Incomplete workflow
 wds figma inject btn-login-submit --file abc123
@@ -824,6 +878,7 @@ wds figma batch inject --list buttons.txt --file abc123
 ```
 
 **Performance:**
+
 - Sequential: ~5 seconds per component
 - Batch: ~2 seconds per component (parallel processing)
 
@@ -832,12 +887,14 @@ wds figma batch inject --list buttons.txt --file abc123
 ### Caching
 
 **MCP Server caches:**
+
 - Figma file structure
 - Component definitions
 - Design tokens
 - Object ID mappings
 
 **Benefits:**
+
 - Faster subsequent operations
 - Reduced API calls
 - Offline capability (limited)
@@ -849,6 +906,7 @@ wds figma batch inject --list buttons.txt --file abc123
 ### API Token Management
 
 **Best practices:**
+
 ```bash
 # Never commit tokens to git
 echo "FIGMA_ACCESS_TOKEN=*" >> .gitignore
@@ -865,6 +923,7 @@ wds figma set-token --secure
 ### Access Control
 
 **Figma file permissions:**
+
 - MCP server requires edit access to inject components
 - Read-only access sufficient for reading refined components
 - Consider separate files for WDS injection vs production design

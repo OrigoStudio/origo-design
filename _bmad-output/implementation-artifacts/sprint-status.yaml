@@ -41,7 +41,7 @@
 # - Retrospective appends its action items to action_items; sprint-status surfaces open ones
 
 generated: 2026-07-29T21:46:02.464968
-last_updated: 2026-08-04T14:42:10.000000
+last_updated: 2026-08-04T15:35:10.000000
 project: origo-design
 project_key: NOKEY
 tracking_system: file-system
@@ -51,8 +51,8 @@ development_status:
   epic-1: in-progress
   1-1-nx-workspace-bootstrap: done
   1-2-ci-pipeline-git-hooks-nfr-git-001: done
-  1-3-performance-benchmark-harness-nfr-perf-002: review
-  1-4-documentation-site-starlight: ready-for-dev
+  1-3-performance-benchmark-harness-nfr-perf-002: done
+  1-4-documentation-site-starlight: in-progress
   epic-1-retrospective: optional
   epic-2: backlog
   2-1-design-token-schema-foundation: backlog

@@ -30,7 +30,12 @@ expect(webhook.body).toMatchObject({
 When testing a downstream event (e.g. deletion), always `waitFor` the preceding event first. Without the drain, the create webhook may remain in the journal and interfere with cleanup or subsequent polling.
 
 ```typescript
-test('movie deletion triggers a webhook with correct payload', async ({ authToken, addMovie, deleteMovie, webhookRegistry }) => {
+test('movie deletion triggers a webhook with correct payload', async ({
+  authToken,
+  addMovie,
+  deleteMovie,
+  webhookRegistry,
+}) => {
   const movie = generateMovieWithoutId();
   const { body: createResponse } = await addMovie(authToken, movie);
   const movieId = createResponse.data.id;
@@ -70,7 +75,7 @@ const batchTemplate = webhookTemplate<{
   data: { id: number };
 }>('movie.created.batch')
   .matchField('event', 'movie.created')
-  .matchPredicate(`data.id is ${id1} or ${id2}`, (p) => p.data.id === id1 || p.data.id === id2)
+  .matchPredicate(`data.id is ${id1} or ${id2}`, p => p.data.id === id1 || p.data.id === id2)
   .withTimeout(15_000)
   .withInterval(500)
   .build();
@@ -78,7 +83,7 @@ const batchTemplate = webhookTemplate<{
 const webhooks = await webhookRegistry.waitForCount(batchTemplate, 2);
 
 expect(webhooks).toHaveLength(2);
-const receivedIds = webhooks.map((w) => w.body.data.id);
+const receivedIds = webhooks.map(w => w.body.data.id);
 expect(receivedIds).toContain(id1);
 expect(receivedIds).toContain(id2);
 expect(new Set(receivedIds).size).toBe(2); // guard against the same ID delivered twice
@@ -96,11 +101,11 @@ expect(all.length).toBeGreaterThanOrEqual(1);
 
 // Method filter — all sample-app webhooks are delivered via POST
 const postOnly = await webhookRegistry.getReceived({ method: 'POST' });
-expect(postOnly.every((w) => w.method === 'POST')).toBe(true);
+expect(postOnly.every(w => w.method === 'POST')).toBe(true);
 
 // URL pattern filter — match the webhooks endpoint path
 const byUrl = await webhookRegistry.getReceived({ urlPattern: '/webhooks' });
-expect(byUrl.every((w) => w.url.includes('/webhooks'))).toBe(true);
+expect(byUrl.every(w => w.url.includes('/webhooks'))).toBe(true);
 ```
 
 `getReceived` accepts `WebhookQueryFilter`:
@@ -128,7 +133,9 @@ const movieCreated = (movieId: number) =>
     .build();
 
 // ❌ Unscoped — will match any movie.created from any parallel worker
-const movieCreatedUnscoped = webhookTemplate('movie.created').matchField('event', 'movie.created').build();
+const movieCreatedUnscoped = webhookTemplate('movie.created')
+  .matchField('event', 'movie.created')
+  .build();
 ```
 
 ## Method Summary

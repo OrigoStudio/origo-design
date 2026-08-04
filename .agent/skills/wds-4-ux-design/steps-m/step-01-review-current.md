@@ -61,6 +61,7 @@ Check `{output_folder}/D-Design-System/` for existing components.
 ### 2. Inventory
 
 List all defined components with:
+
 - Name
 - Category (layout, navigation, content, form, etc.)
 - Usage count across page specifications
@@ -69,6 +70,7 @@ List all defined components with:
 ### 3. Identify Gaps
 
 Cross-reference with page specifications to find:
+
 - Components used in specs but not in design system
 - Components in design system but not used anywhere
 - Inconsistencies in component usage
@@ -76,6 +78,7 @@ Cross-reference with page specifications to find:
 ### 4. Present Status
 
 Show the user the current state and ask what they would like to do:
+
 - Define a new component
 - Update an existing component
 - Review usage consistency

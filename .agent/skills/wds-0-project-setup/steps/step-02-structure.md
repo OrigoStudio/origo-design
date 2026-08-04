@@ -155,6 +155,7 @@ Store all as `project_context` and `working_relationship` in outline.
 **If exists:** Ask to keep or reset
 
 **Create folder structure:**
+
 1. Create root folder: `{{root_folder}}/`
 2. Create progress folder: `{{root_folder}}/_progress/`
 3. Create agent experiences folder: `{{root_folder}}/_progress/agent-experiences/`
@@ -189,10 +190,12 @@ Store all as `project_context` and `working_relationship` in outline.
 Display: "**Select an Option:** [M] Return to Activity Menu"
 
 #### Menu Handling Logic:
+
 - IF M: Return to {workflowFile} or {activityWorkflowFile}
 - IF Any other comments or queries: help user respond then [Redisplay Menu Options]
 
 #### EXECUTION RULES:
+
 - ALWAYS halt and wait for user input after presenting menu
 - User can chat or ask questions - always respond and then redisplay menu options
 
@@ -205,6 +208,7 @@ ONLY WHEN the project is fully configured and structure is created will you pres
 ## 🚨 SYSTEM SUCCESS/FAILURE METRICS
 
 ### ✅ SUCCESS:
+
 - All configuration questions are answered
 - Project outline YAML is generated correctly
 - Folder structure is created
@@ -212,6 +216,7 @@ ONLY WHEN the project is fully configured and structure is created will you pres
 - User understands what comes next
 
 ### ❌ SYSTEM FAILURE:
+
 - Skipping configuration questions
 - Assuming defaults without offering choice
 - Not creating folder structure

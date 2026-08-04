@@ -105,10 +105,12 @@ Identify the root cause of the bug, not just the symptom.
 Display: "**Select an Option:** [C] Continue to Step 3: Fix"
 
 #### Menu Handling Logic:
+
 - IF C: Update design log, then load, read entire file, then execute {nextStepFile}
 - IF Any other comments or queries: help user respond then [Redisplay Menu Options]
 
 #### EXECUTION RULES:
+
 - ALWAYS halt and wait for user input after presenting menu
 - ONLY proceed to next step when user selects 'C'
 - User can chat or ask questions - always respond and then redisplay menu options
@@ -122,6 +124,7 @@ ONLY WHEN the root cause is identified and documented with proposed fix approach
 ## 🚨 SYSTEM SUCCESS/FAILURE METRICS
 
 ### ✅ SUCCESS:
+
 - Relevant code read and understood
 - Execution path traced from trigger to symptom
 - Root cause identified (not just symptom)
@@ -129,6 +132,7 @@ ONLY WHEN the root cause is identified and documented with proposed fix approach
 - Root cause documented in dialog file
 
 ### ❌ SYSTEM FAILURE:
+
 - Beginning to fix without identifying root cause
 - Treating the symptom instead of the cause
 - Not checking wider impact

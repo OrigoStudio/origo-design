@@ -159,12 +159,13 @@ Does this look better?</output>
 <check if="any_sections_look_like_components">
   <output>**I noticed some sections might be reusable components:**
 
-  {{#each potential_components}}
-  - **{{section_name}}** looks similar to **{{component_name}}** from {{previous_page}}
+{{#each potential_components}}
+
+- **{{section_name}}** looks similar to **{{component_name}}** from {{previous_page}}
   {{/each}}
   </output>
 
-  <ask>Should these be components (reusable across pages)?
+<ask>Should these be components (reusable across pages)?
 
 1. **Yes, make them components** - Define once, reference later
 2. **No, keep them as page-specific** - Each page has unique version
@@ -249,33 +250,33 @@ Choice [1/2/3/4]:</ask>
 <check if="choice == 2">
   <ask>**Which interpretations need adjustment?**
 
-  {{#each interpreted_objects}}
-  {{object_index}}. {{interpreted_type}} - {{interpreted_function}}
-  {{/each}}
+{{#each interpreted_objects}}
+{{object_index}}. {{interpreted_type}} - {{interpreted_function}}
+{{/each}}
 
-  Your corrections:</ask>
+Your corrections:</ask>
 
-  <action>Update interpretations based on user feedback</action>
+<action>Update interpretations based on user feedback</action>
 </check>
 
 <check if="choice == 3">
   <ask>**What did I miss?**
 
-  Describe the missing object(s):</ask>
+Describe the missing object(s):</ask>
 
-  <action>Add missed objects to interpretation</action>
+<action>Add missed objects to interpretation</action>
 </check>
 
 <check if="choice == 4">
   <ask>**Which objects should I remove?**
 
-  {{#each interpreted_objects}}
-  {{object_index}}. {{interpreted_type}}
-  {{/each}}
+{{#each interpreted_objects}}
+{{object_index}}. {{interpreted_type}}
+{{/each}}
 
-  Remove numbers:</ask>
+Remove numbers:</ask>
 
-  <action>Remove specified objects</action>
+<action>Remove specified objects</action>
 </check>
 
 <action>Re-display updated interpretation for confirmation</action>
@@ -397,15 +398,16 @@ Let me generate the complete section specification...</output>
 <check if="!more_sections">
   <output>**All sections complete!**
 
-  Your page specification includes:
-  - {{total_sections}} sections
-  - {{total_objects}} objects
-  - {{total_text_elements}} text elements with {{language_count}} languages
-  - {{component_count}} reusable components identified
+Your page specification includes:
 
-  Ready to generate prototype!</output>
+- {{total_sections}} sections
+- {{total_objects}} objects
+- {{total_text_elements}} text elements with {{language_count}} languages
+- {{component_count}} reusable components identified
 
-  <action>Proceed to specification generation</action>
+Ready to generate prototype!</output>
+
+<action>Proceed to specification generation</action>
 </check>
 
 ---

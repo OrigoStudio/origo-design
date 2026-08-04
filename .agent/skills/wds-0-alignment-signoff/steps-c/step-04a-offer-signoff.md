@@ -67,7 +67,7 @@ Now let's secure this commitment with a signoff document. This will formalize wh
 1. **Project Contract** - If you're a consultant and the client has approved the alignment document
 2. **Service Agreement** - If you're a founder/owner and suppliers have approved the alignment document
 3. **Project Signoff Document** - If this is an internal company project and stakeholders have approved
-   - *Note: If you have an existing company signoff document format, you can upload it and I'll adapt it to match your company's format*
+   - _Note: If you have an existing company signoff document format, you can upload it and I'll adapt it to match your company's format_
 4. **Skip** - If you don't need a formal document right now
 
 Which applies to your situation?
@@ -77,6 +77,7 @@ Which applies to your situation?
 ### 2. Handle Decision Point
 
 **If user chooses "Skip"**:
+
 - Acknowledge: "No problem! The alignment document is ready to share. You can always generate a signoff document later if needed."
 - Proceed to Project Brief workflow
 
@@ -91,11 +92,13 @@ Route to step-06a-build-internal-signoff.md (for internal signoff)
 Display: "**Select an Option:** [C] Continue to step-04b-determine-business-model (or step-06a for internal signoff)"
 
 #### Menu Handling Logic:
+
 - IF C: Load, read entire file, then execute {nextStepFile} (or step-06a for internal)
 - IF M: Return to {workflowFile}
 - IF Any other comments or queries: help user respond then [Redisplay Menu Options]
 
 #### EXECUTION RULES:
+
 - ALWAYS halt and wait for user input after presenting menu
 - ONLY proceed to next step when user selects 'C'
 - User can chat or ask questions - always respond and then redisplay menu options
@@ -109,11 +112,13 @@ ONLY WHEN the user has selected a document type will you then load and read full
 ## 🚨 SYSTEM SUCCESS/FAILURE METRICS
 
 ### ✅ SUCCESS:
+
 - All document type options are clearly presented
 - User's choice is captured and routing is correct
 - Skip option is respected if chosen
 
 ### ❌ SYSTEM FAILURE:
+
 - Forcing signoff creation when user wants to skip
 - Not presenting all options
 - Routing to wrong path based on document type

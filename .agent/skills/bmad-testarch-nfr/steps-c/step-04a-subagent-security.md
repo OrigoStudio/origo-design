@@ -104,14 +104,22 @@ For each category, determine status:
       "status": "CONCERN",
       "description": "Database encryption at rest not enabled",
       "evidence": ["Database config shows no encryption"],
-      "recommendations": ["Enable database encryption at rest", "Use AWS RDS encryption or equivalent", "Implement key rotation policy"]
+      "recommendations": [
+        "Enable database encryption at rest",
+        "Use AWS RDS encryption or equivalent",
+        "Implement key rotation policy"
+      ]
     },
     {
       "category": "Input Validation",
       "status": "FAIL",
       "description": "SQL injection vulnerability in search endpoint",
       "evidence": ["src/api/search.ts:42 - direct SQL concatenation"],
-      "recommendations": ["URGENT: Use parameterized queries", "Add input sanitization library", "Implement WAF rules"]
+      "recommendations": [
+        "URGENT: Use parameterized queries",
+        "Add input sanitization library",
+        "Implement WAF rules"
+      ]
     }
   ],
   "compliance": {

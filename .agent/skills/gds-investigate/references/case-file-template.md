@@ -8,13 +8,13 @@
 
 ## Case Info
 
-| Field            | Value                                                                      |
-| ---------------- | -------------------------------------------------------------------------- |
-| Ticket           | {ticket-id or "N/A"}                                                       |
-| Date opened      | {date}                                                                     |
-| Status           | Active                                                                     |
-| System           | {OS, version, relevant environment details}                                |
-| Evidence sources | {diagnostic archive, logs, crash dump, code, version control, etc.}        |
+| Field            | Value                                                               |
+| ---------------- | ------------------------------------------------------------------- |
+| Ticket           | {ticket-id or "N/A"}                                                |
+| Date opened      | {date}                                                              |
+| Status           | Active                                                              |
+| System           | {OS, version, relevant environment details}                         |
+| Evidence sources | {diagnostic archive, logs, crash dump, code, version control, etc.} |
 
 ## Problem Statement
 
@@ -28,9 +28,9 @@
 
 ## Investigation Backlog
 
-| # | Path to Explore | Priority              | Status                                | Notes     |
-| - | --------------- | --------------------- | ------------------------------------- | --------- |
-| 1 | {description}   | {High / Medium / Low} | {Open / In Progress / Done / Blocked} | {context} |
+| #   | Path to Explore | Priority              | Status                                | Notes     |
+| --- | --------------- | --------------------- | ------------------------------------- | --------- |
+| 1   | {description}   | {High / Medium / Low} | {Open / In Progress / Done / Blocked} | {context} |
 
 ## Timeline of Events
 

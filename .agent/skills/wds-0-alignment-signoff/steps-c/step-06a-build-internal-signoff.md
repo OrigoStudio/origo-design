@@ -59,6 +59,7 @@ Build an internal signoff document for company projects, covering goals, budget,
 **For Internal Signoff Document**:
 
 **Focus areas** (not detailed scope/hours):
+
 - Goals and success metrics
 - Budget estimates
 - Ownership and responsibility
@@ -66,39 +67,46 @@ Build an internal signoff document for company projects, covering goals, budget,
 - Timeline and milestones
 
 **Section 1: Project Overview**
+
 - The Realization
 - Recommended Solution
 
 **Section 2: Goals and Success Metrics**
+
 - What we're trying to accomplish
 - Success metrics
 - How we'll measure success
 - Key performance indicators (KPIs)
 
 **Section 3: Budget and Resources**
+
 - Budget allocation (total budget estimate)
 - Budget breakdown (if applicable)
 - Resources needed (high-level)
 - Not-to-exceed budget cap (if applicable)
 
 **Section 4: Ownership and Responsibility**
+
 - Project Owner
 - Process Owner
 - Key Stakeholders
 - Decision-Making Authority
 
 **Section 5: Approval and Sign-Off**
+
 - Who needs to approve
 - Approval stages
 - Sign-off process
 - Timeline for approval
 
 **Section 6: Timeline and Milestones**
+
 - Key milestones
 - Delivery dates
 - Critical deadlines
 
 **Section 7: Optional Sections**
+
 - Risks and considerations (optional)
 - Confidentiality (optional)
 - The Path Forward (optional - high-level overview)
@@ -106,6 +114,7 @@ Build an internal signoff document for company projects, covering goals, budget,
 ### 2. Company Signoff Format (Optional)
 
 **Company Signoff Format (Optional)**:
+
 - If user has existing company format, ask: "Do you have an existing company signoff document format? You can upload it and I'll adapt it to match your format."
 
 ### 3. Present MENU OPTIONS
@@ -113,11 +122,13 @@ Build an internal signoff document for company projects, covering goals, budget,
 Display: "**Select an Option:** [C] Continue to step-06b-finalize-signoff"
 
 #### Menu Handling Logic:
+
 - IF C: Load, read entire file, then execute {nextStepFile}
 - IF M: Return to {workflowFile}
 - IF Any other comments or queries: help user respond then [Redisplay Menu Options]
 
 #### EXECUTION RULES:
+
 - ALWAYS halt and wait for user input after presenting menu
 - ONLY proceed to next step when user selects 'C'
 - User can chat or ask questions - always respond and then redisplay menu options
@@ -131,12 +142,14 @@ ONLY WHEN the internal signoff document is built and user is satisfied will you 
 ## 🚨 SYSTEM SUCCESS/FAILURE METRICS
 
 ### ✅ SUCCESS:
+
 - Internal signoff document covers all required sections
 - Document is adapted to company format if provided
 - Focus is on goals, ownership, and approval - not contract language
 - User confirms the document
 
 ### ❌ SYSTEM FAILURE:
+
 - Using external contract language for internal document
 - Skipping ownership and approval sections
 - Not offering to adapt to company format

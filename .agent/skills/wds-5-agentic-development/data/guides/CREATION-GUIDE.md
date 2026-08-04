@@ -62,6 +62,7 @@ docs/C-UX-Scenarios/01-Customer-Onboarding/1.6-Add-Dog/
 **Best practice**: Use hardcoded translations directly in HTML/JS for readability.
 
 **Why?**
+
 - ✅ Code is immediately readable
 - ✅ No separate translation files to manage
 - ✅ Easy to see what user sees
@@ -74,18 +75,18 @@ docs/C-UX-Scenarios/01-Customer-Onboarding/1.6-Add-Dog/
 ```javascript
 // Define translations inline
 const strings = {
-  sv: { 
-    bookWalk: 'Boka promenad', 
+  sv: {
+    bookWalk: 'Boka promenad',
     cancel: 'Avbryt',
     save: 'Spara',
-    delete: 'Ta bort'
+    delete: 'Ta bort',
   },
-  en: { 
-    bookWalk: 'Book walk', 
+  en: {
+    bookWalk: 'Book walk',
     cancel: 'Cancel',
     save: 'Save',
-    delete: 'Delete'
-  }
+    delete: 'Delete',
+  },
 };
 
 let currentLang = 'sv'; // or get from localStorage
@@ -117,29 +118,28 @@ document.addEventListener('DOMContentLoaded', () => {
 
 ```html
 <!-- Option 1: data-i18n attribute (dynamic) -->
-<button data-i18n="bookWalk" data-object-id="calendar-book-btn">
-  Boka promenad
-</button>
+<button data-i18n="bookWalk" data-object-id="calendar-book-btn">Boka promenad</button>
 
 <!-- Option 2: Hardcoded with comment (simple) -->
 <button data-object-id="calendar-book-btn">
-  Boka promenad <!-- Book walk -->
+  Boka promenad
+  <!-- Book walk -->
 </button>
 
 <!-- Language toggle -->
-<button id="lang-toggle" class="language-toggle">
-  🇸🇪 / 🇬🇧
-</button>
+<button id="lang-toggle" class="language-toggle">🇸🇪 / 🇬🇧</button>
 ```
 
 ### When to Include Language Switching
 
 **Include if**:
+
 - Project defines multiple languages in project brief
 - Stakeholders need to see different languages
 - User testing requires language options
 
 **Skip if**:
+
 - Single language project
 - Prototype for internal team only
 - Time-constrained
@@ -161,7 +161,10 @@ document.addEventListener('DOMContentLoaded', () => {
     <!-- Google Fonts (if using Inter) -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
 
     <!-- Page Styles -->
     <link rel="stylesheet" href="[Page-Number]-[Page-Name]-Preview.css" />
@@ -169,7 +172,9 @@ document.addEventListener('DOMContentLoaded', () => {
   <body>
     <!-- Header -->
     <header class="page-header">
-      <button id="[page]-header-back" data-object-id="[page]-header-back" onclick="handleBack()">← Back</button>
+      <button id="[page]-header-back" data-object-id="[page]-header-back" onclick="handleBack()">
+        ← Back
+      </button>
 
       <h1 id="[page]-header-title" data-object-id="[page]-header-title">[Page Title]</h1>
 
@@ -196,7 +201,12 @@ document.addEventListener('DOMContentLoaded', () => {
         </div>
 
         <!-- Submit Button -->
-        <button type="submit" id="[page]-button-submit" data-object-id="[page]-button-submit" class="submit-button">
+        <button
+          type="submit"
+          id="[page]-button-submit"
+          data-object-id="[page]-button-submit"
+          class="submit-button"
+        >
           <span id="submitButtonText">[Button Text]</span>
           <svg id="submitButtonSpinner" class="hidden spinner">
             <!-- Spinner SVG -->
@@ -896,11 +906,11 @@ function handlePictureUpload() {
   document.getElementById('pictureInput').click();
 }
 
-document.getElementById('pictureInput').addEventListener('change', (e) => {
+document.getElementById('pictureInput').addEventListener('change', e => {
   const file = e.target.files[0];
   if (file) {
     const reader = new FileReader();
-    reader.onload = (e) => {
+    reader.onload = e => {
       showCropModal(e.target.result);
     };
     reader.readAsDataURL(file);
@@ -932,7 +942,7 @@ document.getElementById('pictureInput').addEventListener('change', (e) => {
 ```javascript
 function filterOptions() {
   const query = document.getElementById('searchInput').value.toLowerCase();
-  const filtered = allOptions.filter((opt) => opt.toLowerCase().includes(query));
+  const filtered = allOptions.filter(opt => opt.toLowerCase().includes(query));
   renderOptions(filtered);
 }
 ```

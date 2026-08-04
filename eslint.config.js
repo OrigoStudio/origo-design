@@ -5,7 +5,15 @@ module.exports = [
   ...nx.configs['flat/typescript'],
   ...nx.configs['flat/javascript'],
   {
-    ignores: ['**/dist', '**/tmp', '**/out-tsc'],
+    ignores: [
+      '**/dist',
+      '**/tmp',
+      '**/out-tsc',
+      '**/.astro',
+      '**/_bmad-output',
+      '**/_bmad',
+      '**/.agent',
+    ],
   },
   {
     files: ['**/*.ts', '**/*.tsx', '**/*.js', '**/*.jsx'],
@@ -18,7 +26,12 @@ module.exports = [
           depConstraints: [
             {
               sourceTag: 'type:app',
-              onlyDependOnLibsWithTags: ['type:feature', 'type:ui', 'type:data-access', 'type:util'],
+              onlyDependOnLibsWithTags: [
+                'type:feature',
+                'type:ui',
+                'type:data-access',
+                'type:util',
+              ],
             },
             {
               sourceTag: 'type:feature',

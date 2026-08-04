@@ -7,7 +7,6 @@ description: Project onboarding - determine project type, complexity, tech stack
 
 **The starting point for every WDS project.**
 
-
 ## Purpose
 
 Phase 0 ensures you start on the right path. Before diving into design work, we need to understand:
@@ -58,10 +57,10 @@ Phase 0: Project Setup
 
 ## Steps
 
-| Step | Name | Purpose |
-|------|------|---------|
-| 01 | [Welcome & Orientation](steps/step-01-welcome.md) | Introduce WDS, determine greenfield vs brownfield |
-| 02 | [Configuration & Structure](steps/step-02-structure.md) | Configure project, create folders, generate outline |
+| Step | Name                                                    | Purpose                                             |
+| ---- | ------------------------------------------------------- | --------------------------------------------------- |
+| 01   | [Welcome & Orientation](steps/step-01-welcome.md)       | Introduce WDS, determine greenfield vs brownfield   |
+| 02   | [Configuration & Structure](steps/step-02-structure.md) | Configure project, create folders, generate outline |
 
 ---
 
@@ -94,11 +93,11 @@ Phase 0: Project Setup
 
 ## Configuration Options
 
-| Option | Values | Impact |
-|--------|--------|--------|
-| Project Type | greenfield / brownfield | Determines Phase 1-7 (greenfield) vs Phase 8 (brownfield) |
-| Complexity | simple / standard / complex | Which phases are enabled |
-| Tech Stack | react / vue / wordpress / etc. | Delivery format guidance |
-| Component Library | shadcn / tailwind / custom | Skip or enable Phase 5 |
-| Brief Level | complete / simplified | Depth of Phase 1 |
-| Strategic Analysis | full / simplified / skip | Full Trigger Map or simplified in brief |
+| Option             | Values                         | Impact                                                    |
+| ------------------ | ------------------------------ | --------------------------------------------------------- |
+| Project Type       | greenfield / brownfield        | Determines Phase 1-7 (greenfield) vs Phase 8 (brownfield) |
+| Complexity         | simple / standard / complex    | Which phases are enabled                                  |
+| Tech Stack         | react / vue / wordpress / etc. | Delivery format guidance                                  |
+| Component Library  | shadcn / tailwind / custom     | Skip or enable Phase 5                                    |
+| Brief Level        | complete / simplified          | Depth of Phase 1                                          |
+| Strategic Analysis | full / simplified / skip       | Full Trigger Map or simplified in brief                   |

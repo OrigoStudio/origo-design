@@ -16,18 +16,22 @@
 ### Examples
 
 **Error Message:**
+
 - ✅ "We couldn't find that email. Double-check for typos?"
 - ❌ "Error 404: User not found"
 
 **Button Text:**
+
 - ✅ "Add your first employee"
 - ❌ "Create new record"
 
 **Empty State:**
+
 - ✅ "Your onboarding dashboard is ready. Let's add your first employee to get started."
 - ❌ "No employees added yet"
 
 **Success Message:**
+
 - ✅ "Perfect! Sarah's onboarding is set up. We'll send her the welcome email tomorrow at 9 AM."
 - ❌ "Employee record created successfully"
 
@@ -36,12 +40,14 @@
 ## Analysis
 
 **Why This Tone Works:**
+
 - **Supportive**: "We couldn't find" (collaborative) vs "Error" (blaming)
 - **Professional but Warm**: Uses proper grammar but friendly language
 - **Clear**: Specific, actionable messages without jargon
 - **Empowering**: "Add your first employee" (user action) vs "Create new record" (system function)
 
 **Alignment with User State:**
+
 - HR managers are stressed → Reassuring tone reduces anxiety
 - Want to feel capable → Empowering language focuses on their actions
 - Need efficiency → Clear, concise messaging respects their time

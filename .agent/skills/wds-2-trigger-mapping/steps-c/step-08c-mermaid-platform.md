@@ -58,11 +58,13 @@ Create the central platform node with product name in ALL CAPS, category/tagline
 ### 1. Format Platform Node
 
 **Node Structure Template:**
+
 ```
 PLATFORM["<br/>EMOJI PRODUCT NAME<br/><br/>Category or tagline<br/><br/>Transformation statement<br/>that spans multiple lines<br/>describing the change<br/><br/>"]
 ```
 
 **Required elements:**
+
 1. Start with `<br/>` (top padding)
 2. Emoji + Product name in ALL CAPS
 3. Blank line (`<br/><br/>`)
@@ -74,6 +76,7 @@ PLATFORM["<br/>EMOJI PRODUCT NAME<br/><br/>Category or tagline<br/><br/>Transfor
 ### 2. Craft Transformation Statement
 
 The transformation statement should:
+
 - Describe the before -> after change
 - Be emotionally compelling
 - Be specific about the transformation
@@ -100,11 +103,13 @@ Store platform_node and transformation_statement.
 Display: "**Select an Option:** [C] Continue to Format Target Groups | [M] Return to Activity Menu"
 
 #### Menu Handling Logic:
+
 - IF C: Load and execute {nextStepFile}
 - IF M: Return to {activityWorkflowFile}
 - IF Any other comments or queries: help user respond then [Redisplay Menu Options]
 
 #### EXECUTION RULES:
+
 - ALWAYS halt and wait for user input after presenting menu
 - User can chat or ask questions - always respond and then redisplay menu options
 
@@ -117,6 +122,7 @@ ONLY WHEN user selects [C] will you load the next step file. Platform node must 
 ## 🚨 SYSTEM SUCCESS/FAILURE METRICS
 
 ### ✅ SUCCESS:
+
 - Platform node formatted with all required elements
 - Transformation statement emotionally compelling and multi-line
 - Product name in ALL CAPS with emoji
@@ -125,6 +131,7 @@ ONLY WHEN user selects [C] will you load the next step file. Platform node must 
 - No HTML tags
 
 ### ❌ SYSTEM FAILURE:
+
 - Wrong node ID (not PLATFORM)
 - Missing transformation statement
 - Single-line transformation

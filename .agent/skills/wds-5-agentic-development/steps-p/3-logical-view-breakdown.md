@@ -96,10 +96,12 @@ Present breakdown to user for approval.
 Display: "**Select an Option:** [C] Continue to Step 4a: Announce and Gather"
 
 #### Menu Handling Logic:
+
 - IF C: Update design log, then load, read entire file, then execute {nextStepFile}
 - IF Any other comments or queries: help user respond then [Redisplay Menu Options]
 
 #### EXECUTION RULES:
+
 - ALWAYS halt and wait for user input after presenting menu
 - ONLY proceed to next step when user selects 'C'
 - User can chat or ask questions - always respond and then redisplay menu options
@@ -113,6 +115,7 @@ ONLY WHEN the section breakdown is approved and work file is created will you th
 ## 🚨 SYSTEM SUCCESS/FAILURE METRICS
 
 ### ✅ SUCCESS:
+
 - Logical view selection confirmed
 - All objects extracted from specifications
 - User confirmed object list
@@ -120,6 +123,7 @@ ONLY WHEN the section breakdown is approved and work file is created will you th
 - Work file created with section plan
 
 ### ❌ SYSTEM FAILURE:
+
 - Creating story files before work file is approved
 - Beginning implementation before planning
 - Not getting user approval on section breakdown

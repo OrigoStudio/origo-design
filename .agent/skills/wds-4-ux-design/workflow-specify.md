@@ -23,19 +23,20 @@ Load page context from the existing page specification in the scenario's page fo
 
 Execute steps in `./steps-p/`:
 
-| Step | File | Purpose |
-|------|------|---------|
-| 01 | step-01-page-basics.md | Page metadata, purpose, entry points |
-| 02 | step-02-layout-sections.md | Section layout and ordering |
-| 03 | step-03-components-objects.md | Component/object definitions per section |
-| 04 | step-04-content-languages.md | Content text and translations |
-| 05 | step-05-interactions.md | User interactions and behaviors |
-| 06 | step-06-states.md | Loading, error, empty states |
-| 07 | step-07-validation.md | Form validation and constraints |
-| 08 | step-08-spacing-typography.md | Spacing objects and typography tokens |
-| 09 | step-09-generate-spec.md | Generate final specification document |
+| Step | File                          | Purpose                                  |
+| ---- | ----------------------------- | ---------------------------------------- |
+| 01   | step-01-page-basics.md        | Page metadata, purpose, entry points     |
+| 02   | step-02-layout-sections.md    | Section layout and ordering              |
+| 03   | step-03-components-objects.md | Component/object definitions per section |
+| 04   | step-04-content-languages.md  | Content text and translations            |
+| 05   | step-05-interactions.md       | User interactions and behaviors          |
+| 06   | step-06-states.md             | Loading, error, empty states             |
+| 07   | step-07-validation.md         | Form validation and constraints          |
+| 08   | step-08-spacing-typography.md | Spacing objects and typography tokens    |
+| 09   | step-09-generate-spec.md      | Generate final specification document    |
 
 **Reference data:**
+
 - `./data/object-types/` — component types and templates
 - `./data/guides/WDS-SPECIFICATION-PATTERN.md` — specification format
 - `./data/modular-architecture/` — three-tier architecture

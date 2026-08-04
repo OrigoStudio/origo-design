@@ -53,6 +53,7 @@ The full discipline (what goes where, the two-tier flow from session log to MEMO
 ## On Activation
 
 {if-customizable}
+
 ### Resolve the Agent Block
 
 Run: `uv run {project-root}/_bmad/scripts/resolve_customization.py --skill {skill-root} --key agent`

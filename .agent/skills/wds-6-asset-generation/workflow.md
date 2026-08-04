@@ -38,6 +38,7 @@ Phase 6 is **menu-driven**, not linear. The user picks what to generate.
 ### 1. Configuration Loading
 
 Load and read full config from `{project-root}/_bmad/wds/config.yaml` and resolve:
+
 - `project_name`, `output_folder`, `user_name`
 - `communication_language`, `document_output_language`
 
@@ -62,16 +63,16 @@ What would you like to generate?
 
 ### Activity Routing
 
-| Choice | Workflow File | Steps Folder |
-|--------|--------------|--------------|
-| [W] | workflow-wireframes.md | steps-w/ |
-| [P] | workflow-page-designs.md | steps-p/ |
-| [U] | workflow-ui-elements.md | steps-u/ |
-| [I] | workflow-icons.md | steps-i/ |
-| [M] | workflow-images.md | steps-m/ |
-| [V] | workflow-videos.md | steps-v/ |
-| [C] | workflow-content.md | steps-c/ |
-| [E] | workflow-figma.md | steps-f/ |
+| Choice | Workflow File            | Steps Folder |
+| ------ | ------------------------ | ------------ |
+| [W]    | workflow-wireframes.md   | steps-w/     |
+| [P]    | workflow-page-designs.md | steps-p/     |
+| [U]    | workflow-ui-elements.md  | steps-u/     |
+| [I]    | workflow-icons.md        | steps-i/     |
+| [M]    | workflow-images.md       | steps-m/     |
+| [V]    | workflow-videos.md       | steps-v/     |
+| [C]    | workflow-content.md      | steps-c/     |
+| [E]    | workflow-figma.md        | steps-f/     |
 
 ---
 
@@ -90,6 +91,7 @@ All visual activities (W, P, U, I, M, V) follow this pattern:
 ### Batch Mode
 
 For batch generation (e.g., "generate all hero images for the site"):
+
 - Inventory all assets of the type from specs
 - Apply consistent style across the batch
 - Cycle through generation, using earlier results as reference for consistency
@@ -98,6 +100,7 @@ For batch generation (e.g., "generate all hero images for the site"):
 ### Prompt Export Fallback
 
 When MCP service is unavailable or user prefers external tools:
+
 - Craft the full prompt with all context
 - Format for copy-paste into target service
 - Include style parameters, dimensions, and reference notes
@@ -109,12 +112,14 @@ When MCP service is unavailable or user prefers external tools:
 ### Design Styles
 
 Predefined visual approaches loaded from `data/styles/design-styles/`:
+
 - Minimal, Brutalist, Organic, Corporate, Playful, etc.
 - Each defines: color treatment, spacing, typography feel, mood
 
 ### Content Styles
 
 Visual rendering styles loaded from `data/styles/content-styles/`:
+
 - Photorealistic, Illustration, Watercolor, Comic Book, Pencil Sketch
 - Isometric, Flat Design, 3D Render, Hyper-realistic, Line Art, etc.
 - Each defines: rendering approach, detail level, texture, lighting
@@ -125,12 +130,12 @@ Style selection happens per activity session and can be mixed within a project.
 
 ## REFERENCE CONTENT
 
-| Location | Purpose |
-|----------|---------|
-| `data/styles/design-styles/` | Design style definitions |
-| `data/styles/content-styles/` | Content style definitions |
-| `data/` | Framework guides, examples, service integration docs |
-| `templates/` | Content output, prompt templates |
+| Location                      | Purpose                                              |
+| ----------------------------- | ---------------------------------------------------- |
+| `data/styles/design-styles/`  | Design style definitions                             |
+| `data/styles/content-styles/` | Content style definitions                            |
+| `data/`                       | Framework guides, examples, service integration docs |
+| `templates/`                  | Content output, prompt templates                     |
 
 ---
 

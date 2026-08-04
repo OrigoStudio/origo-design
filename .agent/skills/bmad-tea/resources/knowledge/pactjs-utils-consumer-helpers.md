@@ -51,7 +51,7 @@ describe('Movie API Contract', () => {
         status: 200,
         body: MatchersV3.like({ id: 1, name: 'Inception', year: 2010 }),
       })
-      .executeTest(async (mockServer) => {
+      .executeTest(async mockServer => {
         const res = await fetch(`${mockServer.url}/movies/1`);
         const movie = await res.json();
         expect(movie.name).toBe('Inception');
@@ -121,7 +121,7 @@ await provider
   .uponReceiving('a request when no movies exist')
   .withRequest({ method: 'GET', path: '/movies' })
   .willRespondWith({ status: 200, body: [] })
-  .executeTest(async (mockServer) => {
+  .executeTest(async mockServer => {
     const res = await fetch(`${mockServer.url}/movies`);
     const movies = await res.json();
     expect(movies).toEqual([]);
@@ -145,7 +145,7 @@ await provider
     headers: { Authorization: MatchersV3.like('Bearer token') },
   })
   .willRespondWith({ status: 200, body: MatchersV3.like({ id: 5 }) })
-  .executeTest(async (mockServer) => {
+  .executeTest(async mockServer => {
     // test implementation
   });
 ```
@@ -168,14 +168,14 @@ await pact
     setJsonContent({
       query: { name: 'Inception' },
       headers: { Accept: 'application/json' },
-    }),
+    })
   )
   .willRespondWith(
     200,
     setJsonBody({
       status: 200,
       data: { id: integer(1), name: string('Inception') },
-    }),
+    })
   );
 ```
 
@@ -200,7 +200,7 @@ it('handles movie lookup scenarios', async () => {
     .uponReceiving('a request to get movie by id')
     .withRequest('GET', '/movies/1')
     .willRespondWith(200, setJsonBody({ id: integer(1), name: string('The Matrix') }))
-    .executeTest(async (mockServer) => {
+    .executeTest(async mockServer => {
       /* ... */
     });
 
@@ -211,7 +211,7 @@ it('handles movie lookup scenarios', async () => {
     .uponReceiving('a request for an empty list')
     .withRequest('GET', '/movies')
     .willRespondWith(200, setJsonBody([]))
-    .executeTest(async (mockServer) => {
+    .executeTest(async mockServer => {
       /* ... */
     });
 });
@@ -224,7 +224,7 @@ it('gets a movie by id', async () => {
     .uponReceiving('a request to get movie by id')
     .withRequest('GET', '/movies/1')
     .willRespondWith(200, setJsonBody({ id: integer(1), name: string('The Matrix') }))
-    .executeTest(async (mockServer) => {
+    .executeTest(async mockServer => {
       /* ... */
     });
 });
@@ -236,7 +236,7 @@ it('returns empty list when no movies exist', async () => {
     .uponReceiving('a request for an empty list')
     .withRequest('GET', '/movies')
     .willRespondWith(200, setJsonBody([]))
-    .executeTest(async (mockServer) => {
+    .executeTest(async mockServer => {
       /* ... */
     });
 });
@@ -252,7 +252,7 @@ it.each([
     .uponReceiving(`a request to get movie ${id}`)
     .withRequest('GET', `/movies/${id}`)
     .willRespondWith(200, setJsonBody({ id: integer(id), name: string(name) }))
-    .executeTest(async (mockServer) => {
+    .executeTest(async mockServer => {
       /* ... */
     });
 });
@@ -307,7 +307,7 @@ provider.given(
   ...createProviderState({
     name: 'user exists',
     params: { id: 1, createdAt: new Date(), metadata: { role: 'admin' } },
-  }),
+  })
 );
 ```
 
@@ -353,8 +353,16 @@ provider.given(...createProviderState({ name: STATES.USER_EXISTS, params: { id: 
 ```typescript
 // ❌ PactV4 FFI non-deterministically drops one of these interactions ~1/N runs
 it('handles both success and empty list', async () => {
-  await pact.addInteraction().uponReceiving('get movie').withRequest(/* ... */).executeTest(/* ... */);
-  await pact.addInteraction().uponReceiving('empty list').withRequest(/* ... */).executeTest(/* ... */);
+  await pact
+    .addInteraction()
+    .uponReceiving('get movie')
+    .withRequest(/* ... */)
+    .executeTest(/* ... */);
+  await pact
+    .addInteraction()
+    .uponReceiving('empty list')
+    .withRequest(/* ... */)
+    .executeTest(/* ... */);
 });
 ```
 

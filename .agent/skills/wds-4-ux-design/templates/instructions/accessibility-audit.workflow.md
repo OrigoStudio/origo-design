@@ -145,14 +145,14 @@ Implement these changes? [Yes to all / Review each / Skip]
 
 ## Quick Reference for Agent
 
-| Check | WCAG Rule | Requirement |
-|-------|-----------|-------------|
-| Text contrast | 1.4.3 | 4.5:1 normal, 3:1 large |
-| Focus visible | 2.4.7 | Clear visual indicator |
-| Labels | 1.3.1 | All inputs labeled |
-| Keyboard | 2.1.1 | All functions keyboard accessible |
-| Error ID | 3.3.1 | Errors identified and described |
-| Name/Role | 4.1.2 | Interactive elements have accessible names |
+| Check         | WCAG Rule | Requirement                                |
+| ------------- | --------- | ------------------------------------------ |
+| Text contrast | 1.4.3     | 4.5:1 normal, 3:1 large                    |
+| Focus visible | 2.4.7     | Clear visual indicator                     |
+| Labels        | 1.3.1     | All inputs labeled                         |
+| Keyboard      | 2.1.1     | All functions keyboard accessible          |
+| Error ID      | 3.3.1     | Errors identified and described            |
+| Name/Role     | 4.1.2     | Interactive elements have accessible names |
 
 ---
 

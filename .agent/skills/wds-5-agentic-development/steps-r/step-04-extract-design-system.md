@@ -58,15 +58,19 @@ Consolidate all design tokens and component patterns into a structured WDS-compa
 Take the raw values captured in Step 02 and organize them into a structured token system:
 
 #### Colors
+
 Group colors by purpose: brand, text, background, border, feedback
 
 #### Typography
+
 Document font families, scale (h1 through caption) with size, weight, and line-height
 
 #### Spacing
+
 Document base unit and scale, note common patterns (section padding, card padding, element gap)
 
 #### Other Tokens
+
 Border radius, shadows, breakpoints
 
 ### 2. Catalog Reusable Components
@@ -76,6 +80,7 @@ For each component in the inventory (from Step 02), document as a component spec
 ### 3. Document Component Variants and States
 
 For each component, capture:
+
 - **Variants** — Visual variations (primary/secondary, small/medium/large)
 - **States** — Interactive states (default, hover, focus, active, disabled, loading, error, success)
 - **Content slots** — What content goes where (icon, label, description, image)
@@ -86,7 +91,7 @@ For each component, capture:
 Show which tokens each component uses, connecting the token system to the component system.
 
 | Component | Colors Used | Typography | Spacing | Border Radius |
-|-----------|------------|------------|---------|---------------|
+| --------- | ----------- | ---------- | ------- | ------------- |
 
 ### 5. Output in WDS Design System Format
 
@@ -110,10 +115,12 @@ Save to the output folder alongside the page specs from Step 03.
 Display: "**Select an Option:** [M] Return to Activity Menu"
 
 #### Menu Handling Logic:
+
 - IF M: Update design log, then load, read entire file, then execute {activityWorkflowFile}
 - IF Any other comments or queries: help user respond then [Redisplay Menu Options]
 
 #### EXECUTION RULES:
+
 - ALWAYS halt and wait for user input after presenting menu
 - ONLY proceed when user selects 'M'
 - User can chat or ask questions - always respond and then redisplay menu options
@@ -127,6 +134,7 @@ ONLY WHEN the design system document is complete and saved will you then load an
 ## 🚨 SYSTEM SUCCESS/FAILURE METRICS
 
 ### ✅ SUCCESS:
+
 - Color tokens organized by purpose
 - Typography scale documented
 - Spacing system extracted
@@ -136,6 +144,7 @@ ONLY WHEN the design system document is complete and saved will you then load an
 - Output is consistent with page specs
 
 ### ❌ SYSTEM FAILURE:
+
 - Missing token categories (colors, typography, spacing)
 - Not cataloging components with variants and states
 - No token-to-component mapping

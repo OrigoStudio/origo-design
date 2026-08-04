@@ -22,6 +22,7 @@ description: Add features to existing products through targeted changes
 ## INITIALIZATION
 
 ### Design Log
+
 Read `{output_folder}/_progress/00-design-log.md`. Check Current and Backlog for context.
 
 ### Essential Guides
@@ -36,13 +37,13 @@ Read `{output_folder}/_progress/00-design-log.md`. Check Current and Backlog for
 
 Execute steps in `./steps-e/`:
 
-| Step | File | Purpose |
-|------|------|---------|
-| 01 | step-01-scope-change.md | Define what changes vs what stays |
-| 02 | step-02-analyze-impact.md | Analyze impact on existing code |
-| 03 | step-03-plan-implementation.md | Plan incremental implementation |
-| 04 | step-04-implement.md | Implement changes |
-| 05 | step-05-verify-and-document.md | Verify, regression check, document |
+| Step | File                           | Purpose                            |
+| ---- | ------------------------------ | ---------------------------------- |
+| 01   | step-01-scope-change.md        | Define what changes vs what stays  |
+| 02   | step-02-analyze-impact.md      | Analyze impact on existing code    |
+| 03   | step-03-plan-implementation.md | Plan incremental implementation    |
+| 04   | step-04-implement.md           | Implement changes                  |
+| 05   | step-05-verify-and-document.md | Verify, regression check, document |
 
 **Flow:** 01 → 02 → 03 → 04 → 05
 

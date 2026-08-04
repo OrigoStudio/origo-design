@@ -58,6 +58,7 @@ Construct base prompt using style configuration: style type, stroke/fill details
 ### 2. Generate by Group
 
 Process related icons together for consistency:
+
 1. Navigation set (menu, close, search, arrows, chevrons)
 2. Action set (edit, delete, save, share, copy, download, upload)
 3. Status set (success/check, warning, error/x, info)

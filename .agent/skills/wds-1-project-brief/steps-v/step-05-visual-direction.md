@@ -11,11 +11,13 @@ activityWorkflowFile: '../workflow-validate.md'
 # Validation Step 05: Visual Direction
 
 ## STEP GOAL:
+
 Verify visual direction is documented with enough detail for Phase 4 (UX Design).
 
 ## MANDATORY EXECUTION RULES (READ FIRST):
 
 ### Universal Rules:
+
 - NEVER generate content without user input
 - CRITICAL: Read the complete step file before taking any action
 - CRITICAL: When loading next step with 'C', ensure entire file is read
@@ -23,6 +25,7 @@ Verify visual direction is documented with enough detail for Phase 4 (UX Design)
 - YOU MUST ALWAYS SPEAK OUTPUT in your Agent communication style with the config `{communication_language}`
 
 ### Role Reinforcement:
+
 - You are a Strategic Business Analyst validating visual direction completeness
 - If you already have been given a name, communication_style and persona, continue to use those while playing this new role
 - We engage in collaborative dialogue, not command-response
@@ -30,16 +33,19 @@ Verify visual direction is documented with enough detail for Phase 4 (UX Design)
 - Maintain collaborative and strategic tone throughout
 
 ### Step-Specific Rules:
+
 - Focus: Brand assets, visual references, design style, imagery direction
 - FORBIDDEN: Do not skip prerequisite check for Visual Direction document existence
 - Approach: Check prerequisites, validate brand assets, references, style, imagery, report
 
 ## EXECUTION PROTOCOLS:
+
 - Primary goal: Visual direction validated for Phase 4
 - Save/document outputs appropriately
 - Avoid generating content without user input
 
 ## CONTEXT BOUNDARIES:
+
 - Available context: Visual Direction document, Product Brief
 - Focus: Visual design readiness validation
 - Limits: Validation only, not modification
@@ -90,18 +96,22 @@ Check if Visual Direction document exists at `{output_folder}/A-Product-Brief/`.
 ```
 
 ### N. Present MENU OPTIONS
+
 Display: "**Select an Option:** [C] Continue to next step"
 
 #### Menu Handling Logic:
+
 - IF C: Load, read entire file, then execute {nextStepFile}
 - IF M: Return to {workflowFile} or {activityWorkflowFile}
 - IF Any other comments or queries: help user respond then [Redisplay Menu Options]
 
 #### EXECUTION RULES:
+
 - ALWAYS halt and wait for user input after presenting menu
 - User can chat or ask questions - always respond and then redisplay menu options
 
 ## CRITICAL STEP COMPLETION NOTE
+
 ONLY WHEN step objectives are met and user confirms will you then load and read fully `{nextStepFile}`.
 
 ---
@@ -109,6 +119,7 @@ ONLY WHEN step objectives are met and user confirms will you then load and read 
 ## SYSTEM SUCCESS/FAILURE METRICS
 
 ### SUCCESS:
+
 - Prerequisites checked
 - Brand assets documented or absence noted
 - Visual references validated
@@ -117,6 +128,7 @@ ONLY WHEN step objectives are met and user confirms will you then load and read 
 - Visual direction report generated
 
 ### FAILURE:
+
 - Skipped prerequisite check
 - Did not verify reference quality
 - Left design style unvalidated

@@ -24,6 +24,7 @@ Page specifications must follow this section order:
 ## Required Sections
 
 ### Mandatory
+
 - Page Metadata
 - Navigation structure
 - Page description
@@ -33,6 +34,7 @@ Page specifications must follow this section order:
 - Object Registry
 
 ### Optional
+
 - Reference Materials
 - Technical Notes
 - Development Checklist
@@ -43,6 +45,7 @@ Page specifications must follow this section order:
 ## Page Metadata Requirements
 
 **Required Fields:**
+
 - Platform (from Product Brief/Scenario)
 - Page Type (Full Page, Modal, Drawer, etc.)
 - Primary Viewport (Mobile-first, Desktop-first, etc.)
@@ -51,6 +54,7 @@ Page specifications must follow this section order:
 - Inherits From (Scenario reference)
 
 **Example:**
+
 ```markdown
 ## Page Metadata
 
@@ -70,6 +74,7 @@ Page specifications must follow this section order:
 **Standard Format:** `object-name` (lowercase, hyphen-separated)
 
 **Examples:**
+
 - ✅ `booking-detail-header`
 - ✅ `calendar-week-navigation`
 - ✅ `user-profile-avatar`
@@ -77,9 +82,12 @@ Page specifications must follow this section order:
 - ❌ `Booking_Detail_Header` (PascalCase with underscores)
 
 **Component Declaration:**
+
 ```markdown
 #### Component Name
+
 **OBJECT ID**: `object-name`
+
 - **Component**: [Component Name](link-to-design-system)
 - **Content**: Description
 - **Behavior**: Interactions
@@ -90,6 +98,7 @@ Page specifications must follow this section order:
 ## Design System Separation
 
 **Forbidden in Page Specs:**
+
 - ❌ CSS classes (`.button-primary`, `.flex-container`)
 - ❌ Hex color codes (`#FF5733`, `#000000`)
 - ❌ Pixel values (`16px`, `margin: 20px`)
@@ -98,6 +107,7 @@ Page specifications must follow this section order:
 - ❌ CSS properties (`display: flex`, `justify-content: center`)
 
 **Allowed in Page Specs:**
+
 - ✅ Component references with Design System links
 - ✅ Design System token references (`primary-color`, `heading-large`)
 - ✅ Behavioral descriptions ("button changes to active state")
@@ -109,10 +119,12 @@ Page specifications must follow this section order:
 ## Responsive Behavior Documentation
 
 **When Required:**
+
 - Platform: Responsive Web Application
 - Primary Viewport: Mobile-first or Desktop-first
 
 **What to Document:**
+
 - Layout changes across viewports
 - Navigation pattern adaptations
 - Content reflow strategies
@@ -120,8 +132,10 @@ Page specifications must follow this section order:
 - Breakpoint behavior
 
 **Example:**
+
 ```markdown
 **Responsive Behavior:**
+
 - **Mobile (< 768px)**: Navigation collapses to hamburger menu
 - **Tablet (768px - 1024px)**: Side-by-side layout with condensed sidebar
 - **Desktop (≥ 1024px)**: Full three-column layout with expanded navigation
@@ -134,17 +148,19 @@ Page specifications must follow this section order:
 **Coverage:** 100% of all Object IDs from Page Sections
 
 **Format:**
+
 ```markdown
 ## Object Registry
 
 This registry provides a complete index of all interactive and structural elements on this page, enabling traceability from specification to code to Figma.
 
-| Object ID | Type | Description |
-|-----------|------|-------------|
+| Object ID   | Type           | Description       |
+| ----------- | -------------- | ----------------- |
 | object-name | Component Type | Brief description |
 ```
 
 **Validation:**
+
 - Every Object ID in Page Sections must appear in registry
 - No orphaned Object IDs (in registry but not in sections)
 - Consistent naming across sections and registry
@@ -154,6 +170,7 @@ This registry provides a complete index of all interactive and structural elemen
 ## Unnecessary Information
 
 **Should NOT appear in page specs:**
+
 - Implementation code snippets (HTML, CSS, JavaScript)
 - Developer setup instructions
 - Version control information (commit messages, PR notes)
@@ -163,6 +180,7 @@ This registry provides a complete index of all interactive and structural elemen
 - Design iteration history
 
 **Belongs elsewhere:**
+
 - Code → Implementation files
 - Setup → Developer documentation
 - Version control → Git history
@@ -174,6 +192,7 @@ This registry provides a complete index of all interactive and structural elemen
 ## Navigation Structure
 
 **Required Elements:**
+
 1. H3 header with page number and name
 2. "Previous Step" and "Next Step" links before sketch
 3. Embedded sketch image
@@ -181,6 +200,7 @@ This registry provides a complete index of all interactive and structural elemen
 5. H1 header matching H3
 
 **Format:**
+
 ```markdown
 ### X.X Page Name
 

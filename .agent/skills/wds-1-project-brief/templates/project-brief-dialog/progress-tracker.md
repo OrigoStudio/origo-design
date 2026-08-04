@@ -47,6 +47,7 @@ This dialog tracks the Product Brief discovery process - the conversations, refl
 See [decisions.md](decisions.md) for detailed decision log.
 
 **Major decisions:**
+
 1. {{decision_summary_1}}
 2. {{decision_summary_2}}
 3. {{decision_summary_3}}
@@ -72,5 +73,6 @@ All dialog files are timestamped and track the natural conversation flow, not ju
 ---
 
 **Generated Artifacts:**
+
 - [wds-project-outline.yaml](../../projects/{{project_slug}}/wds-project-outline.yaml)
 - [Product Brief documentation](../../projects/{{project_slug}}/A-Product-Brief/)

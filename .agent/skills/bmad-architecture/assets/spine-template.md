@@ -1,14 +1,14 @@
 ---
 name: '{name}'
 type: architecture-spine
-purpose: build-substrate    # build-substrate (default) · discussion · report · deck
-altitude: feature           # initiative (keeps features) · feature (keeps epics) · epic (keeps stories)
+purpose: build-substrate # build-substrate (default) · discussion · report · deck
+altitude: feature # initiative (keeps features) · feature (keeps epics) · epic (keeps stories)
 paradigm: '{named design pattern, e.g. hexagonal, layered, pipes-and-filters, actor}'
 scope: '{what this spine governs}'
-status: draft               # draft · final
+status: draft # draft · final
 created: '{date}'
 updated: '{date}'
-binds: []                   # capability / unit IDs governed (from the driving spec; at epic altitude, also the inherited parent AD ids)
+binds: [] # capability / unit IDs governed (from the driving spec; at epic altitude, also the inherited parent AD ids)
 sources: []
 companions: []
 ---
@@ -25,8 +25,8 @@ companions: []
 
 <!-- Only when this spine inherits a higher-altitude parent. The parent's ADs/conventions/paradigm that bind here, by their ORIGINAL ids — read-only, never renumbered, not re-derived. A local decision that contradicts one is a conflict to surface, not an override. Cut this section otherwise. -->
 
-| Inherited | From parent | Binds here |
-| --- | --- | --- |
+| Inherited            | From parent    | Binds here                         |
+| -------------------- | -------------- | ---------------------------------- |
 | {AD-id / convention} | {parent spine} | {what it constrains in this scope} |
 
 ## Invariants & Rules
@@ -43,18 +43,18 @@ companions: []
 
 <!-- Defaults that bind where independent builders would drift. Cut rows that don't apply; add rows the project needs. -->
 
-| Concern | Convention |
-| --- | --- |
-| Naming (entities, files, interfaces, events) | |
-| Data & formats (ids, dates, error shapes, envelopes) | |
-| State & cross-cutting (mutation, errors, logging, config, auth) | |
+| Concern                                                         | Convention |
+| --------------------------------------------------------------- | ---------- |
+| Naming (entities, files, interfaces, events)                    |            |
+| Data & formats (ids, dates, error shapes, envelopes)            |            |
+| State & cross-cutting (mutation, errors, logging, config, auth) |            |
 
 ## Stack
 
 <!-- SEED — verified current at authoring; the code owns this once it exists. Name + version only; the why lives in the memlog. One row per language, framework, key dependency, platform, or chain that's pinned. -->
 
-| Name | Version |
-| --- | --- |
+| Name                                                | Version          |
+| --------------------------------------------------- | ---------------- |
 | {language / framework / key dep / platform / chain} | {pinned version} |
 
 ## Structural Seed
@@ -70,9 +70,9 @@ companions: []
 
 <!-- Present when a spec drove this run. Bridges the spec's capabilities to where they live + what governs them; the consistency auditor's checklist. Cut otherwise. -->
 
-| Capability / Area | Lives in | Governed by |
-| --- | --- | --- |
-| {CAP-id / area} | {component / module} | {AD-id, convention, paradigm} |
+| Capability / Area | Lives in             | Governed by                   |
+| ----------------- | -------------------- | ----------------------------- |
+| {CAP-id / area}   | {component / module} | {AD-id, convention, paradigm} |
 
 ## Deferred
 

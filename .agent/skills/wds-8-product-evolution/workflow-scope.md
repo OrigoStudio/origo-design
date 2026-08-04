@@ -13,8 +13,8 @@ borrows_from: Phase 3 (scenarios)
 ## INITIALIZATION
 
 ### Design Log
-Read `{output_folder}/_progress/00-design-log.md`. Check Current and Backlog for context.
 
+Read `{output_folder}/_progress/00-design-log.md`. Check Current and Backlog for context.
 
 ## Steps
 
@@ -61,21 +61,27 @@ Create a scenario document at `{output_folder}/evolution/scenarios/`:
 # [Scenario Name]
 
 ## Target
+
 [What we're improving and why]
 
 ## Current State
+
 [What users experience today]
 
 ## Desired State
+
 [What users should experience after]
 
 ## User Journey
+
 [Step-by-step flow]
 
 ## Success Criteria
+
 [How we measure success]
 
 ## Scope
+
 [Pages, components, risk level]
 ```
 

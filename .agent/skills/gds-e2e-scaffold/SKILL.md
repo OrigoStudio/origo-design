@@ -83,7 +83,6 @@ This uses an **inline workflow pattern** for autonomous execution:
 - Main gameplay scene exists and is functional
 - No existing E2E infrastructure (check for `Tests/PlayMode/E2E/` or engine equivalent)
 
-
 ### Paths
 
 - `installed_path` = `{skill-root}`
@@ -91,11 +90,11 @@ This uses an **inline workflow pattern** for autonomous execution:
 
 ### Inputs (Collect from User or Auto-Detect)
 
-| Input | Description | Required | Default |
-|-------|-------------|----------|---------|
-| `game_state_class` | Primary game state manager class name | Yes | — |
-| `main_scene` | Scene name where core gameplay occurs | Yes | — |
-| `input_system` | Input system in use | No | `auto-detect` |
+| Input              | Description                           | Required | Default       |
+| ------------------ | ------------------------------------- | -------- | ------------- |
+| `game_state_class` | Primary game state manager class name | Yes      | —             |
+| `main_scene`       | Scene name where core gameplay occurs | Yes      | —             |
+| `input_system`     | Input system in use                   | No       | `auto-detect` |
 
 ### Knowledge Fragments
 
@@ -119,21 +118,13 @@ Load `{installed_path}/knowledge/e2e-testing.md` before proceeding. Load the eng
   </action>
   <action>Load the appropriate engine-specific knowledge fragment</action>
 
-  <action>Identify core systems:
-    1. Game State Manager — the primary class holding game state. Look for: `GameManager`, `GameStateManager`, `GameController`, `GameMode`. Note: initialization method, ready state property, save/load methods
-    2. Input Handling — Unity New Input System vs Legacy, Unreal Enhanced Input vs Legacy, Godot built-in Input, or custom abstraction layer
-    3. Event/Messaging System — event bus, C# events/delegates, UnityEvents, Godot Signals
-    4. Scene Structure — main gameplay scene name, loading approach (additive/single), bootstrap/initialization flow
-  </action>
+<action>Identify core systems: 1. Game State Manager — the primary class holding game state. Look for: `GameManager`, `GameStateManager`, `GameController`, `GameMode`. Note: initialization method, ready state property, save/load methods 2. Input Handling — Unity New Input System vs Legacy, Unreal Enhanced Input vs Legacy, Godot built-in Input, or custom abstraction layer 3. Event/Messaging System — event bus, C# events/delegates, UnityEvents, Godot Signals 4. Scene Structure — main gameplay scene name, loading approach (additive/single), bootstrap/initialization flow
+</action>
 
-  <action>Identify domain concepts for the ScenarioBuilder:
-    - Primary Entities: units, players, items, enemies, etc.
-    - State Machine States: turn phases, game modes, player states
-    - Spatial System: grid/hex positions, world coordinates, regions
-    - Resources: currency, health, mana, ammunition, etc.
-  </action>
+<action>Identify domain concepts for the ScenarioBuilder: - Primary Entities: units, players, items, enemies, etc. - State Machine States: turn phases, game modes, player states - Spatial System: grid/hex positions, world coordinates, regions - Resources: currency, health, mana, ammunition, etc.
+</action>
 
-  <action>Check existing test structure. If `Tests/PlayMode/E2E/` (or engine equivalent) already exists, HALT and ask user how to proceed.</action>
+<action>Check existing test structure. If `Tests/PlayMode/E2E/` (or engine equivalent) already exists, HALT and ask user how to proceed.</action>
 </step>
 
 <step n="2" goal="Generate Infrastructure">
@@ -201,6 +192,7 @@ Tests/PlayMode/E2E/          (Unity)
       - `AssertNeverTrue(...)` — assert something doesn't happen
       - `WaitFrames(int)` and `WaitForPhysics(int)` utility methods
     </action>
+
   </check>
 
   <!-- Unreal-specific infrastructure -->
@@ -224,7 +216,7 @@ Tests/PlayMode/E2E/          (Unity)
     </action>
   </check>
 
-  <action>Write all infrastructure files to disk</action>
+<action>Write all infrastructure files to disk</action>
 </step>
 
 <step n="3" goal="Generate Example Test">
@@ -243,7 +235,7 @@ Tests/PlayMode/E2E/          (Unity)
     <action>Generate equivalent example test in the engine-appropriate location and language, covering the same three verification patterns</action>
   </check>
 
-  <action>Write example test file to disk</action>
+<action>Write example test file to disk</action>
 </step>
 
 <step n="4" goal="Generate Documentation">
@@ -276,12 +268,12 @@ Tests/PlayMode/E2E/          (Unity)
 
 ### Configuration
 
-| Setting | Value |
-|---------|-------|
-| Game State Class | `{GameStateClass}` |
-| Main Scene | `{MainSceneName}` |
-| Input System | `{InputSystemType}` |
-| Ready Property | `{IsReadyProperty}` |
+| Setting          | Value               |
+| ---------------- | ------------------- |
+| Game State Class | `{GameStateClass}`  |
+| Main Scene       | `{MainSceneName}`   |
+| Input System     | `{InputSystemType}` |
+| Ready Property   | `{IsReadyProperty}` |
 
 ### Customization Required
 
@@ -297,6 +289,7 @@ Tests/PlayMode/E2E/          (Unity)
 4. Use `test-design` workflow to identify E2E scenarios
 5. Use `automate` workflow to generate E2E tests from scenarios
 ```
+
   </action>
 <action>Run: `python3 {project-root}/_bmad/scripts/resolve_customization.py --skill {skill-root} --key workflow.on_complete` — if the resolved value is non-empty, follow it as the final terminal instruction before exiting.</action>
 </step>

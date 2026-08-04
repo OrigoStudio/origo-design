@@ -33,10 +33,10 @@ Once the intent is routed, execute each entry in `{workflow.activation_steps_app
 
 ## Intents
 
-| Intent | What it does | Load |
-| --- | --- | --- |
-| Build | Create a new skill from the user's idea | `references/build-process.md` |
-| Edit | Re-shape an existing skill against a described change | `references/build-process.md` |
+| Intent  | What it does                                               | Load                               |
+| ------- | ---------------------------------------------------------- | ---------------------------------- |
+| Build   | Create a new skill from the user's idea                    | `references/build-process.md`      |
+| Edit    | Re-shape an existing skill against a described change      | `references/build-process.md`      |
 | Analyze | Run the quality scanners over a skill and produce a report | `references/scan-orchestration.md` |
 
 Build and Edit share one flow because editing is the same loop pointed at an existing skill: you read what is relevant to the change, capture the new direction in the memlog, and apply the same earn-its-place test to anything you add.

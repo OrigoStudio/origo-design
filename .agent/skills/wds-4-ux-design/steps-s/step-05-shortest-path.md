@@ -69,6 +69,7 @@ What's the absolute minimum path? No extra steps, just the essentials that move 
 <ask>**List the critical pages/steps in order:**
 
 Example for SaaS onboarding:
+
 1. Landing page - understand solution
 2. Sign up - commit to trying
 3. Welcome setup - quick configuration
@@ -76,6 +77,7 @@ Example for SaaS onboarding:
 5. Dashboard - ongoing use
 
 Example for mobile app:
+
 1. App store page - decide to install
 2. Welcome screen - understand purpose
 3. Permission requests - enable features

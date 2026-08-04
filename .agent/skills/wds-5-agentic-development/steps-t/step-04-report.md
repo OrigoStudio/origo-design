@@ -71,12 +71,14 @@ Reference: [data/issue-templates.md](data/issue-templates.md) for complete test 
 ### 3. Overall Result Determination
 
 **PASS if:**
+
 - All Critical issues: 0
 - All High issues: Fixed or accepted risk
 - Happy path: 100% pass
 - Design system: > 95% compliant
 
 **FAIL if:**
+
 - Any Critical issues unfixed
 - Any High issues blocking
 - Happy path failures
@@ -99,10 +101,12 @@ Organize testing folder with report, screenshots, recordings, and test data.
 Display: "**Select an Option:** [C] Continue to Step 5: Iterate"
 
 #### Menu Handling Logic:
+
 - IF C: Update design log, then load, read entire file, then execute {nextStepFile}
 - IF Any other comments or queries: help user respond then [Redisplay Menu Options]
 
 #### EXECUTION RULES:
+
 - ALWAYS halt and wait for user input after presenting menu
 - ONLY proceed to next step when user selects 'C'
 - User can chat or ask questions - always respond and then redisplay menu options
@@ -116,6 +120,7 @@ ONLY WHEN the test report is complete with all sections and clear recommendation
 ## 🚨 SYSTEM SUCCESS/FAILURE METRICS
 
 ### ✅ SUCCESS:
+
 - Test report created with all sections
 - Test coverage complete
 - Issues list accurate
@@ -123,6 +128,7 @@ ONLY WHEN the test report is complete with all sections and clear recommendation
 - All attachments organized
 
 ### ❌ SYSTEM FAILURE:
+
 - Missing test categories
 - Incorrect issue counts
 - Unclear recommendation

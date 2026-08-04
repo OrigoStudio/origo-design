@@ -36,12 +36,14 @@ Phase 4 is **adaptive** — Freya reads the design log on startup, shows the pro
 ### 1. Configuration Loading
 
 Load and read full config from `{project-root}/_bmad/wds/config.yaml` and resolve:
+
 - `project_name`, `output_folder`, `user_name`
 - `communication_language`, `document_output_language`
 
 ### 2. Design Log Loading
 
 Read the design log at `{output_folder}/_progress/00-design-log.md`. This single file contains:
+
 - **Backlog** — business-value items to work on
 - **Current** — what's actively being worked on right now
 - **Design Loop Status** — per-page status tracking (latest row per page = current status)
@@ -52,12 +54,14 @@ If the file doesn't exist, guide the user to run Phase 0 setup first.
 ### 3. Mode Determination
 
 **Check invocation:**
+
 - "validate" / -v → Load and execute `./workflow-validate.md`
 - Default → Continue to Adaptive Dashboard
 
 ### 4. Adaptive Dashboard
 
 Read from the design log and scenario files:
+
 1. **Design log** (`{output_folder}/_progress/00-design-log.md`) — Backlog, Current, Design Loop Status, Log
 2. **Scenario files** from `{output_folder}/C-UX-Scenarios/` — full page inventory
 
@@ -92,6 +96,7 @@ Pick up there, or change direction?
 **Ready to continue!**
 
 **Next from backlog:**
+
 - [ ] [first unchecked backlog item]
 - [ ] [second unchecked backlog item]
 
@@ -161,17 +166,17 @@ The primary navigation is the adaptive dashboard above — Freya suggests the ne
 
 ### Activity Routing
 
-| Choice | Workflow File | Steps Folder |
-|--------|--------------|--------------|
-| [C] | workflow-conceptualize.md | steps-c/ |
-| [K] | workflow-sketch.md | steps-k/ |
-| [S] | workflow-suggest.md | steps-s/ |
-| [D] | workflow-dream.md | steps-s/ (autonomous mode) |
-| [P] | workflow-specify.md | steps-p/ |
-| [W] | workflow-visual.md | steps-w/ |
-| [M] | workflow-design-system.md | steps-m/ (extract on 2nd use) |
-| [V] | workflow-validate.md | steps-v/ |
-| [H] | workflow-handover.md | steps-h/ |
+| Choice | Workflow File             | Steps Folder                  |
+| ------ | ------------------------- | ----------------------------- |
+| [C]    | workflow-conceptualize.md | steps-c/                      |
+| [K]    | workflow-sketch.md        | steps-k/                      |
+| [S]    | workflow-suggest.md       | steps-s/                      |
+| [D]    | workflow-dream.md         | steps-s/ (autonomous mode)    |
+| [P]    | workflow-specify.md       | steps-p/                      |
+| [W]    | workflow-visual.md        | steps-w/                      |
+| [M]    | workflow-design-system.md | steps-m/ (extract on 2nd use) |
+| [V]    | workflow-validate.md      | steps-v/                      |
+| [H]    | workflow-handover.md      | steps-h/                      |
 
 If the scenario has a `design_intent` from Phase 3 handover, pre-select that activity. The user can always switch.
 
@@ -179,15 +184,15 @@ If the scenario has a `design_intent` from Phase 3 handover, pre-select that act
 
 ## REFERENCE CONTENT
 
-| Location | Purpose |
-|----------|---------|
-| `data/object-types/` | Component type definitions and templates |
-| `data/guides/` | Design loop, sketch analysis, specification patterns, styling |
-| `data/modular-architecture/` | Three-tier architecture documentation |
-| `data/scenario-init/` | Scenario initialization guides and examples |
-| `data/page-creation-flows/` | Page creation flow approaches |
-| `data/quality-guide.md` | Quality standards |
-| `templates/` | Output templates (page-spec, scenario, storyboard) |
+| Location                     | Purpose                                                       |
+| ---------------------------- | ------------------------------------------------------------- |
+| `data/object-types/`         | Component type definitions and templates                      |
+| `data/guides/`               | Design loop, sketch analysis, specification patterns, styling |
+| `data/modular-architecture/` | Three-tier architecture documentation                         |
+| `data/scenario-init/`        | Scenario initialization guides and examples                   |
+| `data/page-creation-flows/`  | Page creation flow approaches                                 |
+| `data/quality-guide.md`      | Quality standards                                             |
+| `templates/`                 | Output templates (page-spec, scenario, storyboard)            |
 
 ---
 

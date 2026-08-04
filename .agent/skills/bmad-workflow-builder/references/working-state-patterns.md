@@ -6,14 +6,14 @@ How a skill's work survives across turns and context compaction. This is a desig
 
 A multi-turn skill that builds something has to hold state somewhere. Pick by the shape of the work, not by default.
 
-| Strategy | Holds | Choose when |
-|---|---|---|
-| memlog | the *why* — decisions, directions, rejected alternatives, conflicts | the deliverable is prose or a document and its value includes reasoning that must survive revisits and surface conflicts on update |
-| Structured working artifact | the *what* — work-in-progress in a custom schema that transforms into the output | the work decomposes into a natural intermediate the user iterates on directly, which later becomes the deliverable |
-| Both | the what and the why | long, revisable creative or engineering work where construction state and rationale both matter |
-| Neither | nothing across turns | a one-shot transform, a stateless utility, or a purely conversational skill where the input/output contract or the live conversation is the state |
+| Strategy                    | Holds                                                                            | Choose when                                                                                                                                       |
+| --------------------------- | -------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------- |
+| memlog                      | the _why_ — decisions, directions, rejected alternatives, conflicts              | the deliverable is prose or a document and its value includes reasoning that must survive revisits and surface conflicts on update                |
+| Structured working artifact | the _what_ — work-in-progress in a custom schema that transforms into the output | the work decomposes into a natural intermediate the user iterates on directly, which later becomes the deliverable                                |
+| Both                        | the what and the why                                                             | long, revisable creative or engineering work where construction state and rationale both matter                                                   |
+| Neither                     | nothing across turns                                                             | a one-shot transform, a stateless utility, or a purely conversational skill where the input/output contract or the live conversation is the state |
 
-memlog and the structured artifact are not rivals. memlog is *meta* about the work — a decision trail beside the deliverable. The structured artifact *is* the work — state lives inside it, so continuity comes from re-reading the artifact rather than a side log. A skill uses either, both, or neither.
+memlog and the structured artifact are not rivals. memlog is _meta_ about the work — a decision trail beside the deliverable. The structured artifact _is_ the work — state lives inside it, so continuity comes from re-reading the artifact rather than a side log. A skill uses either, both, or neither.
 
 ## memlog: the decision trail
 

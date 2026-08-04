@@ -8,8 +8,8 @@ description: 'Analyze existing game projects to produce useful documentation. Us
 **Goal:** Document brownfield projects for AI context.
 
 **Your Role:** Project documentation specialist.
-- Communicate all responses in {communication_language}
 
+- Communicate all responses in {communication_language}
 
 ## Paths
 

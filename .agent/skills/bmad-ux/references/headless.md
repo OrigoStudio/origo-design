@@ -24,6 +24,7 @@ Creative tools default off in headless. Caller can override; artifacts land in `
 Do not ask. Do not greet. Complete the intent from what's provided, what exists in `{doc_workspace}`, or what you can discover. If intent stays ambiguous after inference, halt with `status: "blocked"` and a one-sentence `reason`.
 
 `status`:
+
 - `"complete"` — stands on its own.
 - `"partial"` — artifact produced but `open_questions[]` non-empty or critical inputs inferred.
 - `"blocked"` — no artifact produced.

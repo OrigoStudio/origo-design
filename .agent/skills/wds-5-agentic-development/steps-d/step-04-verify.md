@@ -84,17 +84,17 @@ At each breakpoint, verify:
 
 For every interactive element, verify each state:
 
-| State | Verify |
-|-------|--------|
-| **Default** | Renders correctly on load |
-| **Hover** | Visual feedback appears |
-| **Focus** | Focus ring or indicator visible (keyboard users) |
-| **Active / Pressed** | Visual response on click/tap |
-| **Disabled** | Visually distinct, not interactive |
-| **Loading** | Spinner or skeleton shown, interactions blocked |
-| **Error** | Error message displayed, field highlighted |
-| **Empty** | Empty state message or placeholder shown |
-| **Success** | Confirmation feedback displayed |
+| State                | Verify                                           |
+| -------------------- | ------------------------------------------------ |
+| **Default**          | Renders correctly on load                        |
+| **Hover**            | Visual feedback appears                          |
+| **Focus**            | Focus ring or indicator visible (keyboard users) |
+| **Active / Pressed** | Visual response on click/tap                     |
+| **Disabled**         | Visually distinct, not interactive               |
+| **Loading**          | Spinner or skeleton shown, interactions blocked  |
+| **Error**            | Error message displayed, field highlighted       |
+| **Empty**            | Empty state message or placeholder shown         |
+| **Success**          | Confirmation feedback displayed                  |
 
 ### 4. Test Accessibility
 
@@ -144,10 +144,12 @@ For projects using Puppeteer, follow the verification process in INLINE-TESTING-
 Display: "**Select an Option:** [C] Continue to Step 5: Finalize"
 
 #### Menu Handling Logic:
+
 - IF C: Update design log, then load, read entire file, then execute {nextStepFile}
 - IF Any other comments or queries: help user respond then [Redisplay Menu Options]
 
 #### EXECUTION RULES:
+
 - ALWAYS halt and wait for user input after presenting menu
 - ONLY proceed to next step when user selects 'C'
 - User can chat or ask questions - always respond and then redisplay menu options
@@ -161,6 +163,7 @@ ONLY WHEN all acceptance criteria are verified passing and all issues fixed will
 ## 🚨 SYSTEM SUCCESS/FAILURE METRICS
 
 ### ✅ SUCCESS:
+
 - Every acceptance criterion tested and passing
 - All responsive breakpoints verified
 - All interactive states working
@@ -169,6 +172,7 @@ ONLY WHEN all acceptance criteria are verified passing and all issues fixed will
 - All found issues fixed or documented
 
 ### ❌ SYSTEM FAILURE:
+
 - Assuming criteria pass without testing concretely
 - Skipping responsive or accessibility verification
 - Batching failures instead of fixing immediately

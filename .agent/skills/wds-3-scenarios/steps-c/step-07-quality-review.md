@@ -111,17 +111,20 @@ For **each scenario**, verify these four dimensions:
 ### 3. Check Thresholds
 
 **Minimum (must meet to proceed):**
+
 - Completeness: 6/7
 - Quality: 5/7
 - Mistakes avoided: 6/6 (all must be avoided)
 - Best practices: 2/4
 
 **Excellent:**
+
 - All scores maxed
 
 ### 4. Fix Failing Items
 
 If any scenario fails:
+
 1. Identify which scenario(s) fail which checks
 2. Go back to the scenario file and fix the specific gaps
 3. Re-verify after fixing

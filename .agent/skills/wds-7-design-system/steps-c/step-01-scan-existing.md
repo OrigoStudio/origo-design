@@ -56,6 +56,7 @@ Find all components in the design system that match the current component type. 
 ### 1. Read Design System Folder
 
 Scan design system components:
+
 - Read all files in `D-Design-System/components/`
 - Parse component type from each file
 - Filter by matching type
@@ -63,6 +64,7 @@ Scan design system components:
 ### 2. Extract Component Metadata
 
 For each matching component, extract:
+
 - Component ID (e.g., `btn-001`)
 - Variants (e.g., primary, secondary, ghost)
 - States (e.g., default, hover, active, disabled)
@@ -84,6 +86,7 @@ Present matching components to user with full metadata.
 ### 5. Pass Data to Next Step
 
 Pass candidate list to comparison step:
+
 - Component IDs
 - Full metadata
 - Current component specification

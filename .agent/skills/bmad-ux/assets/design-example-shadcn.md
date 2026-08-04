@@ -50,16 +50,16 @@ components:
 
 ## Brand & Style
 
-Drift is a focused task tracker for solo founders and small async teams. The product premise is that *work is a moving thing* — momentum matters more than perfectly groomed backlogs, and the right tool surfaces what you're working on *now* without making you administer a system to find it. The brand expression follows: a serif display moment in an otherwise sober sans-serif surface, a single warm accent that means *this is what's live*, and visual restraint everywhere else.
+Drift is a focused task tracker for solo founders and small async teams. The product premise is that _work is a moving thing_ — momentum matters more than perfectly groomed backlogs, and the right tool surfaces what you're working on _now_ without making you administer a system to find it. The brand expression follows: a serif display moment in an otherwise sober sans-serif surface, a single warm accent that means _this is what's live_, and visual restraint everywhere else.
 
-Drift inherits shadcn/ui defaults wholesale. This DESIGN.md specifies only the brand-layer deltas — primary color, accent color, display typography, slightly tighter corners, and a handful of brand-specific components. The 80% of components that ship from shadcn (Button, Card, Dialog, Sheet, Command, Popover, Toast) inherit shadcn's visual specs as-is. Customizing those is *explicitly* against the brand discipline — shadcn's defaults are the contract.
+Drift inherits shadcn/ui defaults wholesale. This DESIGN.md specifies only the brand-layer deltas — primary color, accent color, display typography, slightly tighter corners, and a handful of brand-specific components. The 80% of components that ship from shadcn (Button, Card, Dialog, Sheet, Command, Popover, Toast) inherit shadcn's visual specs as-is. Customizing those is _explicitly_ against the brand discipline — shadcn's defaults are the contract.
 
 ## Colors
 
 The Drift palette is two colors of brand-layer plus shadcn defaults for everything else.
 
 - **Primary Navy (`#0F4C81` light / `#5C8AC2` dark)** is the brand color. Used on primary buttons, active nav items, link underlines, and the "current week" indicator. Replaces shadcn's default `primary`.
-- **Focus Amber (`#F59E0B` light / `#FBC470` dark)** is the accent. Used exclusively to indicate the task or project currently in focus — the one you're working on *right now*. Never used for chrome, never used decoratively, never used for state badges. Amber means "live."
+- **Focus Amber (`#F59E0B` light / `#FBC470` dark)** is the accent. Used exclusively to indicate the task or project currently in focus — the one you're working on _right now_. Never used for chrome, never used decoratively, never used for state badges. Amber means "live."
 - **All other tokens** (`background`, `foreground`, `muted`, `muted-foreground`, `border`, `input`, `ring`, `card`, `popover`, `destructive`) inherit from shadcn defaults. If the brand can't justify overriding a token, it doesn't override it.
 
 Avoid: chromatic flourishes, gradient surfaces, custom destructive colors (use shadcn's), more than two brand colors. The discipline is two-colors-and-stop.
@@ -100,10 +100,10 @@ Brand-layer-overridden components:
 
 ## Do's and Don'ts
 
-| Do | Don't |
-|---|---|
+| Do                                                            | Don't                                                        |
+| ------------------------------------------------------------- | ------------------------------------------------------------ |
 | Inherit shadcn defaults for everything not in the brand layer | Override shadcn's color tokens beyond `primary` and `accent` |
-| Use `{colors.accent}` only for "live / now / in-focus" | Use accent for state, chrome, or hover affordances |
-| `display` typography sparingly — empty states, hero greetings | Set body text in `display` to "make it pretty" |
-| Tighter corners than shadcn (4 / 6 / 8) | Use shadcn's default 6/8/12 (Drift reads sharper) |
-| Single-column layouts inside `max-w-3xl` | Wide multi-column tables (Drift is not a spreadsheet) |
+| Use `{colors.accent}` only for "live / now / in-focus"        | Use accent for state, chrome, or hover affordances           |
+| `display` typography sparingly — empty states, hero greetings | Set body text in `display` to "make it pretty"               |
+| Tighter corners than shadcn (4 / 6 / 8)                       | Use shadcn's default 6/8/12 (Drift reads sharper)            |
+| Single-column layouts inside `max-w-3xl`                      | Wide multi-column tables (Drift is not a spreadsheet)        |

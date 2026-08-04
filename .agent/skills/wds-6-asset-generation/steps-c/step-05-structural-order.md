@@ -94,41 +94,41 @@ Ask: **"Does WHY → HOW → WHAT create natural emotional → logical → actio
 ```yaml
 structural_order:
   section_why:
-    purpose: "Emotional truth / Why user should care"
+    purpose: 'Emotional truth / Why user should care'
     content_elements:
       - order: 1
-        element: "[Opening hook]"
-        rationale: "[Why this opens]"
+        element: '[Opening hook]'
+        rationale: '[Why this opens]'
       - order: 2
-        element: "[Validation or aspiration]"
-        rationale: "[Why this comes second]"
+        element: '[Validation or aspiration]'
+        rationale: '[Why this comes second]'
   section_how:
-    purpose: "Method / Bridge from emotion to specifics"
+    purpose: 'Method / Bridge from emotion to specifics'
     content_elements:
       - order: 1
-        element: "[Solution approach]"
-        rationale: "[Why this bridges first]"
+        element: '[Solution approach]'
+        rationale: '[Why this bridges first]'
       - order: 2
-        element: "[Key differentiator]"
-        rationale: "[Why this matters here]"
+        element: '[Key differentiator]'
+        rationale: '[Why this matters here]'
       - order: 3
-        element: "[Transformation path]"
-        rationale: "[Why this comes last in HOW]"
+        element: '[Transformation path]'
+        rationale: '[Why this comes last in HOW]'
   section_what:
-    purpose: "Specifics / Proof / Action"
+    purpose: 'Specifics / Proof / Action'
     content_elements:
       - order: 1
-        element: "[Product/offer name]"
-        rationale: "[Why we can name it now]"
+        element: '[Product/offer name]'
+        rationale: '[Why we can name it now]'
       - order: 2
-        element: "[Social proof]"
-        rationale: "[Why proof comes here]"
+        element: '[Social proof]'
+        rationale: '[Why proof comes here]'
       - order: 3
-        element: "[CTA]"
-        rationale: "[Why action comes last]"
+        element: '[CTA]'
+        rationale: '[Why action comes last]'
   flow_validation:
-    feels_natural: "[yes/no + notes]"
-    persuasive_arc: "[Does WHY → HOW → WHAT create emotional → logical → action flow?]"
+    feels_natural: '[yes/no + notes]'
+    persuasive_arc: '[Does WHY → HOW → WHAT create emotional → logical → action flow?]'
 ```
 
 ### 8. Present MENU OPTIONS

@@ -64,6 +64,7 @@ Explore why it matters and who we help.
 **Reference**: `{sectionRoutingFile}` (Section 2: Why It Matters)
 
 **Questions to explore**:
+
 - "Why does this matter?"
 - "Who are we helping?"
 - "What are they trying to accomplish?" (Jobs)
@@ -82,11 +83,13 @@ Explore why it matters and who we help.
 Display: "**Select an Option:** [C] Continue to step-02d-explore-how-we-see-it-working"
 
 #### Menu Handling Logic:
+
 - IF C: Load, read entire file, then execute {nextStepFile}
 - IF M: Return to {workflowFile}
 - IF Any other comments or queries: help user respond then [Redisplay Menu Options]
 
 #### EXECUTION RULES:
+
 - ALWAYS halt and wait for user input after presenting menu
 - ONLY proceed to next step when user selects 'C'
 - User can chat or ask questions - always respond and then redisplay menu options
@@ -100,11 +103,13 @@ ONLY WHEN the user has articulated why it matters and who benefits will you then
 ## 🚨 SYSTEM SUCCESS/FAILURE METRICS
 
 ### ✅ SUCCESS:
+
 - Clear articulation of why this matters
 - Specific people/groups who benefit are identified
 - Impact and value are understood
 
 ### ❌ SYSTEM FAILURE:
+
 - Generating reasons without user input
 - Skipping this section
 - Not identifying specific beneficiaries

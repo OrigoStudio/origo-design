@@ -65,15 +65,18 @@ Build the Approval section with formal signature lines for both parties to make 
 **Purpose**: Makes the contract legally binding
 
 **Content**:
+
 - Client and contractor names
 - Signature lines
 - Date fields
 
 **For Project Contract**:
+
 - Client signature
 - Contractor signature
 
 **For Service Agreement**:
+
 - Client/Owner signature
 - Service Provider signature
 
@@ -82,11 +85,13 @@ Build the Approval section with formal signature lines for both parties to make 
 Display: "**Select an Option:** [C] Continue to step-05l-finalize-contract"
 
 #### Menu Handling Logic:
+
 - IF C: Load, read entire file, then execute {nextStepFile}
 - IF M: Return to {workflowFile}
 - IF Any other comments or queries: help user respond then [Redisplay Menu Options]
 
 #### EXECUTION RULES:
+
 - ALWAYS halt and wait for user input after presenting menu
 - ONLY proceed to next step when user selects 'C'
 - User can chat or ask questions - always respond and then redisplay menu options
@@ -100,11 +105,13 @@ ONLY WHEN the Approval section is built with correct party names will you then l
 ## 🚨 SYSTEM SUCCESS/FAILURE METRICS
 
 ### ✅ SUCCESS:
+
 - Signature lines are created for both parties
 - Party names and roles are correct
 - Date fields are included
 
 ### ❌ SYSTEM FAILURE:
+
 - Using placeholder names without asking
 - Missing signature lines for either party
 - Skipping this section

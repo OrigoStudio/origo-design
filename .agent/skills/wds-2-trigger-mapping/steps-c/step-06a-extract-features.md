@@ -60,6 +60,7 @@ Silently read the project brief and extract all strategically relevant features,
 Silently read the project brief and extract all features mentioned in the documentation.
 
 **What to Extract:**
+
 - Core product features
 - User interactions and workflows
 - Content/communication elements
@@ -67,6 +68,7 @@ Silently read the project brief and extract all features mentioned in the docume
 - Infrastructure features (if mentioned and strategic)
 
 **What to SKIP:**
+
 - Basic authentication (login/logout)
 - Standard user profiles
 - Basic CRUD operations (unless unique/strategic)
@@ -79,9 +81,10 @@ Output:
 1. [Feature Name] - [Brief description]
 2. [Feature Name] - [Brief description]
 3. [Feature Name] - [Brief description]
-... (continue for all features)
+   ... (continue for all features)
 
 **Please review this list:**
+
 - Are there features you'd like to add?
 - Would you like to rename or clarify any features?
 - Should any features be combined or split?
@@ -97,11 +100,13 @@ Wait for user to confirm or make changes to the feature list. If changes request
 Display: "**Select an Option:** [C] Continue to Impact Assessment Confirmation | [M] Return to Activity Menu"
 
 #### Menu Handling Logic:
+
 - IF C: Load and execute {nextStepFile}
 - IF M: Return to {activityWorkflowFile}
 - IF Any other comments or queries: help user respond then [Redisplay Menu Options]
 
 #### EXECUTION RULES:
+
 - ALWAYS halt and wait for user input after presenting menu
 - User can chat or ask questions - always respond and then redisplay menu options
 
@@ -114,6 +119,7 @@ ONLY WHEN user selects [C] will you load the next step file. Feature list must b
 ## 🚨 SYSTEM SUCCESS/FAILURE METRICS
 
 ### ✅ SUCCESS:
+
 - All strategically relevant features extracted from documentation
 - Basic/standard features appropriately excluded
 - Features presented as clear numbered list with descriptions
@@ -122,6 +128,7 @@ ONLY WHEN user selects [C] will you load the next step file. Feature list must b
 - Confirmed list stored for assessment step
 
 ### ❌ SYSTEM FAILURE:
+
 - Including basic auth, standard profiles, or basic CRUD
 - Not presenting features for user review
 - Proceeding to assessment without user confirmation

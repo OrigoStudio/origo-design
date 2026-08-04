@@ -7,6 +7,7 @@
 ## Why Now?
 
 You've defined:
+
 - Feature that delivers value
 - Entry point
 - Mental state
@@ -22,6 +23,7 @@ You've defined:
 > "Before we start sketching, let's identify the Trigger Map context for this scenario.
 >
 > From your Trigger Map, which of these apply to this scenario?
+>
 > - **Business Goal** — which goal does this scenario serve?
 > - **User** — which persona is this scenario for?
 > - **Driving Forces** — which positive and negative drivers are most relevant?
@@ -52,6 +54,7 @@ Note the selected Trigger Map context in the scenario overview file:
 **Business Goal:** [selected goal from Trigger Map]
 **Persona:** [selected persona]
 **Key Driving Forces:**
+
 - Positive: [selected positive drivers]
 - Negative: [selected negative drivers]
 ```
@@ -61,6 +64,7 @@ Note the selected Trigger Map context in the scenario overview file:
 ## If No Trigger Map Exists
 
 If the Trigger Map hasn't been created yet:
+
 - Inform the user: "There's no Trigger Map for this project yet. I'd recommend completing Phase 2 (Trigger Mapping) first — it gives us the strategic foundation for design decisions."
 - If the user wants to proceed anyway, use whatever business context is available from the Product Brief and note the gap.
 
@@ -71,10 +75,11 @@ If the Trigger Map hasn't been created yet:
 **Start sketching the scenario journey!**
 
 Each sketch should:
+
 - Serve the selected driving forces
 - Support the shortest path to mutual success
 - Address the target persona's needs
 
 ---
 
-*Strategic context identified — now sketch with purpose!*
+_Strategic context identified — now sketch with purpose!_

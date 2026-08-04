@@ -41,10 +41,10 @@ The builder produces agents along one gradient surfaced as feature decisions, no
 
 ## Intents
 
-| Intent | What it does | Load |
-| --- | --- | --- |
-| Create | Build a new agent, or rebuild an existing one from its core outcomes and persona | `references/build-process.md` |
-| Edit | Change specific behavior in an existing agent while preserving its design | `references/edit-guidance.md` |
-| Analyze | Run the quality lenses over an agent and produce a report | `references/quality-analysis.md` |
+| Intent  | What it does                                                                     | Load                             |
+| ------- | -------------------------------------------------------------------------------- | -------------------------------- |
+| Create  | Build a new agent, or rebuild an existing one from its core outcomes and persona | `references/build-process.md`    |
+| Edit    | Change specific behavior in an existing agent while preserving its design        | `references/edit-guidance.md`    |
+| Analyze | Run the quality lenses over an agent and produce a report                        | `references/quality-analysis.md` |
 
 When the user hands over an existing agent without saying which intent, present the three-way choice and route on the answer: Analyze runs the lenses and returns an actionable report; Edit changes specific behavior while keeping the current approach; Rebuild rethinks from core outcomes and persona using the old agent as reference material, which is the Create flow pointed at existing input.

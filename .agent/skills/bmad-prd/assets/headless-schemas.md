@@ -22,7 +22,12 @@ Every headless run ends with one of these payloads. Omit keys for artifacts not 
   "open_questions": [],
   "assumptions": [],
   "external_handoffs": [
-    {"directive": "Confluence upload", "tool": "corp:confluence_upload", "url": "https://confluence.corp/PROD/123", "status": "ok"}
+    {
+      "directive": "Confluence upload",
+      "tool": "corp:confluence_upload",
+      "url": "https://confluence.corp/PROD/123",
+      "status": "ok"
+    }
   ]
 }
 ```
@@ -39,7 +44,12 @@ Every headless run ends with one of these payloads. Omit keys for artifacts not 
   "conflicts_with_prior_decisions": [],
   "open_questions": [],
   "external_handoffs": [
-    {"directive": "Confluence upload", "tool": "corp:confluence_upload", "url": "https://confluence.corp/PROD/123", "status": "ok"}
+    {
+      "directive": "Confluence upload",
+      "tool": "corp:confluence_upload",
+      "url": "https://confluence.corp/PROD/123",
+      "status": "ok"
+    }
   ]
 }
 ```

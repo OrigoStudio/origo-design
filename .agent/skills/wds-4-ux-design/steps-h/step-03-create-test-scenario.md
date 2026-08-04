@@ -70,6 +70,7 @@ Define how to validate Design Delivery after implementation by creating a Test S
 ### 2. Define Happy Path Tests
 
 For each main user flow in the delivery:
+
 - **Test name**: Descriptive action being tested
 - **Steps**: Numbered sequence of user actions
 - **Expected result**: What should happen at each step
@@ -78,6 +79,7 @@ For each main user flow in the delivery:
 ### 3. Define Error State Tests
 
 For each error scenario:
+
 - **Trigger**: What causes the error (invalid input, network failure, etc.)
 - **Expected error message**: Exact text or pattern
 - **Recovery path**: How the user gets back on track
@@ -86,6 +88,7 @@ For each error scenario:
 ### 4. Define Edge Case Tests
 
 For boundary conditions and unusual scenarios:
+
 - **Empty states**: No data, first-time user, cleared history
 - **Boundary values**: Max lengths, zero values, special characters
 - **Concurrent actions**: Multiple tabs, rapid clicks, interrupted flows

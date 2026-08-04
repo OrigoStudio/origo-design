@@ -58,6 +58,7 @@ Verify persona documents match trigger map hub data and are internally consisten
 ### 1. Hub to Persona Document Alignment
 
 For each persona:
+
 - Name matches between hub and persona document
 - Priority level matches between hub and persona document
 - Driving forces in persona doc match those in hub
@@ -66,6 +67,7 @@ For each persona:
 ### 2. Persona Document Completeness
 
 Each persona document should have all required sections:
+
 - Name and role description
 - Behavioral profile (not just demographics)
 - Goals and motivations
@@ -96,11 +98,13 @@ Each persona document should have all required sections:
 Display: "**Select an Option:** [C] Continue to Feature Impact Alignment | [M] Return to Activity Menu"
 
 #### Menu Handling Logic:
+
 - IF C: Load and execute {nextStepFile}
 - IF M: Return to {activityWorkflowFile}
 - IF Any other comments or queries: help user respond then [Redisplay Menu Options]
 
 #### EXECUTION RULES:
+
 - ALWAYS halt and wait for user input after presenting menu
 - User can chat or ask questions - always respond and then redisplay menu options
 
@@ -113,6 +117,7 @@ ONLY WHEN user selects [C] will you load the next step file. Persona consistency
 ## 🚨 SYSTEM SUCCESS/FAILURE METRICS
 
 ### ✅ SUCCESS:
+
 - All personas compared against hub data
 - Name and priority mismatches identified
 - Section completeness verified for each document
@@ -121,6 +126,7 @@ ONLY WHEN user selects [C] will you load the next step file. Persona consistency
 - Consistency report generated
 
 ### ❌ SYSTEM FAILURE:
+
 - Not comparing against hub data
 - Missing section completeness check
 - Not checking cross-persona distinctness

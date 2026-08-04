@@ -5,4 +5,8 @@
 /.nx/workspace-data
 /_bmad-output
 /_bmad
+/.agents
 /.agent
+**/.astro
+/resolved_config.json
+/bmad_resolved_config.json

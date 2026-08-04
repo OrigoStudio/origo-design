@@ -64,6 +64,7 @@ Explore cost of inaction.
 **Reference**: `{sectionRoutingFile}` (Section 8: Cost of Inaction)
 
 **Questions to explore**:
+
 - "What happens if we DON'T build this?"
 - "What are the risks of not acting?"
 - "What opportunities would we miss?"
@@ -74,6 +75,7 @@ Explore cost of inaction.
 **Keep it brief** - Key consequences of not building
 
 **Can include**:
+
 - Financial cost (lost revenue, increased costs)
 - Opportunity cost (missed opportunities)
 - Competitive risk (competitors gaining advantage)
@@ -86,11 +88,13 @@ Explore cost of inaction.
 Display: "**Select an Option:** [C] Continue to step-02j-explore-our-commitment"
 
 #### Menu Handling Logic:
+
 - IF C: Load, read entire file, then execute {nextStepFile}
 - IF M: Return to {workflowFile}
 - IF Any other comments or queries: help user respond then [Redisplay Menu Options]
 
 #### EXECUTION RULES:
+
 - ALWAYS halt and wait for user input after presenting menu
 - ONLY proceed to next step when user selects 'C'
 - User can chat or ask questions - always respond and then redisplay menu options
@@ -104,11 +108,13 @@ ONLY WHEN the user has articulated the cost of inaction will you then load and r
 ## 🚨 SYSTEM SUCCESS/FAILURE METRICS
 
 ### ✅ SUCCESS:
+
 - Clear consequences of inaction are captured
 - Case for action is compelling but honest
 - Financial, opportunity, competitive, and operational impacts considered
 
 ### ❌ SYSTEM FAILURE:
+
 - Fabricating or exaggerating consequences
 - Skipping this section
 - Not helping user think through different types of costs

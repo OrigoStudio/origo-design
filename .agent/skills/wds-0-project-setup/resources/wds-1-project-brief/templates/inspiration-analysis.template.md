@@ -17,24 +17,32 @@
 **URL:** {{this.url}}
 
 #### What Client Liked
+
 {{#each this.liked}}
+
 - **{{this.element}}** — {{this.why}}
-{{/each}}
+  {{/each}}
 
 #### What Client Didn't Like
+
 {{#each this.disliked}}
+
 - **{{this.element}}** — {{this.why}}
-{{/each}}
+  {{/each}}
 
 #### Adaptations Needed
+
 {{#each this.adaptations}}
+
 - **{{this.element}}** — {{this.modification}}
-{{/each}}
+  {{/each}}
 
 #### Principles Extracted
+
 {{#each this.principles}}
+
 - {{this}}
-{{/each}}
+  {{/each}}
 
 ---
 
@@ -43,48 +51,60 @@
 ## Design Principles (Synthesized)
 
 ### Layout
+
 **DO:**
 {{#each layout_do}}
+
 - {{this}}
-{{/each}}
+  {{/each}}
 
 **DON'T:**
 {{#each layout_dont}}
+
 - {{this}}
-{{/each}}
+  {{/each}}
 
 ### Content Hierarchy
+
 **DO:**
 {{#each content_do}}
+
 - {{this}}
-{{/each}}
+  {{/each}}
 
 **DON'T:**
 {{#each content_dont}}
+
 - {{this}}
-{{/each}}
+  {{/each}}
 
 ### Visual Style
+
 **DO:**
 {{#each visual_do}}
+
 - {{this}}
-{{/each}}
+  {{/each}}
 
 **DON'T:**
 {{#each visual_dont}}
+
 - {{this}}
-{{/each}}
+  {{/each}}
 
 ### User Experience
+
 **DO:**
 {{#each ux_do}}
+
 - {{this}}
-{{/each}}
+  {{/each}}
 
 **DON'T:**
 {{#each ux_dont}}
+
 - {{this}}
-{{/each}}
+  {{/each}}
 
 ---
 

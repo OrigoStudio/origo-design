@@ -192,7 +192,15 @@ project_name: '{{project_name}}'
 user_name: '{{user_name}}'
 date: '{{date}}'
 sections_completed:
-  ['technology_stack', 'engine_rules', 'performance_rules', 'organization_rules', 'testing_rules', 'platform_rules', 'anti_patterns']
+  [
+    'technology_stack',
+    'engine_rules',
+    'performance_rules',
+    'organization_rules',
+    'testing_rules',
+    'platform_rules',
+    'anti_patterns',
+  ]
 status: 'complete'
 rule_count: { { total_rules } }
 optimized_for_llm: true

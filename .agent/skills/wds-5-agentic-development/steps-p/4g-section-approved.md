@@ -60,6 +60,7 @@ Acknowledge user approval and announce status update.
 ### 2. Update Story File Status
 
 Update `stories/[View].[N]-[section-name].md` with:
+
 - Status: Complete
 - Completed date
 - Implementation summary (objects, issues, improvements, time)
@@ -86,15 +87,18 @@ Announce completion of all sections and present summary of files created and sta
 ### 6. Present MENU OPTIONS
 
 Display based on status:
+
 - **If more sections**: "[C] Continue to Step 4a: Announce and Gather (next section)"
 - **If all complete**: "[C] Continue to Step 5: Finalization"
 
 #### Menu Handling Logic:
+
 - IF C (more sections): Update design log, then load, read entire file, then execute `./4a-announce-and-gather.md`
 - IF C (all complete): Update design log, then load, read entire file, then execute {nextStepFile}
 - IF Any other comments or queries: help user respond then [Redisplay Menu Options]
 
 #### EXECUTION RULES:
+
 - ALWAYS halt and wait for user input after presenting menu
 - ONLY proceed to next step when user selects 'C'
 - User can chat or ask questions - always respond and then redisplay menu options
@@ -108,12 +112,14 @@ ONLY WHEN status files are updated and user has chosen to continue will you then
 ## 🚨 SYSTEM SUCCESS/FAILURE METRICS
 
 ### ✅ SUCCESS:
+
 - Story file status updated to complete
 - Work file updated with section status
 - Progress reported to user
 - Correct routing (next section or finalization)
 
 ### ❌ SYSTEM FAILURE:
+
 - Not updating story file status
 - Not updating work file
 - Skipping progress report

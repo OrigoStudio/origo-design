@@ -74,12 +74,12 @@ health_changed.emit(current_health, max_health)
 
 **Signal vs direct call guidelines:**
 
-| Use Signals When | Use Direct Calls When |
-|---|---|
-| Notifying unknown listeners | Calling a known child node |
-| Broadcasting state changes | Requesting specific behavior |
-| Decoupling siblings | Parent configuring a child |
-| Multiple listeners possible | Single target, synchronous |
+| Use Signals When            | Use Direct Calls When        |
+| --------------------------- | ---------------------------- |
+| Notifying unknown listeners | Calling a known child node   |
+| Broadcasting state changes  | Requesting specific behavior |
+| Decoupling siblings         | Parent configuring a child   |
+| Multiple listeners possible | Single target, synchronous   |
 
 ### Resource-Based Data
 
@@ -108,16 +108,16 @@ var dps: float:
 
 ## GDScript vs C# Decision Guide
 
-| Factor | GDScript | C# |
-|---|---|---|
-| **Learning curve** | Easy, Python-like | Moderate, requires .NET knowledge |
-| **Engine integration** | Native, full API access | Full API access, slight overhead |
-| **Performance** | Good for gameplay logic | Better for computation-heavy code |
-| **Typing** | Optional static typing | Strong static typing |
-| **Tooling** | Built-in editor | VS Code, Rider, Visual Studio |
-| **Ecosystem** | Godot-native addons | NuGet packages available |
-| **Export targets** | All platforms | Most platforms (.NET 6+ required) |
-| **Team familiarity** | Godot-specific skill | Transferable C# skill |
+| Factor                 | GDScript                | C#                                |
+| ---------------------- | ----------------------- | --------------------------------- |
+| **Learning curve**     | Easy, Python-like       | Moderate, requires .NET knowledge |
+| **Engine integration** | Native, full API access | Full API access, slight overhead  |
+| **Performance**        | Good for gameplay logic | Better for computation-heavy code |
+| **Typing**             | Optional static typing  | Strong static typing              |
+| **Tooling**            | Built-in editor         | VS Code, Rider, Visual Studio     |
+| **Ecosystem**          | Godot-native addons     | NuGet packages available          |
+| **Export targets**     | All platforms           | Most platforms (.NET 6+ required) |
+| **Team familiarity**   | Godot-specific skill    | Transferable C# skill             |
 
 **Recommendation:** Use GDScript as default. Use C# when the team has strong C# background or when heavy computation benefits from it. Mixing is supported but adds build complexity.
 
@@ -318,46 +318,46 @@ func change_scene_async(path: String) -> void:
 
 ### Essential Development
 
-| Plugin | Purpose | Source |
-|---|---|---|
-| **GUT** (Godot Unit Test) | Testing framework | AssetLib or git submodule |
-| **Phantom Camera** | Advanced camera system (2D/3D) | AssetLib |
-| **Limbo AI** | Behavior trees and state machines for AI | AssetLib or GitHub |
-| **Dialogic 2** | Dialogue and timeline system | AssetLib |
-| **Terrain3D** | Large-scale 3D terrain editing | GitHub releases |
+| Plugin                    | Purpose                                  | Source                    |
+| ------------------------- | ---------------------------------------- | ------------------------- |
+| **GUT** (Godot Unit Test) | Testing framework                        | AssetLib or git submodule |
+| **Phantom Camera**        | Advanced camera system (2D/3D)           | AssetLib                  |
+| **Limbo AI**              | Behavior trees and state machines for AI | AssetLib or GitHub        |
+| **Dialogic 2**            | Dialogue and timeline system             | AssetLib                  |
+| **Terrain3D**             | Large-scale 3D terrain editing           | GitHub releases           |
 
 ### Gameplay Systems
 
-| Plugin | Purpose | Source |
-|---|---|---|
-| **GodotSteam** | Steamworks SDK integration | GitHub / GDExtension |
-| **Godot Jolt** | Jolt Physics replacement (faster, more stable 3D) | AssetLib |
-| **SmartShape2D** | Procedural 2D terrain/shapes | AssetLib |
-| **Maaack's Game Template** | Project template with menus, settings, save system | GitHub / AssetLib |
-| **Quest Manager** | Quest/objective tracking | AssetLib |
+| Plugin                     | Purpose                                            | Source               |
+| -------------------------- | -------------------------------------------------- | -------------------- |
+| **GodotSteam**             | Steamworks SDK integration                         | GitHub / GDExtension |
+| **Godot Jolt**             | Jolt Physics replacement (faster, more stable 3D)  | AssetLib             |
+| **SmartShape2D**           | Procedural 2D terrain/shapes                       | AssetLib             |
+| **Maaack's Game Template** | Project template with menus, settings, save system | GitHub / AssetLib    |
+| **Quest Manager**          | Quest/objective tracking                           | AssetLib             |
 
 ### Visual and Audio
 
-| Plugin | Purpose | Source |
-|---|---|---|
-| **Godot Shaders** | Curated shader collection | GitHub |
-| **Sprite3D Billboard** | 2D sprites in 3D world | AssetLib |
-| **SFXPlayer** | Advanced SFX management with pooling | AssetLib |
+| Plugin                 | Purpose                              | Source   |
+| ---------------------- | ------------------------------------ | -------- |
+| **Godot Shaders**      | Curated shader collection            | GitHub   |
+| **Sprite3D Billboard** | 2D sprites in 3D world               | AssetLib |
+| **SFXPlayer**          | Advanced SFX management with pooling | AssetLib |
 
 ### Networking
 
-| Plugin | Purpose | Source |
-|---|---|---|
-| **Godot Steam Multiplayer Peer** | Steam networking transport | GitHub |
-| **Nakama** | Open-source game server (auth, matchmaking, realtime) | Docker + GDScript SDK |
-| **WebRTC** | Browser-compatible P2P networking | Built-in module |
+| Plugin                           | Purpose                                               | Source                |
+| -------------------------------- | ----------------------------------------------------- | --------------------- |
+| **Godot Steam Multiplayer Peer** | Steam networking transport                            | GitHub                |
+| **Nakama**                       | Open-source game server (auth, matchmaking, realtime) | Docker + GDScript SDK |
+| **WebRTC**                       | Browser-compatible P2P networking                     | Built-in module       |
 
 ### Export and Platform
 
-| Plugin | Purpose | Source |
-|---|---|---|
+| Plugin                | Purpose                          | Source |
+| --------------------- | -------------------------------- | ------ |
 | **Godot Google Play** | Google Play services integration | GitHub |
-| **Godot Admob** | Ad monetization for mobile | GitHub |
+| **Godot Admob**       | Ad monetization for mobile       | GitHub |
 
 ## AI-Assisted Development
 
@@ -450,17 +450,17 @@ func change_scene(path: String, transition: String = "fade") -> void:
 
 If architecture docs or tutorials reference Godot 3, note these changes:
 
-| Godot 3 | Godot 4 |
-|---|---|
-| `yield()` | `await` |
-| `KinematicBody2D` | `CharacterBody2D` |
+| Godot 3                                     | Godot 4                                                                        |
+| ------------------------------------------- | ------------------------------------------------------------------------------ |
+| `yield()`                                   | `await`                                                                        |
+| `KinematicBody2D`                           | `CharacterBody2D`                                                              |
 | `move_and_slide(velocity)` returns velocity | Set `self.velocity = ...` then call `move_and_slide()` (no args, returns void) |
-| `export var` | `@export var` |
-| `onready var` | `@onready var` |
-| `connect("signal", obj, "method")` | `signal.connect(callable)` |
-| `tween = create_tween()` | Same, but `Tween` is refcounted |
-| GDNative (C++) | GDExtension (C++) |
-| `PoolStringArray` | `PackedStringArray` |
+| `export var`                                | `@export var`                                                                  |
+| `onready var`                               | `@onready var`                                                                 |
+| `connect("signal", obj, "method")`          | `signal.connect(callable)`                                                     |
+| `tween = create_tween()`                    | Same, but `Tween` is refcounted                                                |
+| GDNative (C++)                              | GDExtension (C++)                                                              |
+| `PoolStringArray`                           | `PackedStringArray`                                                            |
 
 ## Licensing and Cost
 

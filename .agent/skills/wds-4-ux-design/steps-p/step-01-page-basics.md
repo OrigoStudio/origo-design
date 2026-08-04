@@ -69,6 +69,7 @@ Capture fundamental page information including title, URL/route, user goal, entr
 
 **SEO (for public pages):**
 Check the project brief's SEO Strategy for this page's target keywords.
+
 - Primary keyword:
 - Secondary keywords:
 - URL slug (from keyword map):</ask>

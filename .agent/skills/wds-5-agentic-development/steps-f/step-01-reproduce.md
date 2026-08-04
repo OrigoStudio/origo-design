@@ -83,6 +83,7 @@ Confirm the bug exists and document exact reproduction steps.
 ### 5. Handle Non-Reproducible Bugs
 
 If the bug cannot be reproduced:
+
 - Request more details from the reporter (exact steps, screenshots, browser version)
 - Check if the bug is environment-specific (browser, OS, network)
 - Check if recent changes resolved it inadvertently
@@ -103,10 +104,12 @@ If the bug cannot be reproduced:
 Display: "**Select an Option:** [C] Continue to Step 2: Investigate"
 
 #### Menu Handling Logic:
+
 - IF C: Update design log, then load, read entire file, then execute {nextStepFile}
 - IF Any other comments or queries: help user respond then [Redisplay Menu Options]
 
 #### EXECUTION RULES:
+
 - ALWAYS halt and wait for user input after presenting menu
 - ONLY proceed to next step when user selects 'C'
 - User can chat or ask questions - always respond and then redisplay menu options
@@ -120,6 +123,7 @@ ONLY WHEN the bug has been reproduced and documented with exact steps will you t
 ## 🚨 SYSTEM SUCCESS/FAILURE METRICS
 
 ### ✅ SUCCESS:
+
 - Bug report details gathered and understood
 - Reproduction environment matches reporter's setup
 - Bug reproduced at least twice
@@ -128,6 +132,7 @@ ONLY WHEN the bug has been reproduced and documented with exact steps will you t
 - Dialog file updated with reproduction details
 
 ### ❌ SYSTEM FAILURE:
+
 - Proceeding to investigation without reproducing the bug
 - Attempting to fix the bug before understanding how to trigger it
 - Not documenting reproduction steps

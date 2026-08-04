@@ -14,12 +14,13 @@ web_bundle: true
 
 ## Steps
 
-| # | File | Purpose |
-|---|------|---------|
-| 01 | [Offer Signoff Document](01-offer-signoff-document.md) | Offer to generate signoff document after acceptance |
-| 02 | [Determine Business Model](02-determine-business-model.md) | Determine payment model for external contracts |
+| #   | File                                                       | Purpose                                             |
+| --- | ---------------------------------------------------------- | --------------------------------------------------- |
+| 01  | [Offer Signoff Document](01-offer-signoff-document.md)     | Offer to generate signoff document after acceptance |
+| 02  | [Determine Business Model](02-determine-business-model.md) | Determine payment model for external contracts      |
 
 **Routes to:**
+
 - External contract → `../05-build-contract/workflow.md`
 - Internal signoff → `../06-build-signoff-internal/workflow.md`
 - Skip signoff → Proceed to Project Brief

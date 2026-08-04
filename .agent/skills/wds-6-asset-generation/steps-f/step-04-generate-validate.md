@@ -58,6 +58,7 @@ Create root container, state/variant containers, apply OBJECT IDs from specifica
 ### 2. Apply Styling Requirements
 
 Convert all styles to Figma-compatible CSS:
+
 - Fonts: Google Fonts only, imported in style block
 - Colors: Convert CSS variables to hex values
 - Spacing: Convert rem/em to pixels
@@ -66,6 +67,7 @@ Convert all styles to Figma-compatible CSS:
 ### 3. Run Validation Checks
 
 Execute five validation checks:
+
 1. **Specification Coverage:** All components have OBJECT IDs, IDs match exactly, no duplicates
 2. **ID Naming Convention:** IDs follow project pattern, consistent naming, correct state suffixes
 3. **HTML Structure:** Semantic tags, proper hierarchy, container elements

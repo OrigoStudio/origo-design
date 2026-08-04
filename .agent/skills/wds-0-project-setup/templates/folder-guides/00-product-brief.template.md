@@ -21,6 +21,7 @@ The Product Brief answers five strategic questions:
 Everything downstream — trigger maps, scenarios, page specs, design system — traces back to decisions made here. This is the North Star.
 
 **Learn more:**
+
 - WDS Course Module 04: Product Brief — Your Strategic Foundation
 - WDS Course Module 05: Platform Requirements
 
@@ -33,6 +34,7 @@ Everything downstream — trigger maps, scenarios, page specs, design system —
 **Templates:** `./resources/wds-1-project-brief/templates/`
 
 **Before writing anything in this folder:**
+
 1. Load the workflow and follow its steps
 2. Use Dialog mode for discovery — ask questions, don't assume
 3. Read existing materials if the user has them (check `wds-project-outline.yaml`)
@@ -49,10 +51,10 @@ Everything downstream — trigger maps, scenarios, page specs, design system —
 
 _This section will be updated as documents are created during Phase 1._
 
-| # | Document | Status |
-|---|----------|--------|
-| 01 | Product Brief | Not started |
-| 02 | Platform Requirements | Not started |
+| #   | Document              | Status      |
+| --- | --------------------- | ----------- |
+| 01  | Product Brief         | Not started |
+| 02  | Platform Requirements | Not started |
 
 ---
 

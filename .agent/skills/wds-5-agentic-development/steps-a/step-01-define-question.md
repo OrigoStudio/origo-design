@@ -57,15 +57,15 @@ Articulate exactly what you need to understand about the codebase before reading
 
 Write down what you need to understand. Common analysis questions:
 
-| Category | Example Questions |
-|----------|-------------------|
-| **Architecture** | How is this application structured? What patterns does it use? |
-| **Dependencies** | What does this module depend on? What would break if I change it? |
-| **Patterns** | What conventions does the team follow? Where are they inconsistent? |
-| **Performance** | Where are the bottlenecks? What queries are expensive? |
-| **Data flow** | How does data move from user input to database and back? |
-| **Integration** | What external services does this connect to? How? |
-| **Security** | Where is authentication handled? Are there exposed endpoints? |
+| Category         | Example Questions                                                   |
+| ---------------- | ------------------------------------------------------------------- |
+| **Architecture** | How is this application structured? What patterns does it use?      |
+| **Dependencies** | What does this module depend on? What would break if I change it?   |
+| **Patterns**     | What conventions does the team follow? Where are they inconsistent? |
+| **Performance**  | Where are the bottlenecks? What queries are expensive?              |
+| **Data flow**    | How does data move from user input to database and back?            |
+| **Integration**  | What external services does this connect to? How?                   |
+| **Security**     | Where is authentication handled? Are there exposed endpoints?       |
 
 Write the question in plain language. If you have multiple questions, prioritize them.
 
@@ -95,10 +95,10 @@ Decide what the analysis should produce:
 
 Decide how long the analysis should take. Recommended:
 
-| Scope | Time Box |
-|-------|----------|
+| Scope         | Time Box  |
+| ------------- | --------- |
 | Single module | 15-30 min |
-| Feature area | 30-60 min |
+| Feature area  | 30-60 min |
 | Full codebase | 1-2 hours |
 
 If the time box expires, document what you found and what remains unexplored.
@@ -115,10 +115,12 @@ If the time box expires, document what you found and what remains unexplored.
 Display: "**Select an Option:** [C] Continue to Step 2: Scan Codebase"
 
 #### Menu Handling Logic:
+
 - IF C: Update design log, then load, read entire file, then execute {nextStepFile}
 - IF Any other comments or queries: help user respond then [Redisplay Menu Options]
 
 #### EXECUTION RULES:
+
 - ALWAYS halt and wait for user input after presenting menu
 - ONLY proceed to next step when user selects 'C'
 - User can chat or ask questions - always respond and then redisplay menu options
@@ -132,12 +134,14 @@ ONLY WHEN the user has confirmed a clear question, scope, output format, and tim
 ## 🚨 SYSTEM SUCCESS/FAILURE METRICS
 
 ### ✅ SUCCESS:
+
 - Question is written in plain language
 - Scope boundaries are defined (what is in, what is out)
 - Expected output format is chosen
 - Time box is set
 
 ### ❌ SYSTEM FAILURE:
+
 - Beginning codebase exploration before question is defined
 - Proceeding without clear scope boundaries
 - Skipping time box definition

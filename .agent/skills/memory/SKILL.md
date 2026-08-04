@@ -1,6 +1,6 @@
 ---
 name: memory
-version: "1.0.0"
+version: '1.0.0'
 description: Session state backend for WDS. Called by wrap, start, and handoff tools — never directly by users. Writes to progress/ in the project repo.
 agents: [saga, freya, mimir]
 ---
@@ -18,6 +18,7 @@ State lives in `progress/` at the project root. This folder is project-scoped �
 **Called by:** wrap (step 3), handoff (step 3)
 
 **Input:**
+
 - `agent_id` — the agent whose state is being saved (saga, freya, mimir)
 - `data` — the compiled state block (Wrapped, Context, Plan, Next, Learned, Spec Sync fields)
 
@@ -34,6 +35,7 @@ State lives in `progress/` at the project root. This folder is project-scoped �
 **Called by:** start (step 2)
 
 **Input:**
+
 - `agent_id` — the agent whose state is being loaded
 
 **Steps:**

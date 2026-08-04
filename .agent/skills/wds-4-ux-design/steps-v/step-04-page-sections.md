@@ -58,6 +58,7 @@ Verify that page specification has properly structured Page Sections with Object
 ### 1. Check Page Sections Structure
 
 Check for "## Page Sections" header. Verify:
+
 - Section Objects (H3) with clear purpose statements
 - Component specs (H4) with Object IDs in format `OBJECT ID: object-name`
 - Design system component references

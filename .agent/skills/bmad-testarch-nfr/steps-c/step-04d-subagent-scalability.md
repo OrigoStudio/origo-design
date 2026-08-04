@@ -68,7 +68,11 @@ This is an **isolated subagent** running in parallel with other NFR domain evide
       "status": "CONCERN",
       "description": "No database sharding strategy for large data growth",
       "evidence": ["Single database instance", "No partitioning"],
-      "recommendations": ["Plan database sharding strategy", "Implement read replicas", "Consider database clustering"]
+      "recommendations": [
+        "Plan database sharding strategy",
+        "Implement read replicas",
+        "Consider database clustering"
+      ]
     }
   ],
   "compliance": {
@@ -76,7 +80,10 @@ This is an **isolated subagent** running in parallel with other NFR domain evide
     "10M_users": "CONCERN",
     "100M_users": "FAIL"
   },
-  "priority_actions": ["Design database sharding strategy for future growth", "Implement read replicas for read-heavy workloads"],
+  "priority_actions": [
+    "Design database sharding strategy for future growth",
+    "Implement read replicas for read-heavy workloads"
+  ],
   "summary": "Scalability is good up to 1M users, concerns for 10M+ users"
 }
 ```

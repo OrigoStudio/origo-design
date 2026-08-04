@@ -54,11 +54,11 @@ Report the winning description, its test score, and the round-by-round trail (ea
 
 ## Why each guard is here
 
-| Guard | What it prevents |
-|---|---|
-| near-miss should-not queries | a test set so easy the description never has to draw a real boundary |
-| 60/40 stratified split | a split that hides the false-positive or false-negative problem in one half |
-| fixed split across rounds | a weakness escaping into the train set on a later round |
-| test score blinded from improver | the improver tuning its wording to the held-out queries |
-| pick by test score, not train | shipping a description that fixed the visible failures but does not generalize |
-| prior attempts fed back | the loop oscillating between two phrasings instead of finding a new boundary |
+| Guard                            | What it prevents                                                               |
+| -------------------------------- | ------------------------------------------------------------------------------ |
+| near-miss should-not queries     | a test set so easy the description never has to draw a real boundary           |
+| 60/40 stratified split           | a split that hides the false-positive or false-negative problem in one half    |
+| fixed split across rounds        | a weakness escaping into the train set on a later round                        |
+| test score blinded from improver | the improver tuning its wording to the held-out queries                        |
+| pick by test score, not train    | shipping a description that fixed the visible failures but does not generalize |
+| prior attempts fed back          | the loop oscillating between two phrasings instead of finding a new boundary   |

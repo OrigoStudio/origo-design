@@ -35,15 +35,18 @@ Templates for monitoring impact and iterating in Phase 8 (Product Evolution).
 # Qualitative Feedback: DD-XXX
 
 ## Positive Feedback (8 mentions)
+
 - "Now I understand how to use Feature X!" (3)
 - "The guide was really helpful" (2)
 - "Love the new onboarding" (3)
 
 ## Negative Feedback (2 mentions)
+
 - "Guide is too long" (1)
 - "Can't skip the guide" (1)
 
 ## Neutral Feedback (3 mentions)
+
 - "Didn't notice the change" (3)
 ```
 
@@ -79,6 +82,7 @@ overwhelmingly positive."
 ## Metrics Results
 
 ### Metric 1: Feature X Usage Rate
+
 - **Baseline:** 15%
 - **Target:** 60%
 - **Actual:** 58%
@@ -86,6 +90,7 @@ overwhelmingly positive."
 - **Trend:** Steady increase over 2 weeks
 
 ### Metric 2: Drop-off Rate
+
 - **Baseline:** 40%
 - **Target:** 10%
 - **Actual:** 12%
@@ -93,12 +98,14 @@ overwhelmingly positive."
 - **Trend:** Sharp decrease in first week, stabilized
 
 ### Metric 3: Support Tickets
+
 - **Baseline:** 12/month
 - **Target:** 2/month
 - **Actual:** 3/month
 - **Result:** 75% reduction ✅ (PASS)
 
 ### Metric 4: User Satisfaction
+
 - **Baseline:** 3.2/5
 - **Target:** 4.5/5
 - **Actual:** 4.3/5
@@ -109,6 +116,7 @@ overwhelmingly positive."
 ## Overall Assessment
 
 **Success Criteria:**
+
 - Feature X usage > 50% ✅
 - Drop-off < 15% ✅
 - Support tickets < 5/month ✅
@@ -166,11 +174,13 @@ All success criteria met or exceeded.
 ## Recommendations
 
 ### Short-term (Next Sprint)
+
 1. Add "Skip" button to guide
 2. Shorten guide from 5 steps to 3 steps
 3. A/B test guide length
 
 ### Long-term (Next Quarter)
+
 1. Apply onboarding pattern to other features
 2. Create reusable onboarding component
 3. Measure onboarding impact across product
@@ -243,6 +253,7 @@ WDS Designer
 # Kaizen Cycle Log
 
 ## Cycle 1: DD-001 Feature X Onboarding
+
 - Started: 2024-12-09
 - Completed: 2024-12-28
 - Result: SUCCESS ✅
@@ -250,6 +261,7 @@ WDS Designer
 - Learning: Onboarding matters for complex features
 
 ## Cycle 2: DD-002 Feature Y Onboarding
+
 - Started: 2024-12-28
 - Status: In Progress
 - Goal: Apply validated pattern to similar feature
@@ -264,18 +276,21 @@ WDS Designer
 # Kaizen Prioritization
 
 ## Option A: Refine DD-XXX
+
 - Impact: Medium (58% → 65%)
 - Effort: Low (1 day)
 - Learning: Low (incremental)
 - Priority: MEDIUM
 
 ## Option B: Apply to Feature Y
+
 - Impact: High (20% → 80%)
 - Effort: Low (2 days)
 - Learning: High (validates pattern)
 - Priority: HIGH ✅
 
 ## Option C: Fix Feature Z Performance
+
 - Impact: Medium (35% → 20% drop-off)
 - Effort: Low (1 day)
 - Learning: Medium (performance optimization)
@@ -292,23 +307,28 @@ WDS Designer
 # Learnings from DD-XXX
 
 ## What Worked
+
 1. [Learning 1]
 2. [Learning 2]
 3. [Learning 3]
 
 ## What Didn't Work
+
 1. [Learning 1]
 2. [Learning 2]
 
 ## Patterns Emerging
+
 1. [Pattern 1]
 2. [Pattern 2]
 
 ## Hypotheses Validated
+
 1. [Hypothesis 1]: ✅ Confirmed
 2. [Hypothesis 2]: ❌ Rejected
 
 ## New Questions
+
 1. [Question 1]
 2. [Question 2]
 ```
@@ -323,15 +343,18 @@ WDS Designer
 # Next Iteration: DD-XXX Refinement
 
 **Current Status:**
+
 - Feature X usage: 58% (target: 60%)
 - User feedback: "Guide too long"
 
 **Next Improvement:**
+
 - Shorten guide from 5 steps to 3 steps
 - Add "Skip" button
 - A/B test guide length
 
 **Expected Impact:**
+
 - Feature X usage: 58% → 65%
 - User satisfaction: 4.3/5 → 4.7/5
 
@@ -348,6 +371,7 @@ WDS Designer
 "Onboarding increases usage 4x for complex features"
 
 **Similar Problem:**
+
 - Feature Y usage: 20% (low)
 - User feedback: "Don't understand Feature Y"
 - Similar complexity to Feature X
@@ -356,6 +380,7 @@ WDS Designer
 Apply same onboarding pattern to Feature Y
 
 **Expected Impact:**
+
 - Feature Y usage: 20% → 80% (4x increase)
 - Based on DD-XXX results
 
@@ -369,6 +394,7 @@ Apply same onboarding pattern to Feature Y
 # Next Opportunity: New Problem Identified
 
 **New Data:**
+
 - Feature Z drop-off: 35% (increased from 20%)
 - User feedback: "Feature Z is slow"
 - Analytics: Load time 5 seconds (was 2 seconds)
@@ -380,6 +406,7 @@ Recent update added heavy images, slowing load time
 Optimize images and implement lazy loading
 
 **Expected Impact:**
+
 - Load time: 5s → 2s
 - Drop-off: 35% → 20%
 

@@ -13,8 +13,8 @@ borrows_from: Phase 5 [T] (acceptance testing)
 ## INITIALIZATION
 
 ### Design Log
-Read `{output_folder}/_progress/00-design-log.md`. Check Current and Backlog for context.
 
+Read `{output_folder}/_progress/00-design-log.md`. Check Current and Backlog for context.
 
 ## Steps
 
@@ -40,12 +40,13 @@ Ensure the implementation is running and testable:
 
 For each acceptance criterion:
 
-| # | Criterion | Steps | Expected | Actual | Pass? |
-|---|-----------|-------|----------|--------|-------|
-| 1 | [From spec] | [How to test] | [Expected result] | [What happened] | Y/N |
-| 2 | ... | ... | ... | ... | ... |
+| #   | Criterion   | Steps         | Expected          | Actual          | Pass? |
+| --- | ----------- | ------------- | ----------------- | --------------- | ----- |
+| 1   | [From spec] | [How to test] | [Expected result] | [What happened] | Y/N   |
+| 2   | ...         | ...           | ...               | ...             | ...   |
 
 Also test:
+
 - **Responsive**: Check all breakpoints defined in spec
 - **Edge cases**: Empty states, long content, error states
 - **Regression**: Verify nothing else broke on the page
@@ -59,15 +60,19 @@ Create test report at `{output_folder}/evolution/test-reports/`:
 # Test Report: [Scenario Name]
 
 ## Summary
+
 [X/Y criteria passed]
 
 ## Results
+
 [Test table from Step 3]
 
 ## Issues Found
+
 [List any failures with severity and description]
 
 ## Recommendation
+
 [Pass / Pass with notes / Fail — needs rework]
 ```
 

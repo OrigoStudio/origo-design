@@ -101,10 +101,12 @@ Document the bug, the fix, and create a clean PR.
 Display: "**Select an Option:** [M] Return to Activity Menu"
 
 #### Menu Handling Logic:
+
 - IF M: Update design log, then load, read entire file, then execute {activityWorkflowFile}
 - IF Any other comments or queries: help user respond then [Redisplay Menu Options]
 
 #### EXECUTION RULES:
+
 - ALWAYS halt and wait for user input after presenting menu
 - ONLY proceed when user selects 'M'
 - User can chat or ask questions - always respond and then redisplay menu options
@@ -118,6 +120,7 @@ ONLY WHEN documentation is complete, PR is created, and similar risks are flagge
 ## 🚨 SYSTEM SUCCESS/FAILURE METRICS
 
 ### ✅ SUCCESS:
+
 - Root cause documented
 - Fix approach documented
 - Tests updated and passing
@@ -126,6 +129,7 @@ ONLY WHEN documentation is complete, PR is created, and similar risks are flagge
 - Dialog file finalized with complete bugfix record
 
 ### ❌ SYSTEM FAILURE:
+
 - Not documenting root cause
 - Creating PR without clear description
 - Not flagging similar risks

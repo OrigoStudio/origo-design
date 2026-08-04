@@ -32,12 +32,12 @@ The customize.toml in the skill is the base. The user never edits it, because an
 
 When customization is accepted, these four points appear in nearly every producing skill, so they are baked in by default under `[workflow]`:
 
-| Key | Type | Default | Purpose |
-|---|---|---|---|
-| `activation_steps_prepend` | array | `[]` | Steps to run before standard activation (pre-flight loads, compliance checks). Overrides append. |
-| `activation_steps_append` | array | `[]` | Steps to run after greet, before the workflow begins. Overrides append. |
-| `persistent_facts` | array | `["file:{project-root}/**/project-context.md"]` | Static facts loaded on activation and kept in mind for the whole run. Overrides append. |
-| `on_complete` | scalar | `""` | Instruction executed when the workflow reaches its terminal stage. Override wins. |
+| Key                        | Type   | Default                                         | Purpose                                                                                          |
+| -------------------------- | ------ | ----------------------------------------------- | ------------------------------------------------------------------------------------------------ |
+| `activation_steps_prepend` | array  | `[]`                                            | Steps to run before standard activation (pre-flight loads, compliance checks). Overrides append. |
+| `activation_steps_append`  | array  | `[]`                                            | Steps to run after greet, before the workflow begins. Overrides append.                          |
+| `persistent_facts`         | array  | `["file:{project-root}/**/project-context.md"]` | Static facts loaded on activation and kept in mind for the whole run. Overrides append.          |
+| `on_complete`              | scalar | `""`                                            | Instruction executed when the workflow reaches its terminal stage. Override wins.                |
 
 `persistent_facts` entries are each a literal sentence, a `skill:`-prefixed reference, or a `file:`-prefixed path or glob whose contents load as facts. The default glob picks up a project-context.md anywhere under the project root if one exists, and resolves to nothing when it does not.
 
@@ -45,14 +45,14 @@ When customization is accepted, these four points appear in nearly every produci
 
 Beyond the universal four, offer a point only when the matching stage exists in the skill. Offering an output-path knob to a skill that produces no artifact is a no-op surface the reader has to skip.
 
-| Point | Offer when | Shape |
-|---|---|---|
-| `<purpose>_template` | The skill loads a template the user might want to swap | Scalar file path, e.g. `brief_template = "assets/brief-template.md"` |
-| `<purpose>_output_path` + `run_folder_pattern` | The skill produces artifacts to a writable destination | Paired scalars; the pattern names the per-run folder |
-| `doc_standards` | A finalize stage applies standards to human-consumed docs | Array of `skill:` / `file:` / plain-text directives |
-| `finalize_reviewers` | A review stage gates substantive output | Array of reviewer references |
-| `external_sources` | A stage pulls in outside inputs | Array of source references |
-| `external_handoffs` | A stage routes output onward | Array of handoff references, `tool:` for tool-style routing |
+| Point                                          | Offer when                                                | Shape                                                                |
+| ---------------------------------------------- | --------------------------------------------------------- | -------------------------------------------------------------------- |
+| `<purpose>_template`                           | The skill loads a template the user might want to swap    | Scalar file path, e.g. `brief_template = "assets/brief-template.md"` |
+| `<purpose>_output_path` + `run_folder_pattern` | The skill produces artifacts to a writable destination    | Paired scalars; the pattern names the per-run folder                 |
+| `doc_standards`                                | A finalize stage applies standards to human-consumed docs | Array of `skill:` / `file:` / plain-text directives                  |
+| `finalize_reviewers`                           | A review stage gates substantive output                   | Array of reviewer references                                         |
+| `external_sources`                             | A stage pulls in outside inputs                           | Array of source references                                           |
+| `external_handoffs`                            | A stage routes output onward                              | Array of handoff references, `tool:` for tool-style routing          |
 
 The four arrays (`doc_standards`, `finalize_reviewers`, `external_sources`, `external_handoffs`) encode standards, not options. They are append-only lists the resolver merges, not toggles that switch behavior on and off.
 
@@ -62,12 +62,12 @@ Entry convention for these arrays: each entry is a `skill:` reference, a `file:`
 
 Three files compose at activation: the baked base in the skill, the team override (`{skill-name}.toml`), and the personal override (`{skill-name}.user.toml`). The resolver merges them in that order, last layer winning where the rules call for a winner, and falls back to reading the three files directly if no resolver is available.
 
-| Value kind | Merge behavior |
-|---|---|
-| Scalar (string, number, bool) | Override wins, last layer applied wins |
-| Table | Deep-merge key by key |
+| Value kind                                    | Merge behavior                                                        |
+| --------------------------------------------- | --------------------------------------------------------------------- |
+| Scalar (string, number, bool)                 | Override wins, last layer applied wins                                |
+| Table                                         | Deep-merge key by key                                                 |
 | Array of tables (entries with `code` or `id`) | Match on `code`/`id`: replace the matching entry, append the new ones |
-| Any other array | Append |
+| Any other array                               | Append                                                                |
 
 There is no removal mechanism by design. To suppress a baked default, override it by key (for a scalar) or fork the skill (for an array entry you cannot reach by key). An override file never shrinks a list, so a base reviewer or standard cannot be silently dropped downstream.
 

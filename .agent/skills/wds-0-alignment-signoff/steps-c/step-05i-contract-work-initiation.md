@@ -65,6 +65,7 @@ Build the Work Initiation section specifying exactly when work can begin - prote
 **Purpose**: Prevents unauthorized work, establishes timeline, protects both parties
 
 **Why this matters**:
+
 - Without this clause, work might begin before contract is fully executed
 - Prevents disputes about when work actually started
 - Protects contractor from doing unpaid work
@@ -72,6 +73,7 @@ Build the Work Initiation section specifying exactly when work can begin - prote
 - Establishes clear timeline expectations
 
 **User options**:
+
 - **Upon contract signing**: Work begins immediately when both parties sign
 - **Specific date**: Work begins on a set calendar date
 - **After initial payment**: Work begins when first payment/deposit is received
@@ -87,11 +89,13 @@ Build the Work Initiation section specifying exactly when work can begin - prote
 Display: "**Select an Option:** [C] Continue to step-05j-contract-terms"
 
 #### Menu Handling Logic:
+
 - IF C: Load, read entire file, then execute {nextStepFile}
 - IF M: Return to {workflowFile}
 - IF Any other comments or queries: help user respond then [Redisplay Menu Options]
 
 #### EXECUTION RULES:
+
 - ALWAYS halt and wait for user input after presenting menu
 - ONLY proceed to next step when user selects 'C'
 - User can chat or ask questions - always respond and then redisplay menu options
@@ -105,11 +109,13 @@ ONLY WHEN the Work Initiation section is built and confirmed will you then load 
 ## 🚨 SYSTEM SUCCESS/FAILURE METRICS
 
 ### ✅ SUCCESS:
+
 - Clear work initiation conditions are defined
 - User's chosen option is documented
 - Both parties are protected
 
 ### ❌ SYSTEM FAILURE:
+
 - Assuming when work should begin
 - Skipping this section
 - Not presenting all options

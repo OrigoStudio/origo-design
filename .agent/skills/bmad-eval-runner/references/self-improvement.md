@@ -42,14 +42,14 @@ When a proposed fix reaches for ALL-CAPS ALWAYS or NEVER or a stack of MUSTs, tr
 
 ## Why each guard is here
 
-| Guard | What it prevents |
-|---|---|
-| opt-in | a loop applying changes the user never authorized |
-| stakes calibration | the same aggressiveness on a throwaway and a depended-on skill |
-| eval confirms the scan | auto-fixing a finding the evidence does not support |
-| one change per round | a round whose delta cannot be attributed to a specific fix |
-| revert on regression | building the next round on a change that made things worse |
-| round bound | a loop that runs away instead of handing back to a human |
-| full memlog trail | reasoning that lives only in the model and cannot be audited |
-| benchmark as guardrail, human as judge | treating a green run as proof the change is correct |
-| generalize to intent | a hardcoded patch that passes the case and leaves the class broken |
+| Guard                                  | What it prevents                                                   |
+| -------------------------------------- | ------------------------------------------------------------------ |
+| opt-in                                 | a loop applying changes the user never authorized                  |
+| stakes calibration                     | the same aggressiveness on a throwaway and a depended-on skill     |
+| eval confirms the scan                 | auto-fixing a finding the evidence does not support                |
+| one change per round                   | a round whose delta cannot be attributed to a specific fix         |
+| revert on regression                   | building the next round on a change that made things worse         |
+| round bound                            | a loop that runs away instead of handing back to a human           |
+| full memlog trail                      | reasoning that lives only in the model and cannot be audited       |
+| benchmark as guardrail, human as judge | treating a green run as proof the change is correct                |
+| generalize to intent                   | a hardcoded patch that passes the case and leaves the class broken |

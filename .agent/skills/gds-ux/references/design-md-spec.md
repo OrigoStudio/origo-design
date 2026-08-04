@@ -8,20 +8,20 @@ YAML frontmatter (machine-readable tokens) + markdown body (human-readable ratio
 
 ## Frontmatter tokens
 
-| Key | Type | Notes |
-|---|---|---|
-| `name` | string | Required. Brand or system name. |
-| `description` | string | One-line statement of what this system is. |
-| `colors` | flat object | Kebab-case keys. Values are hex strings (`'#FBF9F4'`). |
-| `typography` | nested object | Each value: an object with any subset of `fontFamily`, `fontSize`, `fontWeight`, `lineHeight`, `letterSpacing`. |
-| `rounded` | object | Scale names (`sm`, `md`, `lg`, `xl`, `full`, `DEFAULT`) → CSS dimensions. `full` is conventionally `9999px`. |
-| `spacing` | object | Scale levels (`'1'`, `'2'`, ...) or named tokens (`gutter`, `margin-mobile`, `editorial-gap`) → dimensions. |
-| `components` | object | Component-name → object of component tokens mapped to values or `{path.to.token}` references. |
+| Key           | Type          | Notes                                                                                                           |
+| ------------- | ------------- | --------------------------------------------------------------------------------------------------------------- |
+| `name`        | string        | Required. Brand or system name.                                                                                 |
+| `description` | string        | One-line statement of what this system is.                                                                      |
+| `colors`      | flat object   | Kebab-case keys. Values are hex strings (`'#FBF9F4'`).                                                          |
+| `typography`  | nested object | Each value: an object with any subset of `fontFamily`, `fontSize`, `fontWeight`, `lineHeight`, `letterSpacing`. |
+| `rounded`     | object        | Scale names (`sm`, `md`, `lg`, `xl`, `full`, `DEFAULT`) → CSS dimensions. `full` is conventionally `9999px`.    |
+| `spacing`     | object        | Scale levels (`'1'`, `'2'`, ...) or named tokens (`gutter`, `margin-mobile`, `editorial-gap`) → dimensions.     |
+| `components`  | object        | Component-name → object of component tokens mapped to values or `{path.to.token}` references.                   |
 
 ## Body sections (omittable, order-locked when present)
 
-1. **Brand & Style** — Aesthetic posture in prose. The editorial voice — what *kind* of thing this is.
-2. **Colors** — Per-color story. Why each exists, where it's used, what it's *not* used for.
+1. **Brand & Style** — Aesthetic posture in prose. The editorial voice — what _kind_ of thing this is.
+2. **Colors** — Per-color story. Why each exists, where it's used, what it's _not_ used for.
 3. **Typography** — Type roles, ramp, and rules. Platform conventions noted semantically when inherited.
 4. **Layout & Spacing** — Spacing scale narrative, grid behavior, margins, gutters, breakpoint rules.
 5. **Elevation & Depth** — Shadow language and tonal layering rules.

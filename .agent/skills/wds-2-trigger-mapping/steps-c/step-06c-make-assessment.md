@@ -62,21 +62,25 @@ For each feature in the confirmed list:
 **Assessment Criteria:**
 
 **HIGH Impact:**
+
 - Directly addresses a major WANT (positive driver)
 - Directly mitigates a major FEAR (negative driver)
 - Core to persona's transformation or success
 
 **MEDIUM Impact:**
+
 - Helpful but not critical
 - Supports wants/fears indirectly
 - Nice-to-have improvement
 
 **LOW Impact:**
+
 - Minimal relevance to this persona
 - Doesn't address their specific drivers
 - Background/infrastructure feature
 
 **Scoring Logic:**
+
 1. Consider Primary Persona's wants and fears
 2. Consider Secondary Persona's wants and fears
 3. Consider Tertiary Persona's wants and fears (if exists)
@@ -90,15 +94,17 @@ Output:
 
 Here's my assessment of all features based on your personas' driving forces:
 
-| Rank | Feature | {{primary}} | {{secondary}} | {{tertiary}} | **Score** |
-|------|---------|-------------|---------------|--------------|-----------|
-| 1 | [Feature] | HIGH (5) | HIGH (3) | HIGH (3) | **11** |
+| Rank | Feature   | {{primary}} | {{secondary}} | {{tertiary}} | **Score** |
+| ---- | --------- | ----------- | ------------- | ------------ | --------- |
+| 1    | [Feature] | HIGH (5)    | HIGH (3)      | HIGH (3)     | **11**    |
+
 ... (continue for all features, ranked by score)
 
 **Top Scoring Features (Score 8+):**
 [Brief list with strategic rationale]
 
 **Please review this assessment:**
+
 - Do you agree with the impact ratings?
 - Should any features be scored differently?
 - Do the top priorities align with your strategic thinking?
@@ -108,6 +114,7 @@ Let me know if you'd like to adjust any scores, and I'll update the assessment a
 ### 3. Iterate on Feedback
 
 If user requests changes:
+
 - Make the adjustments
 - Recalculate scores
 - Show updated table
@@ -120,11 +127,13 @@ Repeat until user confirms assessment.
 Display: "**Select an Option:** [C] Continue to Generate Document | [M] Return to Activity Menu"
 
 #### Menu Handling Logic:
+
 - IF C: Load and execute {nextStepFile}
 - IF M: Return to {activityWorkflowFile}
 - IF Any other comments or queries: help user respond then [Redisplay Menu Options]
 
 #### EXECUTION RULES:
+
 - ALWAYS halt and wait for user input after presenting menu
 - User can chat or ask questions - always respond and then redisplay menu options
 
@@ -137,6 +146,7 @@ ONLY WHEN user selects [C] will you load the next step file. Assessment must be 
 ## 🚨 SYSTEM SUCCESS/FAILURE METRICS
 
 ### ✅ SUCCESS:
+
 - All features assessed against all personas
 - Consistent scoring methodology applied
 - Results presented as ranked table
@@ -146,6 +156,7 @@ ONLY WHEN user selects [C] will you load the next step file. Assessment must be 
 - User confirmed final assessment
 
 ### ❌ SYSTEM FAILURE:
+
 - Not assessing all features against all personas
 - Inconsistent scoring methodology
 - Not presenting results for user review

@@ -76,13 +76,13 @@ Root structure:
 
 Read key configuration files:
 
-| File | Reveals |
-|------|---------|
+| File                                               | Reveals                                 |
+| -------------------------------------------------- | --------------------------------------- |
 | `package.json` / `requirements.txt` / `Cargo.toml` | Dependencies, scripts, project metadata |
-| `tsconfig.json` / `pyproject.toml` | Language configuration |
-| `.env.example` / `.env.template` | Environment variables needed |
-| `docker-compose.yml` / `Dockerfile` | Container setup, services |
-| `Makefile` / `justfile` | Build commands |
+| `tsconfig.json` / `pyproject.toml`                 | Language configuration                  |
+| `.env.example` / `.env.template`                   | Environment variables needed            |
+| `docker-compose.yml` / `Dockerfile`                | Container setup, services               |
+| `Makefile` / `justfile`                            | Build commands                          |
 
 Document the stack:
 
@@ -147,10 +147,12 @@ As you scan, note initial observations about:
 Display: "**Select an Option:** [C] Continue to Step 3: Map Architecture"
 
 #### Menu Handling Logic:
+
 - IF C: Update design log, then load, read entire file, then execute {nextStepFile}
 - IF Any other comments or queries: help user respond then [Redisplay Menu Options]
 
 #### EXECUTION RULES:
+
 - ALWAYS halt and wait for user input after presenting menu
 - ONLY proceed to next step when user selects 'C'
 - User can chat or ask questions - always respond and then redisplay menu options
@@ -164,6 +166,7 @@ ONLY WHEN the codebase scan is complete and observations documented will you the
 ## 🚨 SYSTEM SUCCESS/FAILURE METRICS
 
 ### ✅ SUCCESS:
+
 - Directory structure mapped (top 2 levels)
 - Tech stack and versions identified
 - Entry points located
@@ -172,6 +175,7 @@ ONLY WHEN the codebase scan is complete and observations documented will you the
 - Initial patterns and conventions noted
 
 ### ❌ SYSTEM FAILURE:
+
 - Jumping into deep architecture analysis before completing the scan
 - Skipping configuration or build pipeline investigation
 - Not documenting observations systematically

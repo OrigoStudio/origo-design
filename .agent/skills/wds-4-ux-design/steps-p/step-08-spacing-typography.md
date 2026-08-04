@@ -73,15 +73,16 @@ Present the pair and ask:
 
 Working through your page sections top to bottom:
 
-| Between | Above | Below | Spacing |
-|---------|-------|-------|---------|
-| Gap 1 | [Section A] | [Section B] | ? |
-| Gap 2 | [Section B] | [Section C] | ? |
-| ... | ... | ... | ? |
+| Between | Above       | Below       | Spacing |
+| ------- | ----------- | ----------- | ------- |
+| Gap 1   | [Section A] | [Section B] | ?       |
+| Gap 2   | [Section B] | [Section C] | ?       |
+| ...     | ...         | ...         | ?       |
 
 **Available tokens:** `zero`, `sm`, `md`, `lg`, `xl`, `2xl`, `3xl`
 
 **Guidelines:**
+
 - `zero` = sections form one visual unit (e.g., header + nav)
 - `sm`/`md` = related sections
 - `lg`/`xl` = standard section boundaries
@@ -96,6 +97,7 @@ Store spacing_objects with IDs using the naming convention:
 `{page-slug}-v-separator-{size}` for lines/dividers with spacing
 
 Example:
+
 ```
 #### ↕ `hem-v-space-zero` — header and nav form one continuous unit
 #### ↕ `hem-v-space-xl` — standard gap between hero and content
@@ -104,9 +106,11 @@ Example:
 ```
 
 Also capture grid gaps for any sections with repeated items (card grids, lists):
+
 ```
 | Grid gap | h-space-lg / v-space-lg |
 ```
+
 </action>
 
 ### 2. Define Typography Tokens
@@ -114,6 +118,7 @@ Also capture grid gaps for any sections with repeated items (card grids, lists):
 <output>**Now let's assign typography tokens to your headings.**
 
 In WDS, the semantic tag (h1, h2, h3) and the visual size are independent:
+
 - The **tag** tells screen readers the document structure
 - The **token** controls how big it looks
 
@@ -123,12 +128,12 @@ A section heading might be an `<h2>` but visually `heading-xl` on mobile and `he
 
 For each heading in your content (from step 04):
 
-| Heading | Semantic tag | Visual size (mobile / tablet / desktop) |
-|---------|-------------|----------------------------------------|
-| [Main page heading] | h1 | ? / ? / ? |
-| [Section heading 1] | h2 | ? / ? / ? |
-| [Section heading 2] | h2 | ? / ? / ? |
-| [Card heading] | h3 | ? / ? / ? |
+| Heading             | Semantic tag | Visual size (mobile / tablet / desktop) |
+| ------------------- | ------------ | --------------------------------------- |
+| [Main page heading] | h1           | ? / ? / ?                               |
+| [Section heading 1] | h2           | ? / ? / ?                               |
+| [Section heading 2] | h2           | ? / ? / ?                               |
+| [Card heading]      | h3           | ? / ? / ?                               |
 
 **Available heading tokens:** `heading-xxs` (14px), `heading-xs` (16px), `heading-sm` (18px), `heading-md` (20px), `heading-lg` (24px), `heading-xl` (30px), `heading-2xl` (36px), `heading-3xl` (44px), `heading-4xl` (56px)
 
@@ -143,12 +148,13 @@ What sizes feel right for each heading?</ask>
 
 **OBJECT ID:** `{page-slug}-{section}-heading`
 
-| Property | Value |
-|----------|-------|
-| Tag | h2 |
+| Property    | Value                                 |
+| ----------- | ------------------------------------- |
+| Tag         | h2                                    |
 | Visual size | heading-lg / heading-xl / heading-2xl |
-| Font weight | 900 |
+| Font weight | 900                                   |
 ```
+
 </action>
 
 ### 3. Review
@@ -157,13 +163,16 @@ What sizes feel right for each heading?</ask>
 
 **Spacing Objects:**
 {{#each spacing_object}}
+
 #### ↕ `{{id}}` — {{description}}
+
 {{/each}}
 
 **Typography Tokens:**
 {{#each typography_token}}
+
 - **{{name}}**: `{{tag}}` at `{{mobile}} / {{tablet}} / {{desktop}}`
-{{/each}}
+  {{/each}}
 
 Does this feel right? Any adjustments?</output>
 

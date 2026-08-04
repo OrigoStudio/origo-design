@@ -38,6 +38,7 @@
 {{understanding_of_primary_user}}
 
 **User response:**
+
 - [ ] Confirmed
 - [ ] Corrected
 

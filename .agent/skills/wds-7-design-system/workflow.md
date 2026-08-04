@@ -37,6 +37,7 @@ Phase 7 is **menu-driven**, not linear. The user picks an activity.
 ### 1. Configuration Loading
 
 Load and read full config from `{project-root}/_bmad/wds/config.yaml` and resolve:
+
 - `project_name`, `output_folder`, `user_name`
 - `communication_language`, `document_output_language`
 - `design_system_mode` (none / basic / full)
@@ -59,19 +60,20 @@ What would you like to do?
 
 ### Activity Routing
 
-| Choice | Workflow File | Steps |
-|--------|--------------|-------|
-| [C] | workflow-create.md | steps-c/ |
-| [I] | workflow-import.md | Inline |
-| [V] | workflow-view.md | Inline |
-| [E] | workflow-edit.md | Inline |
-| [B] | workflow-browse.md | Inline |
+| Choice | Workflow File      | Steps    |
+| ------ | ------------------ | -------- |
+| [C]    | workflow-create.md | steps-c/ |
+| [I]    | workflow-import.md | Inline   |
+| [V]    | workflow-view.md   | Inline   |
+| [E]    | workflow-edit.md   | Inline   |
+| [B]    | workflow-browse.md | Inline   |
 
 ---
 
 ## CREATE DESIGN SYSTEM
 
 When creating or adding components, WDS runs duplicate detection internally:
+
 1. Scan existing components for similarity
 2. Compare attributes systematically
 3. Present decision if near-match found (reuse, extend, or create new)
@@ -95,10 +97,10 @@ The app is regenerated from current data each time — always reflects the lates
 
 ## REFERENCE CONTENT
 
-| Location | Purpose |
-|----------|---------|
-| `data/design-system-guide.md` | Comprehensive design system guide |
-| `templates/` | Component, tokens, config, catalog templates |
+| Location                      | Purpose                                      |
+| ----------------------------- | -------------------------------------------- |
+| `data/design-system-guide.md` | Comprehensive design system guide            |
+| `templates/`                  | Component, tokens, config, catalog templates |
 
 ---
 

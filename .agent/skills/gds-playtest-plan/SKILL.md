@@ -73,30 +73,32 @@ This workflow produces a complete playtesting plan including session structure, 
 **Primary Output**: `{output_folder}/playtest-plan.md`
 
 **Supporting Components**:
+
 - Validation: `{installed_path}/checklist.md`
 - Template: `{installed_path}/playtest-template.md`
 - Knowledge Base: `knowledge/playtesting.md`
 
 **Input Files** (auto-located):
+
 - GDD: `{output_folder}/*gdd*.md` or `{output_folder}/*gdd*/*.md` — game mechanics to validate
 - Game Brief: `{output_folder}/*brief*.md` — core pillars
-
 
 Load and resolve configuration from `{module_config}`:
 
 ```yaml
-output_folder: {from config}
-user_name: {from config}
-communication_language: {from config}
-document_output_language: {from config}
-game_dev_experience: {from config}
-date: {system-generated}
+output_folder: { from config }
+user_name: { from config }
+communication_language: { from config }
+document_output_language: { from config }
+game_dev_experience: { from config }
+date: { system-generated }
 ```
 
 Resolve workflow variables:
+
 ```yaml
-playtest_type: "internal"   # internal | external | focused
-session_duration: 60        # minutes
+playtest_type: 'internal' # internal | external | focused
+session_duration: 60 # minutes
 participant_count: 5
 ```
 
@@ -109,6 +111,7 @@ Greet the user by name (`user_name`) and confirm the playtest type and scope bef
 ### Preflight Requirements
 
 Verify before proceeding:
+
 - Playable build available
 - Test objectives defined
 - Participant criteria known
@@ -145,6 +148,7 @@ Ask the user (or infer from GDD/game brief):
 Present options and confirm with user:
 
 #### Internal Playtest
+
 **Best for**: Early validation, bug finding, quick iterations
 
 | Aspect       | Details                   |
@@ -155,6 +159,7 @@ Present options and confirm with user:
 | Setup        | Minimal, informal         |
 
 #### External Playtest
+
 **Best for**: Unbiased feedback, market validation
 
 | Aspect       | Details                           |
@@ -165,6 +170,7 @@ Present options and confirm with user:
 | Setup        | Formal, NDA if needed             |
 
 #### Focused Playtest
+
 **Best for**: Specific feature validation
 
 | Aspect       | Details                      |
@@ -247,6 +253,7 @@ Present options and confirm with user:
 | Boredom     | Checking phone, disengaging           | Drop-off points    |
 
 **Quantitative Metrics**:
+
 - Time to complete tutorial
 - Deaths per section
 - Items/features discovered

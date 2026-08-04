@@ -19,12 +19,12 @@ After Reference Materials, add:
 
 ![Overview](Sketches/{page-number}-{page-name}-Overview.jpg)
 
-┌─────────────┐    ┌─────────────┐    ┌─────────────┐
-│  STATE 1    │───▶│  STATE 2    │───▶│  STATE 3    │
-└─────────────┘    └─────────────┘    └─────────────┘
+┌─────────────┐ ┌─────────────┐ ┌─────────────┐
+│ STATE 1 │───▶│ STATE 2 │───▶│ STATE 3 │
+└─────────────┘ └─────────────┘ └─────────────┘
 
-| State | Name | Visual | Entry | Actions |
-|-------|------|--------|-------|---------|
+| State | Name   | Visual       | Entry     | Actions   |
+| ----- | ------ | ------------ | --------- | --------- |
 | **1** | {name} | {color/icon} | {trigger} | {actions} |
 | **2** | {name} | {color/icon} | {trigger} | {actions} |
 ```
@@ -34,6 +34,7 @@ After Reference Materials, add:
 ### 2. State 1 = Normal Page Specification
 
 Document State 1 using the standard page spec structure:
+
 - Page Sections
 - Objects with OBJECT IDs
 - Groups with nested objects
@@ -53,20 +54,20 @@ After State 1, add for each additional state:
 
 > **The Story:** {User experience narrative}
 
-| Property | Value |
-|----------|-------|
-| Purpose | {what this state does} |
-| Entry | {trigger from previous state} |
-| Previous | State 1 |
-| Next | State 3 / {options} |
+| Property | Value                         |
+| -------- | ----------------------------- |
+| Purpose  | {what this state does}        |
+| Entry    | {trigger from previous state} |
+| Previous | State 1                       |
+| Next     | State 3 / {options}           |
 
 ### Changes from State 1
 
-| OBJECT ID | Change | Details |
-|-----------|--------|---------|
+| OBJECT ID       | Change   | Details        |
+| --------------- | -------- | -------------- |
 | `{existing-id}` | Modified | {what changed} |
-| `{existing-id}` | Hidden | {why hidden} |
-| `{new-id}` | Added | {new element} |
+| `{existing-id}` | Hidden   | {why hidden}   |
+| `{new-id}`      | Added    | {new element}  |
 
 ### State 2 Elements
 
@@ -76,12 +77,12 @@ After State 1, add for each additional state:
 
 **OBJECT ID:** `{page-name}-{new-object}`
 
-| Property | Value |
-|----------|-------|
-| Component | [{Component}]({path}) |
-| Translation Key | `{key}` |
-| SE | "{text}" |
-| EN | "{text}" |
+| Property        | Value                 |
+| --------------- | --------------------- |
+| Component       | [{Component}]({path}) |
+| Translation Key | `{key}`               |
+| SE              | "{text}"              |
+| EN              | "{text}"              |
 ```
 
 ---

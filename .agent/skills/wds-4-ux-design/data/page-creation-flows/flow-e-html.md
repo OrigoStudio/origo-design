@@ -9,6 +9,7 @@
 <output>**Perfect! Let's generate an HTML prototype based on your concept.**
 
 This creates a working page that you can:
+
 - View in browser
 - Screenshot for documentation
 - Test responsive behavior
@@ -28,6 +29,7 @@ The screenshot becomes your "sketch" for the specification.</output>
 - ✅ Prototype is already built!
 
 **Perfect for:**
+
 - Users who can describe but can't draw
 - Testing responsive layouts
 - Quick professional mockups
@@ -44,6 +46,7 @@ The screenshot becomes your "sketch" for the specification.</output>
 **Key Objects:** {{key_objects}}
 
 I'll generate a clean HTML prototype with:
+
 - Semantic HTML structure
 - Basic Tailwind CSS styling (or vanilla CSS)
 - Placeholder content based on your descriptions
@@ -102,6 +105,7 @@ Save to: `C-UX-Scenarios/{{scenario_path}}/{{page_number}}-{{page_slug}}/prototy
 5. **Save screenshots** to `sketches/` folder
 
 **Screenshot naming:**
+
 - `{{page_slug}}-desktop.jpg` - Full desktop view
 - `{{page_slug}}-mobile.jpg` - Mobile view
 - `{{page_slug}}-section-name.jpg` - Section close-ups</output>

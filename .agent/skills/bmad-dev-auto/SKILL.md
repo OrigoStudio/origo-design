@@ -15,6 +15,7 @@ To HALT with a final status and optional blocking condition:
 
 1. If `{spec_file}` is known and exists, update `status` in frontmatter and append missing result details under `## Auto Run Result`.
 2. If `{spec_file}` is unknown or missing, create `{implementation_artifacts}/bmad-dev-auto-result-<slug-or-timestamp>.md` with:
+
    ```markdown
    ---
    status: <final status>
@@ -25,6 +26,7 @@ To HALT with a final status and optional blocking condition:
    Status: <final status>
    Blocking condition: <blocking condition, if any>
    ```
+
 3. Run: `python3 {project-root}/_bmad/scripts/resolve_customization.py --skill {skill-root} --key workflow.on_complete`
 4. If the resolved `workflow.on_complete` is non-empty, follow it as the final instruction before exiting.
 5. Stop the workflow.

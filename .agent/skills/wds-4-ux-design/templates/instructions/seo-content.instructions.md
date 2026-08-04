@@ -50,11 +50,11 @@ Document in page spec:
 ```markdown
 ### Heading Hierarchy
 
-| Level | Content | Keyword |
-|-------|---------|---------|
-| H1 | {Main page heading} | {primary keyword} |
-| H2 | {Section heading} | {secondary keyword} |
-| H3 | {Subsection heading} | — |
+| Level | Content              | Keyword             |
+| ----- | -------------------- | ------------------- |
+| H1    | {Main page heading}  | {primary keyword}   |
+| H2    | {Section heading}    | {secondary keyword} |
+| H3    | {Subsection heading} | —                   |
 ```
 
 ### 3. Internal Links
@@ -70,10 +70,10 @@ Document link targets:
 ```markdown
 ### Internal Links
 
-| Anchor Text | Target Page | Context |
-|-------------|-------------|---------|
-| "Läs mer om service" | /service | About section |
-| "Ring oss" | tel:+46485-27070 | CTA section |
+| Anchor Text          | Target Page      | Context       |
+| -------------------- | ---------------- | ------------- |
+| "Läs mer om service" | /service         | About section |
+| "Ring oss"           | tel:+46485-27070 | CTA section   |
 ```
 
 ### 4. Image SEO
@@ -105,11 +105,11 @@ If the project brief's structured data plan includes this page type:
 
 **Schema Type:** {e.g., Service, Article, FAQPage}
 
-| Property | Value |
-|----------|-------|
-| name | {service/article name} |
+| Property    | Value                   |
+| ----------- | ----------------------- |
+| name        | {service/article name}  |
 | description | {from meta description} |
-| provider | {business name} |
+| provider    | {business name}         |
 ```
 
 ---
@@ -140,10 +140,10 @@ Add this section to the page specification:
 
 ### Heading Hierarchy
 
-| Level | SE | EN | DE | Keyword |
-|-------|----|----|----|---------|
-| H1 | ... | ... | ... | primary |
-| H2 | ... | ... | ... | secondary |
+| Level | SE  | EN  | DE  | Keyword   |
+| ----- | --- | --- | --- | --------- |
+| H1    | ... | ... | ... | primary   |
+| H2    | ... | ... | ... | secondary |
 
 ### Structured Data
 
@@ -160,4 +160,4 @@ Add this section to the page specification:
 
 ---
 
-*Every public page is a search result. Specify it accordingly.*
+_Every public page is a search result. Specify it accordingly._

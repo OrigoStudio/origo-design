@@ -1,16 +1,16 @@
 # Converging: Narrow & Decide
 
-Load this when divergence is spent and the user wants to narrow the field — or asks to "decide," "prioritize," "pick," or "make it real." The whole catalog is *divergent* by design (it generates); this is the deliberate opposite phase, and keeping the two apart is the point. Never run convergence while ideas are still flowing, and never let it leak into a generating batch — premature judgment is what kills good ideas. `{doc_workspace}/.memlog.md` is the canonical record; everything here works from it. Communicate in `{communication_language}`.
+Load this when divergence is spent and the user wants to narrow the field — or asks to "decide," "prioritize," "pick," or "make it real." The whole catalog is _divergent_ by design (it generates); this is the deliberate opposite phase, and keeping the two apart is the point. Never run convergence while ideas are still flowing, and never let it leak into a generating batch — premature judgment is what kills good ideas. `{doc_workspace}/.memlog.md` is the canonical record; everything here works from it. Communicate in `{communication_language}`.
 
-**Mode holds.** In **Facilitator** you run the convergence *on the user's verdicts* — you structure and prompt, they judge; never rank for them. In **Creative Partner** you weigh in too, each call logged by author. In **Ideate for me** you converge yourself and show the result, then offer to keep going.
+**Mode holds.** In **Facilitator** you run the convergence _on the user's verdicts_ — you structure and prompt, they judge; never rank for them. In **Creative Partner** you weigh in too, each call logged by author. In **Ideate for me** you converge yourself and show the result, then offer to keep going.
 
 ## How to run it
 
-First, reflect the field back: pull the live candidates from the memlog (include the odd and buried ones, not just the recent obvious ones) so there's a concrete set to work on. Then pick **one** convergence move that fits the goal — don't hand the user a menu of methods; choose the one that suits *this* decision and name it. Run it to a result, log the outcome, and stop when a clear short-list or single direction emerges.
+First, reflect the field back: pull the live candidates from the memlog (include the odd and buried ones, not just the recent obvious ones) so there's a concrete set to work on. Then pick **one** convergence move that fits the goal — don't hand the user a menu of methods; choose the one that suits _this_ decision and name it. Run it to a result, log the outcome, and stop when a clear short-list or single direction emerges.
 
 Pick by what the decision needs:
 
-- **Affinity Clustering** — when there are many scattered ideas: group them into themes, name each cluster, and surface the through-line. Often the right *first* move, to turn a pile into a handful.
+- **Affinity Clustering** — when there are many scattered ideas: group them into themes, name each cluster, and surface the through-line. Often the right _first_ move, to turn a pile into a handful.
 - **Impact–Effort** — when the goal is action: place each candidate on impact vs effort; harvest high-impact / low-effort first, park the rest.
 - **NUF Test** — when novelty matters: score each New, Useful, Feasible (1–10 each); the totals expose the quiet winners and the dazzling-but-doomed.
 - **Forced Ranking / Dot Vote** — when you just need a ranked top-N: make the ideas compete, no ties; (a literal dot-vote when it's genuinely a group).

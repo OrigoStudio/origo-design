@@ -9,8 +9,15 @@ An adapter is a JSON file the scripts read. A working Claude Code adapter ships 
 ```json
 {
   "name": "claude-code",
-  "invocation": ["claude", "-p", "{prompt}", "--output-format", "stream-json",
-                 "--verbose", "--dangerously-skip-permissions"],
+  "invocation": [
+    "claude",
+    "-p",
+    "{prompt}",
+    "--output-format",
+    "stream-json",
+    "--verbose",
+    "--dangerously-skip-permissions"
+  ],
   "auth_env": "ANTHROPIC_API_KEY",
   "transcript": { "format": "stdout-jsonl" },
   "skill_dir": ".claude/skills",
@@ -19,14 +26,14 @@ An adapter is a JSON file the scripts read. A working Claude Code adapter ships 
 }
 ```
 
-| Key | Required | Meaning |
-|---|---|---|
-| `invocation` | yes | argv template for one non-interactive run. `{prompt}` (alias `{query}`) is replaced with the composed input, `{cwd}` with the case's clean working directory. |
-| `auth_env` | no | name of the one env var the runtime reads for its credential. Forwarded from the host **only when set non-empty** — forwarding an empty string overrides the runtime's own credential fallback and breaks auth. |
-| `transcript` | no | `{"format": "stdout-jsonl"}` (default; stdout captured as the JSONL transcript) or `{"format": "file", "path": "transcript.jsonl"}` (runtime writes a file in the cwd). |
-| `skill_dir` | no | directory under the cwd where the runtime discovers skills. Default `.claude/skills`. Used to stage the skill under test and trigger mode's synthetic skill. |
-| `load_signal` | trigger mode | which tool calls count as a skill load: `{"skill_tool": "Skill", "read_tool": "Read"}` (the defaults). See trigger detection below. |
-| `env_passthrough` | no | extra host env var names to forward into the run, for runtimes that need more than the auth var. Empty unless a runtime forces it. |
+| Key               | Required     | Meaning                                                                                                                                                                                                         |
+| ----------------- | ------------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `invocation`      | yes          | argv template for one non-interactive run. `{prompt}` (alias `{query}`) is replaced with the composed input, `{cwd}` with the case's clean working directory.                                                   |
+| `auth_env`        | no           | name of the one env var the runtime reads for its credential. Forwarded from the host **only when set non-empty** — forwarding an empty string overrides the runtime's own credential fallback and breaks auth. |
+| `transcript`      | no           | `{"format": "stdout-jsonl"}` (default; stdout captured as the JSONL transcript) or `{"format": "file", "path": "transcript.jsonl"}` (runtime writes a file in the cwd).                                         |
+| `skill_dir`       | no           | directory under the cwd where the runtime discovers skills. Default `.claude/skills`. Used to stage the skill under test and trigger mode's synthetic skill.                                                    |
+| `load_signal`     | trigger mode | which tool calls count as a skill load: `{"skill_tool": "Skill", "read_tool": "Read"}` (the defaults). See trigger detection below.                                                                             |
+| `env_passthrough` | no           | extra host env var names to forward into the run, for runtimes that need more than the auth var. Empty unless a runtime forces it.                                                                              |
 
 ### Discovery
 

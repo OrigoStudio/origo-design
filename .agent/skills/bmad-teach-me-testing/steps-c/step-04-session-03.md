@@ -133,7 +133,7 @@ test.use(mergeTests(baseFixtures, authFixtures));
 
 ```typescript
 // BEFORE the action, set up network interception
-await page.route('/api/users', (route) => {
+await page.route('/api/users', route => {
   route.fulfill({ json: mockUsers });
 });
 

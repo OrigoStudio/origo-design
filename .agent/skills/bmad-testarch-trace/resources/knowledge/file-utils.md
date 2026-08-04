@@ -159,7 +159,9 @@ Text extraction may fail for PDFs that store text as vector graphics (e.g., thos
 const pdfResult = await readPDF({ filePath: downloadPath });
 
 expect(pdfResult.pagesCount).toBe(1);
-expect(pdfResult.info.extractionNotes).toContain('Text extraction from vector-based PDFs is not supported.');
+expect(pdfResult.info.extractionNotes).toContain(
+  'Text extraction from vector-based PDFs is not supported.'
+);
 ```
 
 Such PDFs will have:
@@ -188,7 +190,9 @@ test('should validate ZIP archive', async () => {
 
   // Check file list
   expect(Array.isArray(zipResult.content.entries)).toBe(true);
-  expect(zipResult.content.entries).toContain('Case_53125_10-19-22_AM/Case_53125_10-19-22_AM_case_data.csv');
+  expect(zipResult.content.entries).toContain(
+    'Case_53125_10-19-22_AM/Case_53125_10-19-22_AM_case_data.csv'
+  );
 
   // Extract specific file
   const targetFile = 'Case_53125_10-19-22_AM/Case_53125_10-19-22_AM_case_data.csv';
@@ -379,7 +383,10 @@ Vanilla Playwright (real test) snippet:
 
 ```typescript
 // ~80 lines of boilerplate!
-const [download] = await Promise.all([page.waitForEvent('download'), page.getByTestId('download-button-CSV Export').click()]);
+const [download] = await Promise.all([
+  page.waitForEvent('download'),
+  page.getByTestId('download-button-CSV Export').click(),
+]);
 
 const failure = await download.failure();
 expect(failure).toBeNull();
@@ -397,7 +404,7 @@ await expect
         return false;
       }
     },
-    { timeout: 5000, intervals: [100, 200, 500] },
+    { timeout: 5000, intervals: [100, 200, 500] }
   )
   .toBe(true);
 

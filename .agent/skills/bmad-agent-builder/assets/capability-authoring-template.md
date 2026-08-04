@@ -33,6 +33,7 @@ This section is the working standard, synced from the prompt-quality canon. For 
 A capability can take several forms.
 
 ### Prompt (default)
+
 A markdown file with guidance on what to achieve. Best for judgment-based tasks where you need flexibility.
 
 ```
@@ -41,6 +42,7 @@ capabilities/
 ```
 
 ### Script
+
 A Python or bash script for deterministic tasks such as calculations, file processing, data transformation, or API calls. Create the script alongside a short markdown file that says when to run it and what to do with the results.
 
 ```
@@ -52,6 +54,7 @@ capabilities/
 Keep scripts to one job each, have them read and write within the sanctum, and never hardcode paths — accept the sanctum path as an argument.
 
 ### Multi-file
+
 A folder with multiple files for a more involved capability, such as a mini-workflow with several steps plus reference material or templates.
 
 ```
@@ -63,12 +66,14 @@ capabilities/
 ```
 
 ### External Skill Reference
+
 Point to an existing installed skill rather than reinventing it. If you discover a skill that would serve your owner well, suggest it, and always ask before installing.
 
 ```markdown
 ## Learned
-| Code | Name | Description | Source | Added |
-|------|------|-------------|--------|-------|
+
+| Code | Name       | Description  | Source                 | Added      |
+| ---- | ---------- | ------------ | ---------------------- | ---------- |
 | [XX] | Skill Name | What it does | External: `skill-name` | YYYY-MM-DD |
 ```
 
@@ -78,10 +83,10 @@ Every capability prompt file carries this frontmatter:
 
 ```markdown
 ---
-name: {kebab-case-name}
-description: {one line, what this does}
-code: {2-letter menu code, unique across all capabilities}
-added: {YYYY-MM-DD}
+name: { kebab-case-name }
+description: { one line, what this does }
+code: { 2-letter menu code, unique across all capabilities }
+added: { YYYY-MM-DD }
 type: prompt | script | multi-file | external
 ---
 ```

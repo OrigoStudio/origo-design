@@ -11,9 +11,11 @@ Create positioning statement from captured components and document in product br
 Use the classic framework:
 
 **Format:**
+
 > "For [target customer] who [need/opportunity], [product name] is a [category] that [key benefit]. Unlike [alternatives], we [differentiator]."
 
 **Craft the statement:**
+
 - Use natural language (not robotic template-speak)
 - Focus on clarity over cleverness
 - Make it useful for stakeholders and team (not marketing copy)
@@ -29,6 +31,7 @@ Show them the positioning statement:
 > This captures who it's for, what makes it different, and the key value. Does this feel right?"
 
 **If user wants adjustments:**
+
 - Listen to what they want to change
 - Revise and re-present
 - Get final confirmation
@@ -61,6 +64,7 @@ Show them the positioning statement:
 **In `dialog/07-positioning.md`:**
 
 Document:
+
 - Opening question used
 - Key exchanges that revealed positioning components
 - Reflection checkpoint (synthesis + confirmation/correction)
@@ -70,6 +74,7 @@ Document:
 ### 5. Mark Progress
 
 **In `dialog/progress-tracker.md`:**
+
 - Mark Step 3 (Positioning) as complete
 - Update last_updated timestamp
 
@@ -111,6 +116,7 @@ Northern Öland's geography creates a natural monopoly during summer season, but
 ## Design Log Update
 
 **Mandatory:** Update `dialog/07-positioning.md` with:
+
 - Full conversation flow
 - Reflection checkpoint with corrections (if any)
 - Final positioning statement and components

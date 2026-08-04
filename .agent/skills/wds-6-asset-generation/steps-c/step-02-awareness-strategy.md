@@ -97,31 +97,31 @@ What emotional shift happens from START to END?
 
 ```yaml
 awareness_strategy:
-  start_level: "[awareness level]"
+  start_level: '[awareness level]'
   start_characteristics:
-    - "[what they know]"
+    - '[what they know]'
     - "[what they don't know]"
-    - "[how they feel]"
-  end_level: "[awareness level]"
+    - '[how they feel]'
+  end_level: '[awareness level]'
   end_characteristics:
     - "[what they'll know]"
     - "[what they'll understand]"
     - "[how they'll feel]"
   language_guidelines:
-    use: ["[appropriate terms]"]
-    avoid: ["[confusing jargon]"]
-    tone: "[conversational, authoritative, empathetic, etc.]"
+    use: ['[appropriate terms]']
+    avoid: ['[confusing jargon]']
+    tone: '[conversational, authoritative, empathetic, etc.]'
   information_priorities:
-    essential: ["[must include]"]
-    helpful: ["[nice to include if space]"]
-    avoid: ["[too advanced, confusing, or premature]"]
+    essential: ['[must include]']
+    helpful: ['[nice to include if space]']
+    avoid: ['[too advanced, confusing, or premature]']
   credibility_required:
-    type: "[personal story, expert credentials, data, social proof]"
-    examples: ["[specific proof elements]"]
+    type: '[personal story, expert credentials, data, social proof]'
+    examples: ['[specific proof elements]']
   emotional_journey:
-    starting_emotion: "[frustrated, confused, etc.]"
-    bridge: "[how we facilitate the shift]"
-    ending_emotion: "[hopeful, confident, etc.]"
+    starting_emotion: '[frustrated, confused, etc.]'
+    bridge: '[how we facilitate the shift]'
+    ending_emotion: '[hopeful, confident, etc.]'
 ```
 
 ### 8. Present MENU OPTIONS

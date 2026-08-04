@@ -68,7 +68,7 @@ For the difficulty curve, ask where the player is expected to struggle and where
 
 This section is GDD-level: performance targets, platform requirements, asset budgets. Push every target to a measurable form — "runs well" becomes "60 FPS sustained on Steam Deck at 720p Medium, measured over a 10-minute combat loop". Name the measurement method.
 
-When the designer starts describing *how* a system is built — engine APIs, component patterns, netcode libraries — stop them gently: "That's an architecture decision. Let's capture *what* the system has to do here, and let the architecture workflow decide how." Target engine and hard certification constraints are fine; implementation is not.
+When the designer starts describing _how_ a system is built — engine APIs, component patterns, netcode libraries — stop them gently: "That's an architecture decision. Let's capture _what_ the system has to do here, and let the architecture workflow decide how." Target engine and hard certification constraints are fine; implementation is not.
 
 ---
 

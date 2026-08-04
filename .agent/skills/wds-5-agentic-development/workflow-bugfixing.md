@@ -22,6 +22,7 @@ description: Fix bugs in existing code through structured investigation and veri
 ## INITIALIZATION
 
 ### Design Log
+
 Read `{output_folder}/_progress/00-design-log.md`. Check Current and Backlog for context.
 
 ### Essential Guides
@@ -36,13 +37,13 @@ Read `{output_folder}/_progress/00-design-log.md`. Check Current and Backlog for
 
 Execute steps in `./steps-f/`:
 
-| Step | File | Purpose |
-|------|------|---------|
-| 01 | step-01-reproduce.md | Reproduce and document the bug |
-| 02 | step-02-investigate.md | Investigate root cause |
-| 03 | step-03-fix.md | Implement the fix |
-| 04 | step-04-verify.md | Verify fix, check regressions |
-| 05 | step-05-document.md | Document fix, update tests |
+| Step | File                   | Purpose                        |
+| ---- | ---------------------- | ------------------------------ |
+| 01   | step-01-reproduce.md   | Reproduce and document the bug |
+| 02   | step-02-investigate.md | Investigate root cause         |
+| 03   | step-03-fix.md         | Implement the fix              |
+| 04   | step-04-verify.md      | Verify fix, check regressions  |
+| 05   | step-05-document.md    | Document fix, update tests     |
 
 **Flow:** 01 → 02 → 03 → 04 → 05
 

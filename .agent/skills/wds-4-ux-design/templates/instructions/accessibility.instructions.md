@@ -9,23 +9,25 @@
 When documenting buttons, links, inputs, add:
 
 ```markdown
-| Property | Value |
-|----------|-------|
-| aria-label | "{What it does}" |
-| Keyboard | {Enter / Space / Arrow keys} |
+| Property    | Value                        |
+| ----------- | ---------------------------- |
+| aria-label  | "{What it does}"             |
+| Keyboard    | {Enter / Space / Arrow keys} |
 | Focus style | {ring / outline / highlight} |
 ```
 
 **Example:**
+
 ```markdown
 #### Submit Button
+
 **OBJECT ID:** `form-submit`
 
-| Property | Value |
-|----------|-------|
-| aria-label | "Submit booking request" |
-| Keyboard | Enter or Space |
-| Focus | 2px blue ring |
+| Property       | Value                                |
+| -------------- | ------------------------------------ |
+| aria-label     | "Submit booking request"             |
+| Keyboard       | Enter or Space                       |
+| Focus          | 2px blue ring                        |
 | Disabled state | aria-disabled="true", gray, no focus |
 ```
 
@@ -53,11 +55,11 @@ Document the logical sequence:
 When content changes without page reload:
 
 ```markdown
-| Element | Announces |
-|---------|-----------|
-| `toast-success` | aria-live="polite" — "Booking confirmed" |
-| `error-message` | aria-live="assertive" — Error text |
-| `loading-spinner` | aria-busy="true" on parent |
+| Element           | Announces                                |
+| ----------------- | ---------------------------------------- |
+| `toast-success`   | aria-live="polite" — "Booking confirmed" |
+| `error-message`   | aria-live="assertive" — Error text       |
+| `loading-spinner` | aria-busy="true" on parent               |
 ```
 
 ---
@@ -66,11 +68,11 @@ When content changes without page reload:
 
 For status indicators, ensure alternatives:
 
-| Status | Color | Also Has |
-|--------|-------|----------|
+| Status  | Color | Also Has                         |
+| ------- | ----- | -------------------------------- |
 | Success | Green | Checkmark icon + "Complete" text |
-| Error | Red | Warning icon + error message |
-| Active | Blue | Bold text + underline |
+| Error   | Red   | Warning icon + error message     |
+| Active  | Blue  | Bold text + underline            |
 
 ---
 
@@ -80,13 +82,14 @@ Link errors to fields:
 
 ```markdown
 #### Email Error
+
 **OBJECT ID:** `form-email-error`
 
-| Property | Value |
-|----------|-------|
-| aria-describedby | Links to `form-email` |
-| Role | "alert" |
-| Content | "Please enter a valid email" |
+| Property         | Value                        |
+| ---------------- | ---------------------------- |
+| aria-describedby | Links to `form-email`        |
+| Role             | "alert"                      |
+| Content          | "Please enter a valid email" |
 ```
 
 ---

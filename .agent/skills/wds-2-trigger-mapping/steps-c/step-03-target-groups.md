@@ -63,6 +63,7 @@ Output:
 Now we identify the people who matter most to achieving your goals.
 
 We'll create:
+
 - A list of user groups
 - Rich descriptions (personas)
 - Understanding of their context"
@@ -75,6 +76,7 @@ Ask:
 "**Who needs to use your product for you to achieve these goals?**
 
 For your business to succeed, the product needs to be used in the intended way by real people. Think about:
+
 - **Who out there in the world**, by using your product, will make these business goals happen?
 - **Primary users** - Who uses it directly and regularly?
 - **Influencers** - Who affects whether others adopt it?
@@ -95,6 +97,7 @@ Ask:
 "**Which 2-4 groups are most critical to your success?**
 
 Consider:
+
 - Who has the most influence on your objectives?
 - Who, if delighted, would drive the others?
 - Where is the biggest opportunity?"
@@ -132,8 +135,9 @@ Output:
 
 **Your Target Groups:**
 {{#each personas}}
+
 - **{{this.name}}** - {{this.summary}}
-{{/each}}
+  {{/each}}
 
 These are the people we're designing for. Next, we'll explore what drives them - both toward and away from solutions."
 
@@ -144,11 +148,13 @@ Store target_groups and personas for next workshop.
 Display: "**Select an Option:** [C] Continue to Driving Forces Workshop | [M] Return to Activity Menu"
 
 #### Menu Handling Logic:
+
 - IF C: Load and execute {nextStepFile}
 - IF M: Return to {activityWorkflowFile}
 - IF Any other comments or queries: help user respond then [Redisplay Menu Options]
 
 #### EXECUTION RULES:
+
 - ALWAYS halt and wait for user input after presenting menu
 - User can chat or ask questions - always respond and then redisplay menu options
 
@@ -161,6 +167,7 @@ ONLY WHEN user selects [C] will you load the next step file. Personas must feel 
 ## 🚨 SYSTEM SUCCESS/FAILURE METRICS
 
 ### ✅ SUCCESS:
+
 - User groups identified from user input
 - Narrowed to 2-4 focus groups with reasoning
 - Narrative personas created for each group (not just bullet points)
@@ -170,6 +177,7 @@ ONLY WHEN user selects [C] will you load the next step file. Personas must feel 
 - Results stored for subsequent workshops
 
 ### ❌ SYSTEM FAILURE:
+
 - Creating personas without user input
 - Having more than 4 groups without narrowing
 - Bullet-point personas without narrative depth

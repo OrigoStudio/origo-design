@@ -60,6 +60,7 @@ Hand off the Design Delivery (small scope) to BMad Developer for implementation 
 **Ask user about effort estimate:**
 
 Review the effort estimate in DD-XXX file:
+
 - **< 3 days total effort**: Use simplified handoff
 - **> 3 days total effort**: Use full handoff dialog
 
@@ -136,6 +137,7 @@ Explain to user:
 "For larger updates (> 3 days effort), use full handoff dialog process from Phase 4 [H] Handover, Step 04."
 
 **Key topics to cover in dialog:**
+
 1. Problem and solution overview
 2. What's changing vs staying
 3. Technical requirements
@@ -200,10 +202,12 @@ delivery:
 Display: "**Select an Option:** [M] Return to Activity Menu (suggest [T] Acceptance Test)"
 
 #### Menu Handling Logic:
+
 - IF M: Return to {workflowFile} or {activityWorkflowFile}
 - IF Any other comments or queries: help user respond then [Redisplay Menu Options]
 
 #### EXECUTION RULES:
+
 - ALWAYS halt and wait for user input after presenting menu
 - User can chat or ask questions - always respond and then redisplay menu options
 
@@ -216,6 +220,7 @@ ONLY WHEN user selects [M] and handoff is complete will you then return to the a
 ## 🚨 SYSTEM SUCCESS/FAILURE METRICS
 
 ### ✅ SUCCESS:
+
 - Handoff notification composed with all required information
 - Appropriate handoff method chosen (simplified vs full dialog)
 - All artifacts referenced in handoff message
@@ -230,6 +235,7 @@ ONLY WHEN user selects [M] and handoff is complete will you then return to the a
 - User available for clarification questions during development
 
 ### ❌ SYSTEM FAILURE:
+
 - Handoff without all artifacts ready
 - Vague or incomplete handoff message
 - Missing acceptance criteria or metrics

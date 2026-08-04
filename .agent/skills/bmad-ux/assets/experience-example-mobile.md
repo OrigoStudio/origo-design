@@ -16,12 +16,12 @@ Single-surface mobile, iOS + Android with parity. No UI system named — inherit
 
 ## Information Architecture
 
-| Surface | Reached from | Purpose |
-|---|---|---|
-| Today | App open (cold) | Today's prompt + entry composer |
-| Library | Tab bar | Past entries, searchable |
-| Entry detail | Library row tap | Read / edit one entry |
-| Settings | Today header gear | Account, export, theme |
+| Surface      | Reached from      | Purpose                         |
+| ------------ | ----------------- | ------------------------------- |
+| Today        | App open (cold)   | Today's prompt + entry composer |
+| Library      | Tab bar           | Past entries, searchable        |
+| Entry detail | Library row tap   | Read / edit one entry           |
+| Settings     | Today header gear | Account, export, theme          |
 
 Bottom tab bar (Today / Library / Settings). No drawer. Modal stacks one level deep, never two.
 
@@ -31,35 +31,35 @@ Bottom tab bar (Today / Library / Settings). No drawer. Modal stacks one level d
 
 Microcopy. Brand voice and aesthetic posture live in `DESIGN.md`.
 
-| Do | Don't |
-|---|---|
-| "Today's prompt." | "Time to write!" |
-| "Saved." | "✓ Auto-saved successfully" |
-| "We couldn't reach the cloud — your work is on this device." | "Network error" |
-| Short, complete sentences. | Streak counters, encouragement, exclamation marks. |
+| Do                                                           | Don't                                              |
+| ------------------------------------------------------------ | -------------------------------------------------- |
+| "Today's prompt."                                            | "Time to write!"                                   |
+| "Saved."                                                     | "✓ Auto-saved successfully"                        |
+| "We couldn't reach the cloud — your work is on this device." | "Network error"                                    |
+| Short, complete sentences.                                   | Streak counters, encouragement, exclamation marks. |
 
 ## Component Patterns
 
 Behavioral. Visual specs live in `DESIGN.md.Components`.
 
-| Component | Use | Behavioral rules |
-|---|---|---|
-| Prompt card | Today | One per day. Tap opens composer. |
-| Composer | Today + entry detail | No formatting toolbar in v1. Autosave on pause ≥ 600ms. |
-| Entry row | Library list | Tap → entry detail. Long-press reserved for system text selection. |
-| Save indicator | Composer header | Cycles `Editing…` → `Saved.` (≥ 800ms visible). |
-| Settings row | Settings list | Tap → detail or toggle. |
+| Component      | Use                  | Behavioral rules                                                   |
+| -------------- | -------------------- | ------------------------------------------------------------------ |
+| Prompt card    | Today                | One per day. Tap opens composer.                                   |
+| Composer       | Today + entry detail | No formatting toolbar in v1. Autosave on pause ≥ 600ms.            |
+| Entry row      | Library list         | Tap → entry detail. Long-press reserved for system text selection. |
+| Save indicator | Composer header      | Cycles `Editing…` → `Saved.` (≥ 800ms visible).                    |
+| Settings row   | Settings list        | Tap → detail or toggle.                                            |
 
 ## State Patterns
 
-| State | Surface | Treatment |
-|---|---|---|
-| Cold open | Today | Show today's prompt (cached). If no cache, `Today's prompt is loading.` with skeleton. |
-| Empty library | Library | `No entries yet — Today's prompt is your first.` Link to Today. |
-| Search empty | Library search | `No matches.` No suggestions. |
-| Offline write | Composer | Save locally. No banner. Sync on next foreground. |
-| Sync error | Settings → Account | Surfaced here only. Never block writing. |
-| Focus | Composer | Native cursor + keyboard. No custom focus chrome. |
+| State         | Surface            | Treatment                                                                              |
+| ------------- | ------------------ | -------------------------------------------------------------------------------------- |
+| Cold open     | Today              | Show today's prompt (cached). If no cache, `Today's prompt is loading.` with skeleton. |
+| Empty library | Library            | `No entries yet — Today's prompt is your first.` Link to Today.                        |
+| Search empty  | Library search     | `No matches.` No suggestions.                                                          |
+| Offline write | Composer           | Save locally. No banner. Sync on next foreground.                                      |
+| Sync error    | Settings → Account | Surfaced here only. Never block writing.                                               |
+| Focus         | Composer           | Native cursor + keyboard. No custom focus chrome.                                      |
 
 ## Interaction Primitives
 
@@ -82,7 +82,7 @@ Behavioral. Visual contrast lives in `DESIGN.md`.
 
 - **Lifted from Day One:** the single daily entry framing — one prompt, one composer, no inbox.
 - **Lifted from iA Writer:** the no-toolbar composer; formatting is a settings-level decision, not a per-entry one.
-- **Rejected — Streaks (Duolingo, most habit apps):** streaks weaponize the user's calendar. Quill's value is showing up *today*, not punishing missed days.
+- **Rejected — Streaks (Duolingo, most habit apps):** streaks weaponize the user's calendar. Quill's value is showing up _today_, not punishing missed days.
 - **Rejected — AI prompt suggestions inside the composer:** the composer is for writing, not negotiating with a model. AI lives only in the daily prompt generation.
 
 ## Key Flows

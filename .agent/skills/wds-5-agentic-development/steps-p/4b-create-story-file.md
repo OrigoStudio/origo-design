@@ -56,6 +56,7 @@ Create the focused story file for this section with all implementation details. 
 ### 1. Create Story File
 
 Create `stories/[View].[N]-[section-name].md` with:
+
 - Purpose, specifications reference
 - All objects with type, label, behavior, states, and spec reference
 - HTML structure to build
@@ -79,10 +80,12 @@ Present summary and offer user the choice to review the story first or proceed t
 Display: "**Select an Option:** [C] Continue to Step 4c: Implement Section"
 
 #### Menu Handling Logic:
+
 - IF C: Update design log, then load, read entire file, then execute {nextStepFile}
 - IF Any other comments or queries: help user respond then [Redisplay Menu Options]
 
 #### EXECUTION RULES:
+
 - ALWAYS halt and wait for user input after presenting menu
 - ONLY proceed to next step when user selects 'C'
 - User can chat or ask questions - always respond and then redisplay menu options
@@ -96,12 +99,14 @@ ONLY WHEN the story file is created and user is ready to proceed will you then l
 ## 🚨 SYSTEM SUCCESS/FAILURE METRICS
 
 ### ✅ SUCCESS:
+
 - Story file created with complete implementation instructions
 - All objects defined with types, behaviors, and states
 - Acceptance criteria include both agent-verifiable and user-evaluable items
 - User approved or chose to proceed
 
 ### ❌ SYSTEM FAILURE:
+
 - Beginning implementation without a story file
 - Missing objects or acceptance criteria
 - Not offering user the chance to review

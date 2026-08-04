@@ -64,6 +64,7 @@ Explore our commitment.
 **Reference**: `{sectionRoutingFile}` (Section 9: Our Commitment)
 
 **Questions to explore**:
+
 - "What resources are we committing?"
 - "What's the time commitment?"
 - "What budget or team are we committing?"
@@ -82,11 +83,13 @@ Explore our commitment.
 Display: "**Select an Option:** [C] Continue to step-02k-explore-summary"
 
 #### Menu Handling Logic:
+
 - IF C: Load, read entire file, then execute {nextStepFile}
 - IF M: Return to {workflowFile}
 - IF Any other comments or queries: help user respond then [Redisplay Menu Options]
 
 #### EXECUTION RULES:
+
 - ALWAYS halt and wait for user input after presenting menu
 - ONLY proceed to next step when user selects 'C'
 - User can chat or ask questions - always respond and then redisplay menu options
@@ -100,11 +103,13 @@ ONLY WHEN the user has articulated the commitment and potential risks will you t
 ## 🚨 SYSTEM SUCCESS/FAILURE METRICS
 
 ### ✅ SUCCESS:
+
 - Resources and commitment are captured at appropriate level of detail
 - Potential risks and challenges are acknowledged
 - User doesn't feel pressured for precision they don't have
 
 ### ❌ SYSTEM FAILURE:
+
 - Forcing precise numbers when user only has rough estimates
 - Skipping risk/challenge discussion
 - Not capturing the commitment at all

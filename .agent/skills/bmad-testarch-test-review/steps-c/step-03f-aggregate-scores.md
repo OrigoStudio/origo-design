@@ -45,7 +45,7 @@ if (!timestamp) {
 const dimensions = ['determinism', 'isolation', 'maintainability', 'performance'];
 const results = {};
 
-dimensions.forEach((dim) => {
+dimensions.forEach(dim => {
   const outputPath = `/tmp/tea-test-review-${dim}-${timestamp}.json`;
   results[dim] = JSON.parse(fs.readFileSync(outputPath, 'utf8'));
 });
@@ -54,7 +54,7 @@ dimensions.forEach((dim) => {
 **Verify all succeeded:**
 
 ```javascript
-const allSucceeded = dimensions.every((dim) => results[dim].score !== undefined);
+const allSucceeded = dimensions.every(dim => results[dim].score !== undefined);
 if (!allSucceeded) {
   throw new Error('One or more quality subagents failed!');
 }
@@ -88,7 +88,7 @@ const roundedScore = Math.round(overallScore);
 **Determine grade:**
 
 ```javascript
-const getGrade = (score) => {
+const getGrade = score => {
   if (score >= 90) return 'A';
   if (score >= 80) return 'B';
   if (score >= 70) return 'C';
@@ -106,17 +106,17 @@ const overallGrade = getGrade(roundedScore);
 **Collect all violations from all dimensions:**
 
 ```javascript
-const allViolations = dimensions.flatMap((dim) =>
-  results[dim].violations.map((v) => ({
+const allViolations = dimensions.flatMap(dim =>
+  results[dim].violations.map(v => ({
     ...v,
     dimension: dim,
-  })),
+  }))
 );
 
 // Group by severity
-const highSeverity = allViolations.filter((v) => v.severity === 'HIGH');
-const mediumSeverity = allViolations.filter((v) => v.severity === 'MEDIUM');
-const lowSeverity = allViolations.filter((v) => v.severity === 'LOW');
+const highSeverity = allViolations.filter(v => v.severity === 'HIGH');
+const mediumSeverity = allViolations.filter(v => v.severity === 'MEDIUM');
+const lowSeverity = allViolations.filter(v => v.severity === 'LOW');
 
 const violationSummary = {
   total: allViolations.length,
@@ -133,16 +133,18 @@ const violationSummary = {
 **Extract recommendations from all dimensions:**
 
 ```javascript
-const allRecommendations = dimensions.flatMap((dim) =>
-  results[dim].recommendations.map((rec) => ({
+const allRecommendations = dimensions.flatMap(dim =>
+  results[dim].recommendations.map(rec => ({
     dimension: dim,
     recommendation: rec,
     impact: results[dim].score < 70 ? 'HIGH' : 'MEDIUM',
-  })),
+  }))
 );
 
 // Sort by impact (HIGH first)
-const prioritizedRecommendations = allRecommendations.sort((a, b) => (a.impact === 'HIGH' ? -1 : 1)).slice(0, 10); // Top 10 recommendations
+const prioritizedRecommendations = allRecommendations
+  .sort((a, b) => (a.impact === 'HIGH' ? -1 : 1))
+  .slice(0, 10); // Top 10 recommendations
 ```
 
 ---
@@ -184,7 +186,11 @@ const reviewSummary = {
 };
 
 // Save for Step 4 (report generation)
-fs.writeFileSync(`/tmp/tea-test-review-summary-${timestamp}.json`, JSON.stringify(reviewSummary, null, 2), 'utf8');
+fs.writeFileSync(
+  `/tmp/tea-test-review-summary-${timestamp}.json`,
+  JSON.stringify(reviewSummary, null, 2),
+  'utf8'
+);
 ```
 
 ---

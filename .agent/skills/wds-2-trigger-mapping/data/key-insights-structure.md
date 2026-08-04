@@ -24,18 +24,21 @@
 ## The Flywheel: [X] [Champions] Drive Everything
 
 **THE ENGINE (Priority #1):**
-- [X] [champions] are THE PRIMARY GOAL
+
+- [x] [champions] are THE PRIMARY GOAL
 - Timeline: [X] months
 - These [description of what makes them champions]
 - They create the flywheel that drives ALL other objectives
 
 **[Product] Adoption (Priority #2):**
+
 - Driven BY the [X] [champions] spreading the word
 - [List key adoption targets with numbers]
 - Timeline: [X] months
 - Focus: [What this tier achieves]
 
 **Community Opportunities (Priority #3):**
+
 - Real-world benefits FOR community members
 - [List key opportunities]
 - Timeline: [X] months
@@ -80,26 +83,31 @@
 ### Content Priorities Based on Triggers:
 
 **[Section 1] Must:**
+
 - [Requirement 1]
 - [Requirement 2]
 - [Requirement 3]
 
 **[Section 2] Must:**
+
 - [Requirement 1]
 - [Requirement 2]
 - [Requirement 3]
 
 **[Section 3] Must:**
+
 - [Requirement 1]
 - [Requirement 2]
 - [Requirement 3]
 
 **[Section 4] Must:**
+
 - [Requirement 1]
 - [Requirement 2]
 - [Requirement 3]
 
 **[Section 5] Must:**
+
 - [Requirement 1]
 - [Requirement 2]
 - [Requirement 3]
@@ -131,6 +139,7 @@
 **Primary Design Target:** [Primary Persona Name] ([Role])
 
 **Must Address (Critical for Conversion):**
+
 1. [Fear 1] → [Solution approach]
 2. [Fear 2] → [Solution approach]
 3. [Fear 3] → [Solution approach]
@@ -138,6 +147,7 @@
 5. [Want 2] → [Delivery approach]
 
 **Should Address (Supporting Conversion):**
+
 1. [Secondary persona] needs [thing] → [Approach]
 2. [Tertiary persona] needs [thing] → [Approach]
 3. [Community proof element] → [Approach]
@@ -153,7 +163,9 @@
 ## Development Phases
 
 ### **First Deliverable: [Product Name] [Initial Release]**
+
 Focus on empowering [primary persona] from [before] to awesome [after] who naturally becomes [champion]:
+
 - **[Section 1]** - [Key message/approach]
 - **[Section 2]** - [Key message/approach]
 - **[Section 3]** - [Key message/approach]
@@ -163,6 +175,7 @@ Focus on empowering [primary persona] from [before] to awesome [after] who natur
 - **[Section 7]** - [Key message/approach]
 
 ### **Future Phases: Additional Content**
+
 - **Phase 2**: [Next priority]
 - **Phase 3**: [Next priority]
 - **Phase 4**: [Next priority]
@@ -193,26 +206,31 @@ _Back to [Trigger Map](00-trigger-map.md)_
 ## Template Guidelines
 
 **Tone:**
+
 - Actionable and specific
 - "Create awesome" language throughout
 - Links back to workshop outputs
 
 **Focus:**
+
 - PRIMARY persona gets most attention in "Must Address"
 - Secondary and tertiary get "Should Address"
 - Transformation is central theme
 
 **Design Implications:**
+
 - Organized by page/experience sections
 - Each section has clear "must do" items
 - Tied to specific fears/wants from personas
 
 **Emotional Goals:**
+
 - First-person statements
 - Show identity shift
 - Positive and empowering
 
 **Expected Length:**
+
 - ~145-150 lines for complete document
 - Use specific examples from trigger map
 - Keep actionable and scannable

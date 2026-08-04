@@ -11,11 +11,11 @@ When stages earn their place, name them descriptively and route by intent. The s
 ```markdown
 ## Stages
 
-| Stage | Intent it serves | Location |
-|-------|------------------|----------|
-| Ignition | Capture the raw concept, enforce customer-first thinking | SKILL.md (above) |
-| Press Release | Iterative drafting with hard coaching | `references/press-release.md` |
-| Customer FAQ | Surface devil's-advocate customer questions | `references/customer-faq.md` |
+| Stage         | Intent it serves                                         | Location                      |
+| ------------- | -------------------------------------------------------- | ----------------------------- |
+| Ignition      | Capture the raw concept, enforce customer-first thinking | SKILL.md (above)              |
+| Press Release | Iterative drafting with hard coaching                    | `references/press-release.md` |
+| Customer FAQ  | Surface devil's-advocate customer questions              | `references/customer-faq.md`  |
 ```
 
 The intent routing table is what makes the split worth its cost, because the model reads the user's intent and jumps straight to the stage that serves it rather than walking a fixed sequence. Stage order is a routing decision SKILL.md makes per run rather than something baked into the file names.

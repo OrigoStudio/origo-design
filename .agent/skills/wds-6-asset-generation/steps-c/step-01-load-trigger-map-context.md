@@ -54,6 +54,7 @@ Load the relevant Trigger Map context — WHO we are serving, WHAT motivates the
 ### 1. Load the Trigger Map
 
 Search project documentation:
+
 - Check `{output_folder}/B-Trigger-Map/00-trigger-map.md` (the hub document)
 - Check persona documents in `{output_folder}/B-Trigger-Map/`
 - If no Trigger Map folder exists, check Product Brief for business context
@@ -84,6 +85,7 @@ Ask: **"Is this the right strategic context for this content? Any adjustments?"*
 ### 4. Handle Missing Trigger Map
 
 If no Trigger Map exists:
+
 - Explain that the Trigger Map (Phase 2) provides the strategic foundation for content
 - Recommend completing Phase 2 first for best results
 - If the user wants to proceed anyway, use whatever context is available from the Product Brief
@@ -95,16 +97,16 @@ Save the confirmed context:
 
 ```yaml
 trigger_map_context:
-  business_goal: "[goal text]"
+  business_goal: '[goal text]'
   persona:
-    name: "[persona name]"
-    description: "[brief persona description]"
+    name: '[persona name]'
+    description: '[brief persona description]'
   driving_forces:
-    positive: "[relevant positive drivers]"
-    negative: "[relevant negative drivers]"
+    positive: '[relevant positive drivers]'
+    negative: '[relevant negative drivers]'
   customer_awareness:
-    start: "[awareness level where user begins]"
-    end: "[awareness level we want them to reach]"
+    start: '[awareness level where user begins]'
+    end: '[awareness level we want them to reach]'
 ```
 
 ### 6. Present MENU OPTIONS

@@ -16,35 +16,41 @@ Use this template to document the final Tone of Voice in the Product Brief.
 ### Examples
 
 **Error Messages:**
+
 - ✅ "Hmm, that doesn't look like an email. Check for typos?"
 - ❌ "Error: Invalid email format"
 
 **Button Text:**
+
 - ✅ "Let's get started"
 - ❌ "Submit"
 
 **Empty States:**
+
 - ✅ "Nothing here yet. Ready to add your first item?"
 - ❌ "No results found"
 
 **Success Messages:**
+
 - ✅ "You're all set! We've sent a confirmation to your email."
 - ❌ "Operation completed successfully"
 
 ### Guidelines
 
 **Do:**
+
 - [Tone-appropriate practice 1]
 - [Tone-appropriate practice 2]
 - [Tone-appropriate practice 3]
 
 **Don't:**
+
 - [Tone-inappropriate practice 1]
 - [Tone-inappropriate practice 2]
 
 ---
 
-*Note: Tone of Voice applies to UI microcopy. Strategic content (headlines, feature descriptions, value propositions) uses the Content Creation Workshop based on page-specific purpose and context.*
+_Note: Tone of Voice applies to UI microcopy. Strategic content (headlines, feature descriptions, value propositions) uses the Content Creation Workshop based on page-specific purpose and context._
 ```
 
 ## Example Microcopy Format

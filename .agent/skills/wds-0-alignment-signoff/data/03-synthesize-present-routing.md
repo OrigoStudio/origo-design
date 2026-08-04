@@ -14,11 +14,11 @@ web_bundle: true
 
 ## Steps
 
-| # | File | Purpose |
-|---|------|---------|
-| 01 | [Reflect Back](01-reflect-back.md) | Reflect back what you've captured from all sections |
-| 02 | [Synthesize Document](02-synthesize-document.md) | Compile into alignment document using pitch template |
-| 03 | [Present for Approval](04-present-for-approval.md) | Present to stakeholders, handle feedback, iterate |
+| #   | File                                               | Purpose                                              |
+| --- | -------------------------------------------------- | ---------------------------------------------------- |
+| 01  | [Reflect Back](01-reflect-back.md)                 | Reflect back what you've captured from all sections  |
+| 02  | [Synthesize Document](02-synthesize-document.md)   | Compile into alignment document using pitch template |
+| 03  | [Present for Approval](04-present-for-approval.md) | Present to stakeholders, handle feedback, iterate    |
 
 **Key principle:** The alignment phase is collaborative and iterative. Refine until everyone is on board.
 

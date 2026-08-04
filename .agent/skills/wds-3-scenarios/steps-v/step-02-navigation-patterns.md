@@ -56,6 +56,7 @@ Verify that all scenario shortest paths follow WDS navigation conventions, page 
 ### 1. Page Naming Consistency
 
 For each scenario shortest path:
+
 - [ ] Page names are consistent across scenarios (same page = same name everywhere)
 - [ ] Page names are descriptive and user-facing (not technical identifiers)
 - [ ] No duplicate page names with different meanings
@@ -63,6 +64,7 @@ For each scenario shortest path:
 ### 2. Navigation Flow Rules
 
 For each scenario:
+
 - [ ] Path is truly linear — zero "if" statements, zero branches
 - [ ] First step is a landing/entry page (not an internal page)
 - [ ] Last step ends with a success state (marked with ✓)
@@ -88,6 +90,7 @@ Build a page registry from all scenarios:
 ### 4. Navigation Conflicts
 
 Check for conflicts:
+
 - [ ] No scenario routes FROM the same page TO different pages without clear context
 - [ ] Shared pages serve consistent purposes across scenarios
 - [ ] Entry points are reachable from the described discovery method

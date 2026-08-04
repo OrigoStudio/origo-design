@@ -79,6 +79,7 @@ Add the following under the `## Progress` section (after the last entry):
 ```
 
 **Rules:**
+
 - List every artifact file — do not summarize with "etc."
 - Summary must mention specific decisions, not generic statements
 - Use the actual date, not a placeholder
@@ -92,6 +93,7 @@ Add rows to the `## Key Decisions` table for any significant choices made during
 ```
 
 Examples of key decisions worth logging:
+
 - Scenario count adjustments (user added/removed scenarios)
 - Page assignment changes
 - Priority reordering

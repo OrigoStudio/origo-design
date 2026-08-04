@@ -1,11 +1,11 @@
 ---
-title: "Origo Design — Functional Requirements"
+title: 'Origo Design — Functional Requirements'
 status: all-open-questions-resolved
-version: "0.3"
+version: '0.3'
 created: 2026-07-26
 updated: 2026-07-28
-source: "Product Brief (design-artifacts/A-Product-Brief/product-brief.md) + Brainstorm Session (2026-07-25)"
-resolutions: "Open-Questions-Answers.md (2026-07-28), Open-Questions-Answers- v2.md (2026-07-28)"
+source: 'Product Brief (design-artifacts/A-Product-Brief/product-brief.md) + Brainstorm Session (2026-07-25)'
+resolutions: 'Open-Questions-Answers.md (2026-07-28), Open-Questions-Answers- v2.md (2026-07-28)'
 author: Patel
 ---
 
@@ -32,11 +32,11 @@ Origo Design is a **Business Application Description Language (BADL) with a rend
 
 Its core abstraction is a framework-agnostic, technology-neutral metadata contract that describes how organizations achieve business outcomes — not how pixels are arranged on a screen.
 
-| Layer | Package | Responsibility |
-|---|---|---|
-| BADL Grammar | `@origo/core` | Schema, validator, versioning, type system for business application metadata |
-| Renderers | `@origo/[framework]-renderer` | Framework-specific packages that consume BADL and produce UI |
-| Studio | `@origo/studio`, `@origo/cli` | Tooling: CLI, visual designer, AI page generator, DevTools |
+| Layer        | Package                       | Responsibility                                                               |
+| ------------ | ----------------------------- | ---------------------------------------------------------------------------- |
+| BADL Grammar | `@origo/core`                 | Schema, validator, versioning, type system for business application metadata |
+| Renderers    | `@origo/[framework]-renderer` | Framework-specific packages that consume BADL and produce UI                 |
+| Studio       | `@origo/studio`, `@origo/cli` | Tooling: CLI, visual designer, AI page generator, DevTools                   |
 
 ### 1.3 Target Consumers
 
@@ -72,11 +72,11 @@ Angular, React Native, Web, Voice, and AI agents all live at the bottom. They ar
 
 ### 2.2 The Three Concerns That Must Never Be Conflated
 
-| Concern | Describes | Examples |
-|---|---|---|
-| **Business Intent** | What the business wants to accomplish | "Approve Invoice", "Hire Employee" |
+| Concern                | Describes                                | Examples                                               |
+| ---------------------- | ---------------------------------------- | ------------------------------------------------------ |
+| **Business Intent**    | What the business wants to accomplish    | "Approve Invoice", "Hire Employee"                     |
 | **Interaction Intent** | What the interaction requires to succeed | "Confirmation Required, Authentication Level = Strong" |
-| **Presentation** | How the medium renders the interaction | Modal, Bottom Sheet, Voice prompt, [y/N] |
+| **Presentation**       | How the medium renders the interaction   | Modal, Bottom Sheet, Voice prompt, [y/N]               |
 
 A capability is stable across decades. The medium that expresses it changes continuously.
 
@@ -102,6 +102,7 @@ The same Interaction Contract satisfies all of them.
 **FR-O-001:** The BADL schema MUST support declaring Business Outcomes as first-class entities, distinct from capabilities.
 
 **FR-O-002:** Each Business Outcome MUST declare:
+
 - `id` — unique, stable identifier (stable across renames)
 - `name` — human-readable label (localization key)
 - `description` — what the organization achieves when fulfilled
@@ -111,6 +112,7 @@ The same Interaction Contract satisfies all of them.
 - `risk_level` — Low / Medium / High / Critical
 
 **FR-O-003:** Business Outcomes MUST support two realization modes:
+
 - **Simple** — maps 1:1 to a single capability
 - **Composite** — realized through a Workflow (ordered, branching sequence of capabilities)
 
@@ -123,8 +125,9 @@ The same Interaction Contract satisfies all of them.
 ## 4. @origo/core — Capability Contracts
 
 **FR-C-001:** Each Capability MUST declare:
+
 - `id`, `name`, `description`
-- `type` — **`Command`** (changes business state) or **`Query`** (retrieves business state) *(resolved: OQ-02)*
+- `type` — **`Command`** (changes business state) or **`Query`** (retrieves business state) _(resolved: OQ-02)_
 - `outcome_ref[]` — which outcomes this capability advances
 - `preconditions[]` — state predicates MUST be true before execution
 - `postconditions[]` — state predicates guaranteed after successful execution
@@ -133,9 +136,10 @@ The same Interaction Contract satisfies all of them.
 - `interaction_contract_ref` — governing Interaction Contract
 - `async` — Boolean; whether this capability resolves later (approval workflows, batch jobs)
 
-**FR-C-004:** Command capabilities MUST support: permissions, business rules, workflows, governance, and completion signals. Query capabilities MUST support: filters, projections, caching, and pagination. These behavioral contracts MUST NOT be conflated. *(resolved: OQ-02)*
+**FR-C-004:** Command capabilities MUST support: permissions, business rules, workflows, governance, and completion signals. Query capabilities MUST support: filters, projections, caching, and pagination. These behavioral contracts MUST NOT be conflated. _(resolved: OQ-02)_
 
 **FR-C-002:** Preconditions and postconditions MUST be:
+
 - Evaluated at runtime to gate execution
 - Surfaced in DevTools as human-readable explanations
 - Usable in automated testing as assertions
@@ -161,6 +165,7 @@ Invoice.Amount: required, min=0.01
 ```
 
 **FR-R-002:** Each Business Rule MUST have:
+
 - `id` — referenceable by ID in DevTools explanations (e.g., `BR-120`)
 - `description` — human-readable statement
 - `scope[]` — which capabilities or outcomes this rule governs
@@ -172,7 +177,8 @@ Invoice.Amount: required, min=0.01
 
 > **[RESOLVED — OQ-03]** **Both are supported.** Inline expression is mandatory; external rule engine reference is optional. BADL owns the business intent declaration; the external engine executes specialized logic. This avoids vendor lock-in while enabling enterprise integrations (e.g., Drools).
 
-**FR-R-005:** Business rules MUST support two expression modes: *(resolved: OQ-03)*
+**FR-R-005:** Business rules MUST support two expression modes: _(resolved: OQ-03)_
+
 - **Inline** — expression evaluated natively by `@origo/core` (e.g., `Invoice.Total > 0`)
 - **External** — reference to an external rule engine provider and named rule (e.g., `provider: Drools, rule: InvoiceApproval`)
 
@@ -188,21 +194,22 @@ A rule's `type` field MUST be `Inline` or `External`. External rules MUST still 
 
 **FR-I-002:** Each Interaction Contract MUST support:
 
-| Property | Type | Description |
-|---|---|---|
-| `confirmation_required` | Boolean | Adapter MUST obtain explicit user confirmation before capability executes |
-| `reason_required` | Boolean | User must supply free-text justification |
-| `authentication_level` | Enum | None / Standard / Strong / Biometric |
-| `feedback_required` | Boolean | Adapter MUST surface success/failure to the user |
-| `progress_required` | Boolean | Adapter MUST surface progress for async capabilities |
-| `interruptible` | Boolean | Whether the user may cancel mid-execution |
-| `undo_allowed` | Boolean | Whether the outcome can be reversed after execution |
-| `expected_completion_ms` | Number | Advisory; adapter uses this to choose spinner vs. background notification |
-| `accessibility_level` | Enum | WCAG AA (default) / AAA |
+| Property                 | Type    | Description                                                               |
+| ------------------------ | ------- | ------------------------------------------------------------------------- |
+| `confirmation_required`  | Boolean | Adapter MUST obtain explicit user confirmation before capability executes |
+| `reason_required`        | Boolean | User must supply free-text justification                                  |
+| `authentication_level`   | Enum    | None / Standard / Strong / Biometric                                      |
+| `feedback_required`      | Boolean | Adapter MUST surface success/failure to the user                          |
+| `progress_required`      | Boolean | Adapter MUST surface progress for async capabilities                      |
+| `interruptible`          | Boolean | Whether the user may cancel mid-execution                                 |
+| `undo_allowed`           | Boolean | Whether the outcome can be reversed after execution                       |
+| `expected_completion_ms` | Number  | Advisory; adapter uses this to choose spinner vs. background notification |
+| `accessibility_level`    | Enum    | WCAG AA (default) / AAA                                                   |
 
 **FR-I-003:** Interaction Contracts MUST be shareable — a single contract can be referenced by multiple capabilities.
 
 **FR-I-004:** `@origo/core` MUST ship a standard library of common Interaction Contracts:
+
 - `standard-read` — no confirmation, standard auth, feedback optional
 - `standard-write` — no confirmation, standard auth, feedback required
 - `high-risk-write` — confirmation required, strong auth, feedback required, not interruptible
@@ -215,6 +222,7 @@ A rule's `type` field MUST be `Inline` or `External`. External rules MUST still 
 **FR-E-001:** BADL MUST support declaring the domain model: Entities, Value Objects, Enumerations, and their relationships.
 
 **FR-E-002:** Each Entity field MUST support:
+
 - `type` — primitive or reference to another Entity / Value Object
 - `label` — localization key or default text
 - `validation[]` — field-level validators (required, min, max, pattern, custom)
@@ -224,7 +232,8 @@ A rule's `type` field MUST be `Inline` or `External`. External rules MUST still 
 
 > **[RESOLVED — OQ-06]** **Yes — schema importers are a high-priority adoption accelerator.** Importers are implemented as CLI plugins that generate BADL entity definitions from external schema formats. Generated output is always BADL; importers are never a runtime dependency.
 
-**FR-E-004:** `@origo/cli` MUST ship importer plugins for: *(resolved: OQ-06)*
+**FR-E-004:** `@origo/cli` MUST ship importer plugins for: _(resolved: OQ-06)_
+
 - `origo import openapi` — import entities from OpenAPI / Swagger specification
 - `origo import jsonschema` — import entities from JSON Schema
 - `origo import prisma` — import entities from Prisma schema
@@ -240,6 +249,7 @@ All importers produce BADL entity files. Developers refine the generated output;
 **FR-W-001:** Workflows express Composite Business Outcomes — ordered, branching sequences of capabilities.
 
 **FR-W-002:** Each Workflow MUST support:
+
 - Sequential steps
 - Conditional branching (if/else on state predicates)
 - Parallel execution gates (multiple capabilities must all complete before proceeding)
@@ -248,7 +258,7 @@ All importers produce BADL entity files. Developers refine the generated output;
 
 **FR-W-003:** Workflow state MUST be inspectable at runtime by DevTools, AI agents, and governance systems.
 
-**FR-W-004:** The Workflow schema MUST be designed from Phase 2 to accommodate long-running workflow attributes: `persistence_required`, `resume_token`, `timeout_duration`, `escalation_path`, and `compensation_steps`. Runtime execution of persisted long-running workflows is deferred to Phase 4. *(resolved: OQ-07)*
+**FR-W-004:** The Workflow schema MUST be designed from Phase 2 to accommodate long-running workflow attributes: `persistence_required`, `resume_token`, `timeout_duration`, `escalation_path`, and `compensation_steps`. Runtime execution of persisted long-running workflows is deferred to Phase 4. _(resolved: OQ-07)_
 
 > **[RESOLVED — OQ-07]** **Design for them in Phase 2; implement runtime execution in Phase 4.** Long-running workflows (days/weeks) require persistence, resumability, timers, distributed execution, compensations, and saga patterns — effectively a workflow engine. Building runtime support too early delays everything else. The schema will be designed to accommodate persistence from Phase 2; the runtime will execute persisted workflows in Phase 4.
 
@@ -261,6 +271,7 @@ All importers produce BADL entity files. Developers refine the generated output;
 **FR-P-002:** Permission declarations MUST NOT depend on any specific IAM / RBAC provider. They declare **what role or policy is required**; the adapter resolves it against the application's identity system.
 
 **FR-P-003:** The permission system MUST support:
+
 - Role-based conditions: `Role == Accountant`
 - State-based conditions: `Invoice.Status == Posted`
 - Compound conditions: `Role == Accountant AND Invoice.Status == Posted`
@@ -276,6 +287,7 @@ All importers produce BADL entity files. Developers refine the generated output;
 **FR-G-001:** BADL MUST support declaring a governance chain for capabilities and outcomes with elevated `risk_level`.
 
 **FR-G-002:** A governance chain MUST capture:
+
 - Required approvers (roles and/or named actors)
 - Approval sequence (sequential vs. parallel)
 - Minimum approvals required
@@ -284,7 +296,8 @@ All importers produce BADL entity files. Developers refine the generated output;
 
 > **[RESOLVED — OQ-04]** **Both are supported.** Default is inline; external reference is optional. SMEs and smaller teams will use inline governance chains directly in BADL. Banks and enterprises that already operate governance engines (e.g., ServiceNow, custom approval platforms) may reference them externally.
 
-**FR-G-005:** Governance chains MUST support two modes: *(resolved: OQ-04)*
+**FR-G-005:** Governance chains MUST support two modes: _(resolved: OQ-04)_
+
 - **Inline** — approvers, sequence, minimums, timeout, and escalation declared directly in BADL
 - **External** — a reference to an external governance policy service; BADL retains the `risk_level` and audit evidence requirements; the external service owns approval routing
 
@@ -344,13 +357,14 @@ Customer/
 ### 12.3 Git-Friendliness
 
 **FR-M-006:** The canonical on-disk representation MUST be structured to minimize merge conflicts:
+
 - Each entity, capability, rule, and interaction contract MUST be independently addressable
 - Array ordering MUST NOT be semantically significant
 - IDs MUST be stable across renames (a rename is a label change, not an ID change)
 
 > **[RESOLVED — OQ-05]** **JSON is canonical. YAML is supported only as an import/export format.** JSON provides deterministic parsing, JSON Schema tooling, IDE support, AI generation compatibility, and cleaner diffs. YAML anchors, indentation sensitivity, and parser inconsistencies introduce unnecessary risk in a metadata-first platform. YAML MUST never be stored internally.
 
-**FR-M-008:** The canonical on-disk BADL format is JSON. YAML MUST be supported only as a conversion format — `@origo/cli` MUST provide `origo export yaml` and accept YAML input that is immediately converted to canonical JSON before processing. YAML MUST NOT be stored as BADL source. *(resolved: OQ-05)*
+**FR-M-008:** The canonical on-disk BADL format is JSON. YAML MUST be supported only as a conversion format — `@origo/cli` MUST provide `origo export yaml` and accept YAML input that is immediately converted to canonical JSON before processing. YAML MUST NOT be stored as BADL source. _(resolved: OQ-05)_
 
 ### 12.4 Hot Reload
 
@@ -361,6 +375,7 @@ Customer/
 ## 13. Experience Adapters
 
 **FR-A-001:** Each Experience Adapter implements one protocol:
+
 - **Input:** Interaction Contract (what is required)
 - **Output:** Medium-specific interaction (how it is fulfilled)
 
@@ -388,16 +403,17 @@ Customer/
 
 **FR-Rend-004:** Delivery plan:
 
-| Phase | Package |
-|---|---|
-| Phase 1 | `@origo/angular-renderer` |
-| Phase 2 | `@origo/react-native-renderer` |
-| Phase 3 | `@origo/vue-renderer`, `@origo/react-web-renderer` |
+| Phase   | Package                                             |
+| ------- | --------------------------------------------------- |
+| Phase 1 | `@origo/angular-renderer`                           |
+| Phase 2 | `@origo/react-native-renderer`                      |
+| Phase 3 | `@origo/vue-renderer`, `@origo/react-web-renderer`  |
 | Phase 4 | `@origo/blazor-renderer`, `@origo/flutter-renderer` |
 
 ### 14.2 Component Standards
 
 **FR-Rend-005:** Every component in every renderer MUST support the following by default, without additional configuration:
+
 - Accessibility (WCAG 2.1 AA minimum)
 - Localization (labels, validation messages, date/number formats)
 - RTL layout direction
@@ -431,17 +447,18 @@ Sorting · Filtering · Grouping · Column chooser · Frozen columns · Inline e
 
 **FR-Rend-012:** The Page Generator MUST produce the following pages automatically from an Entity + Outcome definition:
 
-| Page | Description |
-|---|---|
-| List Page | Grid + search + filters + actions |
-| Create Page | Form + capability invocation |
+| Page        | Description                       |
+| ----------- | --------------------------------- |
+| List Page   | Grid + search + filters + actions |
+| Create Page | Form + capability invocation      |
 | Update Page | Form pre-filled with entity state |
-| Detail Page | Read-only view + audit trail |
-| Import Page | Bulk entity creation from file |
-| Export | CSV, Excel, PDF |
-| Bulk Edit | Multi-record update |
+| Detail Page | Read-only view + audit trail      |
+| Import Page | Bulk entity creation from file    |
+| Export      | CSV, Excel, PDF                   |
+| Bulk Edit   | Multi-record update               |
 
 **FR-Rend-013:** Every generated page MUST be overridable at three levels without forking the template or losing upgrade compatibility:
+
 1. **Component-level** — replace a specific component for a specific field/action
 2. **Section-level** — replace a section (e.g., form section of a Detail Page)
 3. **Page-level** — provide a fully custom page that still receives resolved BADL as input
@@ -453,6 +470,7 @@ Sorting · Filtering · Grouping · Column chooser · Frozen columns · Inline e
 ### 15.1 DevTools
 
 **FR-DX-001:** Origo MUST ship DevTools exposing, for any selected element on a generated page:
+
 - Metadata source file and line
 - Rendering path (renderer -> adapter -> component chain)
 - Property resolution (which metadata property set this value, and from where it was inherited)
@@ -475,15 +493,15 @@ Disabled because:
 
 **FR-DX-003:** `@origo/cli` MUST support:
 
-| Command | Description |
-|---|---|
-| `origo new` | Scaffold a new Origo project with chosen renderer |
-| `origo generate entity <name>` | Generate entity metadata file(s) |
-| `origo generate outcome <name>` | Generate outcome + capability stubs |
-| `origo generate page <entity>` | Generate Page Generator page suite |
-| `origo validate` | Validate all BADL content against grammar |
-| `origo diff <grammar-version>` | Show what BADL changes would break current content |
-| `origo migrate <grammar-version>` | Run grammar migration |
+| Command                           | Description                                        |
+| --------------------------------- | -------------------------------------------------- |
+| `origo new`                       | Scaffold a new Origo project with chosen renderer  |
+| `origo generate entity <name>`    | Generate entity metadata file(s)                   |
+| `origo generate outcome <name>`   | Generate outcome + capability stubs                |
+| `origo generate page <entity>`    | Generate Page Generator page suite                 |
+| `origo validate`                  | Validate all BADL content against grammar          |
+| `origo diff <grammar-version>`    | Show what BADL changes would break current content |
+| `origo migrate <grammar-version>` | Run grammar migration                              |
 
 ### 15.3 Playground & Onboarding
 
@@ -499,15 +517,15 @@ Disabled because:
 
 **FR-OBS-001:** Every generated page MUST emit the following telemetry events by default:
 
-| Event | Payload |
-|---|---|
-| `page.render` | Time from metadata resolution to first meaningful paint |
-| `page.ready` | Time to interactive |
-| `capability.invoke` | Capability ID, actor, precondition state at invocation |
-| `capability.complete` | Capability ID, outcome state, duration |
-| `validation.fail` | Rule ID, field metadata path |
-| `permission.deny` | Permission ID, actor, capability attempted |
-| `accessibility.violation` | WCAG rule, element metadata path |
+| Event                     | Payload                                                 |
+| ------------------------- | ------------------------------------------------------- |
+| `page.render`             | Time from metadata resolution to first meaningful paint |
+| `page.ready`              | Time to interactive                                     |
+| `capability.invoke`       | Capability ID, actor, precondition state at invocation  |
+| `capability.complete`     | Capability ID, outcome state, duration                  |
+| `validation.fail`         | Rule ID, field metadata path                            |
+| `permission.deny`         | Permission ID, actor, capability attempted              |
+| `accessibility.violation` | WCAG rule, element metadata path                        |
 
 **FR-OBS-002:** Telemetry hooks MUST be pluggable — routable to any analytics, monitoring, or logging system without modifying BADL content.
 
@@ -543,7 +561,7 @@ Disabled because:
 
 **FR-EXT-006:** Theme overrides MUST be achievable through design token overrides alone — no forking of component stylesheets.
 
-**FR-EXT-007:** BADL MUST define a formal plugin/extension contract with semantic versioning and capability negotiation, so third-party providers can safely extend the language (new renderers, adapters, validator types, rule engine integrations) without modifying `@origo/core`. *(resolved: OQ-10)*
+**FR-EXT-007:** BADL MUST define a formal plugin/extension contract with semantic versioning and capability negotiation, so third-party providers can safely extend the language (new renderers, adapters, validator types, rule engine integrations) without modifying `@origo/core`. _(resolved: OQ-10)_
 
 > **[RESOLVED — OQ-10]** **Yes — BADL MUST define a formal plugin and extension contract.** Every extension MUST declare its extension type, semantic version, supported grammar versions, capability set, dependency graph, lifecycle hooks, and required permissions. `@origo/core` MUST negotiate capabilities and validate compatibility before activation. Extensions communicate exclusively through public extension APIs and MUST NOT depend on internal implementation details. This contract enables a stable third-party ecosystem, safe upgrades, and the Phase 4 marketplace.
 
@@ -591,7 +609,8 @@ Disabled because:
 
 > **[RESOLVED — OQ-09]** **Metadata-first, always.** The visual builder is one BADL authoring surface among several — not the primary foundation. All authoring tools (CLI, VS Code extension, AI page generator, visual builder, import wizards) write BADL files. Nothing bypasses BADL. This ensures every authoring experience produces the same consistent, validated metadata contract.
 
-**FR-AI-005:** All authoring surfaces MUST produce BADL as their only output. The authoring stack MUST follow this layering: *(resolved: OQ-09)*
+**FR-AI-005:** All authoring surfaces MUST produce BADL as their only output. The authoring stack MUST follow this layering: _(resolved: OQ-09)_
+
 ```
 CLI  →  VS Code Extension  →  AI Page Generator  →  Visual Builder  →  Import Wizards
                                          ↓
@@ -603,6 +622,7 @@ CLI  →  VS Code Extension  →  AI Page Generator  →  Visual Builder  →  I
                                          ↓
                                      Renderer
 ```
+
 No authoring surface MUST be able to produce renderer-specific code, bypassing BADL.
 
 ---
@@ -616,6 +636,7 @@ No authoring surface MUST be able to produce renderer-specific code, bypassing B
 **FR-TEST-003:** Capability completion signals MUST be usable as test assertions — a test asserts that a Business Outcome was achieved by verifying its completion signal, not by inspecting DOM state.
 
 **FR-TEST-004:** The Page Generator MUST optionally generate a test scaffold alongside each generated page, covering:
+
 - Happy path capability invocation
 - Permission denial scenarios
 - Business rule violation scenarios
@@ -631,7 +652,8 @@ No authoring surface MUST be able to produce renderer-specific code, bypassing B
 
 > **[RESOLVED — OQ-08]** **Yes — ship it, explicitly documented as approximate (not lossless).** This is a high-value brownfield adoption accelerator. The tool analyzes existing component code and generates BADL entity definitions, forms, grids, permissions, and validations. Developers refine the output. The tool MUST be clearly labeled as producing a starting point, not a complete migration.
 
-**FR-ADOPT-003:** `@origo/cli` MUST ship `origo migrate from-code <path>` — a code-to-BADL migration tool that: *(resolved: OQ-08)*
+**FR-ADOPT-003:** `@origo/cli` MUST ship `origo migrate from-code <path>` — a code-to-BADL migration tool that: _(resolved: OQ-08)_
+
 - Analyzes existing Angular, React, or Vue component code
 - Generates approximate BADL: entities, field definitions, validators, permissions, and interaction contract stubs
 - Annotates generated files with `// APPROXIMATE — developer review required` comments
@@ -691,18 +713,18 @@ This tool makes brownfield adoption dramatically more accessible.
 
 > All decisions below are resolved. Each inline `[RESOLVED]` tag documents the rationale at the point of impact in the document.
 
-| ID | Decision | Resolved |
-|---|---|---|
-| **OQ-01** | Developer-first for Phase 1–3; no-code self-service deferred to Phase 4 | §1.3 |
-| **OQ-02** | `CapabilityType: Command \| Query` added as first-class schema property (FR-C-001, FR-C-004) | §4 |
-| **OQ-03** | Business rules support both inline and external rule engine modes (FR-R-005) | §5 |
-| **OQ-04** | Governance chains support both inline and external provider modes (FR-G-005) | §10 |
-| **OQ-05** | JSON is canonical; YAML supported only as import/export conversion format (FR-M-008) | §12.3 |
-| **OQ-06** | Schema importers shipped as CLI plugins for OpenAPI, JSON Schema, Prisma, EF Core, SQL DBs (FR-E-004) | §7 |
-| **OQ-07** | Workflow schema designed for persistence in Phase 2; long-running runtime deferred to Phase 4 (FR-W-004) | §8 |
-| **OQ-08** | `origo migrate from-code` shipped as approximate (not lossless) migration tool (FR-ADOPT-003) | §22 |
-| **OQ-09** | Metadata-first always; visual builder is one BADL authoring surface among several (FR-AI-005) | §20 |
-| **OQ-10** | BADL MUST define a formal plugin/extension contract with typed extension roles, semantic versioning, capability negotiation, dependency resolution, lifecycle hooks, and security sandboxing (FR-EXT-007 through FR-EXT-014) | §18 |
+| ID        | Decision                                                                                                                                                                                                                     | Resolved |
+| --------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------- |
+| **OQ-01** | Developer-first for Phase 1–3; no-code self-service deferred to Phase 4                                                                                                                                                      | §1.3     |
+| **OQ-02** | `CapabilityType: Command \| Query` added as first-class schema property (FR-C-001, FR-C-004)                                                                                                                                 | §4       |
+| **OQ-03** | Business rules support both inline and external rule engine modes (FR-R-005)                                                                                                                                                 | §5       |
+| **OQ-04** | Governance chains support both inline and external provider modes (FR-G-005)                                                                                                                                                 | §10      |
+| **OQ-05** | JSON is canonical; YAML supported only as import/export conversion format (FR-M-008)                                                                                                                                         | §12.3    |
+| **OQ-06** | Schema importers shipped as CLI plugins for OpenAPI, JSON Schema, Prisma, EF Core, SQL DBs (FR-E-004)                                                                                                                        | §7       |
+| **OQ-07** | Workflow schema designed for persistence in Phase 2; long-running runtime deferred to Phase 4 (FR-W-004)                                                                                                                     | §8       |
+| **OQ-08** | `origo migrate from-code` shipped as approximate (not lossless) migration tool (FR-ADOPT-003)                                                                                                                                | §22      |
+| **OQ-09** | Metadata-first always; visual builder is one BADL authoring surface among several (FR-AI-005)                                                                                                                                | §20      |
+| **OQ-10** | BADL MUST define a formal plugin/extension contract with typed extension roles, semantic versioning, capability negotiation, dependency resolution, lifecycle hooks, and security sandboxing (FR-EXT-007 through FR-EXT-014) | §18      |
 
 ### 24.2 Open Questions (v0.3)
 

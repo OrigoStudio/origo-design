@@ -153,12 +153,12 @@ sequenceDiagram
 
 For each risk or debt item found during analysis:
 
-| Risk | Severity | Location | Impact |
-|------|----------|----------|--------|
-| No input validation on `/api/admin/` routes | High | `src/routes/admin.ts` | Security vulnerability |
-| Circular dependency between User and Order modules | Medium | `src/services/` | Fragile, hard to test |
-| No error handling in payment flow | High | `src/payments/stripe.ts` | Silent failures |
-| Outdated dependencies (2 major versions behind) | Medium | `package.json` | Security + compatibility |
+| Risk                                               | Severity | Location                 | Impact                   |
+| -------------------------------------------------- | -------- | ------------------------ | ------------------------ |
+| No input validation on `/api/admin/` routes        | High     | `src/routes/admin.ts`    | Security vulnerability   |
+| Circular dependency between User and Order modules | Medium   | `src/services/`          | Fragile, hard to test    |
+| No error handling in payment flow                  | High     | `src/payments/stripe.ts` | Silent failures          |
+| Outdated dependencies (2 major versions behind)    | Medium   | `package.json`           | Security + compatibility |
 
 ### 4. Write Recommendations
 
@@ -209,10 +209,12 @@ Save the document to the project's output location. If no output location is def
 Display: "**Select an Option:** [M] Return to Activity Menu"
 
 #### Menu Handling Logic:
+
 - IF M: Update design log, then load, read entire file, then execute {activityWorkflowFile}
 - IF Any other comments or queries: help user respond then [Redisplay Menu Options]
 
 #### EXECUTION RULES:
+
 - ALWAYS halt and wait for user input after presenting menu
 - ONLY proceed when user selects 'M'
 - User can chat or ask questions - always respond and then redisplay menu options
@@ -226,6 +228,7 @@ ONLY WHEN the architecture document is complete and saved will you then load and
 ## 🚨 SYSTEM SUCCESS/FAILURE METRICS
 
 ### ✅ SUCCESS:
+
 - Document answers the original questions from Step 01
 - Summary is clear and concise (2-3 sentences)
 - At least one Mermaid diagram included
@@ -234,6 +237,7 @@ ONLY WHEN the architecture document is complete and saved will you then load and
 - Document saved to output folder
 
 ### ❌ SYSTEM FAILURE:
+
 - Document does not answer original questions
 - No diagrams included
 - Recommendations are vague or not prioritized

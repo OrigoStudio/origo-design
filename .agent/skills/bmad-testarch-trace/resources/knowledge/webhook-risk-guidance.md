@@ -64,7 +64,12 @@ const movieDeleted = (movieId: number) =>
     .withInterval(500)
     .build();
 
-test('movie deletion triggers a webhook with correct payload', async ({ authToken, addMovie, deleteMovie, webhookRegistry }) => {
+test('movie deletion triggers a webhook with correct payload', async ({
+  authToken,
+  addMovie,
+  deleteMovie,
+  webhookRegistry,
+}) => {
   const movie = generateMovieWithoutId();
   const { body: createResponse } = await addMovie(authToken, movie);
   const movieId = createResponse.data.id;

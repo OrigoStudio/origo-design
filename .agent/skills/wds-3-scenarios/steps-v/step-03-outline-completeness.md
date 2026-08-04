@@ -58,38 +58,45 @@ Verify every scenario outline has all 7 required components with sufficient qual
 For **each scenario**, validate all 7 components:
 
 #### Component 1: Scenario Name & ID
+
 - [ ] Name includes persona name
 - [ ] ID assigned (01, 02, etc.)
 - [ ] Slug follows format: `NN-descriptive-name`
 
 #### Component 2: Core Feature
+
 - [ ] Stated as user purpose (not feature name)
 - [ ] Aligned to a specific business goal from Trigger Map
 
 #### Component 3: Entry Point
+
 - [ ] Device specified (mobile/desktop/tablet)
 - [ ] Context described (where user is, what they are doing)
 - [ ] Discovery method specified (search, link, ad, bookmark, etc.)
 - [ ] Realistic — not "user opens app"
 
 #### Component 4: Mental State
+
 - [ ] Trigger present and specific (what just happened)
 - [ ] Hope present and specific (what they want)
 - [ ] Worry present and specific (what they fear)
 - [ ] All three are visceral, not generic
 
 #### Component 5: Success Goals
+
 - [ ] User success defined and measurable
 - [ ] Business success defined and measurable
 - [ ] Both are specific — not "get more customers"
 
 #### Component 6: Shortest Path
+
 - [ ] Linear — zero "if" statements
 - [ ] Each step has page name + purpose
 - [ ] Minimum viable steps (each justifies existence)
 - [ ] Final step marked with ✓
 
 #### Component 7: Trigger Map Connections
+
 - [ ] Persona referenced (with priority level)
 - [ ] Positive driving force(s) linked
 - [ ] Negative driving force(s) linked

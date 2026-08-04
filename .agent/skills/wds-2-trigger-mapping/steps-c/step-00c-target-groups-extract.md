@@ -77,6 +77,7 @@ Store target_groups.
 ### 2. Create Detailed Personas
 
 For each target group, check documentation for:
+
 - Context and situation
 - Goals and aspirations
 - Frustrations and fears
@@ -113,11 +114,13 @@ Next, we'll map what drives each group psychologically."
 Display: "**Select an Option:** [C] Continue to Driving Forces Extraction | [M] Return to Activity Menu"
 
 #### Menu Handling Logic:
+
 - IF C: Load and execute {nextStepFile}
 - IF M: Return to {activityWorkflowFile}
 - IF Any other comments or queries: help user respond then [Redisplay Menu Options]
 
 #### EXECUTION RULES:
+
 - ALWAYS halt and wait for user input after presenting menu
 - User can chat or ask questions - always respond and then redisplay menu options
 
@@ -130,6 +133,7 @@ ONLY WHEN user selects [C] will you load the next step file. Target groups and p
 ## 🚨 SYSTEM SUCCESS/FAILURE METRICS
 
 ### ✅ SUCCESS:
+
 - Target groups extracted or identified through dialogue
 - Groups prioritized to 3-4 maximum
 - Personas created with behavioral profiles (not just demographics)
@@ -139,6 +143,7 @@ ONLY WHEN user selects [C] will you load the next step file. Target groups and p
 - Results stored for subsequent steps
 
 ### ❌ SYSTEM FAILURE:
+
 - Accepting demographic-only descriptions without behavioral depth
 - Having more than 4 target groups without prioritizing
 - Not validating extracted groups with user

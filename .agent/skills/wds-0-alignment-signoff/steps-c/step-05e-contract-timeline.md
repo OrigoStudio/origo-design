@@ -67,6 +67,7 @@ Build the Timeline section defining when work will happen, key milestones, and d
 **Content**: Extract from Work Plan or Investment Required from alignment document
 
 **What to include**:
+
 - Key milestones
 - Delivery dates
 - Critical deadlines
@@ -81,11 +82,13 @@ Build the Timeline section defining when work will happen, key milestones, and d
 Display: "**Select an Option:** [C] Continue to step-05f-contract-availability (or step-05g if not Retainer)"
 
 #### Menu Handling Logic:
+
 - IF C: Load, read entire file, then execute {nextStepFile} (or step-05g if not Retainer)
 - IF M: Return to {workflowFile}
 - IF Any other comments or queries: help user respond then [Redisplay Menu Options]
 
 #### EXECUTION RULES:
+
 - ALWAYS halt and wait for user input after presenting menu
 - ONLY proceed to next step when user selects 'C'
 - User can chat or ask questions - always respond and then redisplay menu options
@@ -99,11 +102,13 @@ ONLY WHEN the Timeline section is built and confirmed will you then load and rea
 ## 🚨 SYSTEM SUCCESS/FAILURE METRICS
 
 ### ✅ SUCCESS:
+
 - Key milestones and delivery dates are captured
 - Timeline is realistic and agreed upon
 - Correct routing based on business model
 
 ### ❌ SYSTEM FAILURE:
+
 - Inventing deadlines without user input
 - Not routing correctly based on business model
 - Skipping milestone definition

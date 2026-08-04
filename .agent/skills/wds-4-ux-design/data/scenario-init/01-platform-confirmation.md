@@ -11,6 +11,7 @@ Before starting scenario design, confirm that the platform strategy from the Pro
 ## Context for Agent
 
 The Product Brief defines the overall platform strategy for the product. However, some scenarios might have different platform requirements. For example:
+
 - Onboarding might be web-only while daily use is mobile app
 - Admin features might be desktop-only while customer features are mobile
 - Some scenarios might span multiple platforms (start on web, continue on mobile)
@@ -28,7 +29,7 @@ Read the Product Brief and extract the Platform & Device Strategy section:
 - interaction_models
 - offline_requirements
 - native_features_needed
-</action>
+  </action>
 
 ### 2. Present Platform Strategy
 
@@ -100,6 +101,7 @@ Create or update scenario overview document with platform information:
 {describe how user moves between platforms in this scenario}
 
 **Page Types in This Scenario:**
+
 - {Page 1}: Full page (responsive web)
 - {Page 2}: Modal dialog (overlay)
 - {Page 3}: Email template
@@ -110,6 +112,7 @@ Create or update scenario overview document with platform information:
 
 ---
 ```
+
 </action>
 
 ### 5. Confirm Understanding
@@ -118,6 +121,7 @@ Create or update scenario overview document with platform information:
 **Scenario Platform Summary:**
 
 This scenario will be designed for:
+
 - **Platform:** {platform}
 - **Primary Device:** {device}
 - **Page Types:** {types}
@@ -158,6 +162,7 @@ scenario_platform:
 **Why This Matters:**
 
 Platform context affects every design decision:
+
 - **Layout:** Mobile-first vs desktop-first
 - **Navigation:** Touch gestures vs mouse clicks
 - **Interactions:** Native patterns vs web patterns

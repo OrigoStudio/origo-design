@@ -90,12 +90,12 @@ Document at least one complete flow end-to-end.
 
 Determine the architectural layers and their boundaries:
 
-| Layer | Purpose | Location |
-|-------|---------|----------|
-| **Presentation** | UI rendering, user interaction | `src/components/`, `src/pages/` |
-| **Application** | Use cases, orchestration | `src/services/`, `src/hooks/` |
-| **Domain** | Business rules, entities | `src/models/`, `src/domain/` |
-| **Infrastructure** | Database, external APIs, file system | `src/db/`, `src/integrations/` |
+| Layer              | Purpose                              | Location                        |
+| ------------------ | ------------------------------------ | ------------------------------- |
+| **Presentation**   | UI rendering, user interaction       | `src/components/`, `src/pages/` |
+| **Application**    | Use cases, orchestration             | `src/services/`, `src/hooks/`   |
+| **Domain**         | Business rules, entities             | `src/models/`, `src/domain/`    |
+| **Infrastructure** | Database, external APIs, file system | `src/db/`, `src/integrations/`  |
 
 Note: Not all codebases have clean layers. Document what you actually find, including layer violations.
 
@@ -103,12 +103,12 @@ Note: Not all codebases have clean layers. Document what you actually find, incl
 
 List every external system the codebase talks to:
 
-| Integration | Purpose | Protocol | Location in Code |
-|-------------|---------|----------|-----------------|
-| PostgreSQL | Primary data store | SQL via ORM | `src/db/` |
-| Stripe | Payment processing | REST API | `src/payments/` |
-| SendGrid | Email delivery | REST API | `src/notifications/` |
-| Redis | Caching, sessions | Redis protocol | `src/cache/` |
+| Integration | Purpose            | Protocol       | Location in Code     |
+| ----------- | ------------------ | -------------- | -------------------- |
+| PostgreSQL  | Primary data store | SQL via ORM    | `src/db/`            |
+| Stripe      | Payment processing | REST API       | `src/payments/`      |
+| SendGrid    | Email delivery     | REST API       | `src/notifications/` |
+| Redis       | Caching, sessions  | Redis protocol | `src/cache/`         |
 
 ### 5. Document State Management
 
@@ -152,10 +152,12 @@ Document patterns you observe:
 Display: "**Select an Option:** [C] Continue to Step 4: Document Findings"
 
 #### Menu Handling Logic:
+
 - IF C: Update design log, then load, read entire file, then execute {nextStepFile}
 - IF Any other comments or queries: help user respond then [Redisplay Menu Options]
 
 #### EXECUTION RULES:
+
 - ALWAYS halt and wait for user input after presenting menu
 - ONLY proceed to next step when user selects 'C'
 - User can chat or ask questions - always respond and then redisplay menu options
@@ -169,6 +171,7 @@ ONLY WHEN the architectural mapping is complete with components, flows, and depe
 ## 🚨 SYSTEM SUCCESS/FAILURE METRICS
 
 ### ✅ SUCCESS:
+
 - Component/module inventory created
 - At least one data flow traced end-to-end
 - Architectural layers identified
@@ -178,6 +181,7 @@ ONLY WHEN the architectural mapping is complete with components, flows, and depe
 - Architectural patterns identified
 
 ### ❌ SYSTEM FAILURE:
+
 - Skipping data flow tracing
 - Not mapping external integrations
 - Beginning final document creation before analysis is complete

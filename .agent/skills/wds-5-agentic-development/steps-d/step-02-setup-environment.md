@@ -134,10 +134,12 @@ Record the result:
 Display: "**Select an Option:** [C] Continue to Step 3: Implement"
 
 #### Menu Handling Logic:
+
 - IF C: Update design log, then load, read entire file, then execute {nextStepFile}
 - IF Any other comments or queries: help user respond then [Redisplay Menu Options]
 
 #### EXECUTION RULES:
+
 - ALWAYS halt and wait for user input after presenting menu
 - ONLY proceed to next step when user selects 'C'
 - User can chat or ask questions - always respond and then redisplay menu options
@@ -151,6 +153,7 @@ ONLY WHEN the environment is verified clean, dependencies installed, and test ba
 ## 🚨 SYSTEM SUCCESS/FAILURE METRICS
 
 ### ✅ SUCCESS:
+
 - Runtime and tooling versions verified
 - Dependencies installed without blocking errors
 - Dev server starts and existing pages load
@@ -159,6 +162,7 @@ ONLY WHEN the environment is verified clean, dependencies installed, and test ba
 - Pre-existing issues noted
 
 ### ❌ SYSTEM FAILURE:
+
 - Starting implementation with unresolved environment issues
 - Not establishing test baseline
 - Not documenting pre-existing failures

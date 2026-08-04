@@ -14,7 +14,7 @@ Run the Reviewer Gate (see SKILL.md) against `prd.md` (and `addendum.md` if pres
 
 The rubric walker is the primary review entry. Spawn it as a subagent with this prompt:
 
-> You are validating a PRD against the quality rubric at `{workflow.validation_checklist_template}`. Read the full rubric first, then read `prd.md` (and `addendum.md` if present). Form a judgment per dimension — *strong / adequate / thin / broken* — and write findings only where they add information. Cite specific PRD locations and quote phrases. Severity ranks impact on the PRD's usefulness, not how easy the fix is. Write your review to `{doc_workspace}/review-rubric.md` in the format the rubric specifies. Return ONLY a compact summary (overall verdict, dimension verdicts, finding counts by severity, file path).
+> You are validating a PRD against the quality rubric at `{workflow.validation_checklist_template}`. Read the full rubric first, then read `prd.md` (and `addendum.md` if present). Form a judgment per dimension — _strong / adequate / thin / broken_ — and write findings only where they add information. Cite specific PRD locations and quote phrases. Severity ranks impact on the PRD's usefulness, not how easy the fix is. Write your review to `{doc_workspace}/review-rubric.md` in the format the rubric specifies. Return ONLY a compact summary (overall verdict, dimension verdicts, finding counts by severity, file path).
 
 The Reviewer Gate may also dispatch additional reviewers from `{workflow.finalize_reviewers}` (adversarial-general by default) and any ad-hoc reviewers the parent judges warranted. Each writes its review to `{doc_workspace}/review-{slug}.md` and returns a compact summary. Run in parallel.
 
@@ -32,10 +32,10 @@ Once every selected reviewer has returned, the parent synthesizes one consolidat
 
 1. Read every reviewer file in `{doc_workspace}/review-*.md`.
 2. Fill the HTML skeleton:
-   - **Header.** PRD name, path. Grade derived from the rubric verdicts and severity counts: *Excellent* = all dimensions strong/adequate, no high/critical findings · *Good* = ≤1 thin dimension, no critical findings · *Fair* = multiple thin dimensions or any high finding · *Poor* = any broken dimension or any critical finding. Set the matching `grade-excellent | grade-good | grade-fair | grade-poor` class.
-   - **Synthesis block.** Lift the rubric's *Overall verdict* paragraph as the lead; if adversarial or ad-hoc reviewers materially shift the picture, add a second paragraph that names what they surfaced.
+   - **Header.** PRD name, path. Grade derived from the rubric verdicts and severity counts: _Excellent_ = all dimensions strong/adequate, no high/critical findings · _Good_ = ≤1 thin dimension, no critical findings · _Fair_ = multiple thin dimensions or any high finding · _Poor_ = any broken dimension or any critical finding. Set the matching `grade-excellent | grade-good | grade-fair | grade-poor` class.
+   - **Synthesis block.** Lift the rubric's _Overall verdict_ paragraph as the lead; if adversarial or ad-hoc reviewers materially shift the picture, add a second paragraph that names what they surfaced.
    - **Dimension summary cards.** One per dimension that was assessed. Colored verdict text. Skip dimensions the rubric marked n/a for this PRD (e.g. downstream usability for a standalone PRD).
-   - **Dimension sections.** One `<section class="dimension">` per assessed dimension, in rubric order. `<details open>` for *thin* and *broken*; closed for *strong* and *adequate*. Each contains the dimension judgment (the prose from review-rubric.md) and the findings list.
+   - **Dimension sections.** One `<section class="dimension">` per assessed dimension, in rubric order. `<details open>` for _thin_ and _broken_; closed for _strong_ and _adequate_. Each contains the dimension judgment (the prose from review-rubric.md) and the findings list.
    - **Reviewer sections.** One `<section class="reviewer-section">` per extra reviewer that ran. The source file path goes in the `<span class="reviewer-source">`. Closed by default. Adversarial findings keep their adversarial voice — do not soften.
    - **Mechanical notes.** Bullet list from the rubric's "Mechanical notes" section. Skip the block if empty.
    - **Footer.** Rubric path, ISO timestamp.
@@ -58,9 +58,11 @@ Once every selected reviewer has returned, the parent synthesizes one consolidat
 - **Grade:** {Excellent | Good | Fair | Poor}
 
 ## Overall verdict
+
 {synthesis paragraphs}
 
 ## Dimension verdicts
+
 - Decision-readiness — {verdict}
 - Substance over theater — {verdict}
 - (etc. for each assessed dimension)
@@ -68,23 +70,29 @@ Once every selected reviewer has returned, the parent synthesizes one consolidat
 ## Findings by severity
 
 ### Critical (n)
+
 **[Dimension or Reviewer]** — Title (§ location)
 {Note}
 Fix: {suggested fix}
 
 ### High (n)
+
 ...
 
 ### Medium (n)
+
 ...
 
 ### Low (n)
+
 ...
 
 ## Mechanical notes
+
 - {bullet}
 
 ## Reviewer files
+
 - `review-rubric.md`
 - `review-adversarial-general.md` (if present)
 - (etc.)

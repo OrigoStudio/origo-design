@@ -58,6 +58,7 @@ Verify that page specification has proper navigation structure with H3 header, d
 ### 1. Check Navigation Elements
 
 Check navigation section at top of document. Verify:
+
 - H3 header with page number and name
 - "Next Step" link before sketch (pointing to next page)
 - Embedded sketch image with proper path

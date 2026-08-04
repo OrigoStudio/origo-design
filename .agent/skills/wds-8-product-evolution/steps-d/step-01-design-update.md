@@ -62,12 +62,12 @@ Design a targeted, incremental improvement using Kaizen principles - not a compl
 
 **Reinforce the approach:**
 
-| DO ✅ | DON'T ❌ |
-|-------|----------|
-| Targeted improvement | Complete redesign |
-| Change one thing well | Change everything |
-| Incremental update | Big bang release |
-| Surgical precision | Scope creep |
+| DO ✅                 | DON'T ❌               |
+| --------------------- | ---------------------- |
+| Targeted improvement  | Complete redesign      |
+| Change one thing well | Change everything      |
+| Incremental update    | Big bang release       |
+| Surgical precision    | Scope creep            |
 | Focused on root cause | "While we're at it..." |
 
 **Ask user:** "What is the ONE thing we need to change to solve the root cause?"
@@ -81,11 +81,13 @@ Design a targeted, incremental improvement using Kaizen principles - not a compl
 Help user document:
 
 **What's Changing:**
+
 - Specific screens/features affected
 - Types of changes (copy, visual hierarchy, components, flow, interaction, data)
 - Specific change list (numbered, clear)
 
 **What's Staying:**
+
 - Unchanged elements (brand, typography, layout, navigation, tech stack, data model)
 - Rationale (why keeping these fixed?)
 
@@ -102,29 +104,36 @@ Help user document:
 Guide user to create:
 
 **Change Summary:**
+
 - What's different from v1.0? (brief list)
 
 **Updated Screen Structure:**
+
 - Before (v1.0): [Describe old structure]
 - After (v2.0): [Describe new structure]
 
 **Component Changes:**
+
 - New components (name, purpose)
 - Modified components (name, what changed)
 - Removed components (name, why removed)
 - Unchanged components (name, still used as-is)
 
 **Interaction Changes:**
+
 - Before (v1.0): [Step-by-step flow]
 - After (v2.0): [Updated flow with NEW markers]
 
 **Copy Changes:**
+
 - Before/After pairs with rationale for each change
 
 **Visual Changes:**
+
 - Hierarchy, emphasis, spacing (before vs after)
 
 **Success Metrics:**
+
 - How will we measure if this update works?
 - Measurement period (typically 2 weeks after release)
 
@@ -137,6 +146,7 @@ Guide user to create:
 **Reference:** Use New Component template from {designTemplates}
 
 Help user specify:
+
 - Purpose (why this component?)
 - Specifications (standard component spec format)
 - Usage (where used, when shown)
@@ -154,16 +164,19 @@ Help user specify:
 Guide user to document:
 
 **Before (v1.0):**
+
 - Screenshot/description
 - User experience (sees, feels, problem)
 - Metrics (current state)
 
 **After (v2.0):**
+
 - Screenshot/description
 - User experience (sees, feels, improvement)
 - Expected metrics (targets)
 
 **Key Changes:**
+
 - List each change with before/after/impact
 
 ### 6. Design Validation
@@ -173,6 +186,7 @@ Guide user to document:
 #### 6a. Self-Review Checklist
 
 Work through with user:
+
 - [ ] Does this solve the root cause?
 - [ ] Is this the smallest change that could work?
 - [ ] Does this align with existing design system?
@@ -188,6 +202,7 @@ Work through with user:
 **Reference:** Use Hypothesis Validation template from {designTemplates}
 
 Help user document:
+
 - Hypothesis (what do we believe will happen?)
 - Assumptions (what are we assuming?)
 - Risks (what could go wrong? mitigations?)
@@ -199,10 +214,12 @@ Help user document:
 Display: "**Select an Option:** [M] Return to Activity Menu (suggest [I] Implement)"
 
 #### Menu Handling Logic:
+
 - IF M: Return to {workflowFile} or {activityWorkflowFile}
 - IF Any other comments or queries: help user respond then [Redisplay Menu Options]
 
 #### EXECUTION RULES:
+
 - ALWAYS halt and wait for user input after presenting menu
 - User can chat or ask questions - always respond and then redisplay menu options
 
@@ -215,6 +232,7 @@ ONLY WHEN user selects [M] and design is complete and validated will you then re
 ## 🚨 SYSTEM SUCCESS/FAILURE METRICS
 
 ### ✅ SUCCESS:
+
 - Change scope clearly defined (what changes, what stays)
 - Update specifications created referencing v1.0
 - New/modified components designed (only if necessary)
@@ -226,6 +244,7 @@ ONLY WHEN user selects [M] and design is complete and validated will you then re
 - All changes measurable
 
 ### ❌ SYSTEM FAILURE:
+
 - Scope creep (changing too much, "while we're at it" syndrome)
 - Not documenting what's staying the same
 - No before/after comparison

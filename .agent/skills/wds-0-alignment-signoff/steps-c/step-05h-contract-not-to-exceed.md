@@ -59,6 +59,7 @@ Build the Not-to-Exceed clause based on business model - required for fixed-pric
 **Section 8: Not to Exceed Clause** (Conditional - applies to Fixed-Price and optionally Hourly)
 
 **When this section applies**:
+
 - **Fixed-Price Project**: REQUIRED - This is the project price cap
 - **Hourly/Time-Based**: OPTIONAL - Can include optional not-to-exceed cap if desired
 - **Retainer**: NOT APPLICABLE - Retainer already has monthly cap
@@ -69,6 +70,7 @@ Build the Not-to-Exceed clause based on business model - required for fixed-pric
 **If applicable, include**:
 
 **Why this matters**:
+
 - Without this clause, costs could spiral out of control (fixed-price)
 - Protects your budget from unexpected expenses
 - Prevents scope creep by requiring approval for additional work
@@ -76,15 +78,18 @@ Build the Not-to-Exceed clause based on business model - required for fixed-pric
 - Creates clear boundaries that prevent misunderstandings
 
 **User options**:
+
 - **Fixed budget cap**: Hard limit that cannot be exceeded without new agreement
 - **Soft cap with buffer**: Cap with small percentage buffer (e.g., 10%) for minor overruns
 - **Cap with change order process**: Cap exists, but change orders can adjust it with approval
 
 **What to ask user**:
+
 - **For Fixed-Price**: "The not-to-exceed amount is [total_amount]. This protects both parties from cost overruns. Any work beyond the original scope requires a change order."
 - **For Hourly**: "Would you like to set an optional not-to-exceed cap? This protects your budget while still allowing flexibility."
 
 **Content**:
+
 - **Fixed-Price**: Not-to-exceed = total project price
 - **Hourly**: Optional cap amount if user wants one
 
@@ -95,11 +100,13 @@ Build the Not-to-Exceed clause based on business model - required for fixed-pric
 Display: "**Select an Option:** [C] Continue to step-05i-contract-work-initiation"
 
 #### Menu Handling Logic:
+
 - IF C: Load, read entire file, then execute {nextStepFile}
 - IF M: Return to {workflowFile}
 - IF Any other comments or queries: help user respond then [Redisplay Menu Options]
 
 #### EXECUTION RULES:
+
 - ALWAYS halt and wait for user input after presenting menu
 - ONLY proceed to next step when user selects 'C'
 - User can chat or ask questions - always respond and then redisplay menu options
@@ -113,12 +120,14 @@ ONLY WHEN the Not-to-Exceed section is handled (built or correctly skipped) will
 ## 🚨 SYSTEM SUCCESS/FAILURE METRICS
 
 ### ✅ SUCCESS:
+
 - Clause is included for fixed-price contracts (required)
 - Optional cap is offered for hourly contracts
 - Retainer correctly skips this section
 - Fairness is explained
 
 ### ❌ SYSTEM FAILURE:
+
 - Skipping for fixed-price contracts
 - Including for retainer contracts
 - Not explaining the purpose and fairness of the clause

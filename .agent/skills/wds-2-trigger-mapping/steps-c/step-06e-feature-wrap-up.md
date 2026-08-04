@@ -82,6 +82,7 @@ Output:
 **Ready for Phase 4: UX Design!**
 
 The Feature Impact Analysis will guide your design decisions:
+
 - **What to design first:** Top-scoring features
 - **Where to focus detail:** Features with HIGH primary impact
 - **Who to optimize for:** Impact scores show which personas matter most per feature
@@ -89,6 +90,7 @@ The Feature Impact Analysis will guide your design decisions:
 **Next Steps:**
 
 If you're ready to continue, you can:
+
 1. Start **Phase 4: UX Design** (Scenario Design)
 2. Review the Trigger Map one more time
 3. Share the Feature Impact with your team for alignment
@@ -100,11 +102,13 @@ Would you like to proceed to document generation, or is there anything else you'
 Display: "**Select an Option:** [C] Continue to Document Generation | [M] Return to Activity Menu"
 
 #### Menu Handling Logic:
+
 - IF C: Load and execute {nextStepFile}
 - IF M: Return to {activityWorkflowFile}
 - IF Any other comments or queries: help user respond then [Redisplay Menu Options]
 
 #### EXECUTION RULES:
+
 - ALWAYS halt and wait for user input after presenting menu
 - User can chat or ask questions - always respond and then redisplay menu options
 
@@ -117,6 +121,7 @@ ONLY WHEN user selects [C] will you load the next step file. User must confirm r
 ## 🚨 SYSTEM SUCCESS/FAILURE METRICS
 
 ### ✅ SUCCESS:
+
 - Complete summary of all deliverables presented
 - Feature Impact Workshop acknowledged as complete
 - Explanation of how deliverables guide future phases
@@ -124,6 +129,7 @@ ONLY WHEN user selects [C] will you load the next step file. User must confirm r
 - User confirmed readiness to proceed
 
 ### ❌ SYSTEM FAILURE:
+
 - Skipping summary
 - Not listing all deliverables
 - Not explaining value of Feature Impact for future work

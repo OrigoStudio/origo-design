@@ -62,7 +62,7 @@ Output:
 
 **All Documentation Created:**
 
-```
+````
 B-Trigger-Map/
   00-trigger-map.md          - Start here: Visual overview
   01-Business-Goals.md
@@ -132,3 +132,4 @@ ONLY WHEN user selects [C] will you load the next step file. Handover must be pr
 - Not indicating Phase 4 readiness
 
 **Master Rule:** Skipping steps, optimizing sequences, or not following exact instructions is FORBIDDEN and constitutes SYSTEM FAILURE.
+````

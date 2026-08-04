@@ -73,9 +73,9 @@ Activation is complete. If `activation_steps_prepend` or `activation_steps_appen
 
 ## Input Files
 
-| Input | Path | Load Strategy |
-|-------|------|---------------|
-| Epics | `{planning_artifacts}/*epic*.md` (whole) or `{planning_artifacts}/*epic*/*.md` (sharded) | FULL_LOAD |
+| Input | Path                                                                                     | Load Strategy |
+| ----- | ---------------------------------------------------------------------------------------- | ------------- |
+| Epics | `{planning_artifacts}/*epic*.md` (whole) or `{planning_artifacts}/*epic*/*.md` (sharded) | FULL_LOAD     |
 
 ## Execution
 

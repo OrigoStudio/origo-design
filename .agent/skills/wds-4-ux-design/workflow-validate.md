@@ -22,6 +22,7 @@ Read design log at `{output_folder}/_progress/00-design-log.md` before starting.
 3. Begin: Load and execute `./steps-v/step-01-page-metadata.md`
 
 **Reference data:**
+
 - `./data/quality-guide.md`
 - `./data/validation-standards.md`
 - `./templates/diagnostic-report-template.md`
@@ -32,18 +33,18 @@ Read design log at `{output_folder}/_progress/00-design-log.md` before starting.
 
 Execute each step in order. Each step produces a section of the validation report.
 
-| Step | Name | Validates |
-|------|------|-----------|
-| 01 | Page Metadata | Title, URL, purpose defined |
-| 02 | Navigation | Entry/exit points, breadcrumbs, nav items |
-| 03 | Page Overview | Overall structure and flow |
-| 04 | Page Sections | Each section complete and ordered |
-| 05 | Section Order | Logical progression |
-| 06 | Object Registry | All components registered |
-| 07 | Design System Separation | Components vs. page-specific |
-| 08 | SEO Compliance | Headings, meta, keyword alignment |
-| 09 | Design System Consistency | Cross-page component usage |
-| 10 | Final Validation | Overall quality assessment |
+| Step | Name                      | Validates                                 |
+| ---- | ------------------------- | ----------------------------------------- |
+| 01   | Page Metadata             | Title, URL, purpose defined               |
+| 02   | Navigation                | Entry/exit points, breadcrumbs, nav items |
+| 03   | Page Overview             | Overall structure and flow                |
+| 04   | Page Sections             | Each section complete and ordered         |
+| 05   | Section Order             | Logical progression                       |
+| 06   | Object Registry           | All components registered                 |
+| 07   | Design System Separation  | Components vs. page-specific              |
+| 08   | SEO Compliance            | Headings, meta, keyword alignment         |
+| 09   | Design System Consistency | Cross-page component usage                |
+| 10   | Final Validation          | Overall quality assessment                |
 
 ---
 

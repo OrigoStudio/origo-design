@@ -16,6 +16,7 @@ description: Reference guides for three-tier specification system (Pages, Compon
 This is a **guide collection** for three-tier modular architecture, not a step-by-step workflow.
 
 **Three-Tier System:**
+
 - **Pages** - Full page layouts and compositions
 - **Components** - Reusable UI elements (simple and complex)
 - **Features** - Complex component decompositions
@@ -27,6 +28,7 @@ This is a **guide collection** for three-tier modular architecture, not a step-b
 ## WHEN TO USE
 
 **Use these guides when:**
+
 - ✅ Writing page specifications
 - ✅ Decomposing complex components
 - ✅ Deciding where to document content
@@ -34,6 +36,7 @@ This is a **guide collection** for three-tier modular architecture, not a step-b
 - ✅ Want to optimize agent-designer collaboration
 
 **Skip these guides when:**
+
 - ❌ Building simple prototypes without specs
 - ❌ Already familiar with the architecture
 - ❌ Using different specification system
@@ -51,6 +54,7 @@ How AI agents optimize designer craft without replacing designer thinking.
 **Use when:** Understanding the philosophy behind modular architecture
 
 **Topics:**
+
 - Designer maintains creative control
 - AI handles decomposition and optimization
 - Collaborative workflow patterns
@@ -62,16 +66,19 @@ How AI agents optimize designer craft without replacing designer thinking.
 Three fundamental concepts of the architecture:
 
 **[Three-Tier Overview](01-core-concepts/three-tier-overview.md)**
+
 - Overview of Pages, Components, and Features separation
 - When to use each tier
 - Benefits of separation
 
 **[Content Placement Rules](01-core-concepts/content-placement-rules.md)**
+
 - Decision tree for where to document content
 - Simple vs complex component rules
 - Page-specific vs shared content
 
 **[Complexity Detection](01-core-concepts/complexity-detection.md)**
+
 - How to identify simple vs complex components
 - When to decompose further
 - Complexity indicators
@@ -85,16 +92,19 @@ Three fundamental concepts of the architecture:
 Practical workflows for applying the architecture:
 
 **[Page Specification Workflow](02-workflows/page-specification-workflow.md)**
+
 - Step-by-step page decomposition from sketch to specs
 - Extracting components from page layouts
 - Handling page-specific content
 
 **[Complexity Router Workflow](02-workflows/complexity-router-workflow.md)**
+
 - Guided decomposition for complex components
 - When to create feature folders
 - Substep breakdown patterns
 
 **[Storyboards Guide](02-workflows/storyboards-guide.md)**
+
 - Using visual storyboards for complex components
 - State documentation
 - Interaction flows
@@ -108,11 +118,13 @@ Practical workflows for applying the architecture:
 Fast lookup guides for common questions:
 
 **[Decision Tree](03-quick-refs/decision-tree.md)**
+
 - One-page flowchart for file placement
 - Quick decision making
 - Common scenarios
 
 **[Benefits Summary](03-quick-refs/benefits.md)**
+
 - Why this architecture works
 - Advantages of three-tier system
 - Problem it solves
@@ -192,18 +204,21 @@ When building from specs:
 ## ARCHITECTURE BENEFITS
 
 **For Designers:**
+
 - ✅ Reduced duplication
 - ✅ Clear decision framework
 - ✅ Maintain creative control
 - ✅ Better AI collaboration
 
 **For Developers:**
+
 - ✅ Modular component structure
 - ✅ Clear implementation boundaries
 - ✅ Reusable components identified
 - ✅ Less ambiguity
 
 **For Teams:**
+
 - ✅ Consistent specification format
 - ✅ Scalable architecture
 - ✅ Easier maintenance
@@ -214,21 +229,25 @@ When building from specs:
 ## KEY PRINCIPLES
 
 **1. Separation of Concerns**
+
 - Pages handle layout and composition
 - Components define reusable elements
 - Features decompose complex components
 
 **2. DRY (Don't Repeat Yourself)**
+
 - Define once, reference everywhere
 - Shared components in component library
 - Page-specific variants documented inline
 
 **3. Progressive Complexity**
+
 - Start simple
 - Decompose only when needed
 - Use complexity detection to guide decisions
 
 **4. Designer Agency**
+
 - AI assists but doesn't replace designer thinking
 - Designer makes final placement decisions
 - Architecture enables, doesn't constrain
@@ -274,6 +293,7 @@ These demonstrate the architecture in practice.
 **This is architecture guidance** - not mandatory workflow steps.
 
 Apply as needed based on:
+
 - Project complexity
 - Team size
 - Specification requirements

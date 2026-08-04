@@ -36,6 +36,7 @@ Phase 5 is **menu-driven**, not linear. The user picks an activity.
 ### 1. Configuration Loading
 
 Load and read full config from `{project-root}/_bmad/wds/config.yaml` and resolve:
+
 - `project_name`, `output_folder`, `user_name`
 - `communication_language`, `document_output_language`
 
@@ -61,27 +62,27 @@ What would you like to do?
 
 ### Activity Routing
 
-| Choice | Workflow File | Steps Folder |
-|--------|--------------|--------------|
-| [P] | workflow-prototyping.md | steps-p/ |
-| [D] | workflow-development.md | steps-d/ |
-| [F] | workflow-bugfixing.md | steps-f/ |
-| [E] | workflow-evolution.md | steps-e/ |
-| [A] | workflow-analysis.md | steps-a/ |
-| [R] | workflow-reverse-engineering.md | steps-r/ |
-| [T] | workflow-acceptance-testing.md | steps-t/ |
+| Choice | Workflow File                   | Steps Folder |
+| ------ | ------------------------------- | ------------ |
+| [P]    | workflow-prototyping.md         | steps-p/     |
+| [D]    | workflow-development.md         | steps-d/     |
+| [F]    | workflow-bugfixing.md           | steps-f/     |
+| [E]    | workflow-evolution.md           | steps-e/     |
+| [A]    | workflow-analysis.md            | steps-a/     |
+| [R]    | workflow-reverse-engineering.md | steps-r/     |
+| [T]    | workflow-acceptance-testing.md  | steps-t/     |
 
 ---
 
 ## REFERENCE CONTENT
 
-| Location | Purpose |
-|----------|---------|
-| `data/guides/` | Development guides, protocols, analysis |
-| `data/testing-guide.md` | Acceptance testing guide |
-| `data/test-result-templates.md` | Test result templates |
-| `data/issue-templates.md` | Issue reporting templates |
-| `templates/` | Page, story, work file, roadmap templates |
+| Location                        | Purpose                                   |
+| ------------------------------- | ----------------------------------------- |
+| `data/guides/`                  | Development guides, protocols, analysis   |
+| `data/testing-guide.md`         | Acceptance testing guide                  |
+| `data/test-result-templates.md` | Test result templates                     |
+| `data/issue-templates.md`       | Issue reporting templates                 |
+| `templates/`                    | Page, story, work file, roadmap templates |
 
 ---
 

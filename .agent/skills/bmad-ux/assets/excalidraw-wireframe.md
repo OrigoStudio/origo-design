@@ -4,7 +4,7 @@ Subagent prompt. Produce one `.excalidraw` file at `.working/ia-{date}.excalidra
 
 ## CRITICAL: two-character `index` fields only
 
-Every element's `index` field must be **exactly two characters** (`a0`, `aZ`, `b3`, ...). Three-character indices cause a silent *"Error: invalid file"* with no diagnostic output. Assign sequentially across all elements; advance the leading letter when the trailing alphanumeric exhausts (`a0..a9, aA..aZ`, then `b0..`). Verify before writing.
+Every element's `index` field must be **exactly two characters** (`a0`, `aZ`, `b3`, ...). Three-character indices cause a silent _"Error: invalid file"_ with no diagnostic output. Assign sequentially across all elements; advance the leading letter when the trailing alphanumeric exhausts (`a0..a9, aA..aZ`, then `b0..`). Verify before writing.
 
 ## Shape
 

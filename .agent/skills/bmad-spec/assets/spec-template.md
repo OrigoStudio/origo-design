@@ -1,7 +1,7 @@
 ---
 id: SPEC-{slug}
-companions: []     # files downstream MUST read alongside SPEC.md. Paths may point inside the spec folder (spec-authored) or outside it (adopted from an upstream skill).
-sources: []        # files fully absorbed into the SPEC (audit only; downstream does NOT read these). Never the memlog.
+companions: [] # files downstream MUST read alongside SPEC.md. Paths may point inside the spec folder (spec-authored) or outside it (adopted from an upstream skill).
+sources: [] # files fully absorbed into the SPEC (audit only; downstream does NOT read these). Never the memlog.
 ---
 
 > **Canonical contract.** This SPEC and the files in `companions:` are the complete, preservation-validated contract for what to build, test, and validate. Source documents listed in frontmatter are for traceability only — consult them only if you need narrative rationale or prose color this contract intentionally omits.
@@ -11,10 +11,11 @@ sources: []        # files fully absorbed into the SPEC (audit only; downstream 
 ## Why
 
 {One paragraph naming the force behind this work. A spec can exist for any of:
-  - **a pain to solve** — a user or operator is stuck on a specific gap;
-  - **an opportunity to capture** — something newly possible we want to claim;
-  - **a vision to realize** — a thing we want to make exist because we want it to exist;
-  - **a mandate to meet** — a regulation, deprecation, deadline, or contractual obligation.
+
+- **a pain to solve** — a user or operator is stuck on a specific gap;
+- **an opportunity to capture** — something newly possible we want to claim;
+- **a vision to realize** — a thing we want to make exist because we want it to exist;
+- **a mandate to meet** — a regulation, deprecation, deadline, or contractual obligation.
 
 Name which (or which combination) applies, who is affected, and the backdrop that makes it matter now. This is the anchor every downstream trade-off resolves against.}
 

@@ -19,13 +19,13 @@ Run these in parallel so the lenses read metrics instead of re-deriving them:
 
 Hand each lens the pre-pass JSON and the skill path. Each loads the bar its own spec file names (the canon, the principles file, or its lane's spec) and returns its findings to you in-context.
 
-| Lens | File | Owns |
-| --- | --- | --- |
-| Leanness | `references/scan-leanness.md` | The three minimal-baseline tests: the core test, the defend-against-its-own-absence test, the outcome-vs-prescription test. |
-| Architecture | `references/scan-architecture.md` | Structure, frontmatter, file topology, progressive disclosure, three-mode soundness. |
-| Determinism | `references/scan-determinism.md` | The intelligence-placement boundary: intelligence leaks and determinism leaks, cross-referenced to script opportunities. |
-| Customization | `references/scan-customization.md` | `customize.toml` surface economics, and confirmation that it is the only config mechanism present. |
-| Enhancement | `references/scan-enhancement.md` | Missing named patterns to add and over-applied patterns to cut. |
+| Lens          | File                               | Owns                                                                                                                        |
+| ------------- | ---------------------------------- | --------------------------------------------------------------------------------------------------------------------------- |
+| Leanness      | `references/scan-leanness.md`      | The three minimal-baseline tests: the core test, the defend-against-its-own-absence test, the outcome-vs-prescription test. |
+| Architecture  | `references/scan-architecture.md`  | Structure, frontmatter, file topology, progressive disclosure, three-mode soundness.                                        |
+| Determinism   | `references/scan-determinism.md`   | The intelligence-placement boundary: intelligence leaks and determinism leaks, cross-referenced to script opportunities.    |
+| Customization | `references/scan-customization.md` | `customize.toml` surface economics, and confirmation that it is the only config mechanism present.                          |
+| Enhancement   | `references/scan-enhancement.md`   | Missing named patterns to add and over-applied patterns to cut.                                                             |
 
 Each lens returns the JSON in `references/lens-contract.md`. The leanness lens also returns `proposed_smallest` and `predicted_delta` on defend-against-absence findings, which you can route to the eval-runner's variant mode for a cut-or-keep verdict.
 
@@ -73,9 +73,7 @@ Merge the lens returns into one findings list, keeping each finding's `id`. You 
     }
   ],
   "strengths": ["<what works and should be preserved>"],
-  "recommendations": [
-    { "rank": 1, "action": "<what to do>", "resolves": ["leanness-1"] }
-  ],
+  "recommendations": [{ "rank": 1, "action": "<what to do>", "resolves": ["leanness-1"] }],
   "experience": {
     "journeys": [{ "name": "", "steps": "" }],
     "headless": "<one line on the skill's headless story>"

@@ -57,13 +57,13 @@ Define what to reverse engineer, how to access it, and what to extract.
 
 Identify what you are reverse engineering:
 
-| Target Type | Examples |
-|-------------|----------|
-| **Website** | Public marketing site, SaaS application, e-commerce store |
-| **Web application** | Dashboard, admin panel, booking system |
-| **Component library** | Design system documentation site, Storybook instance |
-| **Mobile app** | iOS/Android app (via screenshots or simulator) |
-| **Source code** | Your own codebase, open source project |
+| Target Type           | Examples                                                  |
+| --------------------- | --------------------------------------------------------- |
+| **Website**           | Public marketing site, SaaS application, e-commerce store |
+| **Web application**   | Dashboard, admin panel, booking system                    |
+| **Component library** | Design system documentation site, Storybook instance      |
+| **Mobile app**        | iOS/Android app (via screenshots or simulator)            |
+| **Source code**       | Your own codebase, open source project                    |
 
 Write a clear target description:
 
@@ -77,12 +77,12 @@ Owner: [Own product / Client product / Public / Competitor]
 
 How will you explore the target?
 
-| Access Method | When to Use | Tools |
-|---------------|-------------|-------|
-| **URL (browser)** | Public websites, web apps with demo | Puppeteer, browser DevTools |
-| **Source code** | Own codebase, open source | File reading, code analysis |
-| **Screenshots** | No live access, mobile apps, provided by client | Image analysis |
-| **Combination** | Source code + live URL | Both code and browser |
+| Access Method     | When to Use                                     | Tools                       |
+| ----------------- | ----------------------------------------------- | --------------------------- |
+| **URL (browser)** | Public websites, web apps with demo             | Puppeteer, browser DevTools |
+| **Source code**   | Own codebase, open source                       | File reading, code analysis |
+| **Screenshots**   | No live access, mobile apps, provided by client | Image analysis              |
+| **Combination**   | Source code + live URL                          | Both code and browser       |
 
 Note any access limitations (login required, rate limits, geo-restrictions).
 
@@ -125,10 +125,12 @@ Target Overview:
 Display: "**Select an Option:** [C] Continue to Step 2: Explore and Capture"
 
 #### Menu Handling Logic:
+
 - IF C: Update design log, then load, read entire file, then execute {nextStepFile}
 - IF Any other comments or queries: help user respond then [Redisplay Menu Options]
 
 #### EXECUTION RULES:
+
 - ALWAYS halt and wait for user input after presenting menu
 - ONLY proceed to next step when user selects 'C'
 - User can chat or ask questions - always respond and then redisplay menu options
@@ -142,12 +144,14 @@ ONLY WHEN the target is defined with access method verified and extraction goals
 ## 🚨 SYSTEM SUCCESS/FAILURE METRICS
 
 ### ✅ SUCCESS:
+
 - Target clearly identified with name and type
 - Access method determined and verified
 - Extraction goals defined
 - Target overview documented
 
 ### ❌ SYSTEM FAILURE:
+
 - Beginning exploration before target is fully defined
 - Not verifying access method
 - Not defining extraction goals

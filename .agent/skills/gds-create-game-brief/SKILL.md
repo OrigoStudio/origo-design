@@ -47,7 +47,12 @@ When invoked headless, do not ask. Complete the intent using what is provided, w
   "decision_log": "{doc_workspace}/.decision-log.md",
   "open_questions": [],
   "external_handoffs": [
-    {"directive": "Confluence upload", "tool": "corp:confluence_upload", "url": "https://confluence.corp/GAME/123", "status": "ok"}
+    {
+      "directive": "Confluence upload",
+      "tool": "corp:confluence_upload",
+      "url": "https://confluence.corp/GAME/123",
+      "status": "ok"
+    }
   ]
 }
 ```
@@ -64,7 +69,7 @@ For Update headless, log every change to `.decision-log.md` before applying and 
 
 ## Discovery
 
-Conversationally surface what the user brings, why this brief exists, the genre, and the form-factor / target platforms (PC / console / handheld / mobile / web / VR — what *is* this game and where does it play) — echo back how each shapes your approach. Open with space for the full picture: invite a brain dump and ask up front for any source material they already have (pitch deck, design notes, prototype, prior brief, reference reel). Read what exists first; ask only what is missing. After the dump, a simple "anything else?" often surfaces what they almost forgot. Drill into specifics only after the broad shape is on the table; premature granular questions interrupt the dump and miss the room. Get a read on stakes early (passion project, game-jam expansion, internal greenlight pitch, publisher input, public launch), and let that calibrate how hard you push. During the dump, spawn web-research subagents to ground the picture — genre landscape, comparable titles, current market, platform trends. Subagent searches; parent gets a digest. Deep work (full market sizing, exhaustive competitor teardowns) → suggest `bmad-market-research` or `bmad-domain-research`.
+Conversationally surface what the user brings, why this brief exists, the genre, and the form-factor / target platforms (PC / console / handheld / mobile / web / VR — what _is_ this game and where does it play) — echo back how each shapes your approach. Open with space for the full picture: invite a brain dump and ask up front for any source material they already have (pitch deck, design notes, prototype, prior brief, reference reel). Read what exists first; ask only what is missing. After the dump, a simple "anything else?" often surfaces what they almost forgot. Drill into specifics only after the broad shape is on the table; premature granular questions interrupt the dump and miss the room. Get a read on stakes early (passion project, game-jam expansion, internal greenlight pitch, publisher input, public launch), and let that calibrate how hard you push. During the dump, spawn web-research subagents to ground the picture — genre landscape, comparable titles, current market, platform trends. Subagent searches; parent gets a digest. Deep work (full market sizing, exhaustive competitor teardowns) → suggest `bmad-market-research` or `bmad-domain-research`.
 
 The game-domain topics to surface (drop what does not apply, add what the game needs):
 
@@ -72,7 +77,7 @@ The game-domain topics to surface (drop what does not apply, add what the game n
 - **Target players & market** — primary and secondary audience (specific, never "everyone": age, experience level, play-session expectations), market context and opportunity, why this audience will care.
 - **Core fundamentals** — genre, the core gameplay loop (what players actually do moment to moment), 2-4 specific gameplay pillars, primary mechanics, and the player-experience goals that connect mechanics to emotions.
 - **Scope & MVP** — target platforms (prioritized), timeline, budget, team size and skills, technical constraints, and a truly minimal MVP that validates the core gameplay hypothesis. Scope must match team capability.
-- **References & differentiation** — comparable / inspiration titles (named, with what is taken vs. deliberately *not* taken from each), competitive analysis (direct and indirect), and genuine, specific differentiators (not "just better").
+- **References & differentiation** — comparable / inspiration titles (named, with what is taken vs. deliberately _not_ taken from each), competitive analysis (direct and indirect), and genuine, specific differentiators (not "just better").
 - **Content & direction** — world and setting, narrative approach, content breadth (rough order of magnitude: levels / assets / playtime / replayability), and art and audio direction.
 
 Once stakes are read and the dump is captured, offer the working mode in the user's language:
@@ -87,7 +92,7 @@ The workspace persists; stop and resume freely. The opener's philosophy (not in 
 - **Right-size to purpose.** A passion project does not need publisher-grade rigor. A greenlight pitch input does. Read the room.
 - **Game-brief quality bar.** The core fantasy fits in one sentence; pillars are 2-4 and specific; the core loop is clear; the audience is not "everyone"; comparable titles are named with what is taken vs. left; differentiators are genuine and specific; scope matches the team; the MVP is truly minimal and validates the core gameplay hypothesis. Watch for red flags: scope too large for the team, unclear core loop or pillars, vague differentiators, no prototype plan for risky mechanics, wishful budget or timeline, a saturated market with no positioning.
 - **Persistence is real-time.** Once Create intent is confirmed, the workspace (run folder, `brief.md` skeleton with `status: draft`, `.decision-log.md`) exists on disk and the user knows the path.
-- **File roles.** `.decision-log.md` is canonical memory and audit trail — every decision, change, and override (including headless overrides and every Update edit) is recorded there as the conversation unfolds. `addendum.md` preserves user-contributed depth that belongs in a downstream document (GDD, PRD, architecture) or earned a place but does not fit the brief (rejected-alternative rationale, options-considered matrices, parked-roadmap context, technical constraints, in-depth personas, market-sizing data). Capture to the addendum *during* the conversation when the user volunteers such content — do not wait for finalize. Audit and override information never goes in the addendum.
+- **File roles.** `.decision-log.md` is canonical memory and audit trail — every decision, change, and override (including headless overrides and every Update edit) is recorded there as the conversation unfolds. `addendum.md` preserves user-contributed depth that belongs in a downstream document (GDD, PRD, architecture) or earned a place but does not fit the brief (rejected-alternative rationale, options-considered matrices, parked-roadmap context, technical constraints, in-depth personas, market-sizing data). Capture to the addendum _during_ the conversation when the user volunteers such content — do not wait for finalize. Audit and override information never goes in the addendum.
 - **Continuity across sessions.** If a prior in-progress draft for this project exists, the user is offered to resume.
 - **Extract, don't ingest.** Source artifacts (provided by the user or discovered during the run — design notes, brainstorms, research reports, prototypes, web results, prior briefs) enter the parent conversation as relevance-filtered extracts, not loaded wholesale. Subagents do the extraction against the user's stated focus; the parent context stays lean.
 - **Length and coherence.** Aim for 1-2 pages — if it is longer, the detail belongs in the addendum. Structure in service of the game; downstream consumers (`gds-gdd`, then `gds-prd`) read this, so coherent shape matters.

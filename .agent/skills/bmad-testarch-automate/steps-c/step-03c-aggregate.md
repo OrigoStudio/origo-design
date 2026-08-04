@@ -87,7 +87,7 @@ if (detected_stack === 'backend' || detected_stack === 'fullstack') {
 **Write API test files:**
 
 ```javascript
-apiTestsOutput.tests.forEach((test) => {
+apiTestsOutput.tests.forEach(test => {
   fs.writeFileSync(test.file, test.content, 'utf8');
   console.log(`✅ Created: ${test.file}`);
 });
@@ -97,7 +97,7 @@ apiTestsOutput.tests.forEach((test) => {
 
 ```javascript
 if (e2eTestsOutput) {
-  e2eTestsOutput.tests.forEach((test) => {
+  e2eTestsOutput.tests.forEach(test => {
     fs.writeFileSync(test.file, test.content, 'utf8');
     console.log(`✅ Created: ${test.file}`);
   });
@@ -108,7 +108,7 @@ if (e2eTestsOutput) {
 
 ```javascript
 if (backendTestsOutput) {
-  backendTestsOutput.testsGenerated.forEach((test) => {
+  backendTestsOutput.testsGenerated.forEach(test => {
     fs.writeFileSync(test.file, test.content, 'utf8');
     console.log(`✅ Created: ${test.file}`);
   });
@@ -198,7 +198,7 @@ export const createProductData = (overrides = {}) => ({
 import { Page } from '@playwright/test';
 
 export const mockPaymentSuccess = async (page: Page) => {
-  await page.route('/api/payment/**', (route) => {
+  await page.route('/api/payment/**', route => {
     route.fulfill({
       status: 200,
       body: JSON.stringify({ success: true, transactionId: '12345' }),
@@ -262,19 +262,31 @@ const summary = {
     P0:
       (apiTestsOutput.priority_coverage?.P0 ?? 0) +
       (e2eTestsOutput?.priority_coverage?.P0 ?? 0) +
-      (backendTestsOutput?.testsGenerated?.reduce((sum, t) => sum + (t.priority_coverage?.P0 ?? 0), 0) ?? 0),
+      (backendTestsOutput?.testsGenerated?.reduce(
+        (sum, t) => sum + (t.priority_coverage?.P0 ?? 0),
+        0
+      ) ?? 0),
     P1:
       (apiTestsOutput.priority_coverage?.P1 ?? 0) +
       (e2eTestsOutput?.priority_coverage?.P1 ?? 0) +
-      (backendTestsOutput?.testsGenerated?.reduce((sum, t) => sum + (t.priority_coverage?.P1 ?? 0), 0) ?? 0),
+      (backendTestsOutput?.testsGenerated?.reduce(
+        (sum, t) => sum + (t.priority_coverage?.P1 ?? 0),
+        0
+      ) ?? 0),
     P2:
       (apiTestsOutput.priority_coverage?.P2 ?? 0) +
       (e2eTestsOutput?.priority_coverage?.P2 ?? 0) +
-      (backendTestsOutput?.testsGenerated?.reduce((sum, t) => sum + (t.priority_coverage?.P2 ?? 0), 0) ?? 0),
+      (backendTestsOutput?.testsGenerated?.reduce(
+        (sum, t) => sum + (t.priority_coverage?.P2 ?? 0),
+        0
+      ) ?? 0),
     P3:
       (apiTestsOutput.priority_coverage?.P3 ?? 0) +
       (e2eTestsOutput?.priority_coverage?.P3 ?? 0) +
-      (backendTestsOutput?.testsGenerated?.reduce((sum, t) => sum + (t.priority_coverage?.P3 ?? 0), 0) ?? 0),
+      (backendTestsOutput?.testsGenerated?.reduce(
+        (sum, t) => sum + (t.priority_coverage?.P3 ?? 0),
+        0
+      ) ?? 0),
   },
   knowledge_fragments_used: [
     ...apiTestsOutput.knowledge_fragments_used,
@@ -290,7 +302,11 @@ const summary = {
 Save summary to temp file for validation step:
 
 ```javascript
-fs.writeFileSync('/tmp/tea-automate-summary-{{timestamp}}.json', JSON.stringify(summary, null, 2), 'utf8');
+fs.writeFileSync(
+  '/tmp/tea-automate-summary-{{timestamp}}.json',
+  JSON.stringify(summary, null, 2),
+  'utf8'
+);
 ```
 
 ---

@@ -73,10 +73,12 @@ This workflow analyzes the game project and produces a complete test design docu
 **Primary Output**: `{output_folder}/game-test-design.md`
 
 **Supporting Components**:
+
 - Validation: `{installed_path}/checklist.md`
 - Template: `{installed_path}/test-design-template.md`
 
 **Knowledge Base References**:
+
 - `knowledge/playtesting.md`
 - `knowledge/save-testing.md`
 - `knowledge/multiplayer-testing.md`
@@ -84,22 +86,22 @@ This workflow analyzes the game project and produces a complete test design docu
 - `knowledge/e2e-testing.md`
 - `knowledge/test-priorities.md`
 
-
 Load and resolve configuration from `{module_config}`:
 
 ```yaml
-output_folder: {from config}
-user_name: {from config}
-communication_language: {from config}
-document_output_language: {from config}
-game_dev_experience: {from config}
-date: {system-generated}
+output_folder: { from config }
+user_name: { from config }
+communication_language: { from config }
+document_output_language: { from config }
+game_dev_experience: { from config }
+date: { system-generated }
 ```
 
 Resolve workflow variables:
+
 ```yaml
-design_level: "full"    # full | targeted | minimal
-focus_area: "auto"      # auto | gameplay | progression | multiplayer | performance
+design_level: 'full' # full | targeted | minimal
+focus_area: 'auto' # auto | gameplay | progression | multiplayer | performance
 ```
 
 Search the project for game design documentation before proceeding.
@@ -111,6 +113,7 @@ Search the project for game design documentation before proceeding.
 ### Preflight Requirements
 
 Verify before proceeding:
+
 - Game design documentation available (GDD, feature specs)
 - Understanding of target platforms
 - Knowledge of core gameplay loop
@@ -191,13 +194,13 @@ Verify before proceeding:
 
 **Knowledge Base Reference**: `knowledge/e2e-testing.md`
 
-| Category           | Focus                       | Priority |
-| ------------------ | --------------------------- | -------- |
-| Core Loop          | Complete gameplay cycle     | P0       |
-| Turn Lifecycle     | Full turn from start to end | P0       |
-| Save/Load Roundtrip| Save → quit → load → resume | P0       |
-| Scene Transitions  | Menu → Game → Back          | P1       |
-| Win/Lose Paths     | Victory and defeat conditions| P1      |
+| Category            | Focus                         | Priority |
+| ------------------- | ----------------------------- | -------- |
+| Core Loop           | Complete gameplay cycle       | P0       |
+| Turn Lifecycle      | Full turn from start to end   | P0       |
+| Save/Load Roundtrip | Save → quit → load → resume   | P0       |
+| Scene Transitions   | Menu → Game → Back            | P1       |
+| Win/Lose Paths      | Victory and defeat conditions | P1       |
 
 ---
 
@@ -302,12 +305,12 @@ E2E SCENARIO: Complete Combat Encounter
 
 **Knowledge Base Reference**: `knowledge/test-priorities.md`
 
-| Priority | Criteria        | Unit | Integration | E2E        | Manual    |
-| -------- | --------------- | ---- | ----------- | ---------- | --------- |
-| P0       | Ship blockers   | 100% | 80%         | Core flows | Smoke     |
-| P1       | Major features  | 90%  | 70%         | Happy paths| Full      |
-| P2       | Secondary       | 80%  | 50%         | -          | Targeted  |
-| P3       | Edge cases      | 60%  | -           | -          | As needed |
+| Priority | Criteria       | Unit | Integration | E2E         | Manual    |
+| -------- | -------------- | ---- | ----------- | ----------- | --------- |
+| P0       | Ship blockers  | 100% | 80%         | Core flows  | Smoke     |
+| P1       | Major features | 90%  | 70%         | Happy paths | Full      |
+| P2       | Secondary      | 80%  | 50%         | -           | Targeted  |
+| P3       | Edge cases     | 60%  | -           | -           | As needed |
 
 **Risk-Based Ordering**:
 

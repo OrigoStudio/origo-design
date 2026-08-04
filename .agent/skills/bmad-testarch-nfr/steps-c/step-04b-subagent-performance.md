@@ -72,7 +72,10 @@ This is an **isolated subagent** running in parallel with other NFR domain evide
     "SLA_99.9": "PASS",
     "SLA_99.99": "CONCERN"
   },
-  "priority_actions": ["Implement CDN for static assets", "Add database query caching for frequent reads"],
+  "priority_actions": [
+    "Implement CDN for static assets",
+    "Add database query caching for frequent reads"
+  ],
   "summary": "Performance is acceptable with minor optimization opportunities"
 }
 ```

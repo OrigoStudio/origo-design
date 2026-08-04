@@ -47,11 +47,13 @@
 ## Competitor Analysis (if discussed)
 
 **Competitor 1:** {{name}}
+
 - What they do well: {{strengths}}
 - Where they fall short: {{weaknesses}}
 - How we'll differentiate: {{approach}}
 
 **Competitor 2:** {{name}}
+
 - What they do well: {{strengths}}
 - Where they fall short: {{weaknesses}}
 - How we'll differentiate: {{approach}}
@@ -67,6 +69,7 @@
 ---
 
 **Documented in:**
+
 - `inspiration/visual-refs.md`
 - `inspiration/competitor-analysis.md`
 - `wds-project-outline.yaml` → `inspiration`

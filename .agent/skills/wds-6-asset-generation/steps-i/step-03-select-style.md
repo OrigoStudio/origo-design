@@ -58,6 +58,7 @@ Present options: [O] Outline, [F] Filled, [D] Duotone, [G] Glyph. Wait for selec
 ### 2. Configure Style Parameters
 
 Based on selection, configure detailed parameters:
+
 - Outline: stroke width, line cap, line join, corner radius
 - Filled: fill style, corner radius
 - Duotone: primary color, secondary opacity

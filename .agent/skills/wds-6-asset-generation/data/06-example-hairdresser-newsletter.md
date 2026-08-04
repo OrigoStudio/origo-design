@@ -14,17 +14,20 @@ Emphasizes the positive driving force: "Wish to be local beauty authority." This
 **Content:**
 
 **WHY Section:**
+
 - Headline: **"Become Your Town's Go-To Beauty Authority"**
 - Subhead: "The trends your clients are asking about? You'll spot them first."
 - Visual: Confident hairdresser surrounded by admiring clients
 
 **HOW Section:**
+
 - Heading: "Here's How Stylists Stay Ahead:"
 - Every Monday morning: Top 5 trends in your inbox
 - 60-second explainers—understand and apply the same day
 - Client conversation starters included—lead the discussion
 
 **WHAT Section:**
+
 - Heading: "Join 2,000 Stylists Who Are Already Ahead"
 - Button: **"Start Leading Trends"**
 - Subtext: "Free. No credit card. Cancel anytime."
@@ -42,17 +45,20 @@ Addresses the negative driving force: "Fear of missing industry trends." This va
 **Content:**
 
 **WHY Section:**
+
 - Headline: **"Are Your Clients Asking About Trends You Haven't Heard Of?"**
 - Subhead: "Stop feeling behind. Never miss a trend again."
 - Visual: Split image—uncertain hairdresser → confident trendsetter
 
 **HOW Section:**
+
 - Heading: "Here's How to Never Miss a Trend:"
 - Weekly alerts delivered Monday morning—stay current effortlessly
 - 60-second reads—no time wasted
 - Client conversation starters—no more guesswork
 
 **WHAT Section:**
+
 - Heading: "Join TrendWeek—Free for Stylists"
 - "2,000 stylists already staying ahead"
 - Button: **"Stop Missing Out"**
@@ -71,17 +77,20 @@ Combines both driving forces naturally—opens with problem recognition (fear), 
 **Content:**
 
 **WHY Section:**
+
 - Headline: **"Your Clients Are Asking. You Should Be Leading."**
 - Subhead: "Stop playing catch-up. Become the trendsetter your town needs."
 - Visual: Transformation sequence—uncertain → confident → authority
 
 **HOW Section:**
+
 - Heading: "Here's How Stylists Go From Behind to Ahead:"
 - Monday mornings: Top 5 trends delivered to your inbox
 - 60 seconds per trend—fast enough to use the same day
 - Conversation starters included—turn knowledge into client impact
 
 **WHAT Section:**
+
 - Heading: "Join TrendWeek—Free for Stylists"
 - "2,000 stylists made the shift. Your turn."
 - Button: **"Start Staying Ahead"**
@@ -103,17 +112,20 @@ Balanced approach works broadly. Acknowledges pain without dwelling, focuses on 
 ## FINAL CONTENT
 
 **WHY Section:**
+
 - Headline: **"Are Your Clients Asking About Trends You Haven't Heard Of?"**
 - Subhead: "Stop feeling behind. Become your town's go-to beauty authority."
 - Visual: Split image—uncertain hairdresser → confident trendsetter
 
 **HOW Section:**
+
 - Heading: "Here's How Stylists Go From Behind to Ahead:"
 - Monday mornings: Top 5 trends delivered
 - 60 seconds per trend—fast enough to use the same day
 - Conversation starters included—lead the discussion
 
 **WHAT Section:**
+
 - Heading: "Join TrendWeek—Free for Stylists"
 - "2,000 stylists already ahead"
 - Button: **"Start Leading Trends"**

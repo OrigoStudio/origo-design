@@ -72,6 +72,7 @@ Finalize the contract document, review it with the user, present it for signing,
 ### 2. Handle Post-Signing
 
 **Once contract is signed**:
+
 - Alignment achieved
 - Commitment secured
 - Legal protection in place
@@ -89,11 +90,13 @@ Update frontmatter of contract file with completion status.
 Display: "**Select an Option:** [C] Continue to step-06a-build-internal-signoff"
 
 #### Menu Handling Logic:
+
 - IF C: Load, read entire file, then execute {nextStepFile}
 - IF M: Return to {workflowFile}
 - IF Any other comments or queries: help user respond then [Redisplay Menu Options]
 
 #### EXECUTION RULES:
+
 - ALWAYS halt and wait for user input after presenting menu
 - ONLY proceed to next step when user selects 'C'
 - User can chat or ask questions - always respond and then redisplay menu options
@@ -107,12 +110,14 @@ ONLY WHEN the contract is reviewed, finalized, and user is satisfied will you th
 ## 🚨 SYSTEM SUCCESS/FAILURE METRICS
 
 ### ✅ SUCCESS:
+
 - Contract is reviewed section by section with user
 - User confirms the contract is ready
 - Contract is saved to correct location
 - Next steps toward Project Brief are clear
 
 ### ❌ SYSTEM FAILURE:
+
 - Skipping the review process
 - Not asking for adjustments
 - Not saving the contract to the correct location

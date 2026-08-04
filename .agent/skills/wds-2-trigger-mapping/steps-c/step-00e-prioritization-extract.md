@@ -61,6 +61,7 @@ Output:
 "**Prioritizing Strategic Elements**
 
 Your documentation gives us the pieces. Now we need to prioritize:
+
 - Which target groups have highest impact on your objectives?
 - Which groups are most feasible to reach?
 - Which driving forces are most frequent and intense?"
@@ -68,6 +69,7 @@ Your documentation gives us the pieces. Now we need to prioritize:
 ### 2. Check for Priority Signals
 
 Analyze documentation for prioritization signals:
+
 - Explicit priority statements
 - Resource allocation (budget, team focus)
 - Timeline emphasis (what's first)
@@ -80,6 +82,7 @@ If no signals: Note documentation doesn't explicitly prioritize and proceed to c
 ### 3. Prioritize Target Groups
 
 Present all target groups. For each group, assess:
+
 - **Impact on objectives:** If this group succeeds with your product, how much does it drive your objectives? (High/Medium/Low)
 - **Feasibility:** How easy is it to reach and serve this group? (High/Medium/Low)
 
@@ -111,6 +114,7 @@ Output:
 "**Workshop 4 Complete!**
 
 **Strategic Priorities Set:**
+
 - Top group: {{top_group.name}}
 - Top drivers: {{top_driver_count}} identified
 - Focus statement: Defined
@@ -122,11 +126,13 @@ Next, we'll run a gap analysis and validate strategic alignment."
 Display: "**Select an Option:** [C] Continue to Gap Analysis | [M] Return to Activity Menu"
 
 #### Menu Handling Logic:
+
 - IF C: Load and execute {nextStepFile}
 - IF M: Return to {activityWorkflowFile}
 - IF Any other comments or queries: help user respond then [Redisplay Menu Options]
 
 #### EXECUTION RULES:
+
 - ALWAYS halt and wait for user input after presenting menu
 - User can chat or ask questions - always respond and then redisplay menu options
 
@@ -139,6 +145,7 @@ ONLY WHEN user selects [C] will you load the next step file. Priority rankings a
 ## 🚨 SYSTEM SUCCESS/FAILURE METRICS
 
 ### ✅ SUCCESS:
+
 - Target groups prioritized with impact and feasibility assessment
 - Driving forces prioritized by frequency, intensity, and alignment
 - Each priority decision has documented rationale
@@ -148,6 +155,7 @@ ONLY WHEN user selects [C] will you load the next step file. Priority rankings a
 - Results stored for subsequent steps
 
 ### ❌ SYSTEM FAILURE:
+
 - Accepting prioritization without rationale
 - Not checking documentation for priority signals first
 - Skipping impact/feasibility assessment

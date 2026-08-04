@@ -73,12 +73,14 @@ Output:
 "For each persona, we'll explore:
 
 **Positive Drivers** (toward motivation):
+
 - Aspirations and dreams
 - Desired outcomes
 - Experiences they seek
 - Status or recognition goals
 
 **Negative Drivers** (away-from motivation):
+
 - Fears and anxieties
 - Problems they want gone
 - Frustrations they're tired of
@@ -97,6 +99,7 @@ Ask about positive drivers:
 What does {{persona.name}} want to achieve or experience?
 
 Think about:
+
 - What would make their day better?
 - What would they brag about to colleagues?
 - What would make them feel successful?"
@@ -108,6 +111,7 @@ Ask about negative drivers:
 What does {{persona.name}} want to avoid or escape?
 
 Think about:
+
 - What keeps them up at night?
 - What frustrations are they tired of?
 - What risks worry them?
@@ -126,6 +130,7 @@ Store driving_forces.
 Output: "Looking across all personas, I notice some patterns..."
 
 Analyze for:
+
 - Common drivers across groups
 - Unique drivers per group
 - Potential conflicts between groups
@@ -143,9 +148,10 @@ We've mapped the psychological landscape:
 
 {{#each personas}}
 **{{this.name}}:**
+
 - Wants: {{this.top_positive_driver}}
 - Avoids: {{this.top_negative_driver}}
-{{/each}}
+  {{/each}}
 
 This is powerful insight. Next, we'll prioritize which groups and drivers to focus on."
 
@@ -156,11 +162,13 @@ Store driving_forces and patterns for next workshop.
 Display: "**Select an Option:** [C] Continue to Prioritization Workshop | [M] Return to Activity Menu"
 
 #### Menu Handling Logic:
+
 - IF C: Load and execute {nextStepFile}
 - IF M: Return to {activityWorkflowFile}
 - IF Any other comments or queries: help user respond then [Redisplay Menu Options]
 
 #### EXECUTION RULES:
+
 - ALWAYS halt and wait for user input after presenting menu
 - User can chat or ask questions - always respond and then redisplay menu options
 
@@ -173,6 +181,7 @@ ONLY WHEN user selects [C] will you load the next step file. Both positive and n
 ## 🚨 SYSTEM SUCCESS/FAILURE METRICS
 
 ### ✅ SUCCESS:
+
 - 3-5 positive drivers identified per persona from user input
 - 3-5 negative drivers identified per persona from user input
 - Loss aversion principle explained
@@ -181,6 +190,7 @@ ONLY WHEN user selects [C] will you load the next step file. Both positive and n
 - Results stored for subsequent workshops
 
 ### ❌ SYSTEM FAILURE:
+
 - Skipping negative drivers for any persona
 - Having fewer than 3 drivers per category
 - Generating driving forces without user input

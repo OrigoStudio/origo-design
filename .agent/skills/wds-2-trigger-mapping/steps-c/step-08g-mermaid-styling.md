@@ -69,25 +69,30 @@ classDef drivingForces fill:#f3f4f6,color:#1f2937,stroke:#d1d5db,stroke-width:2p
 **Color Specifications:**
 
 **Background fills:**
+
 - `#f3f4f6` - Light gray (business goals, driving forces)
 - `#e5e7eb` - Medium gray (platform only)
 - `#f9fafb` - Near white (target groups)
 
 **Text colors:**
+
 - `#1f2937` - Dark gray (most nodes)
 - `#111827` - Darker gray (platform only)
 
 **Border colors:**
+
 - `#d1d5db` - Light gray border (most nodes)
 - `#9ca3af` - Medium gray border (platform only)
 
 **Border widths:**
+
 - `2px` - Standard (business goals, target groups, driving forces)
 - `3px` - Thick (platform only)
 
 ### 2. Apply Classes to Nodes
 
 Format:
+
 ```
 class BG0,BG1,BG2 businessGoal
 class PLATFORM platform
@@ -116,11 +121,13 @@ Store styling_definitions, styling_applications, and complete_diagram.
 Display: "**Select an Option:** [C] Continue to Quality Check | [M] Return to Activity Menu"
 
 #### Menu Handling Logic:
+
 - IF C: Load and execute {nextStepFile}
 - IF M: Return to {activityWorkflowFile}
 - IF Any other comments or queries: help user respond then [Redisplay Menu Options]
 
 #### EXECUTION RULES:
+
 - ALWAYS halt and wait for user input after presenting menu
 - User can chat or ask questions - always respond and then redisplay menu options
 
@@ -133,6 +140,7 @@ ONLY WHEN user selects [C] will you load the next step file. Styling must be app
 ## 🚨 SYSTEM SUCCESS/FAILURE METRICS
 
 ### ✅ SUCCESS:
+
 - All four classDef statements with exact colors
 - Platform thicker border (3px vs 2px)
 - All nodes assigned to correct classes
@@ -141,6 +149,7 @@ ONLY WHEN user selects [C] will you load the next step file. Styling must be app
 - Complete diagram assembled
 
 ### ❌ SYSTEM FAILURE:
+
 - Wrong color codes
 - Missing classDef statements
 - Nodes not assigned to classes

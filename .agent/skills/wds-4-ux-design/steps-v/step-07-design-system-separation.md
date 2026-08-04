@@ -58,6 +58,7 @@ Verify that page specification focuses on strategic design intent without CSS im
 ### 1. Scan for CSS Implementation Details
 
 Scan entire document for:
+
 - CSS classes (e.g., `.button-primary`)
 - Hex codes (e.g., `#FF5733`)
 - Pixel values (e.g., `16px`)
@@ -66,12 +67,14 @@ Scan entire document for:
 - Styling implementation details
 
 Verify that:
+
 - Component references properly link to Design System
 - Color/typography references use Design System tokens
 
 ### 2. Scan for Unnecessary Information
 
 Scan for:
+
 - Implementation code snippets (HTML, CSS, JavaScript)
 - Developer instructions or technical setup steps
 - Version control information (commit messages, PR notes)

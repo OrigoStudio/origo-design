@@ -63,24 +63,27 @@ Reference: [data/issue-templates.md](data/issue-templates.md) for complete issue
 
 ### 2. Assign Severity Levels
 
-| Severity | Description | Fix Timeline |
-|----------|-------------|--------------|
-| **Critical** | App crashes, data loss, security | Immediate |
-| **High** | Major functionality broken | This release |
-| **Medium** | Feature wrong, confusing UX | This release |
-| **Low** | Minor polish, nice to have | Future release |
+| Severity     | Description                      | Fix Timeline   |
+| ------------ | -------------------------------- | -------------- |
+| **Critical** | App crashes, data loss, security | Immediate      |
+| **High**     | Major functionality broken       | This release   |
+| **Medium**   | Feature wrong, confusing UX      | This release   |
+| **Low**      | Minor polish, nice to have       | Future release |
 
 ### 3. Issue Writing Best Practices
 
 **Be specific:**
+
 - Not "Button looks wrong"
 - Instead "Primary button background #3B82F6, should be #2563EB per tokens/colors.json"
 
 **Be actionable:**
+
 - Not "Fix the transition"
 - Instead "Add 300ms fade transition per specifications.md line 45"
 
 **Be visual:**
+
 - Include screenshots
 - Annotate key areas
 - Show expected vs actual
@@ -103,10 +106,12 @@ After creating all issues, create summary with total count and breakdown by seve
 Display: "**Select an Option:** [C] Continue to Step 4: Report"
 
 #### Menu Handling Logic:
+
 - IF C: Update design log, then load, read entire file, then execute {nextStepFile}
 - IF Any other comments or queries: help user respond then [Redisplay Menu Options]
 
 #### EXECUTION RULES:
+
 - ALWAYS halt and wait for user input after presenting menu
 - ONLY proceed to next step when user selects 'C'
 - User can chat or ask questions - always respond and then redisplay menu options
@@ -120,6 +125,7 @@ ONLY WHEN all issues are documented with proper severity and design references w
 ## 🚨 SYSTEM SUCCESS/FAILURE METRICS
 
 ### ✅ SUCCESS:
+
 - All issues documented with correct template
 - Severity levels assigned appropriately
 - Design references included
@@ -128,6 +134,7 @@ ONLY WHEN all issues are documented with proper severity and design references w
 - Issues summary created
 
 ### ❌ SYSTEM FAILURE:
+
 - Vague descriptions
 - Missing severity
 - No screenshots

@@ -28,11 +28,13 @@ Code ⇄ Figma
 ## Workshop Structure
 
 ### Code to Figma (C2F) Workshop
+
 **Location:** `code-to-figma/`
 
 **Purpose:** Send code implementations to Figma for design review, documentation, and visual iteration
 
 **Workflow Steps:**
+
 1. Connection Check - Verify html.to.design MCP server
 2. Identify Type - Determine export scenario (prototype page, design system component, or frontend view)
 3. Prepare Specifications - Find or create OBJECT IDs for proper Figma layer naming
@@ -40,6 +42,7 @@ Code ⇄ Figma
 5. Send to Figma - Execute export and verify success
 
 **Key Features:**
+
 - Specification-driven OBJECT ID naming
 - Three export scenarios with specific ID patterns
 - Automated validation before export
@@ -48,6 +51,7 @@ Code ⇄ Figma
 ---
 
 ### Figma to Code (F2C) Workshop
+
 **Location:** `figma-to-code/`
 
 **Status:** Coming Soon
@@ -55,6 +59,7 @@ Code ⇄ Figma
 **Purpose:** Import design specifications from Figma to generate or update code implementations
 
 **Planned Workflow:**
+
 1. Connection Check - Verify Figma Desktop MCP server
 2. Select Figma Node - Identify what to import
 3. Extract Design Specs - Get colors, spacing, typography, layout
@@ -121,6 +126,7 @@ wds-6-asset-generation/
 **Key Principle:** Design system grows organically as prototypes are built
 
 **Process:**
+
 1. Create prototype with existing design system (may look basic)
 2. Extract to Figma when gaps identified
 3. Refine visuals and create missing components
@@ -131,12 +137,14 @@ wds-6-asset-generation/
 ### When to Extract
 
 **Extract when:**
+
 - Design system is incomplete
 - Prototype needs visual polish
 - New components required
 - Stakeholder presentation needed
 
 **Don't extract when:**
+
 - Design system covers all needs
 - Prototype looks sufficient
 - Rapid iteration more important
@@ -151,6 +159,7 @@ wds-6-asset-generation/
 **Role:** Convert HTML prototypes to Figma for visual refinement
 
 **Process:**
+
 1. Upload HTML prototype
 2. Configure conversion options
 3. Import to Figma
@@ -158,6 +167,7 @@ wds-6-asset-generation/
 5. Extract design system updates
 
 **Benefits:**
+
 - Preserves layout structure
 - Converts CSS to Figma styles
 - Maintains element hierarchy
@@ -168,12 +178,14 @@ wds-6-asset-generation/
 **Role:** Precise region mapping for image-based prototypes
 
 **Usage:**
+
 - Map clickable regions on images
 - Include Object IDs for traceability
 - Extract coordinates via dev mode
 - Document region mappings
 
 **Integration:**
+
 - Works with dev-mode.js component
 - Supports image-based prototypes
 - Enables precise click mapping
@@ -183,6 +195,7 @@ wds-6-asset-generation/
 **Role:** Extract Object IDs and area coordinates from prototypes
 
 **Features:**
+
 - Shift + Click to copy Object IDs
 - Visual highlights
 - Area tag detection
@@ -197,6 +210,7 @@ wds-6-asset-generation/
 ### Phase 4: UX Design
 
 **Updated Step 4D (Prototype):**
+
 - Create functional prototype
 - Test functionality
 - **NEW:** Assess visual quality
@@ -206,6 +220,7 @@ wds-6-asset-generation/
 ### Phase 7: Design System
 
 **New Workflow Branch:**
+
 - Existing: Component specification → Design system
 - Existing: Figma manual creation → Design system
 - **NEW:** Prototype extraction → Figma → Design system
@@ -213,6 +228,7 @@ wds-6-asset-generation/
 ### Iteration Loop
 
 **Complete Cycle:**
+
 ```
 1. Sketch (concept)
 2. Specification (detailed)
@@ -231,12 +247,14 @@ wds-6-asset-generation/
 ### For Designers
 
 **Flexibility:**
+
 - Start with functional prototypes
 - Refine visuals when needed
 - Iterate incrementally
 - Build design system organically
 
 **Efficiency:**
+
 - Don't need complete design system upfront
 - Extract only when necessary
 - Reuse refined components
@@ -245,12 +263,14 @@ wds-6-asset-generation/
 ### For Teams
 
 **Collaboration:**
+
 - Shared design language
 - Clear handoff process
 - Bidirectional sync
 - Maintained traceability
 
 **Quality:**
+
 - Polished final products
 - Consistent design system
 - Professional visuals
@@ -259,12 +279,14 @@ wds-6-asset-generation/
 ### For Projects
 
 **Speed:**
+
 - Faster initial prototypes
 - Iterative refinement
 - Parallel work streams
 - Reduced bottlenecks
 
 **Flexibility:**
+
 - Adapt to changing requirements
 - Grow design system as needed
 - Balance speed and polish
@@ -277,6 +299,7 @@ wds-6-asset-generation/
 ### Documentation Status
 
 ✅ **Complete:**
+
 - Prototype-to-Figma workflow
 - Decision guide
 - Tools reference
@@ -284,12 +307,14 @@ wds-6-asset-generation/
 - Phase 7 README update
 
 ✅ **Tested:**
+
 - Workflow logic validated
 - Integration points confirmed
 - Decision framework practical
 - Tool capabilities verified
 
 ✅ **Ready for:**
+
 - Public documentation
 - User testing
 - Team adoption
@@ -298,11 +323,13 @@ wds-6-asset-generation/
 ### What's Not Included
 
 **Out of Scope:**
+
 - MagicPatterns integration (not needed with html.to.design)
 - Automated extraction (manual process documented)
 - Real-time sync (manual iteration cycle)
 
 **Future Enhancements:**
+
 - Automated design token extraction
 - Figma plugin for WDS
 - Real-time bidirectional sync
@@ -315,12 +342,14 @@ wds-6-asset-generation/
 ### For Existing WDS Users
 
 **No Breaking Changes:**
+
 - Existing workflows continue to work
 - New workflow is optional
 - Backward compatible
 - Incremental adoption
 
 **How to Adopt:**
+
 1. Read prototype-to-Figma workflow
 2. Try with one prototype
 3. Refine in Figma
@@ -331,6 +360,7 @@ wds-6-asset-generation/
 ### For New WDS Users
 
 **Recommended Approach:**
+
 1. Start with first page
 2. Create basic prototype
 3. Extract to Figma
@@ -391,6 +421,7 @@ wds-6-asset-generation/
 ### The Complete WDS Flow
 
 **Concept-First Approach:**
+
 1. Sketch and specification are source of truth
 2. Generate functional prototypes from specs
 3. Apply design system (may be incomplete initially)
@@ -402,6 +433,7 @@ wds-6-asset-generation/
 ### Design System Philosophy
 
 **Just-In-Time Design Definitions:**
+
 - Don't need complete design system upfront
 - Build definitions as needed
 - Extract from working prototypes
@@ -411,6 +443,7 @@ wds-6-asset-generation/
 ### Iterative Refinement
 
 **Balanced Approach:**
+
 - Functional first, polish later
 - Extract strategically, not automatically
 - Iterate incrementally
@@ -422,15 +455,18 @@ wds-6-asset-generation/
 ## Contact and Support
 
 **Documentation Location:**
+
 - `workflows/wds-6-asset-generation/wds-6-asset-generation/`
 
 **Related Documentation:**
+
 - Phase 4: UX Design workflows
 - Phase 7: Design System workflows
 - Interactive Prototypes guides
 - Figma Integration guides
 
 **Questions or Issues:**
+
 - Review decision guide for common scenarios
 - Check tools reference for troubleshooting
 - Follow workflow documentation step-by-step
@@ -445,6 +481,7 @@ wds-6-asset-generation/
 ## Version History
 
 **v1.0 - January 8, 2026**
+
 - Initial release
 - Prototype-to-Figma workflow
 - Decision guide
@@ -452,6 +489,7 @@ wds-6-asset-generation/
 - Phase 4D and Phase 7 integration
 
 **Future Versions:**
+
 - User feedback integration
 - Enhanced automation
 - Additional tool integrations

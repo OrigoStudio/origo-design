@@ -58,6 +58,7 @@ Determine which visual tool and approach to use for this page's visual design.
 ### 1. Review Page Specification
 
 Load the page specification and understand:
+
 - Page purpose and key sections
 - Component complexity
 - Visual fidelity needed
@@ -75,6 +76,7 @@ How would you like to create the visual design?
 ```
 
 **Recommended workflow for page design:**
+
 1. Start with [E] Excalidraw to sketch and iterate on layout — user can drag, resize, annotate
 2. Use [N] Nano Banana to generate image assets (hero photos, card images, seasonal photos)
 3. Use [G] Google Stitch or [H] HTML Prototype for production mockups with real text and code
@@ -82,6 +84,7 @@ How would you like to create the visual design?
 ### 3. Setup Gate (Nano Banana only)
 
 If user selects [N]:
+
 1. Check the design log at `{output_folder}/_progress/00-design-log.md` for previous visual generation entries for this page
 2. If first time using Nano Banana in this project:
    - Route to `step-00-nb-setup.md` to verify MCP connection

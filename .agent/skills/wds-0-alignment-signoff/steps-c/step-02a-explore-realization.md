@@ -64,6 +64,7 @@ Explore the realization section with the user.
 **Reference**: `{sectionRoutingFile}` (Section 1: The Realization)
 
 **Questions to explore**:
+
 - "What have you realized needs attention?"
 - "What observation have you made?"
 - "What challenge are you seeing?"
@@ -74,12 +75,14 @@ Explore the realization section with the user.
 **Help them identify evidence:**
 
 **Soft Evidence** (qualitative indicators):
+
 - "Do you have testimonials or complaints about this?"
 - "What have stakeholders told you?"
 - "What patterns have you observed?"
 - "What do user interviews reveal?"
 
 **Hard Evidence** (quantitative data):
+
 - "Do you have statistics or metrics?"
 - "What do analytics show?"
 - "Have you run surveys or tests?"
@@ -94,11 +97,13 @@ Explore the realization section with the user.
 Display: "**Select an Option:** [C] Continue to step-02b-explore-solution"
 
 #### Menu Handling Logic:
+
 - IF C: Load, read entire file, then execute {nextStepFile}
 - IF M: Return to {workflowFile}
 - IF Any other comments or queries: help user respond then [Redisplay Menu Options]
 
 #### EXECUTION RULES:
+
 - ALWAYS halt and wait for user input after presenting menu
 - ONLY proceed to next step when user selects 'C'
 - User can chat or ask questions - always respond and then redisplay menu options
@@ -112,11 +117,13 @@ ONLY WHEN the realization is articulated with evidence will you then load and re
 ## 🚨 SYSTEM SUCCESS/FAILURE METRICS
 
 ### ✅ SUCCESS:
+
 - User has articulated a clear realization
 - Evidence (soft and/or hard) supports the realization
 - Realization is brief and compelling (2-3 sentences + evidence)
 
 ### ❌ SYSTEM FAILURE:
+
 - Writing the realization for the user without their input
 - Skipping evidence gathering
 - Moving to next section without a captured realization

@@ -12,13 +12,13 @@ Ignore the rest of the codebase unless the provided content explicitly reference
 A brief secondary deletion check runs as Step 4 when the diff removes code.
 
 **Inputs:**
+
 - **content** — Content to review: diff, full file, or function
 - **also_consider** (optional) — Areas to keep in mind during review alongside normal edge-case analysis
 
 **MANDATORY: Execute steps in the Execution section IN EXACT ORDER. DO NOT skip steps or change the sequence. When a halt condition triggers, follow its specific instruction exactly. Each action within a step is a REQUIRED action to complete that step.**
 
 **Your method is exhaustive path enumeration — mechanically walk every branch, not hunt by intuition. Report ONLY paths and conditions that lack handling — discard handled ones silently. Do NOT editorialize or add filler. Do not assign severity labels, rankings, or priority levels.**
-
 
 ## EXECUTION
 
@@ -51,22 +51,22 @@ If the diff removed or replaced meaningful code (ignore pure renames and whitesp
 
 Output all findings as a single JSON array following the Output Format specification exactly.
 
-
 ## OUTPUT FORMAT
 
 Return ONLY a valid JSON array of objects. Each edge-case finding contains exactly these four fields:
 
 ```json
-[{
-  "location": "file:start-end (or file:line when single line, or file:hunk when exact line unavailable)",
-  "trigger_condition": "one-line description (max 15 words)",
-  "guard_snippet": "minimal code sketch that closes the gap (single-line escaped string, no raw newlines or unescaped quotes)",
-  "potential_consequence": "what could actually go wrong (max 15 words)"
-}]
+[
+  {
+    "location": "file:start-end (or file:line when single line, or file:hunk when exact line unavailable)",
+    "trigger_condition": "one-line description (max 15 words)",
+    "guard_snippet": "minimal code sketch that closes the gap (single-line escaped string, no raw newlines or unescaped quotes)",
+    "potential_consequence": "what could actually go wrong (max 15 words)"
+  }
+]
 ```
 
 No extra text, no explanations, no markdown wrapping. An empty array `[]` is valid when nothing is found. Deletion findings from Step 4, if any, go in the same array with the extra fields defined in `references/deletion-check.md`.
-
 
 ## HALT CONDITIONS
 

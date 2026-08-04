@@ -65,24 +65,28 @@ Build the Scope of Work section with explicit IN scope, OUT of scope, deliverabl
 **Purpose**: Prevents scope creep and sets clear boundaries - critical for avoiding disputes
 
 **Why this matters**:
+
 - Most contract disputes arise from unclear scope
 - Clear IN/OUT scope prevents misunderstandings
 - Protects both parties from scope creep
 - Sets expectations upfront
 
 **Content to gather**:
+
 1. **The Path Forward**: Pull from alignment document (path_forward) - how the work will be done
 2. **Deliverables**: Pull from alignment document (deliverables_list) - what will be delivered
 3. **IN Scope**: Ask user explicitly - "What work is explicitly included? Be specific about what's covered."
 4. **OUT of Scope**: Ask user explicitly - "What work is explicitly NOT included? What would require a change order?"
 
 **Important**: Based on business model, adapt scope section:
+
 - **Fixed-Price**: Must have very clear IN scope and OUT of scope (critical for fixed-price - this protects both parties)
 - **Hourly**: Can be more flexible, but still define boundaries to prevent misunderstandings
 - **Retainer**: Define what types of work are included in retainer vs. project work
 - **Hybrid**: Define scope for each component separately
 
 **What to ask user**:
+
 - "Let's be very clear about what's included and what's not. What work is explicitly IN scope for this contract?"
 - "What work is explicitly OUT of scope? What would require a change order?"
 - "Are there any assumptions about what's included that we should document?"
@@ -92,11 +96,13 @@ Build the Scope of Work section with explicit IN scope, OUT of scope, deliverabl
 Display: "**Select an Option:** [C] Continue to step-05d-contract-payment"
 
 #### Menu Handling Logic:
+
 - IF C: Load, read entire file, then execute {nextStepFile}
 - IF M: Return to {workflowFile}
 - IF Any other comments or queries: help user respond then [Redisplay Menu Options]
 
 #### EXECUTION RULES:
+
 - ALWAYS halt and wait for user input after presenting menu
 - ONLY proceed to next step when user selects 'C'
 - User can chat or ask questions - always respond and then redisplay menu options
@@ -110,12 +116,14 @@ ONLY WHEN the Scope of Work section is built with clear IN/OUT scope will you th
 ## 🚨 SYSTEM SUCCESS/FAILURE METRICS
 
 ### ✅ SUCCESS:
+
 - Clear IN scope and OUT of scope definitions
 - Deliverables are explicitly listed
 - Scope is adapted to business model
 - User confirms the scope boundaries
 
 ### ❌ SYSTEM FAILURE:
+
 - Skipping IN scope/OUT of scope definitions
 - Not adapting scope to business model
 - Creating vague scope that invites disputes

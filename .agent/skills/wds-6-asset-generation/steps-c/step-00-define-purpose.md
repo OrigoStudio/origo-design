@@ -91,20 +91,20 @@ Compile all answers into a structured purpose definition:
 
 ```yaml
 content_purpose:
-  content_type: "[e.g., Landing page hero, Error message, CTA button]"
-  purpose_statement: "[Action verb] + [specific audience/state] + [desired outcome]"
+  content_type: '[e.g., Landing page hero, Error message, CTA button]'
+  purpose_statement: '[Action verb] + [specific audience/state] + [desired outcome]'
   audience:
-    who: "[User persona or type]"
-    state: "[Mental/emotional state, awareness level]"
-    context: "[When/where they encounter this content]"
+    who: '[User persona or type]'
+    state: '[Mental/emotional state, awareness level]'
+    context: '[When/where they encounter this content]'
   success_criteria:
-    - "[Observable outcome 1]"
-    - "[Observable outcome 2]"
+    - '[Observable outcome 1]'
+    - '[Observable outcome 2]'
   model_priorities:
-    primary: ["[Model 1]", "[Model 2]"]
-    secondary: ["[Model 3]"]
-    tertiary: ["[Model 4]"]
-  review_question: "[How will we know this achieved its purpose?]"
+    primary: ['[Model 1]', '[Model 2]']
+    secondary: ['[Model 3]']
+    tertiary: ['[Model 4]']
+  review_question: '[How will we know this achieved its purpose?]'
 ```
 
 ### 7. Present MENU OPTIONS

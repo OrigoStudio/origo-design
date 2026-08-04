@@ -8,12 +8,14 @@ description: Write production code from approved specifications
 **Goal:** Write production-quality code from approved specifications using structured agent collaboration.
 
 **When to use:**
+
 - An approved specification exists (page spec, feature spec, or component spec)
 - Prototype has been validated (if prototyping was part of the process)
 - The codebase and tech stack are established (this is NOT for greenfield project setup)
 - You need to turn a spec into committed, tested, production-ready code
 
 **When NOT to use:**
+
 - No approved spec exists yet — use [A] Analysis or spec writing first
 - You need to explore or understand an existing codebase — use [R] Reverse Engineering
 - You are fixing a bug in existing code — use [F] Bugfixing
@@ -39,19 +41,20 @@ description: Write production code from approved specifications
 
 Guides in `./data/guides/` support this workflow:
 
-| Guide | Use When |
-|-------|----------|
+| Guide                   | Use When                                                                               |
+| ----------------------- | -------------------------------------------------------------------------------------- |
 | EXECUTION-PRINCIPLES.md | Core execution discipline (document before acting, sketch fidelity, plan-then-execute) |
-| INLINE-TESTING-GUIDE.md | Self-verifying implementation with Puppeteer before presenting to user |
-| SEO-VALIDATION-GUIDE.md | Public-facing pages that need SEO compliance |
-| SESSION-PROTOCOL.md | Managing agent sessions and handoffs |
-| FEEDBACK-PROTOCOL.md | Handling user feedback during development |
+| INLINE-TESTING-GUIDE.md | Self-verifying implementation with Puppeteer before presenting to user                 |
+| SEO-VALIDATION-GUIDE.md | Public-facing pages that need SEO compliance                                           |
+| SESSION-PROTOCOL.md     | Managing agent sessions and handoffs                                                   |
+| FEEDBACK-PROTOCOL.md    | Handling user feedback during development                                              |
 
 ---
 
 ## INITIALIZATION
 
 ### Design Log
+
 Read `{output_folder}/_progress/00-design-log.md`. Check Current and Backlog for context.
 
 ---
@@ -60,13 +63,13 @@ Read `{output_folder}/_progress/00-design-log.md`. Check Current and Backlog for
 
 Execute steps in `./steps-d/`:
 
-| Step | File | Purpose |
-|------|------|---------|
-| 01 | step-01-scope-and-plan.md | Read spec, identify work items, create implementation order |
-| 02 | step-02-setup-environment.md | Verify environment, install dependencies, establish baseline |
-| 03 | step-03-implement.md | Build features one at a time from the plan |
-| 04 | step-04-verify.md | Walk through every acceptance criterion |
-| 05 | step-05-finalize.md | Clean up, test suite, PR preparation |
+| Step | File                         | Purpose                                                      |
+| ---- | ---------------------------- | ------------------------------------------------------------ |
+| 01   | step-01-scope-and-plan.md    | Read spec, identify work items, create implementation order  |
+| 02   | step-02-setup-environment.md | Verify environment, install dependencies, establish baseline |
+| 03   | step-03-implement.md         | Build features one at a time from the plan                   |
+| 04   | step-04-verify.md            | Walk through every acceptance criterion                      |
+| 05   | step-05-finalize.md          | Clean up, test suite, PR preparation                         |
 
 ---
 
@@ -86,4 +89,4 @@ Design log updated with `built` status (see above). Present the transition:
 
 1. **Run acceptance testing** — validate against the specification
 2. **Explore the next scenario step** — [next page name]
-</output>
+   </output>

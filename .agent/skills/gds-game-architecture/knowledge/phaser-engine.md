@@ -21,23 +21,23 @@ Phaser games are organized into Scenes, each representing a distinct game state 
 
 ```typescript
 const config: Phaser.Types.Core.GameConfig = {
-    type: Phaser.AUTO,              // WebGL with Canvas fallback
-    width: 800,
-    height: 600,
-    parent: 'game-container',
-    backgroundColor: '#1a1a2e',
-    physics: {
-        default: 'arcade',
-        arcade: {
-            gravity: { y: 300 },
-            debug: false
-        }
+  type: Phaser.AUTO, // WebGL with Canvas fallback
+  width: 800,
+  height: 600,
+  parent: 'game-container',
+  backgroundColor: '#1a1a2e',
+  physics: {
+    default: 'arcade',
+    arcade: {
+      gravity: { y: 300 },
+      debug: false,
     },
-    scale: {
-        mode: Phaser.Scale.FIT,
-        autoCenter: Phaser.Scale.CENTER_BOTH
-    },
-    scene: [BootScene, PreloadScene, MenuScene, GameScene, UIScene]
+  },
+  scale: {
+    mode: Phaser.Scale.FIT,
+    autoCenter: Phaser.Scale.CENTER_BOTH,
+  },
+  scene: [BootScene, PreloadScene, MenuScene, GameScene, UIScene],
 };
 
 const game = new Phaser.Game(config);
@@ -58,26 +58,27 @@ update(time, dt)  → Called every frame (game logic, input polling)
 
 ```typescript
 class GameScene extends Phaser.Scene {
-    init(data: { level: number }) {
-        this.level = data.level;  // Receive data from scene transition
-    }
+  init(data: { level: number }) {
+    this.level = data.level; // Receive data from scene transition
+  }
 
-    preload() {
-        this.load.image('player', 'assets/player.png');
-        this.load.spritesheet('coins', 'assets/coins.png', {
-            frameWidth: 32, frameHeight: 32
-        });
-    }
+  preload() {
+    this.load.image('player', 'assets/player.png');
+    this.load.spritesheet('coins', 'assets/coins.png', {
+      frameWidth: 32,
+      frameHeight: 32,
+    });
+  }
 
-    create() {
-        this.player = this.physics.add.sprite(100, 100, 'player');
-        this.setupInput();
-        this.setupCollisions();
-    }
+  create() {
+    this.player = this.physics.add.sprite(100, 100, 'player');
+    this.setupInput();
+    this.setupCollisions();
+  }
 
-    update(time: number, delta: number) {
-        this.handleMovement(delta);
-    }
+  update(time: number, delta: number) {
+    this.handleMovement(delta);
+  }
 }
 ```
 
@@ -148,21 +149,21 @@ const lives = this.registry.get('playerLives');
 
 // Listen for changes
 this.registry.events.on('changedata-playerLives', (parent, value) => {
-    this.livesText.setText(`Lives: ${value}`);
+  this.livesText.setText(`Lives: ${value}`);
 });
 ```
 
 ## TypeScript vs JavaScript Decision Guide
 
-| Factor | TypeScript | JavaScript |
-|---|---|---|
-| **Type safety** | Full static typing | None (runtime errors) |
-| **IDE support** | Excellent autocomplete | Basic |
-| **Phaser API** | Built-in type definitions | No type hints |
-| **Build step** | Required (Vite, Webpack) | Optional |
-| **Learning curve** | Slight overhead | Immediate |
-| **Refactoring** | Safe, compiler-assisted | Error-prone |
-| **Team projects** | Strongly recommended | Risky for >1 person |
+| Factor             | TypeScript                | JavaScript            |
+| ------------------ | ------------------------- | --------------------- |
+| **Type safety**    | Full static typing        | None (runtime errors) |
+| **IDE support**    | Excellent autocomplete    | Basic                 |
+| **Phaser API**     | Built-in type definitions | No type hints         |
+| **Build step**     | Required (Vite, Webpack)  | Optional              |
+| **Learning curve** | Slight overhead           | Immediate             |
+| **Refactoring**    | Safe, compiler-assisted   | Error-prone           |
+| **Team projects**  | Strongly recommended      | Risky for >1 person   |
 
 **Recommendation:** Always use TypeScript for Phaser projects. The type definitions are excellent and catch many bugs at compile time. Use the official Phaser + Vite template as a starter.
 
@@ -172,39 +173,53 @@ this.registry.events.on('changedata-playerLives', (parent, value) => {
 
 ```typescript
 export class GameScene extends Phaser.Scene {
-    // Typed properties
-    private player!: Phaser.Physics.Arcade.Sprite;
-    private enemies!: Phaser.Physics.Arcade.Group;
-    private cursors!: Phaser.Types.Input.Keyboard.CursorKeys;
-    private score: number = 0;
-    private scoreText!: Phaser.GameObjects.Text;
+  // Typed properties
+  private player!: Phaser.Physics.Arcade.Sprite;
+  private enemies!: Phaser.Physics.Arcade.Group;
+  private cursors!: Phaser.Types.Input.Keyboard.CursorKeys;
+  private score: number = 0;
+  private scoreText!: Phaser.GameObjects.Text;
 
-    constructor() {
-        super({ key: 'GameScene' });
-    }
+  constructor() {
+    super({ key: 'GameScene' });
+  }
 
-    create(): void {
-        this.createWorld();
-        this.createPlayer();
-        this.createEnemies();
-        this.setupInput();
-        this.setupCollisions();
-        this.setupUI();
-    }
+  create(): void {
+    this.createWorld();
+    this.createPlayer();
+    this.createEnemies();
+    this.setupInput();
+    this.setupCollisions();
+    this.setupUI();
+  }
 
-    update(time: number, delta: number): void {
-        this.handlePlayerMovement();
-        this.updateEnemies(delta);
-    }
+  update(time: number, delta: number): void {
+    this.handlePlayerMovement();
+    this.updateEnemies(delta);
+  }
 
-    // Private methods organized by concern
-    private createPlayer(): void { /* ... */ }
-    private createEnemies(): void { /* ... */ }
-    private setupInput(): void { /* ... */ }
-    private setupCollisions(): void { /* ... */ }
-    private setupUI(): void { /* ... */ }
-    private handlePlayerMovement(): void { /* ... */ }
-    private updateEnemies(delta: number): void { /* ... */ }
+  // Private methods organized by concern
+  private createPlayer(): void {
+    /* ... */
+  }
+  private createEnemies(): void {
+    /* ... */
+  }
+  private setupInput(): void {
+    /* ... */
+  }
+  private setupCollisions(): void {
+    /* ... */
+  }
+  private setupUI(): void {
+    /* ... */
+  }
+  private handlePlayerMovement(): void {
+    /* ... */
+  }
+  private updateEnemies(delta: number): void {
+    /* ... */
+  }
 }
 ```
 
@@ -220,9 +235,9 @@ this.player.setBounce(0.2);
 
 // Groups for pooling
 this.bullets = this.physics.add.group({
-    classType: Bullet,
-    maxSize: 30,
-    runChildUpdate: true
+  classType: Bullet,
+  maxSize: 30,
+  runChildUpdate: true,
 });
 
 // Collisions
@@ -253,12 +268,12 @@ const ball = this.matter.add.image(400, 100, 'ball', undefined, {
 
 **When to use which:**
 
-| Arcade | Matter.js |
-|---|---|
+| Arcade                               | Matter.js                                       |
+| ------------------------------------ | ----------------------------------------------- |
 | Platformers, shooters, most 2D games | Physics puzzles, ragdolls, realistic simulation |
-| AABB and circle collision only | Complex shapes, joints, constraints |
-| Very fast | Slower, more accurate |
-| No rotation physics | Full rotation and torque |
+| AABB and circle collision only       | Complex shapes, joints, constraints             |
+| Very fast                            | Slower, more accurate                           |
+| No rotation physics                  | Full rotation and torque                        |
 
 ### Input Handling
 
@@ -266,33 +281,33 @@ const ball = this.matter.add.image(400, 100, 'ball', undefined, {
 // Keyboard
 this.cursors = this.input.keyboard!.createCursorKeys();
 const wasd = this.input.keyboard!.addKeys('W,A,S,D') as {
-    W: Phaser.Input.Keyboard.Key;
-    A: Phaser.Input.Keyboard.Key;
-    S: Phaser.Input.Keyboard.Key;
-    D: Phaser.Input.Keyboard.Key;
+  W: Phaser.Input.Keyboard.Key;
+  A: Phaser.Input.Keyboard.Key;
+  S: Phaser.Input.Keyboard.Key;
+  D: Phaser.Input.Keyboard.Key;
 };
 
 // In update
 if (this.cursors.left.isDown) {
-    this.player.setVelocityX(-160);
+  this.player.setVelocityX(-160);
 } else if (this.cursors.right.isDown) {
-    this.player.setVelocityX(160);
+  this.player.setVelocityX(160);
 } else {
-    this.player.setVelocityX(0);
+  this.player.setVelocityX(0);
 }
 
 if (this.cursors.up.isDown && this.player.body!.touching.down) {
-    this.player.setVelocityY(-330);
+  this.player.setVelocityY(-330);
 }
 
 // Pointer (mouse/touch)
 this.input.on('pointerdown', (pointer: Phaser.Input.Pointer) => {
-    this.fireBullet(pointer.worldX, pointer.worldY);
+  this.fireBullet(pointer.worldX, pointer.worldY);
 });
 
 // Gamepad
 this.input.gamepad?.once('connected', (pad: Phaser.Input.Gamepad.Gamepad) => {
-    this.gamepad = pad;
+  this.gamepad = pad;
 });
 ```
 
@@ -379,26 +394,26 @@ project/
 
 ```typescript
 export class BulletPool {
-    private pool: Phaser.Physics.Arcade.Group;
+  private pool: Phaser.Physics.Arcade.Group;
 
-    constructor(scene: Phaser.Scene) {
-        this.pool = scene.physics.add.group({
-            classType: Bullet,
-            maxSize: 50,
-            runChildUpdate: true,
-            createCallback: (obj) => {
-                (obj as Bullet).init();
-            }
-        });
-    }
+  constructor(scene: Phaser.Scene) {
+    this.pool = scene.physics.add.group({
+      classType: Bullet,
+      maxSize: 50,
+      runChildUpdate: true,
+      createCallback: obj => {
+        (obj as Bullet).init();
+      },
+    });
+  }
 
-    spawn(x: number, y: number, velocityX: number, velocityY: number): Bullet | null {
-        const bullet = this.pool.get(x, y) as Bullet | null;
-        if (bullet) {
-            bullet.fire(velocityX, velocityY);
-        }
-        return bullet;
+  spawn(x: number, y: number, velocityX: number, velocityY: number): Bullet | null {
+    const bullet = this.pool.get(x, y) as Bullet | null;
+    if (bullet) {
+      bullet.fire(velocityX, velocityY);
     }
+    return bullet;
+  }
 }
 ```
 
@@ -413,34 +428,34 @@ export class BulletPool {
 
 ### Phaser Plugins
 
-| Plugin | Purpose | Source |
-|---|---|---|
-| **Rex Plugins** | Massive collection (UI, board, behavior trees, CSV parsing, virtual joystick) | GitHub (rexrainbow) |
-| **phaser3-rex-notes** | Documentation for Rex plugins | GitHub |
-| **phaser-matter-collision-plugin** | Better Matter.js collision callbacks | npm |
-| **phaser-navmesh** | 2D navigation mesh pathfinding | npm |
-| **phaser3-rex-plugins (Board)** | Board/grid game framework (hex, square grids, pathfinding) | npm |
+| Plugin                             | Purpose                                                                       | Source              |
+| ---------------------------------- | ----------------------------------------------------------------------------- | ------------------- |
+| **Rex Plugins**                    | Massive collection (UI, board, behavior trees, CSV parsing, virtual joystick) | GitHub (rexrainbow) |
+| **phaser3-rex-notes**              | Documentation for Rex plugins                                                 | GitHub              |
+| **phaser-matter-collision-plugin** | Better Matter.js collision callbacks                                          | npm                 |
+| **phaser-navmesh**                 | 2D navigation mesh pathfinding                                                | npm                 |
+| **phaser3-rex-plugins (Board)**    | Board/grid game framework (hex, square grids, pathfinding)                    | npm                 |
 
 ### Companion Libraries
 
-| Library | Purpose | Source |
-|---|---|---|
-| **Tiled** | Level editor (TMX/JSON tilemaps) | mapeditor.org (free) |
-| **TexturePacker** | Sprite atlas packing | texturepacker.com (free/paid) |
-| **Howler.js** | Advanced audio (alternative to Phaser audio) | npm |
-| **Colyseus** | Multiplayer game server (Node.js) | colyseus.io |
-| **Socket.IO** | WebSocket-based multiplayer | npm |
-| **LDtk** | Level designer toolkit (alternative to Tiled) | ldtk.io (free) |
+| Library           | Purpose                                       | Source                        |
+| ----------------- | --------------------------------------------- | ----------------------------- |
+| **Tiled**         | Level editor (TMX/JSON tilemaps)              | mapeditor.org (free)          |
+| **TexturePacker** | Sprite atlas packing                          | texturepacker.com (free/paid) |
+| **Howler.js**     | Advanced audio (alternative to Phaser audio)  | npm                           |
+| **Colyseus**      | Multiplayer game server (Node.js)             | colyseus.io                   |
+| **Socket.IO**     | WebSocket-based multiplayer                   | npm                           |
+| **LDtk**          | Level designer toolkit (alternative to Tiled) | ldtk.io (free)                |
 
 ### Build and Deploy
 
-| Tool | Purpose | Source |
-|---|---|---|
-| **Vite** | Fast build tool (recommended bundler for Phaser) | npm |
-| **Capacitor** | Wrap web game as native mobile app | npm |
-| **Electron** | Wrap web game as desktop app | npm |
-| **itch.io** | Free game hosting and distribution | itch.io |
-| **CrazyGames / Poki** | Browser game portals (monetization) | Developer programs |
+| Tool                  | Purpose                                          | Source             |
+| --------------------- | ------------------------------------------------ | ------------------ |
+| **Vite**              | Fast build tool (recommended bundler for Phaser) | npm                |
+| **Capacitor**         | Wrap web game as native mobile app               | npm                |
+| **Electron**          | Wrap web game as desktop app                     | npm                |
+| **itch.io**           | Free game hosting and distribution               | itch.io            |
+| **CrazyGames / Poki** | Browser game portals (monetization)              | Developer programs |
 
 ## Common Architectural Patterns
 
@@ -448,44 +463,44 @@ export class BulletPool {
 
 ```typescript
 export class Player extends Phaser.Physics.Arcade.Sprite {
-    private health: number = 100;
-    private speed: number = 200;
-    private cursors!: Phaser.Types.Input.Keyboard.CursorKeys;
+  private health: number = 100;
+  private speed: number = 200;
+  private cursors!: Phaser.Types.Input.Keyboard.CursorKeys;
 
-    constructor(scene: Phaser.Scene, x: number, y: number) {
-        super(scene, x, y, 'player');
+  constructor(scene: Phaser.Scene, x: number, y: number) {
+    super(scene, x, y, 'player');
 
-        scene.add.existing(this);
-        scene.physics.add.existing(this);
+    scene.add.existing(this);
+    scene.physics.add.existing(this);
 
-        this.setCollideWorldBounds(true);
-        this.cursors = scene.input.keyboard!.createCursorKeys();
+    this.setCollideWorldBounds(true);
+    this.cursors = scene.input.keyboard!.createCursorKeys();
+  }
+
+  update(): void {
+    // Called if group has runChildUpdate = true
+    if (this.cursors.left.isDown) {
+      this.setVelocityX(-this.speed);
+      this.setFlipX(true);
+    } else if (this.cursors.right.isDown) {
+      this.setVelocityX(this.speed);
+      this.setFlipX(false);
+    } else {
+      this.setVelocityX(0);
     }
 
-    update(): void {
-        // Called if group has runChildUpdate = true
-        if (this.cursors.left.isDown) {
-            this.setVelocityX(-this.speed);
-            this.setFlipX(true);
-        } else if (this.cursors.right.isDown) {
-            this.setVelocityX(this.speed);
-            this.setFlipX(false);
-        } else {
-            this.setVelocityX(0);
-        }
-
-        if (this.cursors.up.isDown && this.body!.touching.down) {
-            this.setVelocityY(-400);
-        }
+    if (this.cursors.up.isDown && this.body!.touching.down) {
+      this.setVelocityY(-400);
     }
+  }
 
-    takeDamage(amount: number): void {
-        this.health -= amount;
-        this.scene.cameras.main.shake(100, 0.01);
-        if (this.health <= 0) {
-            this.scene.events.emit('player-died');
-        }
+  takeDamage(amount: number): void {
+    this.health -= amount;
+    this.scene.cameras.main.shake(100, 0.01);
+    if (this.health <= 0) {
+      this.scene.events.emit('player-died');
     }
+  }
 }
 ```
 
@@ -494,26 +509,26 @@ export class Player extends Phaser.Physics.Arcade.Sprite {
 ```typescript
 // GameScene launches UIScene in parallel
 class GameScene extends Phaser.Scene {
-    create(): void {
-        this.scene.launch('UIScene');
+  create(): void {
+    this.scene.launch('UIScene');
 
-        // Send data to UI
-        this.events.on('score-changed', (score: number) => {
-            this.scene.get('UIScene').events.emit('update-score', score);
-        });
-    }
+    // Send data to UI
+    this.events.on('score-changed', (score: number) => {
+      this.scene.get('UIScene').events.emit('update-score', score);
+    });
+  }
 }
 
 // UIScene listens
 class UIScene extends Phaser.Scene {
-    create(): void {
-        this.scoreText = this.add.text(10, 10, 'Score: 0');
+  create(): void {
+    this.scoreText = this.add.text(10, 10, 'Score: 0');
 
-        const gameScene = this.scene.get('GameScene');
-        gameScene.events.on('score-changed', (score: number) => {
-            this.scoreText.setText(`Score: ${score}`);
-        });
-    }
+    const gameScene = this.scene.get('GameScene');
+    gameScene.events.on('score-changed', (score: number) => {
+      this.scoreText.setText(`Score: ${score}`);
+    });
+  }
 }
 ```
 
@@ -521,28 +536,28 @@ class UIScene extends Phaser.Scene {
 
 ```typescript
 interface State {
-    enter(): void;
-    update(delta: number): void;
-    exit(): void;
+  enter(): void;
+  update(delta: number): void;
+  exit(): void;
 }
 
 class StateMachine {
-    private currentState: State | null = null;
-    private states = new Map<string, State>();
+  private currentState: State | null = null;
+  private states = new Map<string, State>();
 
-    addState(name: string, state: State): void {
-        this.states.set(name, state);
-    }
+  addState(name: string, state: State): void {
+    this.states.set(name, state);
+  }
 
-    setState(name: string): void {
-        this.currentState?.exit();
-        this.currentState = this.states.get(name) ?? null;
-        this.currentState?.enter();
-    }
+  setState(name: string): void {
+    this.currentState?.exit();
+    this.currentState = this.states.get(name) ?? null;
+    this.currentState?.enter();
+  }
 
-    update(delta: number): void {
-        this.currentState?.update(delta);
-    }
+  update(delta: number): void {
+    this.currentState?.update(delta);
+  }
 }
 ```
 
@@ -550,23 +565,23 @@ class StateMachine {
 
 ```typescript
 const config: Phaser.Types.Core.GameConfig = {
-    scale: {
-        mode: Phaser.Scale.FIT,          // Fit to container, preserve ratio
-        autoCenter: Phaser.Scale.CENTER_BOTH,
-        width: 800,
-        height: 600,
-        min: { width: 400, height: 300 },
-        max: { width: 1600, height: 1200 }
-    },
-    // OR for mobile-first pixel art:
-    scale: {
-        mode: Phaser.Scale.RESIZE,       // Dynamic resize
-        autoCenter: Phaser.Scale.CENTER_BOTH
-    },
-    render: {
-        pixelArt: true,                  // Disable anti-aliasing for pixel art
-        antialias: false
-    }
+  scale: {
+    mode: Phaser.Scale.FIT, // Fit to container, preserve ratio
+    autoCenter: Phaser.Scale.CENTER_BOTH,
+    width: 800,
+    height: 600,
+    min: { width: 400, height: 300 },
+    max: { width: 1600, height: 1200 },
+  },
+  // OR for mobile-first pixel art:
+  scale: {
+    mode: Phaser.Scale.RESIZE, // Dynamic resize
+    autoCenter: Phaser.Scale.CENTER_BOTH,
+  },
+  render: {
+    pixelArt: true, // Disable anti-aliasing for pixel art
+    antialias: false,
+  },
 };
 ```
 
@@ -588,8 +603,11 @@ const config: Phaser.Types.Core.GameConfig = {
 - **Viewport meta tag:**
 
 ```html
-<meta name="viewport" content="width=device-width, initial-scale=1,
-      maximum-scale=1, user-scalable=no, viewport-fit=cover">
+<meta
+  name="viewport"
+  content="width=device-width, initial-scale=1,
+      maximum-scale=1, user-scalable=no, viewport-fit=cover"
+/>
 ```
 
 ### Wrapping as Native App

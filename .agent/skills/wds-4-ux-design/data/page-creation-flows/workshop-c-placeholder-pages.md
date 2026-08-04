@@ -7,6 +7,7 @@
 ## WORKSHOP GOAL
 
 Rapidly create placeholder page documents with:
+
 - Navigation structure
 - Page names
 - Page purposes
@@ -23,6 +24,7 @@ This gives clarity to the overall flow before diving into detailed specification
 Sometimes it helps to create placeholder pages first - just the names, purposes, and navigation - before diving into detailed specifications. This gives you a clear roadmap.
 
 Would you like to:
+
 - Create placeholders for a whole scenario flow
 - Add individual placeholder pages as you plan
 
@@ -44,8 +46,9 @@ Let's start! 📋</output>
 {{#if existing_scenarios}}
 Existing scenarios:
 {{#each scenario in existing_scenarios}}
+
 - {{scenario.number}}: {{scenario.name}}
-{{/each}}
+  {{/each}}
 
 Type scenario number or "new" for a new scenario:
 {{else}}
@@ -67,6 +70,7 @@ Think about the user journey through "{{scenario_name}}"</output>
 <ask>**How many pages will be in this scenario?**
 
 Think about the steps a user goes through:
+
 - Entry point / first page
 - Middle steps (actions, decisions, inputs)
 - Completion / exit page
@@ -84,6 +88,7 @@ Number of pages:</ask>
 I'll guide you through {{pages_count}} pages...</output>
 
 For each page, gather:
+
 1. **Page name** (examples: "Start Page", "Sign In", "Checkout")
 2. **Page purpose** (1-2 sentences: what user accomplishes)
 3. **User situation** (what just happened, what they're trying to do)
@@ -136,12 +141,14 @@ For each page in pages_list:
 **Scenario:** {{scenario_number}} - {{scenario_name}}
 
 **Created:**
+
 - {{pages_list.length}} page folders with navigation
 - {{pages_list.length}} placeholder documents
 - 1 scenario overview document
 - 1 scenario tracking file
 
 **Next Steps:**
+
 1. **Add sketches** - Upload visuals for each page
 2. **Complete specifications** - Run Workshop A (Sketch Analysis) for each page
 3. **Add more pages** - Come back and add pages to this scenario

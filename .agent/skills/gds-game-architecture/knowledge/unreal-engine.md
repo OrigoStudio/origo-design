@@ -37,15 +37,15 @@ UGameInstance                    → Persistent across level loads
 
 **When to use what:**
 
-| Class | Purpose | Lifetime |
-|---|---|---|
-| `UGameInstance` | Persistent data, level transitions, subsystems | Entire application |
-| `AGameModeBase` | Spawn rules, basic game flow | Per level (server only) |
+| Class                  | Purpose                                         | Lifetime                |
+| ---------------------- | ----------------------------------------------- | ----------------------- |
+| `UGameInstance`        | Persistent data, level transitions, subsystems  | Entire application      |
+| `AGameModeBase`        | Spawn rules, basic game flow                    | Per level (server only) |
 | `AGameMode` (subclass) | Adds match states (warmup, playing, post-match) | Per level (server only) |
-| `AGameState` | Match score, timer, team info | Per level (replicated) |
-| `APlayerController` | Input handling, UI ownership, camera | Per player connection |
-| `APlayerState` | Player score, name, team | Per player (replicated) |
-| `APawn/ACharacter` | Physical entity in world | Can respawn |
+| `AGameState`           | Match score, timer, team info                   | Per level (replicated)  |
+| `APlayerController`    | Input handling, UI ownership, camera            | Per player connection   |
+| `APlayerState`         | Player score, name, team                        | Per player (replicated) |
+| `APawn/ACharacter`     | Physical entity in world                        | Can respawn             |
 
 ### Module System
 
@@ -83,15 +83,15 @@ PublicDependencyModuleNames.AddRange(new string[] {
 
 ### Blueprint vs C++ Decision Guide
 
-| Factor | C++ | Blueprints |
-|---|---|---|
-| **Performance** | Maximum performance | Slight overhead per node |
-| **Compilation** | Slow compile, fast runtime | Instant iteration |
-| **Complexity** | Any complexity | Gets unwieldy for complex logic |
-| **Team access** | Programmers only | Designers and artists too |
-| **Engine access** | Full API access | Most API exposed |
-| **Debugging** | Standard C++ debuggers | Visual debugger in editor |
-| **Source control** | Text-based diffs | Binary assets (harder to merge) |
+| Factor             | C++                        | Blueprints                      |
+| ------------------ | -------------------------- | ------------------------------- |
+| **Performance**    | Maximum performance        | Slight overhead per node        |
+| **Compilation**    | Slow compile, fast runtime | Instant iteration               |
+| **Complexity**     | Any complexity             | Gets unwieldy for complex logic |
+| **Team access**    | Programmers only           | Designers and artists too       |
+| **Engine access**  | Full API access            | Most API exposed                |
+| **Debugging**      | Standard C++ debuggers     | Visual debugger in editor       |
+| **Source control** | Text-based diffs           | Binary assets (harder to merge) |
 
 **Blueprint binary merge conflict warning:**
 
@@ -362,52 +362,52 @@ StreamableManager.RequestAsyncLoad(AssetPath,
 
 ### Essential Development
 
-| Plugin | Purpose | Source |
-|---|---|---|
-| **Gameplay Ability System (GAS)** | Abilities, attributes, effects framework | Engine built-in (module) |
-| **Common UI** | Cross-platform UI framework with input routing | Engine plugin |
-| **Enhanced Input** | Modern input handling | Engine built-in |
-| **Mass Entity (Mass AI)** | Large-scale entity simulation (ECS-like) | Engine (production since UE 5.4) |
-| **Online Subsystem Steam** | Steamworks integration | Engine built-in |
+| Plugin                            | Purpose                                        | Source                           |
+| --------------------------------- | ---------------------------------------------- | -------------------------------- |
+| **Gameplay Ability System (GAS)** | Abilities, attributes, effects framework       | Engine built-in (module)         |
+| **Common UI**                     | Cross-platform UI framework with input routing | Engine plugin                    |
+| **Enhanced Input**                | Modern input handling                          | Engine built-in                  |
+| **Mass Entity (Mass AI)**         | Large-scale entity simulation (ECS-like)       | Engine (production since UE 5.4) |
+| **Online Subsystem Steam**        | Steamworks integration                         | Engine built-in                  |
 
 ### Gameplay Systems
 
-| Plugin | Purpose | Source |
-|---|---|---|
-| **Gameplay Ability System** | RPG stats, buffs, cooldowns, combos | Epic (included) |
+| Plugin                               | Purpose                               | Source                  |
+| ------------------------------------ | ------------------------------------- | ----------------------- |
+| **Gameplay Ability System**          | RPG stats, buffs, cooldowns, combos   | Epic (included)         |
 | **ALS (Advanced Locomotion System)** | Production-quality character movement | Marketplace (community) |
-| **Narrative** | Branching dialogue and quest system | Marketplace |
-| **Voxel Plugin** | Voxel terrain generation and editing | Marketplace |
-| **Easy Multi Save** | Save/load system with serialization | Marketplace |
+| **Narrative**                        | Branching dialogue and quest system   | Marketplace             |
+| **Voxel Plugin**                     | Voxel terrain generation and editing  | Marketplace             |
+| **Easy Multi Save**                  | Save/load system with serialization   | Marketplace             |
 
 ### Visual and Audio
 
-| Plugin | Purpose | Source |
-|---|---|---|
-| **MetaSounds** | Procedural audio graph system | Engine built-in |
-| **FMOD for Unreal** | Professional audio middleware | FMOD website (free for indie) |
-| **Wwise** | AAA audio middleware | Audiokinetic website |
-| **Niagara** | GPU particle and VFX system | Engine built-in |
-| **Water System** | Ocean and water body rendering | Engine plugin |
+| Plugin              | Purpose                        | Source                        |
+| ------------------- | ------------------------------ | ----------------------------- |
+| **MetaSounds**      | Procedural audio graph system  | Engine built-in               |
+| **FMOD for Unreal** | Professional audio middleware  | FMOD website (free for indie) |
+| **Wwise**           | AAA audio middleware           | Audiokinetic website          |
+| **Niagara**         | GPU particle and VFX system    | Engine built-in               |
+| **Water System**    | Ocean and water body rendering | Engine plugin                 |
 
 ### Networking and Backend
 
-| Plugin | Purpose | Source |
-|---|---|---|
-| **Online Subsystem** | Platform abstraction for networking | Engine built-in |
-| **Epic Online Services (EOS)** | Auth, matchmaking, lobbies, voice, anti-cheat | Epic (free) |
-| **Steamworks** | Steam API (achievements, leaderboards, P2P) | Engine + Steamworks SDK |
-| **PlayFab** | Cloud backend (analytics, leaderboards, economy) | Microsoft (free tier) |
-| **Nakama** | Open-source game server | Docker + Unreal SDK |
+| Plugin                         | Purpose                                          | Source                  |
+| ------------------------------ | ------------------------------------------------ | ----------------------- |
+| **Online Subsystem**           | Platform abstraction for networking              | Engine built-in         |
+| **Epic Online Services (EOS)** | Auth, matchmaking, lobbies, voice, anti-cheat    | Epic (free)             |
+| **Steamworks**                 | Steam API (achievements, leaderboards, P2P)      | Engine + Steamworks SDK |
+| **PlayFab**                    | Cloud backend (analytics, leaderboards, economy) | Microsoft (free tier)   |
+| **Nakama**                     | Open-source game server                          | Docker + Unreal SDK     |
 
 ### Tools and Infrastructure
 
-| Plugin | Purpose | Source |
-|---|---|---|
-| **Gameplay Debugger** | In-game AI and gameplay visualization | Engine built-in |
-| **Unreal Insights** | Profiling and telemetry | Engine built-in |
-| **Gauntlet** | Automated testing framework | Engine built-in |
-| **Horde** | Distributed build system | Epic (for large teams) |
+| Plugin                | Purpose                               | Source                 |
+| --------------------- | ------------------------------------- | ---------------------- |
+| **Gameplay Debugger** | In-game AI and gameplay visualization | Engine built-in        |
+| **Unreal Insights**   | Profiling and telemetry               | Engine built-in        |
+| **Gauntlet**          | Automated testing framework           | Engine built-in        |
+| **Horde**             | Distributed build system              | Epic (for large teams) |
 
 ## Common Architectural Patterns
 

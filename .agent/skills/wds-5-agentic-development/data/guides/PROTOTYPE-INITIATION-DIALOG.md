@@ -21,6 +21,7 @@
 > "**Which page are we building?**
 >
 > Please provide:
+>
 > - Page number and name (e.g., "3.1 Dog Calendar Booking")
 > - Link to the specification (if available)
 > - Scenario name"
@@ -28,6 +29,7 @@
 **Wait for response**
 
 **Record**:
+
 - `metadata.page_number`
 - `metadata.page_name`
 - `metadata.scenario`
@@ -45,19 +47,16 @@
 >    - Testing: iPhone SE, iPhone 14 Pro, iPhone 14 Pro Max
 >    - No breakpoints, touch-optimized only
 >    - Hover: None
->
 > 2. 📱💻 **Mobile + Tablet** (375px-1024px)
 >    - For: Content apps, casual use
 >    - Testing: Mobile + iPad
 >    - Breakpoint at 768px
 >    - Hover: Tablet only
->
 > 3. 🌐 **Fully Responsive** (375px-1920px+)
 >    - For: Business apps, multi-device use
 >    - Testing: Mobile + Tablet + Desktop
 >    - Multiple breakpoints (768px, 1024px, 1280px)
 >    - Hover: Tablet & Desktop
->
 > 4. 🖥️ **Desktop-Only** (1280px+)
 >    - For: Complex data entry, professional tools
 >    - Testing: Desktop only
@@ -69,15 +68,18 @@
 **Wait for response**
 
 **Record**:
+
 - `metadata.device_compatibility.type`
 - `metadata.device_compatibility.test_viewports`
 - `metadata.device_compatibility.touch_optimized`
 - `metadata.device_compatibility.hover_interactions`
 
 **If Mobile-Only**, ask:
+
 > "Perfect! **Which mobile devices should we test on?**
 >
 > Default is:
+>
 > - iPhone SE (375px × 667px) - Smallest common size
 > - iPhone 14 Pro (393px × 852px) - Standard size
 > - iPhone 14 Pro Max (428px × 926px) - Largest common size
@@ -97,13 +99,11 @@
 >    - Generic Tailwind defaults (grays, blues)
 >    - Focus on functionality first, style later
 >    - Fastest to build
->
 > 2. **Design System Components**
 >    - Uses your documented Design System
 >    - Branded colors, typography, spacing
 >    - Consistent with your design tokens
 >    - Production-ready look and feel
->
 > 3. **Full Design / Figma MCP Integration**
 >    - Import directly from Figma designs
 >    - Pixel-perfect implementation
@@ -115,9 +115,11 @@
 **Wait for response**
 
 **If option 2 or 3**, ask:
+
 > "Great! Where is your Design System located? (I'll look for it in `docs/D-Design-System/` or you can specify)"
 
 **Record**:
+
 - `metadata.design_fidelity`
 - `design_tokens` (colors, typography, spacing from Design System)
 
@@ -126,6 +128,7 @@
 ## 🌍 **Question 4: Languages**
 
 **Check project brief/outline first**:
+
 - If project defines multiple languages → Ask this question
 - If project is single language → Skip this question
 
@@ -134,29 +137,34 @@
 > **Should this prototype include language switching?** (Y/N)
 >
 > If **YES**:
+>
 > - Which languages? (e.g., Swedish, English)
 > - How to switch? (Toggle button, dropdown, flag icons)
 >
 > If **NO**:
+>
 > - Which language to use? (Default to primary language from project)"
 
 **Wait for response**
 
 **Record**:
+
 - `languages` (array: ["sv", "en"] or single: ["en"])
 - `language_switcher` (boolean)
 - `primary_language` (default language)
 
 **Implementation Note**:
+
 - Prototypes use **hardcoded translations** directly in HTML/JS
 - No separate translation files (easier to read, no secrets)
 - Simple language switcher if multi-language
 
 **Example**:
+
 ```javascript
 const strings = {
   sv: { bookWalk: 'Boka promenad', cancel: 'Avbryt' },
-  en: { bookWalk: 'Book walk', cancel: 'Cancel' }
+  en: { bookWalk: 'Book walk', cancel: 'Cancel' },
 };
 ```
 
@@ -171,15 +179,19 @@ const strings = {
 > **This page requires:**
 >
 > **Organism Components**:
+>
 > - [List with Object IDs from spec]
 >
 > **Molecular Components**:
+>
 > - [List with Object IDs from spec]
 >
 > **Atomic Components**:
+>
 > - [List from Design System]
 >
 > **Special Features**:
+>
 > - [Real-time features, persistence, etc.]
 >
 > **All components and Object IDs from the specification will be included.**
@@ -189,9 +201,11 @@ const strings = {
 **Wait for response**
 
 **If N**, ask:
+
 > "What would you like to add or change?"
 
 **Record**:
+
 - `metadata.dependencies`
 - `object_ids` (all Object IDs from spec)
 - `design_tokens.components_available`
@@ -203,6 +217,7 @@ const strings = {
 > "**What demo data do we need for realistic testing?**
 >
 > Based on your user context, I'll suggest:
+>
 > - Current user (first name, last name, email)
 > - [Other entities based on page type]
 >
@@ -211,6 +226,7 @@ const strings = {
 **Wait for response**
 
 **Record**:
+
 - `demo_data_needed`
 
 ---
@@ -223,9 +239,10 @@ const strings = {
 > **📄 Pages**: [List pages in this scenario]  
 > **📱 Devices**: [Device type] ([Viewport range])  
 > **🎨 Design**: [Gray Model / Design System / Figma]  
-> **👥 Demo Family**: [Family members + dogs]  
+> **👥 Demo Family**: [Family members + dogs]
 >
 > **Files Created**:
+>
 > - ✅ `data/demo-data.json` (demo family data)
 > - ✅ `PROTOTYPE-ROADMAP.md` (scenario overview)
 >
@@ -248,16 +265,18 @@ const strings = {
 > [Agent reads spec, identifies all components and Object IDs]
 >
 > **Proposed sections**:
+>
 > 1. [Section name] (~X min)
 > 2. [Section name] (~X min)
 > 3. [Section name] (~X min)
-> ...
+>    ...
 >
 > **Total**: [N] sections, ~[X] hours
 >
 > **Approve this breakdown?** (Y/N)"
 
 **If Y**:
+
 > "✅ Creating Work File: `work/3.1-Dog-Calendar-Work.yaml`
 >
 > [Creates complete work file with all sections]
@@ -273,6 +292,7 @@ const strings = {
 ## 📝 **Notes for Freya**
 
 **Scenario Initiation** creates:
+
 - ✅ `[Scenario]-Prototype/` folder with complete structure:
   - `data/` folder with `demo-data.json`
   - `work/` folder (empty, for work files)
@@ -284,11 +304,13 @@ const strings = {
 - ✅ `PROTOTYPE-ROADMAP.md` (scenario overview)
 
 **Per-Page Building** creates:
+
 - ✅ `work/[Page]-Work.yaml` (page-specific work file)
 - ✅ `stories/[Page]-[Section].md` (just-in-time story files)
 - ✅ `[Page].html` (actual prototype, built section-by-section)
 
 **Key Principles**:
+
 1. **Scenario init** = High-level setup (device type, demo data)
 2. **Per-page** = Detailed section breakdown and building
 3. **One page at a time** = Prevents overwhelming scope
@@ -313,6 +335,7 @@ const strings = {
 ## 🔄 **After Work File Creation**
 
 **Agent automatically**:
+
 1. Creates `work/[Page]-Work.yaml` with all gathered info
 2. Creates `data/demo-data.json` (if doesn't exist)
 3. Updates `PROTOTYPE-ROADMAP.md` with this page
@@ -327,6 +350,7 @@ const strings = {
 ### **Part 1: Scenario Initiation** (one-time setup)
 
 **Freya**: "Let's set up prototypes for Scenario 3: Booking Dog Walks! Which devices?"
+
 - 1. Mobile-Only
 - 2. Mobile + Tablet
 - 3. Fully Responsive
@@ -339,6 +363,7 @@ const strings = {
 **User**: "Y"
 
 **Freya**: "Design fidelity?"
+
 - 1. Generic Gray Model
 - 2. Design System Components
 - 3. Full Design / Figma MCP Integration
@@ -350,11 +375,13 @@ const strings = {
 **User**: "Y - Swedish primary, English secondary, toggle button"
 
 **Freya**: "Got it! Demo data?"
+
 - Need realistic test family? (Y/N)
 
 **User**: "Y - Familjen Svensson with 4 members and Golden Retriever Rufus, no pre-booked walks"
 
 **Freya**: "✅ Created complete prototype environment!
+
 - ✅ `03-Booking-Dog-Walks-Prototype/` folder
 - ✅ `data/demo-data.json` with demo family
 - ✅ `PROTOTYPE-ROADMAP.md` with scenario overview
@@ -377,6 +404,7 @@ const strings = {
 **Freya**: "Building: 3.1 Dog Calendar Booking. Let me analyze the spec...
 
 **Proposed sections**:
+
 1. Page Structure & Header (~10 min)
 2. Week Overview Component (~20 min)
 3. Leaderboard Section (~15 min)
@@ -406,4 +434,3 @@ const strings = {
 
 **Scenario initiation: 3-4 questions, 2-3 minutes**  
 **Per-page building: Section approval, then build!** 🎯
-

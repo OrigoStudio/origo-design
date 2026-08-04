@@ -58,11 +58,13 @@ Create persona nodes with emojis, ALL CAPS names, priority levels (PRIMARY/SECON
 ### 1. Format Each Target Group Node
 
 **Node Structure Template:**
+
 ```
 TGX["<br/>EMOJI PERSONA NAME<br/>PRIORITY LEVEL<br/><br/>Profile trait 1<br/>Profile trait 2<br/>Profile trait 3<br/><br/>"]
 ```
 
 **Required elements per node:**
+
 1. Start with `<br/>` (top padding)
 2. Emoji + Persona name in ALL CAPS
 3. Priority level (PRIMARY TARGET, SECONDARY TARGET, etc.) in ALL CAPS
@@ -75,6 +77,7 @@ TGX["<br/>EMOJI PERSONA NAME<br/>PRIORITY LEVEL<br/><br/>Profile trait 1<br/>Pro
 **Important:** Use same emoji for both TG node and corresponding DF node.
 
 Common persona emojis:
+
 - Target/Strategic: target emoji
 - Business/Leadership: briefcase emoji
 - Technical/Developer: computer emoji
@@ -105,11 +108,13 @@ Store target_group_nodes, persona_emojis, persona_count.
 Display: "**Select an Option:** [C] Continue to Format Driving Forces | [M] Return to Activity Menu"
 
 #### Menu Handling Logic:
+
 - IF C: Load and execute {nextStepFile}
 - IF M: Return to {activityWorkflowFile}
 - IF Any other comments or queries: help user respond then [Redisplay Menu Options]
 
 #### EXECUTION RULES:
+
 - ALWAYS halt and wait for user input after presenting menu
 - User can chat or ask questions - always respond and then redisplay menu options
 
@@ -122,6 +127,7 @@ ONLY WHEN user selects [C] will you load the next step file. All TG nodes must b
 ## 🚨 SYSTEM SUCCESS/FAILURE METRICS
 
 ### ✅ SUCCESS:
+
 - All persona nodes formatted following template
 - Emojis selected and RECORDED for DF matching
 - Priority levels in ALL CAPS
@@ -130,6 +136,7 @@ ONLY WHEN user selects [C] will you load the next step file. All TG nodes must b
 - No HTML tags
 
 ### ❌ SYSTEM FAILURE:
+
 - Not recording emojis for DF matching
 - Missing priority levels
 - Traits not concise

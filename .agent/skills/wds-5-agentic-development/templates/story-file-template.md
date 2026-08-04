@@ -20,7 +20,7 @@
 ```html
 <!-- [Description of HTML to add] -->
 <div class="[tailwind-classes]">
-    <!-- Specific HTML structure here -->
+  <!-- Specific HTML structure here -->
 </div>
 ```
 
@@ -36,16 +36,22 @@ function [functionName]() {
 ### Tailwind Classes to Use
 
 **Key classes for this section**:
+
 - `[class-category]`: `[specific-classes]`
 - `[class-category]`: `[specific-classes]`
 
 **Example combinations**:
+
 ```html
 <!-- Input field -->
-<input class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[project]-500">
+<input
+  class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[project]-500"
+/>
 
 <!-- Button -->
-<button class="w-full py-3 bg-[project]-600 text-white rounded-lg font-semibold hover:bg-[project]-700 transition-colors">
+<button
+  class="w-full py-3 bg-[project]-600 text-white rounded-lg font-semibold hover:bg-[project]-700 transition-colors"
+></button>
 ```
 
 ---
@@ -53,10 +59,12 @@ function [functionName]() {
 ## 🔗 Dependencies
 
 **Shared code**:
+
 - ✅ `shared/prototype-api.js` (already loaded)
 - ✅ `shared/init.js` (already loaded)
 
 **Components** (load if not already included):
+
 - [ ] `components/image-crop.js` (if using image upload)
 - [ ] `components/toast.js` (if showing notifications)
 - [ ] `components/modal.js` (if using modals)
@@ -68,8 +76,8 @@ function [functionName]() {
 
 _Capture with Puppeteer before implementation when modifying existing features. Skip for new sections._
 
-| Element | Current Value | Notes |
-|---------|---------------|-------|
+| Element   | Current Value   | Notes                  |
+| --------- | --------------- | ---------------------- |
 | [element] | [current value] | [any relevant context] |
 
 ---
@@ -77,12 +85,15 @@ _Capture with Puppeteer before implementation when modifying existing features. 
 ## 📝 Implementation Steps
 
 ### Step 1: [First Step]
+
 [What to do first]
 
 ### Step 2: [Second Step]
+
 [What to do second]
 
 ### Step 3: [Third Step]
+
 [What to do third]
 
 ---
@@ -91,11 +102,11 @@ _Capture with Puppeteer before implementation when modifying existing features. 
 
 ### Agent-Verifiable (Puppeteer)
 
-| # | Criterion | Element | Expected | How to Verify |
-|---|-----------|---------|----------|---------------|
-| 1 | [Criterion] | `[selector]` | [Value] | [Method] |
-| 2 | [Criterion] | `[selector]` | [Value] | [Method] |
-| 3 | [Criterion] | `[selector]` | [Value] | [Method] |
+| #   | Criterion   | Element      | Expected | How to Verify |
+| --- | ----------- | ------------ | -------- | ------------- |
+| 1   | [Criterion] | `[selector]` | [Value]  | [Method]      |
+| 2   | [Criterion] | `[selector]` | [Value]  | [Method]      |
+| 3   | [Criterion] | `[selector]` | [Value]  | [Method]      |
 
 ### User-Evaluable (Qualitative)
 
@@ -127,6 +138,7 @@ See [Inline Testing Guide](../guides/INLINE-TESTING-GUIDE.md) for full methodolo
 ### User Qualitative Review
 
 After Puppeteer verification passes, present to user:
+
 - Summarize Puppeteer results (X/Y criteria pass)
 - Ask user to evaluate qualitative criteria above
 - Collect feedback on feel, flow, clarity, consistency
@@ -136,11 +148,13 @@ After Puppeteer verification passes, present to user:
 ## 🐛 Common Issues & Fixes
 
 ### Issue: [Problem Description]
+
 **Symptom**: [What user sees]  
 **Cause**: [Why it happens]  
 **Fix**: [How to fix it]
 
 ### Issue: [Problem Description]
+
 **Symptom**: [What user sees]  
 **Cause**: [Why it happens]  
 **Fix**: [How to fix it]
@@ -150,10 +164,12 @@ After Puppeteer verification passes, present to user:
 ## 🎨 Design Notes
 
 **Visual requirements**:
+
 - [Design consideration 1]
 - [Design consideration 2]
 
 **UX considerations**:
+
 - [UX note 1]
 - [UX note 2]
 
@@ -184,8 +200,7 @@ After this section is approved: `[Page].[NextSection]-[page-name]-[next-section-
 
 ## 🔄 Changes from Original Plan
 
-*Document any deviations from the work file plan here:*
+_Document any deviations from the work file plan here:_
 
 - [Change 1 and reason]
 - [Change 2 and reason]
-
