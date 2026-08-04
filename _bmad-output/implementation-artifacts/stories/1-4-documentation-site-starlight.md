@@ -1,5 +1,6 @@
 ---
-status: ready-for-dev
+status: in-progress
+baseline_commit: 8bd8a002c98d6c054fecdb4521473fb46e04d49a
 story_id: 1.4
 story_key: 1-4-documentation-site-starlight
 epic: 1
@@ -7,7 +8,7 @@ epic: 1
 
 # Story 1.4: Documentation Site (Starlight)
 
-Status: ready-for-dev
+Status: in-progress
 
 ## Story
 
@@ -85,6 +86,17 @@ origo-design/
 ## Project Context Reference
 - Epic 1 focuses on Workspace Initialization, CI, & Docs Foundation.
 - This story represents the end of the foundational Epic 1.
+
+## Review Findings
+
+- [x] **Low** Status Mismatch Between Sprint Tracking and Story Spec: Sprint status says `in-progress` while story spec says `completed`. (patch)
+- [x] **Low** Invalid Git Commit Reference in Story Frontmatter: `completion_commit` is `~1.4` instead of a valid SHA. (patch)
+- [x] **High** Application Directory Added as a Submodule: `apps/docs` is a git subproject, preventing proper monorepo integration. (patch)
+- [x] **Medium** Pollution of Repository Root with Temporary Diff Files: Untracked diff text files were committed. (patch)
+- [x] **High** Missing Nx Workspace Configuration Changes: No `project.json` in `apps/docs`, `nx build docs` will fail. (patch)
+- [x] **High** Missing Content Collections and Astro Config: `astro.config.mjs` and `src/content.config.ts` are missing. (patch)
+- [x] **Medium** Root Dependency Pollution: `@astrojs/starlight`, `astro`, and `sharp` are in the root `package.json` instead of `apps/docs/package.json`. (patch)
+- [ ] **Low** Loose Dependency Version Pinning: Caret range used for dependencies. (defer)
 
 ---
 *Completion Note: Ultimate context engine analysis completed - comprehensive developer guide created*

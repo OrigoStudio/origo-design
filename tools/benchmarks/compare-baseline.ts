@@ -75,12 +75,11 @@ export function runBenchmarkGate(): void {
   console.log('--------------------------------------------------');
 
   if (!fs.existsSync(baselinePath)) {
-    console.log(
-      `ℹ️ No baseline file found at ${baselinePath}. Saving current run as initial baseline.`
+    console.error(
+      `❌ PERFORMANCE GATE FAILED: No baseline file found at ${baselinePath}. Baseline must be committed to repository.`
     );
     fs.writeFileSync(baselinePath, JSON.stringify(currentMetrics, null, 2), 'utf-8');
-    console.log('✅ Baseline established successfully.');
-    process.exit(0);
+    process.exit(1);
   }
 
   const baselineMetrics: PerfMetrics = JSON.parse(fs.readFileSync(baselinePath, 'utf-8'));
