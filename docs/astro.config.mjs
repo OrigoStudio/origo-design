@@ -1,10 +1,13 @@
 // @ts-check
-import { defineConfig } from 'astro/config';
+import { defineConfig, passthroughImageService } from 'astro/config';
 import starlight from '@astrojs/starlight';
 
 // https://astro.build/config
 export default defineConfig({
   output: 'static',
+  image: {
+    service: passthroughImageService(),
+  },
   integrations: [
     starlight({
       title: 'My Docs',
