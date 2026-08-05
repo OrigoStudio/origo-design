@@ -1,4 +1,4 @@
-﻿---
+---
 name: 'Origo Design — Phase 1: Foundation (Months 1–6)'
 type: architecture-spine
 purpose: build-substrate
@@ -112,7 +112,7 @@ No file outside @origo/core may import from any path other than the package root
 
 ### P1-AD-8 — Starlight (Astro) as the Documentation Site
 
-- **Binds:** apps/docs/ implementation
+- **Binds:** docs/ implementation
 - **Prevents:** Angular/React SSR complexity in a static docs site; contributors choosing incompatible doc frameworks
 - **Rule:** Documentation site uses Starlight (built on Astro). Output: static site, no server-side runtime. The hosted playground is embedded as an iframe island — the only Angular runtime in docs. Deployed to a CDN (no server).
 
@@ -234,7 +234,7 @@ apps/
 | CLI: new + generate + validate | @origo/cli/src/commands/ | AD-7, AD-8 |
 | Playground editor | @origo/playground/src/editor/ | P1-AD-7 |
 | Playground live preview | @origo/playground/src/preview/ | AD-7, AD-8 |
-| Documentation site | apps/docs/ | P1-AD-8 |
+| Documentation site | docs/ | P1-AD-8 |
 | DevTools v1 Chrome Extension | packages/devtools/ | P1-AD-9 |
 | Telemetry hooks | @origo/angular-renderer (per component) | AD-11 |
 | Accessibility enforcement | @origo/angular-renderer (axe-core in CI) | P1-AD-6 |
