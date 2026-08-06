@@ -1,0 +1,52 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://origo.dev/schemas/semantic-tokens.schema.json",
+  "title": "Origo Semantic Tokens Schema",
+  "description": "JSON Schema for Origo Semantic Tokens (ensures references)",
+  "type": "object",
+  "patternProperties": {
+    "^[^$][a-zA-Z0-9_\\-]*$": {
+      "$ref": "#/$defs/tokenOrGroup"
+    }
+  },
+  "additionalProperties": false,
+  "$defs": {
+    "tokenOrGroup": {
+      "anyOf": [{ "$ref": "#/$defs/token" }, { "$ref": "#/$defs/tokenGroup" }]
+    },
+    "token": {
+      "type": "object",
+      "properties": {
+        "$value": {
+          "type": "string",
+          "pattern": "^.*\\{[a-zA-Z0-9_\\-\\.]+\\}.*$"
+        },
+        "$type": {
+          "type": "string"
+        },
+        "$description": {
+          "type": "string"
+        }
+      },
+      "required": ["$value"],
+      "additionalProperties": false
+    },
+    "tokenGroup": {
+      "type": "object",
+      "properties": {
+        "$type": {
+          "type": "string"
+        },
+        "$description": {
+          "type": "string"
+        }
+      },
+      "patternProperties": {
+        "^[^$][a-zA-Z0-9_\\-]*$": {
+          "$ref": "#/$defs/tokenOrGroup"
+        }
+      },
+      "additionalProperties": false
+    }
+  }
+}

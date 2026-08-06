@@ -54,8 +54,8 @@ development_status:
   1-3-performance-benchmark-harness-nfr-perf-002: done
   1-4-documentation-site-starlight: done
   epic-1-retrospective: done
-  epic-2: backlog
-  2-1-design-token-schema-foundation: backlog
+  epic-2: in-progress
+  2-1-design-token-schema-foundation: done
   2-2-token-compilation-pipeline: in-progress
   2-3-zero-code-theme-overrides: backlog
   2-4-token-resolution-consumption-contract: backlog

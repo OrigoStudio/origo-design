@@ -15,7 +15,9 @@
     "skipLibCheck": true,
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
-    "paths": {},
+    "paths": {
+      "@origo/design-tokens": ["./packages/design-tokens/src/index.ts"]
+    },
     "ignoreDeprecations": "6.0"
   },
   "exclude": ["node_modules", "tmp", "dist", ".nx/cache"],
