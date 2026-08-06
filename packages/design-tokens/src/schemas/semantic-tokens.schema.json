@@ -1,11 +1,11 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://origo.dev/schemas/design-tokens.schema.json",
-  "title": "Origo Design Tokens Schema",
-  "description": "JSON Schema for Origo Design Tokens aligning with DTCG specification",
+  "$id": "https://origo.dev/schemas/semantic-tokens.schema.json",
+  "title": "Origo Semantic Tokens Schema",
+  "description": "JSON Schema for Origo Semantic Tokens (ensures references)",
   "type": "object",
   "patternProperties": {
-    "^[a-zA-Z0-9_\\-]+$": {
+    "^[^$][a-zA-Z0-9_\\-]*$": {
       "$ref": "#/$defs/tokenOrGroup"
     }
   },
@@ -18,32 +18,11 @@
       "type": "object",
       "properties": {
         "$value": {
-          "type": ["string", "number", "object", "array"]
+          "type": "string",
+          "pattern": "^.*\\{[a-zA-Z0-9_\\-\\.]+\\}.*$"
         },
         "$type": {
-          "type": "string",
-          "enum": [
-            "color",
-            "dimension",
-            "fontFamily",
-            "fontWeight",
-            "duration",
-            "cubicBezier",
-            "number",
-            "shadow",
-            "strokeStyle",
-            "border",
-            "transition",
-            "typography",
-            "spacing",
-            "borderRadius",
-            "elevation",
-            "animation",
-            "motion",
-            "breakpoints",
-            "opacity",
-            "density"
-          ]
+          "type": "string"
         },
         "$description": {
           "type": "string"
@@ -63,7 +42,7 @@
         }
       },
       "patternProperties": {
-        "^[a-zA-Z0-9_\\-]+$": {
+        "^[^$][a-zA-Z0-9_\\-]*$": {
           "$ref": "#/$defs/tokenOrGroup"
         }
       },

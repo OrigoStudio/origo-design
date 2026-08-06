@@ -1,5 +1,5 @@
 ---
-status: review
+status: done
 baseline_commit: 20b8f44fa7ed14fcdb9fc746428d49c53baf0ca5
 story_id: 2.1
 story_key: 2-1-design-token-schema-foundation
@@ -8,7 +8,7 @@ epic: 2
 
 # Story 2.1: Design Token Schema Foundation
 
-Status: review
+Status: done
 
 ## Story
 
@@ -128,3 +128,28 @@ The schema successfully validates base and semantic token structures. Unit tests
 - `packages/design-tokens/src/lib/design-tokens.ts`
 - `packages/design-tokens/README.md`
 - `tsconfig.base.json`
+
+### Review Findings
+- [x] [Review][Decision] Schema Validation Strategy for Alias References — JSON Schema Draft 2020-12 cannot natively validate that a token reference (e.g. `{color.base...}`) points to an existing key, nor easily enforce mutually exclusive structures between base/semantic files without splitting them or using custom Ajv keywords. How should we implement this?
+- [x] [Review][Patch] Sprint Status Timestamp Regression [`_bmad-output/implementation-artifacts/sprint-status.yaml`]
+- [x] [Review][Patch] Missing `completion_commit` Metadata [`_bmad-output/implementation-artifacts/stories/2-1-design-token-schema-foundation.md`]
+- [x] [Review][Patch] Accidental Artifact tracking [`_bmad/scripts/resolved_config.json`]
+- [x] [Review][Patch] Broken Entry Point in `package.json` [`packages/design-tokens/package.json`]
+- [x] [Review][Patch] Useless Stub Export in Library API [`packages/design-tokens/src/index.ts`]
+- [x] [Review][Patch] Missing JSON Schema and Token Files in Nx Build Assets [`packages/design-tokens/project.json`]
+- [x] [Review][Patch] Missing Unit Tests for missing required fields [`packages/design-tokens/src/lib/design-tokens.spec.ts`]
+- [x] [Review][Patch] DTCG Specification Incompatibilities [`packages/design-tokens/src/schemas/design-tokens.schema.json`]
+- [x] [Review][Patch] Incomplete Nx Boundary Tags [`packages/design-tokens/project.json`]
+- [x] [Review][Patch] Missing `resolveJsonModule` in TypeScript Configurations [`packages/design-tokens/tsconfig.json`]
+- [x] [Review][Patch] Module Resolution Mismatch Between Spec and Library Configs [`packages/design-tokens/tsconfig.spec.json`]
+- [x] [Review][Patch] Package Marked as `private: true` [`packages/design-tokens/package.json`]
+- [x] [Review][Patch] Invalid main and types entrypoints pointing to uncompiled TS files instead of compiled output [`packages/design-tokens/package.json`]
+- [x] [Review][Patch] Rigid pattern constraint in semantic tokens schema breaking composite references and interpolation [`packages/design-tokens/src/schemas/semantic-tokens.schema.json`]
+- [x] [Review][Patch] Ambiguous token group property keys allowing reserved keywords (`$value`, `$type`) to be misparsed as groups [`packages/design-tokens/src/schemas/base-tokens.schema.json`, `semantic-tokens.schema.json`]
+- [x] [Review][Patch] Inadequate schema boundary unit test coverage for invalid DTCG types and group structures [`packages/design-tokens/src/lib/design-tokens.spec.ts`]
+- [x] [Review][Patch] Shallow asset glob patterns preventing nested token directory resolution [`packages/design-tokens/project.json`]
+- [x] [Review][Patch] Useless boilerplate function in library export (`designTokens()`) polluting API [`packages/design-tokens/src/lib/design-tokens.ts`, `index.ts`]
+- [ ] [Review][Defer] Missing composite token validation structures in base-tokens schema (Out of scope for initial foundation)
+- [ ] [Review][Defer] Non-standard DTCG token type definitions (`elevation`, etc) (Out of scope / needed for design system)
+- [ ] [Review][Defer] Fragile custom traversal for reference validation in tests (Acceptable for initial foundation)
+- [ ] [Review][Defer] CI workflow and lint-staged issues (Out of scope for design tokens schema foundation)
