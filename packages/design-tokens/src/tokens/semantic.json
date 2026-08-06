@@ -1,0 +1,33 @@
+{
+  "color": {
+    "surface": {
+      "primary": {
+        "$value": "{color.base.blue.500}",
+        "$type": "color",
+        "$description": "Primary surface color for main actions"
+      },
+      "background": {
+        "$value": "{color.base.neutral.100}",
+        "$type": "color"
+      }
+    },
+    "text": {
+      "primary": {
+        "$value": "{color.base.neutral.900}",
+        "$type": "color"
+      },
+      "inverse": {
+        "$value": "{color.base.neutral.100}",
+        "$type": "color"
+      }
+    }
+  },
+  "spacing": {
+    "container": {
+      "padding": {
+        "$value": "{spacing.base.4}",
+        "$type": "dimension"
+      }
+    }
+  }
+}
