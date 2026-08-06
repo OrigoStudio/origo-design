@@ -56,7 +56,7 @@ development_status:
   epic-1-retrospective: done
   epic-2: in-progress
   2-1-design-token-schema-foundation: done
-  2-2-token-compilation-pipeline: in-progress
+  2-2-token-compilation-pipeline: done
   2-3-zero-code-theme-overrides: backlog
   2-4-token-resolution-consumption-contract: backlog
   epic-2-retrospective: optional

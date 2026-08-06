@@ -1,5 +1,5 @@
 ---
-status: in-progress
+status: done
 baseline_commit: 20b8f44fa7ed14fcdb9fc746428d49c53baf0ca5
 story_id: 2.2
 story_key: 2-2-token-compilation-pipeline
@@ -8,7 +8,7 @@ epic: 2
 
 # Story 2.2: Token Compilation Pipeline
 
-Status: in-progress
+Status: done
 
 ## Story
 
@@ -50,18 +50,18 @@ So that the web renderer can consume them natively without heavy JS parsing.
 
 ## Tasks/Subtasks
 
-- [ ] Task 1: Setup build script to parse JSON tokens
-  - [ ] Implement `packages/design-tokens/src/build.ts`
-  - [ ] Read token files (base and semantic)
-- [ ] Task 2: Implement CSS Variable Generation
-  - [ ] Generate CSS for base tokens
-  - [ ] Generate CSS for semantic tokens mapping to base tokens
-- [ ] Task 3: Minification and Nx integration
-  - [ ] Configure `project.json` build target to run the build script
-  - [ ] Ensure output is minified for minimal network transfer
-- [ ] Task 4: Testing and Validation
-  - [ ] Write unit tests to verify JSON transforms correctly to CSS
-  - [ ] Verify `nx build design-tokens` completes successfully
+- [x] Task 1: Setup build script to parse JSON tokens
+  - [x] Implement `packages/design-tokens/src/build.ts`
+  - [x] Read token files (base and semantic)
+- [x] Task 2: Implement CSS Variable Generation
+  - [x] Generate CSS for base tokens
+  - [x] Generate CSS for semantic tokens mapping to base tokens
+- [x] Task 3: Minification and Nx integration
+  - [x] Configure `project.json` build target to run the build script
+  - [x] Ensure output is minified for minimal network transfer
+- [x] Task 4: Testing and Validation
+  - [x] Write unit tests to verify JSON transforms correctly to CSS
+  - [x] Verify `nx build design-tokens` completes successfully
 
 ## Previous Story Intelligence
 ### Learnings from Story 2.1:
@@ -73,17 +73,27 @@ So that the web renderer can consume them natively without heavy JS parsing.
 - This pipeline will unblock Epic 5 (Renderer), which depends heavily on consuming these CSS variables natively.
 
 ## Change Log
-- 
+- Created `build.ts` containing `parseTokens` and `generateCssVariables`.
+- Created `compile.ts` execution script.
+- Configured `project.json` to execute `compile-css` as part of `build`.
+- Updated `package.json` to map correct exports (`./index.js` and `./tokens.css`).
+- Added tests in `build.spec.ts`.
 
 ## File List
-- 
+- packages/design-tokens/src/build.ts
+- packages/design-tokens/src/build.spec.ts
+- packages/design-tokens/src/compile.ts
+- packages/design-tokens/src/index.ts
+- packages/design-tokens/package.json
+- packages/design-tokens/project.json
 
 ## Dev Agent Record
 ### Debug Log
-- 
+- N/A
 
 ### Completion Notes
-- 
+- The compilation pipeline runs via `nx build design-tokens` and successfully generates minified CSS mapping semantic variables to base ones.
+- CSS is appropriately output to `dist/packages/design-tokens/tokens.css` and mapped in `package.json` exports.
 
 ---
 *Completion Note: Ultimate context engine analysis completed - comprehensive developer guide created*

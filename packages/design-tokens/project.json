@@ -5,7 +5,13 @@
   "projectType": "library",
   "tags": ["scope:design-tokens", "type:lib", "type:tokens"],
   "targets": {
-    "build": {
+    "compile-css": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "ts-node packages/design-tokens/src/compile.ts"
+      }
+    },
+    "tsc": {
       "executor": "@nx/js:tsc",
       "outputs": ["{options.outputPath}"],
       "options": {
@@ -17,6 +23,13 @@
           "packages/design-tokens/src/schemas/**/*.json",
           "packages/design-tokens/src/tokens/**/*.json"
         ]
+      }
+    },
+    "build": {
+      "executor": "nx:run-commands",
+      "options": {
+        "commands": ["npx nx run design-tokens:tsc", "npx nx run design-tokens:compile-css"],
+        "parallel": false
       }
     }
   }
