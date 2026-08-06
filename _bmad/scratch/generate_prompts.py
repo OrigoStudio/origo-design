@@ -1,4 +1,3 @@
-import os
 import subprocess
 
 diff = subprocess.check_output(['git', 'diff', '20b8f44fa7ed14fcdb9fc746428d49c53baf0ca5'], encoding='utf-8', errors='ignore')
