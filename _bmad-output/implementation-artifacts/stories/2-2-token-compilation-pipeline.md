@@ -63,6 +63,27 @@ So that the web renderer can consume them natively without heavy JS parsing.
   - [x] Write unit tests to verify JSON transforms correctly to CSS
   - [x] Verify `nx build design-tokens` completes successfully
 
+### Review Findings
+- [x] [Review][Patch] Missing Required Output Formats — Only compiles CSS, missing tokens.js, tokens.ts, and tokens.json which may be required by AD-2.
+- [x] [Review][Patch] Missing test and lint Targets in project.json [packages/design-tokens/project.json:7]
+- [x] [Review][Patch] Improper Nx Target Chaining [packages/design-tokens/project.json:28]
+- [x] [Review][Patch] Fragile Output Path Resolution in Compilation Script [packages/design-tokens/src/compile.ts:18]
+- [x] [Review][Patch] Naive Alias Reference Parsing [packages/design-tokens/src/build.ts:11]
+- [x] [Review][Patch] Compiler Mismatch with Schema Constraints [packages/design-tokens/src/build.ts:11]
+- [x] [Review][Patch] Runtime Null Pointer Exception Risk [packages/design-tokens/src/build.ts:6]
+- [x] [Review][Patch] Missing Circular and Chained Reference Resolution [packages/design-tokens/src/build.ts:4]
+- [x] [Review][Patch] Missing Distribution Package Artifacts [packages/design-tokens/project.json:21]
+- [x] [Review][Patch] Mismatched Entrypoint Paths in Package Specification [packages/design-tokens/package.json:6]
+- [x] [Review][Patch] Invalid CSS Output for Array-Based Token Values [packages/design-tokens/src/build.ts:9]
+- [x] [Review][Patch] Empty Reference in Token Handling [packages/design-tokens/src/build.ts:11]
+- [x] [Review][Patch] Unsanitized Custom Property Identifiers [packages/design-tokens/src/build.ts:8]
+- [x] [Review][Patch] Silent Test Helper Failure on Module Interoperability [packages/design-tokens/src/lib/design-tokens.spec.ts:1]
+- [x] [Review][Patch] Uncompiled Source Execution at Build Time [packages/design-tokens/project.json:11]
+- [x] [Review][Patch] Unhandled JSON Parsing Exception [packages/design-tokens/src/compile.ts:9]
+- [x] [Review][Patch] Missing CSS Tree-Shaking Implementation [packages/design-tokens/src/build.ts:28]
+- [x] [Review][Patch] Compilation Pipeline Bypasses Token Schema Validation [packages/design-tokens/src/compile.ts:12]
+- [x] [Review][Defer] Unconstrained Token Group Metadata [packages/design-tokens/src/schemas/base-tokens.schema.json:1] — deferred, pre-existing
+
 ## Previous Story Intelligence
 ### Learnings from Story 2.1:
 - `packages/design-tokens` package was initialized but had some config and main entrypoint issues (e.g., `package.json` pointing to `.js` instead of `.ts` or dist). Ensure build outputs correctly map to the package exports.

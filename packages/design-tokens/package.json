@@ -3,19 +3,19 @@
   "version": "0.0.1",
   "private": false,
   "type": "commonjs",
-  "main": "./index.js",
-  "types": "./index.d.ts",
+  "main": "./src/index.js",
+  "types": "./src/index.d.ts",
   "exports": {
     ".": {
-      "types": "./index.d.ts",
-      "default": "./index.js"
+      "types": "./src/index.d.ts",
+      "default": "./src/index.js"
     },
-    "./tokens.css": "./tokens.css"
+    "./tokens.css": "./tokens.css",
+    "./tokens.json": "./tokens.json",
+    "./tokens.js": "./tokens.js"
   },
   "dependencies": {
-    "tslib": "^2.3.0"
-  },
-  "devDependencies": {
     "ajv": "^8.20.0"
-  }
+  },
+  "devDependencies": {}
 }
