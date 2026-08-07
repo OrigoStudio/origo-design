@@ -5,7 +5,7 @@
   "projectType": "library",
   "tags": ["scope:design-tokens", "type:lib", "type:tokens"],
   "targets": {
-    "build": {
+    "tsc": {
       "executor": "@nx/js:tsc",
       "outputs": ["{options.outputPath}"],
       "options": {
@@ -14,10 +14,37 @@
         "tsConfig": "packages/design-tokens/tsconfig.lib.json",
         "assets": [
           "packages/design-tokens/*.md",
+          "packages/design-tokens/package.json",
           "packages/design-tokens/src/schemas/**/*.json",
           "packages/design-tokens/src/tokens/**/*.json"
         ]
       }
+    },
+    "compile-css": {
+      "executor": "nx:run-commands",
+      "dependsOn": ["tsc"],
+      "options": {
+        "command": "node dist/packages/design-tokens/src/compile.js"
+      }
+    },
+    "build": {
+      "executor": "nx:run-commands",
+      "dependsOn": ["compile-css"],
+      "options": {
+        "command": "echo 'Build complete'"
+      }
+    },
+    "test": {
+      "executor": "@nx/jest:jest",
+      "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
+      "options": {
+        "jestConfig": "packages/design-tokens/jest.config.cts",
+        "passWithNoTests": true
+      }
+    },
+    "lint": {
+      "executor": "@nx/eslint:lint",
+      "outputs": ["{options.outputFile}"]
     }
   }
 }

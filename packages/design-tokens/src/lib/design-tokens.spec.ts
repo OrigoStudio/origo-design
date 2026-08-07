@@ -1,8 +1,8 @@
 import Ajv2020 from 'ajv/dist/2020';
-import * as baseSchema from '../schemas/base-tokens.schema.json';
-import * as semanticSchema from '../schemas/semantic-tokens.schema.json';
-import * as baseTokens from '../tokens/base.json';
-import * as semanticTokens from '../tokens/semantic.json';
+import baseSchema from '../schemas/base-tokens.schema.json';
+import semanticSchema from '../schemas/semantic-tokens.schema.json';
+import baseTokens from '../tokens/base.json';
+import semanticTokens from '../tokens/semantic.json';
 
 describe('Design Tokens Schema Validation', () => {
   let ajv: Ajv2020;
@@ -102,23 +102,25 @@ describe('Design Tokens Schema Validation', () => {
 
   it('should fail on invalid alias references in semantic tokens', () => {
     // Helper to traverse and validate references exist in baseTokens
-    const validateReferences = (obj: any) => {
+    const validateReferences = (obj: unknown) => {
       let isValid = true;
-      const traverse = (node: any) => {
+      const traverse = (node: unknown) => {
         if (node && typeof node === 'object' && !Array.isArray(node)) {
+          const nodeRecord = node as Record<string, unknown>;
+          const val = nodeRecord['$value'];
           if (
             '$value' in node &&
-            typeof node.$value === 'string' &&
-            node.$value.startsWith('{') &&
-            node.$value.endsWith('}')
+            typeof val === 'string' &&
+            val.startsWith('{') &&
+            val.endsWith('}')
           ) {
-            const path = node.$value.slice(1, -1).split('.');
-            let current: any = baseTokens;
+            const path = val.slice(1, -1).split('.');
+            let current: unknown = baseTokens;
             // The default export for json files in this TS configuration adds an extra wrapper or behaves directly depending on esModuleInterop
             // For safety, we traverse carefully
             for (const key of path) {
               if (current && typeof current === 'object' && key in current) {
-                current = current[key];
+                current = (current as Record<string, unknown>)[key];
               } else {
                 isValid = false;
                 break;
