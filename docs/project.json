@@ -8,28 +8,28 @@
     "build": {
       "executor": "nx:run-commands",
       "options": {
-        "command": "astro build",
+        "command": "npx astro build",
         "cwd": "docs"
       }
     },
     "serve": {
       "executor": "nx:run-commands",
       "options": {
-        "command": "astro dev",
+        "command": "npx astro dev",
         "cwd": "docs"
       }
     },
     "preview": {
       "executor": "nx:run-commands",
       "options": {
-        "command": "astro preview",
+        "command": "npx astro preview",
         "cwd": "docs"
       }
     },
     "check": {
       "executor": "nx:run-commands",
       "options": {
-        "command": "astro check",
+        "command": "npx astro check",
         "cwd": "docs"
       }
     }
