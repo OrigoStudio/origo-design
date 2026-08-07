@@ -55,3 +55,6 @@ jobs:
 
       - name: Run Performance Benchmark Harness (NFR-PERF-002)
         run: npm run perf:benchmark
+
+      - run: npx nx fix-ci
+        if: always()
