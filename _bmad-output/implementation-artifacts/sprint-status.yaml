@@ -41,7 +41,7 @@
 # - Retrospective appends its action items to action_items; sprint-status surfaces open ones
 
 generated: 2026-07-29T21:46:02.464968
-last_updated: 2026-08-08T14:49:39.000000
+last_updated: 2026-08-08T14:30:05.000000
 project: origo-design
 project_key: NOKEY
 tracking_system: file-system
@@ -59,9 +59,9 @@ development_status:
   2-2-token-compilation-pipeline: done
   2-3-zero-code-theme-overrides: done
   2-4-token-resolution-consumption-contract: done
-  epic-2-retrospective: optional
-  epic-3: backlog
-  3-1-target-page-json-fixture: backlog
+  epic-2-retrospective: done
+  epic-3: in-progress
+  3-1-target-page-json-fixture: ready-for-dev
   3-2-domain-entity-schema-parser: backlog
   3-3-canonical-ast-serialization: backlog
   3-4-ast-validation-engine: backlog
@@ -115,4 +115,13 @@ action_items:
     status: done
   - id: retro-1-scaffold
     description: "Design Token Library Scaffold: Generate the @origo/design-tokens package in the correct Nx workspace boundary. (Owner: Winston)"
+    status: done
+  - id: retro-2-versioning
+    description: "Establish Versioning Management: Manage versioning strategy for the product and its packages. (Owner: Patel)"
+    status: open
+  - id: retro-2-use-cases
+    description: "Use Case Documentation: Create documentation detailing how and by whom the @origo/design-tokens package should be used. (Owner: Alice/Amelia)"
+    status: open
+  - id: retro-2-tech-debt
+    description: "Technical Debt Cleanup: Address Epic 2 deferred items (Theme Provider API, composite token validation) before starting Epic 3 parsers. (Owner: Charlie)"
     status: open
