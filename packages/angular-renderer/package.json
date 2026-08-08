@@ -1,0 +1,16 @@
+{
+  "name": "angular-renderer",
+  "version": "0.0.1",
+  "private": true,
+  "type": "commonjs",
+  "main": "./src/index.js",
+  "types": "./src/index.d.ts",
+  "dependencies": {
+    "@origo/design-tokens": "0.0.1",
+    "tslib": "^2.3.0"
+  },
+  "peerDependencies": {
+    "@angular/common": ">=22.0.8",
+    "@angular/core": ">=22.0.8"
+  }
+}
