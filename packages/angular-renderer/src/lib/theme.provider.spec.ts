@@ -5,12 +5,13 @@ import { APP_INITIALIZER, FactoryProvider } from '@angular/core';
 import * as runtime from '@origo/design-tokens/runtime';
 
 jest.mock('@origo/design-tokens/runtime', () => ({
-  loadAndInjectTheme: jest.fn(),
+  // eslint-disable-next-line @typescript-eslint/no-empty-function
+  loadAndInjectTheme: jest.fn().mockResolvedValue(() => {}),
 }));
 
 describe('theme.provider', () => {
   beforeEach(() => {
-    jest.resetAllMocks();
+    jest.clearAllMocks();
   });
 
   describe('themeInitializerFactory', () => {

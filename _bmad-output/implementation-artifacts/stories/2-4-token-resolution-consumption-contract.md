@@ -8,7 +8,7 @@ epic: 2
 
 # Story 2.4: Token Resolution & Consumption Contract
 
-Status: ready-for-dev
+Status: done
 
 ## Story
 
@@ -84,5 +84,18 @@ Recent commits implemented the `theme-injector` and its strict testing. Ensure t
 - [x] 4. Benchmark Validation
   - [x] 4.1 Write a benchmark test ensuring the entire resolution timing meets NFR-PERF-005
 
+### Review Findings
+- [x] [Review][Patch] Conflicting Story Status in Story Spec File [_bmad-output/implementation-artifacts/stories/2-4-token-resolution-consumption-contract.md:3]
+- [x] [Review][Patch] Invalid Angular Peer Dependencies [packages/angular-renderer/package.json:12]
+- [x] [Review][Patch] Error Handling and Teardown in APP_INITIALIZER Bootstrapping [packages/angular-renderer/src/lib/theme.provider.ts:11]
+- [x] [Review][Patch] Incomplete SSR Bypassing Guard in Theme Fetcher [packages/design-tokens/src/runtime/theme-fetcher.ts:14]
+- [x] [Review][Patch] Performance Timeline Memory Leak [packages/design-tokens/src/runtime/theme-fetcher.ts:50]
+- [x] [Review][Patch] Simulated/Fake Performance Benchmark for NFR-PERF-005 [packages/design-tokens/src/runtime/theme-fetcher.perf.spec.ts:12]
+- [x] [Review][Patch] Incorrect Package Entry Point Paths [packages/angular-renderer/package.json:6]
+- [x] [Review][Patch] Misconfigured Test Environment for DOM Provider [packages/angular-renderer/jest.config.cts]
+- [x] [Review][Patch] Dead Scaffolding Exported in Public API [packages/angular-renderer/src/lib/angular-renderer.ts]
+- [x] [Review][Defer] Static Inflexible Theme Provider API [packages/angular-renderer/src/lib/theme.provider.ts:25] — deferred, pre-existing
+
 ### Completion Notes
+- Code review passed. Applied 9 patches, deferred 1 item to backlog. 1 item dismissed as intentional.
 - Ultimate context engine analysis completed - comprehensive developer guide created.

@@ -10,8 +10,8 @@ import { injectTheme } from './theme-injector';
  * @returns A promise that resolves to the parsed theme JSON object, or an empty object on failure/SSR.
  */
 export async function fetchTheme(url: string): Promise<Record<string, unknown>> {
-  // SSR guard: fetch might not exist
-  if (typeof fetch === 'undefined') {
+  // SSR guard: fetch might not exist, or we are in a server environment
+  if (typeof fetch === 'undefined' || typeof document === 'undefined') {
     return {};
   }
 
@@ -51,16 +51,28 @@ export async function loadAndInjectTheme(
     performance.mark(perfMarkStart);
   }
 
-  const themeJson = await fetchTheme(url);
-  const teardown = injectTheme(themeJson, target);
-
-  if (typeof performance !== 'undefined' && performance.mark && performance.measure) {
-    performance.mark(perfMarkEnd);
-    try {
-      performance.measure(perfMeasure, perfMarkStart, perfMarkEnd);
-      // Optional: Log or assert performance if strictly needed in dev environments
-    } catch {
-      // Ignore measure errors
+  let teardown: () => void = () => {
+    // default no-op teardown
+  };
+  try {
+    const themeJson = await fetchTheme(url);
+    const injected = injectTheme(themeJson, target);
+    if (typeof injected === 'function') {
+      teardown = injected;
+    }
+  } catch (error) {
+    console.warn('[origo-design] Error in loadAndInjectTheme', error);
+  } finally {
+    if (typeof performance !== 'undefined' && performance.mark && performance.measure) {
+      performance.mark(perfMarkEnd);
+      try {
+        performance.measure(perfMeasure, perfMarkStart, perfMarkEnd);
+      } catch {
+        // Ignore measure errors
+      }
+      performance.clearMarks(perfMarkStart);
+      performance.clearMarks(perfMarkEnd);
+      performance.clearMeasures(perfMeasure);
     }
   }
 

@@ -1,3 +1,4 @@
+/** @jest-environment jsdom */
 import { fetchTheme, loadAndInjectTheme } from './theme-fetcher';
 import * as injector from './theme-injector';
 
@@ -117,10 +118,10 @@ describe('loadAndInjectTheme', () => {
     const markMock = jest.fn();
     const measureMock = jest.fn();
 
-    global.performance = {
-      mark: markMock,
-      measure: measureMock,
-    } as unknown as Performance;
+    global.performance.mark = markMock;
+    global.performance.measure = measureMock;
+    global.performance.clearMarks = jest.fn();
+    global.performance.clearMeasures = jest.fn();
 
     await loadAndInjectTheme('/test.json');
 

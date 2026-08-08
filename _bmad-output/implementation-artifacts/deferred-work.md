@@ -15,3 +15,6 @@
 
 - Missing `theme.json` fetch mechanism — spec says "Create a mechanism to fetch, parse, and apply a `theme.json` file at runtime." Only parse+inject are implemented; no network/file fetch wrapper exists. Can be addressed in story 2.4 or as a follow-on fetch utility in `@origo/design-tokens/runtime`.
 
+## Deferred from: code review of 2-4-token-resolution-consumption-contract.md (2026-08-08)
+
+- Static Inflexible Theme Provider API [packages/angular-renderer/src/lib/theme.provider.ts:25] — `provideOrigoTheme` only accepts a static `themeUrl` string argument. Deferred as a dynamic string injection via DI tokens or factory is an enhancement over current requirements.

@@ -11,7 +11,9 @@ export function themeInitializerFactory(
   return () => {
     if (isPlatformBrowser(platformId)) {
       const target = document ? document.documentElement : undefined;
-      return loadAndInjectTheme(url, target);
+      return loadAndInjectTheme(url, target).catch(e => {
+        console.error('[origo-design] theme init failed', e);
+      });
     }
     return Promise.resolve();
   };
