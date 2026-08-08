@@ -1,0 +1,19 @@
+{
+  "name": "angular-renderer",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "packages/angular-renderer/src",
+  "projectType": "library",
+  "tags": ["scope:angular-renderer", "type:lib"],
+  "targets": {
+    "build": {
+      "executor": "@nx/js:tsc",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/packages/angular-renderer",
+        "main": "packages/angular-renderer/src/index.ts",
+        "tsConfig": "packages/angular-renderer/tsconfig.lib.json",
+        "assets": ["packages/angular-renderer/*.md"]
+      }
+    }
+  }
+}

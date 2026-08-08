@@ -47,6 +47,14 @@ module.exports = [
             },
             {
               sourceTag: 'type:util',
+              onlyDependOnLibsWithTags: ['type:util', 'type:lib', 'type:tokens'],
+            },
+            {
+              sourceTag: 'type:lib',
+              onlyDependOnLibsWithTags: ['type:lib', 'type:tokens', 'type:util'],
+            },
+            {
+              sourceTag: 'type:tokens',
               onlyDependOnLibsWithTags: [],
             },
           ],
