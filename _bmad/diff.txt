@@ -1,6 +1,4 @@
-Invoke the `bmad-review-adversarial-general` skill on this diff:
-
-diff --git a/_bmad-output/implementation-artifacts/deferred-work.md b/_bmad-output/implementation-artifacts/deferred-work.md
+﻿diff --git a/_bmad-output/implementation-artifacts/deferred-work.md b/_bmad-output/implementation-artifacts/deferred-work.md
 index 6532378..c3e3e89 100644
 --- a/_bmad-output/implementation-artifacts/deferred-work.md
 +++ b/_bmad-output/implementation-artifacts/deferred-work.md

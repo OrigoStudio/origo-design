@@ -1,5 +1,5 @@
 ---
-status: review
+status: done
 story_id: 2.3
 story_key: 2-3-zero-code-theme-overrides
 epic: 2
@@ -8,7 +8,7 @@ baseline_commit: 1ec3866c74a417eed54f2b2bcbc7daaaee8212c8
 
 # Story 2.3: Zero-Code Theme Overrides
 
-Status: review
+Status: done
 
 ## Story
 
@@ -80,6 +80,32 @@ Recent commits show successful merge of the `2-2-token-compilation-pipeline`. Th
   - [x] 3.1 Map `theme.json` keys to generated CSS custom property names
   - [x] 3.2 Implement logic to inject `<style>` tag into `document.head`
   - [x] 3.3 Write tests for DOM injection (using JSDOM or similar)
+
+### Review Findings
+
+- [x] [Review][Decision] `target` parameter ignored — resolved: implemented scoped injection via `data-origo-theme-id` attribute selector. Global `:root` used when `target === document.documentElement`.
+- [x] [Review][Patch] CSS injection via object keys — resolved: keys validated against `/^[a-zA-Z0-9_-]+$/` allowlist before interpolation. [theme-injector.ts:12-19, 38-40]
+- [x] [Review][Patch] Sanitization is too weak — resolved: value validation replaced with explicit format allowlist (hex, rgb/rgba, hsl/hsla, numeric+unit, named colors). [theme-injector.ts:18]
+- [x] [Review][Patch] No SSR guard — resolved: `if (typeof document === 'undefined') return;` added at top of `injectTheme`. [theme-injector.ts:29, 46]
+- [x] [Review][Patch] Stale theme persists when re-injecting empty/all-invalid theme — resolved: empty `parsed` now removes the existing style tag instead of returning early. [theme-injector.ts:32-34]
+- [x] [Review][Patch] Prototype pollution via `__proto__` key — resolved: `Object.create(null)` used for `result`; explicit `BLOCKED_KEYS` set blocks `__proto__`, `constructor`, `prototype`. [theme-injector.ts:6, 19]
+- [x] [Review][Defer] Missing `theme.json` fetch mechanism — spec says "Create a mechanism to fetch, parse, and apply a `theme.json` file at runtime." Only parse+inject are implemented; no network/file fetch wrapper exists. — deferred, pre-existing gap in story scope interpretation; can be addressed in story 2.4 or as a follow-on capability
+
+#### Round 2 Findings
+
+- [x] [Review][Patch] Hyper-restrictive sanitization blocks valid CSS features — regex allowlist blocks `var()`, `calc()`, `clamp()`, and gradients, and native JSON numbers are silently ignored. (from Acceptance Auditor & Blind Hunter) — fix: broaden allowlist and cast numbers to strings.
+- [x] [Review][Patch] Scoped style tag memory leak — when a scoped element target is removed from DOM, its injected `<style>` tag is orphaned in `<head>`. (from Blind Hunter & Acceptance Auditor) — fix: introduce a cleanup mechanism (e.g. teardown function).
+- [x] [Review][Patch] `Math.random()` ID generator and injection hazard — `tagId` is generated using a non-stable/colliding method and injected without `CSS.escape()`, which breaks if existing `data-origo-theme-id` contains special characters. (from Blind Hunter & Edge Case Hunter) — fix: switch to stable ID generator and use `CSS.escape()`.
+- [x] [Review][Patch] Filtering semantic vs base tokens — no mechanism enforces that overrides target semantic tokens rather than base tokens. (from Acceptance Auditor) — fix: add configuration check/list to strictly enforce semantic token overrides.
+- [x] [Review][Patch] Default parameter SSR guard evaluation — `target = document.documentElement` default is evaluated before the SSR guard, crashing in non-browser environments. Explicitly passing `null` also crashes. (from Blind Hunter & Edge Case Hunter) [packages/design-tokens/src/runtime/theme-injector.ts:75]
+- [x] [Review][Patch] Infinite recursion and depth limits — circular object references cause maximum call stack exceeded. Function recurses to arbitrary depth despite JSDoc saying "single-level-nested". (from Blind Hunter & Edge Case Hunter) [packages/design-tokens/src/runtime/theme-injector.ts:41-48]
+- [x] [Review][Patch] `document.head` is null hazard — crashes if `document.head` is null in non-standard HTML environments. (from Edge Case Hunter) [packages/design-tokens/src/runtime/theme-injector.ts:98]
+- [x] [Review][Patch] Prototype pollution test is invalid — test creates object using `{ __proto__: 'polluted' }` which sets the prototype rather than adding a key, thus passing vacuously. (from Blind Hunter) [packages/design-tokens/src/runtime/theme-injector.spec.ts]
+- [x] [Review][Patch] `deferred-work.md` encoding artifacts — contains garbled Windows-1252 mojibake (`ΓÇö` instead of `—`). (from Blind Hunter) [deferred-work.md]
+- [x] [Review][Patch] Missing test coverage for SSR guard — `typeof document === 'undefined'` branch has zero test coverage. (from Blind Hunter) [packages/design-tokens/src/runtime/theme-injector.spec.ts]
+- [x] [Review][Patch] Fragile test cleanup logic — `afterEach` relies on elements still being in the DOM to clean up attributes. (from Blind Hunter) [packages/design-tokens/src/runtime/theme-injector.spec.ts]
+- [x] [Review][Patch] Missing return value — `injectTheme` does not signal if injection succeeded, was suppressed, or failed. (from Blind Hunter) [packages/design-tokens/src/runtime/theme-injector.ts:73]
+- [x] [Review][Defer] Missing `theme.json` fetch mechanism — explicitly deferred to Story 2.4. [deferred-work.md] — deferred, pre-existing
 
 ## File List
 - `packages/design-tokens/src/runtime/theme-injector.ts`
