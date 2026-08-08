@@ -10,6 +10,10 @@
       "types": "./src/index.d.ts",
       "default": "./src/index.js"
     },
+    "./runtime": {
+      "types": "./src/runtime/index.d.ts",
+      "default": "./src/runtime/index.js"
+    },
     "./tokens.css": "./tokens.css",
     "./tokens.json": "./tokens.json",
     "./tokens.js": "./tokens.js"

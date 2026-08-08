@@ -10,3 +10,8 @@
 ## Deferred from: code review of 2-2-token-compilation-pipeline.md (2026-08-06)
 
 - Unconstrained Token Group Metadata [packages/design-tokens/src/schemas/base-tokens.schema.json:1] — `base-tokens.schema.json` permits any arbitrary string for `$type` inside a `tokenGroup`, creating schema loopholes.
+
+## Deferred from: code review of 2-3-zero-code-theme-overrides.md (2026-08-08)
+
+- Missing `theme.json` fetch mechanism — spec says "Create a mechanism to fetch, parse, and apply a `theme.json` file at runtime." Only parse+inject are implemented; no network/file fetch wrapper exists. Can be addressed in story 2.4 or as a follow-on fetch utility in `@origo/design-tokens/runtime`.
+
