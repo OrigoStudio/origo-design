@@ -18,3 +18,9 @@
 ## Deferred from: code review of 2-4-token-resolution-consumption-contract.md (2026-08-08)
 
 - Static Inflexible Theme Provider API [packages/angular-renderer/src/lib/theme.provider.ts:25] — `provideOrigoTheme` only accepts a static `themeUrl` string argument. Deferred as a dynamic string injection via DI tokens or factory is an enhancement over current requirements.
+
+## Deferred from: code review of 2-5-1-versioning-management-strategy.md (2026-08-08)
+
+- GitHub release creation lacks authentication config [nx.json:85] — deferred, pre-existing
+- Unenforced CRLF/LF line-ending inconsistencies [epics.md] — deferred, pre-existing
+- Package Name Mismatch for angular-renderer [packages/angular-renderer/package.json] — deferred, pre-existing

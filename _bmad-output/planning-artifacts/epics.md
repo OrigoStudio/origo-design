@@ -299,6 +299,48 @@ So that theme switching and initial rendering do not cause UI jank.
 **Then** tokens are available for consumption by the renderer (FR-THEME-005)
 **And** resolution timing passes the performance benchmark limits defined in NFR-PERF-005.
 
+### Epic 2.5: Epic 2 Tech Debt & Documentation
+[Developer knocks out critical tech debt and documentation from Epic 2 before beginning the Epic 3 BADL Domain parser.]
+**FRs covered:** FR-THEME-001, FR-THEME-005, NFR-GIT-001
+
+#### Story 2.5.1: Versioning Management Strategy
+
+As a Project Lead,
+I want a clear versioning strategy for the product and its Nx packages,
+So that package versions are synchronized and releases are predictable.
+
+**Acceptance Criteria:**
+
+**Given** the Origo monorepo,
+**When** a release is triggered,
+**Then** a versioning strategy (e.g. standard-version, Nx release, or Changesets) is configured,
+**And** all packages increment version numbers safely and consistently.
+
+#### Story 2.5.2: Design Tokens Use Case Documentation
+
+As a UX Engineer,
+I want documentation detailing how and by whom `@origo/design-tokens` should be used,
+So that consumers understand the token lifecycle and overrides.
+
+**Acceptance Criteria:**
+
+**Given** the Starlight docs site,
+**When** a developer navigates to the Design Tokens section,
+**Then** they can read a comprehensive use case guide explaining token structures, consumption, and white-labeling.
+
+#### Story 2.5.3: Theme Provider & Composite Token Tech Debt
+
+As a Core Developer,
+I want to address the deferred Theme Provider API inflexibility and missing composite token validation,
+So that the token resolution pipeline is robust before Epic 3 begins.
+
+**Acceptance Criteria:**
+
+**Given** the `@origo/design-tokens` package,
+**When** tokens are resolved or the Theme Provider is used,
+**Then** composite tokens are strictly validated against their schema,
+**And** the Theme Provider API supports flexible injection without causing race conditions or untyped warnings.
+
 ### Epic 3: BADL Domain & Validation Engine (@origo/core)
 [Developer can define Domains and Entities in BADL and validate them to canonical JSON AST. MUST be driven by a real-world target page JSON fixture and requires 100% test coverage for the AST parser.]
 **FRs covered:** FR-E-001, FR-E-002, FR-E-003, FR-M-006, FR-M-008
