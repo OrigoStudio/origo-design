@@ -1,3 +1,263 @@
 Invoke the `bmad-review-adversarial-general` skill on this diff:
 
-diff --git a/_bmad-output/implementation-artifacts/sprint-status.yaml b/_bmad-output/implementation-artifacts/sprint-status.yaml index 29ca3b7..9bf0daf 100644 --- a/_bmad-output/implementation-artifacts/sprint-status.yaml +++ b/_bmad-output/implementation-artifacts/sprint-status.yaml @@ -41,7 +41,7 @@  # - Retrospective appends its action items to action_items; sprint-status surfaces open ones    generated: 2026-07-29T21:46:02.464968 -last_updated: 2026-08-09T11:53:00.000000 +last_updated: 2026-08-09T18:05:00.000000  project: origo-design  project_key: NOKEY  tracking_system: file-system @@ -63,7 +63,7 @@ development_status:    epic-2-5: in-progress    2-5-1-versioning-management-strategy: done    2-5-2-design-tokens-use-case-documentation: done -  2-5-3-theme-provider-composite-token-tech-debt: backlog +  2-5-3-theme-provider-composite-token-tech-debt: review    epic-3: in-progress    3-1-target-page-json-fixture: ready-for-dev    3-2-domain-entity-schema-parser: backlog diff --git a/_bmad-output/implementation-artifacts/stories/2-5-3-theme-provider-composite-token-tech-debt.md b/_bmad-output/implementation-artifacts/stories/2-5-3-theme-provider-composite-token-tech-debt.md new file mode 100644 index 0000000..fe517b4 --- /dev/null +++ b/_bmad-output/implementation-artifacts/stories/2-5-3-theme-provider-composite-token-tech-debt.md @@ -0,0 +1,66 @@ +--- +story_id: 2.5.3 +title: Theme Provider & Composite Token Tech Debt +epic: 2.5 +status: review +--- + +# Story 2.5.3: Theme Provider & Composite Token Tech Debt + +## =ƒôû Story Requirements + +As a UX Engineer and Framework Developer, +I want to resolve the technical debt deferred from Epic 2, +So that the Theme Provider API is flexible, concurrent token loading is safe, and composite tokens are properly validated. + +### Acceptance Criteria: + +- **Given** the Angular `theme.provider.ts`, +- **When** a consumer provides theme configuration, +- **Then** they can supply a static theme dictionary instead of, or in addition to, a URL, and optionally specify a target DOM element. +- **Given** the `loadAndInjectTheme` function in `theme-fetcher.ts`, +- **When** called concurrently multiple times, +- **Then** it must implement a concurrency lock or cancellation mechanism to prevent undefined behavior and race conditions. +- **Given** the `base-tokens.schema.json`, +- **When** a JSON file includes composite tokens (like typography or shadow), +- **Then** the schema must provide validation structures for those token types. + +--- + +## =ƒö¼ Developer Context & Guardrails + +### Technical Requirements +- **Angular Renderer:** Update `packages/angular-renderer/src/lib/theme.provider.ts`. The API should allow an options object (e.g., `{ url?: string; theme?: Record<string, unknown>; targetElement?: HTMLElement | string }`) instead of strictly requiring a string URL. +- **Runtime Concurrency:** Update `packages/design-tokens/src/runtime/theme-fetcher.ts`. Introduce a mechanism (e.g., `AbortController` or a simple state tracker) to ensure concurrent calls to `loadAndInjectTheme` do not step on each other or apply styles out of order. +- **Schema Validation:** Update `packages/design-tokens/src/schemas/base-tokens.schema.json`. Add `$defs` for composite types such as `typography`, `shadow`, and `border`.  + +### Architecture Compliance +- Keep the `theme-fetcher` lightweight. Avoid adding external libraries for concurrency. +- Ensure backwards compatibility if possible, or update the existing tests to reflect the new `provideOrigoTheme` signature. + +### File Structure Requirements +- `[MODIFY] packages/angular-renderer/src/lib/theme.provider.ts` +- `[MODIFY] packages/design-tokens/src/runtime/theme-fetcher.ts` +- `[MODIFY] packages/design-tokens/src/schemas/base-tokens.schema.json` + +### Testing Requirements +- Update tests in `packages/angular-renderer/src/lib/theme.provider.spec.ts` for the new options. +- Add tests in `packages/design-tokens/src/runtime/theme-fetcher.spec.ts` that simulate rapid successive calls to `loadAndInjectTheme` to ensure the concurrency lock works. +- Run `npm run test` or `nx test design-tokens` and `nx test angular-renderer` to verify. + +### Git Intelligence +- This story resolves tech debt identified in Stories 2.1, 2.4, and 2.5.2. +- Previous work heavily relied on Angular's `APP_INITIALIZER`; ensure changes here don't break the application startup flow. + +--- + +## =ƒôÜ Project Context Reference +- **Project:** Origo Design +- **Architecture Spine:** Phase 1 Foundation +- **Tokens/Theme Engine:** Epic 2 Technical Debt resolution. + +--- + +## G£à Completion Status +- **Status**: `review` +- **Completion Note**: Implementation complete. Angular Provider API updated. Concurrency lock added to fetcher. Schema validated for composite tokens. Tests passing. diff --git a/packages/angular-renderer/src/lib/theme.provider.spec.ts b/packages/angular-renderer/src/lib/theme.provider.spec.ts index ad55796..94517c7 100644 --- a/packages/angular-renderer/src/lib/theme.provider.spec.ts +++ b/packages/angular-renderer/src/lib/theme.provider.spec.ts @@ -1,12 +1,14 @@  import '@angular/compiler'; -import { provideOrigoTheme, themeInitializerFactory } from './theme.provider'; +import { provideOrigoTheme, themeInitializerFactory, OrigoThemeOptions } from './theme.provider';  import { APP_INITIALIZER, FactoryProvider } from '@angular/core';    import * as runtime from '@origo/design-tokens/runtime'; +import { injectTheme } from '@origo/design-tokens/runtime';    jest.mock('@origo/design-tokens/runtime', () => ({    // eslint-disable-next-line @typescript-eslint/no-empty-function    loadAndInjectTheme: jest.fn().mockResolvedValue(() => {}), +  injectTheme: jest.fn(),  }));    describe('theme.provider', () => { @@ -15,7 +17,7 @@ describe('theme.provider', () => {    });      describe('themeInitializerFactory', () => { -    it('should call loadAndInjectTheme when in browser', async () => { +    it('should call loadAndInjectTheme when string URL is provided in browser', async () => {        const mockDocument = { documentElement: {} } as unknown as Document;        const factory = themeInitializerFactory(          '/test.json', @@ -31,7 +33,43 @@ describe('theme.provider', () => {        );      });   -    it('should not call loadAndInjectTheme when not in browser (SSR)', async () => { +    it('should call loadAndInjectTheme when options.url is provided in browser', async () => { +      const mockDocument = { documentElement: {} } as unknown as Document; +      const options: OrigoThemeOptions = { url: '/options.json' }; +      const factory = themeInitializerFactory( +        options, +        'browser' as unknown as object, +        mockDocument +      ); + +      await factory(); + +      expect(runtime.loadAndInjectTheme).toHaveBeenCalledWith( +        '/options.json', +        mockDocument.documentElement +      ); +    }); + +    it('should call injectTheme directly when options.theme is provided in browser', async () => { +      const mockDocument = { documentElement: {} } as unknown as Document; +      const theme = { 'color-primary': '#000' }; +      const options: OrigoThemeOptions = { theme }; +      const factory = themeInitializerFactory( +        options, +        'browser' as unknown as object, +        mockDocument +      ); + +      await factory(); + +      expect(runtime.injectTheme).toHaveBeenCalledWith( +        theme, +        mockDocument.documentElement +      ); +      expect(runtime.loadAndInjectTheme).not.toHaveBeenCalled(); +    }); + +    it('should not call any injection when not in browser (SSR)', async () => {        const mockDocument = { documentElement: {} } as unknown as Document;        const factory = themeInitializerFactory(          '/test.json', @@ -42,6 +80,7 @@ describe('theme.provider', () => {        await factory();          expect(runtime.loadAndInjectTheme).not.toHaveBeenCalled(); +      expect(runtime.injectTheme).not.toHaveBeenCalled();      });    });   diff --git a/packages/angular-renderer/src/lib/theme.provider.ts b/packages/angular-renderer/src/lib/theme.provider.ts index 32aa96b..676b562 100644 --- a/packages/angular-renderer/src/lib/theme.provider.ts +++ b/packages/angular-renderer/src/lib/theme.provider.ts @@ -1,19 +1,44 @@  import { APP_INITIALIZER, Provider, PLATFORM_ID, Optional } from '@angular/core';  import { isPlatformBrowser, DOCUMENT } from '@angular/common';   -import { loadAndInjectTheme } from '@origo/design-tokens/runtime'; +import { loadAndInjectTheme, injectTheme } from '@origo/design-tokens/runtime'; + +export interface OrigoThemeOptions { +  url?: string; +  theme?: Record<string, unknown>; +  targetElement?: HTMLElement | string; +}    export function themeInitializerFactory( -  url: string, +  optionsOrUrl: string | OrigoThemeOptions,    platformId: object,    document: Document | null  ) {    return () => {      if (isPlatformBrowser(platformId)) { -      const target = document ? document.documentElement : undefined; -      return loadAndInjectTheme(url, target).catch(e => { -        console.error('[origo-design] theme init failed', e); -      }); +      const isString = typeof optionsOrUrl === 'string'; +      const url = isString ? optionsOrUrl : optionsOrUrl.url; +      const theme = isString ? undefined : optionsOrUrl.theme; +      // Resolve target element +      let target: HTMLElement | undefined; +      if (!isString && typeof optionsOrUrl.targetElement === 'string') { +         target = document?.querySelector(optionsOrUrl.targetElement) as HTMLElement | undefined; +      } else if (!isString && optionsOrUrl.targetElement instanceof HTMLElement) { +         target = optionsOrUrl.targetElement; +      } else { +         target = document ? document.documentElement : undefined; +      } + +      if (theme) { +        // Inject statically provided theme directly +        injectTheme(theme, target); +        return Promise.resolve(); +      } else if (url) { +        // Fetch and inject +        return loadAndInjectTheme(url, target).catch(e => { +          console.error('[origo-design] theme init failed', e); +        }); +      }      }      return Promise.resolve();    }; @@ -22,14 +47,14 @@ export function themeInitializerFactory(  /**   * Provides the Origo Design theme initialization for the Angular Web Adapter.   * - * @param themeUrl URL to the theme.json file to fetch and apply at runtime. + * @param optionsOrUrl URL string to the theme.json file, or an options object configuring the theme.   */ -export function provideOrigoTheme(themeUrl: string): Provider[] { +export function provideOrigoTheme(optionsOrUrl: string | OrigoThemeOptions): Provider[] {    return [      {        provide: APP_INITIALIZER,        useFactory: (platformId: object, document: Document | null) => -        themeInitializerFactory(themeUrl, platformId, document), +        themeInitializerFactory(optionsOrUrl, platformId, document),        deps: [PLATFORM_ID, [new Optional(), DOCUMENT]],        multi: true,      }, diff --git a/packages/design-tokens/src/runtime/theme-fetcher.spec.ts b/packages/design-tokens/src/runtime/theme-fetcher.spec.ts index 62de234..14c91f9 100644 --- a/packages/design-tokens/src/runtime/theme-fetcher.spec.ts +++ b/packages/design-tokens/src/runtime/theme-fetcher.spec.ts @@ -133,4 +133,38 @@ describe('loadAndInjectTheme', () => {        'theme-load-end-/test.json'      );    }); + +  it('should prevent race conditions by ignoring superseded concurrent calls', async () => { +    const mockTheme1 = { 'color-primary': '#111' }; +    const mockTheme2 = { 'color-primary': '#222' }; +     +    let resolveFirst: (value: any) => void; +    let resolveSecond: (value: any) => void; +     +    global.fetch = jest.fn().mockImplementation((url) => { +      if (url === '/theme1.json') { +         return new Promise(r => { resolveFirst = r; }); +      } +      return new Promise(r => { resolveSecond = r; }); +    }); +     +    (injector.injectTheme as jest.Mock).mockReturnValue(jest.fn()); + +    // Start first request +    const p1 = loadAndInjectTheme('/theme1.json'); +    // Start second request concurrently (this one supersedes p1) +    const p2 = loadAndInjectTheme('/theme2.json'); +     +    // Resolve them out of order or simultaneously +    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion +    resolveFirst!({ ok: true, json: jest.fn().mockResolvedValue(mockTheme1) }); +    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion +    resolveSecond!({ ok: true, json: jest.fn().mockResolvedValue(mockTheme2) }); +     +    await Promise.all([p1, p2]); +     +    expect(injector.injectTheme).toHaveBeenCalledTimes(1); +    expect(injector.injectTheme).toHaveBeenCalledWith(mockTheme2, undefined); +  });  }); + diff --git a/packages/design-tokens/src/runtime/theme-fetcher.ts b/packages/design-tokens/src/runtime/theme-fetcher.ts index 44c1ff7..69f707a 100644 --- a/packages/design-tokens/src/runtime/theme-fetcher.ts +++ b/packages/design-tokens/src/runtime/theme-fetcher.ts @@ -31,6 +31,8 @@ export async function fetchTheme(url: string): Promise<Record<string, unknown>>    }  }   +let currentLoadId = 0; +  /**   * Fetches a theme.json file and injects it into the DOM.   * Measures the time taken using the Performance API to ensure NFR-PERF-005 limits. @@ -43,6 +45,7 @@ export async function loadAndInjectTheme(    url: string,    target?: HTMLElement | null  ): Promise<() => void> { +  const loadId = ++currentLoadId;    const perfMarkStart = `theme-load-start-${url}`;    const perfMarkEnd = `theme-load-end-${url}`;    const perfMeasure = `theme-load-measure-${url}`; @@ -56,6 +59,10 @@ export async function loadAndInjectTheme(    };    try {      const themeJson = await fetchTheme(url); +    // Concurrency Lock: abort injection if a newer call has superseded this one +    if (loadId !== currentLoadId) { +      return teardown; +    }      const injected = injectTheme(themeJson, target);      if (typeof injected === 'function') {        teardown = injected; diff --git a/packages/design-tokens/src/schemas/base-tokens.schema.json b/packages/design-tokens/src/schemas/base-tokens.schema.json index 1085d37..db61976 100644 --- a/packages/design-tokens/src/schemas/base-tokens.schema.json +++ b/packages/design-tokens/src/schemas/base-tokens.schema.json @@ -50,7 +50,21 @@          }        },        "required": ["$value"], -      "additionalProperties": false +      "additionalProperties": false, +      "allOf": [ +        { +          "if": { "properties": { "$type": { "const": "typography" } } }, +          "then": { "properties": { "$value": { "$ref": "#/$defs/typographyValue" } } } +        }, +        { +          "if": { "properties": { "$type": { "const": "shadow" } } }, +          "then": { "properties": { "$value": { "$ref": "#/$defs/shadowValue" } } } +        }, +        { +          "if": { "properties": { "$type": { "const": "border" } } }, +          "then": { "properties": { "$value": { "$ref": "#/$defs/borderValue" } } } +        } +      ]      },      "tokenGroup": {        "type": "object", @@ -68,6 +82,42 @@          }        },        "additionalProperties": false +    }, +    "typographyValue": { +      "type": "object", +      "properties": { +        "fontFamily": { "type": "string" }, +        "fontSize": { "type": ["string", "number"] }, +        "fontWeight": { "type": ["string", "number"] }, +        "letterSpacing": { "type": ["string", "number"] }, +        "lineHeight": { "type": ["string", "number"] } +      } +    }, +    "shadowValue": { +      "anyOf": [ +        { "$ref": "#/$defs/singleShadowValue" }, +        { "type": "array", "items": { "$ref": "#/$defs/singleShadowValue" } } +      ] +    }, +    "singleShadowValue": { +      "type": "object", +      "properties": { +        "color": { "type": "string" }, +        "offsetX": { "type": ["string", "number"] }, +        "offsetY": { "type": ["string", "number"] }, +        "blur": { "type": ["string", "number"] }, +        "spread": { "type": ["string", "number"] } +      }, +      "required": ["color", "offsetX", "offsetY"] +    }, +    "borderValue": { +      "type": "object", +      "properties": { +        "color": { "type": "string" }, +        "width": { "type": ["string", "number"] }, +        "style": { "type": "string" } +      }, +      "required": ["color", "width", "style"]      }    }  }
+```diff
+diff --git a/_bmad-output/implementation-artifacts/sprint-status.yaml b/_bmad-output/implementation-artifacts/sprint-status.yaml
+index 0aadbba..e612af0 100644
+--- a/_bmad-output/implementation-artifacts/sprint-status.yaml
++++ b/_bmad-output/implementation-artifacts/sprint-status.yaml
+@@ -41,7 +41,7 @@
+ # - Retrospective appends its action items to action_items; sprint-status surfaces open ones
+ 
+ generated: 2026-07-29T21:46:02.464968
+-last_updated: 2026-08-09T18:05:00.000000
++last_updated: 2026-08-09T21:03:52+05:30
+ project: origo-design
+ project_key: NOKEY
+ tracking_system: file-system
+@@ -65,7 +65,7 @@ development_status:
+   2-5-2-design-tokens-use-case-documentation: done
+   2-5-3-theme-provider-composite-token-tech-debt: done
+   epic-3: in-progress
+-  3-1-target-page-json-fixture: ready-for-dev
++  3-1-target-page-json-fixture: review
+   3-2-domain-entity-schema-parser: backlog
+   3-3-canonical-ast-serialization: backlog
+   3-4-ast-validation-engine: backlog
+diff --git a/_bmad-output/implementation-artifacts/stories/3-1-target-page-json-fixture.md b/_bmad-output/implementation-artifacts/stories/3-1-target-page-json-fixture.md
+index be87807..192008a 100644
+--- a/_bmad-output/implementation-artifacts/stories/3-1-target-page-json-fixture.md
++++ b/_bmad-output/implementation-artifacts/stories/3-1-target-page-json-fixture.md
+@@ -1,10 +1,11 @@
+ ---
+-status: ready-for-dev
++baseline_commit: db07bc81f13559140a9b3781dfaa61e6db47599a
++status: review
+ ---
+ 
+ # Story 3.1: Target Page JSON Fixture
+ 
+-Status: ready-for-dev
++Status: review
+ 
+ <!-- Note: Validation is optional. Run validate-create-story for quality check before dev-story. -->
+ 
+@@ -23,26 +24,29 @@ so that I have a tangible target for the BADL schema to compile against.
+ 
+ ## Tasks / Subtasks
+ 
+-- [ ] Task 1: Create Target Page JSON Fixture (AC: 1)
+-  - [ ] Scaffold a JSON file within `@origo/core/src/schemas/__fixtures__` (or equivalent test fixtures folder) that represents a complete JSON AST.
+-  - [ ] Ensure the fixture represents a full CRUD screen, including multiple nested entities and relationships.
+-  - [ ] Include core capabilities (e.g. CRUD+L) to represent what an actual page would look like.
+-  - [ ] Add `metadata_path` values using the dot notation format (`EntityName.FieldName`).
+-  - [ ] Ensure the fixture strictly conforms to canonical JSON formatting rules.
++- [x] Task 1: Create Target Page JSON Fixture (AC: 1)
++  - [x] Scaffold the fixture file exactly at `packages/core/src/schemas/__fixtures__/target-page.json`.
++  - [x] Model a concrete **User Management** domain, including `User`, `Role`, and `Department` entities to ensure realistic complexity.
++  - [x] Include core capabilities (CRUD+L: `CreateUser`, `ReadUser`, `UpdateUser`, `DeleteUser`, `ListUsers`).
++  - [x] For every Entity field, include mandatory properties: `type`, `label`, `validation[]`, and `metadata_path` (FR-E-002).
++  - [x] Add `metadata_path` values using the strict dot notation format (`EntityName.FieldName`).
++  - [x] Ensure array ordering is semantically insignificant and IDs are stable across entities (FR-M-006).
++  - [x] Ensure the fixture strictly conforms to canonical JSON formatting rules (FR-M-008) — no trailing commas, no comments.
++- [x] Task 2: Syntactic Validation
++  - [x] Run a JSON parser or quick node script (e.g., `node -e "require('./packages/core/src/schemas/__fixtures__/target-page.json')"`) to guarantee the file is valid JSON before completing the story.
+ 
+ ## Dev Notes
+ 
+ - **Architectural Constraints:**
+   - P1-AD-3: The format will eventually be validated against JSON Schema Draft 2020-12 (to be built in 3.2). The fixture needs to be realistic and accurate.
+-  - P1-AD-4: `@origo/core` has strict internal module structure. The fixture should be placed appropriately for tests to consume, e.g., `packages/core/src/schemas/__fixtures__/target-page.json` or `packages/core/tests/fixtures/target-page.json`.
+-  - AD-7: Must be JSON.
+-  - AD-12: Test Selectors Use BADL `metadata_path` Values (`metadata_path: "EntityName.FieldName"`).
++  - P1-AD-4: `@origo/core` has strict internal module structure. The fixture must be placed at `packages/core/src/schemas/__fixtures__/target-page.json` for validation tests to consume.
++  - AD-7 / AD-12: Test Selectors Use BADL `metadata_path` Values (`metadata_path: "EntityName.FieldName"`). Must be strict JSON.
+ - **Testing Standards:**
+   - This fixture serves as the primary dataset for unit and integration testing of the parser and validation engine in subsequent stories (3.2, 3.3, 3.4).
+ 
+ ### Project Structure Notes
+ 
+-- Alignment with unified project structure: Needs to be within `packages/core`.
++- Alignment with unified project structure: Needs to be within `packages/core/src/schemas/__fixtures__`.
+ 
+ ### References
+ 
+@@ -54,9 +58,14 @@ so that I have a tangible target for the BADL schema to compile against.
+ ## Dev Agent Record
+ 
+ ### Agent Model Used
++Gemini 3.1 Pro
+ 
+ ### Debug Log References
++- JSON syntactic validation succeeded via node module loader.
+ 
+ ### Completion Notes List
++- Created valid JSON fixture at `packages/core/src/schemas/__fixtures__/target-page.json` modeling User Management domain.
++- Strictly followed FR-E-002, FR-M-006, and FR-M-008 constraints.
+ 
+ ### File List
++- `packages/core/src/schemas/__fixtures__/target-page.json` (NEW)
+diff --git a/packages/core/src/schemas/__fixtures__/target-page.json b/packages/core/src/schemas/__fixtures__/target-page.json
+new file mode 100644
+index 0000000..70945fb
+--- /dev/null
++++ b/packages/core/src/schemas/__fixtures__/target-page.json
+@@ -0,0 +1,158 @@
++{
++  "version": "1.0.0",
++  "domain": "User Management",
++  "entities": [
++    {
++      "id": "entity-user",
++      "name": "User",
++      "fields": [
++        {
++          "id": "field-user-id",
++          "name": "id",
++          "type": "string",
++          "label": "User ID",
++          "validation": [
++            "required",
++            "uuid"
++          ],
++          "metadata_path": "User.id"
++        },
++        {
++          "id": "field-user-username",
++          "name": "username",
++          "type": "string",
++          "label": "Username",
++          "validation": [
++            "required",
++            "minLength:3",
++            "maxLength:50"
++          ],
++          "metadata_path": "User.username"
++        },
++        {
++          "id": "field-user-email",
++          "name": "email",
++          "type": "string",
++          "label": "Email Address",
++          "validation": [
++            "required",
++            "email"
++          ],
++          "metadata_path": "User.email"
++        },
++        {
++          "id": "field-user-roleId",
++          "name": "roleId",
++          "type": "string",
++          "label": "Role ID",
++          "validation": [
++            "required"
++          ],
++          "metadata_path": "User.roleId"
++        },
++        {
++          "id": "field-user-departmentId",
++          "name": "departmentId",
++          "type": "string",
++          "label": "Department ID",
++          "validation": [],
++          "metadata_path": "User.departmentId"
++        }
++      ]
++    },
++    {
++      "id": "entity-role",
++      "name": "Role",
++      "fields": [
++        {
++          "id": "field-role-id",
++          "name": "id",
++          "type": "string",
++          "label": "Role ID",
++          "validation": [
++            "required",
++            "uuid"
++          ],
++          "metadata_path": "Role.id"
++        },
++        {
++          "id": "field-role-name",
++          "name": "name",
++          "type": "string",
++          "label": "Role Name",
++          "validation": [
++            "required"
++          ],
++          "metadata_path": "Role.name"
++        },
++        {
++          "id": "field-role-permissions",
++          "name": "permissions",
++          "type": "array",
++          "label": "Permissions",
++          "validation": [],
++          "metadata_path": "Role.permissions"
++        }
++      ]
++    },
++    {
++      "id": "entity-department",
++      "name": "Department",
++      "fields": [
++        {
++          "id": "field-department-id",
++          "name": "id",
++          "type": "string",
++          "label": "Department ID",
++          "validation": [
++            "required",
++            "uuid"
++          ],
++          "metadata_path": "Department.id"
++        },
++        {
++          "id": "field-department-name",
++          "name": "name",
++          "type": "string",
++          "label": "Department Name",
++          "validation": [
++            "required"
++          ],
++          "metadata_path": "Department.name"
++        }
++      ]
++    }
++  ],
++  "capabilities": [
++    {
++      "id": "cap-user-create",
++      "name": "CreateUser",
++      "type": "create",
++      "entityId": "entity-user"
++    },
++    {
++      "id": "cap-user-read",
++      "name": "ReadUser",
++      "type": "read",
++      "entityId": "entity-user"
++    },
++    {
++      "id": "cap-user-update",
++      "name": "UpdateUser",
++      "type": "update",
++      "entityId": "entity-user"
++    },
++    {
++      "id": "cap-user-delete",
++      "name": "DeleteUser",
++      "type": "delete",
++      "entityId": "entity-user"
++    },
++    {
++      "id": "cap-user-list",
++      "name": "ListUsers",
++      "type": "list",
++      "entityId": "entity-user"
++    }
++  ]
++}
+```
