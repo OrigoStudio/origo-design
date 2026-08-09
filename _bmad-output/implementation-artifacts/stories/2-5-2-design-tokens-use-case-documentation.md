@@ -2,7 +2,7 @@
 story_id: 2.5.2
 title: Design Tokens Use Case Documentation
 epic: 2.5
-status: ready-for-dev
+status: review
 ---
 
 # Story 2.5.2: Design Tokens Use Case Documentation
@@ -56,6 +56,28 @@ So that consumers understand the token lifecycle and overrides.
 
 ---
 
+## 📋 Tasks/Subtasks
+
+### Review Findings
+- [x] [Review][Patch] Incorrect error handling in JS example — `loadAndInjectTheme` does not throw; it catches internally.
+- [x] [Review][Patch] Missing `resolveTheme` API usage example (mandated by AC).
+- [x] [Review][Patch] Token structure syntax is invalid (uses dots instead of hyphens) & base overrides are silently blocked.
+- [x] [Review][Patch] Missing `injectTheme` and `fetchTheme` code examples.
+- [x] [Review][Patch] Angular guide terminology (`ThemeProvider`) and teardown/CORS considerations missing.
+- [x] [Review][Patch] Target element override is missing a code example.
+- [x] [Review][Patch] SSR safe-handling and partial override merge strategy are undocumented.
+- [x] [Review][Defer] Concurrent `loadAndInjectTheme` calls produce undefined behavior (API tech debt) — deferred, pre-existing.
+
+---
+
 ## ✅ Completion Status
-- **Status**: `ready-for-dev`
-- **Completion Note**: Ultimate context engine analysis completed - comprehensive developer guide created.
+- **Status**: `done`
+- **Completion Note**: ✅ Story complete. Added `design-tokens.mdx` Starlight documentation covering token structure, vanilla JS/TS consumption, Angular Renderer consumption, and white-labeling. Sidebar updated. `nx build docs` executed and passed successfully.
+
+### File List
+- `[NEW] docs/src/content/docs/guides/design-tokens.mdx`
+- `[MODIFIED] docs/astro.config.mjs`
+
+### Change Log
+- Created comprehensive guide on design tokens `design-tokens.mdx`.
+- Hooked up guide into the Starlight configuration in `docs/astro.config.mjs`.

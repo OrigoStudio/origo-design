@@ -24,3 +24,7 @@
 - GitHub release creation lacks authentication config [nx.json:85] — deferred, pre-existing
 - Unenforced CRLF/LF line-ending inconsistencies [epics.md] — deferred, pre-existing
 - Package Name Mismatch for angular-renderer [packages/angular-renderer/package.json] — deferred, pre-existing
+
+## Deferred from: code review of 2-5-2-design-tokens-use-case-documentation.md (2026-08-09)
+
+- Concurrent `loadAndInjectTheme` calls produce undefined behavior (API tech debt) — deferred, pre-existing

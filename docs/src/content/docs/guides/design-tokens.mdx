@@ -1,0 +1,102 @@
+---
+title: Design Tokens
+description: A comprehensive guide on Origo Design tokens structure, lifecycle, and consumption.
+---
+
+Welcome to the Design Tokens guide for Origo Design! This document outlines how to understand and consume design tokens in your applications, as well as how to provide runtime overrides (white-labeling).
+
+## Token Structure
+
+Origo Design uses a multi-layered token structure to ensure maximum flexibility and semantic consistency.
+
+1. **Base Tokens:** The foundational values of the design system (e.g., raw color hex codes, absolute spacing values). Defined in `base-tokens.schema.json`. **Note:** Base tokens cannot be overridden at runtime; they are statically compiled.
+2. **Semantic Tokens:** Meaningful aliases for base tokens that describe their intent (e.g., `color-primary`, `spacing-large`). Defined in `semantic-tokens.schema.json`.
+3. **Component Tokens:** Highly specific tokens scoped to individual UI components (e.g., `button-background-primary`). Defined in `component-tokens.schema.json`.
+
+## Consumption
+
+### Vanilla JavaScript / TypeScript
+
+To consume design tokens in a standard web environment, the `@origo/design-tokens` package provides a runtime fetcher and injector. 
+
+Use `loadAndInjectTheme` to fetch a `theme.json` file from a URL and inject it into the DOM as CSS variables. The function gracefully catches network errors (returning a no-op teardown) and safely no-ops in Server-Side Rendering (SSR) environments where `document` is missing.
+
+```typescript
+import { loadAndInjectTheme } from '@origo/design-tokens/runtime';
+
+// Fetches theme.json and injects it into document.documentElement by default
+loadAndInjectTheme('/assets/theme.json').then(teardown => {
+  console.log('Theme loaded successfully! Call teardown() to remove the injected style tag.');
+  
+  // Example of removing the theme later:
+  // teardown();
+});
+```
+
+#### Lower-level APIs (`fetchTheme`, `injectTheme`, `resolveTheme`)
+
+If you need finer control, you can use the lower-level APIs directly:
+- `fetchTheme(url: string)`: Retrieves the JSON payload without injecting it.
+- `injectTheme(tokens: Record<string, string>, target?: HTMLElement)`: Injects a token dictionary into the DOM.
+- `resolveTheme(theme: ThemeDefinition)`: Statically compiles or resolves raw theme schemas into a flat token dictionary.
+
+```typescript
+import { fetchTheme, injectTheme, resolveTheme } from '@origo/design-tokens/runtime';
+
+async function applyCustomTheme() {
+  const themeData = await fetchTheme('/assets/theme.json');
+  if (themeData) {
+    // Resolve full theme dictionary
+    const flatTokens = resolveTheme(themeData);
+    
+    // Inject into a specific DOM element (Subtree Isolation)
+    const container = document.getElementById('my-scope');
+    if (container) {
+      injectTheme(flatTokens, container);
+    }
+  }
+}
+```
+
+When injecting a theme, new tokens perform a **partial override** via deep-merging, meaning existing CSS variables on that element are retained unless explicitly overwritten.
+
+### Angular Renderer
+
+For Angular applications, we provide the `@origo/angular-renderer` package which simplifies theme injection into the application lifecycle via the internal `ThemeProvider`.
+
+You can register the theme provider in your app config or root module using `provideOrigoTheme`. This utilizes Angular's `APP_INITIALIZER` to fetch and apply the theme during application bootstrap. Note that because it blocks bootstrap, network timeouts or cross-origin (CORS) issues on the theme URL can stall or crash application startup if not properly handled on your host server. Currently, `provideOrigoTheme` does not expose a teardown hook.
+
+```typescript
+import { ApplicationConfig } from '@angular/core';
+import { provideOrigoTheme } from '@origo/angular-renderer'; // Wraps ThemeProvider internally
+
+export const appConfig: ApplicationConfig = {
+  providers: [
+    provideOrigoTheme('/assets/theme.json')
+  ]
+};
+```
+
+## White-labeling & Overrides
+
+One of the key strengths of this token architecture is the ability to easily white-label your application. Since tokens are resolved into CSS Custom Properties (Variables) at runtime, clients can provide overriding dictionaries.
+
+1. **Host a Custom Theme JSON:** Create a `custom-theme.json` that follows the same schema as the default tokens.
+2. **Override at Runtime:** Pass the URL of your custom theme file to `loadAndInjectTheme` or `provideOrigoTheme`.
+3. **CSS Injection:** The fetcher will parse the new tokens and overwrite the CSS Custom Properties on the `documentElement` (or a specific target element if provided).
+
+```typescript
+// Applying a client-specific theme
+// WARNING: Ensure CORS is properly configured on the external domain to allow the fetch!
+import { provideOrigoTheme } from '@origo/angular-renderer';
+
+export const appConfig = {
+  providers: [
+    provideOrigoTheme('https://client-domain.com/branding/custom-theme.json')
+  ]
+};
+```
+
+## Versioning & Imports
+
+Packages in the Origo-Design monorepo use `nx release` for semantic versioning. When importing, ensure you import from the correct public API surfaces (e.g. `@origo/design-tokens/runtime`). Always align your package versions in `package.json` with the latest releases to benefit from new token schemas and bug fixes.
