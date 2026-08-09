@@ -50,7 +50,21 @@
         }
       },
       "required": ["$value"],
-      "additionalProperties": false
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": { "properties": { "$type": { "const": "typography" } }, "required": ["$type"] },
+          "then": { "properties": { "$value": { "$ref": "#/$defs/typographyValue" } } }
+        },
+        {
+          "if": { "properties": { "$type": { "const": "shadow" } }, "required": ["$type"] },
+          "then": { "properties": { "$value": { "$ref": "#/$defs/shadowValue" } } }
+        },
+        {
+          "if": { "properties": { "$type": { "const": "border" } }, "required": ["$type"] },
+          "then": { "properties": { "$value": { "$ref": "#/$defs/borderValue" } } }
+        }
+      ]
     },
     "tokenGroup": {
       "type": "object",
@@ -67,6 +81,46 @@
           "$ref": "#/$defs/tokenOrGroup"
         }
       },
+      "additionalProperties": false
+    },
+    "typographyValue": {
+      "type": "object",
+      "properties": {
+        "fontFamily": { "type": "string" },
+        "fontSize": { "type": ["string", "number"] },
+        "fontWeight": { "type": ["string", "number"] },
+        "letterSpacing": { "type": ["string", "number"] },
+        "lineHeight": { "type": ["string", "number"] }
+      },
+      "required": ["fontFamily", "fontSize"],
+      "additionalProperties": false
+    },
+    "shadowValue": {
+      "anyOf": [
+        { "$ref": "#/$defs/singleShadowValue" },
+        { "type": "array", "items": { "$ref": "#/$defs/singleShadowValue" } }
+      ]
+    },
+    "singleShadowValue": {
+      "type": "object",
+      "properties": {
+        "color": { "type": "string" },
+        "offsetX": { "type": ["string", "number"] },
+        "offsetY": { "type": ["string", "number"] },
+        "blur": { "type": ["string", "number"] },
+        "spread": { "type": ["string", "number"] }
+      },
+      "required": ["color", "offsetX", "offsetY"],
+      "additionalProperties": false
+    },
+    "borderValue": {
+      "type": "object",
+      "properties": {
+        "color": { "type": "string" },
+        "width": { "type": ["string", "number"] },
+        "style": { "type": "string" }
+      },
+      "required": ["color", "width", "style"],
       "additionalProperties": false
     }
   }

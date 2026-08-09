@@ -31,6 +31,9 @@ export async function fetchTheme(url: string): Promise<Record<string, unknown>> 
   }
 }
 
+const activeLoads = new Map<unknown, number>();
+let globalLoadCounter = 0;
+
 /**
  * Fetches a theme.json file and injects it into the DOM.
  * Measures the time taken using the Performance API to ensure NFR-PERF-005 limits.
@@ -43,6 +46,9 @@ export async function loadAndInjectTheme(
   url: string,
   target?: HTMLElement | null
 ): Promise<() => void> {
+  const loadId = ++globalLoadCounter;
+  const loadKey = target || 'default';
+  activeLoads.set(loadKey, loadId);
   const perfMarkStart = `theme-load-start-${url}`;
   const perfMarkEnd = `theme-load-end-${url}`;
   const perfMeasure = `theme-load-measure-${url}`;
@@ -56,6 +62,10 @@ export async function loadAndInjectTheme(
   };
   try {
     const themeJson = await fetchTheme(url);
+    // Concurrency Lock: abort injection if a newer call has superseded this one for the same target
+    if (activeLoads.get(loadKey) !== loadId) {
+      return teardown;
+    }
     const injected = injectTheme(themeJson, target);
     if (typeof injected === 'function') {
       teardown = injected;

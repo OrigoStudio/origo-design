@@ -133,4 +133,45 @@ describe('loadAndInjectTheme', () => {
       'theme-load-end-/test.json'
     );
   });
+
+  it('should prevent race conditions by ignoring superseded concurrent calls', async () => {
+    const mockTheme1 = { 'color-primary': '#111' };
+    const mockTheme2 = { 'color-primary': '#222' };
+
+    // Initialize to no-ops to prevent undefined reference errors if used before assignment
+    let resolveFirst: (value: unknown) => void = () => undefined;
+    let resolveSecond: (value: unknown) => void = () => undefined;
+
+    global.fetch = jest.fn().mockImplementation(url => {
+      if (url === '/theme1.json') {
+        return new Promise(r => {
+          resolveFirst = r;
+        });
+      }
+      return new Promise(r => {
+        resolveSecond = r;
+      });
+    });
+
+    (injector.injectTheme as jest.Mock).mockReturnValue(jest.fn());
+
+    // Start first request
+    const p1 = loadAndInjectTheme('/theme1.json');
+    // Start second request concurrently (this one supersedes p1)
+    const p2 = loadAndInjectTheme('/theme2.json');
+
+    // Resolve second one first to interleave microtasks
+    resolveSecond({ ok: true, json: jest.fn().mockResolvedValue(mockTheme2) });
+    await Promise.resolve(); // let microtasks flush
+
+    // Then resolve the first one
+    resolveFirst({ ok: true, json: jest.fn().mockResolvedValue(mockTheme1) });
+
+    const [t1, t2] = await Promise.all([p1, p2]);
+
+    expect(injector.injectTheme).toHaveBeenCalledTimes(1);
+    expect(injector.injectTheme).toHaveBeenCalledWith(mockTheme2, undefined);
+    expect(typeof t1).toBe('function');
+    expect(typeof t2).toBe('function');
+  });
 });
