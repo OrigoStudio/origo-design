@@ -17,7 +17,7 @@ Origo Design uses a multi-layered token structure to ensure maximum flexibility 
 
 ### Vanilla JavaScript / TypeScript
 
-To consume design tokens in a standard web environment, the `@origo/design-tokens` package provides a runtime fetcher and injector. 
+To consume design tokens in a standard web environment, the `@origo/design-tokens` package provides a runtime fetcher and injector.
 
 Use `loadAndInjectTheme` to fetch a `theme.json` file from a URL and inject it into the DOM as CSS variables. The function gracefully catches network errors (returning a no-op teardown) and safely no-ops in Server-Side Rendering (SSR) environments where `document` is missing.
 
@@ -27,7 +27,7 @@ import { loadAndInjectTheme } from '@origo/design-tokens/runtime';
 // Fetches theme.json and injects it into document.documentElement by default
 loadAndInjectTheme('/assets/theme.json').then(teardown => {
   console.log('Theme loaded successfully! Call teardown() to remove the injected style tag.');
-  
+
   // Example of removing the theme later:
   // teardown();
 });
@@ -36,6 +36,7 @@ loadAndInjectTheme('/assets/theme.json').then(teardown => {
 #### Lower-level APIs (`fetchTheme`, `injectTheme`, `resolveTheme`)
 
 If you need finer control, you can use the lower-level APIs directly:
+
 - `fetchTheme(url: string)`: Retrieves the JSON payload without injecting it.
 - `injectTheme(tokens: Record<string, string>, target?: HTMLElement)`: Injects a token dictionary into the DOM.
 - `resolveTheme(theme: ThemeDefinition)`: Statically compiles or resolves raw theme schemas into a flat token dictionary.
@@ -48,7 +49,7 @@ async function applyCustomTheme() {
   if (themeData) {
     // Resolve full theme dictionary
     const flatTokens = resolveTheme(themeData);
-    
+
     // Inject into a specific DOM element (Subtree Isolation)
     const container = document.getElementById('my-scope');
     if (container) {
@@ -71,9 +72,7 @@ import { ApplicationConfig } from '@angular/core';
 import { provideOrigoTheme } from '@origo/angular-renderer'; // Wraps ThemeProvider internally
 
 export const appConfig: ApplicationConfig = {
-  providers: [
-    provideOrigoTheme('/assets/theme.json')
-  ]
+  providers: [provideOrigoTheme('/assets/theme.json')],
 };
 ```
 
@@ -91,9 +90,7 @@ One of the key strengths of this token architecture is the ability to easily whi
 import { provideOrigoTheme } from '@origo/angular-renderer';
 
 export const appConfig = {
-  providers: [
-    provideOrigoTheme('https://client-domain.com/branding/custom-theme.json')
-  ]
+  providers: [provideOrigoTheme('https://client-domain.com/branding/custom-theme.json')],
 };
 ```
 
