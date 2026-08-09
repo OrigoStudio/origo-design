@@ -1,0 +1,169 @@
+{
+  "id": "page-user-management",
+  "name": "User Management Page",
+  "version": "1.0.0",
+  "domain": "User Management",
+  "entities": [
+    {
+      "id": "entity-user",
+      "name": "User",
+      "fields": [
+        {
+          "id": "field-user-id",
+          "name": "id",
+          "type": "string",
+          "label": "User ID",
+          "validation": ["required", "uuid"],
+          "metadata_path": "User.id"
+        },
+        {
+          "id": "field-user-username",
+          "name": "username",
+          "type": "string",
+          "label": "Username",
+          "validation": ["required", "minLength:3", "maxLength:50"],
+          "metadata_path": "User.username"
+        },
+        {
+          "id": "field-user-email",
+          "name": "email",
+          "type": "string",
+          "label": "Email Address",
+          "validation": ["required", "email"],
+          "metadata_path": "User.email"
+        },
+        {
+          "id": "field-user-isActive",
+          "name": "isActive",
+          "type": "boolean",
+          "label": "Active Status",
+          "validation": ["required"],
+          "metadata_path": "User.isActive"
+        },
+        {
+          "id": "field-user-createdAt",
+          "name": "createdAt",
+          "type": "date",
+          "label": "Creation Date",
+          "validation": ["required"],
+          "metadata_path": "User.createdAt"
+        },
+        {
+          "id": "field-user-roleId",
+          "name": "roleId",
+          "type": "string",
+          "label": "Role ID",
+          "references": "entity-role",
+          "validation": ["required"],
+          "metadata_path": "User.roleId"
+        },
+        {
+          "id": "field-user-departmentId",
+          "name": "departmentId",
+          "type": "string",
+          "label": "Department ID",
+          "references": "entity-department",
+          "validation": ["uuid"],
+          "metadata_path": "User.departmentId"
+        }
+      ]
+    },
+    {
+      "id": "entity-role",
+      "name": "Role",
+      "fields": [
+        {
+          "id": "field-role-id",
+          "name": "id",
+          "type": "string",
+          "label": "Role ID",
+          "validation": ["required", "uuid"],
+          "metadata_path": "Role.id"
+        },
+        {
+          "id": "field-role-name",
+          "name": "name",
+          "type": "string",
+          "label": "Role Name",
+          "validation": ["required"],
+          "metadata_path": "Role.name"
+        },
+        {
+          "id": "field-role-permissions",
+          "name": "permissions",
+          "type": "array",
+          "itemType": "string",
+          "label": "Permissions",
+          "validation": [],
+          "metadata_path": "Role.permissions"
+        }
+      ]
+    },
+    {
+      "id": "entity-department",
+      "name": "Department",
+      "fields": [
+        {
+          "id": "field-department-id",
+          "name": "id",
+          "type": "string",
+          "label": "Department ID",
+          "validation": ["required", "uuid"],
+          "metadata_path": "Department.id"
+        },
+        {
+          "id": "field-department-name",
+          "name": "name",
+          "type": "string",
+          "label": "Department Name",
+          "validation": ["required"],
+          "metadata_path": "Department.name"
+        }
+      ]
+    }
+  ],
+  "capabilities": [
+    {
+      "id": "cap-user-create",
+      "name": "CreateUser",
+      "type": "create",
+      "entityId": "entity-user"
+    },
+    {
+      "id": "cap-user-read",
+      "name": "ReadUser",
+      "type": "read",
+      "entityId": "entity-user"
+    },
+    {
+      "id": "cap-user-update",
+      "name": "UpdateUser",
+      "type": "update",
+      "entityId": "entity-user"
+    },
+    {
+      "id": "cap-user-delete",
+      "name": "DeleteUser",
+      "type": "delete",
+      "entityId": "entity-user"
+    },
+    {
+      "id": "cap-user-list",
+      "name": "ListUsers",
+      "type": "list",
+      "entityId": "entity-user"
+    },
+    {
+      "id": "cap-role-list",
+      "name": "ListRoles",
+      "type": "list",
+      "entityId": "entity-role"
+    },
+    {
+      "id": "cap-department-list",
+      "name": "ListDepartments",
+      "type": "list",
+      "entityId": "entity-department"
+    }
+  ]
+}

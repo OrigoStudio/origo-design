@@ -1,8 +1,6 @@
-You are an Acceptance Auditor. Review the provided diff against `_bmad-output/implementation-artifacts/stories/3-1-target-page-json-fixture.md` and any loaded context docs. Check for: violations of acceptance criteria, deviations from spec intent, missing implementation of specified behavior, contradictions between spec constraints and actual code. Output findings as a Markdown list. Each finding: one-line title, which AC/constraint it violates, and evidence from the diff.
+import os
 
-Diff:
-```diff
-diff --git a/_bmad-output/implementation-artifacts/sprint-status.yaml b/_bmad-output/implementation-artifacts/sprint-status.yaml
+diff_content = """diff --git a/_bmad-output/implementation-artifacts/sprint-status.yaml b/_bmad-output/implementation-artifacts/sprint-status.yaml
 index 0aadbba..e612af0 100644
 --- a/_bmad-output/implementation-artifacts/sprint-status.yaml
 +++ b/_bmad-output/implementation-artifacts/sprint-status.yaml
@@ -59,7 +57,7 @@ index be87807..192008a 100644
 +  - [x] For every Entity field, include mandatory properties: `type`, `label`, `validation[]`, and `metadata_path` (FR-E-002).
 +  - [x] Add `metadata_path` values using the strict dot notation format (`EntityName.FieldName`).
 +  - [x] Ensure array ordering is semantically insignificant and IDs are stable across entities (FR-M-006).
-+  - [x] Ensure the fixture strictly conforms to canonical JSON formatting rules (FR-M-008) — no trailing commas, no comments.
++  - [x] Ensure the fixture strictly conforms to canonical JSON formatting rules (FR-M-008) â€” no trailing commas, no comments.
 +- [x] Task 2: Syntactic Validation
 +  - [x] Run a JSON parser or quick node script (e.g., `node -e "require('./packages/core/src/schemas/__fixtures__/target-page.json')"`) to guarantee the file is valid JSON before completing the story.
  
@@ -260,5 +258,15 @@ index 0000000..70945fb
 +      "entityId": "entity-user"
 +    }
 +  ]
-+}
-```
++}"""
+blind_hunter_prompt = f"Invoke the `bmad-review-adversarial-general` skill on this diff:\n\n```diff\n{diff_content}\n```\n"
+edge_case_hunter_prompt = f"Invoke the `bmad-review-edge-case-hunter` skill on this diff:\n\n```diff\n{diff_content}\n```\n"
+acceptance_auditor_prompt = f"You are an Acceptance Auditor. Review the provided diff against `_bmad-output/implementation-artifacts/stories/3-1-target-page-json-fixture.md` and any loaded context docs. Check for: violations of acceptance criteria, deviations from spec intent, missing implementation of specified behavior, contradictions between spec constraints and actual code. Output findings as a Markdown list. Each finding: one-line title, which AC/constraint it violates, and evidence from the diff.\n\nDiff:\n```diff\n{diff_content}\n```\n"
+
+out_dir = "_bmad-output/implementation-artifacts"
+with open(os.path.join(out_dir, "prompt-blind-hunter.md"), "w") as f:
+    f.write(blind_hunter_prompt)
+with open(os.path.join(out_dir, "prompt-edge-case-hunter.md"), "w") as f:
+    f.write(edge_case_hunter_prompt)
+with open(os.path.join(out_dir, "prompt-acceptance-auditor.md"), "w") as f:
+    f.write(acceptance_auditor_prompt)
