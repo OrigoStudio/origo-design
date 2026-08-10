@@ -41,3 +41,8 @@
 ## Deferred from: code review of 3-3-canonical-ast-serialization.md (2026-08-10)
 
 - undefined Values Silently Dropped [packages/core/src/validator/serializer.ts:7] — deferred, pre-existing
+
+## Deferred from: code review (3-4-ast-validation-engine) (2026-08-10)
+- Lack of domain ID uniqueness checks across Canonical AST domains [packages/core/src/validator/ast-validator.ts:7]
+- Deeply nested chain stack overflow [packages/core/src/validator/ast-validator.ts:38]
+

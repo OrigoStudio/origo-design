@@ -122,3 +122,4 @@ export class BADLValidator {
 }
 
 export * from './serializer';
+export * from './ast-validator';

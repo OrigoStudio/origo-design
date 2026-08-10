@@ -1,4 +1,5 @@
 import { CanonicalAST } from '../types/ast';
+import { validateAST } from './ast-validator';
 
 /**
  * Deep clones and canonically sorts an object/array.
@@ -77,6 +78,9 @@ export function serializeAST(ast: CanonicalAST): string {
   if (!Array.isArray(ast.domains)) {
     throw new Error('Invalid AST: domains must be an array');
   }
+
+  // Validate semantics before serializing
+  validateAST(ast);
 
   const canonical = canonicalize(ast);
 
