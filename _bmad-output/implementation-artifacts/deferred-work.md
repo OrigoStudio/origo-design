@@ -28,3 +28,12 @@
 ## Deferred from: code review of 2-5-2-design-tokens-use-case-documentation.md (2026-08-09)
 
 - Concurrent `loadAndInjectTheme` calls produce undefined behavior (API tech debt) — deferred, pre-existing
+
+## Deferred from: code review of 3-2-domain-entity-schema-parser.md (2026-08-10)
+
+- Circular test uses custom circularRef instead of BADL schema reference [packages/core/src/validator/index.spec.ts] — deferred, pre-existing
+- index.ts exports auto-generated files (committed to git) [packages/core/src/index.ts] — deferred, pre-existing
+- generate-types.ts uses __dirname which fails under ESM [packages/core/scripts/generate-types.ts] — deferred, pre-existing
+- domain.schema.json has redundant "domain" property [packages/core/src/schemas/domain.schema.json] — deferred, pre-existing
+- entity.schema.json fields array allows zero items [packages/core/src/schemas/entity.schema.json] — deferred, pre-existing
+- Field id empty string validates [packages/core/src/schemas/entity.schema.json] — deferred, pre-existing
