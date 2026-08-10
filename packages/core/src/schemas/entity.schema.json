@@ -1,0 +1,55 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://origo.design/schemas/v1/entity.schema.json",
+  "title": "Entity",
+  "description": "BADL Entity Definition",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string"
+    },
+    "name": {
+      "type": "string"
+    },
+    "fields": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "type": {
+            "type": "string",
+            "enum": ["string", "boolean", "date", "number", "array", "object"]
+          },
+          "itemType": {
+            "type": "string"
+          },
+          "label": {
+            "type": "string"
+          },
+          "references": {
+            "type": "string"
+          },
+          "validation": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "metadata_path": {
+            "type": "string"
+          }
+        },
+        "required": ["id", "name", "type", "label", "validation", "metadata_path"],
+        "additionalProperties": false
+      }
+    }
+  },
+  "required": ["id", "name", "fields"],
+  "additionalProperties": false
+}

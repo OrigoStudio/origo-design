@@ -18,7 +18,8 @@
     "paths": {
       "@origo/design-tokens": ["./packages/design-tokens/src/index.ts"],
       "@origo/design-tokens/runtime": ["./packages/design-tokens/src/runtime/index.ts"],
-      "@origo/angular-renderer": ["./packages/angular-renderer/src/index.ts"]
+      "@origo/angular-renderer": ["./packages/angular-renderer/src/index.ts"],
+      "@origo/core": ["./packages/core/src/index.ts"]
     },
     "ignoreDeprecations": "6.0"
   },
