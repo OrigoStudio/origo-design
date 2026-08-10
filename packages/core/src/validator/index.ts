@@ -120,3 +120,5 @@ export class BADLValidator {
     return isValid as boolean;
   }
 }
+
+export * from './serializer';

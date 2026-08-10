@@ -1,95 +1,287 @@
-Invoke the `bmad-review-edge-case-hunter` skill on this diff:
+Invoke the bmad-review-edge-case-hunter skill on this diff:
 
-```diff
-diff --git a/docs/astro.config.mjs b/docs/astro.config.mjs
-index d94440d..7f8aa29 100644
---- a/docs/astro.config.mjs
-+++ b/docs/astro.config.mjs
-@@ -20,6 +20,7 @@ export default defineConfig({
-           items: [
-             // Each item here is one entry in the navigation menu.
-             { label: 'Example Guide', link: '/guides/example/' },
-+            { label: 'Design Tokens', link: '/guides/design-tokens/' },
-           ],
-         },
-         {
-diff --git a/docs/src/content/docs/guides/design-tokens.mdx b/docs/src/content/docs/guides/design-tokens.mdx
+diff --git a/_bmad-output/implementation-artifacts/sprint-status.yaml b/_bmad-output/implementation-artifacts/sprint-status.yaml
+index 0ead22c..df5c415 100644
+--- a/_bmad-output/implementation-artifacts/sprint-status.yaml
++++ b/_bmad-output/implementation-artifacts/sprint-status.yaml
+@@ -41,7 +41,7 @@
+ # - Retrospective appends its action items to action_items; sprint-status surfaces open ones
+ 
+ generated: 2026-07-29T21:46:02.464968
+-last_updated: 2026-08-10T09:56:05.000000
++last_updated: 2026-08-10T19:56:09.000000
+ project: origo-design
+ project_key: NOKEY
+ tracking_system: file-system
+@@ -67,7 +67,7 @@ development_status:
+   epic-3: in-progress
+   3-1-target-page-json-fixture: done
+   3-2-domain-entity-schema-parser: done
+-  3-3-canonical-ast-serialization: backlog
++  3-3-canonical-ast-serialization: review
+   3-4-ast-validation-engine: backlog
+   epic-3-retrospective: optional
+   epic-4: backlog
+diff --git a/packages/core/src/index.ts b/packages/core/src/index.ts
+index 8ac044e..b6de3ee 100644
+--- a/packages/core/src/index.ts
++++ b/packages/core/src/index.ts
+@@ -1,2 +1,3 @@
+ export * from './validator';
+ export * from './types/domain';
++export * from './types/ast';
+diff --git a/packages/core/src/validator/index.ts b/packages/core/src/validator/index.ts
+index fa21fe9..569d18a 100644
+--- a/packages/core/src/validator/index.ts
++++ b/packages/core/src/validator/index.ts
+@@ -120,3 +120,5 @@ export class BADLValidator {
+     return isValid as boolean;
+   }
+ }
++
++export * from './serializer';
+diff --git a/packages/core/src/types/ast.ts b/packages/core/src/types/ast.ts
 new file mode 100644
-index 0000000..9bf1a37
+index 0000000..279f176
 --- /dev/null
-+++ b/docs/src/content/docs/guides/design-tokens.mdx
-@@ -0,0 +1,72 @@
-+---
-+title: Design Tokens
-+description: A comprehensive guide on Origo Design tokens structure, lifecycle, and consumption.
-+---
++++ b/packages/core/src/types/ast.ts
+@@ -0,0 +1,6 @@
++import { Domain } from './domain';
 +
-+Welcome to the Design Tokens guide for Origo Design! This document outlines how to understand and consume design tokens in your applications, as well as how to provide runtime overrides (white-labeling).
++export interface CanonicalAST {
++  schemaVersion: string;
++  domains: Domain[];
++}
+diff --git a/packages/core/src/validator/serializer.ts b/packages/core/src/validator/serializer.ts
+new file mode 100644
+index 0000000..d851e65
+--- /dev/null
++++ b/packages/core/src/validator/serializer.ts
+@@ -0,0 +1,65 @@
++import { CanonicalAST } from '../types/ast';
 +
-+## Token Structure
++/**
++ * Deep clones and canonically sorts an object/array.
++ */
++function canonicalize(obj: any): any {
++  if (obj === null || typeof obj !== 'object') {
++    return obj;
++  }
 +
-+Origo Design uses a multi-layered token structure to ensure maximum flexibility and semantic consistency.
++  if (Array.isArray(obj)) {
++    // Process children first
++    const mapped = obj.map(item => canonicalize(item));
++    
++    // Determine sort type for this array based on its elements
++    // We sort if elements are objects and have 'id' or 'name' property
++    const hasId = mapped.length > 0 && typeof mapped[0] === 'object' && mapped[0] !== null && 'id' in mapped[0];
++    const hasName = mapped.length > 0 && typeof mapped[0] === 'object' && mapped[0] !== null && 'name' in mapped[0];
++    
++    if (hasId) {
++      mapped.sort((a, b) => {
++        const idA = String(a.id);
++        const idB = String(b.id);
++        return idA.localeCompare(idB);
++      });
++    } else if (hasName) {
++      mapped.sort((a, b) => {
++        const nameA = String(a.name);
++        const nameB = String(b.name);
++        return nameA.localeCompare(nameB);
++      });
++    }
++    
++    return mapped;
++  }
 +
-+1. **Base Tokens:** The foundational values of the design system (e.g., raw color hex codes, absolute spacing values). Defined in `base-tokens.schema.json`.
-+2. **Semantic Tokens:** Meaningful aliases for base tokens that describe their intent (e.g., `color.primary`, `spacing.large`).
-+3. **Component Tokens:** Highly specific tokens scoped to individual UI components (e.g., `button.background.primary`).
++  // It is an object, sort its keys
++  const sortedKeys = Object.keys(obj).sort();
++  const result: Record<string, any> = {};
++  for (const key of sortedKeys) {
++    result[key] = canonicalize(obj[key]);
++  }
++  
++  return result;
++}
 +
-+## Consumption
++/**
++ * Serializes the parsed memory model into a canonical JSON AST.
++ * Enforces `schemaVersion`, stable key ordering, and stable array ordering.
++ * 
++ * @param ast The canonical AST to serialize
++ * @returns Byte-for-byte deterministic JSON string
++ */
++export function serializeAST(ast: CanonicalAST): string {
++  if (!ast || !ast.schemaVersion) {
++    throw new Error('Invalid AST: Missing schemaVersion');
++  }
 +
-+### Vanilla JavaScript / TypeScript
++  const canonical = canonicalize(ast);
++  
++  // Return nicely formatted JSON (or should it be minified?)
++  // For standard AST output, using 2 spaces is typical for readability, 
++  // but minified is also fine. Let's use 2 spaces as standard JSON.
++  return JSON.stringify(canonical, null, 2);
++}
+diff --git a/packages/core/src/validator/serializer.spec.ts b/packages/core/src/validator/serializer.spec.ts
+new file mode 100644
+index 0000000..81620ac
+--- /dev/null
++++ b/packages/core/src/validator/serializer.spec.ts
+@@ -0,0 +1,155 @@
++import { CanonicalAST } from '../types/ast';
++import { serializeAST } from './serializer';
 +
-+To consume design tokens in a standard web environment, the `@origo/design-tokens` package provides a runtime fetcher and injector. 
-+
-+Use `loadAndInjectTheme` to fetch a `theme.json` file from a URL and inject it into the DOM as CSS variables.
-+
-+```typescript
-+import { loadAndInjectTheme } from '@origo/design-tokens/runtime';
-+
-+// Fetches theme.json and injects it into document.documentElement by default
-+loadAndInjectTheme('/assets/theme.json')
-+  .then(teardown => {
-+    // A teardown function is returned to remove the injected style tag if needed
-+    console.log('Theme loaded successfully!');
-+  })
-+  .catch(error => {
-+    console.error('Failed to load theme:', error);
++describe('AST Serializer', () => {
++  it('should embed schemaVersion in the root payload', () => {
++    const ast: CanonicalAST = {
++      schemaVersion: '1.0.0',
++      domains: []
++    };
++    
++    const result = serializeAST(ast);
++    const parsed = JSON.parse(result);
++    expect(parsed.schemaVersion).toBe('1.0.0');
 +  });
-+```
 +
-+The underlying API also includes `fetchTheme` if you only want to retrieve the JSON without injecting it. The runtime utilities are built to safely handle Server-Side Rendering (SSR) environments and gracefully degrade on network errors.
++  it('should guarantee deterministic object key ordering', () => {
++    const ast1 = {
++      schemaVersion: '1.0.0',
++      domains: [
++        {
++          id: 'domain-1',
++          name: 'Domain 1',
++          version: '1',
++          domain: 'example',
++          entities: []
++        }
++      ]
++    };
++    
++    const ast2 = {
++      domains: [
++        {
++          name: 'Domain 1',
++          id: 'domain-1',
++          domain: 'example',
++          version: '1',
++          entities: []
++        }
++      ],
++      schemaVersion: '1.0.0',
++    };
 +
-+### Angular Renderer
++    // Cast as any because ast1 and ast2 are structured differently in memory
++    const serialized1 = serializeAST(ast1 as any);
++    const serialized2 = serializeAST(ast2 as any);
 +
-+For Angular applications, we provide the `@origo/angular-renderer` package which simplifies theme injection into the application lifecycle.
++    expect(serialized1).toBe(serialized2);
++  });
 +
-+You can register the theme provider in your app config or root module using `provideOrigoTheme`. This utilizes Angular's `APP_INITIALIZER` to fetch and apply the theme during application bootstrap.
++  it('should guarantee array sorting by id', () => {
++    const ast1: CanonicalAST = {
++      schemaVersion: '1.0.0',
++      domains: [
++        {
++          id: 'domain-1',
++          name: 'Domain 1',
++          version: '1',
++          domain: 'example',
++          entities: [
++            {
++              id: 'entity-b',
++              name: 'Entity B',
++              fields: []
++            },
++            {
++              id: 'entity-a',
++              name: 'Entity A',
++              fields: []
++            }
++          ]
++        }
++      ]
++    };
 +
-+```typescript
-+import { ApplicationConfig } from '@angular/core';
-+import { provideOrigoTheme } from '@origo/angular-renderer';
++    const ast2: CanonicalAST = {
++      schemaVersion: '1.0.0',
++      domains: [
++        {
++          id: 'domain-1',
++          name: 'Domain 1',
++          version: '1',
++          domain: 'example',
++          entities: [
++            {
++              id: 'entity-a',
++              name: 'Entity A',
++              fields: []
++            },
++            {
++              id: 'entity-b',
++              name: 'Entity B',
++              fields: []
++            }
++          ]
++        }
++      ]
++    };
 +
-+export const appConfig: ApplicationConfig = {
-+  providers: [
-+    provideOrigoTheme('/assets/theme.json')
-+  ]
-+};
-+```
++    const serialized1 = serializeAST(ast1);
++    const serialized2 = serializeAST(ast2);
 +
-+## White-labeling & Overrides
++    expect(serialized1).toBe(serialized2);
++    
++    // Ensure it's sorted alphabetically by ID
++    const parsed = JSON.parse(serialized1);
++    expect(parsed.domains[0].entities[0].id).toBe('entity-a');
++    expect(parsed.domains[0].entities[1].id).toBe('entity-b');
++  });
 +
-+One of the key strengths of this token architecture is the ability to easily white-label your application. Since tokens are resolved into CSS Custom Properties (Variables) at runtime, clients can provide overriding dictionaries.
++  it('should guarantee array sorting by name if id is missing', () => {
++    const ast1: any = {
++      schemaVersion: '1.0.0',
++      domains: [
++        {
++          id: 'domain-1',
++          name: 'Domain 1',
++          version: '1',
++          domain: 'example',
++          entities: [],
++          capabilities: [
++            { name: 'Cap B', type: 'Query', entityId: 'e' },
++            { name: 'Cap A', type: 'Query', entityId: 'e' }
++          ]
++        }
++      ]
++    };
 +
-+1. **Host a Custom Theme JSON:** Create a `custom-theme.json` that follows the same schema as the default tokens.
-+2. **Override at Runtime:** Pass the URL of your custom theme file to `loadAndInjectTheme` or `provideOrigoTheme`.
-+3. **CSS Injection:** The fetcher will parse the new tokens and overwrite the CSS Custom Properties on the `documentElement` (or a specific target element if provided).
++    const ast2: any = {
++      schemaVersion: '1.0.0',
++      domains: [
++        {
++          id: 'domain-1',
++          name: 'Domain 1',
++          version: '1',
++          domain: 'example',
++          entities: [],
++          capabilities: [
++            { name: 'Cap A', type: 'Query', entityId: 'e' },
++            { name: 'Cap B', type: 'Query', entityId: 'e' }
++          ]
++        }
++      ]
++    };
 +
-+```typescript
-+// Applying a client-specific theme
-+provideOrigoTheme('https://client-domain.com/branding/custom-theme.json');
-+```
++    const serialized1 = serializeAST(ast1);
++    const serialized2 = serializeAST(ast2);
 +
-+## Versioning & Imports
-+
-+Packages in the Origo-Design monorepo use `nx release` for semantic versioning. When importing, ensure you import from the correct public API surfaces (e.g. `@origo/design-tokens/runtime`). Always align your package versions in `package.json` with the latest releases to benefit from new token schemas and bug fixes.
-+```
-+
++    expect(serialized1).toBe(serialized2);
++    
++    // Ensure it's sorted alphabetically by name
++    const parsed = JSON.parse(serialized1);
++    expect(parsed.domains[0].capabilities[0].name).toBe('Cap A');
++    expect(parsed.domains[0].capabilities[1].name).toBe('Cap B');
++  });
++});
+

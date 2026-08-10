@@ -37,3 +37,7 @@
 - domain.schema.json has redundant "domain" property [packages/core/src/schemas/domain.schema.json] — deferred, pre-existing
 - entity.schema.json fields array allows zero items [packages/core/src/schemas/entity.schema.json] — deferred, pre-existing
 - Field id empty string validates [packages/core/src/schemas/entity.schema.json] — deferred, pre-existing
+
+## Deferred from: code review of 3-3-canonical-ast-serialization.md (2026-08-10)
+
+- undefined Values Silently Dropped [packages/core/src/validator/serializer.ts:7] — deferred, pre-existing
