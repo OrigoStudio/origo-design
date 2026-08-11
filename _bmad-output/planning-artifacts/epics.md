@@ -9,6 +9,7 @@ inputDocuments:
   - "_bmad-output/planning-artifacts/architecture/architecture-origo-design-2026-07-28/phase3-metadata-platform/ARCHITECTURE-SPINE.md"
   - "_bmad-output/planning-artifacts/architecture/architecture-origo-design-2026-07-28/phase4-enterprise-ai/ARCHITECTURE-SPINE.md"
   - "_bmad-output/planning-artifacts/implementation-readiness-report-2026-07-28.md"
+  - "_bmad-output/implementation-artifacts/epic-3-retro-2026-08-10.md"
 scope: "Phase 1 only (Months 1-6)"
 ---
 
@@ -74,6 +75,10 @@ This document provides the complete epic and story breakdown for Origo Design Ph
 - FR-TEST-002: Test selectors MUST be stable across renderer upgrades
 - FR-ADOPT-001: Teams MUST be able to adopt Origo one page at a time; existing pages MUST coexist without conflict
 - FR-ADOPT-002: Incremental adoption path MUST be documented as a first-class migration guide
+- FR-PREP-001: Define monorepo-wide ESM/TypeScript JSON import standard and ADR
+- FR-PREP-002: Fix AST parser deeply nested chain limit
+- FR-PREP-003: Prevent deferred edge case crashes in AST engine
+- FR-PREP-004: Establish semantic versioning for @origo/core package (Executes First)
 
 ### Non-Functional Requirements (Phase 1 Scope)
 
@@ -87,6 +92,14 @@ This document provides the complete epic and story breakdown for Origo Design Ph
 - NFR-VER-001: Grammar major version MUST ship with migration tool; renderers fail fast on incompatible version
 - NFR-GIT-001: IDs MUST be stable across renames; array ordering semantically insignificant; minimal merge conflicts
 - NFR-ADOPT-001: Teams MUST be able to adopt one page at a time; coexist with existing non-Origo pages
+- NFR-PREP-001: Enforce JSON import pattern via monorepo-wide CI check
+- NFR-PREP-002: AST traversal performance must remain within benchmark limits after depth limits are added
+- NFR-PREP-003: All deferred edge cases must have explicit regression test fixtures
+- NFR-PREP-004: AST logic changes must maintain 100% backwards compatibility with existing valid JSON structures
+- NFR-PREP-005: AST engine must fail gracefully (return a validation error array) instead of crashing the Node process when encountering excessively nested or cyclic payloads.
+- NFR-PREP-006: AST engine must detect and reject circular entity references (e.g., A -> B -> A) immediately via a visited-node tracker, rather than waiting for the maximum depth limit to trigger.
+- NFR-PREP-007: Semantic versioning CI jobs must exit cleanly (code 0) if no releasable commits are detected, preventing false-positive CI failures.
+- NFR-PREP-008: JSON import standardization must include guidance or lint rules against directly importing massive JSON fixtures that cause TypeScript compiler OOM errors.
 
 ### Additional Requirements (from Phase 1 Architecture Spine)
 
@@ -299,7 +312,7 @@ So that theme switching and initial rendering do not cause UI jank.
 **Then** tokens are available for consumption by the renderer (FR-THEME-005)
 **And** resolution timing passes the performance benchmark limits defined in NFR-PERF-005.
 
-### Epic 2.5: Epic 2 Tech Debt & Documentation
+#### Epic 2 Tech Debt & Documentation Chores
 [Developer knocks out critical tech debt and documentation from Epic 2 before beginning the Epic 3 BADL Domain parser.]
 **FRs covered:** FR-THEME-001, FR-THEME-005, NFR-GIT-001
 
@@ -398,6 +411,63 @@ So that illegal entity relationships and invalid consumption rules are caught at
 **When** the validation engine processes the AST
 **Then** it throws a descriptive compilation error preventing cyclic dependencies (FR-E-003)
 **And** the validation engine has 100% test coverage.
+
+#### Epic 3 Tech Debt & Retro Prep Chores
+[Developer addresses critical tech debt before Epic 4. To prevent scope creep and ensure all fixes are properly versioned and released, this sprint follows a strict linear implementation path:
+1. **Story 1 (Versioning):** Establish semantic versioning so all subsequent sprint work is properly tracked.
+2. **Story 2 (Tooling):** Fix JSON import standards so CI pipelines pass.
+3. **Story 3 (Defensive Traversal):** Group AST depth limits and deferred edge cases into a unified refactor to prevent DoS vulnerabilities.]
+
+**FRs covered:** FR-PREP-001, FR-PREP-002, FR-PREP-003, FR-PREP-004
+**NFRs covered:** NFR-PREP-001, NFR-PREP-002, NFR-PREP-003, NFR-PREP-004, NFR-PREP-005, NFR-PREP-006, NFR-PREP-007, NFR-PREP-008
+
+##### Strict Story Sequence Map
+1. **[FR-PREP-004]** Establish semantic versioning for @origo/core package
+2. **[FR-PREP-001, NFR-PREP-001, NFR-PREP-007, NFR-PREP-008]** Define monorepo-wide ESM/TypeScript JSON import standard
+3. **[FR-PREP-002, FR-PREP-003, NFR-PREP-002, NFR-PREP-003, NFR-PREP-004, NFR-PREP-005, NFR-PREP-006]** Defensive Traversal Phase
+
+#### Story 3.5.1: Establish Semantic Versioning for @origo/core
+
+As a Core Maintainer,
+I want to establish an automated semantic versioning pipeline for the `@origo/core` package,
+So that all AST logic changes and bug fixes made during this sprint are tracked, properly versioned, and safely released to downstream consumers.
+
+**Acceptance Criteria:**
+
+**Given** the Origo monorepo and CI pipeline
+**When** a pull request containing conventional commits is merged into the `main` branch
+**Then** the `@origo/core` package version is automatically bumped according to semantic rules (FR-PREP-004)
+**And** the CI versioning job exits cleanly (code 0) if no releasable commits are detected, preventing false-positive pipeline failures (NFR-PREP-007).
+
+#### Story 3.5.2: Define Monorepo-Wide JSON Import Standard
+
+As a Monorepo Developer,
+I want a standardized configuration for importing JSON files across all packages,
+So that CI pipelines do not fail with TypeScript TS2732 errors when core packages import schema fixtures.
+
+**Acceptance Criteria:**
+
+**Given** the Origo monorepo and Nx tooling
+**When** a developer runs the `nx run core:build` or `core:lint` commands
+**Then** the TypeScript configuration allows for `resolveJsonModule` standard imports natively (FR-PREP-001)
+**And** the monorepo CI checks enforce this pattern without throwing type errors (NFR-PREP-001)
+**And** ESLint rules or architectural guidelines are enforced to prevent directly importing massive JSON fixtures that would cause TypeScript compiler OOM crashes (NFR-PREP-008).
+
+#### Story 3.5.3: Defensive AST Traversal
+
+As a Core Engine Developer,
+I want to refactor the AST recursive traversal to include depth limits, circular reference checks, and deferred edge case handling,
+So that maliciously nested JSON payloads or missing references do not crash the Node process and cause a Denial of Service (DoS).
+
+**Acceptance Criteria:**
+
+**Given** the AST engine's recursive parsing logic
+**When** it encounters an excessively nested payload (e.g., depth > MAX_AST_DEPTH) or a cyclic reference (e.g., Entity A -> Entity B -> Entity A)
+**Then** it gracefully returns a validation error array instead of crashing the Node process (NFR-PREP-005)
+**And** it detects circular entity references immediately via a visited-node tracker, rather than waiting for the maximum depth limit to trigger (NFR-PREP-006)
+**And** AST traversal performance remains within benchmark limits after these defensive checks are added (NFR-PREP-002)
+**And** all deferred edge cases (e.g., missing dependencies) are covered by explicit regression test fixtures (NFR-PREP-003, FR-PREP-002)
+**And** the changes maintain 100% backwards compatibility with existing valid JSON structures (NFR-PREP-004, FR-PREP-003).
 
 ### Epic 4: Core Behaviors & Extensibility (@origo/core)
 [Developer can define Capabilities, Contracts, and Permissions in BADL, and declare extension compatibility and interfaces. MUST be driven by a real-world target page JSON fixture and requires 100% test coverage for the validation engine.]

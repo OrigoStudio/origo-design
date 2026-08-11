@@ -60,16 +60,15 @@ development_status:
   2-3-zero-code-theme-overrides: done
   2-4-token-resolution-consumption-contract: done
   epic-2-retrospective: done
-  epic-2-5: done
   2-5-1-versioning-management-strategy: done
   2-5-2-design-tokens-use-case-documentation: done
   2-5-3-theme-provider-composite-token-tech-debt: done
-  epic-3: in-progress
+  epic-3: done
   3-1-target-page-json-fixture: done
   3-2-domain-entity-schema-parser: done
   3-3-canonical-ast-serialization: done
   3-4-ast-validation-engine: done
-  epic-3-retrospective: optional
+  epic-3-retrospective: done
   epic-4: backlog
   4-1-capabilities-schema-parsing: backlog
   4-2-contracts-and-implementations: backlog
@@ -129,3 +128,12 @@ action_items:
   - id: retro-2-tech-debt
     description: "Technical Debt Cleanup: Address Epic 2 deferred items (Theme Provider API, composite token validation) before starting Epic 3 parsers. (Owner: Charlie)"
     status: done
+  - id: retro-3-systemic-ts-imports
+    description: "Standardize JSON imports, capture in ADR, and add CI check to prevent ESM/TS module resolution errors. (Owner: Charlie)"
+    status: open
+  - id: retro-3-edge-case-debt
+    description: "Address deferred AST validation edge cases (deeply nested chain stack overflow) before Epic 4 extension parsing. (Owner: Amelia)"
+    status: open
+  - id: retro-3-versioning
+    description: "Establish semantic versioning strategy for packages (Nx release/Changesets) before downstream consumption starts. (Owner: Patel)"
+    status: open
