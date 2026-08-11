@@ -1,0 +1,43 @@
+---
+title: Publishing and Versioning
+description: Guide on how packages are versioned and published in the Origo monorepo.
+---
+
+In the Origo monorepo, we use a fully automated release pipeline powered by **Nx Release** and **GitHub Actions**. This guide explains how semantic versioning works, how packages are published, and how you should format your commits to trigger releases.
+
+## Semantic Versioning and Conventional Commits
+
+We strictly enforce **Conventional Commits** for all changes. The CI pipeline relies on these commit messages to automatically determine semantic version bumps (Major, Minor, or Patch) for packages like `@origo/core`.
+
+When you make a commit, use the following format:
+
+- `fix: <description>` -> Triggers a **Patch** release (e.g., `1.0.0` to `1.0.1`)
+- `feat: <description>` -> Triggers a **Minor** release (e.g., `1.0.0` to `1.1.0`)
+- `feat!: <description>` or adding `BREAKING CHANGE: <description>` in the footer -> Triggers a **Major** release (e.g., `1.0.0` to `2.0.0`)
+
+A local Git hook (`commitlint`) is configured via Husky to verify that all commit messages adhere to the `config-conventional` specification before you can commit. If your commit is rejected, you will need to reformat the message properly.
+
+## The Release Pipeline
+
+Releases are completely automated via GitHub Actions (`.github/workflows/release.yml`). You do not need to manually bump versions, update changelogs, or run publish commands locally.
+
+### How it Works Under the Hood
+
+1. **Trigger**: When a Pull Request is merged into the `main` branch, the Release workflow runs.
+2. **Nx Release**: The CI job runs `npx nx release --skip-publish`. Nx automatically:
+   - Analyzes the Git history since the last release.
+   - Detects which specific packages in the monorepo (e.g., `@origo/core`) have changed.
+   - Calculates the appropriate new version based on the Conventional Commits.
+   - Updates `package.json` versions and generates `CHANGELOG.md` files.
+3. **GITHUB_TOKEN**: The workflow uses the automatically generated `${{ secrets.GITHUB_TOKEN }}` provided by GitHub Actions to push the version bumps, tags, and changelogs back to the repository. No personal access tokens (PATs) are required. This works because the workflow is granted `permissions: contents: write`.
+4. **Publishing**: _(Note: Publishing to npm/registries can be configured in this step. Currently, the pipeline is set to skip publishing to a remote registry during the initial development phase)._
+
+### Manual Releases
+
+In general, you should not need to run releases manually. However, if you need to test the release process locally to see what versions would be bumped, you can run:
+
+```bash
+npx nx release --dry-run
+```
+
+This will output the projected version bumps and changelogs without modifying any files or pushing anything to remote.

@@ -21,6 +21,7 @@ export default defineConfig({
             // Each item here is one entry in the navigation menu.
             { label: 'Example Guide', link: '/guides/example/' },
             { label: 'Design Tokens', link: '/guides/design-tokens/' },
+            { label: 'Publishing & Versioning', link: '/guides/publishing/' },
           ],
         },
         {

@@ -63,12 +63,15 @@ development_status:
   2-5-1-versioning-management-strategy: done
   2-5-2-design-tokens-use-case-documentation: done
   2-5-3-theme-provider-composite-token-tech-debt: done
-  epic-3: done
+  epic-3: in-progress
   3-1-target-page-json-fixture: done
   3-2-domain-entity-schema-parser: done
   3-3-canonical-ast-serialization: done
   3-4-ast-validation-engine: done
   epic-3-retrospective: done
+  3-5-1-establish-semantic-versioning: done
+  3-5-2-define-monorepo-wide-json-import-standard: backlog
+  3-5-3-defensive-ast-traversal: backlog
   epic-4: backlog
   4-1-capabilities-schema-parsing: backlog
   4-2-contracts-and-implementations: backlog
