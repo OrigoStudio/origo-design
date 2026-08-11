@@ -11,7 +11,7 @@
     "perf:benchmark": "ts-node tools/benchmarks/compare-baseline.ts",
     "perf:test": "ts-node tools/benchmarks/run-tests.ts",
     "prepare": "husky",
-    "release": "nx release"
+    "release": "nx release --skip-publish"
   },
   "private": true,
   "dependencies": {

@@ -2,7 +2,7 @@
 epic: 3
 story: "5-1"
 title: Establish Semantic Versioning for @origo/core
-status: ready-for-dev
+status: done
 ---
 
 # Story 3.5.1: Establish Semantic Versioning for @origo/core
@@ -35,6 +35,16 @@ This is required before any downstream consumption starts. Proper semantic versi
   - [x] Subtask 2.2: Ensure the CI job exits cleanly (code 0) when no releasable commits are detected (NFR-PREP-007)
 - [x] Task 3: Document the versioning process for developers
   - [x] Subtask 3.1: Add a section in `README.md` or a `CONTRIBUTING.md` describing how conventional commits affect versioning
+### Review Findings
+- [x] [Review][Patch] `nx release` scope is monorepo-wide [nx.json:79] — The release configuration includes `docs` and `apps/*` instead of just `@origo/core`. Update it to target only packages.
+- [x] [Review][Patch] Husky hook uses deprecated v4 bootstrap syntax [.husky/commit-msg:2]
+- [x] [Review][Patch] Husky hook script lacks executable permissions [.husky/commit-msg]
+- [x] [Review][Patch] Release workflow lacks concurrency control [.github/workflows/release.yml:34-38]
+- [x] [Review][Patch] `npm run release` script omits `--skip-publish` [package.json:14]
+- [x] [Review][Patch] Documentation inaccurately describes trigger condition [docs/src/content/docs/guides/publishing.mdx:27]
+- [x] [Review][Patch] Stale retro action item status [_bmad-output/implementation-artifacts/sprint-status.yaml:131-142]
+- [x] [Review][Patch] `epic-2-5: done` removed from sprint status [_bmad-output/implementation-artifacts/sprint-status.yaml:62]
+- [x] [Review][Defer] Release workflow pushes directly to main without branch protection awareness [.github/workflows/release.yml:1-38] — deferred, pre-existing repo setup dependency
 
 ## Dev Agent Guardrails
 

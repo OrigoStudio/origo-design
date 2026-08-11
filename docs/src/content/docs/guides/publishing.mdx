@@ -23,7 +23,7 @@ Releases are completely automated via GitHub Actions (`.github/workflows/release
 
 ### How it Works Under the Hood
 
-1. **Trigger**: When a Pull Request is merged into the `main` branch, the Release workflow runs.
+1. **Trigger**: When a push to the `main` branch occurs (e.g., merging a Pull Request or a direct push), the Release workflow runs.
 2. **Nx Release**: The CI job runs `npx nx release --skip-publish`. Nx automatically:
    - Analyzes the Git history since the last release.
    - Detects which specific packages in the monorepo (e.g., `@origo/core`) have changed.

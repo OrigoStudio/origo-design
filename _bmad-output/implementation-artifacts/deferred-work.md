@@ -46,3 +46,5 @@
 - Lack of domain ID uniqueness checks across Canonical AST domains [packages/core/src/validator/ast-validator.ts:7]
 - Deeply nested chain stack overflow [packages/core/src/validator/ast-validator.ts:38]
 
+## Deferred from: code review of 3-5-1-establish-semantic-versioning.md (2026-08-11)
+- Release workflow pushes directly to main without branch protection awareness [.github/workflows/release.yml:1-38] — pre-existing repo setup dependency

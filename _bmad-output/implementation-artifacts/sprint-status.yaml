@@ -41,7 +41,7 @@
 # - Retrospective appends its action items to action_items; sprint-status surfaces open ones
 
 generated: 2026-07-29T21:46:02.464968
-last_updated: 2026-08-10T21:20:23.000000
+last_updated: 2026-08-11T21:33:39.000000
 project: origo-design
 project_key: NOKEY
 tracking_system: file-system
@@ -60,6 +60,7 @@ development_status:
   2-3-zero-code-theme-overrides: done
   2-4-token-resolution-consumption-contract: done
   epic-2-retrospective: done
+  epic-2-5: done
   2-5-1-versioning-management-strategy: done
   2-5-2-design-tokens-use-case-documentation: done
   2-5-3-theme-provider-composite-token-tech-debt: done
@@ -139,4 +140,4 @@ action_items:
     status: open
   - id: retro-3-versioning
     description: "Establish semantic versioning strategy for packages (Nx release/Changesets) before downstream consumption starts. (Owner: Patel)"
-    status: open
+    status: done
