@@ -76,7 +76,7 @@
   "analytics": true,
   "nxCloudId": "6a75f22a66c65db5106c4220",
   "release": {
-    "projects": ["packages/*", "apps/*", "docs"],
+    "projects": ["packages/*"],
     "version": {
       "conventionalCommits": true,
       "fallbackCurrentVersionResolver": "disk"

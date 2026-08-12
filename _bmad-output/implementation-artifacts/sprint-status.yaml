@@ -41,7 +41,7 @@
 # - Retrospective appends its action items to action_items; sprint-status surfaces open ones
 
 generated: 2026-07-29T21:46:02.464968
-last_updated: 2026-08-10T21:20:23.000000
+last_updated: 2026-08-12T22:18:00+05:30
 project: origo-design
 project_key: NOKEY
 tracking_system: file-system
@@ -69,7 +69,10 @@ development_status:
   3-2-domain-entity-schema-parser: done
   3-3-canonical-ast-serialization: done
   3-4-ast-validation-engine: done
-  epic-3-retrospective: optional
+  epic-3-retrospective: done
+  3-5-1-establish-semantic-versioning: done
+  3-5-2-define-monorepo-wide-json-import-standard: done
+  3-5-3-defensive-ast-traversal: done
   epic-4: backlog
   4-1-capabilities-schema-parsing: backlog
   4-2-contracts-and-implementations: backlog
@@ -128,4 +131,13 @@ action_items:
     status: done
   - id: retro-2-tech-debt
     description: "Technical Debt Cleanup: Address Epic 2 deferred items (Theme Provider API, composite token validation) before starting Epic 3 parsers. (Owner: Charlie)"
+    status: done
+  - id: retro-3-systemic-ts-imports
+    description: "Standardize JSON imports, capture in ADR, and add CI check to prevent ESM/TS module resolution errors. (Owner: Charlie)"
+    status: open
+  - id: retro-3-edge-case-debt
+    description: "Address deferred AST validation edge cases (deeply nested chain stack overflow) before Epic 4 extension parsing. (Owner: Amelia)"
+    status: open
+  - id: retro-3-versioning
+    description: "Establish semantic versioning strategy for packages (Nx release/Changesets) before downstream consumption starts. (Owner: Patel)"
     status: done

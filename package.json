@@ -11,7 +11,7 @@
     "perf:benchmark": "ts-node tools/benchmarks/compare-baseline.ts",
     "perf:test": "ts-node tools/benchmarks/run-tests.ts",
     "prepare": "husky",
-    "release": "nx release"
+    "release": "nx release --skip-publish"
   },
   "private": true,
   "dependencies": {
@@ -40,6 +40,8 @@
     "@angular/compiler-cli": "22.0.8",
     "@angular/language-service": "22.0.8",
     "@astrojs/starlight": "^0.25.0",
+    "@commitlint/cli": "^21.2.1",
+    "@commitlint/config-conventional": "^21.2.0",
     "@nx/angular": "23.1.0",
     "@nx/esbuild": "23.1.0",
     "@nx/eslint": "23.1.0",

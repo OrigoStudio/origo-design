@@ -1,28 +1,50 @@
 import { CanonicalAST } from '../types/ast';
-import { validateAST } from './ast-validator';
+import { validateAST, MAX_AST_DEPTH } from './ast-validator';
+import { ValidationError } from '../types/validation';
 
 /**
  * Deep clones and canonically sorts an object/array.
  * Also detects circular references and unsupported types.
  */
-function canonicalize(obj: any, seen = new WeakSet()): any {
+function canonicalize(
+  obj: unknown,
+  seen = new WeakSet(),
+  errors: ValidationError[] = [],
+  depth = 1
+): unknown {
+  if (depth > MAX_AST_DEPTH) {
+    errors.push({
+      type: 'MAX_DEPTH_EXCEEDED',
+      message: `Maximum AST depth exceeded (${MAX_AST_DEPTH}) during canonicalization`,
+    });
+    return null;
+  }
+
   if (obj === null || typeof obj !== 'object') {
     return obj;
   }
 
   if (seen.has(obj)) {
-    throw new Error('Invalid AST: Circular reference detected');
+    errors.push({
+      type: 'CIRCULAR_REFERENCE',
+      message: 'Invalid AST: Circular reference detected during canonicalization',
+    });
+    return null;
   }
 
-  if (obj.constructor && obj.constructor !== Object && !Array.isArray(obj)) {
-    throw new Error(`Invalid AST: Unsupported type ${obj.constructor.name}`);
+  if (Object.prototype.toString.call(obj) !== '[object Object]' && !Array.isArray(obj)) {
+    errors.push({
+      type: 'INVALID_TYPE',
+      message: `Invalid AST: Unsupported type ${obj.constructor?.name || typeof obj}`,
+    });
+    return null;
   }
 
   seen.add(obj);
 
   if (Array.isArray(obj)) {
     // Process children first
-    const mapped = obj.map(item => canonicalize(item, seen));
+    const mapped = obj.map(item => canonicalize(item, seen, errors, depth + 1));
 
     // Sort deterministically
     mapped.sort((a, b) => {
@@ -53,10 +75,11 @@ function canonicalize(obj: any, seen = new WeakSet()): any {
   }
 
   // It is an object, sort its keys
-  const sortedKeys = Object.keys(obj).sort();
-  const result: Record<string, any> = {};
+  const objAsRecord = obj as Record<string, unknown>;
+  const sortedKeys = Object.keys(objAsRecord).sort();
+  const result: Record<string, unknown> = {};
   for (const key of sortedKeys) {
-    result[key] = canonicalize(obj[key], seen);
+    result[key] = canonicalize(objAsRecord[key], seen, errors, depth + 1);
   }
 
   seen.delete(obj);
@@ -69,20 +92,29 @@ function canonicalize(obj: any, seen = new WeakSet()): any {
  *
  * @param ast The canonical AST to serialize
  * @returns Byte-for-byte deterministic JSON string
+ * @throws {ASTValidationError} If validation or canonicalization fails
  */
-export function serializeAST(ast: CanonicalAST): string {
+export function serializeAST(ast: CanonicalAST): [string | null, ValidationError[]] {
   if (!ast || !ast.schemaVersion) {
-    throw new Error('Invalid AST: Missing schemaVersion');
+    return [null, [{ type: 'INVALID_FORMAT', message: 'Invalid AST: Missing schemaVersion' }]];
   }
 
   if (!Array.isArray(ast.domains)) {
-    throw new Error('Invalid AST: domains must be an array');
+    return [null, [{ type: 'INVALID_FORMAT', message: 'Invalid AST: domains must be an array' }]];
   }
 
   // Validate semantics before serializing
-  validateAST(ast);
+  const errors = validateAST(ast);
+  if (errors.length > 0) {
+    return [null, errors];
+  }
 
-  const canonical = canonicalize(ast);
+  const canonicalErrors: ValidationError[] = [];
+  const canonical = canonicalize(ast, new WeakSet(), canonicalErrors, 1);
 
-  return JSON.stringify(canonical);
+  if (canonicalErrors.length > 0) {
+    return [null, canonicalErrors];
+  }
+
+  return [JSON.stringify(canonical), []];
 }
