@@ -65,11 +65,49 @@ module.exports = [
   {
     files: ['**/*.ts', '**/*.tsx'],
     // Override or add rules here
-    rules: {},
+    rules: {
+      'no-restricted-imports': [
+        'error',
+        {
+          patterns: [
+            {
+              group: [
+                '**/*.fixture.json',
+                '**/*.mock.json',
+                '**/*.data.json',
+                '**/*.large.json',
+                '**/seed.json',
+              ],
+              message:
+                'Importing massive JSON fixtures directly can cause TypeScript compiler OOM crashes (NFR-PREP-008). Use fs.readFile at runtime or stream parsing instead.',
+            },
+          ],
+        },
+      ],
+    },
   },
   {
     files: ['**/*.js', '**/*.jsx'],
     // Override or add rules here
-    rules: {},
+    rules: {
+      'no-restricted-imports': [
+        'error',
+        {
+          patterns: [
+            {
+              group: [
+                '**/*.fixture.json',
+                '**/*.mock.json',
+                '**/*.data.json',
+                '**/*.large.json',
+                '**/seed.json',
+              ],
+              message:
+                'Importing massive JSON fixtures directly can cause TypeScript compiler OOM crashes (NFR-PREP-008). Use fs.readFile at runtime or stream parsing instead.',
+            },
+          ],
+        },
+      ],
+    },
   },
 ];

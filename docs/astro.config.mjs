@@ -22,11 +22,16 @@ export default defineConfig({
             { label: 'Example Guide', link: '/guides/example/' },
             { label: 'Design Tokens', link: '/guides/design-tokens/' },
             { label: 'Publishing & Versioning', link: '/guides/publishing/' },
+            { label: 'AST JSON Validation', link: '/guides/ast-validator/' },
           ],
         },
         {
           label: 'Reference',
           autogenerate: { directory: 'reference' },
+        },
+        {
+          label: 'Architecture Decisions',
+          autogenerate: { directory: 'architecture-decisions' },
         },
       ],
     }),

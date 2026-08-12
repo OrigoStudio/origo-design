@@ -48,3 +48,9 @@
 
 ## Deferred from: code review of 3-5-1-establish-semantic-versioning.md (2026-08-11)
 - Release workflow pushes directly to main without branch protection awareness [.github/workflows/release.yml:1-38] — pre-existing repo setup dependency
+
+## Deferred from: code review of 3-5-2-define-monorepo-wide-json-import-standard.md (2026-08-12)
+- `astro.config.mjs` docs site title is still `'My Docs'` and GitHub URL is default. — pre-existing
+- ADR recommendation for `fs.readFileSync` has no helper/utility. — out of scope for this spec
+- `docs/astro.config.mjs` Guides sidebar uses hardcoded links instead of autogenerate. — out of scope
+- `sprint-status.yaml` no `story_file` field. — framework issue
