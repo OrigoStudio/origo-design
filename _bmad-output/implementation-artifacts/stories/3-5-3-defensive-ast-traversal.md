@@ -2,7 +2,8 @@
 epic: 3
 story: "5-3"
 title: Defensive AST Traversal
-status: ready-for-dev
+status: review
+baseline_commit: 4f82702e479e9639062c91d8097eb38a89c26fa8
 ---
 
 # Story 3.5.3: Defensive AST Traversal
@@ -80,6 +81,50 @@ This is the final tech debt and stabilization chore for Epic 3. The AST logic cu
 ### Project Context Reference
 - Epic 3's core deliverable is the Canonical AST validation engine. This stability fix is required before Epic 4 begins heavily extending the schemas with Capabilities, Contracts, and Extensions, which will add further tree complexity.
 
+## Tasks/Subtasks
+- [x] 1. Refactor `validateAST` and `dfs` in `ast-validator.ts` to enforce `MAX_AST_DEPTH` (e.g. 100) and immediately return circular reference validation errors instead of throwing Node.js Errors.
+- [x] 2. Refactor `canonicalize` in `serializer.ts` to accept depth limit and return errors gracefully rather than throwing.
+- [x] 3. Update `serializeAST` and other consumers to handle returned errors appropriately.
+- [x] 4. Add regression test fixtures for deep AST structure, circular entity references, and missing dependencies. Ensure benchmark tests remain within limits.
+
+### Review Findings
+- [x] [Review][Patch] `serializeAST` error handling — Make `serializeAST` return `[string | null, ValidationError[]]` tuple instead of throwing.
+- [x] [Review][Patch] Unsafe null accesses in loops [packages/core/src/validator/ast-validator.ts:24]
+- [x] [Review][Patch] `canonicalize` throws instead of accumulating [packages/core/src/validator/serializer.ts:9]
+- [x] [Review][Patch] Duplicate Entity ID Overwrite skips validation [packages/core/src/validator/ast-validator.ts:59]
+- [x] [Review][Patch] Valid objects with `constructor` property throw [packages/core/src/validator/serializer.ts:32]
+- [x] [Review][Patch] Depth error path omits current node [packages/core/src/validator/ast-validator.ts:72]
+- [x] [Review][Patch] `ASTValidationError` message lacks detail [packages/core/src/types/validation.ts:10]
+- [x] [Review][Defer] Inefficient `JSON.stringify` in Array Sorting [packages/core/src/validator/serializer.ts:63] — deferred, pre-existing
+- [x] [Review][Defer] Vague Error Typing with Generic `string` Type [packages/core/src/types/validation.ts:5] — deferred, pre-existing
+- [x] [Review][Defer] No Structural Schema Validation [packages/core/src/validator/ast-validator.ts:40] — deferred, pre-existing
+
+## Dev Notes
+- Ensure the array of `ValidationError` includes specific type names (e.g. `MAX_DEPTH_EXCEEDED`, `CIRCULAR_REFERENCE`).
+- Remember dynamically generated deep AST payloads in tests to avoid JSON bloat.
+
+## Dev Agent Record
+### Debug Log
+- Fixed minor TypeScript strictness error in the deep AST generation fixture.
+
+### Completion Notes
+- Implemented `ValidationError` and `ASTValidationError` classes in `packages/core/src/types/validation.ts`.
+- Refactored `validateAST` to accumulate errors.
+- Enforced depth limit `MAX_AST_DEPTH = 250` in DFS graph traversal and recursive canonicalization.
+- Replaced untyped exceptions with structured validation errors, preventing Node crash edge cases.
+
+## File List
+- packages/core/src/types/validation.ts
+- packages/core/src/validator/ast-validator.ts
+- packages/core/src/validator/serializer.ts
+- packages/core/src/validator/ast-validator.spec.ts
+- packages/core/src/validator/serializer.spec.ts
+
+## Change Log
+- Added `MAX_AST_DEPTH` check.
+- Refactored cycle detection to return errors gracefully.
+- Updated spec tests for deep AST arrays and modified assertion errors.
+
 ## Completion Status
-Status: ready-for-dev
-Completion Note: Ultimate context engine analysis completed - comprehensive developer guide created.
+**Status:** done
+Completion Note: Defensive AST Traversal implementation completed with all acceptance criteria met. Tests are green.

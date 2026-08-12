@@ -1,5 +1,5 @@
 import { CanonicalAST } from '../types/ast';
-import { validateAST } from './ast-validator';
+import { validateAST, MAX_AST_DEPTH } from './ast-validator';
 
 describe('AST Validation Engine', () => {
   it('should pass a valid Canonical AST', () => {
@@ -30,7 +30,7 @@ describe('AST Validation Engine', () => {
         },
       ],
     };
-    expect(() => validateAST(ast)).not.toThrow();
+    expect(validateAST(ast)).toEqual([]);
   });
 
   it('should detect a circular dependency between two entities', () => {
@@ -77,7 +77,10 @@ describe('AST Validation Engine', () => {
         },
       ],
     };
-    expect(() => validateAST(ast)).toThrow(
+    const errors = validateAST(ast);
+    expect(errors).toHaveLength(1);
+    expect(errors[0].type).toBe('CIRCULAR_REFERENCE');
+    expect(errors[0].message).toMatch(
       /Circular dependency detected: entity-1 -> entity-2 -> entity-1/
     );
   });
@@ -111,10 +114,13 @@ describe('AST Validation Engine', () => {
         },
       ],
     };
-    expect(() => validateAST(ast)).toThrow(/Circular dependency detected: entity-1 -> entity-1/);
+    const errors = validateAST(ast);
+    expect(errors).toHaveLength(1);
+    expect(errors[0].type).toBe('CIRCULAR_REFERENCE');
+    expect(errors[0].message).toMatch(/Circular dependency detected: entity-1 -> entity-1/);
   });
 
-  it('should throw an error for missing referenced entities', () => {
+  it('should report an error for missing referenced entities', () => {
     const ast: CanonicalAST = {
       schemaVersion: '1.0.0',
       domains: [
@@ -143,12 +149,15 @@ describe('AST Validation Engine', () => {
         },
       ],
     };
-    expect(() => validateAST(ast)).toThrow(
+    const errors = validateAST(ast);
+    expect(errors).toHaveLength(1);
+    expect(errors[0].type).toBe('MISSING_REFERENCE');
+    expect(errors[0].message).toMatch(
       /Invalid consumption rule: Entity "entity-missing" referenced by field "field-1" does not exist/
     );
   });
 
-  it('should throw an error if multiple domains declare the same entity ID (if unique entity IDs are required globally)', () => {
+  it('should report an error if multiple domains declare the same entity ID', () => {
     const ast: CanonicalAST = {
       schemaVersion: '1.0.0',
       domains: [
@@ -180,7 +189,10 @@ describe('AST Validation Engine', () => {
         },
       ],
     };
-    expect(() => validateAST(ast)).toThrow(/Duplicate entity ID found: entity-1/);
+    const errors = validateAST(ast);
+    expect(errors).toHaveLength(1);
+    expect(errors[0].type).toBe('DUPLICATE_ID');
+    expect(errors[0].message).toMatch(/Duplicate entity ID found: entity-1/);
   });
 
   it('should detect a three-node cycle', () => {
@@ -242,7 +254,10 @@ describe('AST Validation Engine', () => {
         },
       ],
     };
-    expect(() => validateAST(ast)).toThrow(
+    const errors = validateAST(ast);
+    expect(errors).toHaveLength(1);
+    expect(errors[0].type).toBe('CIRCULAR_REFERENCE');
+    expect(errors[0].message).toMatch(
       /Circular dependency detected: A -> B -> C -> A|B -> C -> A -> B|C -> A -> B -> C/
     );
   });
@@ -266,7 +281,7 @@ describe('AST Validation Engine', () => {
         },
       ],
     };
-    expect(() => validateAST(ast)).not.toThrow();
+    expect(validateAST(ast)).toEqual([]);
   });
 
   it('should pass a valid diamond dependency graph without false positive cycles', () => {
@@ -342,6 +357,50 @@ describe('AST Validation Engine', () => {
         },
       ],
     };
-    expect(() => validateAST(ast)).not.toThrow();
+    expect(validateAST(ast)).toEqual([]);
+  });
+
+  it('should report an error when MAX_AST_DEPTH is exceeded', () => {
+    const entities = [];
+    for (let i = 0; i <= MAX_AST_DEPTH + 1; i++) {
+      entities.push({
+        id: `e${i}`,
+        name: `e${i}`,
+        fields: [
+          {
+            id: `f${i}`,
+            name: `f${i}`,
+            type: 'string' as const,
+            references: `e${i + 1}`,
+            label: `f${i}`,
+            validation: [],
+            metadata_path: '',
+          },
+        ],
+      });
+    }
+    // Add the last entity that has no references
+    entities.push({
+      id: `e${MAX_AST_DEPTH + 2}`,
+      name: `e${MAX_AST_DEPTH + 2}`,
+      fields: [],
+    });
+
+    const ast: CanonicalAST = {
+      schemaVersion: '1.0.0',
+      domains: [
+        {
+          id: 'domain-1',
+          name: 'Core',
+          version: '1.0.0',
+          domain: 'core',
+          entities: entities,
+        },
+      ],
+    };
+
+    const errors = validateAST(ast);
+    expect(errors.length).toBeGreaterThan(0);
+    expect(errors.some(e => e.type === 'MAX_DEPTH_EXCEEDED')).toBe(true);
   });
 });

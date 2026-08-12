@@ -54,3 +54,8 @@
 - ADR recommendation for `fs.readFileSync` has no helper/utility. — out of scope for this spec
 - `docs/astro.config.mjs` Guides sidebar uses hardcoded links instead of autogenerate. — out of scope
 - `sprint-status.yaml` no `story_file` field. — framework issue
+
+## Deferred from: code review of 3-5-3-defensive-ast-traversal.md (2026-08-12)
+- Inefficient `JSON.stringify` in Array Sorting [packages/core/src/validator/serializer.ts:63]
+- Vague Error Typing with Generic `string` Type [packages/core/src/types/validation.ts:5]
+- No Structural Schema Validation [packages/core/src/validator/ast-validator.ts:40]
