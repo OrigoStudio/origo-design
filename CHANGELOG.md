@@ -1,3 +1,15 @@
+## 0.0.4 (2026-08-13)
+
+### 🚀 Features
+
+- update sprint status and initialize story 4-2 contracts and implementations documentation ([4b37c59](https://github.com/OrigoStudio/origo-design/commit/4b37c59))
+- implement semantic AST validator with domain, entity, and contract schema definitions ([e969466](https://github.com/OrigoStudio/origo-design/commit/e969466))
+- add auto-generated Domain, Entity, Capability, and Contract TypeScript types for BADL definition ([10c337d](https://github.com/OrigoStudio/origo-design/commit/10c337d))
+
+### ❤️ Thank You
+
+- Hardik Patel @hardikpatelse
+
 ## 0.0.3 (2026-08-13)
 
 ### 🚀 Features
