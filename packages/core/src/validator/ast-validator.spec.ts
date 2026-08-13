@@ -998,4 +998,175 @@ describe('AST Validation Engine', () => {
       expect(ast.domains[0].capabilities![0].permissions[0].access).toBe('grant');
     });
   });
+
+  describe('Extension Validation', () => {
+    it('should fail when extension is missing implements array', () => {
+      const ast: CanonicalAST = {
+        schemaVersion: '1.0.0',
+        domains: [
+          {
+            id: 'domain-1',
+            name: 'Core',
+            version: '1.0.0',
+            domain: 'core',
+            entities: [],
+            extensions: [
+              {
+                id: 'ext-1',
+                name: 'auth-plugin',
+                version: '1.0.0',
+                extension_type: 'plugin',
+                plugin_version_range: '^1.0.0',
+              } as any,
+            ],
+          },
+        ],
+      };
+      const errors = validateAST(ast);
+      expect(errors).toHaveLength(1);
+      expect(errors[0].type).toBe('MISSING_REFERENCE');
+      expect(errors[0].message).toMatch(/Extension missing implements contract reference/);
+    });
+
+    it('should fail when extension implements a non-existent contract', () => {
+      const ast: CanonicalAST = {
+        schemaVersion: '1.0.0',
+        domains: [
+          {
+            id: 'domain-1',
+            name: 'Core',
+            version: '1.0.0',
+            domain: 'core',
+            entities: [],
+            extensions: [
+              {
+                id: 'ext-1',
+                name: 'auth-plugin',
+                version: '1.0.0',
+                extension_type: 'plugin',
+                plugin_version_range: '^1.0.0',
+                implements: ['missing-contract'],
+              },
+            ],
+          },
+        ],
+      };
+      const errors = validateAST(ast);
+      expect(errors).toHaveLength(1);
+      expect(errors[0].type).toBe('MISSING_REFERENCE');
+      expect(errors[0].message).toMatch(
+        /Contract "missing-contract" referenced by extension "ext-1" does not exist/
+      );
+    });
+
+    it('should fail when local manifest is missing extension version', () => {
+      const ast: CanonicalAST = {
+        schemaVersion: '1.0.0',
+        domains: [
+          {
+            id: 'domain-1',
+            name: 'Core',
+            version: '1.0.0',
+            domain: 'core',
+            entities: [],
+            contracts: [
+              {
+                id: 'contract-1',
+                name: 'PluginContract',
+                requiredFields: [],
+                requiredCapabilities: [],
+              },
+            ],
+            extensions: [
+              {
+                id: 'ext-1',
+                name: 'auth-plugin',
+                version: '1.0.0',
+                extension_type: 'plugin',
+                plugin_version_range: '^1.0.0',
+                implements: ['contract-1'],
+              },
+            ],
+          },
+        ],
+      };
+      const localManifest = { 'other-plugin': '1.0.0' };
+      const errors = validateAST(ast, localManifest);
+      expect(errors).toHaveLength(1);
+      expect(errors[0].type).toBe('MISSING_MANIFEST_VERSION');
+    });
+
+    it('should fail when local manifest version does not satisfy plugin_version_range', () => {
+      const ast: CanonicalAST = {
+        schemaVersion: '1.0.0',
+        domains: [
+          {
+            id: 'domain-1',
+            name: 'Core',
+            version: '1.0.0',
+            domain: 'core',
+            entities: [],
+            contracts: [
+              {
+                id: 'contract-1',
+                name: 'PluginContract',
+                requiredFields: [],
+                requiredCapabilities: [],
+              },
+            ],
+            extensions: [
+              {
+                id: 'ext-1',
+                name: 'auth-plugin',
+                version: '1.0.0',
+                extension_type: 'plugin',
+                plugin_version_range: '^2.0.0',
+                implements: ['contract-1'],
+              },
+            ],
+          },
+        ],
+      };
+      const localManifest = { 'auth-plugin': '1.0.0' };
+      const errors = validateAST(ast, localManifest);
+      expect(errors).toHaveLength(1);
+      expect(errors[0].type).toBe('VERSION_MISMATCH');
+    });
+
+    it('should pass when local manifest version satisfies plugin_version_range', () => {
+      const ast: CanonicalAST = {
+        schemaVersion: '1.0.0',
+        domains: [
+          {
+            id: 'domain-1',
+            name: 'Core',
+            version: '1.0.0',
+            domain: 'core',
+            entities: [],
+            contracts: [
+              {
+                id: 'contract-1',
+                name: 'PluginContract',
+                requiredFields: [],
+                requiredCapabilities: [],
+              },
+            ],
+            extensions: [
+              {
+                id: 'ext-1',
+                name: 'auth-plugin',
+                version: '1.0.0',
+                extension_type: 'plugin',
+                plugin_version_range: '^1.0.0',
+                implements: ['contract-1'],
+              },
+            ],
+          },
+        ],
+      };
+      const localManifest = { 'auth-plugin': '1.2.0' };
+      const errors = validateAST(ast, localManifest);
+      expect(errors).toHaveLength(0);
+    });
+  });
 });

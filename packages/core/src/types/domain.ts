@@ -23,6 +23,7 @@ export interface Domain {
   entities: Entity[];
   capabilities?: Capability[];
   contracts?: Contract[];
+  extensions?: Extension[];
 }
 /**
  * BADL Entity Definition
@@ -86,4 +87,16 @@ export interface Contract {
     name: 'Create' | 'Read' | 'Update' | 'Delete' | 'List';
     type: 'Command' | 'Query';
   }[];
+}
+
+/**
+ * BADL Extension Definition
+ */
+export interface Extension {
+  id: string;
+  name: string;
+  version: string;
+  extension_type: string;
+  implements: string[];
+  plugin_version_range: string;
 }

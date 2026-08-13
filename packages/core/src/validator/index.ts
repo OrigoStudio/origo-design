@@ -6,6 +6,7 @@ import * as entitySchema from '../schemas/entity.schema.json';
 import * as capabilitySchema from '../schemas/capability.schema.json';
 import * as contractSchema from '../schemas/contract.schema.json';
 import * as permissionSchema from '../schemas/permission.schema.json';
+import * as extensionSchema from '../schemas/extension.schema.json';
 
 export interface ValidatorOptions {
   maxDepth?: number;
@@ -36,6 +37,9 @@ export class BADLValidator {
     const resolvedContractSchema =
       (contractSchema as Record<string, unknown>)['default'] ?? contractSchema;
 
+    const resolvedExtensionSchema =
+      (extensionSchema as Record<string, unknown>)['default'] ?? extensionSchema;
+
     this.ajv.addSchema(
       resolvedCapabilitySchema,
       'https://origo.design/schemas/v1/capability.schema.json'
@@ -47,6 +51,10 @@ export class BADLValidator {
     this.ajv.addSchema(
       resolvedPermissionSchema,
       'https://origo.design/schemas/v1/permission.schema.json'
+    );
+    this.ajv.addSchema(
+      resolvedExtensionSchema,
+      'https://origo.design/schemas/v1/extension.schema.json'
     );
     this.ajv.addSchema(resolvedEntitySchema, 'https://origo.design/schemas/v1/entity.schema.json');
     this.ajv.addSchema(resolvedDomainSchema, 'https://origo.design/schemas/v1/domain.schema.json');
