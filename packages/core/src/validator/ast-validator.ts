@@ -196,6 +196,47 @@ export function validateAST(ast: CanonicalAST): ValidationError[] {
           path: `${capPath}.entityId`,
         });
       }
+
+      if (
+        !capability.permissions ||
+        !Array.isArray(capability.permissions) ||
+        capability.permissions.length === 0
+      ) {
+        errors.push({
+          type: 'UNSECURED_CAPABILITY',
+          message: `Capability "${capability.id}" is unsecured. Fail-closed policy requires at least one permission.`,
+          path: `${capPath}.permissions`,
+        });
+      } else {
+        for (let pIndex = 0; pIndex < capability.permissions.length; pIndex++) {
+          const perm = capability.permissions[pIndex];
+          if (
+            !perm ||
+            typeof perm !== 'object' ||
+            !perm.role ||
+            typeof perm.role !== 'string' ||
+            perm.role.trim() === ''
+          ) {
+            errors.push({
+              type: 'INVALID_PERMISSION',
+              message: `Capability "${capability.id}" has an invalid permission definition. Role is required.`,
+              path: `${capPath}.permissions[${pIndex}]`,
+            });
+          } else {
+            perm.role = perm.role.trim();
+            if (perm.access === undefined) {
+              perm.access = 'grant';
+            }
+            if (perm.access !== 'grant' && perm.access !== 'deny') {
+              errors.push({
+                type: 'INVALID_PERMISSION',
+                message: `Capability "${capability.id}" has an invalid access definition. Must be "grant" or "deny".`,
+                path: `${capPath}.permissions[${pIndex}].access`,
+              });
+            }
+          }
+        }
+      }
     }
   }
 

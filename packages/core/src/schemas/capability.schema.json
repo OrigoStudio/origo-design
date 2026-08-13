@@ -47,7 +47,7 @@
     "permissions": {
       "type": "array",
       "items": {
-        "type": "string"
+        "$ref": "permission.schema.json"
       }
     },
     "risk_level": {

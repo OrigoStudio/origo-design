@@ -57,10 +57,20 @@ export interface Capability2 {
   outcome_ref: string[];
   preconditions: string[];
   postconditions: string[];
-  permissions: string[];
+  permissions: Permission[];
   risk_level: 'low' | 'medium' | 'high' | 'critical';
   interaction_contract_ref?: string;
   async: boolean;
+}
+/**
+ * BADL Role-Based Permission Definition
+ */
+export interface Permission {
+  /**
+   * The role required for this permission
+   */
+  role: string;
+  access?: 'grant' | 'deny';
 }
 /**
  * BADL Contract Definition
@@ -73,7 +83,7 @@ export interface Contract {
     type: 'string' | 'boolean' | 'date' | 'number' | 'array' | 'object';
   }[];
   requiredCapabilities: {
-    name: string;
+    name: 'Create' | 'Read' | 'Update' | 'Delete' | 'List';
     type: 'Command' | 'Query';
   }[];
 }

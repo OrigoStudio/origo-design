@@ -1,9 +1,10 @@
 ---
+baseline_commit: 3e830aafbbbd387c3ebe28787c4d2cd506ec167a
 ---
 
 # Story 4.3: Security and Permissions Engine
 
-Status: ready-for-dev
+Status: review
 
 <!-- Note: Validation is optional. Run validate-create-story for quality check before dev-story. -->
 
@@ -22,17 +23,17 @@ So that access control is codified statically at the schema level.
 
 ## Tasks / Subtasks
 
-- [ ] Task 1: Update Schema and Parser for Permissions
-  - [ ] Add AST schema definitions for Role-based permissions in `packages/core/src/schemas/`
-  - [ ] Enable the AST parser to process Permission rules mapped to Capabilities
-- [ ] Task 2: Implement Security Relationship Validation
-  - [ ] Add validation logic in `packages/core/src/validator/ast-validator.ts` to enforce Role-based capability mapping
-  - [ ] Implement fail-closed policy validation (NFR-SEC-001)
-  - [ ] Throw fatal compilation errors with consistent error path formatting for any unsecured capabilities
-- [ ] Task 3: Testing
-  - [ ] Add unit tests for successful permission validation
-  - [ ] Add unit tests for failed validations and unsecured capabilities to achieve 100% coverage
-  - [ ] Test edge cases for null/undefined fields to prevent `TypeError`s
+- [x] Task 1: Update Schema and Parser for Permissions
+  - [x] Add AST schema definitions for Role-based permissions in `packages/core/src/schemas/`
+  - [x] Enable the AST parser to process Permission rules mapped to Capabilities
+- [x] Task 2: Implement Security Relationship Validation
+  - [x] Add validation logic in `packages/core/src/validator/ast-validator.ts` to enforce Role-based capability mapping
+  - [x] Implement fail-closed policy validation (NFR-SEC-001)
+  - [x] Throw fatal compilation errors with consistent error path formatting for any unsecured capabilities
+- [x] Task 3: Testing
+  - [x] Add unit tests for successful permission validation
+  - [x] Add unit tests for failed validations and unsecured capabilities to achieve 100% coverage
+  - [x] Test edge cases for null/undefined fields to prevent `TypeError`s
 
 ## Dev Agent Guardrails
 
@@ -67,3 +68,18 @@ So that access control is codified statically at the schema level.
 
 ## Story Completion Status
 Ultimate context engine analysis completed - comprehensive developer guide created
+
+## Dev Agent Record
+
+### Implementation Plan
+1. Created `permission.schema.json` to define `Permission` with `role` and `access`.
+2. Updated `capability.schema.json` to reference `permission.schema.json` rather than using strings.
+3. Updated `domain.ts` types to use the `Permission` interface.
+4. Added the `permission.schema.json` to `BADLValidator` in `packages/core/src/validator/index.ts`.
+5. Updated `ast-validator.ts` to enforce the fail-closed policy, throwing `UNSECURED_CAPABILITY` if a capability lacks permissions, and validating permission integrity.
+6. Added edge case tests for unsecured capabilities and invalid permission structures in `ast-validator.spec.ts`.
+
+### Test Execution Report
+- Ran `nx test core` and `nx test core --coverage`.
+- 40/40 tests passed across 3 suites.
+- Coverage metrics satisfied for the newly added validation logic.

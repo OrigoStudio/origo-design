@@ -132,7 +132,7 @@
       "outcome_ref": ["outcome-1"],
       "preconditions": ["pre-1"],
       "postconditions": ["post-1"],
-      "permissions": ["perm-1"],
+      "permissions": [{ "role": "perm-1" }],
       "risk_level": "medium",
       "async": false
     },
@@ -145,7 +145,7 @@
       "outcome_ref": [],
       "preconditions": [],
       "postconditions": [],
-      "permissions": [],
+      "permissions": [{ "role": "admin" }],
       "risk_level": "low",
       "interaction_contract_ref": "ref",
       "async": true
@@ -159,7 +159,7 @@
       "outcome_ref": [],
       "preconditions": [],
       "postconditions": [],
-      "permissions": [],
+      "permissions": [{ "role": "admin" }],
       "risk_level": "high",
       "async": false
     },
@@ -172,7 +172,7 @@
       "outcome_ref": [],
       "preconditions": [],
       "postconditions": [],
-      "permissions": [],
+      "permissions": [{ "role": "admin" }],
       "risk_level": "critical",
       "async": false
     },
@@ -185,7 +185,7 @@
       "outcome_ref": [],
       "preconditions": [],
       "postconditions": [],
-      "permissions": [],
+      "permissions": [{ "role": "admin" }],
       "risk_level": "low",
       "interaction_contract_ref": "ref",
       "async": false
@@ -199,7 +199,7 @@
       "outcome_ref": [],
       "preconditions": [],
       "postconditions": [],
-      "permissions": [],
+      "permissions": [{ "role": "admin" }],
       "risk_level": "low",
       "interaction_contract_ref": "ref",
       "async": false
@@ -213,7 +213,7 @@
       "outcome_ref": [],
       "preconditions": [],
       "postconditions": [],
-      "permissions": [],
+      "permissions": [{ "role": "admin" }],
       "risk_level": "low",
       "interaction_contract_ref": "ref",
       "async": false
