@@ -11,6 +11,12 @@
     "name": {
       "type": "string"
     },
+    "implements": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
     "fields": {
       "type": "array",
       "items": {

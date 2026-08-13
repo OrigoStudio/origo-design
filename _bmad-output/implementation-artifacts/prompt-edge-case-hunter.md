@@ -1,263 +1,503 @@
 Invoke the `bmad-review-edge-case-hunter` skill on this diff:
 
-```diff
+diff --git a/_bmad-output/diff.patch b/_bmad-output/diff.patch
+index dd12c4b..e69de29 100644
+Binary files a/_bmad-output/diff.patch and b/_bmad-output/diff.patch differ
 diff --git a/_bmad-output/implementation-artifacts/sprint-status.yaml b/_bmad-output/implementation-artifacts/sprint-status.yaml
-index 0aadbba..e612af0 100644
+index 61aa7c1..22685fa 100644
 --- a/_bmad-output/implementation-artifacts/sprint-status.yaml
 +++ b/_bmad-output/implementation-artifacts/sprint-status.yaml
 @@ -41,7 +41,7 @@
  # - Retrospective appends its action items to action_items; sprint-status surfaces open ones
  
  generated: 2026-07-29T21:46:02.464968
--last_updated: 2026-08-09T18:05:00.000000
-+last_updated: 2026-08-09T21:03:52+05:30
+-last_updated: 2026-08-12T22:18:00+05:30
++last_updated: 2026-08-13T15:59:00+05:30
  project: origo-design
  project_key: NOKEY
  tracking_system: file-system
-@@ -65,7 +65,7 @@ development_status:
-   2-5-2-design-tokens-use-case-documentation: done
-   2-5-3-theme-provider-composite-token-tech-debt: done
-   epic-3: in-progress
--  3-1-target-page-json-fixture: ready-for-dev
-+  3-1-target-page-json-fixture: review
-   3-2-domain-entity-schema-parser: backlog
-   3-3-canonical-ast-serialization: backlog
-   3-4-ast-validation-engine: backlog
-diff --git a/_bmad-output/implementation-artifacts/stories/3-1-target-page-json-fixture.md b/_bmad-output/implementation-artifacts/stories/3-1-target-page-json-fixture.md
-index be87807..192008a 100644
---- a/_bmad-output/implementation-artifacts/stories/3-1-target-page-json-fixture.md
-+++ b/_bmad-output/implementation-artifacts/stories/3-1-target-page-json-fixture.md
-@@ -1,10 +1,11 @@
- ---
--status: ready-for-dev
-+baseline_commit: db07bc81f13559140a9b3781dfaa61e6db47599a
-+status: review
- ---
- 
- # Story 3.1: Target Page JSON Fixture
+@@ -75,7 +75,7 @@ development_status:
+   3-5-3-defensive-ast-traversal: done
+   epic-4: in-progress
+   4-1-capabilities-schema-parsing: done
+-  4-2-contracts-and-implementations: ready-for-dev
++  4-2-contracts-and-implementations: done
+   4-3-security-and-permissions-engine: backlog
+   4-4-extensibility-and-plugin-schema: backlog
+   4-5-behavior-validation-suite: backlog
+diff --git a/_bmad-output/implementation-artifacts/stories/4-2-contracts-and-implementations.md b/_bmad-output/implementation-artifacts/stories/4-2-contracts-and-implementations.md
+index 05ec718..b0b1334 100644
+--- a/_bmad-output/implementation-artifacts/stories/4-2-contracts-and-implementations.md
++++ b/_bmad-output/implementation-artifacts/stories/4-2-contracts-and-implementations.md
+@@ -1,6 +1,10 @@
++---
++baseline_commit: 4b37c59b01283611900a5bb837a7e99a38037267
++---
++
+ # Story 4.2: Contracts and Implementations
  
 -Status: ready-for-dev
-+Status: review
++Status: done
  
  <!-- Note: Validation is optional. Run validate-create-story for quality check before dev-story. -->
  
-@@ -23,26 +24,29 @@ so that I have a tangible target for the BADL schema to compile against.
- 
- ## Tasks / Subtasks
- 
--- [ ] Task 1: Create Target Page JSON Fixture (AC: 1)
--  - [ ] Scaffold a JSON file within `@origo/core/src/schemas/__fixtures__` (or equivalent test fixtures folder) that represents a complete JSON AST.
--  - [ ] Ensure the fixture represents a full CRUD screen, including multiple nested entities and relationships.
--  - [ ] Include core capabilities (e.g. CRUD+L) to represent what an actual page would look like.
--  - [ ] Add `metadata_path` values using the dot notation format (`EntityName.FieldName`).
--  - [ ] Ensure the fixture strictly conforms to canonical JSON formatting rules.
-+- [x] Task 1: Create Target Page JSON Fixture (AC: 1)
-+  - [x] Scaffold the fixture file exactly at `packages/core/src/schemas/__fixtures__/target-page.json`.
-+  - [x] Model a concrete **User Management** domain, including `User`, `Role`, and `Department` entities to ensure realistic complexity.
-+  - [x] Include core capabilities (CRUD+L: `CreateUser`, `ReadUser`, `UpdateUser`, `DeleteUser`, `ListUsers`).
-+  - [x] For every Entity field, include mandatory properties: `type`, `label`, `validation[]`, and `metadata_path` (FR-E-002).
-+  - [x] Add `metadata_path` values using the strict dot notation format (`EntityName.FieldName`).
-+  - [x] Ensure array ordering is semantically insignificant and IDs are stable across entities (FR-M-006).
-+  - [x] Ensure the fixture strictly conforms to canonical JSON formatting rules (FR-M-008) — no trailing commas, no comments.
-+- [x] Task 2: Syntactic Validation
-+  - [x] Run a JSON parser or quick node script (e.g., `node -e "require('./packages/core/src/schemas/__fixtures__/target-page.json')"`) to guarantee the file is valid JSON before completing the story.
- 
- ## Dev Notes
- 
- - **Architectural Constraints:**
-   - P1-AD-3: The format will eventually be validated against JSON Schema Draft 2020-12 (to be built in 3.2). The fixture needs to be realistic and accurate.
--  - P1-AD-4: `@origo/core` has strict internal module structure. The fixture should be placed appropriately for tests to consume, e.g., `packages/core/src/schemas/__fixtures__/target-page.json` or `packages/core/tests/fixtures/target-page.json`.
--  - AD-7: Must be JSON.
--  - AD-12: Test Selectors Use BADL `metadata_path` Values (`metadata_path: "EntityName.FieldName"`).
-+  - P1-AD-4: `@origo/core` has strict internal module structure. The fixture must be placed at `packages/core/src/schemas/__fixtures__/target-page.json` for validation tests to consume.
-+  - AD-7 / AD-12: Test Selectors Use BADL `metadata_path` Values (`metadata_path: "EntityName.FieldName"`). Must be strict JSON.
- - **Testing Standards:**
-   - This fixture serves as the primary dataset for unit and integration testing of the parser and validation engine in subsequent stories (3.2, 3.3, 3.4).
- 
- ### Project Structure Notes
- 
--- Alignment with unified project structure: Needs to be within `packages/core`.
-+- Alignment with unified project structure: Needs to be within `packages/core/src/schemas/__fixtures__`.
- 
- ### References
- 
-@@ -54,9 +58,14 @@ so that I have a tangible target for the BADL schema to compile against.
- ## Dev Agent Record
- 
- ### Agent Model Used
-+Gemini 3.1 Pro
- 
- ### Debug Log References
-+- JSON syntactic validation succeeded via node module loader.
- 
- ### Completion Notes List
-+- Created valid JSON fixture at `packages/core/src/schemas/__fixtures__/target-page.json` modeling User Management domain.
-+- Strictly followed FR-E-002, FR-M-006, and FR-M-008 constraints.
- 
- ### File List
-+- `packages/core/src/schemas/__fixtures__/target-page.json` (NEW)
-diff --git a/packages/core/src/schemas/__fixtures__/target-page.json b/packages/core/src/schemas/__fixtures__/target-page.json
+diff --git a/packages/core/src/schemas/contract.schema.json b/packages/core/src/schemas/contract.schema.json
 new file mode 100644
-index 0000000..70945fb
+index 0000000..8ee29bc
 --- /dev/null
-+++ b/packages/core/src/schemas/__fixtures__/target-page.json
-@@ -0,0 +1,158 @@
++++ b/packages/core/src/schemas/contract.schema.json
+@@ -0,0 +1,51 @@
 +{
-+  "version": "1.0.0",
-+  "domain": "User Management",
-+  "entities": [
-+    {
-+      "id": "entity-user",
-+      "name": "User",
-+      "fields": [
-+        {
-+          "id": "field-user-id",
-+          "name": "id",
-+          "type": "string",
-+          "label": "User ID",
-+          "validation": [
-+            "required",
-+            "uuid"
-+          ],
-+          "metadata_path": "User.id"
-+        },
-+        {
-+          "id": "field-user-username",
-+          "name": "username",
-+          "type": "string",
-+          "label": "Username",
-+          "validation": [
-+            "required",
-+            "minLength:3",
-+            "maxLength:50"
-+          ],
-+          "metadata_path": "User.username"
-+        },
-+        {
-+          "id": "field-user-email",
-+          "name": "email",
-+          "type": "string",
-+          "label": "Email Address",
-+          "validation": [
-+            "required",
-+            "email"
-+          ],
-+          "metadata_path": "User.email"
-+        },
-+        {
-+          "id": "field-user-roleId",
-+          "name": "roleId",
-+          "type": "string",
-+          "label": "Role ID",
-+          "validation": [
-+            "required"
-+          ],
-+          "metadata_path": "User.roleId"
-+        },
-+        {
-+          "id": "field-user-departmentId",
-+          "name": "departmentId",
-+          "type": "string",
-+          "label": "Department ID",
-+          "validation": [],
-+          "metadata_path": "User.departmentId"
-+        }
-+      ]
++  "$schema": "https://json-schema.org/draft/2020-12/schema",
++  "$id": "https://origo.design/schemas/v1/contract.schema.json",
++  "title": "Contract",
++  "description": "BADL Contract Definition",
++  "type": "object",
++  "properties": {
++    "id": {
++      "type": "string"
 +    },
-+    {
-+      "id": "entity-role",
-+      "name": "Role",
-+      "fields": [
-+        {
-+          "id": "field-role-id",
-+          "name": "id",
-+          "type": "string",
-+          "label": "Role ID",
-+          "validation": [
-+            "required",
-+            "uuid"
-+          ],
-+          "metadata_path": "Role.id"
-+        },
-+        {
-+          "id": "field-role-name",
-+          "name": "name",
-+          "type": "string",
-+          "label": "Role Name",
-+          "validation": [
-+            "required"
-+          ],
-+          "metadata_path": "Role.name"
-+        },
-+        {
-+          "id": "field-role-permissions",
-+          "name": "permissions",
-+          "type": "array",
-+          "label": "Permissions",
-+          "validation": [],
-+          "metadata_path": "Role.permissions"
-+        }
-+      ]
++    "name": {
++      "type": "string"
 +    },
-+    {
-+      "id": "entity-department",
-+      "name": "Department",
-+      "fields": [
-+        {
-+          "id": "field-department-id",
-+          "name": "id",
-+          "type": "string",
-+          "label": "Department ID",
-+          "validation": [
-+            "required",
-+            "uuid"
-+          ],
-+          "metadata_path": "Department.id"
++    "requiredFields": {
++      "type": "array",
++      "items": {
++        "type": "object",
++        "properties": {
++          "name": {
++            "type": "string"
++          },
++          "type": {
++            "type": "string",
++            "enum": ["string", "boolean", "date", "number", "array", "object"]
++          }
 +        },
-+        {
-+          "id": "field-department-name",
-+          "name": "name",
-+          "type": "string",
-+          "label": "Department Name",
-+          "validation": [
-+            "required"
-+          ],
-+          "metadata_path": "Department.name"
-+        }
-+      ]
++        "required": ["name", "type"],
++        "additionalProperties": false
++      }
++    },
++    "requiredCapabilities": {
++      "type": "array",
++      "items": {
++        "type": "object",
++        "properties": {
++          "name": {
++            "type": "string"
++          },
++          "type": {
++            "type": "string",
++            "enum": ["Command", "Query"]
++          }
++        },
++        "required": ["name", "type"],
++        "additionalProperties": false
++      }
 +    }
-+  ],
-+  "capabilities": [
-+    {
-+      "id": "cap-user-create",
-+      "name": "CreateUser",
-+      "type": "create",
-+      "entityId": "entity-user"
-+    },
-+    {
-+      "id": "cap-user-read",
-+      "name": "ReadUser",
-+      "type": "read",
-+      "entityId": "entity-user"
-+    },
-+    {
-+      "id": "cap-user-update",
-+      "name": "UpdateUser",
-+      "type": "update",
-+      "entityId": "entity-user"
-+    },
-+    {
-+      "id": "cap-user-delete",
-+      "name": "DeleteUser",
-+      "type": "delete",
-+      "entityId": "entity-user"
-+    },
-+    {
-+      "id": "cap-user-list",
-+      "name": "ListUsers",
-+      "type": "list",
-+      "entityId": "entity-user"
-+    }
-+  ]
++  },
++  "required": ["id", "name", "requiredFields", "requiredCapabilities"],
++  "additionalProperties": false
 +}
-```
+diff --git a/packages/core/src/schemas/domain.schema.json b/packages/core/src/schemas/domain.schema.json
+index 381b367..d66636e 100644
+--- a/packages/core/src/schemas/domain.schema.json
++++ b/packages/core/src/schemas/domain.schema.json
+@@ -28,6 +28,12 @@
+       "items": {
+         "$ref": "capability.schema.json"
+       }
++    },
++    "contracts": {
++      "type": "array",
++      "items": {
++        "$ref": "contract.schema.json"
++      }
+     }
+   },
+   "required": ["id", "name", "version", "domain", "entities"],
+diff --git a/packages/core/src/schemas/entity.schema.json b/packages/core/src/schemas/entity.schema.json
+index be093b1..992db7d 100644
+--- a/packages/core/src/schemas/entity.schema.json
++++ b/packages/core/src/schemas/entity.schema.json
+@@ -11,6 +11,12 @@
+     "name": {
+       "type": "string"
+     },
++    "implements": {
++      "type": "array",
++      "items": {
++        "type": "string"
++      }
++    },
+     "fields": {
+       "type": "array",
+       "items": {
+diff --git a/packages/core/src/types/domain.ts b/packages/core/src/types/domain.ts
+index e6b3e3b..4cb7540 100644
+--- a/packages/core/src/types/domain.ts
++++ b/packages/core/src/types/domain.ts
+@@ -1,3 +1,4 @@
++/* eslint-disable */
+ /**
+  * This file was automatically generated by json-schema-to-typescript.
+  * DO NOT MODIFY IT BY HAND. Instead, modify the source JSONSchema file,
+@@ -22,6 +23,7 @@ export interface Domain {
+   domain: string;
+   entities: Entity[];
+   capabilities?: Capability[];
++  contracts?: Contract[];
+ }
+ /**
+  * BADL Entity Definition
+@@ -29,10 +31,11 @@ export interface Domain {
+ export interface Entity {
+   id: string;
+   name: string;
++  implements?: string[];
+   fields: {
+     id: string;
+     name: string;
+-    type: 'string' | 'boolean' | 'date' | 'number' | 'array' | 'object';
++    type: "string" | "boolean" | "date" | "number" | "array" | "object";
+     itemType?: string;
+     label: string;
+     references?: string;
+@@ -45,9 +48,9 @@ export interface Capability2 {
+   /**
+    * Strict vocabulary of core capability verbs
+    */
+-  name: 'Create' | 'Read' | 'Update' | 'Delete' | 'List';
++  name: "Create" | "Read" | "Update" | "Delete" | "List";
+   description: string;
+-  type: 'Command' | 'Query';
++  type: "Command" | "Query";
+   /**
+    * Target entity for this capability
+    */
+@@ -56,7 +59,22 @@ export interface Capability2 {
+   preconditions: string[];
+   postconditions: string[];
+   permissions: string[];
+-  risk_level: 'low' | 'medium' | 'high' | 'critical';
++  risk_level: "low" | "medium" | "high" | "critical";
+   interaction_contract_ref?: string;
+   async: boolean;
+ }
++/**
++ * BADL Contract Definition
++ */
++export interface Contract {
++  id: string;
++  name: string;
++  requiredFields: {
++    name: string;
++    type: "string" | "boolean" | "date" | "number" | "array" | "object";
++  }[];
++  requiredCapabilities: {
++    name: string;
++    type: "Command" | "Query";
++  }[];
++}
+diff --git a/packages/core/src/validator/ast-validator.spec.ts b/packages/core/src/validator/ast-validator.spec.ts
+index e349786..c5316f4 100644
+--- a/packages/core/src/validator/ast-validator.spec.ts
++++ b/packages/core/src/validator/ast-validator.spec.ts
+@@ -446,4 +446,172 @@ describe('AST Validation Engine', () => {
+     expect(errors.length).toBeGreaterThan(0);
+     expect(errors.some(e => e.type === 'MAX_DEPTH_EXCEEDED')).toBe(true);
+   });
++
++  describe('Contract Validation', () => {
++    it('should pass when entity correctly implements a contract', () => {
++      const ast: CanonicalAST = {
++        schemaVersion: '1.0.0',
++        domains: [
++          {
++            id: 'domain-1',
++            name: 'Core',
++            version: '1.0.0',
++            domain: 'core',
++            contracts: [
++              {
++                id: 'contract-1',
++                name: 'Renderable',
++                requiredFields: [{ name: 'title', type: 'string' }],
++                requiredCapabilities: [{ name: 'Read', type: 'Query' }],
++              },
++            ],
++            entities: [
++              {
++                id: 'entity-1',
++                name: 'Article',
++                implements: ['contract-1'],
++                fields: [
++                  {
++                    id: 'f1',
++                    name: 'title',
++                    type: 'string',
++                    label: 'Title',
++                    validation: [],
++                    metadata_path: '',
++                  },
++                ],
++              },
++            ],
++            capabilities: [
++              {
++                id: 'cap-1',
++                name: 'Read',
++                description: 'Read Article',
++                type: 'Query',
++                entityId: 'entity-1',
++                outcome_ref: [],
++                preconditions: [],
++                postconditions: [],
++                permissions: [],
++                risk_level: 'low',
++                async: false,
++              },
++            ],
++          },
++        ],
++      };
++      expect(validateAST(ast)).toEqual([]);
++    });
++
++    it('should fail when entity is missing a required contract field', () => {
++      const ast: CanonicalAST = {
++        schemaVersion: '1.0.0',
++        domains: [
++          {
++            id: 'domain-1',
++            name: 'Core',
++            version: '1.0.0',
++            domain: 'core',
++            contracts: [
++              {
++                id: 'contract-1',
++                name: 'Renderable',
++                requiredFields: [{ name: 'title', type: 'string' }],
++                requiredCapabilities: [],
++              },
++            ],
++            entities: [
++              {
++                id: 'entity-1',
++                name: 'Article',
++                implements: ['contract-1'],
++                fields: [],
++              },
++            ],
++          },
++        ],
++      };
++      const errors = validateAST(ast);
++      expect(errors).toHaveLength(1);
++      expect(errors[0].type).toBe('CONTRACT_BREACH');
++      expect(errors[0].message).toMatch(/Entity "entity-1" missing required field "title" for contract "contract-1"/);
++    });
++
++    it('should fail when entity is missing a required contract capability', () => {
++      const ast: CanonicalAST = {
++        schemaVersion: '1.0.0',
++        domains: [
++          {
++            id: 'domain-1',
++            name: 'Core',
++            version: '1.0.0',
++            domain: 'core',
++            contracts: [
++              {
++                id: 'contract-1',
++                name: 'Renderable',
++                requiredFields: [],
++                requiredCapabilities: [{ name: 'Read', type: 'Query' }],
++              },
++            ],
++            entities: [
++              {
++                id: 'entity-1',
++                name: 'Article',
++                implements: ['contract-1'],
++                fields: [],
++              },
++            ],
++          },
++        ],
++      };
++      const errors = validateAST(ast);
++      expect(errors).toHaveLength(1);
++      expect(errors[0].type).toBe('CONTRACT_BREACH');
++      expect(errors[0].message).toMatch(/Entity "entity-1" missing required capability "Read" \(Query\) for contract "contract-1"/);
++    });
++
++    it('should fail when entity field has wrong type for contract', () => {
++      const ast: CanonicalAST = {
++        schemaVersion: '1.0.0',
++        domains: [
++          {
++            id: 'domain-1',
++            name: 'Core',
++            version: '1.0.0',
++            domain: 'core',
++            contracts: [
++              {
++                id: 'contract-1',
++                name: 'Renderable',
++                requiredFields: [{ name: 'title', type: 'string' }],
++                requiredCapabilities: [],
++              },
++            ],
++            entities: [
++              {
++                id: 'entity-1',
++                name: 'Article',
++                implements: ['contract-1'],
++                fields: [
++                  {
++                    id: 'f1',
++                    name: 'title',
++                    type: 'number',
++                    label: 'Title',
++                    validation: [],
++                    metadata_path: '',
++                  }
++                ],
++              },
++            ],
++          },
++        ],
++      };
++      const errors = validateAST(ast);
++      expect(errors).toHaveLength(1);
++      expect(errors[0].type).toBe('CONTRACT_BREACH');
++      expect(errors[0].message).toMatch(/Entity "entity-1" field "title" has type "number" but contract "contract-1" requires "string"/);
++    });
++  });
+ });
+diff --git a/packages/core/src/validator/ast-validator.ts b/packages/core/src/validator/ast-validator.ts
+index b6ccf91..5b239b8 100644
+--- a/packages/core/src/validator/ast-validator.ts
++++ b/packages/core/src/validator/ast-validator.ts
+@@ -19,8 +19,10 @@ export function validateAST(ast: CanonicalAST): ValidationError[] {
+   }
+   const entityDomainMap = new Map<string, string>();
+   const capabilityIds = new Set<string>();
++  const contractMap = new Map<string, any>();
++  const entityCapabilities = new Map<string, any[]>();
+ 
+-  // First pass: Collect all entities and capabilities to ensure unique IDs and for quick lookup
++  // First pass: Collect all entities, capabilities, and contracts to ensure unique IDs and for quick lookup
+   for (let dIndex = 0; dIndex < ast.domains.length; dIndex++) {
+     const domain = ast.domains[dIndex];
+     if (!domain) continue;
+@@ -58,6 +60,27 @@ export function validateAST(ast: CanonicalAST): ValidationError[] {
+       } else {
+         capabilityIds.add(capability.id);
+       }
++
++      if (capability.entityId) {
++        const existingCaps = entityCapabilities.get(capability.entityId) || [];
++        existingCaps.push(capability);
++        entityCapabilities.set(capability.entityId, existingCaps);
++      }
++    }
++
++    const contracts = Array.isArray(domain.contracts) ? domain.contracts : [];
++    for (let cIdx = 0; cIdx < contracts.length; cIdx++) {
++      const contract = contracts[cIdx];
++      if (!contract || !contract.id) continue;
++      if (contractMap.has(contract.id)) {
++        errors.push({
++          type: 'DUPLICATE_ID',
++          message: `Duplicate contract ID found: ${contract.id}`,
++          path: `domains[${dIndex}].contracts[${cIdx}].id`,
++        });
++      } else {
++        contractMap.set(contract.id, contract);
++      }
+     }
+   }
+ 
+@@ -87,6 +110,53 @@ export function validateAST(ast: CanonicalAST): ValidationError[] {
+       }
+       const existingDeps = adjList.get(entity.id) || [];
+       adjList.set(entity.id, [...existingDeps, ...dependencies]);
++
++      if (Array.isArray(entity.implements)) {
++        for (const contractId of entity.implements) {
++          const contract = contractMap.get(contractId);
++          if (!contract) {
++            errors.push({
++              type: 'MISSING_REFERENCE',
++              message: `Entity "${entity.id}" implements missing contract "${contractId}"`,
++              path: `${entity.id}.implements`,
++            });
++            continue;
++          }
++
++          if (Array.isArray(contract.requiredFields)) {
++            for (const reqField of contract.requiredFields) {
++              const entityField = (entity.fields || []).find((f: any) => f.name === reqField.name);
++              if (!entityField) {
++                errors.push({
++                  type: 'CONTRACT_BREACH',
++                  message: `Entity "${entity.id}" missing required field "${reqField.name}" for contract "${contract.id}"`,
++                  path: `${entity.id}.implements`,
++                });
++              } else if (entityField.type !== reqField.type) {
++                errors.push({
++                  type: 'CONTRACT_BREACH',
++                  message: `Entity "${entity.id}" field "${reqField.name}" has type "${entityField.type}" but contract "${contract.id}" requires "${reqField.type}"`,
++                  path: `${entity.id}.fields.${entityField.id}`,
++                });
++              }
++            }
++          }
++
++          if (Array.isArray(contract.requiredCapabilities)) {
++            const caps = entityCapabilities.get(entity.id) || [];
++            for (const reqCap of contract.requiredCapabilities) {
++              const hasCap = caps.some((c: any) => c.name === reqCap.name && c.type === reqCap.type);
++              if (!hasCap) {
++                errors.push({
++                  type: 'CONTRACT_BREACH',
++                  message: `Entity "${entity.id}" missing required capability "${reqCap.name}" (${reqCap.type}) for contract "${contract.id}"`,
++                  path: `${entity.id}.implements`,
++                });
++              }
++            }
++          }
++        }
++      }
+     }
+ 
+     const capabilities = Array.isArray(domain.capabilities) ? domain.capabilities : [];
+diff --git a/packages/core/src/validator/index.ts b/packages/core/src/validator/index.ts
+index 98aefd8..b86e37e 100644
+--- a/packages/core/src/validator/index.ts
++++ b/packages/core/src/validator/index.ts
+@@ -4,6 +4,7 @@ import addErrors from 'ajv-errors';
+ import * as domainSchema from '../schemas/domain.schema.json';
+ import * as entitySchema from '../schemas/entity.schema.json';
+ import * as capabilitySchema from '../schemas/capability.schema.json';
++import * as contractSchema from '../schemas/contract.schema.json';
+ 
+ export interface ValidatorOptions {
+   maxDepth?: number;
+@@ -29,10 +30,14 @@ export class BADLValidator {
+     const resolvedCapabilitySchema =
+       (capabilitySchema as Record<string, unknown>)['default'] ?? capabilitySchema;
+ 
++    const resolvedContractSchema =
++      (contractSchema as Record<string, unknown>)['default'] ?? contractSchema;
++
+     this.ajv.addSchema(
+       resolvedCapabilitySchema,
+       'https://origo.design/schemas/v1/capability.schema.json'
+     );
++    this.ajv.addSchema(resolvedContractSchema, 'https://origo.design/schemas/v1/contract.schema.json');
+     this.ajv.addSchema(resolvedEntitySchema, 'https://origo.design/schemas/v1/entity.schema.json');
+     this.ajv.addSchema(resolvedDomainSchema, 'https://origo.design/schemas/v1/domain.schema.json');
+   }
+
