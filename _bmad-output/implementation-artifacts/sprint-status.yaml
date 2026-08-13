@@ -41,7 +41,7 @@
 # - Retrospective appends its action items to action_items; sprint-status surfaces open ones
 
 generated: 2026-07-29T21:46:02.464968
-last_updated: 2026-08-13T15:59:00+05:30
+last_updated: 2026-08-13T17:05:00+05:30
 project: origo-design
 project_key: NOKEY
 tracking_system: file-system
@@ -76,7 +76,7 @@ development_status:
   epic-4: in-progress
   4-1-capabilities-schema-parsing: done
   4-2-contracts-and-implementations: done
-  4-3-security-and-permissions-engine: backlog
+  4-3-security-and-permissions-engine: ready-for-dev
   4-4-extensibility-and-plugin-schema: backlog
   4-5-behavior-validation-suite: backlog
   4-6-formal-extension-manifest-lifecycle-fr-ext-008-to-013: backlog
