@@ -1,3 +1,13 @@
+## 0.0.3 (2026-08-13)
+
+### 🚀 Features
+
+- 4-1-capabilities-schema-parsing ([869c872](https://github.com/OrigoStudio/origo-design/commit/869c872))
+
+### ❤️ Thank You
+
+- Hardik Patel @hardikpatelse
+
 ## 0.0.2 (2026-08-12)
 
 ### 🚀 Features
