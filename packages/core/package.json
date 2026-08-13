@@ -10,7 +10,7 @@
     "ajv-errors": "^3.0.0",
     "ajv-formats": "^3.0.1",
     "json-schema-to-typescript": "^14.1.0",
-    "semver": "^7.8.5",
+    "semver": "^7.7.4",
     "tslib": "^2.3.0"
   },
   "devDependencies": {
