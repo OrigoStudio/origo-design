@@ -183,7 +183,7 @@ describe('AST Validation Engine', () => {
               outcome_ref: [],
               preconditions: [],
               postconditions: [],
-              permissions: [],
+              permissions: [{ role: 'admin' }],
               risk_level: 'low',
               interaction_contract_ref: 'ref',
               async: false,
@@ -492,7 +492,7 @@ describe('AST Validation Engine', () => {
                 outcome_ref: [],
                 preconditions: [],
                 postconditions: [],
-                permissions: [],
+                permissions: [{ role: 'admin' }],
                 risk_level: 'low',
                 async: false,
               },
@@ -723,7 +723,7 @@ describe('AST Validation Engine', () => {
                 outcome_ref: [],
                 preconditions: [],
                 postconditions: [],
-                permissions: [],
+                permissions: [{ role: 'admin' }],
                 risk_level: 'low',
                 async: false,
               },
@@ -733,6 +733,269 @@ describe('AST Validation Engine', () => {
       };
       const errors = validateAST(ast);
       expect(errors).toEqual([]); // Should pass cross-boundary capability check
+    });
+  });
+  describe('Security Validation', () => {
+    it('should pass when capability has valid permissions', () => {
+      const ast: CanonicalAST = {
+        schemaVersion: '1.0.0',
+        domains: [
+          {
+            id: 'domain-1',
+            name: 'Core',
+            version: '1.0.0',
+            domain: 'core',
+            entities: [
+              {
+                id: 'entity-1',
+                name: 'Article',
+                fields: [],
+              },
+            ],
+            capabilities: [
+              {
+                id: 'cap-1',
+                name: 'Read',
+                description: 'Read Article',
+                type: 'Query',
+                entityId: 'entity-1',
+                outcome_ref: [],
+                preconditions: [],
+                postconditions: [],
+                permissions: [{ role: 'admin', access: 'grant' }],
+                risk_level: 'low',
+                async: false,
+              },
+            ],
+          },
+        ],
+      };
+      expect(validateAST(ast)).toEqual([]);
+    });
+
+    it('should fail with UNSECURED_CAPABILITY when permissions array is empty', () => {
+      const ast: CanonicalAST = {
+        schemaVersion: '1.0.0',
+        domains: [
+          {
+            id: 'domain-1',
+            name: 'Core',
+            version: '1.0.0',
+            domain: 'core',
+            entities: [
+              {
+                id: 'entity-1',
+                name: 'Article',
+                fields: [],
+              },
+            ],
+            capabilities: [
+              {
+                id: 'cap-1',
+                name: 'Read',
+                description: 'Read Article',
+                type: 'Query',
+                entityId: 'entity-1',
+                outcome_ref: [],
+                preconditions: [],
+                postconditions: [],
+                permissions: [],
+                risk_level: 'low',
+                async: false,
+              },
+            ],
+          },
+        ],
+      };
+      const errors = validateAST(ast);
+      expect(errors).toHaveLength(1);
+      expect(errors[0].type).toBe('UNSECURED_CAPABILITY');
+      expect(errors[0].message).toMatch(
+        /Capability "cap-1" is unsecured. Fail-closed policy requires at least one permission/
+      );
+      expect(errors[0].path).toBe('domains[0].capabilities[0].permissions');
+    });
+
+    it('should fail with UNSECURED_CAPABILITY when permissions is missing', () => {
+      const ast: CanonicalAST = {
+        schemaVersion: '1.0.0',
+        domains: [
+          {
+            id: 'domain-1',
+            name: 'Core',
+            version: '1.0.0',
+            domain: 'core',
+            entities: [
+              {
+                id: 'entity-1',
+                name: 'Article',
+                fields: [],
+              },
+            ],
+            capabilities: [
+              {
+                id: 'cap-1',
+                name: 'Read',
+                description: 'Read Article',
+                type: 'Query',
+                entityId: 'entity-1',
+                outcome_ref: [],
+                preconditions: [],
+                postconditions: [],
+                risk_level: 'low',
+                async: false,
+              } as any,
+            ],
+          },
+        ],
+      };
+      const errors = validateAST(ast);
+      expect(errors).toHaveLength(1);
+      expect(errors[0].type).toBe('UNSECURED_CAPABILITY');
+    });
+
+    it('should fail with INVALID_PERMISSION when permission is missing role', () => {
+      const ast: CanonicalAST = {
+        schemaVersion: '1.0.0',
+        domains: [
+          {
+            id: 'domain-1',
+            name: 'Core',
+            version: '1.0.0',
+            domain: 'core',
+            entities: [
+              {
+                id: 'entity-1',
+                name: 'Article',
+                fields: [],
+              },
+            ],
+            capabilities: [
+              {
+                id: 'cap-1',
+                name: 'Read',
+                description: 'Read Article',
+                type: 'Query',
+                entityId: 'entity-1',
+                outcome_ref: [],
+                preconditions: [],
+                postconditions: [],
+                permissions: [{ access: 'grant' } as any],
+                risk_level: 'low',
+                async: false,
+              },
+            ],
+          },
+        ],
+      };
+      const errors = validateAST(ast);
+      expect(errors).toHaveLength(1);
+      expect(errors[0].type).toBe('INVALID_PERMISSION');
+      expect(errors[0].message).toMatch(/invalid permission definition/);
+      expect(errors[0].path).toBe('domains[0].capabilities[0].permissions[0]');
+    });
+
+    it('should fail with INVALID_PERMISSION when permission is null', () => {
+      const ast: CanonicalAST = {
+        schemaVersion: '1.0.0',
+        domains: [
+          {
+            id: 'domain-1',
+            name: 'Core',
+            version: '1.0.0',
+            domain: 'core',
+            entities: [{ id: 'entity-1', name: 'Article', fields: [] }],
+            capabilities: [
+              {
+                id: 'cap-1',
+                name: 'Read',
+                description: 'Read',
+                type: 'Query',
+                entityId: 'entity-1',
+                outcome_ref: [],
+                preconditions: [],
+                postconditions: [],
+                permissions: [null as any],
+                risk_level: 'low',
+                async: false,
+              },
+            ],
+          },
+        ],
+      };
+      const errors = validateAST(ast);
+      expect(errors).toHaveLength(1);
+      expect(errors[0].type).toBe('INVALID_PERMISSION');
+      expect(errors[0].message).toMatch(/invalid permission definition/);
+    });
+
+    it('should fail with INVALID_PERMISSION when access is invalid', () => {
+      const ast: CanonicalAST = {
+        schemaVersion: '1.0.0',
+        domains: [
+          {
+            id: 'domain-1',
+            name: 'Core',
+            version: '1.0.0',
+            domain: 'core',
+            entities: [{ id: 'entity-1', name: 'Article', fields: [] }],
+            capabilities: [
+              {
+                id: 'cap-1',
+                name: 'Read',
+                description: 'Read',
+                type: 'Query',
+                entityId: 'entity-1',
+                outcome_ref: [],
+                preconditions: [],
+                postconditions: [],
+                permissions: [{ role: 'admin', access: 'unknown' } as any],
+                risk_level: 'low',
+                async: false,
+              },
+            ],
+          },
+        ],
+      };
+      const errors = validateAST(ast);
+      expect(errors).toHaveLength(1);
+      expect(errors[0].type).toBe('INVALID_PERMISSION');
+      expect(errors[0].message).toMatch(/invalid access definition/);
+      expect(errors[0].path).toBe('domains[0].capabilities[0].permissions[0].access');
+    });
+
+    it('should trim role strings and default access to grant', () => {
+      const ast: CanonicalAST = {
+        schemaVersion: '1.0.0',
+        domains: [
+          {
+            id: 'domain-1',
+            name: 'Core',
+            version: '1.0.0',
+            domain: 'core',
+            entities: [{ id: 'entity-1', name: 'Article', fields: [] }],
+            capabilities: [
+              {
+                id: 'cap-1',
+                name: 'Read',
+                description: 'Read',
+                type: 'Query',
+                entityId: 'entity-1',
+                outcome_ref: [],
+                preconditions: [],
+                postconditions: [],
+                permissions: [{ role: ' admin  ' }],
+                risk_level: 'low',
+                async: false,
+              },
+            ],
+          },
+        ],
+      };
+      const errors = validateAST(ast);
+      expect(errors).toHaveLength(0);
+      expect(ast.domains[0].capabilities![0].permissions[0].role).toBe('admin');
+      expect(ast.domains[0].capabilities![0].permissions[0].access).toBe('grant');
     });
   });
 });
