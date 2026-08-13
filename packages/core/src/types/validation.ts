@@ -4,6 +4,13 @@ export interface ValidationError {
   path?: string;
 }
 
+export type ASTErrorType =
+  | 'CONTRACT_BREACH'
+  | 'INVALID_PERMISSION'
+  | 'UNSECURED_CAPABILITY'
+  | 'MISSING_MANIFEST_VERSION'
+  | 'VERSION_MISMATCH';
+
 export class ASTValidationError extends Error {
   public errors: ValidationError[];
 

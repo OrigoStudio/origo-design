@@ -1,6 +1,7 @@
 import { CanonicalAST } from '../types/ast';
 import { ValidationError } from '../types/validation';
 import { Contract, Capability } from '../types/domain';
+import * as semver from 'semver';
 
 export const MAX_AST_DEPTH = 250;
 
@@ -11,7 +12,10 @@ export const MAX_AST_DEPTH = 250;
  * @param ast The Canonical AST to validate
  * @returns {ValidationError[]} Array of validation errors, or empty array if valid.
  */
-export function validateAST(ast: CanonicalAST): ValidationError[] {
+export function validateAST(
+  ast: CanonicalAST,
+  localManifest?: Record<string, string>
+): ValidationError[] {
   const errors: ValidationError[] = [];
 
   if (!ast || !Array.isArray(ast.domains)) {
@@ -19,6 +23,7 @@ export function validateAST(ast: CanonicalAST): ValidationError[] {
     return errors;
   }
   const entityDomainMap = new Map<string, string>();
+  const extensionIds = new Set<string>();
   const capabilityIds = new Set<string>();
   const contractMap = new Map<string, Contract>();
   const entityCapabilities = new Map<string, Capability[]>();
@@ -89,6 +94,33 @@ export function validateAST(ast: CanonicalAST): ValidationError[] {
         });
       } else {
         contractMap.set(contract.id, contract);
+      }
+    }
+
+    const extensions = Array.isArray(domain.extensions) ? domain.extensions : [];
+    for (let eIdx = 0; eIdx < extensions.length; eIdx++) {
+      const ext = extensions[eIdx];
+      if (!ext || !ext.id) {
+        errors.push({
+          type: 'INVALID_FORMAT',
+          message: 'Extension missing id',
+          path: `domains[${dIndex}].extensions[${eIdx}]`,
+        });
+        continue;
+      }
+      if (
+        contractMap.has(ext.id) ||
+        capabilityIds.has(ext.id) ||
+        entityDomainMap.has(ext.id) ||
+        extensionIds.has(ext.id)
+      ) {
+        errors.push({
+          type: 'DUPLICATE_ID',
+          message: `Duplicate ID found across extensions and other types: ${ext.id}`,
+          path: `domains[${dIndex}].extensions[${eIdx}].id`,
+        });
+      } else {
+        extensionIds.add(ext.id);
       }
     }
   }
@@ -235,6 +267,54 @@ export function validateAST(ast: CanonicalAST): ValidationError[] {
               });
             }
           }
+        }
+      }
+    }
+
+    const extensions = Array.isArray(domain.extensions) ? domain.extensions : [];
+    for (let eIndex = 0; eIndex < extensions.length; eIndex++) {
+      const ext = extensions[eIndex];
+      if (!ext || !ext.id) continue;
+
+      const extPath = `domains[${dIndex}].extensions[${eIndex}]`;
+      if (!Array.isArray(ext.implements) || ext.implements.length === 0) {
+        errors.push({
+          type: 'MISSING_REFERENCE',
+          message: `Extension missing implements contract reference: ${ext.id}`,
+          path: `${extPath}.implements`,
+        });
+      } else {
+        for (const imp of ext.implements) {
+          if (!contractMap.has(imp)) {
+            errors.push({
+              type: 'MISSING_REFERENCE',
+              message: `Invalid extension reference: Contract "${imp}" referenced by extension "${ext.id}" does not exist`,
+              path: `${extPath}.implements`,
+            });
+          }
+        }
+      }
+
+      if (localManifest && ext.name && ext.plugin_version_range) {
+        const localVersion = localManifest[ext.name];
+        if (!localVersion) {
+          errors.push({
+            type: 'MISSING_MANIFEST_VERSION',
+            message: `Local manifest is missing version for extension "${ext.name}"`,
+            path: `${extPath}.name`,
+          });
+        } else if (!semver.valid(localVersion) || !semver.validRange(ext.plugin_version_range)) {
+          errors.push({
+            type: 'VERSION_MISMATCH',
+            message: `Invalid semver format for extension "${ext.name}"`,
+            path: `${extPath}.plugin_version_range`,
+          });
+        } else if (!semver.satisfies(localVersion, ext.plugin_version_range)) {
+          errors.push({
+            type: 'VERSION_MISMATCH',
+            message: `Extension "${ext.name}" requires plugin version "${ext.plugin_version_range}" but local manifest provides "${localVersion}"`,
+            path: `${extPath}.plugin_version_range`,
+          });
         }
       }
     }

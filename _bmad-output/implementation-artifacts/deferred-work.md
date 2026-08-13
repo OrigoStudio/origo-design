@@ -65,3 +65,6 @@
 - Overly restrictive top-level schema requirement
 - Unoptimized quadratic lookup in contract field validation
 - Unchecked cross-domain contract references
+## Deferred from: code review of 4-4-extensibility-and-plugin-schema.md (2026-08-13)
+- Unchecked Mutability in AST Parameter: \alidateAST\ mutates input properties directly (e.g., \perm.role.trim()\), violating functional purity.
+
