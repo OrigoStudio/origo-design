@@ -1,3 +1,15 @@
+## 0.0.6 (2026-08-13)
+
+### 🚀 Features
+
+- initialize sprint-status.yaml to track project development and retrospective action items ([66c6cdf](https://github.com/OrigoStudio/origo-design/commit/66c6cdf))
+- implement AST validation engine with support for circular dependency detection and reference integrity checks ([afd48c9](https://github.com/OrigoStudio/origo-design/commit/afd48c9))
+- initialize package.json for @origo/core with essential dependencies ([f819e96](https://github.com/OrigoStudio/origo-design/commit/f819e96))
+
+### ❤️ Thank You
+
+- Hardik Patel @hardikpatelse
+
 ## 0.0.5 (2026-08-13)
 
 ### 🚀 Features
