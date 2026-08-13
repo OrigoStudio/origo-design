@@ -125,45 +125,98 @@
   "capabilities": [
     {
       "id": "cap-user-create",
-      "name": "CreateUser",
-      "type": "create",
-      "entityId": "entity-user"
+      "name": "Create",
+      "description": "Create a User",
+      "type": "Command",
+      "entityId": "entity-user",
+      "outcome_ref": ["outcome-1"],
+      "preconditions": ["pre-1"],
+      "postconditions": ["post-1"],
+      "permissions": ["perm-1"],
+      "risk_level": "medium",
+      "async": false
     },
     {
       "id": "cap-user-read",
-      "name": "ReadUser",
-      "type": "read",
-      "entityId": "entity-user"
+      "name": "Read",
+      "description": "Read a User",
+      "type": "Query",
+      "entityId": "entity-user",
+      "outcome_ref": [],
+      "preconditions": [],
+      "postconditions": [],
+      "permissions": [],
+      "risk_level": "low",
+      "interaction_contract_ref": "ref",
+      "async": true
     },
     {
       "id": "cap-user-update",
-      "name": "UpdateUser",
-      "type": "update",
-      "entityId": "entity-user"
+      "name": "Update",
+      "description": "Update a User",
+      "type": "Command",
+      "entityId": "entity-user",
+      "outcome_ref": [],
+      "preconditions": [],
+      "postconditions": [],
+      "permissions": [],
+      "risk_level": "high",
+      "async": false
     },
     {
       "id": "cap-user-delete",
-      "name": "DeleteUser",
-      "type": "delete",
-      "entityId": "entity-user"
+      "name": "Delete",
+      "description": "Delete a User",
+      "type": "Command",
+      "entityId": "entity-user",
+      "outcome_ref": [],
+      "preconditions": [],
+      "postconditions": [],
+      "permissions": [],
+      "risk_level": "critical",
+      "async": false
     },
     {
       "id": "cap-user-list",
-      "name": "ListUsers",
-      "type": "list",
-      "entityId": "entity-user"
+      "name": "List",
+      "description": "List Users",
+      "type": "Query",
+      "entityId": "entity-user",
+      "outcome_ref": [],
+      "preconditions": [],
+      "postconditions": [],
+      "permissions": [],
+      "risk_level": "low",
+      "interaction_contract_ref": "ref",
+      "async": false
     },
     {
       "id": "cap-role-list",
-      "name": "ListRoles",
-      "type": "list",
-      "entityId": "entity-role"
+      "name": "List",
+      "description": "List Roles",
+      "type": "Query",
+      "entityId": "entity-role",
+      "outcome_ref": [],
+      "preconditions": [],
+      "postconditions": [],
+      "permissions": [],
+      "risk_level": "low",
+      "interaction_contract_ref": "ref",
+      "async": false
     },
     {
       "id": "cap-department-list",
-      "name": "ListDepartments",
-      "type": "list",
-      "entityId": "entity-department"
+      "name": "List",
+      "description": "List Departments",
+      "type": "Query",
+      "entityId": "entity-department",
+      "outcome_ref": [],
+      "preconditions": [],
+      "postconditions": [],
+      "permissions": [],
+      "risk_level": "low",
+      "interaction_contract_ref": "ref",
+      "async": false
     }
   ]
 }

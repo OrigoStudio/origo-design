@@ -157,6 +157,49 @@ describe('AST Validation Engine', () => {
     );
   });
 
+  it('should report an error for capabilities referencing missing entities', () => {
+    const ast: CanonicalAST = {
+      schemaVersion: '1.0.0',
+      domains: [
+        {
+          id: 'domain-1',
+          name: 'Core',
+          version: '1.0.0',
+          domain: 'core',
+          entities: [
+            {
+              id: 'entity-1',
+              name: 'Order',
+              fields: [],
+            },
+          ],
+          capabilities: [
+            {
+              id: 'cap-1',
+              name: 'Create',
+              description: 'create',
+              type: 'Command',
+              entityId: 'entity-missing',
+              outcome_ref: [],
+              preconditions: [],
+              postconditions: [],
+              permissions: [],
+              risk_level: 'low',
+              interaction_contract_ref: 'ref',
+              async: false,
+            },
+          ],
+        },
+      ],
+    };
+    const errors = validateAST(ast);
+    expect(errors).toHaveLength(1);
+    expect(errors[0].type).toBe('MISSING_REFERENCE');
+    expect(errors[0].message).toMatch(
+      /Invalid capability reference: Entity "entity-missing" referenced by capability "cap-1" does not exist/
+    );
+  });
+
   it('should report an error if multiple domains declare the same entity ID', () => {
     const ast: CanonicalAST = {
       schemaVersion: '1.0.0',

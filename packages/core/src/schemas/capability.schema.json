@@ -1,0 +1,104 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://origo.design/schemas/v1/capability.schema.json",
+  "title": "Capability",
+  "description": "BADL Capability Definition",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "name": {
+      "type": "string",
+      "enum": ["Create", "Read", "Update", "Delete", "List"],
+      "description": "Strict vocabulary of core capability verbs"
+    },
+    "description": {
+      "type": "string"
+    },
+    "type": {
+      "type": "string",
+      "enum": ["Command", "Query"]
+    },
+    "entityId": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Target entity for this capability"
+    },
+    "outcome_ref": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "preconditions": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "postconditions": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "permissions": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "risk_level": {
+      "type": "string",
+      "enum": ["low", "medium", "high", "critical"]
+    },
+    "interaction_contract_ref": {
+      "type": "string"
+    },
+    "async": {
+      "type": "boolean"
+    }
+  },
+  "required": [
+    "id",
+    "name",
+    "description",
+    "type",
+    "entityId",
+    "outcome_ref",
+    "preconditions",
+    "postconditions",
+    "permissions",
+    "risk_level",
+    "async"
+  ],
+  "additionalProperties": false,
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "name": { "enum": ["Create", "Update", "Delete"] }
+        }
+      },
+      "then": {
+        "properties": {
+          "type": { "const": "Command" }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "name": { "enum": ["Read", "List"] }
+        }
+      },
+      "then": {
+        "properties": {
+          "type": { "const": "Query" }
+        }
+      }
+    }
+  ]
+}

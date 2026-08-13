@@ -15,12 +15,6 @@ async function generate() {
     declareExternallyReferenced: true,
   });
   fs.writeFileSync(path.join(typesDir, 'domain.ts'), domainTs);
-
-  const entityTs = await compileFromFile(path.join(schemasDir, 'entity.schema.json'), {
-    cwd: schemasDir,
-    declareExternallyReferenced: true,
-  });
-  fs.writeFileSync(path.join(typesDir, 'entity.ts'), entityTs);
 }
 
 generate().catch(e => {

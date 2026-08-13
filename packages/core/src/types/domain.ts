@@ -5,6 +5,14 @@
  */
 
 /**
+ * BADL Capability Definition
+ */
+export type Capability = Capability1 & Capability2;
+export type Capability1 = {
+  [k: string]: unknown;
+};
+
+/**
  * BADL Domain Definition
  */
 export interface Domain {
@@ -13,12 +21,7 @@ export interface Domain {
   version: string;
   domain: string;
   entities: Entity[];
-  capabilities?: {
-    id: string;
-    name: string;
-    type: string;
-    entityId: string;
-  }[];
+  capabilities?: Capability[];
 }
 /**
  * BADL Entity Definition
@@ -36,4 +39,24 @@ export interface Entity {
     validation: string[];
     metadata_path: string;
   }[];
+}
+export interface Capability2 {
+  id: string;
+  /**
+   * Strict vocabulary of core capability verbs
+   */
+  name: 'Create' | 'Read' | 'Update' | 'Delete' | 'List';
+  description: string;
+  type: 'Command' | 'Query';
+  /**
+   * Target entity for this capability
+   */
+  entityId: string;
+  outcome_ref: string[];
+  preconditions: string[];
+  postconditions: string[];
+  permissions: string[];
+  risk_level: 'low' | 'medium' | 'high' | 'critical';
+  interaction_contract_ref?: string;
+  async: boolean;
 }

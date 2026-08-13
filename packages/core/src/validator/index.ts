@@ -3,6 +3,7 @@ import addFormats from 'ajv-formats';
 import addErrors from 'ajv-errors';
 import * as domainSchema from '../schemas/domain.schema.json';
 import * as entitySchema from '../schemas/entity.schema.json';
+import * as capabilitySchema from '../schemas/capability.schema.json';
 
 export interface ValidatorOptions {
   maxDepth?: number;
@@ -25,7 +26,13 @@ export class BADLValidator {
       (entitySchema as Record<string, unknown>)['default'] ?? entitySchema;
     const resolvedDomainSchema =
       (domainSchema as Record<string, unknown>)['default'] ?? domainSchema;
+    const resolvedCapabilitySchema =
+      (capabilitySchema as Record<string, unknown>)['default'] ?? capabilitySchema;
 
+    this.ajv.addSchema(
+      resolvedCapabilitySchema,
+      'https://origo.design/schemas/v1/capability.schema.json'
+    );
     this.ajv.addSchema(resolvedEntitySchema, 'https://origo.design/schemas/v1/entity.schema.json');
     this.ajv.addSchema(resolvedDomainSchema, 'https://origo.design/schemas/v1/domain.schema.json');
   }

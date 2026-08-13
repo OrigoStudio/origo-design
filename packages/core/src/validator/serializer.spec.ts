@@ -119,11 +119,11 @@ describe('AST Serializer', () => {
           name: 'Domain 1',
           version: '1',
           domain: 'example',
-          entities: [],
-          capabilities: [
-            { name: 'Cap B', type: 'Query', entityId: 'e' },
-            { name: 'Cap A', type: 'Query', entityId: 'e' },
+          entities: [
+            { name: 'Cap B', type: 'Query' },
+            { name: 'Cap A', type: 'Query' },
           ],
+          capabilities: [],
         },
       ],
     };
@@ -136,11 +136,11 @@ describe('AST Serializer', () => {
           name: 'Domain 1',
           version: '1',
           domain: 'example',
-          entities: [],
-          capabilities: [
-            { name: 'Cap A', type: 'Query', entityId: 'e' },
-            { name: 'Cap B', type: 'Query', entityId: 'e' },
+          entities: [
+            { name: 'Cap A', type: 'Query' },
+            { name: 'Cap B', type: 'Query' },
           ],
+          capabilities: [],
         },
       ],
     };
@@ -153,8 +153,8 @@ describe('AST Serializer', () => {
     expect(serialized1).toBe(serialized2);
 
     const parsed = JSON.parse(serialized1 as string);
-    expect(parsed.domains[0].capabilities[0].name).toBe('Cap A');
-    expect(parsed.domains[0].capabilities[1].name).toBe('Cap B');
+    expect(parsed.domains[0].entities[0].name).toBe('Cap A');
+    expect(parsed.domains[0].entities[1].name).toBe('Cap B');
   });
 
   it('should return errors if schemaVersion is missing', () => {

@@ -26,23 +26,7 @@
     "capabilities": {
       "type": "array",
       "items": {
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "string"
-          },
-          "name": {
-            "type": "string"
-          },
-          "type": {
-            "type": "string"
-          },
-          "entityId": {
-            "type": "string"
-          }
-        },
-        "required": ["id", "name", "type", "entityId"],
-        "additionalProperties": false
+        "$ref": "capability.schema.json"
       }
     }
   },

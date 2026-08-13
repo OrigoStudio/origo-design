@@ -48,6 +48,47 @@ describe('BADLValidator', () => {
       expect(validator.errors).toBeDefined();
     });
 
+    it('should fail if Capability uses a non-CRUD+L verb for name', () => {
+      const invalidDomain = {
+        ...targetPageFixture,
+        capabilities: [
+          {
+            id: 'cap-1',
+            name: 'Initialize', // Invalid verb
+            description: 'Init',
+            type: 'Command',
+            entityId: 'entity-1',
+            outcome_ref: [],
+            preconditions: [],
+            postconditions: [],
+            permissions: [],
+            risk_level: 'low',
+            interaction_contract_ref: 'ref',
+            async: false,
+          },
+        ],
+      };
+      const isValid = validator.validateDomain(invalidDomain);
+      expect(isValid).toBe(false);
+      expect(validator.errors).toBeDefined();
+    });
+
+    it('should fail if Capability is missing required fields', () => {
+      const invalidDomain = {
+        ...targetPageFixture,
+        capabilities: [
+          {
+            id: 'cap-2',
+            name: 'Create', // Valid verb
+            // missing other fields
+          },
+        ],
+      };
+      const isValid = validator.validateDomain(invalidDomain);
+      expect(isValid).toBe(false);
+      expect(validator.errors).toBeDefined();
+    });
+
     it('should correctly enforce depth limiting to prevent circular dependency stack overflows', () => {
       // Simulate an infinite circular dependency graph
       interface MockEntity {

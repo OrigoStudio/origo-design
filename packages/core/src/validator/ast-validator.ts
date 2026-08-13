@@ -17,22 +17,46 @@ export function validateAST(ast: CanonicalAST): ValidationError[] {
     errors.push({ type: 'INVALID_FORMAT', message: 'Invalid AST: missing domains array' });
     return errors;
   }
-  const entityMap = new Map<string, string>();
+  const entityDomainMap = new Map<string, string>();
+  const capabilityIds = new Set<string>();
 
-  // First pass: Collect all entities to ensure unique IDs and for quick lookup
-  for (const domain of ast.domains) {
+  // First pass: Collect all entities and capabilities to ensure unique IDs and for quick lookup
+  for (let dIndex = 0; dIndex < ast.domains.length; dIndex++) {
+    const domain = ast.domains[dIndex];
     if (!domain) continue;
     const entities = Array.isArray(domain.entities) ? domain.entities : [];
     for (const entity of entities) {
       if (!entity || !entity.id) continue;
-      if (entityMap.has(entity.id)) {
+      if (entityDomainMap.has(entity.id)) {
         errors.push({
           type: 'DUPLICATE_ID',
           message: `Duplicate entity ID found: ${entity.id}`,
           path: entity.id,
         });
       } else {
-        entityMap.set(entity.id, entity.name);
+        entityDomainMap.set(entity.id, domain.id);
+      }
+    }
+
+    const capabilities = Array.isArray(domain.capabilities) ? domain.capabilities : [];
+    for (let cIndex = 0; cIndex < capabilities.length; cIndex++) {
+      const capability = capabilities[cIndex];
+      if (!capability || !capability.id) {
+        errors.push({
+          type: 'INVALID_FORMAT',
+          message: `Capability missing id in domain ${domain.id}`,
+          path: `domains[${dIndex}].capabilities[${cIndex}]`,
+        });
+        continue;
+      }
+      if (capabilityIds.has(capability.id)) {
+        errors.push({
+          type: 'DUPLICATE_ID',
+          message: `Duplicate capability ID found: ${capability.id}`,
+          path: `domains[${dIndex}].capabilities[${cIndex}].id`,
+        });
+      } else {
+        capabilityIds.add(capability.id);
       }
     }
   }
@@ -40,7 +64,8 @@ export function validateAST(ast: CanonicalAST): ValidationError[] {
   // Second pass: Validate field references and detect cycles
   const adjList = new Map<string, string[]>();
 
-  for (const domain of ast.domains) {
+  for (let dIndex = 0; dIndex < ast.domains.length; dIndex++) {
+    const domain = ast.domains[dIndex];
     if (!domain) continue;
     const entities = Array.isArray(domain.entities) ? domain.entities : [];
     for (const entity of entities) {
@@ -49,7 +74,7 @@ export function validateAST(ast: CanonicalAST): ValidationError[] {
       const fields = Array.isArray(entity.fields) ? entity.fields : [];
       for (const field of fields) {
         if (field.references) {
-          if (!entityMap.has(field.references)) {
+          if (!entityDomainMap.has(field.references)) {
             errors.push({
               type: 'MISSING_REFERENCE',
               message: `Invalid consumption rule: Entity "${field.references}" referenced by field "${field.id}" does not exist`,
@@ -62,6 +87,37 @@ export function validateAST(ast: CanonicalAST): ValidationError[] {
       }
       const existingDeps = adjList.get(entity.id) || [];
       adjList.set(entity.id, [...existingDeps, ...dependencies]);
+    }
+
+    const capabilities = Array.isArray(domain.capabilities) ? domain.capabilities : [];
+    for (let cIndex = 0; cIndex < capabilities.length; cIndex++) {
+      const capability = capabilities[cIndex];
+      if (!capability || !capability.id) continue;
+
+      const capPath = `domains[${dIndex}].capabilities[${cIndex}]`;
+      if (!capability.entityId) {
+        errors.push({
+          type: 'MISSING_REFERENCE',
+          message: `Capability missing entityId: ${capability.id}`,
+          path: `${capPath}.entityId`,
+        });
+        continue;
+      }
+
+      const targetDomainId = entityDomainMap.get(capability.entityId);
+      if (!targetDomainId) {
+        errors.push({
+          type: 'MISSING_REFERENCE',
+          message: `Invalid capability reference: Entity "${capability.entityId}" referenced by capability "${capability.id}" does not exist`,
+          path: `${capPath}.entityId`,
+        });
+      } else if (targetDomainId !== domain.id) {
+        errors.push({
+          type: 'INVALID_REFERENCE',
+          message: `Cross-domain capability reference: Capability "${capability.id}" in domain "${domain.id}" cannot reference entity "${capability.entityId}" in domain "${targetDomainId}"`,
+          path: `${capPath}.entityId`,
+        });
+      }
     }
   }
 
@@ -109,7 +165,7 @@ export function validateAST(ast: CanonicalAST): ValidationError[] {
     visited.add(nodeId);
   }
 
-  for (const entityId of entityMap.keys()) {
+  for (const entityId of entityDomainMap.keys()) {
     if (!visited.has(entityId)) {
       dfs(entityId, [], 1);
     }
