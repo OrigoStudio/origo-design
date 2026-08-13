@@ -22,6 +22,7 @@ export interface Domain {
   domain: string;
   entities: Entity[];
   capabilities?: Capability[];
+  contracts?: Contract[];
 }
 /**
  * BADL Entity Definition
@@ -29,6 +30,7 @@ export interface Domain {
 export interface Entity {
   id: string;
   name: string;
+  implements?: string[];
   fields: {
     id: string;
     name: string;
@@ -59,4 +61,19 @@ export interface Capability2 {
   risk_level: 'low' | 'medium' | 'high' | 'critical';
   interaction_contract_ref?: string;
   async: boolean;
+}
+/**
+ * BADL Contract Definition
+ */
+export interface Contract {
+  id: string;
+  name: string;
+  requiredFields: {
+    name: string;
+    type: 'string' | 'boolean' | 'date' | 'number' | 'array' | 'object';
+  }[];
+  requiredCapabilities: {
+    name: string;
+    type: 'Command' | 'Query';
+  }[];
 }

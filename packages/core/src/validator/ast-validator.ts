@@ -1,5 +1,6 @@
 import { CanonicalAST } from '../types/ast';
 import { ValidationError } from '../types/validation';
+import { Contract, Capability } from '../types/domain';
 
 export const MAX_AST_DEPTH = 250;
 
@@ -19,8 +20,10 @@ export function validateAST(ast: CanonicalAST): ValidationError[] {
   }
   const entityDomainMap = new Map<string, string>();
   const capabilityIds = new Set<string>();
+  const contractMap = new Map<string, Contract>();
+  const entityCapabilities = new Map<string, Capability[]>();
 
-  // First pass: Collect all entities and capabilities to ensure unique IDs and for quick lookup
+  // First pass: Collect all entities, capabilities, and contracts to ensure unique IDs and for quick lookup
   for (let dIndex = 0; dIndex < ast.domains.length; dIndex++) {
     const domain = ast.domains[dIndex];
     if (!domain) continue;
@@ -55,8 +58,37 @@ export function validateAST(ast: CanonicalAST): ValidationError[] {
           message: `Duplicate capability ID found: ${capability.id}`,
           path: `domains[${dIndex}].capabilities[${cIndex}].id`,
         });
+        continue;
       } else {
         capabilityIds.add(capability.id);
+      }
+
+      if (capability.entityId) {
+        const existingCaps = entityCapabilities.get(capability.entityId) || [];
+        existingCaps.push(capability);
+        entityCapabilities.set(capability.entityId, existingCaps);
+      }
+    }
+
+    const contracts = Array.isArray(domain.contracts) ? domain.contracts : [];
+    for (let cIdx = 0; cIdx < contracts.length; cIdx++) {
+      const contract = contracts[cIdx];
+      if (!contract || !contract.id) {
+        errors.push({
+          type: 'INVALID_FORMAT',
+          message: 'Contract missing id',
+          path: `domains[${dIndex}].contracts[${cIdx}]`,
+        });
+        continue;
+      }
+      if (contractMap.has(contract.id)) {
+        errors.push({
+          type: 'DUPLICATE_ID',
+          message: `Duplicate contract ID found: ${contract.id}`,
+          path: `domains[${dIndex}].contracts[${cIdx}].id`,
+        });
+      } else {
+        contractMap.set(contract.id, contract);
       }
     }
   }
@@ -68,7 +100,8 @@ export function validateAST(ast: CanonicalAST): ValidationError[] {
     const domain = ast.domains[dIndex];
     if (!domain) continue;
     const entities = Array.isArray(domain.entities) ? domain.entities : [];
-    for (const entity of entities) {
+    for (let eIndex = 0; eIndex < entities.length; eIndex++) {
+      const entity = entities[eIndex];
       if (!entity || !entity.id) continue;
       const dependencies: string[] = [];
       const fields = Array.isArray(entity.fields) ? entity.fields : [];
@@ -87,6 +120,57 @@ export function validateAST(ast: CanonicalAST): ValidationError[] {
       }
       const existingDeps = adjList.get(entity.id) || [];
       adjList.set(entity.id, [...existingDeps, ...dependencies]);
+
+      if (Array.isArray(entity.implements)) {
+        for (const contractId of entity.implements) {
+          const contract = contractMap.get(contractId);
+          if (!contract) {
+            errors.push({
+              type: 'MISSING_REFERENCE',
+              message: `Entity "${entity.id}" implements missing contract "${contractId}"`,
+              path: `domains[${dIndex}].entities[${eIndex}].implements`,
+            });
+            continue;
+          }
+
+          if (Array.isArray(contract.requiredFields)) {
+            for (const reqField of contract.requiredFields) {
+              if (!reqField || typeof reqField !== 'object' || !reqField.name) continue;
+              const entityField = (entity.fields || []).find((f: any) => f.name === reqField.name);
+              if (!entityField) {
+                errors.push({
+                  type: 'CONTRACT_BREACH',
+                  message: `Entity "${entity.id}" missing required field "${reqField.name}" for contract "${contract.id}"`,
+                  path: `domains[${dIndex}].entities[${eIndex}].implements`,
+                });
+              } else if (entityField.type !== reqField.type) {
+                errors.push({
+                  type: 'CONTRACT_BREACH',
+                  message: `Entity "${entity.id}" field "${reqField.name}" has type "${entityField.type}" but contract "${contract.id}" requires "${reqField.type}"`,
+                  path: `domains[${dIndex}].entities[${eIndex}].fields.${entityField.id}`,
+                });
+              }
+            }
+          }
+
+          if (Array.isArray(contract.requiredCapabilities)) {
+            const caps = entityCapabilities.get(entity.id) || [];
+            for (const reqCap of contract.requiredCapabilities) {
+              if (!reqCap || typeof reqCap !== 'object' || !reqCap.name || !reqCap.type) continue;
+              const hasCap = caps.some(
+                (c: any) => c.name === reqCap.name && c.type === reqCap.type
+              );
+              if (!hasCap) {
+                errors.push({
+                  type: 'CONTRACT_BREACH',
+                  message: `Entity "${entity.id}" missing required capability "${reqCap.name}" (${reqCap.type}) for contract "${contract.id}"`,
+                  path: `domains[${dIndex}].entities[${eIndex}].implements`,
+                });
+              }
+            }
+          }
+        }
+      }
     }
 
     const capabilities = Array.isArray(domain.capabilities) ? domain.capabilities : [];
@@ -109,12 +193,6 @@ export function validateAST(ast: CanonicalAST): ValidationError[] {
         errors.push({
           type: 'MISSING_REFERENCE',
           message: `Invalid capability reference: Entity "${capability.entityId}" referenced by capability "${capability.id}" does not exist`,
-          path: `${capPath}.entityId`,
-        });
-      } else if (targetDomainId !== domain.id) {
-        errors.push({
-          type: 'INVALID_REFERENCE',
-          message: `Cross-domain capability reference: Capability "${capability.id}" in domain "${domain.id}" cannot reference entity "${capability.entityId}" in domain "${targetDomainId}"`,
           path: `${capPath}.entityId`,
         });
       }

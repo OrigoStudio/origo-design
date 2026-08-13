@@ -59,3 +59,9 @@
 - Inefficient `JSON.stringify` in Array Sorting [packages/core/src/validator/serializer.ts:63]
 - Vague Error Typing with Generic `string` Type [packages/core/src/types/validation.ts:5]
 - No Structural Schema Validation [packages/core/src/validator/ast-validator.ts:40]
+
+## Deferred from: code review (4-2-contracts-and-implementations.md)
+- Incomplete schema constraints for contract field types
+- Overly restrictive top-level schema requirement
+- Unoptimized quadratic lookup in contract field validation
+- Unchecked cross-domain contract references

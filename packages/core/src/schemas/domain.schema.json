@@ -28,6 +28,12 @@
       "items": {
         "$ref": "capability.schema.json"
       }
+    },
+    "contracts": {
+      "type": "array",
+      "items": {
+        "$ref": "contract.schema.json"
+      }
     }
   },
   "required": ["id", "name", "version", "domain", "entities"],
