@@ -1,3 +1,14 @@
+## 0.0.5 (2026-08-13)
+
+### 🚀 Features
+
+- add story 4.3 for security and permissions engine and update sprint status ([3eb4aae](https://github.com/OrigoStudio/origo-design/commit/3eb4aae))
+- **core:** implement security and permissions engine ([d066d90](https://github.com/OrigoStudio/origo-design/commit/d066d90))
+
+### ❤️ Thank You
+
+- Hardik Patel @hardikpatelse
+
 ## 0.0.4 (2026-08-13)
 
 ### 🚀 Features
