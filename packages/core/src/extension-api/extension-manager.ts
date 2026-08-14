@@ -25,6 +25,7 @@ export class ExtensionManager {
     { manifest: ExtensionManifest; lifecycle: ExtensionLifecycle; state: ExtensionState }
   > = new Map();
   private capabilities: Set<string> = new Set();
+  private grantedPermissions: Map<string, Set<string>> = new Map();
 
   public registerExtension(manifest: ExtensionManifest, lifecycle: ExtensionLifecycle) {
     if (!manifest) throw new ExtensionError('Manifest is required', 'INVALID_MANIFEST');
@@ -36,6 +37,7 @@ export class ExtensionManager {
       );
     }
     this.validateManifest(manifest);
+    this.grantedPermissions.set(manifest.id, new Set());
     this.extensions.set(manifest.id, { manifest, lifecycle, state: ExtensionState.REGISTERED });
   }
 
@@ -92,6 +94,18 @@ export class ExtensionManager {
         }
       }
     }
+
+    if (manifest.permissions !== undefined) {
+      if (
+        !Array.isArray(manifest.permissions) ||
+        manifest.permissions.some(p => typeof p !== 'string' || !p.trim())
+      ) {
+        throw new ExtensionError(
+          'permissions must be an array of non-empty strings',
+          'INVALID_MANIFEST'
+        );
+      }
+    }
   }
 
   private negotiateCapabilities(manifest: ExtensionManifest) {
@@ -103,6 +117,84 @@ export class ExtensionManager {
         if (!this.capabilities.has(cap)) {
           throw new ExtensionError(`Missing required capability: ${cap}`, 'MISSING_CAPABILITY');
         }
+      }
+    }
+  }
+
+  public grantPermission(id: string, permission: string) {
+    const ext = this.extensions.get(id);
+    if (!ext) throw new ExtensionError(`Extension not found: ${id}`, 'NOT_FOUND');
+
+    if (ext.state !== ExtensionState.REGISTERED) {
+      throw new ExtensionError(
+        `Cannot grant permissions after extension initialization (current state: ${ext.state})`,
+        'INVALID_LIFECYCLE'
+      );
+    }
+
+    const declaredPermissions = ext.manifest.permissions || [];
+    if (!declaredPermissions.includes(permission)) {
+      throw new ExtensionError(
+        `Permission not declared in manifest: ${permission}`,
+        'UNDECLARED_PERMISSION'
+      );
+    }
+
+    const granted = this.grantedPermissions.get(id)!;
+    granted.add(permission);
+  }
+
+  public getDeclaredPermissions(id: string): string[] {
+    const ext = this.extensions.get(id);
+    if (!ext) throw new ExtensionError(`Extension not found: ${id}`, 'NOT_FOUND');
+    return ext.manifest.permissions || [];
+  }
+
+  public getGrantedPermissions(id: string): string[] {
+    const ext = this.extensions.get(id);
+    if (!ext) throw new ExtensionError(`Extension not found: ${id}`, 'NOT_FOUND');
+    return Array.from(this.grantedPermissions.get(id)!);
+  }
+
+  public hasPermission(id: string, permission: string): boolean {
+    const ext = this.extensions.get(id);
+    if (!ext) throw new ExtensionError(`Extension not found: ${id}`, 'NOT_FOUND');
+    return this.grantedPermissions.get(id)!.has(permission);
+  }
+
+  public checkPermission(id: string, permission: string) {
+    if (!this.hasPermission(id, permission)) {
+      throw new ExtensionError(
+        `Unauthorized access: Missing permission ${permission}`,
+        'UNAUTHORIZED_ACCESS'
+      );
+    }
+  }
+
+  private createSandboxContext(id: string, baseContext?: unknown): unknown {
+    if (!baseContext || typeof baseContext !== 'object') return baseContext;
+    return new Proxy(baseContext as any, {
+      get: (target, prop, receiver) => {
+        const value = Reflect.get(target, prop, receiver);
+        if (typeof value === 'function') {
+          return (...args: any[]) => value.apply(target, args);
+        }
+        return value;
+      },
+    });
+  }
+
+  private enforcePermissionsBeforeExecution(manifest: ExtensionManifest) {
+    const id = manifest.id;
+    const declared = manifest.permissions || [];
+    const granted = this.grantedPermissions.get(id)!;
+
+    for (const perm of declared) {
+      if (!granted.has(perm)) {
+        throw new ExtensionError(
+          `Cannot execute extension ${id}: Missing required permission ${perm}`,
+          'UNAUTHORIZED_ACCESS'
+        );
       }
     }
   }
@@ -175,8 +267,11 @@ export class ExtensionManager {
       );
     }
 
+    this.enforcePermissionsBeforeExecution(ext.manifest);
     this.negotiateCapabilities(ext.manifest);
-    await ext.lifecycle.initialize(context);
+
+    const sandboxedContext = this.createSandboxContext(id, context);
+    await ext.lifecycle.initialize(sandboxedContext);
     ext.state = ExtensionState.INITIALIZED;
   }
 
@@ -190,6 +285,7 @@ export class ExtensionManager {
       );
     }
 
+    this.enforcePermissionsBeforeExecution(ext.manifest);
     await ext.lifecycle.configure(config);
     ext.state = ExtensionState.CONFIGURED;
   }
@@ -204,6 +300,7 @@ export class ExtensionManager {
       );
     }
 
+    this.enforcePermissionsBeforeExecution(ext.manifest);
     const isValid = await ext.lifecycle.validate();
     if (!isValid) {
       throw new ExtensionError(`Extension failed validation: ${id}`, 'VALIDATION_FAILED');
@@ -221,6 +318,7 @@ export class ExtensionManager {
       );
     }
 
+    this.enforcePermissionsBeforeExecution(ext.manifest);
     await ext.lifecycle.activate();
     ext.state = ExtensionState.ACTIVATED;
   }

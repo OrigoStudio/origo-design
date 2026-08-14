@@ -13,6 +13,8 @@ export interface ExtensionManifest {
   apiRanges?: Record<string, string>;
   /** Capabilities required by this extension */
   capabilities?: string[];
+  /** Permissions required by this extension for sandbox access */
+  permissions?: string[];
   /** Dependencies on other extensions (map of extension id to semver range) */
   dependencies?: Record<string, string>;
 }
