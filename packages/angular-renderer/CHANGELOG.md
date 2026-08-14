@@ -1,3 +1,14 @@
+## 0.0.10 (2026-08-14)
+
+### 🚀 Features
+
+- implement extension API scaffolding, define Angular signals patterns, and add renderer test utilities ([d2adbed](https://github.com/OrigoStudio/origo-design/commit/d2adbed))
+- mark Epic 4 as complete and record its retrospective action items in sprint status ([37c2caa](https://github.com/OrigoStudio/origo-design/commit/37c2caa))
+
+### ❤️ Thank You
+
+- Hardik Patel @hardikpatelse
+
 ## 0.0.9 (2026-08-14)
 
 ### 🚀 Features

@@ -1,6 +1,6 @@
 {
   "name": "@origo/design-tokens",
-  "version": "0.0.9",
+  "version": "0.0.10",
   "private": false,
   "type": "commonjs",
   "main": "./src/index.js",
