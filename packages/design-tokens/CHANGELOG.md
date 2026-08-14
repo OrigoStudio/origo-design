@@ -1,3 +1,13 @@
+## 0.0.9 (2026-08-14)
+
+### 🚀 Features
+
+- implement extension manager with manifest validation, permission security, and dependency resolution ([154b0d4](https://github.com/OrigoStudio/origo-design/commit/154b0d4))
+
+### ❤️ Thank You
+
+- Hardik Patel @hardikpatelse
+
 ## 0.0.8 (2026-08-14)
 
 ### 🚀 Features
