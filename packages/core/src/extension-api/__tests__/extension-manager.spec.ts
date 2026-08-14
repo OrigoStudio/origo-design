@@ -369,4 +369,146 @@ describe('ExtensionManager', () => {
       expect(aLifecycle.initialize).toHaveBeenCalled();
     });
   });
+
+  describe('Security and Sandboxing', () => {
+    it('should throw if granting undeclared permission', () => {
+      manager.registerExtension(
+        { id: 'test', name: 'Test', version: '1.0.0', type: 'test', permissions: ['network'] },
+        createMockLifecycle()
+      );
+      expect(() => manager.grantPermission('test', 'fs')).toThrow(
+        new ExtensionError('Permission not declared in manifest: fs', 'UNDECLARED_PERMISSION')
+      );
+    });
+
+    it('should successfully grant and check declared permission', () => {
+      manager.registerExtension(
+        {
+          id: 'test',
+          name: 'Test',
+          version: '1.0.0',
+          type: 'test',
+          permissions: ['network', 'fs'],
+        },
+        createMockLifecycle()
+      );
+      manager.grantPermission('test', 'network');
+      expect(() => manager.checkPermission('test', 'network')).not.toThrow();
+    });
+
+    it('should throw UNAUTHORIZED_ACCESS if permission is checked but not granted', () => {
+      manager.registerExtension(
+        { id: 'test', name: 'Test', version: '1.0.0', type: 'test', permissions: ['network'] },
+        createMockLifecycle()
+      );
+      expect(() => manager.checkPermission('test', 'network')).toThrow(
+        new ExtensionError('Unauthorized access: Missing permission network', 'UNAUTHORIZED_ACCESS')
+      );
+    });
+
+    it('should throw NOT_FOUND for unknown extension in grant/check', () => {
+      expect(() => manager.grantPermission('unknown', 'net')).toThrow(
+        new ExtensionError('Extension not found: unknown', 'NOT_FOUND')
+      );
+      expect(() => manager.checkPermission('unknown', 'net')).toThrow(
+        new ExtensionError('Extension not found: unknown', 'NOT_FOUND')
+      );
+    });
+
+    it('should throw on invalid permissions array in manifest', () => {
+      const invalidManifests = [
+        { permissions: 'not-an-array' },
+        { permissions: [123] },
+        { permissions: [null] },
+        { permissions: [''] },
+        { permissions: ['   '] },
+      ];
+
+      for (const invalid of invalidManifests) {
+        const manifest = {
+          id: 'test',
+          name: 'Test',
+          version: '1.0.0',
+          type: 'test',
+          ...invalid,
+        } as any;
+        expect(() => manager.registerExtension(manifest, createMockLifecycle())).toThrow(
+          new ExtensionError(
+            'permissions must be an array of non-empty strings',
+            'INVALID_MANIFEST'
+          )
+        );
+      }
+    });
+
+    it('should successfully retrieve declared and granted permissions', () => {
+      manager.registerExtension(
+        {
+          id: 'test',
+          name: 'Test',
+          version: '1.0.0',
+          type: 'test',
+          permissions: ['network', 'fs'],
+        },
+        createMockLifecycle()
+      );
+      expect(manager.getDeclaredPermissions('test')).toEqual(['network', 'fs']);
+      expect(manager.getGrantedPermissions('test')).toEqual([]);
+      manager.grantPermission('test', 'network');
+      expect(manager.getGrantedPermissions('test')).toEqual(['network']);
+      expect(manager.hasPermission('test', 'network')).toBe(true);
+      expect(manager.hasPermission('test', 'fs')).toBe(false);
+    });
+
+    it('should throw if granting permissions after initialization', async () => {
+      manager.registerExtension(
+        { id: 'test', name: 'Test', version: '1.0.0', type: 'test', permissions: ['network'] },
+        createMockLifecycle()
+      );
+      manager.grantPermission('test', 'network');
+      await manager.initializeExtension('test', {});
+      expect(() => manager.grantPermission('test', 'network')).toThrow(
+        new ExtensionError(
+          'Cannot grant permissions after extension initialization (current state: INITIALIZED)',
+          'INVALID_LIFECYCLE'
+        )
+      );
+    });
+
+    it('should throw on execution if missing required permissions during lifecycle', async () => {
+      manager.registerExtension(
+        { id: 'test', name: 'Test', version: '1.0.0', type: 'test', permissions: ['network'] },
+        createMockLifecycle()
+      );
+      // We haven't granted the 'network' permission
+      await expect(manager.initializeExtension('test', {})).rejects.toThrow(
+        new ExtensionError(
+          'Cannot execute extension test: Missing required permission network',
+          'UNAUTHORIZED_ACCESS'
+        )
+      );
+    });
+
+    it('should proxy the context during initialization', async () => {
+      const lifecycle = createMockLifecycle();
+      manager.registerExtension(
+        { id: 'test', name: 'Test', version: '1.0.0', type: 'test' },
+        lifecycle
+      );
+
+      const context = {
+        doSomething: jest.fn(),
+        value: 42,
+      };
+
+      await manager.initializeExtension('test', context);
+
+      const calledContext = (lifecycle.initialize as jest.Mock).mock.calls[0][0];
+      expect(calledContext).not.toBe(context); // It's a Proxy
+      expect(calledContext.value).toBe(42);
+
+      calledContext.doSomething();
+      expect(context.doSomething).toHaveBeenCalled();
+    });
+  });
 });

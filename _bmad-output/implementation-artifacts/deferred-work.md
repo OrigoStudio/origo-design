@@ -80,3 +80,9 @@
 - Unhandled lifecycle rejection state poisoning — deferred, pre-existing
 - Capability management lacks namespace, unregistration, and inspection — deferred, pre-existing
 - Missing introspection and query APIs — deferred, pre-existing
+
+## Deferred from: code review of 4-7-extension-security-sandboxing-fr-ext-014.md (2026-08-14)
+- No Permission Revocation Mechanisms
+- Untyped Magic Strings for Permissions
+- No Batch Permission Granting API
+- No Capability-to-Permission Mapping or Integration
