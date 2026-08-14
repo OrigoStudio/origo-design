@@ -1,3 +1,13 @@
+## 0.0.8 (2026-08-14)
+
+### 🚀 Features
+
+- implement formal extension manifest, capability negotiation, and lifecycle management in core extension-api ([808f113](https://github.com/OrigoStudio/origo-design/commit/808f113))
+
+### ❤️ Thank You
+
+- Hardik Patel @hardikpatelse
+
 ## 0.0.7 (2026-08-14)
 
 ### 🚀 Features
