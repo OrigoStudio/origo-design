@@ -1,3 +1,13 @@
+## 0.0.11 (2026-08-14)
+
+### 🚀 Features
+
+- implement angular-renderer package with AST-based dynamic component instantiation and registry support ([500f396](https://github.com/OrigoStudio/origo-design/commit/500f396))
+
+### ❤️ Thank You
+
+- Hardik Patel @hardikpatelse
+
 ## 0.0.10 (2026-08-14)
 
 ### 🚀 Features

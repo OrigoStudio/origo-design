@@ -1,13 +1,13 @@
 {
   "name": "angular-renderer",
-  "version": "0.0.10",
+  "version": "0.0.11",
   "private": true,
   "type": "commonjs",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
   "dependencies": {
-    "@origo/core": "0.0.10",
-    "@origo/design-tokens": "0.0.10",
+    "@origo/core": "0.0.11",
+    "@origo/design-tokens": "0.0.11",
     "tslib": "^2.3.0"
   },
   "peerDependencies": {
