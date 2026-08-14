@@ -1,0 +1,87 @@
+{
+  "schemaVersion": "1.0.0",
+  "domains": [
+    {
+      "id": "domain-core",
+      "name": "Core System",
+      "version": "1.0.0",
+      "domain": "core",
+      "contracts": [
+        {
+          "id": "contract-viewable",
+          "name": "Viewable",
+          "description": "Can be viewed",
+          "requiredFields": [{ "name": "title", "type": "string" }],
+          "requiredCapabilities": [{ "name": "read", "type": "read" }]
+        }
+      ],
+      "entities": [
+        {
+          "id": "entity-page",
+          "name": "Page",
+          "fields": [
+            {
+              "id": "field-title",
+              "name": "title",
+              "type": "string",
+              "label": "Title",
+              "validation": [],
+              "metadata_path": "page.title"
+            },
+            {
+              "id": "field-author",
+              "name": "author",
+              "type": "string",
+              "references": "entity-user",
+              "label": "Author",
+              "validation": [],
+              "metadata_path": "page.author"
+            }
+          ],
+          "implements": ["contract-viewable"]
+        },
+        {
+          "id": "entity-user",
+          "name": "User",
+          "fields": [
+            {
+              "id": "field-username",
+              "name": "username",
+              "type": "string",
+              "label": "Username",
+              "validation": [],
+              "metadata_path": "user.username"
+            }
+          ]
+        }
+      ],
+      "capabilities": [
+        {
+          "id": "cap-read-page",
+          "name": "read",
+          "type": "read",
+          "entityId": "entity-page",
+          "permissions": [{ "role": "viewer", "access": "grant" }]
+        },
+        {
+          "id": "cap-edit-page",
+          "name": "update",
+          "type": "update",
+          "entityId": "entity-page",
+          "permissions": [
+            { "role": "editor", "access": "grant" },
+            { "role": "guest", "access": "deny" }
+          ]
+        }
+      ],
+      "extensions": [
+        {
+          "id": "ext-seo-metadata",
+          "name": "seo-plugin",
+          "plugin_version_range": "^1.0.0",
+          "implements": ["contract-viewable"]
+        }
+      ]
+    }
+  ]
+}
