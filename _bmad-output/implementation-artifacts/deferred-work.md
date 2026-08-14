@@ -71,3 +71,12 @@
 
 ## Deferred from: code review of 4-5-behavior-validation-suite.md (2026-08-14)
 - Explicit edge cases found in ast-validator.ts (e.g. Domain id missing, null elements) — deferred, pre-existing known edge cases
+
+## Deferred from: code review of 4-6-formal-extension-manifest-lifecycle-fr-ext-008-to-013.md (2026-08-14)
+
+- Manifest range validation without runtime version verification — deferred, pre-existing
+- No rollback or failure recovery in loadAll — deferred, pre-existing
+- Missing teardown and deactivation lifecycle — deferred, pre-existing
+- Unhandled lifecycle rejection state poisoning — deferred, pre-existing
+- Capability management lacks namespace, unregistration, and inspection — deferred, pre-existing
+- Missing introspection and query APIs — deferred, pre-existing
