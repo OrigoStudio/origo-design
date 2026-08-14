@@ -1,4 +1,4 @@
-import { ExtensionManifest, ExtensionLifecycle } from './types';
+import { ExtensionManifest, ExtensionLifecycle, CorePermission, ExtensionContext } from './types';
 import * as semver from 'semver';
 
 export class ExtensionError extends Error {
@@ -25,7 +25,7 @@ export class ExtensionManager {
     { manifest: ExtensionManifest; lifecycle: ExtensionLifecycle; state: ExtensionState }
   > = new Map();
   private capabilities: Set<string> = new Set();
-  private grantedPermissions: Map<string, Set<string>> = new Map();
+  private grantedPermissions: Map<string, Set<CorePermission>> = new Map();
 
   public registerExtension(manifest: ExtensionManifest, lifecycle: ExtensionLifecycle) {
     if (!manifest) throw new ExtensionError('Manifest is required', 'INVALID_MANIFEST');
@@ -42,6 +42,12 @@ export class ExtensionManager {
   }
 
   public registerCapability(capability: string) {
+    if (!/^[a-z0-9-]+:[a-z0-9-]+$/i.test(capability)) {
+      throw new ExtensionError(
+        `Invalid capability format: ${capability}. Must be namespace:name`,
+        'INVALID_CAPABILITY_NAMESPACE'
+      );
+    }
     this.capabilities.add(capability);
   }
 
@@ -121,7 +127,7 @@ export class ExtensionManager {
     }
   }
 
-  public grantPermission(id: string, permission: string) {
+  public grantPermission(id: string, permission: CorePermission) {
     const ext = this.extensions.get(id);
     if (!ext) throw new ExtensionError(`Extension not found: ${id}`, 'NOT_FOUND');
 
@@ -144,25 +150,25 @@ export class ExtensionManager {
     granted.add(permission);
   }
 
-  public getDeclaredPermissions(id: string): string[] {
+  public getDeclaredPermissions(id: string): CorePermission[] {
     const ext = this.extensions.get(id);
     if (!ext) throw new ExtensionError(`Extension not found: ${id}`, 'NOT_FOUND');
     return ext.manifest.permissions || [];
   }
 
-  public getGrantedPermissions(id: string): string[] {
+  public getGrantedPermissions(id: string): CorePermission[] {
     const ext = this.extensions.get(id);
     if (!ext) throw new ExtensionError(`Extension not found: ${id}`, 'NOT_FOUND');
     return Array.from(this.grantedPermissions.get(id)!);
   }
 
-  public hasPermission(id: string, permission: string): boolean {
+  public hasPermission(id: string, permission: CorePermission): boolean {
     const ext = this.extensions.get(id);
     if (!ext) throw new ExtensionError(`Extension not found: ${id}`, 'NOT_FOUND');
     return this.grantedPermissions.get(id)!.has(permission);
   }
 
-  public checkPermission(id: string, permission: string) {
+  public checkPermission(id: string, permission: CorePermission) {
     if (!this.hasPermission(id, permission)) {
       throw new ExtensionError(
         `Unauthorized access: Missing permission ${permission}`,
@@ -171,17 +177,34 @@ export class ExtensionManager {
     }
   }
 
-  private createSandboxContext(id: string, baseContext?: unknown): unknown {
-    if (!baseContext || typeof baseContext !== 'object') return baseContext;
-    return new Proxy(baseContext as any, {
-      get: (target, prop, receiver) => {
-        const value = Reflect.get(target, prop, receiver);
-        if (typeof value === 'function') {
-          return (...args: any[]) => value.apply(target, args);
-        }
-        return value;
-      },
-    });
+  private createSandboxContext(id: string, baseContext?: ExtensionContext): ExtensionContext {
+    const context = baseContext || {};
+    return {
+      getEnv: context.getEnv
+        ? (key: string) => {
+            this.checkPermission(id, 'env:read');
+            return context.getEnv!(key);
+          }
+        : undefined,
+      fetch: context.fetch
+        ? (((...args: Parameters<typeof fetch>) => {
+            this.checkPermission(id, 'network:fetch');
+            return context.fetch!(...args);
+          }) as typeof fetch)
+        : undefined,
+      readFile: context.readFile
+        ? (path: string) => {
+            this.checkPermission(id, 'fs:read');
+            return context.readFile!(path);
+          }
+        : undefined,
+      writeFile: context.writeFile
+        ? (path: string, data: string) => {
+            this.checkPermission(id, 'fs:write');
+            return context.writeFile!(path, data);
+          }
+        : undefined,
+    };
   }
 
   private enforcePermissionsBeforeExecution(manifest: ExtensionManifest) {
@@ -257,7 +280,7 @@ export class ExtensionManager {
     return sorted;
   }
 
-  public async initializeExtension(id: string, context?: unknown) {
+  public async initializeExtension(id: string, context?: ExtensionContext) {
     const ext = this.extensions.get(id);
     if (!ext) throw new ExtensionError(`Extension not found: ${id}`, 'NOT_FOUND');
     if (ext.state !== ExtensionState.REGISTERED) {
@@ -323,7 +346,7 @@ export class ExtensionManager {
     ext.state = ExtensionState.ACTIVATED;
   }
 
-  public async loadAll(context?: unknown, config?: unknown) {
+  public async loadAll(context?: ExtensionContext, config?: unknown) {
     const sortedIds = this.resolveDependencyGraph();
 
     for (const id of sortedIds) {

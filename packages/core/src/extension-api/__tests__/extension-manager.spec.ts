@@ -128,12 +128,12 @@ describe('ExtensionManager', () => {
         name: 'Test',
         version: '1.0.0',
         type: 'test',
-        capabilities: ['required-cap'],
+        capabilities: ['test:required-cap'],
       };
 
       manager.registerExtension(manifest, createMockLifecycle());
       await expect(manager.initializeExtension('test-ext')).rejects.toThrow(
-        new ExtensionError('Missing required capability: required-cap', 'MISSING_CAPABILITY')
+        new ExtensionError('Missing required capability: test:required-cap', 'MISSING_CAPABILITY')
       );
     });
 
@@ -143,10 +143,10 @@ describe('ExtensionManager', () => {
         name: 'Test',
         version: '1.0.0',
         type: 'test',
-        capabilities: ['required-cap'],
+        capabilities: ['test:required-cap'],
       };
 
-      manager.registerCapability('required-cap');
+      manager.registerCapability('test:required-cap');
       manager.registerExtension(manifest, createMockLifecycle());
       await expect(manager.initializeExtension('test-ext')).resolves.not.toThrow();
     });
@@ -341,8 +341,11 @@ describe('ExtensionManager', () => {
     it('should pass context and config parameters to lifecycle hooks', async () => {
       const lc = createMockLifecycle();
       manager.registerExtension({ id: 'ext', name: 'Ext', version: '1.0.0', type: 'test' }, lc);
-      await manager.initializeExtension('ext', { someContext: true });
-      expect(lc.initialize).toHaveBeenCalledWith({ someContext: true });
+      const testContext = { fetch: jest.fn() } as any;
+      await manager.initializeExtension('ext', testContext);
+
+      const calledContext = (lc.initialize as jest.Mock).mock.calls[0][0];
+      expect(calledContext.fetch).toBeDefined();
       await manager.configureExtension('ext', { someConfig: true });
       expect(lc.configure).toHaveBeenCalledWith({ someConfig: true });
     });
@@ -373,11 +376,17 @@ describe('ExtensionManager', () => {
   describe('Security and Sandboxing', () => {
     it('should throw if granting undeclared permission', () => {
       manager.registerExtension(
-        { id: 'test', name: 'Test', version: '1.0.0', type: 'test', permissions: ['network'] },
+        {
+          id: 'test',
+          name: 'Test',
+          version: '1.0.0',
+          type: 'test',
+          permissions: ['network:fetch'],
+        },
         createMockLifecycle()
       );
-      expect(() => manager.grantPermission('test', 'fs')).toThrow(
-        new ExtensionError('Permission not declared in manifest: fs', 'UNDECLARED_PERMISSION')
+      expect(() => manager.grantPermission('test', 'fs:read')).toThrow(
+        new ExtensionError('Permission not declared in manifest: fs:read', 'UNDECLARED_PERMISSION')
       );
     });
 
@@ -388,29 +397,38 @@ describe('ExtensionManager', () => {
           name: 'Test',
           version: '1.0.0',
           type: 'test',
-          permissions: ['network', 'fs'],
+          permissions: ['network:fetch', 'fs:read'],
         },
         createMockLifecycle()
       );
-      manager.grantPermission('test', 'network');
-      expect(() => manager.checkPermission('test', 'network')).not.toThrow();
+      manager.grantPermission('test', 'network:fetch');
+      expect(() => manager.checkPermission('test', 'network:fetch')).not.toThrow();
     });
 
     it('should throw UNAUTHORIZED_ACCESS if permission is checked but not granted', () => {
       manager.registerExtension(
-        { id: 'test', name: 'Test', version: '1.0.0', type: 'test', permissions: ['network'] },
+        {
+          id: 'test',
+          name: 'Test',
+          version: '1.0.0',
+          type: 'test',
+          permissions: ['network:fetch'],
+        },
         createMockLifecycle()
       );
-      expect(() => manager.checkPermission('test', 'network')).toThrow(
-        new ExtensionError('Unauthorized access: Missing permission network', 'UNAUTHORIZED_ACCESS')
+      expect(() => manager.checkPermission('test', 'network:fetch')).toThrow(
+        new ExtensionError(
+          'Unauthorized access: Missing permission network:fetch',
+          'UNAUTHORIZED_ACCESS'
+        )
       );
     });
 
     it('should throw NOT_FOUND for unknown extension in grant/check', () => {
-      expect(() => manager.grantPermission('unknown', 'net')).toThrow(
+      expect(() => manager.grantPermission('unknown', 'network:fetch')).toThrow(
         new ExtensionError('Extension not found: unknown', 'NOT_FOUND')
       );
-      expect(() => manager.checkPermission('unknown', 'net')).toThrow(
+      expect(() => manager.checkPermission('unknown', 'network:fetch')).toThrow(
         new ExtensionError('Extension not found: unknown', 'NOT_FOUND')
       );
     });
@@ -448,26 +466,32 @@ describe('ExtensionManager', () => {
           name: 'Test',
           version: '1.0.0',
           type: 'test',
-          permissions: ['network', 'fs'],
+          permissions: ['network:fetch', 'fs:read'],
         },
         createMockLifecycle()
       );
-      expect(manager.getDeclaredPermissions('test')).toEqual(['network', 'fs']);
+      expect(manager.getDeclaredPermissions('test')).toEqual(['network:fetch', 'fs:read']);
       expect(manager.getGrantedPermissions('test')).toEqual([]);
-      manager.grantPermission('test', 'network');
-      expect(manager.getGrantedPermissions('test')).toEqual(['network']);
-      expect(manager.hasPermission('test', 'network')).toBe(true);
-      expect(manager.hasPermission('test', 'fs')).toBe(false);
+      manager.grantPermission('test', 'network:fetch');
+      expect(manager.getGrantedPermissions('test')).toEqual(['network:fetch']);
+      expect(manager.hasPermission('test', 'network:fetch')).toBe(true);
+      expect(manager.hasPermission('test', 'fs:read')).toBe(false);
     });
 
     it('should throw if granting permissions after initialization', async () => {
       manager.registerExtension(
-        { id: 'test', name: 'Test', version: '1.0.0', type: 'test', permissions: ['network'] },
+        {
+          id: 'test',
+          name: 'Test',
+          version: '1.0.0',
+          type: 'test',
+          permissions: ['network:fetch'],
+        },
         createMockLifecycle()
       );
-      manager.grantPermission('test', 'network');
+      manager.grantPermission('test', 'network:fetch');
       await manager.initializeExtension('test', {});
-      expect(() => manager.grantPermission('test', 'network')).toThrow(
+      expect(() => manager.grantPermission('test', 'network:fetch')).toThrow(
         new ExtensionError(
           'Cannot grant permissions after extension initialization (current state: INITIALIZED)',
           'INVALID_LIFECYCLE'
@@ -477,38 +501,54 @@ describe('ExtensionManager', () => {
 
     it('should throw on execution if missing required permissions during lifecycle', async () => {
       manager.registerExtension(
-        { id: 'test', name: 'Test', version: '1.0.0', type: 'test', permissions: ['network'] },
+        {
+          id: 'test',
+          name: 'Test',
+          version: '1.0.0',
+          type: 'test',
+          permissions: ['network:fetch'],
+        },
         createMockLifecycle()
       );
       // We haven't granted the 'network' permission
       await expect(manager.initializeExtension('test', {})).rejects.toThrow(
         new ExtensionError(
-          'Cannot execute extension test: Missing required permission network',
+          'Cannot execute extension test: Missing required permission network:fetch',
           'UNAUTHORIZED_ACCESS'
         )
       );
     });
 
-    it('should proxy the context during initialization', async () => {
+    it('should proxy the context during initialization and intercept API calls', async () => {
       const lifecycle = createMockLifecycle();
       manager.registerExtension(
-        { id: 'test', name: 'Test', version: '1.0.0', type: 'test' },
+        { id: 'test', name: 'Test', version: '1.0.0', type: 'test', permissions: ['fs:read'] },
         lifecycle
       );
 
+      manager.grantPermission('test', 'fs:read');
+
+      const mockReadFile = jest.fn().mockResolvedValue('data');
       const context = {
-        doSomething: jest.fn(),
-        value: 42,
+        readFile: mockReadFile,
+        fetch: jest.fn(), // We won't grant this permission
       };
 
       await manager.initializeExtension('test', context);
 
       const calledContext = (lifecycle.initialize as jest.Mock).mock.calls[0][0];
-      expect(calledContext).not.toBe(context); // It's a Proxy
-      expect(calledContext.value).toBe(42);
 
-      calledContext.doSomething();
-      expect(context.doSomething).toHaveBeenCalled();
+      // Should work since we granted fs:read
+      await calledContext.readFile('test.txt');
+      expect(mockReadFile).toHaveBeenCalledWith('test.txt');
+
+      // Should throw since we didn't grant network:fetch
+      expect(() => calledContext.fetch('http://example.com')).toThrow(
+        new ExtensionError(
+          'Unauthorized access: Missing permission network:fetch',
+          'UNAUTHORIZED_ACCESS'
+        )
+      );
     });
   });
 });

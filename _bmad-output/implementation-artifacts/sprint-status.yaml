@@ -82,8 +82,8 @@ development_status:
   4-6-formal-extension-manifest-lifecycle-fr-ext-008-to-013: done
   4-7-extension-security-sandboxing-fr-ext-014: done
   epic-4-retrospective: done
-  epic-5: backlog
-  5-1-ast-traversal-and-dynamic-instantiation: backlog
+  epic-5: in-progress
+  5-1-ast-traversal-and-dynamic-instantiation: ready-for-dev
   5-2-experience-adapter-interface: backlog
   5-3-core-primitive-implementation: backlog
   5-4-design-token-consumption: backlog
@@ -143,10 +143,10 @@ action_items:
     status: done
   - id: retro-4-architectural-cleanup
     description: "Architectural Cleanup: Address Epic 4 deferred items (capability namespaces, untyped magic strings, and security boundary leaks) before wiring up the Angular renderer. (Owner: Charlie)"
-    status: open
+    status: done
   - id: retro-4-testing-infrastructure
     description: "Testing Infrastructure: Scaffold the testing infrastructure for Angular UI primitives. (Owner: Dana)"
-    status: open
+    status: done
   - id: retro-4-knowledge-transfer
     description: "Knowledge Transfer: Conduct knowledge sharing or write documentation on the new Angular Signals reactive state patterns for the team. (Owner: Elena/Amelia)"
-    status: open
+    status: done
