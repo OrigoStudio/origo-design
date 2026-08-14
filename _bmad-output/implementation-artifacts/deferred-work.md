@@ -86,3 +86,9 @@
 - Untyped Magic Strings for Permissions
 - No Batch Permission Granting API
 - No Capability-to-Permission Mapping or Integration
+
+## Deferred from: code review of 5-1-ast-traversal-and-dynamic-instantiation (2026-08-14)
+- Suboptimal Yielding Mechanism: Yielding via setTimeout(resolve, 0) relies on timer macrotasks.
+- Hardcoded Traversal Chunk Size: CHUNK_SIZE = 50 is hardcoded.
+- Incomplete Test Coverage for Failure Modes: renderer.component.spec.ts only covers happy-path scenarios.
+- Loose and Disconnected AST Core Types: ASTNode interface operates disconnected from CanonicalAST.
