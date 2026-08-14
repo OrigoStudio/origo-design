@@ -6,6 +6,7 @@
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
   "dependencies": {
+    "@origo/core": "*",
     "@origo/design-tokens": "0.0.9",
     "tslib": "^2.3.0"
   },
