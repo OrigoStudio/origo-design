@@ -1,3 +1,14 @@
+## 0.0.7 (2026-08-14)
+
+### 🚀 Features
+
+- register behavior validation suite story and update sprint status tracking ([798ec74](https://github.com/OrigoStudio/origo-design/commit/798ec74))
+- implement behavior validation test suite and expand AST validator test coverage ([d4c79ef](https://github.com/OrigoStudio/origo-design/commit/d4c79ef))
+
+### ❤️ Thank You
+
+- Hardik Patel @hardikpatelse
+
 ## 0.0.6 (2026-08-13)
 
 ### 🚀 Features
