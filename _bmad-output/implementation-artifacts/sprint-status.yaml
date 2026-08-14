@@ -73,15 +73,15 @@ development_status:
   3-5-1-establish-semantic-versioning: done
   3-5-2-define-monorepo-wide-json-import-standard: done
   3-5-3-defensive-ast-traversal: done
-  epic-4: in-progress
+  epic-4: done
   4-1-capabilities-schema-parsing: done
   4-2-contracts-and-implementations: done
   4-3-security-and-permissions-engine: done
   4-4-extensibility-and-plugin-schema: done
   4-5-behavior-validation-suite: done
   4-6-formal-extension-manifest-lifecycle-fr-ext-008-to-013: done
-  4-7-extension-security-sandboxing-fr-ext-014: review
-  epic-4-retrospective: optional
+  4-7-extension-security-sandboxing-fr-ext-014: done
+  epic-4-retrospective: done
   epic-5: backlog
   5-1-ast-traversal-and-dynamic-instantiation: backlog
   5-2-experience-adapter-interface: backlog
@@ -134,11 +134,19 @@ action_items:
     status: done
   - id: retro-3-systemic-ts-imports
     description: "Standardize JSON imports, capture in ADR, and add CI check to prevent ESM/TS module resolution errors. (Owner: Charlie)"
-    status: open
+    status: done
   - id: retro-3-edge-case-debt
     description: "Address deferred AST validation edge cases (deeply nested chain stack overflow) before Epic 4 extension parsing. (Owner: Amelia)"
-    status: open
+    status: done
   - id: retro-3-versioning
     description: "Establish semantic versioning strategy for packages (Nx release/Changesets) before downstream consumption starts. (Owner: Patel)"
     status: done
-
+  - id: retro-4-architectural-cleanup
+    description: "Architectural Cleanup: Address Epic 4 deferred items (capability namespaces, untyped magic strings, and security boundary leaks) before wiring up the Angular renderer. (Owner: Charlie)"
+    status: open
+  - id: retro-4-testing-infrastructure
+    description: "Testing Infrastructure: Scaffold the testing infrastructure for Angular UI primitives. (Owner: Dana)"
+    status: open
+  - id: retro-4-knowledge-transfer
+    description: "Knowledge Transfer: Conduct knowledge sharing or write documentation on the new Angular Signals reactive state patterns for the team. (Owner: Elena/Amelia)"
+    status: open
