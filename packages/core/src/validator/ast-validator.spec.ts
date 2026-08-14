@@ -1169,4 +1169,347 @@ describe('AST Validation Engine', () => {
       expect(errors).toHaveLength(0);
     });
   });
+
+  describe('Capabilities Validation', () => {
+    it('should throw error if capability is unsecured (missing permissions)', () => {
+      const ast: any = {
+        schemaVersion: '1.0.0',
+        domains: [
+          {
+            id: 'domain-1',
+            name: 'Core',
+            version: '1.0.0',
+            domain: 'core',
+            entities: [
+              {
+                id: 'entity-1',
+                name: 'User',
+                fields: [],
+              },
+            ],
+            capabilities: [
+              {
+                id: 'cap-1',
+                name: 'Read',
+                type: 'Query',
+                entityId: 'entity-1',
+              } as any,
+            ],
+          },
+        ],
+      };
+      const errors = validateAST(ast);
+      expect(errors).toHaveLength(1);
+      expect(errors[0].type).toBe('UNSECURED_CAPABILITY');
+    });
+
+    it('should throw error if capability permission is missing role', () => {
+      const ast: any = {
+        schemaVersion: '1.0.0',
+        domains: [
+          {
+            id: 'domain-1',
+            name: 'Core',
+            version: '1.0.0',
+            domain: 'core',
+            entities: [
+              {
+                id: 'entity-1',
+                name: 'User',
+                fields: [],
+              },
+            ],
+            capabilities: [
+              {
+                id: 'cap-1',
+                name: 'Read',
+                type: 'Query',
+                entityId: 'entity-1',
+                permissions: [{ access: 'grant' } as any],
+              } as any,
+            ],
+          },
+        ],
+      };
+      const errors = validateAST(ast);
+      expect(errors).toHaveLength(1);
+      expect(errors[0].type).toBe('INVALID_PERMISSION');
+      expect(errors[0].message).toMatch(/Role is required/);
+    });
+
+    it('should throw error if capability permission access is invalid', () => {
+      const ast: any = {
+        schemaVersion: '1.0.0',
+        domains: [
+          {
+            id: 'domain-1',
+            name: 'Core',
+            version: '1.0.0',
+            domain: 'core',
+            entities: [
+              {
+                id: 'entity-1',
+                name: 'User',
+                fields: [],
+              },
+            ],
+            capabilities: [
+              {
+                id: 'cap-1',
+                name: 'Read',
+                type: 'Query',
+                entityId: 'entity-1',
+                permissions: [{ role: 'admin', access: 'maybe' } as any],
+              } as any,
+            ],
+          },
+        ],
+      };
+      const errors = validateAST(ast);
+      expect(errors).toHaveLength(1);
+      expect(errors[0].type).toBe('INVALID_PERMISSION');
+      expect(errors[0].message).toMatch(/must be "grant" or "deny"/i);
+    });
+
+    it('should throw error if capability entityId is missing', () => {
+      const ast: any = {
+        schemaVersion: '1.0.0',
+        domains: [
+          {
+            id: 'domain-1',
+            name: 'Core',
+            version: '1.0.0',
+            domain: 'core',
+            entities: [],
+            capabilities: [
+              {
+                id: 'cap-1',
+                name: 'Read',
+                type: 'Query',
+                permissions: [{ role: 'admin', access: 'grant' }],
+              } as any,
+            ],
+          },
+        ],
+      };
+      const errors = validateAST(ast);
+      expect(errors).toHaveLength(1);
+      expect(errors[0].type).toBe('MISSING_REFERENCE');
+      expect(errors[0].message).toMatch(/Capability missing entityId/);
+    });
+
+    it('should throw error if capability references a non-existent entity', () => {
+      const ast: any = {
+        schemaVersion: '1.0.0',
+        domains: [
+          {
+            id: 'domain-1',
+            name: 'Core',
+            version: '1.0.0',
+            domain: 'core',
+            entities: [],
+            capabilities: [
+              {
+                id: 'cap-1',
+                name: 'Read',
+                type: 'Query',
+                entityId: 'missing-entity',
+                permissions: [{ role: 'admin', access: 'grant' }],
+              } as any,
+            ],
+          },
+        ],
+      };
+      const errors = validateAST(ast);
+      expect(errors).toHaveLength(1);
+      expect(errors[0].type).toBe('MISSING_REFERENCE');
+      expect(errors[0].message).toMatch(/Invalid capability reference/);
+    });
+  });
+
+  describe('Extensions and Contracts Validation', () => {
+    it('should throw error if extension is missing implements', () => {
+      const ast: any = {
+        schemaVersion: '1.0.0',
+        domains: [
+          {
+            id: 'domain-1',
+            name: 'Core',
+            version: '1.0.0',
+            domain: 'core',
+            entities: [],
+            extensions: [
+              {
+                id: 'ext-1',
+                name: 'test-plugin',
+                version: '1.0.0',
+                extension_type: 'plugin',
+                plugin_version_range: '^1.0.0',
+              } as any,
+            ],
+          },
+        ],
+      };
+      const errors = validateAST(ast);
+      expect(errors).toHaveLength(1);
+      expect(errors[0].type).toBe('MISSING_REFERENCE');
+      expect(errors[0].message).toMatch(/Extension missing implements/);
+    });
+
+    it('should throw error if extension references missing contract', () => {
+      const ast: any = {
+        schemaVersion: '1.0.0',
+        domains: [
+          {
+            id: 'domain-1',
+            name: 'Core',
+            version: '1.0.0',
+            domain: 'core',
+            entities: [],
+            extensions: [
+              {
+                id: 'ext-1',
+                name: 'test-plugin',
+                version: '1.0.0',
+                extension_type: 'plugin',
+                plugin_version_range: '^1.0.0',
+                implements: ['missing-contract'],
+              },
+            ],
+          },
+        ],
+      };
+      const errors = validateAST(ast);
+      expect(errors).toHaveLength(1);
+      expect(errors[0].type).toBe('MISSING_REFERENCE');
+      expect(errors[0].message).toMatch(
+        /Contract "missing-contract" referenced by extension "ext-1" does not exist/
+      );
+    });
+
+    it('should throw error if local manifest is missing extension version', () => {
+      const ast: any = {
+        schemaVersion: '1.0.0',
+        domains: [
+          {
+            id: 'domain-1',
+            name: 'Core',
+            version: '1.0.0',
+            domain: 'core',
+            entities: [],
+            contracts: [
+              {
+                id: 'contract-1',
+                name: 'TestContract',
+                requiredFields: [],
+                requiredCapabilities: [],
+              },
+            ],
+            extensions: [
+              {
+                id: 'ext-1',
+                name: 'test-plugin',
+                version: '1.0.0',
+                extension_type: 'plugin',
+                plugin_version_range: '^1.0.0',
+                implements: ['contract-1'],
+              },
+            ],
+          },
+        ],
+      };
+      const errors = validateAST(ast, { 'other-plugin': '1.0.0' });
+      expect(errors).toHaveLength(1);
+      expect(errors[0].type).toBe('MISSING_MANIFEST_VERSION');
+    });
+
+    it('should throw error if local manifest version is invalid semver', () => {
+      const ast: any = {
+        schemaVersion: '1.0.0',
+        domains: [
+          {
+            id: 'domain-1',
+            name: 'Core',
+            version: '1.0.0',
+            domain: 'core',
+            entities: [],
+            contracts: [
+              {
+                id: 'contract-1',
+                name: 'TestContract',
+                requiredFields: [],
+                requiredCapabilities: [],
+              },
+            ],
+            extensions: [
+              {
+                id: 'ext-1',
+                name: 'test-plugin',
+                version: '1.0.0',
+                extension_type: 'plugin',
+                plugin_version_range: '^1.0.0',
+                implements: ['contract-1'],
+              },
+            ],
+          },
+        ],
+      };
+      const errors = validateAST(ast, { 'test-plugin': 'not-a-version' });
+      expect(errors).toHaveLength(1);
+      expect(errors[0].type).toBe('VERSION_MISMATCH');
+      expect(errors[0].message).toMatch(/Invalid semver format/);
+    });
+
+    it('should throw error if local manifest version mismatch', () => {
+      const ast: any = {
+        schemaVersion: '1.0.0',
+        domains: [
+          {
+            id: 'domain-1',
+            name: 'Core',
+            version: '1.0.0',
+            domain: 'core',
+            entities: [],
+            contracts: [
+              {
+                id: 'contract-1',
+                name: 'TestContract',
+                requiredFields: [],
+                requiredCapabilities: [],
+              },
+            ],
+            extensions: [
+              {
+                id: 'ext-1',
+                name: 'test-plugin',
+                version: '1.0.0',
+                extension_type: 'plugin',
+                plugin_version_range: '^1.0.0',
+                implements: ['contract-1'],
+              },
+            ],
+          },
+        ],
+      };
+      const errors = validateAST(ast, { 'test-plugin': '0.5.0' });
+      expect(errors).toHaveLength(1);
+      expect(errors[0].type).toBe('VERSION_MISMATCH');
+      expect(errors[0].message).toMatch(
+        /requires plugin version "\^1.0.0" but local manifest provides "0.5.0"/
+      );
+    });
+  });
+
+  describe('Integration with Epic 3 target-page.json fixture', () => {
+    it('should pass validation for the complex real-world target page JSON fixture', () => {
+      const fixturePath = require('path').resolve(
+        __dirname,
+        '../../test/fixtures/target-page.json'
+      );
+      const ast = require(fixturePath);
+      const localManifest = { 'seo-plugin': '1.0.5' };
+      const errors = validateAST(ast, localManifest);
+      expect(errors).toHaveLength(0);
+    });
+  });
 });

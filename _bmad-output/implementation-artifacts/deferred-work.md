@@ -65,6 +65,9 @@
 - Overly restrictive top-level schema requirement
 - Unoptimized quadratic lookup in contract field validation
 - Unchecked cross-domain contract references
-## Deferred from: code review of 4-4-extensibility-and-plugin-schema.md (2026-08-13)
-- Unchecked Mutability in AST Parameter: \alidateAST\ mutates input properties directly (e.g., \perm.role.trim()\), violating functional purity.
 
+## Deferred from: code review of 4-4-extensibility-and-plugin-schema.md (2026-08-13)
+- Unchecked Mutability in AST Parameter: \ alidateAST\ mutates input properties directly (e.g., \perm.role.trim()\), violating functional purity.
+
+## Deferred from: code review of 4-5-behavior-validation-suite.md (2026-08-14)
+- Explicit edge cases found in ast-validator.ts (e.g. Domain id missing, null elements) — deferred, pre-existing known edge cases
