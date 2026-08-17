@@ -92,3 +92,6 @@
 - Hardcoded Traversal Chunk Size: CHUNK_SIZE = 50 is hardcoded.
 - Incomplete Test Coverage for Failure Modes: renderer.component.spec.ts only covers happy-path scenarios.
 - Loose and Disconnected AST Core Types: ASTNode interface operates disconnected from CanonicalAST.
+
+## Deferred from: code review (5-2-experience-adapter-interface.md)
+- Architectural Bleed in AST Module: InteractionContract is placed in packages/core/src/types/ast.ts, coupling interaction translation semantics directly into the core AST syntax definitions instead of isolating them.

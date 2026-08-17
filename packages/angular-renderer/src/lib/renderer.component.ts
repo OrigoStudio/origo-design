@@ -9,7 +9,7 @@ import {
 } from '@angular/core';
 import { ASTNode } from '@origo/core';
 import { RENDERER_REGISTRY } from './renderer.tokens';
-import { AdapterPipelineService, ContainerComponent } from './adapter';
+import { AdapterPipelineService, ContainerComponent } from '../adapters/web/adapter';
 
 @Component({
   selector: 'origo-renderer',
@@ -69,8 +69,20 @@ export class OrigoRendererComponent {
         }
 
         const componentRef = vc.createComponent(componentType);
-        const preparedNode = this.adapter.prepareNode(node);
-        componentRef.setInput('node', preparedNode);
+
+        // Extract optional schema/strict mode if defined on the component class
+        const schema = (componentType as any).contractSchema;
+        const strict = (componentType as any).strictContract === true;
+
+        const preparedNode = this.adapter.prepareNode(node, schema, strict);
+
+        if ('contract' in (componentRef.instance as any)) {
+          componentRef.setInput('contract', preparedNode);
+        } else {
+          console.warn(
+            `Component for ${node.type} does not implement OrigoAdapter (missing 'contract' input).`
+          );
+        }
 
         if (node.children && node.children.length > 0) {
           componentRef.changeDetectorRef.detectChanges();
