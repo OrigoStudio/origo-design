@@ -84,7 +84,7 @@ development_status:
   epic-4-retrospective: done
   epic-5: in-progress
   5-1-ast-traversal-and-dynamic-instantiation: done
-  5-2-experience-adapter-interface: ready-for-dev
+  5-2-experience-adapter-interface: done
   5-3-core-primitive-implementation: backlog
   5-4-design-token-consumption: backlog
   5-5-reactive-state-event-binding: backlog

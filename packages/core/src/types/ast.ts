@@ -11,3 +11,10 @@ export interface ASTNode {
   props?: Record<string, unknown>;
   children?: ASTNode[];
 }
+
+export interface InteractionContract<TProps = Record<string, unknown>> {
+  id: string;
+  type: string;
+  props: TProps;
+  children?: InteractionContract[];
+}

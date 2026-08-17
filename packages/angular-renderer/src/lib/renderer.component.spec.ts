@@ -1,16 +1,17 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { Component, input, viewChild, ViewContainerRef } from '@angular/core';
 import { OrigoRendererComponent } from './renderer.component';
-import { ASTNode } from '@origo/core';
+import { ASTNode, InteractionContract } from '@origo/core';
 import { RENDERER_REGISTRY } from './renderer.tokens';
+import { OrigoAdapter } from '../adapters/web/adapter';
 
 @Component({
   selector: 'test-text-primitive',
   standalone: true,
-  template: `<span>{{ node().props?.['text'] }}</span>`,
+  template: `<span>{{ contract().props?.['text'] }}</span>`,
 })
-class TestTextPrimitive {
-  node = input.required<ASTNode>();
+class TestTextPrimitive implements OrigoAdapter {
+  contract = input.required<InteractionContract>();
 }
 
 @Component({
@@ -18,8 +19,8 @@ class TestTextPrimitive {
   standalone: true,
   template: `<div class="container"><ng-container #vc></ng-container></div>`,
 })
-class TestContainerPrimitive {
-  node = input.required<ASTNode>();
+class TestContainerPrimitive implements OrigoAdapter {
+  contract = input.required<InteractionContract>();
   vc = viewChild.required('vc', { read: ViewContainerRef });
 }
 
@@ -85,7 +86,6 @@ describe('OrigoRendererComponent', () => {
   });
 
   it('should chunk render a massive AST to prevent blocking the main thread', async () => {
-    jest.useFakeTimers();
     // Create a massive AST
     const children: ASTNode[] = [];
     for (let i = 0; i < 2000; i++) {
@@ -106,19 +106,21 @@ describe('OrigoRendererComponent', () => {
     fixture.detectChanges();
 
     const compiled = fixture.nativeElement as HTMLElement;
-    // Before ticking, only a portion should be rendered (chunking)
+    // Before waiting, only a portion should be rendered (chunking)
     const initialSpans = compiled.querySelectorAll('span').length;
     expect(initialSpans).toBeLessThan(2000);
 
-    // Fast forward time to process all chunks
-    await jest.advanceTimersByTimeAsync(5000);
-    fixture.detectChanges();
+    // Wait for the event loop to process all chunks
+    let retries = 50;
+    while (compiled.querySelectorAll('span').length < 2000 && retries > 0) {
+      await new Promise(resolve => setTimeout(resolve, 20));
+      fixture.detectChanges();
+      retries--;
+    }
 
     // Now all should be rendered
     const finalSpans = compiled.querySelectorAll('span').length;
     expect(finalSpans).toBe(2000);
-
-    jest.useRealTimers();
   });
 
   it('should ignore circular child references to prevent infinite loops', () => {
