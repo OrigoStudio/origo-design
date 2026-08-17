@@ -1,3 +1,13 @@
+## 0.0.12 (2026-08-17)
+
+### 🚀 Features
+
+- implement InteractionContract-based OrigoAdapter and transition angular-renderer architecture to web adapter pattern ([1a8ea32](https://github.com/OrigoStudio/origo-design/commit/1a8ea32))
+
+### ❤️ Thank You
+
+- Hardik Patel @hardikpatelse
+
 ## 0.0.11 (2026-08-14)
 
 ### 🚀 Features
