@@ -42,7 +42,9 @@ export class VBoxComponent implements OrigoAdapter<VBoxProps>, ContainerComponen
 
   computedGap = computed(() => {
     const gap = this.contract().props?.gap;
-    return typeof gap === 'number' ? `${gap}px` : gap || undefined;
+    if (gap === undefined || gap === null || gap === '') return undefined;
+    const num = Number(gap);
+    return !isNaN(num) ? `${num}px` : String(gap);
   });
 
   computedAlignment = computed(() => {
@@ -63,6 +65,8 @@ export class VBoxComponent implements OrigoAdapter<VBoxProps>, ContainerComponen
 
   computedPadding = computed(() => {
     const padding = this.contract().props?.padding;
-    return typeof padding === 'number' ? `${padding}px` : padding || undefined;
+    if (padding === undefined || padding === null || padding === '') return undefined;
+    const num = Number(padding);
+    return !isNaN(num) ? `${num}px` : String(padding);
   });
 }

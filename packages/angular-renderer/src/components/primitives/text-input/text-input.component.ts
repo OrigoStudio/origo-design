@@ -1,4 +1,4 @@
-import { Component, input, ChangeDetectionStrategy, computed } from '@angular/core';
+import { Component, input, output, ChangeDetectionStrategy, computed } from '@angular/core';
 import { InteractionContract } from '@origo/core';
 import { OrigoAdapter } from '../../../adapters/web/adapter';
 
@@ -7,6 +7,8 @@ export interface TextInputProps {
   placeholder?: string;
   disabled?: boolean;
   readonly?: boolean;
+  'aria-label'?: string;
+  'aria-describedby'?: string;
 }
 
 @Component({
@@ -34,4 +36,15 @@ export class TextInputComponent implements OrigoAdapter<TextInputProps> {
   computedPlaceholder = computed(() => this.contract().props?.placeholder ?? '');
   computedDisabled = computed(() => !!this.contract().props?.disabled);
   computedReadonly = computed(() => !!this.contract().props?.readonly);
+  computedAriaLabel = computed(() => this.contract().props?.['aria-label'] as string | undefined);
+  computedAriaDescribedBy = computed(
+    () => this.contract().props?.['aria-describedby'] as string | undefined
+  );
+
+  valueChange = output<string>();
+
+  onInput(event: Event) {
+    const target = event.target as HTMLInputElement;
+    this.valueChange.emit(target.value);
+  }
 }

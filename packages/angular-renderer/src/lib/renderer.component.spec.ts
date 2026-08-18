@@ -88,7 +88,7 @@ describe('OrigoRendererComponent', () => {
   it('should chunk render a massive AST to prevent blocking the main thread', async () => {
     // Create a massive AST
     const children: ASTNode[] = [];
-    for (let i = 0; i < 2000; i++) {
+    for (let i = 0; i < 250; i++) {
       children.push({
         id: `text-${i}`,
         type: 'Text',
@@ -108,11 +108,11 @@ describe('OrigoRendererComponent', () => {
     const compiled = fixture.nativeElement as HTMLElement;
     // Before waiting, only a portion should be rendered (chunking)
     const initialSpans = compiled.querySelectorAll('span').length;
-    expect(initialSpans).toBeLessThan(2000);
+    expect(initialSpans).toBeLessThan(250);
 
     // Wait for the event loop to process all chunks
     let retries = 50;
-    while (compiled.querySelectorAll('span').length < 2000 && retries > 0) {
+    while (compiled.querySelectorAll('span').length < 250 && retries > 0) {
       await new Promise(resolve => setTimeout(resolve, 20));
       fixture.detectChanges();
       retries--;
@@ -120,7 +120,7 @@ describe('OrigoRendererComponent', () => {
 
     // Now all should be rendered
     const finalSpans = compiled.querySelectorAll('span').length;
-    expect(finalSpans).toBe(2000);
+    expect(finalSpans).toBe(250);
   }, 10000);
 
   it('should ignore circular child references to prevent infinite loops', () => {

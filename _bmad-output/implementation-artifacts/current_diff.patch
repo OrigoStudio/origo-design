@@ -1,5 +1,3 @@
-Invoke the `bmad-review-edge-case-hunter` skill on this diff:
-
 diff --git a/_bmad-output/implementation-artifacts/5-3-core-primitive-implementation.md b/_bmad-output/implementation-artifacts/5-3-core-primitive-implementation.md
 new file mode 100644
 index 0000000..b05d5a7
@@ -747,4 +745,3 @@ index 0bcb6b5..a54e9e0 100644
      "src/test-setup.ts",
      "src/lib/test-utils.ts"
    ]
-

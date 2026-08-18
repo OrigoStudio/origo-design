@@ -82,7 +82,6 @@ export function coerceContractProps<T>(
       const num = Number(value);
       if (isNaN(num)) {
         if (strict) throw new Error(`Invalid number for prop '${key}': ${value}`);
-        console.warn(`Invalid number for prop '${key}': ${value}`);
       } else {
         result[key] = num;
       }

@@ -1,3 +1,9 @@
-<button [type]="computedType()" [disabled]="computedDisabled()">
+<button
+  [type]="computedType()"
+  [disabled]="computedDisabled()"
+  [attr.aria-label]="computedAriaLabel()"
+  [attr.aria-describedby]="computedAriaDescribedBy()"
+  (click)="action.emit()"
+>
   {{ computedLabel() }}
 </button>
