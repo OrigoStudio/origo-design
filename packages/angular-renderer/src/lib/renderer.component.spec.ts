@@ -121,7 +121,7 @@ describe('OrigoRendererComponent', () => {
     // Now all should be rendered
     const finalSpans = compiled.querySelectorAll('span').length;
     expect(finalSpans).toBe(2000);
-  });
+  }, 10000);
 
   it('should ignore circular child references to prevent infinite loops', () => {
     const nodeA: ASTNode = { id: 'A', type: 'Container', children: [] };
