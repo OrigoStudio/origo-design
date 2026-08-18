@@ -11,6 +11,7 @@
     "jest.config.cts",
     "src/**/*.spec.ts",
     "src/**/*.test.ts",
+    "src/**/*.pw.ts",
     "src/test-setup.ts",
     "src/lib/test-utils.ts"
   ]

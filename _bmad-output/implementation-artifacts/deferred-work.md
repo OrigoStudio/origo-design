@@ -95,3 +95,12 @@
 
 ## Deferred from: code review (5-2-experience-adapter-interface.md)
 - Architectural Bleed in AST Module: InteractionContract is placed in packages/core/src/types/ast.ts, coupling interaction translation semantics directly into the core AST syntax definitions instead of isolating them.
+
+## Deferred from: code review of 5-3-core-primitive-implementation.md (2026-08-18)
+- Missing <ng-content> fallback in VBoxComponent: Container only uses programmatic #vc insertion, breaking standard declarative usage.
+- Fragile and naive deepClone implementation: deepClone risks stack overflow on circular references and corrupts instances.
+- Superficial Playwright component accessibility coverage: Tests only verify static states, omitting disabled/focus states.
+- Incomplete Recursive Schema Resolution for Nested Node Properties: prepareNode passes undefined schema for children, skipping validation.
+- Unverified acceptance criteria FR-Rend-002 against Epic 3 fixture: No test validates rendering against the complex target page fixture.
+- Permissive and silent error swallowing during coercion: Missing schema keys ignored, invalid objects become empty, etc.
+- NaN undefined deletion regression: NaN now skipped entirely instead of setting undefined explicitly.

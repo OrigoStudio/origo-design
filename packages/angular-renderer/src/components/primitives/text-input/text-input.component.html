@@ -1,0 +1,10 @@
+<input
+  type="text"
+  [value]="computedValue()"
+  (input)="onInput($event)"
+  [placeholder]="computedPlaceholder()"
+  [disabled]="computedDisabled()"
+  [readonly]="computedReadonly()"
+  [attr.aria-label]="computedAriaLabel()"
+  [attr.aria-describedby]="computedAriaDescribedBy()"
+/>
