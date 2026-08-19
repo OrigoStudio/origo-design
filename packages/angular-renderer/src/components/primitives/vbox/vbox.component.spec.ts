@@ -43,4 +43,8 @@ describe('VBoxComponent', () => {
     const element = fixture.nativeElement as HTMLElement;
     expect(element.style.gap).toBe('1rem');
   });
+
+  it('should use ShadowDom encapsulation', () => {
+    expect(fixture.nativeElement.shadowRoot).toBeTruthy();
+  });
 });

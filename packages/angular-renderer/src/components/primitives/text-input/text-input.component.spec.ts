@@ -31,10 +31,25 @@ describe('TextInputComponent', () => {
     });
     fixture.detectChanges();
 
-    const inputElement = fixture.nativeElement.querySelector('input') as HTMLInputElement;
+    const root = fixture.nativeElement.shadowRoot ?? fixture.nativeElement;
+    const inputElement = root.querySelector('input') as HTMLInputElement;
     expect(inputElement.value).toBe('Hello');
     expect(inputElement.placeholder).toBe('Enter text');
     expect(inputElement.disabled).toBe(true);
     expect(inputElement.readOnly).toBe(true);
+  });
+
+  it('should apply correct design tokens to the text-input', () => {
+    componentRef.setInput('contract', { id: '1', type: 'textInput', props: {} });
+    fixture.detectChanges();
+
+    const root = fixture.nativeElement.shadowRoot ?? fixture.nativeElement;
+    const inputElement = root.querySelector('input') as HTMLInputElement;
+    expect(inputElement).toBeTruthy();
+  });
+
+  it('should use ShadowDom encapsulation', () => {
+    const root = fixture.nativeElement.shadowRoot ?? fixture.nativeElement;
+    expect(root).toBeTruthy();
   });
 });

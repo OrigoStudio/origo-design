@@ -4,4 +4,39 @@
 input {
   box-sizing: border-box;
   width: 100%;
+  background-color: var(--origo-color-surface-background);
+  color: var(--origo-color-text-primary);
+  padding: var(--origo-spacing-container-padding);
+  border: var(--origo-border-width-default, 1px) solid var(--origo-color-border-default, #ccc);
+  border-radius: var(--origo-radius-sm, 4px);
+  box-shadow: var(--origo-shadow-sm, none);
+  font-family: var(--origo-typography-input-font-family, inherit);
+  font-size: var(--origo-typography-input-font-size, inherit);
+  font-weight: var(--origo-typography-input-font-weight, inherit);
+  line-height: var(--origo-typography-input-line-height, inherit);
+  transition: all 0.2s ease-in-out;
+}
+input::placeholder {
+  color: var(--origo-color-text-muted, #777);
+}
+input:hover:not(:disabled):not([readonly]) {
+  border-color: var(--origo-color-border-hover, #999);
+}
+input:active:not(:disabled):not([readonly]) {
+  border-color: var(--origo-color-border-active, #666);
+}
+input:focus,
+input:focus-visible {
+  outline: 2px solid var(--origo-color-focus, #005fcc);
+  outline-offset: -1px;
+  border-color: var(--origo-color-focus, #005fcc);
+}
+input:disabled {
+  cursor: not-allowed;
+  opacity: var(--origo-opacity-disabled, 0.5);
+  background-color: var(--origo-color-surface-disabled, #eee);
+  color: var(--origo-color-text-disabled, #999);
+}
+input[readonly] {
+  background-color: var(--origo-color-surface-readonly, #f9f9f9);
 }

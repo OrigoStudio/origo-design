@@ -5,6 +5,7 @@ import {
   ViewContainerRef,
   ChangeDetectionStrategy,
   computed,
+  ViewEncapsulation,
 } from '@angular/core';
 import { InteractionContract } from '@origo/core';
 import { OrigoAdapter, ContainerComponent } from '../../../adapters/web/adapter';
@@ -21,6 +22,7 @@ export interface VBoxProps {
   templateUrl: './vbox.component.html',
   styleUrls: ['./vbox.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
+  encapsulation: ViewEncapsulation.ShadowDom,
   host: {
     '[class.origo-vbox]': 'true',
     '[style.gap]': 'computedGap()',

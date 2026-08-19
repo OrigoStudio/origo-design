@@ -1,4 +1,11 @@
-import { Component, input, output, ChangeDetectionStrategy, computed } from '@angular/core';
+import {
+  Component,
+  input,
+  output,
+  ChangeDetectionStrategy,
+  computed,
+  ViewEncapsulation,
+} from '@angular/core';
 import { InteractionContract } from '@origo/core';
 import { OrigoAdapter } from '../../../adapters/web/adapter';
 
@@ -16,6 +23,7 @@ export interface ButtonProps {
   templateUrl: './button.component.html',
   styleUrls: ['./button.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
+  encapsulation: ViewEncapsulation.ShadowDom,
   host: {
     '[class.origo-button]': 'true',
   },
