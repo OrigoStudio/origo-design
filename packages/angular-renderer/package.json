@@ -8,7 +8,9 @@
   "dependencies": {
     "@origo/core": "0.0.13",
     "@origo/design-tokens": "0.0.13",
-    "tslib": "^2.3.0"
+    "tslib": "^2.3.0",
+    "@axe-core/playwright": "^4.13.0",
+    "@playwright/test": "^1.36.0"
   },
   "peerDependencies": {
     "@angular/common": ">=18.0.0",

@@ -91,6 +91,7 @@ export class BADLValidator {
   }
 
   validateDomain(data: unknown, options: ValidatorOptions = {}): boolean {
+    this.errors = null;
     if (typeof data === 'string') {
       try {
         data = JSON.parse(data);
@@ -107,7 +108,10 @@ export class BADLValidator {
         return false;
       }
     }
-    const maxDepth = options.maxDepth || 100;
+    if (typeof options.maxDepth === 'number' && options.maxDepth < 0) {
+      throw new Error('maxDepth must be >= 0');
+    }
+    const maxDepth = options.maxDepth ?? 100;
     this.checkCircularDependency(data, 0, maxDepth, new Set());
 
     const validate = this.ajv.getSchema('https://origo.design/schemas/v1/domain.schema.json');
@@ -121,6 +125,7 @@ export class BADLValidator {
   }
 
   validateEntity(data: unknown, options: ValidatorOptions = {}): boolean {
+    this.errors = null;
     if (typeof data === 'string') {
       try {
         data = JSON.parse(data);
@@ -137,7 +142,10 @@ export class BADLValidator {
         return false;
       }
     }
-    const maxDepth = options.maxDepth || 100;
+    if (typeof options.maxDepth === 'number' && options.maxDepth < 0) {
+      throw new Error('maxDepth must be >= 0');
+    }
+    const maxDepth = options.maxDepth ?? 100;
     this.checkCircularDependency(data, 0, maxDepth, new Set());
 
     const validate = this.ajv.getSchema('https://origo.design/schemas/v1/entity.schema.json');
