@@ -1,6 +1,6 @@
 {
   "name": "@origo/core",
-  "version": "0.0.12",
+  "version": "0.0.13",
   "private": true,
   "type": "commonjs",
   "main": "./src/index.js",
