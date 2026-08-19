@@ -25,7 +25,7 @@ describe('BADLValidator', () => {
 
   describe('Negative Test Cases', () => {
     it('should fail if Domain is missing required properties', () => {
-      const invalidDomain = { ...targetPageFixture, id: undefined };
+      const { id, ...invalidDomain } = targetPageFixture as any;
       const isValid = validator.validateDomain(invalidDomain);
       expect(isValid).toBe(false);
       expect(validator.errors).toBeDefined();

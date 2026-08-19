@@ -1,4 +1,11 @@
-import { Component, input, output, ChangeDetectionStrategy, computed } from '@angular/core';
+import {
+  Component,
+  input,
+  output,
+  ChangeDetectionStrategy,
+  computed,
+  ViewEncapsulation,
+} from '@angular/core';
 import { InteractionContract } from '@origo/core';
 import { OrigoAdapter } from '../../../adapters/web/adapter';
 
@@ -17,6 +24,7 @@ export interface TextInputProps {
   templateUrl: './text-input.component.html',
   styleUrls: ['./text-input.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
+  encapsulation: ViewEncapsulation.ShadowDom,
   host: {
     '[class.origo-text-input]': 'true',
   },

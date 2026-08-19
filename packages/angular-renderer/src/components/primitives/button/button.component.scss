@@ -3,7 +3,29 @@
 }
 button {
   cursor: pointer;
+  background-color: var(--origo-color-surface-primary);
+  color: var(--origo-color-text-inverse);
+  padding: var(--origo-spacing-container-padding);
+  border: none;
+  border-radius: var(--origo-radius-sm, 4px);
+  box-shadow: var(--origo-shadow-sm, none);
+  font-family: var(--origo-typography-button-font-family, inherit);
+  font-size: var(--origo-typography-button-font-size, inherit);
+  font-weight: var(--origo-typography-button-font-weight, inherit);
+  line-height: var(--origo-typography-button-line-height, inherit);
+  transition: all 0.2s ease-in-out;
+}
+button:hover:not(:disabled) {
+  background-color: var(--origo-color-surface-primary-hover);
+}
+button:active:not(:disabled) {
+  background-color: var(--origo-color-surface-primary-active);
+}
+button:focus-visible {
+  outline: 2px solid var(--origo-color-focus, #005fcc);
+  outline-offset: 2px;
 }
 button:disabled {
   cursor: not-allowed;
+  opacity: var(--origo-opacity-disabled, 0.5);
 }
