@@ -13,20 +13,21 @@ export interface OrigoAdapter<TProps = Record<string, unknown>> {
   contract: InputSignal<InteractionContract<TProps>>;
 }
 
-function deepClone(obj: any): any {
+function deepClone<T>(obj: T): T {
   if (obj === null || typeof obj !== 'object') {
     return obj;
   }
   if (Array.isArray(obj)) {
-    return obj.map(deepClone);
+    return obj.map(item => deepClone(item)) as unknown as T;
   }
-  const cloned: any = {};
-  for (const key in obj) {
-    if (Object.prototype.hasOwnProperty.call(obj, key)) {
-      cloned[key] = deepClone(obj[key]);
+  const cloned = {} as Record<string, unknown>;
+  const typedObj = obj as Record<string, unknown>;
+  for (const key in typedObj) {
+    if (Object.prototype.hasOwnProperty.call(typedObj, key)) {
+      cloned[key] = deepClone(typedObj[key]) as unknown;
     }
   }
-  return cloned;
+  return cloned as unknown as T;
 }
 
 /**

@@ -13,7 +13,7 @@ test.describe('TextInputComponent Accessibility', () => {
           id: '2',
           type: 'textInput',
           props: { placeholder: 'Enter name', value: 'Jane' },
-        } as any,
+        } as never,
       },
     });
 

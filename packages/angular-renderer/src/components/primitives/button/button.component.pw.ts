@@ -9,7 +9,7 @@ test.describe('ButtonComponent Accessibility', () => {
   }) => {
     await mount(ButtonComponent, {
       props: {
-        contract: { id: '3', type: 'button', props: { label: 'Submit' } } as any,
+        contract: { id: '3', type: 'button', props: { label: 'Submit' } } as never,
       },
     });
 

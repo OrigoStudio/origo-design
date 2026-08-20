@@ -87,7 +87,7 @@ development_status:
   5-2-experience-adapter-interface: done
   5-3-core-primitive-implementation: done
   5-4-design-token-consumption: done
-  5-5-reactive-state-event-binding: ready-for-dev
+  5-5-reactive-state-event-binding: review
   epic-5-retrospective: optional
   epic-6: backlog
   6-1-cli-initialization-and-scaffolding: backlog
