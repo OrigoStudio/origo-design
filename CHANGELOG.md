@@ -1,3 +1,15 @@
+## 0.0.15 (2026-08-20)
+
+### 🚀 Features
+
+- story creation 5-5-reactive-state-event-binding ([21104c6](https://github.com/OrigoStudio/origo-design/commit/21104c6))
+- implementation of 5-5-reactive-state-event-binding ([3a5948a](https://github.com/OrigoStudio/origo-design/commit/3a5948a))
+- code-review 5-5-reactive-state-event-binding ([b235951](https://github.com/OrigoStudio/origo-design/commit/b235951))
+
+### ❤️ Thank You
+
+- Hardik Patel @hardikpatelse
+
 ## 0.0.14 (2026-08-19)
 
 ### 🚀 Features
