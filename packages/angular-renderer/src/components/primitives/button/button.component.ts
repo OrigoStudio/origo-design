@@ -56,7 +56,12 @@ export class ButtonComponent implements OrigoAdapter<ButtonProps> {
   private experienceAdapter = inject(WebExperienceAdapterService);
 
   onClick() {
-    this.experienceAdapter.dispatchCapability(this.contract().id, 'click');
+    if (this.computedDisabled()) return;
+
+    const id = this.contract().id;
+    if (!id) return;
+
+    this.experienceAdapter.dispatchCapability(id, 'click');
     this.action.emit();
   }
 }

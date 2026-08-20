@@ -60,6 +60,7 @@ describe('ButtonComponent', () => {
   });
 
   it('should dispatch capability on click', () => {
+    const debugSpy = jest.spyOn(console, 'debug').mockImplementation(jest.fn());
     const dispatchSpy = jest.spyOn(experienceAdapter, 'dispatchCapability');
     componentRef.setInput('contract', { id: 'test-btn-1', type: 'button', props: {} });
     fixture.detectChanges();
@@ -69,5 +70,6 @@ describe('ButtonComponent', () => {
     buttonElement.click();
 
     expect(dispatchSpy).toHaveBeenCalledWith('test-btn-1', 'click');
+    debugSpy.mockRestore();
   });
 });

@@ -6,9 +6,9 @@ import {
   computed,
   ViewEncapsulation,
   inject,
-  SecurityContext,
   effect,
   untracked,
+  SecurityContext,
 } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 import { InteractionContract } from '@origo/core';
@@ -55,29 +55,30 @@ export class TextInputComponent implements OrigoAdapter<TextInputProps> {
     () => this.contract().props?.['aria-describedby'] as string | undefined
   );
 
-  private sanitizer = inject(DomSanitizer);
   private experienceAdapter = inject(WebExperienceAdapterService);
+  private sanitizer = inject(DomSanitizer);
 
   constructor() {
     effect(() => {
       const contractVal = this.contract().props?.value;
-      if (contractVal !== undefined) {
-        untracked(() => this.value.set(String(contractVal)));
-      }
+      untracked(() =>
+        this.value.set(contractVal !== undefined && contractVal !== null ? String(contractVal) : '')
+      );
     });
   }
 
   onInput(event: Event) {
-    const target = event.target as HTMLInputElement;
+    const target = event.target as HTMLInputElement | null;
+    if (!target) return;
+
     const rawValue = target.value;
-    const sanitized = this.sanitizer.sanitize(SecurityContext.HTML, rawValue) || '';
+    const sanitizedValue = this.sanitizer.sanitize(SecurityContext.HTML, rawValue) || '';
 
-    this.value.set(sanitized);
-
-    if (rawValue !== sanitized) {
-      target.value = sanitized;
+    if (target.value !== sanitizedValue) {
+      target.value = sanitizedValue;
     }
 
-    this.experienceAdapter.updateState(this.contract().id, 'value', sanitized);
+    this.value.set(sanitizedValue);
+    this.experienceAdapter.updateState(this.contract().id, 'value', sanitizedValue);
   }
 }

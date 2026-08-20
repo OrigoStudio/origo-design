@@ -47,10 +47,11 @@ export function coerceContractProps<T>(
   const inputProps = props as Record<string, unknown>;
 
   if (!schema) {
+    if (strict) {
+      throw new Error('strict mode requires a schema');
+    }
     for (const [key, val] of Object.entries(inputProps)) {
-      if (!strict || key.startsWith('aria-') || key.startsWith('data-')) {
-        result[key] = deepClone(val);
-      }
+      result[key] = deepClone(val);
     }
     return result as T;
   }
@@ -99,7 +100,11 @@ export function coerceContractProps<T>(
       const arr = Array.isArray(value) ? value : [value];
       result[key] = deepClone(arr);
     } else if (expectedType === 'object') {
-      const obj = typeof value === 'object' && !Array.isArray(value) ? value : {};
+      if (Array.isArray(value)) {
+        if (strict) throw new Error(`Invalid object for prop '${key}'`);
+        continue;
+      }
+      const obj = typeof value === 'object' && value !== null ? value : {};
       result[key] = deepClone(obj);
     } else {
       result[key] = deepClone(value);

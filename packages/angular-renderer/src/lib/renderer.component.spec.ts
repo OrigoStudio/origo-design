@@ -139,6 +139,7 @@ describe('OrigoRendererComponent', () => {
   });
 
   it('should fallback to parent view container for unregistered node types', () => {
+    const warnSpy = jest.spyOn(console, 'warn').mockImplementation(jest.fn());
     fixture.componentRef.setInput('node', {
       id: 'container-1',
       type: 'Container',
@@ -162,6 +163,8 @@ describe('OrigoRendererComponent', () => {
     // The fallback child should still render inside the parent container
     const span = compiled.querySelector('span');
     expect(span?.textContent).toBe('Fallback Child');
+    expect(warnSpy).toHaveBeenCalledWith('No primitive found for node type: UnknownType');
+    warnSpy.mockRestore();
   });
 
   it('should pass nodes through the adapter pipeline', () => {

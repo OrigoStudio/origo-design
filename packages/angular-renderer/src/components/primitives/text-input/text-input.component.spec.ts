@@ -58,6 +58,8 @@ describe('TextInputComponent', () => {
   });
 
   it('should dispatch state update and sanitize on input', () => {
+    const debugSpy = jest.spyOn(console, 'debug').mockImplementation(jest.fn());
+    const warnSpy = jest.spyOn(console, 'warn').mockImplementation(jest.fn());
     const updateStateSpy = jest.spyOn(experienceAdapter, 'updateState');
     componentRef.setInput('contract', { id: 'test-input', type: 'textInput', props: {} });
     fixture.detectChanges();
@@ -72,6 +74,8 @@ describe('TextInputComponent', () => {
     expect(component.value()).toBe('clean text');
     expect(inputElement.value).toBe('clean text');
     expect(updateStateSpy).toHaveBeenCalledWith('test-input', 'value', 'clean text');
+    debugSpy.mockRestore();
+    warnSpy.mockRestore();
   });
 
   it('should sync value from contract', () => {
