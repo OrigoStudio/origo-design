@@ -5,9 +5,11 @@ import {
   ChangeDetectionStrategy,
   computed,
   ViewEncapsulation,
+  inject,
 } from '@angular/core';
 import { InteractionContract } from '@origo/core';
 import { OrigoAdapter } from '../../../adapters/web/adapter';
+import { WebExperienceAdapterService } from '../../../adapters/web/experience-adapter.service';
 
 export interface ButtonProps {
   label?: string;
@@ -50,4 +52,16 @@ export class ButtonComponent implements OrigoAdapter<ButtonProps> {
   );
 
   action = output<void>();
+
+  private experienceAdapter = inject(WebExperienceAdapterService);
+
+  onClick() {
+    if (this.computedDisabled()) return;
+
+    const id = this.contract().id;
+    if (!id) return;
+
+    this.experienceAdapter.dispatchCapability(id, 'click');
+    this.action.emit();
+  }
 }

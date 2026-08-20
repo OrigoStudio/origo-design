@@ -71,12 +71,15 @@ export class OrigoRendererComponent {
         const componentRef = vc.createComponent(componentType);
 
         // Extract optional schema/strict mode if defined on the component class
-        const schema = (componentType as any).contractSchema;
-        const strict = (componentType as any).strictContract === true;
+        const schema = (componentType as unknown as Record<string, unknown>)['contractSchema'] as
+          | Record<string, 'string' | 'number' | 'boolean' | 'array' | 'object'>
+          | undefined;
+        const strict =
+          (componentType as unknown as Record<string, unknown>)['strictContract'] === true;
 
         const preparedNode = this.adapter.prepareNode(node, schema, strict);
 
-        if ('contract' in (componentRef.instance as any)) {
+        if ('contract' in (componentRef.instance as Record<string, unknown>)) {
           componentRef.setInput('contract', preparedNode);
         } else {
           console.warn(

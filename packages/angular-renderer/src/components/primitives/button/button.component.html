@@ -3,7 +3,7 @@
   [disabled]="computedDisabled()"
   [attr.aria-label]="computedAriaLabel()"
   [attr.aria-describedby]="computedAriaDescribedBy()"
-  (click)="action.emit()"
+  (click)="onClick()"
 >
   {{ computedLabel() }}
 </button>

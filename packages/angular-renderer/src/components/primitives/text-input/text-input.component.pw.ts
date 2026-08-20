@@ -1,5 +1,6 @@
 import { test, expect } from '@playwright/experimental-ct-angular';
-import { TextInputComponent } from './text-input.component';
+import { TextInputComponent, TextInputProps } from './text-input.component';
+import { InteractionContract } from '@origo/core';
 import AxeBuilder from '@axe-core/playwright';
 
 test.describe('TextInputComponent Accessibility', () => {
@@ -12,8 +13,13 @@ test.describe('TextInputComponent Accessibility', () => {
         contract: {
           id: '2',
           type: 'textInput',
-          props: { placeholder: 'Enter name', value: 'Jane' },
-        } as any,
+          props: {
+            placeholder: 'Enter name',
+            value: 'Jane',
+            'aria-label': 'Name input',
+            'aria-describedby': 'name-hint',
+          },
+        } as InteractionContract<TextInputProps>,
       },
     });
 

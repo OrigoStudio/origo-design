@@ -9,7 +9,7 @@ test.describe('VBoxComponent Accessibility', () => {
   }) => {
     await mount(VBoxComponent, {
       props: {
-        contract: { id: '1', type: 'vbox', props: { gap: '10px' } } as any,
+        contract: { id: '1', type: 'vbox', props: { gap: '10px' } } as never,
       },
     });
 

@@ -13,20 +13,21 @@ export interface OrigoAdapter<TProps = Record<string, unknown>> {
   contract: InputSignal<InteractionContract<TProps>>;
 }
 
-function deepClone(obj: any): any {
+function deepClone<T>(obj: T): T {
   if (obj === null || typeof obj !== 'object') {
     return obj;
   }
   if (Array.isArray(obj)) {
-    return obj.map(deepClone);
+    return obj.map(item => deepClone(item)) as unknown as T;
   }
-  const cloned: any = {};
-  for (const key in obj) {
-    if (Object.prototype.hasOwnProperty.call(obj, key)) {
-      cloned[key] = deepClone(obj[key]);
+  const cloned = {} as Record<string, unknown>;
+  const typedObj = obj as Record<string, unknown>;
+  for (const key in typedObj) {
+    if (Object.prototype.hasOwnProperty.call(typedObj, key)) {
+      cloned[key] = deepClone(typedObj[key]) as unknown;
     }
   }
-  return cloned;
+  return cloned as unknown as T;
 }
 
 /**
@@ -46,10 +47,11 @@ export function coerceContractProps<T>(
   const inputProps = props as Record<string, unknown>;
 
   if (!schema) {
+    if (strict) {
+      throw new Error('strict mode requires a schema');
+    }
     for (const [key, val] of Object.entries(inputProps)) {
-      if (!strict || key.startsWith('aria-') || key.startsWith('data-')) {
-        result[key] = deepClone(val);
-      }
+      result[key] = deepClone(val);
     }
     return result as T;
   }
@@ -98,7 +100,11 @@ export function coerceContractProps<T>(
       const arr = Array.isArray(value) ? value : [value];
       result[key] = deepClone(arr);
     } else if (expectedType === 'object') {
-      const obj = typeof value === 'object' && !Array.isArray(value) ? value : {};
+      if (Array.isArray(value)) {
+        if (strict) throw new Error(`Invalid object for prop '${key}'`);
+        continue;
+      }
+      const obj = typeof value === 'object' && value !== null ? value : {};
       result[key] = deepClone(obj);
     } else {
       result[key] = deepClone(value);

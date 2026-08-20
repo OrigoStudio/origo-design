@@ -1,13 +1,19 @@
 import {
   Component,
   input,
-  output,
+  model,
   ChangeDetectionStrategy,
   computed,
   ViewEncapsulation,
+  inject,
+  effect,
+  untracked,
+  SecurityContext,
 } from '@angular/core';
+import { DomSanitizer } from '@angular/platform-browser';
 import { InteractionContract } from '@origo/core';
 import { OrigoAdapter } from '../../../adapters/web/adapter';
+import { WebExperienceAdapterService } from '../../../adapters/web/experience-adapter.service';
 
 export interface TextInputProps {
   value?: string;
@@ -39,8 +45,8 @@ export class TextInputComponent implements OrigoAdapter<TextInputProps> {
   static readonly strictContract = false;
 
   contract = input.required<InteractionContract<TextInputProps>>();
+  value = model<string>('');
 
-  computedValue = computed(() => this.contract().props?.value ?? '');
   computedPlaceholder = computed(() => this.contract().props?.placeholder ?? '');
   computedDisabled = computed(() => !!this.contract().props?.disabled);
   computedReadonly = computed(() => !!this.contract().props?.readonly);
@@ -49,10 +55,30 @@ export class TextInputComponent implements OrigoAdapter<TextInputProps> {
     () => this.contract().props?.['aria-describedby'] as string | undefined
   );
 
-  valueChange = output<string>();
+  private experienceAdapter = inject(WebExperienceAdapterService);
+  private sanitizer = inject(DomSanitizer);
+
+  constructor() {
+    effect(() => {
+      const contractVal = this.contract().props?.value;
+      untracked(() =>
+        this.value.set(contractVal !== undefined && contractVal !== null ? String(contractVal) : '')
+      );
+    });
+  }
 
   onInput(event: Event) {
-    const target = event.target as HTMLInputElement;
-    this.valueChange.emit(target.value);
+    const target = event.target as HTMLInputElement | null;
+    if (!target) return;
+
+    const rawValue = target.value;
+    const sanitizedValue = this.sanitizer.sanitize(SecurityContext.HTML, rawValue) || '';
+
+    if (target.value !== sanitizedValue) {
+      target.value = sanitizedValue;
+    }
+
+    this.value.set(sanitizedValue);
+    this.experienceAdapter.updateState(this.contract().id, 'value', sanitizedValue);
   }
 }
