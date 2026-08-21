@@ -28,20 +28,23 @@ export interface Domain {
 /**
  * BADL Entity Definition
  */
+export interface EntityField {
+  id: string;
+  name: string;
+  type: 'string' | 'boolean' | 'date' | 'number' | 'array' | 'object';
+  itemType?: string;
+  label: string;
+  references?: string;
+  validation: string[];
+  metadata_path: string;
+  fields?: EntityField[];
+}
+
 export interface Entity {
   id: string;
   name: string;
   implements?: string[];
-  fields: {
-    id: string;
-    name: string;
-    type: 'string' | 'boolean' | 'date' | 'number' | 'array' | 'object';
-    itemType?: string;
-    label: string;
-    references?: string;
-    validation: string[];
-    metadata_path: string;
-  }[];
+  fields: EntityField[];
 }
 export interface Capability2 {
   id: string;

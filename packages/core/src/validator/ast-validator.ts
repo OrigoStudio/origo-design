@@ -136,20 +136,36 @@ export function validateAST(
       const entity = entities[eIndex];
       if (!entity || !entity.id) continue;
       const dependencies: string[] = [];
-      const fields = Array.isArray(entity.fields) ? entity.fields : [];
-      for (const field of fields) {
-        if (field.references) {
-          if (!entityDomainMap.has(field.references)) {
-            errors.push({
-              type: 'MISSING_REFERENCE',
-              message: `Invalid consumption rule: Entity "${field.references}" referenced by field "${field.id}" does not exist`,
-              path: field.id,
-            });
-          } else {
-            dependencies.push(field.references);
+      const processFields = (fieldList: any[], depth = 1) => {
+        if (depth > MAX_AST_DEPTH) {
+          errors.push({
+            type: 'MAX_DEPTH_EXCEEDED',
+            message: `Maximum AST depth exceeded (${MAX_AST_DEPTH}) in entity fields for ${entity.id}`,
+            path: entity.id,
+          });
+          return;
+        }
+        for (const field of fieldList) {
+          if (!field || typeof field !== 'object') continue;
+          if (field.references) {
+            if (!entityDomainMap.has(field.references)) {
+              errors.push({
+                type: 'MISSING_REFERENCE',
+                message: `Invalid consumption rule: Entity "${field.references}" referenced by field "${field.id}" does not exist`,
+                path: field.id,
+              });
+            } else {
+              dependencies.push(field.references);
+            }
+          }
+          if (Array.isArray(field.fields)) {
+            processFields(field.fields, depth + 1);
           }
         }
-      }
+      };
+
+      const fields = Array.isArray(entity.fields) ? entity.fields : [];
+      processFields(fields);
       const existingDeps = adjList.get(entity.id) || [];
       adjList.set(entity.id, [...existingDeps, ...dependencies]);
 
@@ -166,9 +182,21 @@ export function validateAST(
           }
 
           if (Array.isArray(contract.requiredFields)) {
+            const flattenFields = (fieldList: any[]): any[] => {
+              let res: any[] = [];
+              for (const f of fieldList) {
+                if (!f) continue;
+                res.push(f);
+                if (Array.isArray(f.fields)) {
+                  res = res.concat(flattenFields(f.fields));
+                }
+              }
+              return res;
+            };
+            const allEntityFields = flattenFields(entity.fields || []);
             for (const reqField of contract.requiredFields) {
               if (!reqField || typeof reqField !== 'object' || !reqField.name) continue;
-              const entityField = (entity.fields || []).find((f: any) => f.name === reqField.name);
+              const entityField = allEntityFields.find((f: any) => f.name === reqField.name);
               if (!entityField) {
                 errors.push({
                   type: 'CONTRACT_BREACH',

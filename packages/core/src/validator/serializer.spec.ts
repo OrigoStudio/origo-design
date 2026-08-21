@@ -272,4 +272,50 @@ describe('AST Serializer', () => {
     expect(errors.length).toBeGreaterThan(0);
     expect(errors[0].type).toBe('MAX_DEPTH_EXCEEDED');
   });
+
+  it('should canonically serialize nested recursive fields without payload bloat or key corruption', () => {
+    const ast: CanonicalAST = {
+      schemaVersion: '1.0.0',
+      domains: [
+        {
+          id: 'domain-1',
+          name: 'Domain 1',
+          version: '1.0.0',
+          domain: 'example',
+          entities: [
+            {
+              id: 'entity-1',
+              name: 'Entity 1',
+              fields: [
+                {
+                  id: 'field-1',
+                  name: 'parent',
+                  type: 'object',
+                  label: 'Parent',
+                  validation: ['required'],
+                  metadata_path: 'parent',
+                  fields: [
+                    {
+                      id: 'field-1-1',
+                      name: 'child',
+                      type: 'string',
+                      label: 'Child',
+                      validation: ['required'],
+                      metadata_path: 'parent.child',
+                    },
+                  ],
+                },
+              ],
+            },
+          ],
+        },
+      ],
+    };
+
+    const [serialized, errors] = serializeAST(ast);
+    expect(errors).toHaveLength(0);
+    expect(serialized).not.toBeNull();
+    const parsed = JSON.parse(serialized as string);
+    expect(parsed.domains[0].entities[0].fields[0].fields[0].id).toBe('field-1-1');
+  });
 });

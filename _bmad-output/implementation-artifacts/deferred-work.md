@@ -104,3 +104,8 @@
 - Unverified acceptance criteria FR-Rend-002 against Epic 3 fixture: No test validates rendering against the complex target page fixture.
 - Permissive and silent error swallowing during coercion: Missing schema keys ignored, invalid objects become empty, etc.
 - NaN undefined deletion regression: NaN now skipped entirely instead of setting undefined explicitly.
+
+## Deferred from: code review of 5.5-3-resolve-recursive-schema-resolution-tech-debt.md (2026-08-22)
+
+- Pre-existing missing string check and non-null assertion edge cases in ExtensionManager [packages/core/src/extension-api/extension-manager.ts:130] — `grantPermission` and `checkPermission` do not validate non-empty permission string, and `registerExtension` updates granted permissions before manifest validation finishes.
+
