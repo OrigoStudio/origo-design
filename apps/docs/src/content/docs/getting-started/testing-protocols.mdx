@@ -1,0 +1,42 @@
+---
+title: 'Testing Protocols'
+description: 'End-to-End Testing Protocols for Origo Workflows'
+---
+
+# End-to-End QA Protocols
+
+Our overarching E2E suite (`apps/origo-e2e`) ensures that our core workflows—from the CLI initialization to the web Playground rendering—operate seamlessly without regressions.
+
+## E2E Testing Architecture
+
+The `apps/origo-e2e` project uses **Playwright** to orchestrate real-world user scenarios. Because we test the full lifecycle of an Origo project, tests must scaffold real environments rather than mocking core functionality.
+
+1. **Temporary Execution Environment**: Tests scaffold a temporary workspace under `tmp/e2e-project`.
+2. **CLI Orchestration**: We use a `CLIWrapper` utility to run the Origo CLI (via `ts-node` or pre-compiled binaries). This simulates a user running `origo init`, `origo generate`, and `origo validate`.
+3. **Web Server Spinning**: The Playwright configuration automatically spins up the `origo-design` Angular Playground via `nx serve`.
+4. **Browser Verification**: Once the CLI has generated the assets, Playwright drives a real browser against the Playground to verify the visual outputs of those generated assets.
+
+## The Quickstart Baseline Workflow
+
+We maintain a baseline test (`quickstart-workflow.spec.ts`) that traces back to the steps documented in the [Quickstart Guide](./quickstart.mdx).
+
+**Traceability Matrix:**
+
+| Quickstart Step  | CLI Action                                 | E2E Assertion                                 |
+| ---------------- | ------------------------------------------ | --------------------------------------------- |
+| `origo init`     | `CLIWrapper.init()`                        | Verifies `origo.config.json` is generated     |
+| `origo generate` | `CLIWrapper.generateEntity('UserAccount')` | Verifies `entities/user-account.json` exists  |
+| `origo validate` | `CLIWrapper.validate()`                    | Verifies CLI validation succeeds              |
+| Open Playground  | `page.goto('/')`                           | Verifies the Playground renders `UserAccount` |
+
+## Writing New E2E Tests
+
+When adding new commands to the CLI or new UI primitives to the Playground:
+
+1. Always use `setupTestEnvironment` and `teardownTestEnvironment` to ensure the `tmp/e2e-project` directory is isolated.
+2. Add your CLI command to the `CLIWrapper` utility (`apps/origo-e2e/src/utils/cli-wrapper.ts`).
+3. Add a new `.spec.ts` file tracing back to the documented workflow.
+4. Run tests via `npx nx e2e origo-e2e`.
+
+> **Note**: For local debugging, it is highly recommended to use the Playwright UI mode:
+> `npx nx e2e origo-e2e --ui`
