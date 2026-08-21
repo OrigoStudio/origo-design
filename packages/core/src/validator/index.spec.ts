@@ -16,8 +16,48 @@ describe('BADLValidator', () => {
     });
 
     it('should successfully validate a single Entity', () => {
+      expect(targetPageFixture.entities.length).toBeGreaterThan(0);
       const entity = targetPageFixture.entities[0];
       const isValid = validator.validateEntity(entity);
+      expect(validator.errors).toBeNull();
+      expect(isValid).toBe(true);
+    });
+
+    it('should fail-closed on undeclared properties (additionalProperties: false)', () => {
+      expect(targetPageFixture.entities.length).toBeGreaterThan(0);
+      const entity = { ...targetPageFixture.entities[0], extraProp: 'should-fail-validation' };
+      const isValid = validator.validateEntity(entity);
+      expect(isValid).toBe(false);
+      expect(validator.errors).toBeDefined();
+      expect(validator.errors?.some(e => e.keyword === 'additionalProperties')).toBe(true);
+    });
+
+    it('should successfully validate deeply nested and recursive field definitions', () => {
+      const recursiveEntity = {
+        id: 'entity-recursive',
+        name: 'RecursiveEntity',
+        fields: [
+          {
+            id: 'field-parent',
+            name: 'parentField',
+            type: 'object',
+            label: 'Parent Field',
+            validation: ['required'],
+            metadata_path: 'parent',
+            fields: [
+              {
+                id: 'field-child',
+                name: 'childField',
+                type: 'string',
+                label: 'Child Field',
+                validation: ['required'],
+                metadata_path: 'parent.child',
+              },
+            ],
+          },
+        ],
+      };
+      const isValid = validator.validateEntity(recursiveEntity);
       expect(validator.errors).toBeNull();
       expect(isValid).toBe(true);
     });

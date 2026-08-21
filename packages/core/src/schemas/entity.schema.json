@@ -4,6 +4,49 @@
   "title": "Entity",
   "description": "BADL Entity Definition",
   "type": "object",
+  "$defs": {
+    "field": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "type": {
+          "type": "string",
+          "enum": ["string", "boolean", "date", "number", "array", "object"]
+        },
+        "itemType": {
+          "type": "string"
+        },
+        "label": {
+          "type": "string"
+        },
+        "references": {
+          "type": "string"
+        },
+        "validation": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "metadata_path": {
+          "type": "string"
+        },
+        "fields": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/field"
+          }
+        }
+      },
+      "required": ["id", "name", "type", "label", "validation", "metadata_path"],
+      "additionalProperties": false
+    }
+  },
   "properties": {
     "id": {
       "type": "string"
@@ -20,39 +63,7 @@
     "fields": {
       "type": "array",
       "items": {
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "string"
-          },
-          "name": {
-            "type": "string"
-          },
-          "type": {
-            "type": "string",
-            "enum": ["string", "boolean", "date", "number", "array", "object"]
-          },
-          "itemType": {
-            "type": "string"
-          },
-          "label": {
-            "type": "string"
-          },
-          "references": {
-            "type": "string"
-          },
-          "validation": {
-            "type": "array",
-            "items": {
-              "type": "string"
-            }
-          },
-          "metadata_path": {
-            "type": "string"
-          }
-        },
-        "required": ["id", "name", "type", "label", "validation", "metadata_path"],
-        "additionalProperties": false
+        "$ref": "#/$defs/field"
       }
     }
   },
