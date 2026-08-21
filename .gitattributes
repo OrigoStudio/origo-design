@@ -1,0 +1,22 @@
+# Ignore internal and development directories when creating release archives (e.g. GitHub Releases)
+_bmad export-ignore
+_bmad-output export-ignore
+.agent export-ignore
+.agents export-ignore
+.bmad export-ignore
+.github export-ignore
+.husky export-ignore
+.nx export-ignore
+tools export-ignore
+design-artifacts export-ignore
+docs export-ignore
+tmp export-ignore
+apps export-ignore
+
+# Ignore root config files not needed by users downloading the release source
+*.txt export-ignore
+*.py export-ignore
+*.patch export-ignore
+bmad_resolved_config*.json export-ignore
+resolved_config.json export-ignore
+test*.js export-ignore
