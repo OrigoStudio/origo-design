@@ -12,6 +12,8 @@ design-artifacts/
 docs/
 tmp/
 apps/
+playwright-report/
+test-results/
 
 # Ignore root config files not needed by users downloading the release source
 *.txt

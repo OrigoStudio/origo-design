@@ -27,12 +27,17 @@ node_modules
 # misc
 /.sass-cache
 /connect.lock
+# testing
 /coverage
+/playwright-report
+/test-results
+testem.log
+/typings
+
+# logs
 /libpeerconnection.log
 npm-debug.log
 yarn-error.log
-testem.log
-/typings
 
 # System Files
 .DS_Store
