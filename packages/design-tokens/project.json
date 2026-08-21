@@ -15,6 +15,7 @@
         "assets": [
           "packages/design-tokens/*.md",
           "packages/design-tokens/package.json",
+          "packages/design-tokens/.npmignore",
           "packages/design-tokens/src/schemas/**/*.json",
           "packages/design-tokens/src/tokens/**/*.json"
         ]

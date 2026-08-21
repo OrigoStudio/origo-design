@@ -1,0 +1,79 @@
+
+# compiled output
+dist
+tmp
+/out-tsc
+
+# dependencies
+node_modules
+
+# IDEs and editors
+/.idea
+.project
+.classpath
+.c9/
+*.launch
+.settings/
+*.sublime-workspace
+
+# IDE - VSCode
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+
+# misc
+/.sass-cache
+/connect.lock
+/coverage
+/libpeerconnection.log
+npm-debug.log
+yarn-error.log
+testem.log
+/typings
+
+# System Files
+.DS_Store
+Thumbs.db
+
+.nx/cache
+.nx/workspace-data
+
+.claude/worktrees
+.nx/polygraph
+.nx/self-healing
+.nx/migrate-runs
+.nx/installation
+
+# Ignore internal and development directories when creating release archives (e.g. GitHub Releases)
+_bmad/
+_bmad-output/
+.agent/
+.agents/
+.bmad/
+.github/
+.husky/
+.nx/
+tools/
+design-artifacts/
+docs/
+tmp/
+apps/
+
+# Ignore root config files not needed by users downloading the release source
+*.txt
+*.py
+*.patch
+bmad_resolved_config*.json
+resolved_config.json
+test*.js
+
+# Ignore testing and configuration files
+*.spec.ts
+*.test.ts
+jest.config.cts
+eslint.config.cjs
+tsconfig.json
+tsconfig.*.json
+project.json

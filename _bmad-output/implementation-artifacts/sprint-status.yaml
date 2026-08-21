@@ -41,7 +41,7 @@
 # - Retrospective appends its action items to action_items; sprint-status surfaces open ones
 
 generated: 2026-07-29T21:46:02.464968
-last_updated: 2026-08-19T21:24:10Z
+last_updated: 2026-08-21T11:47:00Z
 project: origo-design
 project_key: NOKEY
 tracking_system: file-system
@@ -82,15 +82,22 @@ development_status:
   4-6-formal-extension-manifest-lifecycle-fr-ext-008-to-013: done
   4-7-extension-security-sandboxing-fr-ext-014: done
   epic-4-retrospective: done
-  epic-5: in-progress
+  epic-5: done
   5-1-ast-traversal-and-dynamic-instantiation: done
   5-2-experience-adapter-interface: done
   5-3-core-primitive-implementation: done
   5-4-design-token-consumption: done
-  5-5-reactive-state-event-binding: review
-  epic-5-retrospective: optional
+  5-5-reactive-state-event-binding: done
+  epic-5-retrospective: done
+  epic-5.5: in-progress
+  5.5-1-create-usability-quickstart-guide: done
+  5.5-2-establish-end-to-end-qa-protocols: backlog
+  5.5-3-resolve-recursive-schema-resolution-tech-debt: backlog
+  5.5-4-verify-core-compiler-source-map-preservation: backlog
+  5.5-5-define-secure-by-default-boilerplate-templates: backlog
+  epic-5.5-retrospective: optional
   epic-6: backlog
-  6-1-cli-initialization-and-scaffolding: backlog
+  6-1-cli-initialization-and-scaffolding: ready-for-dev
   6-2-local-schema-validation: backlog
   6-3-entity-generator-boilerplate: backlog
   epic-6-retrospective: optional
@@ -150,3 +157,18 @@ action_items:
   - id: retro-4-knowledge-transfer
     description: "Knowledge Transfer: Conduct knowledge sharing or write documentation on the new Angular Signals reactive state patterns for the team. (Owner: Elena/Amelia)"
     status: done
+  - id: retro-5-usability-docs
+    description: "Document Usability Steps & Quickstarts for components detailing end-to-end user workflows. (Owner: Elena)"
+    status: open
+  - id: retro-5-e2e-testing
+    description: "Establish End-to-End User Testing Protocols for new components based on usability documentation. (Owner: Dana)"
+    status: open
+  - id: retro-5-schema-resolution
+    description: "Fix 'Recursive Schema Resolution' tech debt to stop aggressive property stripping during AST coercion. (Owner: Charlie)"
+    status: open
+  - id: retro-5-prep-cli-maps
+    description: "Verify core compiler preserves source maps and line number offsets for CLI error reporting. (Owner: Charlie)"
+    status: open
+  - id: retro-5-prep-cli-templates
+    description: "Define secure-by-default boilerplate templates for CLI generators. (Owner: Amelia)"
+    status: open

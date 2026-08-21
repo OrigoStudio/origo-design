@@ -1,0 +1,15 @@
+{
+  "name": "@origo/cli",
+  "version": "0.0.1",
+  "private": true,
+  "type": "commonjs",
+  "main": "./src/index.js",
+  "types": "./src/index.d.ts",
+  "bin": {
+    "origo": "./src/main.js"
+  },
+  "dependencies": {
+    "commander": "^15.0.0",
+    "tslib": "^2.3.0"
+  }
+}

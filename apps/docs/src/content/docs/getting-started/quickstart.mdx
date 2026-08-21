@@ -1,0 +1,91 @@
+---
+title: Quickstart Guide
+description: Get started with the Origo platform in under 10 minutes.
+---
+
+Welcome to Origo! This quickstart guide will take you through the core "happy path" of the platform. In under 10 minutes, you will learn how to scaffold a new project, define a domain entity, validate its schema, and preview the rendered UI in the browser.
+
+## Prerequisites
+
+Before starting, ensure you have the following installed on your system:
+
+- Node.js (v22 or higher)
+- npm or yarn
+
+:::note
+The Origo CLI is the primary way to interact with the platform. You can use it globally via `npx` or install it locally in your project.
+:::
+
+:::caution
+The CLI package is not yet available on npm. Use local workspace build: `npm install` from monorepo root.
+:::
+
+## 1. Scaffold a New Project
+
+The easiest way to start is by using the Origo CLI to scaffold a new workspace.
+
+```bash
+origo init my-origo-project
+cd my-origo-project
+```
+
+This command sets up a standardized workspace with the necessary configuration files, dependencies, and a predefined folder structure.
+
+## 2. Define an Entity
+
+Origo uses Business Application Domain Language (BADL) to define entities. Let's generate a simple entity using the CLI.
+
+```bash
+origo generate entity User
+```
+
+This will create a new file `schemas/User.badl`. Open the file and you'll see a basic structure. You can customize the entity by defining its properties, relationships, and validation rules in BADL format.
+
+If a file with this name already exists, the command will error. Use a unique entity name.
+
+```json
+{
+  "entity": "User",
+  "fields": [
+    { "name": "id", "type": "String", "annotations": ["@id"] },
+    { "name": "name", "type": "String", "annotations": ["@required"] },
+    { "name": "email", "type": "String", "annotations": ["@required", "@email"] }
+  ]
+}
+```
+
+:::tip
+BADL is designed to be highly readable while remaining strongly typed. Explore the [BADL Documentation](/badl-reference) for advanced entity relationships.
+:::
+
+## 3. Compile the Schema
+
+Once you have defined your entity, you must compile it into Origo's canonical Abstract Syntax Tree (AST). The Core Engine uses this AST to drive the rest of the application lifecycle.
+
+Ensure at least one .badl file exists in `/schemas` before running validate.
+
+```bash
+origo validate
+```
+
+If your BADL syntax is correct, this command will output the compiled AST to `./dist/schema.json` (configurable in `origo.json`). If there are errors (like missing required annotations or invalid types), the CLI will provide descriptive error messages pointing you to the exact line in your BADL file.
+
+:::caution
+Do not modify the generated AST (`schema.json`) manually. Any changes should be made directly to your BADL files and re-compiled.
+:::
+
+## 4. Preview the UI
+
+Finally, let's view the rendered UI. The Web Adapter interprets the AST and dynamically renders the corresponding interfaces.
+
+Start the local playground server (refer to [Playground Documentation](/playground) for setup). Navigate to `http://localhost:3000` to see your `User` entity rendered automatically as a functional user interface. You will see forms (e.g. `form[data-origo-metadata-path="User"]`), data tables (`table[data-origo-metadata-path="User"]`), and navigation elements derived directly from the properties and annotations you defined in BADL.
+
+## Next Steps
+
+Congratulations! You've successfully completed the Origo end-to-end workflow.
+
+To explore further:
+
+- Learn how to customize the visual design using [Design Tokens](/design-tokens).
+- Understand how to add [Behavior and Logic](/behavior-validation) to your entities.
+- Read the [Architecture Overview](/architecture) to see how the Core Engine, Web Adapter, and extensions interact.

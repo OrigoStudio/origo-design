@@ -1,6 +1,7 @@
 ---
-stepsCompleted: ["step-01-validate-prerequisites", "step-02-design-epics", "step-03-create-stories"]
+stepsCompleted: ["step-01-validate-prerequisites", "step-02-design-epics", "step-03-create-stories", "step-04-epic-5.5"]
 inputDocuments:
+  - "_bmad-output/implementation-artifacts/epic-5-retro-2026-08-20.md"
   - "design-artifacts/B-Functional-Requirements/functional-requirements.md"
   - "design-artifacts/A-Product-Brief/product-brief.md"
   - "_bmad-output/planning-artifacts/architecture/architecture-origo-design-2026-07-28/ARCHITECTURE-SPINE.md"
@@ -79,6 +80,11 @@ This document provides the complete epic and story breakdown for Origo Design Ph
 - FR-PREP-002: Fix AST parser deeply nested chain limit
 - FR-PREP-003: Prevent deferred edge case crashes in AST engine
 - FR-PREP-004: Establish semantic versioning for @origo/core package (Executes First)
+- FR-PREP5-001: Create a Quickstart/Usability guide detailing end-to-end user workflows
+- FR-PREP5-002: Establish QA protocols based on the new usability documentation
+- FR-PREP5-003: Resolve the "Recursive Schema Resolution" tech debt to stop aggressive property stripping during AST coercion
+- FR-PREP5-004: Verify core compiler preserves source maps and line number offsets for CLI error reporting
+- FR-PREP5-005: Define secure-by-default boilerplate templates for CLI generators
 
 ### Non-Functional Requirements (Phase 1 Scope)
 
@@ -184,6 +190,12 @@ FR-AI-005: Epic 6 - CLI and playground output format
 FR-TEST-002: Epic 4 - Test selector stability
 FR-ADOPT-001: Epic 10 - Page-by-page adoption support
 FR-ADOPT-002: Epic 10 - Incremental adoption migration guide
+
+FR-PREP5-001: Epic 5.5 - Create Quickstart/Usability guide
+FR-PREP5-002: Epic 5.5 - Establish QA protocols based on usability docs
+FR-PREP5-003: Epic 5.5 - Resolve "Recursive Schema Resolution" tech debt
+FR-PREP5-004: Epic 5.5 - Verify source maps and line number offsets for CLI
+FR-PREP5-005: Epic 5.5 - Define boilerplate templates for CLI generators
 
 NFR-PERF-002: Epic 1 - Validation performance benchmarks in CI
 NFR-PERF-003: Epic 7 - Playground hot-reload performance
@@ -637,6 +649,75 @@ So that user interactions correctly update the model and trigger actions.
 **Then** the local state is reactively updated via Angular Signals
 **And** the input is explicitly sanitized before state updates to prevent XSS attacks
 **And** the corresponding BADL capability or action is dispatched to the core engine (FR-A-002, 003).
+
+### Epic 5.5: Developer CLI Foundation & Usability Preparation
+[Developers have access to complete usability documentation and QA protocols, and the core engine is robustly prepared to support CLI error reporting and boilerplate generation]
+**FRs covered:** FR-PREP5-001, FR-PREP5-002, FR-PREP5-003, FR-PREP5-004, FR-PREP5-005
+
+#### Story 5.5.1: Create Usability Quickstart Guide
+
+As a Developer,
+I want a comprehensive Quickstart/Usability guide detailing end-to-end user workflows,
+So that I understand the actual user perspective and have clear documentation on how the system is intended to be used.
+
+**Acceptance Criteria:**
+
+**Given** the current state of the Origo platform after Epic 5
+**When** a developer or QA engineer needs to test or interact with the system end-to-end
+**Then** they have a detailed Quickstart guide documenting the entire usability flow
+**And** the guide clearly covers the "happy path" and core use cases from an end-user perspective.
+
+#### Story 5.5.2: Establish End-to-End QA Protocols
+
+As a QA Engineer,
+I want established end-to-end user testing protocols based on the new usability documentation,
+So that I can effectively test the application from a user's perspective rather than just testing isolated technical components.
+
+**Acceptance Criteria:**
+
+**Given** the newly created Usability Quickstart Guide (from Story 5.5.1)
+**When** QA protocols are defined
+**Then** they include specific test scenarios derived directly from the documented user workflows
+**And** these protocols cover the complete "happy path" and identified edge cases to prevent usability blindspots.
+
+#### Story 5.5.3: Resolve Recursive Schema Resolution Tech Debt
+
+As a Core Developer,
+I want to resolve the "Recursive Schema Resolution" tech debt,
+So that properties are no longer aggressively stripped during AST coercion, preserving data integrity.
+
+**Acceptance Criteria:**
+
+**Given** the AST coercion engine
+**When** it processes a deeply nested or recursive schema
+**Then** it correctly resolves properties without aggressively stripping valid data
+**And** it passes all existing AST test fixtures without regression.
+
+#### Story 5.5.4: Verify Core Compiler Source Map Preservation
+
+As a Core Developer,
+I want to verify that the core compiler preserves source maps and line number offsets,
+So that the upcoming CLI generator (Epic 6) can produce accurate error reporting.
+
+**Acceptance Criteria:**
+
+**Given** a compiled BADL schema
+**When** the compiler throws a validation error
+**Then** the error object includes the exact source map and line number offsets of the offending token
+**And** this behavior is verified by explicit test coverage.
+
+#### Story 5.5.5: Define Secure-by-Default Boilerplate Templates
+
+As a Developer,
+I want secure-by-default boilerplate templates defined for the upcoming CLI generators,
+So that generated code automatically adheres to security best practices without manual configuration.
+
+**Acceptance Criteria:**
+
+**Given** the template definition files for the CLI generator
+**When** the boilerplate templates are authored
+**Then** they must contain no hardcoded secrets, permissive CORS defaults, or insecure dependencies
+**And** they are reviewed and approved for strict security compliance before being merged.
 
 ### Epic 6: Developer CLI (@origo/cli)
 [Developer can generate entities, scaffold projects, and validate BADL schemas locally from the terminal]

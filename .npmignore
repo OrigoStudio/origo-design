@@ -1,0 +1,31 @@
+# Ignore internal and development directories when creating release archives (e.g. GitHub Releases)
+_bmad/
+_bmad-output/
+.agent/
+.agents/
+.bmad/
+.github/
+.husky/
+.nx/
+tools/
+design-artifacts/
+docs/
+tmp/
+apps/
+
+# Ignore root config files not needed by users downloading the release source
+*.txt
+*.py
+*.patch
+bmad_resolved_config*.json
+resolved_config.json
+test*.js
+
+# Ignore testing and configuration files
+*.spec.ts
+*.test.ts
+jest.config.cts
+eslint.config.cjs
+tsconfig.json
+tsconfig.*.json
+project.json
