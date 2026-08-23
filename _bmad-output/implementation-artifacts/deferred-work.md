@@ -109,3 +109,6 @@
 
 - Pre-existing missing string check and non-null assertion edge cases in ExtensionManager [packages/core/src/extension-api/extension-manager.ts:130] — `grantPermission` and `checkPermission` do not validate non-empty permission string, and `registerExtension` updates granted permissions before manifest validation finishes.
 
+## Deferred from: code review of 5.5-5-define-secure-by-default-boilerplate-templates (2026-08-23)
+
+- New `security` key added to config file callers didn't expect [packages/cli/src/commands/init.ts:20-24] — pre-existing config parser issue, not caused by template itself.

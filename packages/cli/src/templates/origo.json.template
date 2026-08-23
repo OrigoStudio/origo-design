@@ -1,0 +1,16 @@
+{
+  "version": "1.0",
+  "build": {
+    "outDir": "./dist"
+  },
+  "schemas": "./schemas",
+  "security": {
+    "sandboxEnabled": true,
+    "allowNetworkAccess": false,
+    "allowFileSystemAccess": false
+  },
+  "permissions": {
+    "read": ["admin"],
+    "write": ["admin"]
+  }
+}

@@ -1,247 +1,166 @@
 Invoke the `bmad-review-edge-case-hunter` skill on this diff:
 
-diff --git a/packages/core/package-lock.json b/packages/core/package-lock.json
-index 45232f2..61a388e 100644
---- a/packages/core/package-lock.json
-+++ b/packages/core/package-lock.json
-@@ -1,21 +1,23 @@
- {
-   "name": "@origo/core",
--  "version": "0.0.5",
-+  "version": "0.0.17",
-   "lockfileVersion": 3,
-   "requires": true,
-   "packages": {
-     "": {
-       "name": "@origo/core",
--      "version": "0.0.5",
-+      "version": "0.0.17",
-       "dependencies": {
-         "ajv": "^8.17.1",
-         "ajv-errors": "^3.0.0",
-         "ajv-formats": "^3.0.1",
-         "json-schema-to-typescript": "^14.1.0",
--        "semver": "^7.8.5",
-+        "json-source-map": "^0.6.1",
-+        "semver": "^7.7.4",
-         "tslib": "^2.3.0"
-       },
-       "devDependencies": {
-+        "@types/json-source-map": "^0.6.0",
-         "@types/semver": "^7.8.0"
-       }
-     },
-@@ -75,6 +77,13 @@
-       "integrity": "sha512-5+fP8P8MFNC+AyZCDxrB2pkZFPGzqQWUzpSeuuVLvm8VMcorNYavBqoFcxK8bQz4Qsbn4oUEEem4wDLfcysGHA==",
-       "license": "MIT"
-     },
-+    "node_modules/@types/json-source-map": {
-+      "version": "0.6.0",
-+      "resolved": "https://registry.npmjs.org/@types/json-source-map/-/json-source-map-0.6.0.tgz",
-+      "integrity": "sha512-5RTx9KQi42g0knHvHM9+f6V5B17S22ZFyoDfabgHLhnWa/5ST1UCDpuda/AaUIyHX1pLxwFZKcScM2sytz9OEQ==",
-+      "dev": true,
-+      "license": "MIT"
-+    },
-     "node_modules/@types/lodash": {
-       "version": "4.17.25",
-       "resolved": "https://registry.npmjs.org/@types/lodash/-/lodash-4.17.25.tgz",
-@@ -548,6 +557,12 @@
-       "integrity": "sha512-NM8/P9n3XjXhIZn1lLhkFaACTOURQXjWhV4BA/RnOv8xvgqtqpAX9IO4mRQxSx1Rlo4tqzeqb0sOlruaOy3dug==",
-       "license": "MIT"
-     },
-+    "node_modules/json-source-map": {
-+      "version": "0.6.1",
-+      "resolved": "https://registry.npmjs.org/json-source-map/-/json-source-map-0.6.1.tgz",
-+      "integrity": "sha512-1QoztHPsMQqhDq0hlXY5ZqcEdUzxQEIxgFkKl4WUp2pgShObl+9ovi4kRh2TfvAfxAoHOJ9vIMEqk3k4iex7tg==",
-+      "license": "MIT"
-+    },
-     "node_modules/lodash": {
-       "version": "4.18.1",
-       "resolved": "https://registry.npmjs.org/lodash/-/lodash-4.18.1.tgz",
-diff --git a/packages/core/package.json b/packages/core/package.json
-index b744a5b..c5c776b 100644
---- a/packages/core/package.json
-+++ b/packages/core/package.json
-@@ -10,10 +10,12 @@
-     "ajv-errors": "^3.0.0",
-     "ajv-formats": "^3.0.1",
-     "json-schema-to-typescript": "^14.1.0",
-+    "json-source-map": "^0.6.1",
-     "semver": "^7.7.4",
-     "tslib": "^2.3.0"
-   },
-   "devDependencies": {
-+    "@types/json-source-map": "^0.6.0",
-     "@types/semver": "^7.8.0"
-   }
- }
-diff --git a/packages/core/src/validator/index.spec.ts b/packages/core/src/validator/index.spec.ts
-index 3c2f8ea..003bf3d 100644
---- a/packages/core/src/validator/index.spec.ts
-+++ b/packages/core/src/validator/index.spec.ts
-@@ -164,5 +164,28 @@ describe('BADLValidator', () => {
-         validator.validateEntity(objA, { maxDepth: 10 });
-       }).toThrow('Maximum depth exceeded. Possible circular dependency detected.');
-     });
-+
-+    it('should correctly attach line and column numbers to errors when parsing from a JSON string', () => {
-+      const invalidJsonString = `{
-+  "id": "entity-invalid",
-+  "name": "Invalid",
-+  "fields": [
-+    {
-+      "id": "field-1",
-+      "name": "missing-type-and-label"
-+    }
-+  ]
-+}`;
-+      const isValid = validator.validateEntity(invalidJsonString);
-+      expect(isValid).toBe(false);
-+      expect(validator.errors).toBeDefined();
-+      expect(validator.errors?.length).toBeGreaterThan(0);
-+      
-+      const errorWithContext = validator.errors?.find(e => e.context?.line !== undefined);
-+      expect(errorWithContext).toBeDefined();
-+      expect(errorWithContext?.context?.line).toBeDefined();
-+      expect(errorWithContext?.context?.column).toBeDefined();
-+      expect(errorWithContext?.code).toBeDefined();
-+    });
-   });
- });
-diff --git a/packages/core/src/validator/index.ts b/packages/core/src/validator/index.ts
-index 6360a0e..094d140 100644
---- a/packages/core/src/validator/index.ts
-+++ b/packages/core/src/validator/index.ts
-@@ -1,6 +1,7 @@
--import Ajv, { ErrorObject } from 'ajv/dist/2020';
-+import Ajv, { ErrorObject, AnySchemaObject } from 'ajv/dist/2020';
- import addFormats from 'ajv-formats';
- import addErrors from 'ajv-errors';
-+import { parse as parseJSONWithSourceMap } from 'json-source-map';
- import * as domainSchema from '../schemas/domain.schema.json';
- import * as entitySchema from '../schemas/entity.schema.json';
- import * as capabilitySchema from '../schemas/capability.schema.json';
-@@ -12,9 +13,18 @@ export interface ValidatorOptions {
-   maxDepth?: number;
- }
+```diff
+diff --git a/packages/cli/src/commands/init.ts b/packages/cli/src/commands/init.ts
+index 48decd4..8be8a45 100644
+--- a/packages/cli/src/commands/init.ts
++++ b/packages/cli/src/commands/init.ts
+@@ -2,6 +2,7 @@ import { Command } from 'commander';
+ import * as fs from 'fs/promises';
+ import * as path from 'path';
+ import { CliError } from '../utils/errors';
++import { generateOrigoConfig } from '../templates';
  
-+export interface EnhancedErrorObject extends ErrorObject {
-+  code?: string;
-+  context?: {
-+    line?: number;
-+    column?: number;
-+    [key: string]: any;
+ export function initCommand(): Command {
+   const init = new Command('init')
+@@ -49,13 +50,9 @@ export async function initializeProject(
+     await fs.mkdir(schemasDir, { recursive: true });
+ 
+     // Create config file securely
+-    const config = {
+-      version: '1.0',
+-      build: { outDir: './dist' },
+-      schemas: './schemas',
+-    };
++    const configContent = generateOrigoConfig();
+ 
+-    await fs.writeFile(configFile, JSON.stringify(config, null, 2), 'utf-8');
++    await fs.writeFile(configFile, configContent, 'utf-8');
+ 
+     console.log(`Successfully initialized Origo project in ${projectDir}`);
+   } catch (error) {
+diff --git a/packages/cli/src/templates/index.ts b/packages/cli/src/templates/index.ts
+new file mode 100644
+--- /dev/null
++++ b/packages/cli/src/templates/index.ts
+@@ -0,0 +1,51 @@
++export function generateEntityTemplate(
++  options: { id?: string; name?: string; type?: string } = {}
++): string {
++  const entity = {
++    id: options.id || 'default_entity_id',
++    name: options.name || 'DefaultEntityName',
++    type: options.type || 'object',
++    fields: [],
++    permissions: {
++      read: ['admin'],
++      write: ['admin'],
++    },
 +  };
++  return JSON.stringify(entity, null, 2);
 +}
 +
- export class BADLValidator {
-   private ajv: Ajv;
--  public errors: ErrorObject[] | null | undefined = null;
-+  public errors: EnhancedErrorObject[] | null | undefined = null;
- 
-   constructor() {
-     this.ajv = new Ajv({
-@@ -92,7 +102,10 @@ export class BADLValidator {
- 
-   validateDomain(data: unknown, options: ValidatorOptions = {}): boolean {
-     this.errors = null;
-+    let jsonString: string | undefined;
++export function generateOrigoConfig(options: Record<string, any> = {}): string {
++  const config = {
++    version: '1.0',
++    build: { outDir: './dist' },
++    schemas: './schemas',
++    security: {
++      sandboxEnabled: true,
++      allowNetworkAccess: false,
++      allowFileSystemAccess: false,
++    },
++    ...options,
++  };
++  return JSON.stringify(config, null, 2);
++}
 +
-     if (typeof data === 'string') {
-+      jsonString = data;
-       try {
-         data = JSON.parse(data);
-       } catch {
-@@ -103,6 +116,7 @@ export class BADLValidator {
-             instancePath: '',
-             schemaPath: '',
-             params: {},
-+            code: 'parse'
-           },
-         ];
-         return false;
-@@ -120,13 +134,41 @@ export class BADLValidator {
-     }
- 
-     const isValid = validate(data);
--    this.errors = isValid ? null : validate.errors;
-+    
-+    if (!isValid && validate.errors) {
-+      let sourceMapPointers: Record<string, any> | undefined;
-+      if (jsonString) {
-+        try {
-+          sourceMapPointers = parseJSONWithSourceMap(jsonString).pointers;
-+        } catch {
-+          // Ignore parsing errors for source maps if initial parse succeeded
-+        }
-+      }
++export function generateExtensionTemplate(
++  options: { id?: string; name?: string; version?: string } = {}
++): string {
++  const extension = {
++    id: options.id || 'my-extension',
++    name: options.name || 'My Extension',
++    version: options.version || '1.0.0',
++    capabilities: [],
++    permissions: {
++      required: [],
++      sandbox: {
++        network: false,
++        filesystem: false,
++        process: false,
++      },
++    },
++  };
++  return JSON.stringify(extension, null, 2);
++}
+diff --git a/packages/cli/src/templates/index.spec.ts b/packages/cli/src/templates/index.spec.ts
+new file mode 100644
+--- /dev/null
++++ b/packages/cli/src/templates/index.spec.ts
+@@ -0,0 +1,75 @@
++import {
++  generateEntityTemplate,
++  generateOrigoConfig,
++  generateExtensionTemplate,
++} from './index';
 +
-+      this.errors = validate.errors.map(err => {
-+        const newErr: EnhancedErrorObject = { ...err, code: err.keyword };
-+        if (sourceMapPointers && err.instancePath && sourceMapPointers[err.instancePath]) {
-+          const pointer = sourceMapPointers[err.instancePath];
-+          newErr.context = {
-+            line: pointer.value.line,
-+            column: pointer.value.column,
-+          };
-+        }
-+        return newErr;
++describe('Boilerplate Templates', () => {
++  describe('Entity Template', () => {
++    it('should generate valid JSON containing strict RBAC permissions', () => {
++      const templateJson = generateEntityTemplate({
++        id: 'user',
++        name: 'User',
 +      });
-+    } else {
-+      this.errors = null;
-+    }
-+    
-     return isValid as boolean;
-   }
- 
-   validateEntity(data: unknown, options: ValidatorOptions = {}): boolean {
-     this.errors = null;
-+    let jsonString: string | undefined;
++      const parsed = JSON.parse(templateJson);
 +
-     if (typeof data === 'string') {
-+      jsonString = data;
-       try {
-         data = JSON.parse(data);
-       } catch {
-@@ -137,6 +179,7 @@ export class BADLValidator {
-             instancePath: '',
-             schemaPath: '',
-             params: {},
-+            code: 'parse'
-           },
-         ];
-         return false;
-@@ -154,7 +197,32 @@ export class BADLValidator {
-     }
- 
-     const isValid = validate(data);
--    this.errors = isValid ? null : validate.errors;
-+    
-+    if (!isValid && validate.errors) {
-+      let sourceMapPointers: Record<string, any> | undefined;
-+      if (jsonString) {
-+        try {
-+          sourceMapPointers = parseJSONWithSourceMap(jsonString).pointers;
-+        } catch {
-+          // Ignore parsing errors for source maps if initial parse succeeded
-+        }
-+      }
++      expect(parsed.id).toBe('user');
++      expect(parsed.name).toBe('User');
++      expect(parsed.type).toBe('object');
++      expect(parsed.fields).toEqual([]);
 +
-+      this.errors = validate.errors.map(err => {
-+        const newErr: EnhancedErrorObject = { ...err, code: err.keyword };
-+        if (sourceMapPointers && err.instancePath && sourceMapPointers[err.instancePath]) {
-+          const pointer = sourceMapPointers[err.instancePath];
-+          newErr.context = {
-+            line: pointer.value.line,
-+            column: pointer.value.column,
-+          };
++      // Security requirement: Must have strict RBAC defaults
++      expect(parsed.permissions).toBeDefined();
++      expect(parsed.permissions.read).toEqual(['admin']);
++      expect(parsed.permissions.write).toEqual(['admin']);
++    });
++
++    it('should fail validation (hypothetically) if permissions block is omitted', () => {
++      const templateJson = generateEntityTemplate();
++      const parsed = JSON.parse(templateJson);
++      
++      const validateStrictRBAC = (entity: any) => {
++        if (!entity.permissions || !entity.permissions.read || !entity.permissions.write) {
++          throw new Error('Strict RBAC permissions block is missing');
 +        }
-+        return newErr;
-+      });
-+    } else {
-+      this.errors = null;
-+    }
-+    
-     return isValid as boolean;
-   }
- }
++      };
++
++      // Template includes it, so it should pass
++      expect(() => validateStrictRBAC(parsed)).not.toThrow();
++
++      // If omitted, it should throw
++      delete parsed.permissions;
++      expect(() => validateStrictRBAC(parsed)).toThrow('Strict RBAC permissions block is missing');
++    });
++  });
++
++  describe('Origo Config Template', () => {
++    it('should generate valid JSON with secure default config', () => {
++      const templateJson = generateOrigoConfig();
++      const parsed = JSON.parse(templateJson);
++
++      expect(parsed.version).toBe('1.0');
++      expect(parsed.schemas).toBe('./schemas');
++      
++      // Security requirement: Secure defaults
++      expect(parsed.security).toBeDefined();
++      expect(parsed.security.sandboxEnabled).toBe(true);
++      expect(parsed.security.allowNetworkAccess).toBe(false);
++      expect(parsed.security.allowFileSystemAccess).toBe(false);
++    });
++  });
++
++  describe('Extension Template', () => {
++    it('should generate valid JSON with strict sandbox permissions', () => {
++      const templateJson = generateExtensionTemplate();
++      const parsed = JSON.parse(templateJson);
++
++      expect(parsed.id).toBe('my-extension');
++      expect(parsed.permissions).toBeDefined();
++      expect(parsed.permissions.sandbox.network).toBe(false);
++      expect(parsed.permissions.sandbox.filesystem).toBe(false);
++      expect(parsed.permissions.sandbox.process).toBe(false);
++    });
++  });
++});
+```
