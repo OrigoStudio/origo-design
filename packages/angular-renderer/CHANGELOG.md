@@ -1,3 +1,13 @@
+## 0.0.19 (2026-08-23)
+
+### 🚀 Features
+
+- 5.5-5-define-secure-by-default-boilerplate-templates ([0eb6dde](https://github.com/OrigoStudio/origo-design/commit/0eb6dde))
+
+### ❤️ Thank You
+
+- Hardik Patel @hardikpatelse
+
 ## 0.0.18 (2026-08-23)
 
 ### 🚀 Features
