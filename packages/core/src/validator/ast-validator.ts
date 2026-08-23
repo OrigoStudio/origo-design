@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { CanonicalAST } from '../types/ast';
 import { ValidationError } from '../types/validation';
 import { Contract, Capability } from '../types/domain';
@@ -33,13 +34,14 @@ export function validateAST(
     const domain = ast.domains[dIndex];
     if (!domain) continue;
     const entities = Array.isArray(domain.entities) ? domain.entities : [];
-    for (const entity of entities) {
+    for (let eIndex = 0; eIndex < entities.length; eIndex++) {
+      const entity = entities[eIndex];
       if (!entity || !entity.id) continue;
       if (entityDomainMap.has(entity.id)) {
         errors.push({
           type: 'DUPLICATE_ID',
           message: `Duplicate entity ID found: ${entity.id}`,
-          path: entity.id,
+          path: `/domains/${dIndex}/entities/${eIndex}/id`,
         });
       } else {
         entityDomainMap.set(entity.id, domain.id);
@@ -53,7 +55,7 @@ export function validateAST(
         errors.push({
           type: 'INVALID_FORMAT',
           message: `Capability missing id in domain ${domain.id}`,
-          path: `domains[${dIndex}].capabilities[${cIndex}]`,
+          path: `/domains/${dIndex}/capabilities/${cIndex}`,
         });
         continue;
       }
@@ -61,7 +63,7 @@ export function validateAST(
         errors.push({
           type: 'DUPLICATE_ID',
           message: `Duplicate capability ID found: ${capability.id}`,
-          path: `domains[${dIndex}].capabilities[${cIndex}].id`,
+          path: `/domains/${dIndex}/capabilities/${cIndex}/id`,
         });
         continue;
       } else {
@@ -82,7 +84,7 @@ export function validateAST(
         errors.push({
           type: 'INVALID_FORMAT',
           message: 'Contract missing id',
-          path: `domains[${dIndex}].contracts[${cIdx}]`,
+          path: `/domains/${dIndex}/contracts/${cIdx}`,
         });
         continue;
       }
@@ -90,7 +92,7 @@ export function validateAST(
         errors.push({
           type: 'DUPLICATE_ID',
           message: `Duplicate contract ID found: ${contract.id}`,
-          path: `domains[${dIndex}].contracts[${cIdx}].id`,
+          path: `/domains/${dIndex}/contracts/${cIdx}/id`,
         });
       } else {
         contractMap.set(contract.id, contract);
@@ -104,7 +106,7 @@ export function validateAST(
         errors.push({
           type: 'INVALID_FORMAT',
           message: 'Extension missing id',
-          path: `domains[${dIndex}].extensions[${eIdx}]`,
+          path: `/domains/${dIndex}/extensions/${eIdx}`,
         });
         continue;
       }
@@ -117,7 +119,7 @@ export function validateAST(
         errors.push({
           type: 'DUPLICATE_ID',
           message: `Duplicate ID found across extensions and other types: ${ext.id}`,
-          path: `domains[${dIndex}].extensions[${eIdx}].id`,
+          path: `/domains/${dIndex}/extensions/${eIdx}/id`,
         });
       } else {
         extensionIds.add(ext.id);
@@ -136,36 +138,38 @@ export function validateAST(
       const entity = entities[eIndex];
       if (!entity || !entity.id) continue;
       const dependencies: string[] = [];
-      const processFields = (fieldList: any[], depth = 1) => {
+      const processFields = (fieldList: any[], currentPath: string, depth = 1) => {
         if (depth > MAX_AST_DEPTH) {
           errors.push({
             type: 'MAX_DEPTH_EXCEEDED',
             message: `Maximum AST depth exceeded (${MAX_AST_DEPTH}) in entity fields for ${entity.id}`,
-            path: entity.id,
+            path: currentPath,
           });
           return;
         }
-        for (const field of fieldList) {
+        for (let fIndex = 0; fIndex < fieldList.length; fIndex++) {
+          const field = fieldList[fIndex];
           if (!field || typeof field !== 'object') continue;
+          const fieldPath = `${currentPath}/${fIndex}`;
           if (field.references) {
             if (!entityDomainMap.has(field.references)) {
               errors.push({
                 type: 'MISSING_REFERENCE',
                 message: `Invalid consumption rule: Entity "${field.references}" referenced by field "${field.id}" does not exist`,
-                path: field.id,
+                path: `${fieldPath}/references`,
               });
             } else {
               dependencies.push(field.references);
             }
           }
           if (Array.isArray(field.fields)) {
-            processFields(field.fields, depth + 1);
+            processFields(field.fields, `${fieldPath}/fields`, depth + 1);
           }
         }
       };
 
       const fields = Array.isArray(entity.fields) ? entity.fields : [];
-      processFields(fields);
+      processFields(fields, `/domains/${dIndex}/entities/${eIndex}/fields`);
       const existingDeps = adjList.get(entity.id) || [];
       adjList.set(entity.id, [...existingDeps, ...dependencies]);
 
@@ -201,13 +205,13 @@ export function validateAST(
                 errors.push({
                   type: 'CONTRACT_BREACH',
                   message: `Entity "${entity.id}" missing required field "${reqField.name}" for contract "${contract.id}"`,
-                  path: `domains[${dIndex}].entities[${eIndex}].implements`,
+                  path: `/domains/${dIndex}/entities/${eIndex}/implements`,
                 });
               } else if (entityField.type !== reqField.type) {
                 errors.push({
                   type: 'CONTRACT_BREACH',
                   message: `Entity "${entity.id}" field "${reqField.name}" has type "${entityField.type}" but contract "${contract.id}" requires "${reqField.type}"`,
-                  path: `domains[${dIndex}].entities[${eIndex}].fields.${entityField.id}`,
+                  path: `/domains/${dIndex}/entities/${eIndex}/fields`,
                 });
               }
             }
@@ -224,7 +228,7 @@ export function validateAST(
                 errors.push({
                   type: 'CONTRACT_BREACH',
                   message: `Entity "${entity.id}" missing required capability "${reqCap.name}" (${reqCap.type}) for contract "${contract.id}"`,
-                  path: `domains[${dIndex}].entities[${eIndex}].implements`,
+                  path: `/domains/${dIndex}/entities/${eIndex}/implements`,
                 });
               }
             }
@@ -238,12 +242,12 @@ export function validateAST(
       const capability = capabilities[cIndex];
       if (!capability || !capability.id) continue;
 
-      const capPath = `domains[${dIndex}].capabilities[${cIndex}]`;
+      const capPath = `/domains/${dIndex}/capabilities/${cIndex}`;
       if (!capability.entityId) {
         errors.push({
           type: 'MISSING_REFERENCE',
           message: `Capability missing entityId: ${capability.id}`,
-          path: `${capPath}.entityId`,
+          path: `${capPath}/entityId`,
         });
         continue;
       }
@@ -253,7 +257,7 @@ export function validateAST(
         errors.push({
           type: 'MISSING_REFERENCE',
           message: `Invalid capability reference: Entity "${capability.entityId}" referenced by capability "${capability.id}" does not exist`,
-          path: `${capPath}.entityId`,
+          path: `${capPath}/entityId`,
         });
       }
 
@@ -265,7 +269,7 @@ export function validateAST(
         errors.push({
           type: 'UNSECURED_CAPABILITY',
           message: `Capability "${capability.id}" is unsecured. Fail-closed policy requires at least one permission.`,
-          path: `${capPath}.permissions`,
+          path: `${capPath}/permissions`,
         });
       } else {
         for (let pIndex = 0; pIndex < capability.permissions.length; pIndex++) {
@@ -280,7 +284,7 @@ export function validateAST(
             errors.push({
               type: 'INVALID_PERMISSION',
               message: `Capability "${capability.id}" has an invalid permission definition. Role is required.`,
-              path: `${capPath}.permissions[${pIndex}]`,
+              path: `${capPath}/permissions/${pIndex}`,
             });
           } else {
             perm.role = perm.role.trim();
@@ -291,7 +295,7 @@ export function validateAST(
               errors.push({
                 type: 'INVALID_PERMISSION',
                 message: `Capability "${capability.id}" has an invalid access definition. Must be "grant" or "deny".`,
-                path: `${capPath}.permissions[${pIndex}].access`,
+                path: `${capPath}/permissions/${pIndex}/access`,
               });
             }
           }
@@ -304,12 +308,12 @@ export function validateAST(
       const ext = extensions[eIndex];
       if (!ext || !ext.id) continue;
 
-      const extPath = `domains[${dIndex}].extensions[${eIndex}]`;
+      const extPath = `/domains/${dIndex}/extensions/${eIndex}`;
       if (!Array.isArray(ext.implements) || ext.implements.length === 0) {
         errors.push({
           type: 'MISSING_REFERENCE',
           message: `Extension missing implements contract reference: ${ext.id}`,
-          path: `${extPath}.implements`,
+          path: `${extPath}/implements`,
         });
       } else {
         for (const imp of ext.implements) {
@@ -317,7 +321,7 @@ export function validateAST(
             errors.push({
               type: 'MISSING_REFERENCE',
               message: `Invalid extension reference: Contract "${imp}" referenced by extension "${ext.id}" does not exist`,
-              path: `${extPath}.implements`,
+              path: `${extPath}/implements`,
             });
           }
         }
@@ -329,19 +333,19 @@ export function validateAST(
           errors.push({
             type: 'MISSING_MANIFEST_VERSION',
             message: `Local manifest is missing version for extension "${ext.name}"`,
-            path: `${extPath}.name`,
+            path: `${extPath}/name`,
           });
         } else if (!semver.valid(localVersion) || !semver.validRange(ext.plugin_version_range)) {
           errors.push({
             type: 'VERSION_MISMATCH',
             message: `Invalid semver format for extension "${ext.name}"`,
-            path: `${extPath}.plugin_version_range`,
+            path: `${extPath}/plugin_version_range`,
           });
         } else if (!semver.satisfies(localVersion, ext.plugin_version_range)) {
           errors.push({
             type: 'VERSION_MISMATCH',
             message: `Extension "${ext.name}" requires plugin version "${ext.plugin_version_range}" but local manifest provides "${localVersion}"`,
-            path: `${extPath}.plugin_version_range`,
+            path: `${extPath}/plugin_version_range`,
           });
         }
       }

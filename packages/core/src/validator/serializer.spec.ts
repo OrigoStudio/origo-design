@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { CanonicalAST } from '../types/ast';
 import { serializeAST } from './serializer';
 

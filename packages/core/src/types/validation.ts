@@ -2,6 +2,8 @@ export interface ValidationError {
   type: string;
   message: string;
   path?: string;
+  line?: number;
+  column?: number;
 }
 
 export type ASTErrorType =

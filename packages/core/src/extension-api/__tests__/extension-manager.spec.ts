@@ -70,7 +70,7 @@ describe('ExtensionManager', () => {
         version: '1.0.0',
         type: 'test',
         apiRanges: { 'core-api': 'invalid-range' },
-      } as any;
+      } as unknown as ExtensionManifest;
       expect(() => manager.registerExtension(manifest, createMockLifecycle())).toThrow(
         new ExtensionError(
           'Invalid semver range for API core-api: invalid-range',
@@ -93,18 +93,18 @@ describe('ExtensionManager', () => {
     });
 
     it('should throw on null or undefined inputs', () => {
-      expect(() => manager.registerExtension(null as any, createMockLifecycle())).toThrow(
-        new ExtensionError('Manifest is required', 'INVALID_MANIFEST')
-      );
+      expect(() =>
+        manager.registerExtension(null as unknown as ExtensionManifest, createMockLifecycle())
+      ).toThrow(new ExtensionError('Manifest is required', 'INVALID_MANIFEST'));
       const manifest: ExtensionManifest = {
         id: 'test-ext',
         name: 'Test',
         version: '1.0.0',
         type: 'test',
       };
-      expect(() => manager.registerExtension(manifest, null as any)).toThrow(
-        new ExtensionError('Lifecycle is required', 'INVALID_LIFECYCLE')
-      );
+      expect(() =>
+        manager.registerExtension(manifest, null as unknown as ExtensionLifecycle)
+      ).toThrow(new ExtensionError('Lifecycle is required', 'INVALID_LIFECYCLE'));
     });
 
     it('should throw on invalid dependencies object', () => {
@@ -114,7 +114,7 @@ describe('ExtensionManager', () => {
         version: '1.0.0',
         type: 'test',
         dependencies: 'not-an-object',
-      } as any;
+      } as unknown as ExtensionManifest;
       expect(() => manager.registerExtension(manifest, createMockLifecycle())).toThrow(
         new ExtensionError('dependencies must be an object', 'INVALID_MANIFEST')
       );
@@ -158,7 +158,7 @@ describe('ExtensionManager', () => {
         version: '1.0.0',
         type: 'test',
         capabilities: 'not-an-array',
-      } as any;
+      } as unknown as ExtensionManifest;
       manager.registerExtension(manifest, createMockLifecycle());
       await expect(manager.initializeExtension('test')).rejects.toThrow(
         new ExtensionError('Capabilities must be an array', 'INVALID_MANIFEST')
@@ -341,7 +341,7 @@ describe('ExtensionManager', () => {
     it('should pass context and config parameters to lifecycle hooks', async () => {
       const lc = createMockLifecycle();
       manager.registerExtension({ id: 'ext', name: 'Ext', version: '1.0.0', type: 'test' }, lc);
-      const testContext = { fetch: jest.fn() } as any;
+      const testContext = { fetch: jest.fn() } as unknown as Record<string, unknown>;
       await manager.initializeExtension('ext', testContext);
 
       const calledContext = (lc.initialize as jest.Mock).mock.calls[0][0];
@@ -449,7 +449,7 @@ describe('ExtensionManager', () => {
           version: '1.0.0',
           type: 'test',
           ...invalid,
-        } as any;
+        } as unknown as ExtensionManifest;
         expect(() => manager.registerExtension(manifest, createMockLifecycle())).toThrow(
           new ExtensionError(
             'permissions must be an array of non-empty strings',
