@@ -2,6 +2,7 @@ import { Command } from 'commander';
 import * as fs from 'fs/promises';
 import * as path from 'path';
 import { CliError } from '../utils/errors';
+import { generateOrigoConfig } from '../templates';
 
 export function initCommand(): Command {
   const init = new Command('init')
@@ -49,13 +50,12 @@ export async function initializeProject(
     await fs.mkdir(schemasDir, { recursive: true });
 
     // Create config file securely
-    const config = {
-      version: '1.0',
+    const configContent = generateOrigoConfig({
       build: { outDir: './dist' },
       schemas: './schemas',
-    };
+    });
 
-    await fs.writeFile(configFile, JSON.stringify(config, null, 2), 'utf-8');
+    await fs.writeFile(configFile, configContent, 'utf-8');
 
     console.log(`Successfully initialized Origo project in ${projectDir}`);
   } catch (error) {
