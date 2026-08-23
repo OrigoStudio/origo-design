@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any, @typescript-eslint/no-non-null-assertion */
 import { CanonicalAST } from '../types/ast';
 import { validateAST, MAX_AST_DEPTH } from './ast-validator';
 
@@ -813,7 +814,7 @@ describe('AST Validation Engine', () => {
       expect(errors[0].message).toMatch(
         /Capability "cap-1" is unsecured. Fail-closed policy requires at least one permission/
       );
-      expect(errors[0].path).toBe('domains[0].capabilities[0].permissions');
+      expect(errors[0].path).toBe('/domains/0/capabilities/0/permissions');
     });
 
     it('should fail with UNSECURED_CAPABILITY when permissions is missing', () => {
@@ -892,7 +893,7 @@ describe('AST Validation Engine', () => {
       expect(errors).toHaveLength(1);
       expect(errors[0].type).toBe('INVALID_PERMISSION');
       expect(errors[0].message).toMatch(/invalid permission definition/);
-      expect(errors[0].path).toBe('domains[0].capabilities[0].permissions[0]');
+      expect(errors[0].path).toBe('/domains/0/capabilities/0/permissions/0');
     });
 
     it('should fail with INVALID_PERMISSION when permission is null', () => {
@@ -961,7 +962,7 @@ describe('AST Validation Engine', () => {
       expect(errors).toHaveLength(1);
       expect(errors[0].type).toBe('INVALID_PERMISSION');
       expect(errors[0].message).toMatch(/invalid access definition/);
-      expect(errors[0].path).toBe('domains[0].capabilities[0].permissions[0].access');
+      expect(errors[0].path).toBe('/domains/0/capabilities/0/permissions/0/access');
     });
 
     it('should trim role strings and default access to grant', () => {

@@ -1,4 +1,5 @@
 import { ExtensionManifest, ExtensionLifecycle, CorePermission, ExtensionContext } from './types';
+/* eslint-disable @typescript-eslint/no-non-null-assertion */
 import * as semver from 'semver';
 
 export class ExtensionError extends Error {

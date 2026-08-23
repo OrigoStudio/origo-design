@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any, @typescript-eslint/no-unused-vars */
 import { BADLValidator } from './index';
 import targetPageFixture from '../schemas/__fixtures__/target-page.json';
 
@@ -163,6 +164,29 @@ describe('BADLValidator', () => {
       expect(() => {
         validator.validateEntity(objA, { maxDepth: 10 });
       }).toThrow('Maximum depth exceeded. Possible circular dependency detected.');
+    });
+
+    it('should correctly attach line and column numbers to errors when parsing from a JSON string', () => {
+      const invalidJsonString = `{
+  "id": "entity-invalid",
+  "name": "Invalid",
+  "fields": [
+    {
+      "id": "field-1",
+      "name": "missing-type-and-label"
+    }
+  ]
+}`;
+      const isValid = validator.validateEntity(invalidJsonString);
+      expect(isValid).toBe(false);
+      expect(validator.errors).toBeDefined();
+      expect(validator.errors?.length).toBeGreaterThan(0);
+
+      const errorWithContext = validator.errors?.find(e => e.context?.line !== undefined);
+      expect(errorWithContext).toBeDefined();
+      expect(errorWithContext?.context?.line).toBeDefined();
+      expect(errorWithContext?.context?.column).toBeDefined();
+      expect(errorWithContext?.code).toBeDefined();
     });
   });
 });

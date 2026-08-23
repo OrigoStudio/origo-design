@@ -1,6 +1,7 @@
 import Ajv, { ErrorObject } from 'ajv/dist/2020';
 import addFormats from 'ajv-formats';
 import addErrors from 'ajv-errors';
+import { parse as parseJSONWithSourceMap } from 'json-source-map';
 import * as domainSchema from '../schemas/domain.schema.json';
 import * as entitySchema from '../schemas/entity.schema.json';
 import * as capabilitySchema from '../schemas/capability.schema.json';
@@ -12,9 +13,18 @@ export interface ValidatorOptions {
   maxDepth?: number;
 }
 
+export interface EnhancedErrorObject extends ErrorObject {
+  code?: string;
+  context?: {
+    line?: number;
+    column?: number;
+    [key: string]: unknown;
+  };
+}
+
 export class BADLValidator {
   private ajv: Ajv;
-  public errors: ErrorObject[] | null | undefined = null;
+  public errors: EnhancedErrorObject[] | null | undefined = null;
 
   constructor() {
     this.ajv = new Ajv({
@@ -90,72 +100,106 @@ export class BADLValidator {
     }
   }
 
-  validateDomain(data: unknown, options: ValidatorOptions = {}): boolean {
+  private runValidation(schemaUrl: string, data: unknown, options: ValidatorOptions = {}): boolean {
     this.errors = null;
+    let parsedData = data;
+    let sourceMapPointers: Record<string, unknown> | undefined;
+
     if (typeof data === 'string') {
       try {
-        data = JSON.parse(data);
-      } catch {
+        const parsed = parseJSONWithSourceMap(data);
+        parsedData = parsed.data;
+        sourceMapPointers = parsed.pointers;
+      } catch (err: unknown) {
+        let line: number | undefined;
+        let column: number | undefined;
+
+        if (err && typeof err === 'object') {
+          const errMsg = (err as Error).message || '';
+          const match = /line (\d+) column (\d+)/.exec(errMsg);
+          if (match) {
+            line = parseInt(match[1], 10);
+            column = parseInt(match[2], 10);
+          }
+        }
+
         this.errors = [
           {
             keyword: 'parse',
-            message: 'Invalid JSON string',
+            message: (err as Error)?.message || 'Invalid JSON string',
             instancePath: '',
             schemaPath: '',
             params: {},
+            code: 'parse',
+            context: { line, column },
           },
         ];
         return false;
       }
     }
+
     if (typeof options.maxDepth === 'number' && options.maxDepth < 0) {
       throw new Error('maxDepth must be >= 0');
     }
     const maxDepth = options.maxDepth ?? 100;
-    this.checkCircularDependency(data, 0, maxDepth, new Set());
+    this.checkCircularDependency(parsedData, 0, maxDepth, new Set());
 
-    const validate = this.ajv.getSchema('https://origo.design/schemas/v1/domain.schema.json');
+    const validate = this.ajv.getSchema(schemaUrl);
     if (!validate) {
-      throw new Error('Domain schema not found');
+      throw new Error(`Schema not found: ${schemaUrl}`);
     }
 
-    const isValid = validate(data);
-    this.errors = isValid ? null : validate.errors;
+    const isValid = validate(parsedData);
+
+    if (!isValid && validate.errors) {
+      this.errors = validate.errors.map(err => {
+        const newErr: EnhancedErrorObject = { ...err, code: err.keyword };
+        if (sourceMapPointers) {
+          const decodedPath = (err.instancePath ?? '').replace(/~1/g, '/').replace(/~0/g, '~');
+
+          let lookupPath = decodedPath;
+          if (
+            err.keyword === 'additionalProperties' &&
+            (err.params as Record<string, unknown>)['additionalProperty']
+          ) {
+            const additionalProperty = (err.params as Record<string, unknown>)[
+              'additionalProperty'
+            ] as string;
+            const additionalPath = `${decodedPath === '' ? '' : decodedPath}/${additionalProperty.replace(/~/g, '~0').replace(/\//g, '~1')}`;
+            if (sourceMapPointers[additionalPath]) {
+              lookupPath = additionalPath;
+            }
+          }
+
+          if (sourceMapPointers[lookupPath] !== undefined) {
+            const pointer = sourceMapPointers[lookupPath] as {
+              key?: { line: number; column: number };
+              value?: { line: number; column: number };
+            };
+            const loc = pointer.key || pointer.value;
+            if (loc != null) {
+              newErr.context = {
+                line: loc.line + 1,
+                column: loc.column + 1,
+              };
+            }
+          }
+        }
+        return newErr;
+      });
+    } else {
+      this.errors = null;
+    }
+
     return isValid as boolean;
   }
 
+  validateDomain(data: unknown, options: ValidatorOptions = {}): boolean {
+    return this.runValidation('https://origo.design/schemas/v1/domain.schema.json', data, options);
+  }
+
   validateEntity(data: unknown, options: ValidatorOptions = {}): boolean {
-    this.errors = null;
-    if (typeof data === 'string') {
-      try {
-        data = JSON.parse(data);
-      } catch {
-        this.errors = [
-          {
-            keyword: 'parse',
-            message: 'Invalid JSON string',
-            instancePath: '',
-            schemaPath: '',
-            params: {},
-          },
-        ];
-        return false;
-      }
-    }
-    if (typeof options.maxDepth === 'number' && options.maxDepth < 0) {
-      throw new Error('maxDepth must be >= 0');
-    }
-    const maxDepth = options.maxDepth ?? 100;
-    this.checkCircularDependency(data, 0, maxDepth, new Set());
-
-    const validate = this.ajv.getSchema('https://origo.design/schemas/v1/entity.schema.json');
-    if (!validate) {
-      throw new Error('Entity schema not found');
-    }
-
-    const isValid = validate(data);
-    this.errors = isValid ? null : validate.errors;
-    return isValid as boolean;
+    return this.runValidation('https://origo.design/schemas/v1/entity.schema.json', data, options);
   }
 }
 
