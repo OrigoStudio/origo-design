@@ -760,9 +760,10 @@ So that I don't have to write boilerplate BADL schema by hand.
 
 **Given** an initialized Origo project
 **When** I run `origo generate entity User`
-**Then** it creates a `user.badl` file with standard entity scaffolding, a primary key, and common metadata stubs
+**Then** it creates a `user.badl` file with standard entity scaffolding, a primary key, and common metadata stubs using zero-configuration embedded templates
 **And** it safely aborts without overwriting if the file already exists (unless `--force` is provided)
-**And** the generator architecture is explicitly designed to accept external plugins or LLM prompts for future AI integration (FR-AI-005).
+**And** the generator architecture is explicitly designed to accept external plugins or LLM prompts for future AI integration (FR-AI-005)
+**And** if I run `origo generate --eject`, it copies the internal templates into a local `.origo/templates` directory for customization, which the CLI will then prioritize.
 
 ### Epic 7: Browser-Based BADL Playground (@origo/playground)
 [Developer can write BADL in a browser editor with intellisense and instantly see live rendered output]

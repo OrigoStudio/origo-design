@@ -201,6 +201,14 @@ graph LR
 
 ---
 
+### AD-16 — CLI Template Generation Strategy (Zero-Config + Eject)
+
+- **Binds:** `@origo/cli` generator commands
+- **Prevents:** architectural drift between generated boilerplate and core AST validation; developer friction from maintaining templates
+- **Rule:** The CLI MUST ship with embedded, CI-tested string templates that are validated against the core AST. These internal templates are used by default (Zero-Config). To allow customization, the CLI MUST provide an `--eject` flag that copies these internal templates into a local workspace directory (e.g., `.origo/templates`). If local templates exist, the CLI prioritizes them. This shifts the maintenance burden of custom templates to user-space while preserving default integrity.
+
+---
+
 ## Consistency Conventions
 
 | Concern | Convention |

@@ -1,3 +1,9 @@
+## [Unreleased]
+
+### 🚀 Upcoming Features (Epic 6)
+
+- **CLI Template Generation Strategy:** Established a tiered template generation pattern for `@origo/cli` (ADR-002). The CLI will use embedded, CI-validated templates by default (Zero-Config) to prevent architectural drift. An `--eject` flag will be available to copy templates into a local workspace directory (`.origo/templates`) for custom overrides.
+
 ## 0.0.19 (2026-08-23)
 
 ### 🚀 Features
