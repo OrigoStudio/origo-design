@@ -1,6 +1,4 @@
 import { generateEntityTemplate, generateOrigoConfig, generateExtensionTemplate } from './index';
-import * as fs from 'fs';
-import * as path from 'path';
 
 describe('Boilerplate Templates', () => {
   describe('Entity Template', () => {

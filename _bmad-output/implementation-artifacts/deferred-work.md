@@ -112,3 +112,20 @@
 ## Deferred from: code review of 5.5-5-define-secure-by-default-boilerplate-templates (2026-08-23)
 
 - New `security` key added to config file callers didn't expect [packages/cli/src/commands/init.ts:20-24] — pre-existing config parser issue, not caused by template itself.
+
+## Deferred from: code review of story 6-1-cli-initialization-and-scaffolding (2026-08-25)
+
+- Missing strict-mode filter for aria-/data- attributes in Web Adapter [packages/angular-renderer/src/adapters/web/adapter.ts] — strict callers get unexpected passthrough of aria-/data- attributes.
+- Unchecked Infinity handling in Web Adapter numeric coercion [packages/angular-renderer/src/adapters/web/adapter.ts] — Infinity passes Number() without isFinite guard, causing potential render issues.
+- Unhandled whitespace trimming in Web Adapter boolean coercion (' 0 ', ' false ') [packages/angular-renderer/src/adapters/web/adapter.ts] — string ' false ' with whitespace evaluates to true instead of false.
+- Null value coerced to empty object in Web Adapter object branch [packages/angular-renderer/src/adapters/web/adapter.ts] — typeof null === 'object' coerces null to {} silently.
+- Non-plain object types (Date/Map/Set) stripped during deepClone in Web Adapter [packages/angular-renderer/src/adapters/web/adapter.ts] — non-plain objects cloned as empty plain object {}.
+- Null value rendered as string 'null' in TextInput component effect [packages/angular-renderer/src/components/primitives/text-input/text-input.component.ts] — null value rendered as literal string 'null'.
+- Numeric input '0' converted to empty string in TextInput component [packages/angular-renderer/src/components/primitives/text-input/text-input.component.ts] — sanitized value '0' falsy check wipes valid user input '0'.
+- Event target null-check missing in TextInput onInput handler [packages/angular-renderer/src/components/primitives/text-input/text-input.component.ts] — event.target null dereference risk.
+- Button component missing ID guard before capability dispatch [packages/angular-renderer/src/components/primitives/button/button.component.ts] — dispatchCapability called with empty/undefined nodeId.
+- Potential circular reference error in ExperienceAdapterService debug logging [packages/angular-renderer/src/adapters/web/experience-adapter.service.ts] — console.debug with circular payload throws in some environments.
+- Duplicate emission risk on Button component action output [packages/angular-renderer/src/components/primitives/button/button.component.ts] — onClick emits action.emit() and dispatches to adapter concurrently.
+- Negative CSS gap/padding handling missing in VBox component [packages/angular-renderer/src/components/primitives/vbox/vbox.component.ts] — negative gap or padding produces invalid layout.
+- Race condition between TextInput local model and external contract updates [packages/angular-renderer/src/components/primitives/text-input/text-input.component.ts] — contract effect untracked write can overwrite in-progress user input.
+

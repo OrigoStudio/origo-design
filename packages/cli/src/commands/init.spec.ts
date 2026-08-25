@@ -20,7 +20,7 @@ describe('initCommand', () => {
 
     await initializeProject('test-project', mockTarget);
 
-    const expectedProjectDir = path.join(mockTarget, 'test-project');
+    const expectedProjectDir = path.resolve(mockTarget, 'test-project');
     const expectedSchemasDir = path.join(expectedProjectDir, 'schemas');
     const expectedConfigFile = path.join(expectedProjectDir, 'origo.json');
 
@@ -40,7 +40,7 @@ describe('initCommand', () => {
 
     await expect(initializeProject('test-project', mockTarget)).rejects.toThrow(CliError);
     await expect(initializeProject('test-project', mockTarget)).rejects.toMatchObject({
-      code: 'ERR_DIR_EXISTS',
+      code: 'EEXIST',
     });
   });
 
@@ -50,7 +50,7 @@ describe('initCommand', () => {
 
     await expect(initializeProject('test-project', mockTarget)).rejects.toThrow(CliError);
     await expect(initializeProject('test-project', mockTarget)).rejects.toMatchObject({
-      code: 'ERR_INIT_FAILED',
+      code: 'SCAFFOLD_ERROR',
     });
   });
 });

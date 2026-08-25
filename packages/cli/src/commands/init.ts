@@ -1,15 +1,18 @@
 import { Command } from 'commander';
-import * as fs from 'fs/promises';
-import * as path from 'path';
-import { CliError } from '../utils/errors';
-import { generateOrigoConfig } from '../templates';
+import { scaffoldProject } from '../lib/scaffolding';
+import { handleError } from '../utils/errors';
 
 export function initCommand(): Command {
   const init = new Command('init')
-    .description('Initialize a new Origo project')
+    .description('Initialize a new Origo project (alias for origo new)')
     .argument('<project-name>', 'Name of the project to initialize')
-    .action(async (projectName: string) => {
-      await initializeProject(projectName);
+    .option('--json', 'Output machine-readable JSON format')
+    .action(async (projectName: string, options: { json?: boolean }) => {
+      try {
+        await initializeProject(projectName, process.cwd(), options);
+      } catch (error) {
+        handleError(error, { json: options.json });
+      }
     });
 
   return init;
@@ -17,56 +20,9 @@ export function initCommand(): Command {
 
 export async function initializeProject(
   projectName: string,
-  targetPath: string = process.cwd()
+  targetPath: string = process.cwd(),
+  options: { json?: boolean } = {}
 ): Promise<void> {
-  const projectDir = path.join(targetPath, projectName);
-  const schemasDir = path.join(projectDir, 'schemas');
-  const configFile = path.join(projectDir, 'origo.json');
-
-  try {
-    // Check if directory already exists
-    try {
-      await fs.access(projectDir);
-      throw new CliError({
-        code: 'ERR_DIR_EXISTS',
-        message: `Directory ${projectName} already exists.`,
-      });
-    } catch (e) {
-      if (e instanceof CliError) {
-        throw e;
-      }
-      const isEnoent =
-        typeof e === 'object' &&
-        e !== null &&
-        'code' in e &&
-        (e as { code?: string }).code === 'ENOENT';
-      if (!isEnoent) {
-        throw e;
-      }
-    }
-
-    // Create project directories
-    await fs.mkdir(projectDir, { recursive: true });
-    await fs.mkdir(schemasDir, { recursive: true });
-
-    // Create config file securely
-    const configContent = generateOrigoConfig({
-      build: { outDir: './dist' },
-      schemas: './schemas',
-    });
-
-    await fs.writeFile(configFile, configContent, 'utf-8');
-
-    console.log(`Successfully initialized Origo project in ${projectDir}`);
-  } catch (error) {
-    if (error instanceof CliError) {
-      throw error;
-    }
-    const errorMessage = error instanceof Error ? error.message : String(error);
-    throw new CliError({
-      code: 'ERR_INIT_FAILED',
-      message: `Failed to initialize project: ${errorMessage}`,
-      context: { projectName, error },
-    });
-  }
+  // Delegate directly to scaffoldProject to maintain single source of truth for scaffolding
+  await scaffoldProject(projectName, { ...options, cwd: targetPath });
 }
