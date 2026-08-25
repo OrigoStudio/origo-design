@@ -1,3 +1,13 @@
+## 0.0.20 (2026-08-25)
+
+### 🚀 Features
+
+- implementation of 6-1-cli-initialization-and-scaffolding ([f6aca9e](https://github.com/OrigoStudio/origo-design/commit/f6aca9e))
+
+### ❤️ Thank You
+
+- Hardik Patel @hardikpatelse
+
 ## 0.0.19 (2026-08-23)
 
 ### 🚀 Features

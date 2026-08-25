@@ -1,13 +1,13 @@
 {
   "name": "angular-renderer",
-  "version": "0.0.19",
+  "version": "0.0.20",
   "private": true,
   "type": "commonjs",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
   "dependencies": {
-    "@origo/core": "0.0.19",
-    "@origo/design-tokens": "0.0.19",
+    "@origo/core": "0.0.20",
+    "@origo/design-tokens": "0.0.20",
     "tslib": "^2.3.0",
     "@axe-core/playwright": "^4.13.0",
     "@playwright/test": "^1.36.0"
