@@ -1,5 +1,3 @@
-Invoke the `bmad-review-edge-case-hunter` skill on this diff:
-
 diff --git a/_bmad-output/implementation-artifacts/sprint-status.yaml b/_bmad-output/implementation-artifacts/sprint-status.yaml
 index dfbd835..69fd719 100644
 --- a/_bmad-output/implementation-artifacts/sprint-status.yaml
@@ -661,4 +659,3 @@ index 0000000..2ab3398
 +Ultimate context engine analysis completed — comprehensive developer guide created.
 +Story structure validated and required tracking sections added.
 +All tasks completed successfully.
-

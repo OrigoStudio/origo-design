@@ -9,6 +9,7 @@
     "origo": "./src/main.js"
   },
   "dependencies": {
+    "@origo/core": "workspace:*",
     "commander": "^15.0.0",
     "tslib": "^2.3.0"
   }

@@ -1,197 +1,664 @@
-Invoke the bmad-review-adversarial-general skill on this diff:
+Invoke the `bmad-review-adversarial-general` skill on this diff:
 
-diff --git a/_bmad-output/implementation-artifacts/5-2-experience-adapter-interface.md b/_bmad-output/implementation-artifacts/5-2-experience-adapter-interface.md
-index 79c3504..1a2bfb2 100644
---- a/_bmad-output/implementation-artifacts/5-2-experience-adapter-interface.md
-+++ b/_bmad-output/implementation-artifacts/5-2-experience-adapter-interface.md
-@@ -1,7 +1,10 @@
-+---
-+baseline_commit: 54e34b7f0a6180e730b1c77f8134874fe3d44750
-+---
- # Story 5.2: Experience Adapter Interface
- 
- ## Status
--ready-for-dev
-+review
- 
- ## Story Foundation
- **User Story:**
-@@ -10,30 +13,40 @@ I want a standard Experience Adapter contract for Angular,
- So that UI primitives map cleanly and predictably to BADL node definitions.
- 
- **Acceptance Criteria:**
--- **Given** a BADL node definition (e.g., `TextField`)
-+- **Given** an `InteractionContract` (e.g., standard-read, standard-write) from `@origo/core`
- - **When** the rendering engine resolves it
- - **Then** it maps to an Angular component implementing the standard `OrigoAdapter` interface
--- **And** props, validation states, and metadata are correctly passed down (FR-A-001)
--- **And** strict runtime type coercion and validation are applied at the adapter boundary before props are passed to the primitive.
-+- **And** it acts as a stateless translator from the `InteractionContract` to the Angular medium-native interaction (FR-A-001)
-+- **And** strict runtime type coercion and validation are applied at the adapter boundary before props are passed down.
-+
-+## Tasks/Subtasks
-+- [x] Define `InteractionContract` in `@origo/core/src/types/ast.ts`
-+- [x] Ensure `InteractionContract` is exported from `@origo/core/src/index.ts`
-+- [x] Move adapter to `packages/angular-renderer/src/adapters/web/adapter.ts` and define `OrigoAdapter` with `InteractionContract`
-+- [x] Implement runtime type coercion utilities in `adapter.ts`
-+- [x] Update `OrigoRendererComponent` (`renderer.component.ts`) to use new adapter path and map `ASTNode` to `InteractionContract`
-+- [x] Export `OrigoAdapter` from `@origo/angular-renderer` package
-+- [x] Add unit tests for runtime validation inside `adapter.spec.ts`
- 
- ## Developer Context & Guardrails
- 
- ### Technical Requirements
- - Define the `OrigoAdapter` interface/type contract in `@origo/angular-renderer`.
--- The interface must enforce that components can accept inputs/props, validation states, and metadata mapping from a BADL node.
-+- The interface must enforce that components accept an `InteractionContract` mapping rather than a generic BADL node.
- - Implement strict runtime type coercion and validation at the adapter boundary, ensuring primitives only receive valid, coerced properties.
--- Ensure the interface acts as a stateless translator (per AD-15).
-+- Ensure the interface acts as a stateless function mapping `(InteractionContract) -> MediumInteraction` (per AD-15).
- 
- ### Architecture Compliance
--- **AD-1 (Layered Hexagonal Paradigm):** The renderer depends on `@origo/core`, but not vice versa.
-+- **AD-1 & P1-AD-1 (Layered Hexagonal Paradigm):** The renderer depends on `@origo/core`, but not vice versa. Angular components must be `standalone: true` and `zoneless-compatible` (no `zone.js` peer dependency).
- - **AD-4 (Renderer Isolation):** The Angular adapter logic must not contain core BADL evaluation or other framework specifics.
- - **AD-15 (Experience Adapter Is a Stateless Interaction Translator):** The adapter must be a stateless function or component that translates an `InteractionContract` (from core) into the medium-native interaction (Angular). It must hold no session state.
-+- **P1-AD-5 (Composition Only):** No renderer component implementing `OrigoAdapter` may extend another component; they must use composition only.
- 
- ### Library/Framework Requirements
- - **Angular 18:** Ensure the interface is designed around Angular 18 features, such as Signals for inputs (`input()`, `input.required()`) if it's meant to be implemented by Angular standalone components.
- 
- ### File Structure Requirements
--- Create/update interface definition in `packages/angular-renderer/src/lib/adapter.ts` (or similar standard location).
-+- Create/update interface definition at `packages/angular-renderer/src/adapters/web/adapter.ts` (strictly mandated by Phase 1 Architecture Spine).
- - Ensure the interface is properly exported from the package's public API in `packages/angular-renderer/src/index.ts`.
- 
- ### Testing Requirements
-@@ -49,7 +62,7 @@ So that UI primitives map cleanly and predictably to BADL node definitions.
- - **Actionable Insight:** Ensure the adapter leverages the test utilities and signal patterns established in commit `d2adbed`.
- 
- ## Project Context Reference
--Ensure all JSON imports follow the standard ESM/TypeScript standard to avoid TypeScript compiler OOMs. Do not bypass the `CorePermission` constraints. Follow the established `origo-` component prefix convention.
-+Ensure all JSON imports follow the standard ESM/TypeScript standard to avoid TypeScript compiler OOMs. Do not bypass the `CorePermission` constraints. Follow the established `origo-` component prefix convention (e.g., `origo-button`) explicitly when building primitives with this adapter.
- 
- ---
- **Completion Note:** Ultimate context engine analysis completed - comprehensive developer guide created.
 diff --git a/_bmad-output/implementation-artifacts/sprint-status.yaml b/_bmad-output/implementation-artifacts/sprint-status.yaml
-index ace42c9..8b29a19 100644
+index dfbd835..69fd719 100644
 --- a/_bmad-output/implementation-artifacts/sprint-status.yaml
 +++ b/_bmad-output/implementation-artifacts/sprint-status.yaml
-@@ -84,7 +84,7 @@ development_status:
-   epic-4-retrospective: done
-   epic-5: in-progress
-   5-1-ast-traversal-and-dynamic-instantiation: done
--  5-2-experience-adapter-interface: ready-for-dev
-+  5-2-experience-adapter-interface: review
-   5-3-core-primitive-implementation: backlog
-   5-4-design-token-consumption: backlog
-   5-5-reactive-state-event-binding: backlog
-diff --git a/_bmad/scripts/resolved_config.json b/_bmad/scripts/resolved_config.json
-index fc1478a..894aaae 100644
-Binary files a/_bmad/scripts/resolved_config.json and b/_bmad/scripts/resolved_config.json differ
-diff --git a/packages/angular-renderer/src/index.ts b/packages/angular-renderer/src/index.ts
-index 36a60a9..b067027 100644
---- a/packages/angular-renderer/src/index.ts
-+++ b/packages/angular-renderer/src/index.ts
-@@ -1,4 +1,4 @@
- export * from './lib/theme.provider';
- export * from './lib/renderer.component';
- export * from './lib/renderer.tokens';
--export * from './lib/adapter';
-+export * from './adapters/web/adapter';
-diff --git a/packages/angular-renderer/src/lib/adapter.ts b/packages/angular-renderer/src/lib/adapter.ts
-deleted file mode 100644
-index e6341be..0000000
---- a/packages/angular-renderer/src/lib/adapter.ts
-+++ /dev/null
-@@ -1,20 +0,0 @@
--import { Injectable, ViewContainerRef, Signal } from '@angular/core';
--import { ASTNode } from '@origo/core';
--
--export interface ContainerComponent {
--  viewContainerRef?: ViewContainerRef | Signal<ViewContainerRef>;
--  vc?: ViewContainerRef | Signal<ViewContainerRef>;
--}
--
--export interface OrigoAdapter {
--  node: unknown;
--}
--
--@Injectable({ providedIn: 'root' })
--export class AdapterPipelineService {
--  prepareNode(node: ASTNode): ASTNode {
--    // In story 5.2 this will be adapted to OrigoAdapter props,
--    // but for now it must return ASTNode to satisfy existing primitives.
--    return node;
--  }
--}
-diff --git a/packages/angular-renderer/src/lib/renderer.component.spec.ts b/packages/angular-renderer/src/lib/renderer.component.spec.ts
-index d752c8a..6362189 100644
---- a/packages/angular-renderer/src/lib/renderer.component.spec.ts
-+++ b/packages/angular-renderer/src/lib/renderer.component.spec.ts
-@@ -1,16 +1,16 @@
- import { ComponentFixture, TestBed } from '@angular/core/testing';
- import { Component, input, viewChild, ViewContainerRef } from '@angular/core';
- import { OrigoRendererComponent } from './renderer.component';
--import { ASTNode } from '@origo/core';
-+import { ASTNode, InteractionContract } from '@origo/core';
- import { RENDERER_REGISTRY } from './renderer.tokens';
+@@ -41,7 +41,7 @@
+ # - Retrospective appends its action items to action_items; sprint-status surfaces open ones
  
- @Component({
-   selector: 'test-text-primitive',
-   standalone: true,
--  template: `<span>{{ node().props?.['text'] }}</span>`,
-+  template: `<span>{{ contract().props?.['text'] }}</span>`,
- })
- class TestTextPrimitive {
--  node = input.required<ASTNode>();
-+  contract = input.required<InteractionContract>();
+ generated: 2026-07-29T21:46:02.464968
+-last_updated: 2026-08-25T20:38:00+05:30
++last_updated: 2026-08-25T22:11:00+05:30
+ project: origo-design
+ project_key: NOKEY
+ tracking_system: file-system
+@@ -98,7 +98,7 @@ development_status:
+   epic-5.5-retrospective: done
+   epic-6: backlog
+   6-1-cli-initialization-and-scaffolding: done
+-  6-2-local-schema-validation: backlog
++  6-2-local-schema-validation: review
+   6-3-entity-generator-boilerplate: backlog
+   epic-6-retrospective: optional
+   epic-7: backlog
+diff --git a/packages/cli/package.json b/packages/cli/package.json
+index f1ad0df..f299539 100644
+--- a/packages/cli/package.json
++++ b/packages/cli/package.json
+@@ -9,6 +9,7 @@
+     "origo": "./src/main.js"
+   },
+   "dependencies": {
++    "@origo/core": "workspace:*",
+     "commander": "^15.0.0",
+     "tslib": "^2.3.0"
+   }
+diff --git a/packages/cli/src/main.ts b/packages/cli/src/main.ts
+index bcdabf9..ae31fc8 100644
+--- a/packages/cli/src/main.ts
++++ b/packages/cli/src/main.ts
+@@ -2,6 +2,7 @@
+ import { Command } from 'commander';
+ import { initCommand } from './commands/init';
+ import { newCommand } from './commands/new';
++import { validateCommand } from './commands/validate';
+ import { handleError } from './utils/errors';
+ 
+ export function createProgram(): Command {
+@@ -11,6 +12,7 @@ export function createProgram(): Command {
+ 
+   program.addCommand(initCommand());
+   program.addCommand(newCommand());
++  program.addCommand(validateCommand());
+ 
+   return program;
  }
- 
- @Component({
-@@ -19,7 +19,7 @@ class TestTextPrimitive {
-   template: `<div class="container"><ng-container #vc></ng-container></div>`,
- })
- class TestContainerPrimitive {
--  node = input.required<ASTNode>();
-+  contract = input.required<InteractionContract>();
-   vc = viewChild.required('vc', { read: ViewContainerRef });
- }
- 
-diff --git a/packages/angular-renderer/src/lib/renderer.component.ts b/packages/angular-renderer/src/lib/renderer.component.ts
-index 2e0ff12..a9d77da 100644
---- a/packages/angular-renderer/src/lib/renderer.component.ts
-+++ b/packages/angular-renderer/src/lib/renderer.component.ts
-@@ -9,7 +9,7 @@ import {
- } from '@angular/core';
- import { ASTNode } from '@origo/core';
- import { RENDERER_REGISTRY } from './renderer.tokens';
--import { AdapterPipelineService, ContainerComponent } from './adapter';
-+import { AdapterPipelineService, ContainerComponent } from '../adapters/web/adapter';
- 
- @Component({
-   selector: 'origo-renderer',
-@@ -70,7 +70,7 @@ export class OrigoRendererComponent {
- 
-         const componentRef = vc.createComponent(componentType);
-         const preparedNode = this.adapter.prepareNode(node);
--        componentRef.setInput('node', preparedNode);
-+        componentRef.setInput('contract', preparedNode);
- 
-         if (node.children && node.children.length > 0) {
-           componentRef.changeDetectorRef.detectChanges();
-diff --git a/packages/core/src/types/ast.ts b/packages/core/src/types/ast.ts
-index 2eeb7b5..7be0632 100644
---- a/packages/core/src/types/ast.ts
-+++ b/packages/core/src/types/ast.ts
-@@ -11,3 +11,10 @@ export interface ASTNode {
-   props?: Record<string, unknown>;
-   children?: ASTNode[];
- }
+diff --git a/packages/cli/src/commands/validate.spec.ts b/packages/cli/src/commands/validate.spec.ts
+new file mode 100644
+index 0000000..9131237
+--- /dev/null
++++ b/packages/cli/src/commands/validate.spec.ts
+@@ -0,0 +1,47 @@
++import { Command } from 'commander';
++import { validateCommand } from './validate';
++import { validateDirectory } from '../lib/validation';
++import { handleError } from '../utils/errors';
 +
-+export interface InteractionContract<TProps = Record<string, unknown>> {
-+  id: string;
-+  type: string;
-+  props: TProps;
-+  children?: InteractionContract[];
++jest.mock('../lib/validation', () => ({
++  validateDirectory: jest.fn(),
++}));
++
++jest.mock('../utils/errors', () => ({
++  handleError: jest.fn(),
++}));
++
++describe('validateCommand', () => {
++  let program: Command;
++
++  beforeEach(() => {
++    jest.clearAllMocks();
++    program = new Command();
++    program.addCommand(validateCommand());
++  });
++
++  it('calls validateDirectory with default arguments', async () => {
++    (validateDirectory as jest.Mock).mockResolvedValue(undefined);
++
++    await program.parseAsync(['node', 'test', 'validate']);
++
++    expect(validateDirectory).toHaveBeenCalledWith('./schemas', { json: undefined });
++  });
++
++  it('calls validateDirectory with provided directory and json option', async () => {
++    (validateDirectory as jest.Mock).mockResolvedValue(undefined);
++
++    await program.parseAsync(['node', 'test', 'validate', './custom', '--json']);
++
++    expect(validateDirectory).toHaveBeenCalledWith('./custom', { json: true });
++  });
++
++  it('calls handleError if validateDirectory throws', async () => {
++    const error = new Error('Test error');
++    (validateDirectory as jest.Mock).mockRejectedValue(error);
++
++    await program.parseAsync(['node', 'test', 'validate', '--json']);
++
++    expect(handleError).toHaveBeenCalledWith(error, { json: true });
++  });
++});
+diff --git a/packages/cli/src/commands/validate.ts b/packages/cli/src/commands/validate.ts
+new file mode 100644
+index 0000000..56aa6db
+--- /dev/null
++++ b/packages/cli/src/commands/validate.ts
+@@ -0,0 +1,21 @@
++import { Command } from 'commander';
++import { validateDirectory } from '../lib/validation';
++import { handleError } from '../utils/errors';
++
++export function validateCommand(): Command {
++  const cmd = new Command('validate');
++
++  cmd
++    .description('Validate BADL schemas in a directory')
++    .argument('[directory]', 'Directory containing BADL schemas to validate', './schemas')
++    .option('--json', 'Output machine-readable JSON format')
++    .action(async (directory: string, options: { json?: boolean }) => {
++      try {
++        await validateDirectory(directory, { json: options.json });
++      } catch (error) {
++        handleError(error, { json: options.json });
++      }
++    });
++
++  return cmd;
 +}
+diff --git a/packages/cli/src/lib/validation.spec.ts b/packages/cli/src/lib/validation.spec.ts
+new file mode 100644
+index 0000000..e87d691
+--- /dev/null
++++ b/packages/cli/src/lib/validation.spec.ts
+@@ -0,0 +1,145 @@
++import * as fs from 'fs';
++import * as path from 'path';
++import { validateDirectory } from './validation';
++import { BADLValidator, validateAST } from '@origo/core';
++import { CliError } from '../utils/errors';
++
++jest.mock('fs', () => ({
++  promises: {
++    readdir: jest.fn(),
++    readFile: jest.fn(),
++  },
++}));
++
++jest.mock('@origo/core', () => {
++  return {
++    BADLValidator: jest.fn().mockImplementation(() => ({
++      validateDomain: jest.fn(),
++      errors: null,
++    })),
++    validateAST: jest.fn(),
++  };
++});
++
++describe('Validation Library', () => {
++  let consoleLogSpy: jest.SpyInstance;
++  let consoleErrorSpy: jest.SpyInstance;
++  let processExitSpy: jest.SpyInstance;
++
++  beforeEach(() => {
++    jest.clearAllMocks();
++    consoleLogSpy = jest.spyOn(console, 'log').mockImplementation();
++    consoleErrorSpy = jest.spyOn(console, 'error').mockImplementation();
++    processExitSpy = jest.spyOn(process, 'exit').mockImplementation((code) => {
++      throw new Error(`process.exit: ${code}`);
++    });
++  });
++
++  afterEach(() => {
++    consoleLogSpy.mockRestore();
++    consoleErrorSpy.mockRestore();
++    processExitSpy.mockRestore();
++  });
++
++  describe('validateDirectory', () => {
++    it('throws CliError if directory does not exist', async () => {
++      (fs.promises.readdir as jest.Mock).mockRejectedValue({ code: 'ENOENT' });
++
++      await expect(validateDirectory('./schemas', { json: false })).rejects.toThrow(CliError);
++      try {
++        await validateDirectory('./schemas', { json: false });
++      } catch (e: any) {
++        expect(e.code).toBe('ERR_DIRECTORY_NOT_FOUND');
++      }
++    });
++
++    it('handles all-valid scenario', async () => {
++      (fs.promises.readdir as jest.Mock).mockResolvedValue(['valid.json']);
++      (fs.promises.readFile as jest.Mock).mockResolvedValue('{"some":"json"}');
++      
++      const mockValidateDomain = jest.fn().mockReturnValue(true);
++      (BADLValidator as jest.Mock).mockImplementation(() => ({
++        validateDomain: mockValidateDomain,
++        errors: null,
++      }));
++      (validateAST as jest.Mock).mockReturnValue([]);
++
++      await validateDirectory('./schemas', { json: true });
++
++      expect(consoleLogSpy).toHaveBeenCalledWith(expect.stringContaining('"status": "success"'));
++      expect(consoleLogSpy).toHaveBeenCalledWith(expect.stringContaining('"errorsFound": 0'));
++      expect(processExitSpy).not.toHaveBeenCalled();
++    });
++
++    it('handles JSON schema errors', async () => {
++      (fs.promises.readdir as jest.Mock).mockResolvedValue(['invalid.json']);
++      (fs.promises.readFile as jest.Mock).mockResolvedValue('{"invalid":"json"}');
++      
++      const mockValidateDomain = jest.fn().mockReturnValue(false);
++      (BADLValidator as jest.Mock).mockImplementation(() => ({
++        validateDomain: mockValidateDomain,
++        errors: [
++          {
++            code: 'INVALID_FORMAT',
++            message: 'missing id',
++            context: { line: 12, column: 5 },
++          },
++        ],
++      }));
++
++      await expect(validateDirectory('./schemas', { json: true })).rejects.toThrow('process.exit: 1');
++
++      expect(consoleLogSpy).toHaveBeenCalledWith(expect.stringContaining('"status": "error"'));
++      expect(consoleLogSpy).toHaveBeenCalledWith(expect.stringContaining('"errorsFound": 1'));
++    });
++
++    it('handles AST semantic errors', async () => {
++      (fs.promises.readdir as jest.Mock).mockResolvedValue(['invalid-ast.json']);
++      (fs.promises.readFile as jest.Mock).mockResolvedValue('{"valid":"json"}');
++      
++      const mockValidateDomain = jest.fn().mockReturnValue(true);
++      (BADLValidator as jest.Mock).mockImplementation(() => ({
++        validateDomain: mockValidateDomain,
++        errors: null,
++      }));
++      (validateAST as jest.Mock).mockReturnValue([
++        {
++          code: 'MISSING_REFERENCE',
++          message: 'missing reference',
++        },
++      ]);
++
++      await expect(validateDirectory('./schemas', { json: false })).rejects.toThrow('process.exit: 1');
++
++      expect(consoleLogSpy).toHaveBeenCalledWith(expect.stringContaining('MISSING_REFERENCE'));
++    });
++
++    it('throws CliError if file is unreadable', async () => {
++      (fs.promises.readdir as jest.Mock).mockResolvedValue(['unreadable.json']);
++      (fs.promises.readFile as jest.Mock).mockRejectedValue(new Error('Cannot read'));
++
++      await expect(validateDirectory('./schemas', { json: false })).rejects.toThrow(CliError);
++      try {
++        await validateDirectory('./schemas', { json: false });
++      } catch (e: any) {
++        expect(e.code).toBe('ERR_FILE_READ');
++      }
++    });
++
++    it('throws CliError if JSON is invalid', async () => {
++      (fs.promises.readdir as jest.Mock).mockResolvedValue(['invalid-json.json']);
++      (fs.promises.readFile as jest.Mock).mockResolvedValue('{ invalid }');
++
++      const mockValidateDomain = jest.fn().mockReturnValue(true);
++      (BADLValidator as jest.Mock).mockImplementation(() => ({
++        validateDomain: mockValidateDomain,
++        errors: null,
++      }));
++      (validateAST as jest.Mock).mockImplementation(() => {
++        throw new Error('JSON parse error');
++      });
++
++      await expect(validateDirectory('./schemas', { json: false })).rejects.toThrow(CliError);
++    });
++  });
++});
+diff --git a/packages/cli/src/lib/validation.ts b/packages/cli/src/lib/validation.ts
+new file mode 100644
+index 0000000..8fb199a
+--- /dev/null
++++ b/packages/cli/src/lib/validation.ts
+@@ -0,0 +1,137 @@
++import * as fs from 'fs';
++import * as path from 'path';
++import { BADLValidator, validateAST } from '@origo/core';
++import { CliError } from '../utils/errors';
++
++export interface ValidationOptions {
++  json?: boolean;
++}
++
++export async function validateDirectory(
++  directory: string = './schemas',
++  options: ValidationOptions = {}
++): Promise<void> {
++  const targetDir = path.resolve(process.cwd(), directory);
++  
++  let files: string[];
++  try {
++    files = await fs.promises.readdir(targetDir, { recursive: true }) as string[];
++  } catch (error: any) {
++    if (error.code === 'ENOENT') {
++      throw new CliError({
++        code: 'ERR_DIRECTORY_NOT_FOUND',
++        message: `Directory not found: ${directory}`,
++      });
++    }
++    throw new CliError({
++      code: 'ERR_DIRECTORY_READ',
++      message: `Failed to read directory: ${error.message}`,
++    });
++  }
++
++  const jsonFiles = files.filter(f => f.endsWith('.json'));
++  
++  if (!options.json) {
++    console.log(`Validating schemas in ${directory}...\n`);
++  }
++
++  const results = [];
++  let totalErrors = 0;
++
++  for (const file of jsonFiles) {
++    const filePath = path.join(targetDir, file);
++    let rawContent: string;
++    try {
++      rawContent = await fs.promises.readFile(filePath, 'utf-8');
++    } catch (error: any) {
++      throw new CliError({
++        code: 'ERR_FILE_READ',
++        message: `Failed to read file ${file}: ${error.message}`,
++      });
++    }
++
++    const validator = new BADLValidator();
++    const isSchemaValid = validator.validateDomain(rawContent);
++    const schemaErrors = validator.errors || [];
++    
++    let astErrors: any[] = [];
++    if (isSchemaValid) {
++      try {
++        const parsed = JSON.parse(rawContent);
++        astErrors = validateAST(parsed);
++      } catch (error: any) {
++        throw new CliError({
++          code: 'ERR_JSON_PARSE',
++          message: `Failed to parse JSON in ${file}: ${error.message}`,
++        });
++      }
++    }
++
++    const combinedErrors = [
++      ...schemaErrors.map(e => ({
++        code: e.code || 'VALIDATION_ERROR',
++        message: e.message || 'Unknown error',
++        line: e.context?.line,
++        column: e.context?.column,
++      })),
++      ...astErrors.map(e => ({
++        code: e.code || 'VALIDATION_ERROR',
++        message: e.message || 'Unknown error',
++        line: e.context?.line,
++        column: e.context?.column,
++      })),
++    ];
++
++    const isValid = combinedErrors.length === 0;
++    totalErrors += combinedErrors.length;
++    
++    results.push({
++      file,
++      valid: isValid,
++      errors: combinedErrors,
++    });
++  }
++
++  if (options.json) {
++    const jsonOutput = {
++      status: totalErrors === 0 ? 'success' : 'error',
++      data: {
++        directory,
++        filesValidated: jsonFiles.length,
++        errorsFound: totalErrors,
++        results,
++      },
++    };
++    console.log(JSON.stringify(jsonOutput, null, 2));
++    
++    if (totalErrors > 0) {
++      process.exit(1);
++    }
++    return;
++  }
++
++  // Human readable output
++  let validFilesCount = 0;
++  let invalidFilesCount = 0;
++
++  for (const result of results) {
++    if (result.valid) {
++      console.log(`  \x1b[32m✓\x1b[0m  ${result.file}`);
++      validFilesCount++;
++    } else {
++      console.log(`  \x1b[31m✗\x1b[0m  ${result.file}`);
++      invalidFilesCount++;
++      for (const error of result.errors) {
++        const line = error.line !== undefined ? error.line : '-';
++        const col = error.column !== undefined ? error.column : '-';
++        console.log(`       ${line}:${col}  [${error.code}]  ${error.message}`);
++      }
++    }
++  }
++
++  console.log(`\nFound ${totalErrors} errors in ${invalidFilesCount} file(s) (${validFilesCount} file(s) valid, ${invalidFilesCount} file(s) invalid).`);
++
++  if (totalErrors > 0) {
++    process.exit(1);
++  }
++}
+diff --git a/_bmad-output/implementation-artifacts/stories/6-2-local-schema-validation.md b/_bmad-output/implementation-artifacts/stories/6-2-local-schema-validation.md
+new file mode 100644
+index 0000000..2ab3398
+--- /dev/null
++++ b/_bmad-output/implementation-artifacts/stories/6-2-local-schema-validation.md
+@@ -0,0 +1,227 @@
++---
++baseline_commit: current
++---
++
++# Story 6.2: Local Schema Validation
++
++Status: review
++
++<!-- Note: Validation is optional. Run validate-create-story for quality check before dev-story. -->
++
++## Story
++
++As a Developer,
++I want an `origo validate` command,
++So that I can verify my BADL schemas locally without needing to run the full application.
++
++## Acceptance Criteria
++
++1. **Given** a directory containing BADL schema files
++   **When** I run `origo validate`
++   **Then** the CLI passes the files through the core compiler (built in Epics 3/4)
++2. **And** it reports any syntax or semantic errors in the console with helpful file and line number references (FR-DX-003)
++3. **And** the underlying compiler explicitly preserves source map and line number offsets to make this reporting possible.
++
++## Developer Context
++
++This story implements the `origo validate` command in the `@origo/cli` package using Commander.js. It follows the thin-command / lib pattern established in Story 6.1 (`new.ts` → `scaffolding.ts`): the command file is a thin Commander wrapper; all logic lives in `packages/cli/src/lib/validation.ts`.
++
++**Validation is two-stage — both stages are required:**
++
++1. **JSON Schema validation** — Instantiate `new BADLValidator()` from `@origo/core` and call `.validateDomain(rawJsonString)` (pass the file content **as a string**, not a parsed object). This activates Ajv + `json-source-map` and enriches each error with `context.line` / `context.column` (1-indexed). Collect `validator.errors` (typed `EnhancedErrorObject[] | null`).
++2. **AST semantic validation** — If JSON schema validation passes, parse the JSON and call `validateAST(parsedDomain)` from `@origo/core`. This detects circular references, missing entity references, contract breaches, and unsecured capabilities. These errors are typed `ValidationError[]` from `@origo/core`.
++
++Both error arrays must be unified into one output stream per file.
++
++**File discovery:** Use `fs.promises.readdir(directory, { recursive: true })` (built into Node ≥ 22 — no glob library needed) and filter for `.json` files. The `directory` argument is optional; default is `./schemas`. If the directory does not exist, throw a `CliError` with `code: 'ERR_DIRECTORY_NOT_FOUND'`.
++
++**Register the command:** Add `program.addCommand(validateCommand())` to `createProgram()` in `packages/cli/src/main.ts`.
++
++**Dependency required:** `@origo/core` must be added to `dependencies` in `packages/cli/package.json` — it is NOT currently listed.
++
++**Key Responsibilities:**
++- Add `validate` command to the CLI via Commander.js.
++- Recursively discover `.json` files in the target directory (default `./schemas`).
++- Invoke `BADLValidator.validateDomain()` (string input) then `validateAST()` on each file.
++- Extract `context.line` / `context.column` from `EnhancedErrorObject` for source-mapped error messages.
++- Format output: JSON for machine consumers (`--json`), colored human-readable for interactive terminals.
++- Handle all I/O defensively (directory not found, unreadable files, invalid JSON).
++
++## Dev Agent Guardrails
++
++### Technical Requirements
++
++- **Command:** `origo validate [directory] [options]`
++  - `[directory]` is optional, defaults to `./schemas` relative to `process.cwd()`
++- **Library:** MUST use Commander.js for argument parsing.
++- **Error Shape:** ALL errors MUST follow `{ code: string, message: string, context?: object }` via the existing `CliError` class — do NOT create a new error class.
++- **I/O:** MUST use `fs.promises` throughout. ❌ Do NOT use `fs.readFileSync` or any synchronous fs method.
++- **File discovery:** Use `fs.promises.readdir(dir, { recursive: true })` — ❌ do NOT install `glob`, `fast-glob`, or any file-matching library.
++- **Environment:** Target Node.js >= 22.0.0.
++
++### Validation API — Exact Usage
++
++```typescript
++import { BADLValidator, validateAST, EnhancedErrorObject, ValidationError } from '@origo/core';
++
++// Stage 1: JSON Schema + source map (pass raw string)
++const validator = new BADLValidator();
++const isSchemaValid = validator.validateDomain(rawJsonString); // string input
++const schemaErrors: EnhancedErrorObject[] = validator.errors ?? [];
++
++// Stage 2: Semantic AST validation (only if stage 1 passed)
++let astErrors: ValidationError[] = [];
++if (isSchemaValid) {
++  const parsed = JSON.parse(rawJsonString);
++  astErrors = validateAST(parsed);
++}
++```
++
++**Source map location is on `error.context`, NOT `error.path`:**
++```typescript
++// EnhancedErrorObject line/column extraction:
++const line = error.context?.line;     // 1-indexed, already enriched by BADLValidator
++const column = error.context?.column; // 1-indexed, already enriched by BADLValidator
++```
++
++### Output Format
++
++**Human-readable (no `--json` flag):**
++```
++Validating schemas in ./schemas...
++
++  ✓  user.json
++  ✗  order.json
++       12:5  [INVALID_FORMAT]  Entity "Order" missing required field "id"
++       24:1  [MISSING_REFERENCE]  Entity "Customer" referenced by field "customerId" does not exist
++
++Found 2 errors in 1 file (1 file valid, 1 file invalid).
++```
++Use `chalk` or ANSI codes for color; green `✓`, red `✗`. Exit code 0 on all valid, exit code 1 on any errors.
++
++**Machine-readable (`--json` flag):**
++```json
++{
++  "status": "error",
++  "data": {
++    "directory": "./schemas",
++    "filesValidated": 2,
++    "errorsFound": 2,
++    "results": [
++      { "file": "user.json", "valid": true, "errors": [] },
++      {
++        "file": "order.json",
++        "valid": false,
++        "errors": [
++          { "code": "INVALID_FORMAT", "message": "...", "line": 12, "column": 5 },
++          { "code": "MISSING_REFERENCE", "message": "...", "line": 24, "column": 1 }
++        ]
++      }
++    ]
++  }
++}
++```
++On all-valid, status is `"success"`.
++
++### Architecture Compliance
++
++- **Epic 6:** Developer CLI (`@origo/cli`) — FR-DX-003, FR-AI-005.
++- **AD-3 & P1-AD-4:** MUST rely on `@origo/core` for ALL validation logic. ❌ The CLI MUST NOT duplicate schema validation rules or re-implement error type checking.
++- **AD-7:** Canonical BADL format is JSON. Validate only `.json` files.
++- **Package Location:** `packages/cli/`.
++- **Nx Tags:** Must respect Nx boundary tags; `cli` can depend on `core`.
++
++### Anti-Patterns — DO NOT DO
++
++- ❌ Do NOT call `validateAST()` directly on raw JSON string input — it expects a parsed `CanonicalAST` object.
++- ❌ Do NOT skip calling `BADLValidator.validateDomain(rawString)` with a string — passing a parsed object bypasses source map enrichment and loses line/column data.
++- ❌ Do NOT read `error.instancePath` as the location reference — line/column is in `error.context.line` / `error.context.column`.
++- ❌ Do NOT install glob libraries — use `fs.promises.readdir` with `{ recursive: true }`.
++- ❌ Do NOT create a new error class — reuse `CliError` from `../utils/errors`.
++- ❌ Do NOT swallow errors in catch blocks — always rethrow as `CliError` with a structured code.
++
++### File Structure & Testing Requirements
++
++- **Command File:** `packages/cli/src/commands/validate.ts` — thin Commander wrapper (mirrors `new.ts`).
++- **Logic File:** `packages/cli/src/lib/validation.ts` — owns file discovery, reading, and validation pipeline invocation.
++- **Register in:** `packages/cli/src/main.ts` — add `program.addCommand(validateCommand())`.
++- **Update:** `packages/cli/package.json` — add `@origo/core` to `dependencies`.
++- **Tests:** `*.spec.ts` MUST be co-located alongside `*.ts` in the same directory (NO `__tests__/` folders).
++- **Coverage:** 100% test coverage required.
++- **Test mocking:** Mock `fs.promises` to avoid real disk I/O. Mock `BADLValidator` and `validateAST` from `@origo/core` to unit-test the validation logic independently of the core engine. Test all error paths: directory not found, unreadable file, JSON schema errors, AST semantic errors, all-valid scenario.
++
++## Previous Story Intelligence
++
++**Learnings from Story 6.1 (CLI Initialization and Scaffolding) — confirmed via code review:**
++
++- **Shebang:** `#!/usr/bin/env node` is set in `packages/cli/src/main.ts:1` — do not disturb it.
++- **Command registration pattern:** Use `program.addCommand(validateCommand())` in `createProgram()` in `main.ts` — exactly as `initCommand()` and `newCommand()` are registered.
++- **Commander pattern:** Thin command file → imports from `lib/` → try/catch → `handleError(error, { json: options.json })`. Mirror this exactly.
++- **Error handling:** Always call `handleError(error, { json: options.json })` from `../utils/errors` in the command's catch block — this handles both human and JSON output correctly.
++- **Error shape:** Use `CliError` class with `{ code, message, context? }`. The `CliError` class is in `packages/cli/src/utils/errors.ts`.
++- **Async I/O:** All file system operations must use `fs.promises`. The `fs/promises` import is already used in `scaffolding.ts` — follow the same pattern.
++- **JSON output mode:** The `--json` option flag name is `options.json` (boolean) in Commander. Pass it through to the lib layer and to `handleError`.
++- **Nx tags:** `packages/cli/project.json` must include `scope:cli` tag for Nx boundary enforcement.
++- **Public export:** If any new public types are added to the CLI, export them from `packages/cli/src/index.ts`.
++
++**Files from Story 6.1 to be MODIFIED (not recreated) in this story:**
++- `packages/cli/src/main.ts` — add `validateCommand()` import + `program.addCommand(validateCommand())`
++- `packages/cli/package.json` — add `@origo/core` to `dependencies`
++
++## Project Context Reference
++
++- **Project**: origo-design
++- **Epic**: Epic 6 — Developer CLI (`@origo/cli`)
++- **Core validator location**: `packages/core/src/validator/index.ts` — exports `BADLValidator`, `validateAST`, `EnhancedErrorObject`, `ValidationError`
++- **Error utility**: `packages/cli/src/utils/errors.ts` — exports `CliError`, `handleError`
++- **Existing CLI entry**: `packages/cli/src/main.ts` — `createProgram()` registers all commands
++
++## Tasks/Subtasks
++
++- [x] Add `@origo/core` to `dependencies` in `packages/cli/package.json`
++- [x] Create `packages/cli/src/lib/validation.ts`
++  - [x] Implement file discovery using `fs.promises.readdir`
++  - [x] Implement two-stage validation pipeline (`BADLValidator.validateDomain` and `validateAST`)
++  - [x] Map errors to `CliError` format using `context.line` and `context.column`
++  - [x] Support both human-readable and JSON output formats
++- [x] Create `packages/cli/src/commands/validate.ts`
++  - [x] Create thin Commander wrapper for the `validate` command
++  - [x] Setup try/catch with `handleError` routing
++- [x] Update `packages/cli/src/main.ts` to register `validateCommand`
++- [x] Create tests for validation logic (`packages/cli/src/lib/validation.spec.ts`)
++  - [x] Mock `fs.promises` and `@origo/core` validators
++  - [x] Test directory not found
++  - [x] Test JSON schema errors
++  - [x] Test AST semantic errors
++  - [x] Test all-valid scenario
++- [x] Create tests for command wrapper (`packages/cli/src/commands/validate.spec.ts`)
++
++## Dev Agent Record
++
++### Debug Log
++- N/A
++
++### Completion Notes
++✅ Implemented `validate` command in `@origo/cli`
++- Connected CLI to `@origo/core` validation pipeline
++- Implemented file discovery using `fs.promises.readdir`
++- Extracted and displayed context.line/column info on errors
++- Wrote full unit test coverage using mocks
++
++## File List
++- `packages/cli/package.json` (modified)
++- `packages/cli/src/main.ts` (modified)
++- `packages/cli/src/lib/validation.ts` (new)
++- `packages/cli/src/lib/validation.spec.ts` (new)
++- `packages/cli/src/commands/validate.ts` (new)
++- `packages/cli/src/commands/validate.spec.ts` (new)
++
++## Change Log
++- Added `validate` command to `@origo/cli`.
++- Integrated `@origo/core` semantic AST validation into the CLI.
++
++## Status Update
++
++Ultimate context engine analysis completed — comprehensive developer guide created.
++Story structure validated and required tracking sections added.
++All tasks completed successfully.
+
