@@ -129,3 +129,7 @@
 - Negative CSS gap/padding handling missing in VBox component [packages/angular-renderer/src/components/primitives/vbox/vbox.component.ts] — negative gap or padding produces invalid layout.
 - Race condition between TextInput local model and external contract updates [packages/angular-renderer/src/components/primitives/text-input/text-input.component.ts] — contract effect untracked write can overwrite in-progress user input.
 
+
+## Deferred from: code review of 6-2-local-schema-validation.md (2026-08-25)
+
+- Directory exists but contains zero .json files [packages/cli/src/lib/validation.ts:325] — (confusing UX but not a bug)
