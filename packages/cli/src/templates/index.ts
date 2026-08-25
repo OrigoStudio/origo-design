@@ -1,5 +1,6 @@
-import * as fs from 'fs';
-import * as path from 'path';
+import origoTemplate from './origo.json';
+import entityTemplate from './entity.json';
+import extensionTemplate from './extension.json';
 
 export interface EntityOptions {
   id?: string;
@@ -25,11 +26,7 @@ export interface OrigoConfigOptions {
     read?: string[];
     write?: string[];
   };
-  [key: string]: any; // Allow other overrides securely
-}
-
-function loadTemplate(name: string): string {
-  return fs.readFileSync(path.join(__dirname, `${name}.json.template`), 'utf-8');
+  [key: string]: unknown; // Allow other overrides securely
 }
 
 function validateIdentifier(id: string): void {
@@ -49,12 +46,13 @@ export function generateEntityTemplate(options: EntityOptions = {}): string {
   const name = options.name || 'DefaultEntityName';
   validateIdentifier(id);
 
-  let content = loadTemplate('entity');
-  content = content.replace(/\{\{id\}\}/g, id);
-  content = content.replace(/\{\{name\}\}/g, name);
+  const entityObj = {
+    ...entityTemplate,
+    id,
+    name,
+  };
 
-  if (!content.endsWith('\n')) content += '\n';
-  return content;
+  return JSON.stringify(entityObj, null, 2) + '\n';
 }
 
 export function generateExtensionTemplate(options: ExtensionOptions = {}): string {
@@ -65,18 +63,18 @@ export function generateExtensionTemplate(options: ExtensionOptions = {}): strin
   validateIdentifier(id);
   validateSemver(version);
 
-  let content = loadTemplate('extension');
-  content = content.replace(/\{\{id\}\}/g, id);
-  content = content.replace(/\{\{name\}\}/g, name);
-  content = content.replace(/\{\{version\}\}/g, version);
+  const extensionObj = {
+    ...extensionTemplate,
+    id,
+    name,
+    version,
+  };
 
-  if (!content.endsWith('\n')) content += '\n';
-  return content;
+  return JSON.stringify(extensionObj, null, 2) + '\n';
 }
 
 export function generateOrigoConfig(options: OrigoConfigOptions = {}): string {
-  const templateStr = loadTemplate('origo');
-  const defaults = JSON.parse(templateStr);
+  const defaults = origoTemplate;
 
   const merged = {
     ...defaults,

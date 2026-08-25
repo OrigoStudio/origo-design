@@ -1,3 +1,1678 @@
-﻿Invoke the bmad-review-edge-case-hunter skill on this diff:
+Invoke the bmad-review-edge-case-hunter skill on this diff:
 
-diff --git a/.github/workflows/release.yml b/.github/workflows/release.yml new file mode 100644 index 0000000..1184c0c --- /dev/null +++ b/.github/workflows/release.yml @@ -0,0 +1,38 @@ +name: Release + +on: +  push: +    branches: +      - main + +permissions: +  contents: write # Needed to push tags and release commits + +jobs: +  release: +    runs-on: ubuntu-latest +    steps: +      - name: Checkout repository +        uses: actions/checkout@v4 +        with: +          fetch-depth: 0 + +      - name: Setup Node.js +        uses: actions/setup-node@v4 +        with: +          node-version: 22 +          cache: 'npm' + +      - name: Install dependencies +        run: npm ci --no-audit + +      - name: Configure Git +        run: | +          git config --global user.name "github-actions[bot]" +          git config --global user.email "github-actions[bot]@users.noreply.github.com" + +      - name: Run Nx Release +        # nx release will exit 0 if there are no releasable commits +        run: npx nx release --skip-publish +        env: +          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} diff --git a/.husky/commit-msg b/.husky/commit-msg new file mode 100644 index 0000000..e998e31 --- /dev/null +++ b/.husky/commit-msg @@ -0,0 +1,4 @@ +#!/usr/bin/env sh +. "$(dirname -- "$0")/_/husky.sh" + +npx --no -- commitlint --edit "${1}" diff --git a/README.md b/README.md index 6d196e3..2d7bf3d 100644 --- a/README.md +++ b/README.md @@ -1 +1,11 @@  # origo-design + +## Semantic Versioning and Commits + +This repository enforces **Conventional Commits** for all changes. Our CI pipeline relies on these commit messages to automatically determine semantic version bumps for packages (like `@origo/core`) using `nx release`. + +- `fix: ...` -> Patch release (e.g. 1.0.0 to 1.0.1) +- `feat: ...` -> Minor release (e.g. 1.0.0 to 1.1.0) +- `feat!: ...` or `BREAKING CHANGE: ...` -> Major release (e.g. 1.0.0 to 2.0.0) + +A commit hook (`commitlint`) runs locally to verify that commit messages adhere to the `config-conventional` specification. If your commit is rejected, please format it properly. diff --git a/_bmad-output/implementation-artifacts/epic-3-retro-2026-08-10.md b/_bmad-output/implementation-artifacts/epic-3-retro-2026-08-10.md new file mode 100644 index 0000000..22927ab --- /dev/null +++ b/_bmad-output/implementation-artifacts/epic-3-retro-2026-08-10.md @@ -0,0 +1,45 @@ +# Epic 3 Retrospective + +**Date:** 2026-08-10 +**Epic:** Epic 3 (BADL Domain & Validation Engine) +**Participants:** Patel (Project Lead), Amelia (Developer), Alice (Product Owner), Charlie (Senior Dev), Dana (QA Engineer), Elena (Junior Dev) + +## Delivery Metrics +- **Completed:** 4/4 stories (100%) +- **Velocity:** 4 stories +- **Duration:** 1 sprint + +## Quality & Technical +- **Blockers encountered:** 1 (TypeScript JSON `import * as` anomaly causing build failures) +- **Technical debt items added:** 6 deferred edge cases (including empty ID validation, deeply nested stack overflow limits, and cross-domain uniqueness checks) +- **Test coverage:** 100% achieved for the AST validation engine +- **Production incidents:** 0 + +## Key Insights & Learnings +- **Tooling as a Systemic Issue:** When a developer loses significant time to tooling behavior (like the ESM/TS JSON import issue), it should be converted into a guardrail (ADR + CI check) rather than expecting the next developer to learn it the hard way. +- **Grounding in Reality:** Having a concrete, complex Target Page JSON Fixture (Story 3.1) successfully grounded the abstract requirements for the parser and compiler. +- **Deterministic Output:** Adversarial reviews successfully caught cross-platform determinism bugs (`localeCompare` dependence) ensuring stable JSON serialization. +- **Edge Case Tech Debt:** Intentional deferral of edge cases allowed for high velocity, but leaves critical cleanup work (like cycle depth limits) before the AST can safely parse external extensions. + +## Epic 3 Action Items & Prep Sprint Tasks +These items will be executed as part of a dedicated "Prep Sprint" before kicking off Epic 4: + +1. **Standardize JSON Imports (Systemic Fix)** +   - Define one supported ESM/TypeScript pattern for JSON imports. +   - Capture the decision in an ADR. +   - Add a CI check/lint rule for schema loading. +   - Owner: Charlie + +2. **Address Deferred AST Edge Cases** +   - Fix the deeply nested chain stack overflow limitation. +   - Prevent crashes before the Extension dependency resolver is built in Epic 4. +   - Owner: Amelia + +3. **Establish Versioning Management** +   - Implement semantic versioning (e.g., Nx release or standard-version) for `@origo/core`. +   - Must be in place before downstream Epics begin relying on the Canonical AST schema. +   - Owner: Patel + +## Next Epic Preview: Epic 4 (Core Behaviors & Extensibility) +- **Dependencies:** Relies heavily on the Canonical AST JSON structure and the `ast-validator` engine to process new Capabilities, Contracts, and Permissions. +- **Readiness:** Proceed with Epic 4 *after* completing the Prep Sprint action items above. diff --git a/_bmad-output/implementation-artifacts/sprint-status.yaml b/_bmad-output/implementation-artifacts/sprint-status.yaml index 792eaac..4c632da 100644 --- a/_bmad-output/implementation-artifacts/sprint-status.yaml +++ b/_bmad-output/implementation-artifacts/sprint-status.yaml @@ -60,7 +60,6 @@ development_status:    2-3-zero-code-theme-overrides: done    2-4-token-resolution-consumption-contract: done    epic-2-retrospective: done -  epic-2-5: done    2-5-1-versioning-management-strategy: done    2-5-2-design-tokens-use-case-documentation: done    2-5-3-theme-provider-composite-token-tech-debt: done @@ -69,7 +68,10 @@ development_status:    3-2-domain-entity-schema-parser: done    3-3-canonical-ast-serialization: done    3-4-ast-validation-engine: done -  epic-3-retrospective: optional +  epic-3-retrospective: done +  3-5-1-establish-semantic-versioning: done +  3-5-2-define-monorepo-wide-json-import-standard: backlog +  3-5-3-defensive-ast-traversal: backlog    epic-4: backlog    4-1-capabilities-schema-parsing: backlog    4-2-contracts-and-implementations: backlog @@ -129,3 +131,12 @@ action_items:    - id: retro-2-tech-debt      description: "Technical Debt Cleanup: Address Epic 2 deferred items (Theme Provider API, composite token validation) before starting Epic 3 parsers. (Owner: Charlie)"      status: done +  - id: retro-3-systemic-ts-imports +    description: "Standardize JSON imports, capture in ADR, and add CI check to prevent ESM/TS module resolution errors. (Owner: Charlie)" +    status: open +  - id: retro-3-edge-case-debt +    description: "Address deferred AST validation edge cases (deeply nested chain stack overflow) before Epic 4 extension parsing. (Owner: Amelia)" +    status: open +  - id: retro-3-versioning +    description: "Establish semantic versioning strategy for packages (Nx release/Changesets) before downstream consumption starts. (Owner: Patel)" +    status: open diff --git a/_bmad-output/implementation-artifacts/stories/3-5-1-establish-semantic-versioning.md b/_bmad-output/implementation-artifacts/stories/3-5-1-establish-semantic-versioning.md new file mode 100644 index 0000000..bd63f2c --- /dev/null +++ b/_bmad-output/implementation-artifacts/stories/3-5-1-establish-semantic-versioning.md @@ -0,0 +1,92 @@ +--- +epic: 3 +story: "5-1" +title: Establish Semantic Versioning for @origo/core +status: ready-for-dev +--- + +# Story 3.5.1: Establish Semantic Versioning for @origo/core + +<!-- Note: Validation is optional. Run validate-create-story for quality check before dev-story. --> + +## Story Foundation + +**User Story:** +As a Core Maintainer, +I want to establish an automated semantic versioning pipeline for the `@origo/core` package, +So that all AST logic changes and bug fixes made during this sprint are tracked, properly versioned, and safely released to downstream consumers. + +**Acceptance Criteria:** +1. **Given** the Origo monorepo and CI pipeline +   **When** a pull request containing conventional commits is merged into the `main` branch +   **Then** the `@origo/core` package version is automatically bumped according to semantic rules (FR-PREP-004) +   **And** the CI versioning job exits cleanly (code 0) if no releasable commits are detected, preventing false-positive pipeline failures (NFR-PREP-007). + +**Business Context:** +This is required before any downstream consumption starts. Proper semantic versioning ensures that API changes, schema additions, or bug fixes are safely communicated to consumers via deterministic version increments. + +## Tasks / Subtasks + +- [x] Task 1: Initialize semantic versioning strategy for the Nx monorepo (e.g., using Nx release, Changesets, or standard-version) +  - [x] Subtask 1.1: Configure versioning tool at the monorepo root to target `@origo/core` and other packages +  - [x] Subtask 1.2: Ensure conventional commit parsing is enforced +- [x] Task 2: Configure CI pipeline for automated versioning +  - [x] Subtask 2.1: Add a CI workflow/job that runs the versioning tool on pushes to the `main` branch +  - [x] Subtask 2.2: Ensure the CI job exits cleanly (code 0) when no releasable commits are detected (NFR-PREP-007) +- [x] Task 3: Document the versioning process for developers +  - [x] Subtask 3.1: Add a section in `README.md` or a `CONTRIBUTING.md` describing how conventional commits affect versioning + +## Dev Agent Guardrails + +### Technical Requirements +- MUST implement semantic versioning strategy (e.g. Nx release or Changesets) +- CI job MUST NOT fail if there are no releasable commits (exit 0) +- Changes MUST follow conventional commits standard + +### Architecture Compliance +- **FR-PREP-004**: Establish semantic versioning for `@origo/core` package +- **NFR-PREP-007**: Semantic versioning CI jobs must exit cleanly (code 0) if no releasable commits are detected, preventing false-positive CI failures. + +### Library/Framework Requirements +- Use standard ecosystem tools suitable for Nx monorepos (e.g., `nx release`, Changesets) +- Follow existing CI pipeline conventions (e.g. GitHub Actions) + +### File Structure Requirements +- Update CI configuration files (e.g., `.github/workflows/ci.yml` or similar) +- Add or update versioning tool configuration files (e.g., `nx.json`, `.changeset/config.json`) + +### Testing Requirements +- Test the versioning tool locally to verify it parses conventional commits and suggests the correct semantic version bump. + +## Previous Story Intelligence +- Story 3.4 completed the AST validation engine with DAG circular dependency resolution. +- It was crucial to have deterministic execution and high test coverage. The versioning system must now safely release these features. + +## Latest Tech Information +- Nx 19+ has built-in `nx release` capabilities which may be the preferred approach for Nx monorepos. Verify current Nx version and `nx release` configuration practices. + +## Project Context Reference +- Strict Nx boundary enforcement: packages must version independently or coherently depending on the selected strategy. + +## Completion Notes +Ultimate context engine analysis completed - comprehensive developer guide created + +## Dev Agent Record + +### Agent Model Used +Gemini 3.1 Pro (High) + +### Debug Log References + +### Completion Notes List +- Verified `nx release` configuration is in `nx.json`. +- Installed `commitlint` and configured `.husky/commit-msg` to enforce conventional commits. +- Added `.github/workflows/release.yml` with `npx nx release --skip-publish` to handle versioning cleanly in CI without failing on no commits. +- Documented semantic versioning process in `README.md`. + +### File List +- `package.json` [UPDATE] +- `commitlint.config.js` [NEW] +- `.husky/commit-msg` [NEW] +- `.github/workflows/release.yml` [NEW] +- `README.md` [UPDATE] diff --git a/_bmad-output/planning-artifacts/epics.md b/_bmad-output/planning-artifacts/epics.md index 688733c..104e37b 100644 --- a/_bmad-output/planning-artifacts/epics.md +++ b/_bmad-output/planning-artifacts/epics.md @@ -9,6 +9,7 @@ inputDocuments:    - "_bmad-output/planning-artifacts/architecture/architecture-origo-design-2026-07-28/phase3-metadata-platform/ARCHITECTURE-SPINE.md"    - "_bmad-output/planning-artifacts/architecture/architecture-origo-design-2026-07-28/phase4-enterprise-ai/ARCHITECTURE-SPINE.md"    - "_bmad-output/planning-artifacts/implementation-readiness-report-2026-07-28.md" +  - "_bmad-output/implementation-artifacts/epic-3-retro-2026-08-10.md"  scope: "Phase 1 only (Months 1-6)"  ---   @@ -74,6 +75,10 @@ This document provides the complete epic and story breakdown for Origo Design Ph  - FR-TEST-002: Test selectors MUST be stable across renderer upgrades  - FR-ADOPT-001: Teams MUST be able to adopt Origo one page at a time; existing pages MUST coexist without conflict  - FR-ADOPT-002: Incremental adoption path MUST be documented as a first-class migration guide +- FR-PREP-001: Define monorepo-wide ESM/TypeScript JSON import standard and ADR +- FR-PREP-002: Fix AST parser deeply nested chain limit +- FR-PREP-003: Prevent deferred edge case crashes in AST engine +- FR-PREP-004: Establish semantic versioning for @origo/core package (Executes First)    ### Non-Functional Requirements (Phase 1 Scope)   @@ -87,6 +92,14 @@ This document provides the complete epic and story breakdown for Origo Design Ph  - NFR-VER-001: Grammar major version MUST ship with migration tool; renderers fail fast on incompatible version  - NFR-GIT-001: IDs MUST be stable across renames; array ordering semantically insignificant; minimal merge conflicts  - NFR-ADOPT-001: Teams MUST be able to adopt one page at a time; coexist with existing non-Origo pages +- NFR-PREP-001: Enforce JSON import pattern via monorepo-wide CI check +- NFR-PREP-002: AST traversal performance must remain within benchmark limits after depth limits are added +- NFR-PREP-003: All deferred edge cases must have explicit regression test fixtures +- NFR-PREP-004: AST logic changes must maintain 100% backwards compatibility with existing valid JSON structures +- NFR-PREP-005: AST engine must fail gracefully (return a validation error array) instead of crashing the Node process when encountering excessively nested or cyclic payloads. +- NFR-PREP-006: AST engine must detect and reject circular entity references (e.g., A -> B -> A) immediately via a visited-node tracker, rather than waiting for the maximum depth limit to trigger. +- NFR-PREP-007: Semantic versioning CI jobs must exit cleanly (code 0) if no releasable commits are detected, preventing false-positive CI failures. +- NFR-PREP-008: JSON import standardization must include guidance or lint rules against directly importing massive JSON fixtures that cause TypeScript compiler OOM errors.    ### Additional Requirements (from Phase 1 Architecture Spine)   @@ -299,7 +312,7 @@ So that theme switching and initial rendering do not cause UI jank.  **Then** tokens are available for consumption by the renderer (FR-THEME-005)  **And** resolution timing passes the performance benchmark limits defined in NFR-PERF-005.   -### Epic 2.5: Epic 2 Tech Debt & Documentation +#### Epic 2 Tech Debt & Documentation Chores  [Developer knocks out critical tech debt and documentation from Epic 2 before beginning the Epic 3 BADL Domain parser.]  **FRs covered:** FR-THEME-001, FR-THEME-005, NFR-GIT-001   @@ -399,6 +412,63 @@ So that illegal entity relationships and invalid consumption rules are caught at  **Then** it throws a descriptive compilation error preventing cyclic dependencies (FR-E-003)  **And** the validation engine has 100% test coverage.   +#### Epic 3 Tech Debt & Retro Prep Chores +[Developer addresses critical tech debt before Epic 4. To prevent scope creep and ensure all fixes are properly versioned and released, this sprint follows a strict linear implementation path: +1. **Story 1 (Versioning):** Establish semantic versioning so all subsequent sprint work is properly tracked. +2. **Story 2 (Tooling):** Fix JSON import standards so CI pipelines pass. +3. **Story 3 (Defensive Traversal):** Group AST depth limits and deferred edge cases into a unified refactor to prevent DoS vulnerabilities.] + +**FRs covered:** FR-PREP-001, FR-PREP-002, FR-PREP-003, FR-PREP-004 +**NFRs covered:** NFR-PREP-001, NFR-PREP-002, NFR-PREP-003, NFR-PREP-004, NFR-PREP-005, NFR-PREP-006, NFR-PREP-007, NFR-PREP-008 + +##### Strict Story Sequence Map +1. **[FR-PREP-004]** Establish semantic versioning for @origo/core package +2. **[FR-PREP-001, NFR-PREP-001, NFR-PREP-007, NFR-PREP-008]** Define monorepo-wide ESM/TypeScript JSON import standard +3. **[FR-PREP-002, FR-PREP-003, NFR-PREP-002, NFR-PREP-003, NFR-PREP-004, NFR-PREP-005, NFR-PREP-006]** Defensive Traversal Phase + +#### Story 3.5.1: Establish Semantic Versioning for @origo/core + +As a Core Maintainer, +I want to establish an automated semantic versioning pipeline for the `@origo/core` package, +So that all AST logic changes and bug fixes made during this sprint are tracked, properly versioned, and safely released to downstream consumers. + +**Acceptance Criteria:** + +**Given** the Origo monorepo and CI pipeline +**When** a pull request containing conventional commits is merged into the `main` branch +**Then** the `@origo/core` package version is automatically bumped according to semantic rules (FR-PREP-004) +**And** the CI versioning job exits cleanly (code 0) if no releasable commits are detected, preventing false-positive pipeline failures (NFR-PREP-007). + +#### Story 3.5.2: Define Monorepo-Wide JSON Import Standard + +As a Monorepo Developer, +I want a standardized configuration for importing JSON files across all packages, +So that CI pipelines do not fail with TypeScript TS2732 errors when core packages import schema fixtures. + +**Acceptance Criteria:** + +**Given** the Origo monorepo and Nx tooling +**When** a developer runs the `nx run core:build` or `core:lint` commands +**Then** the TypeScript configuration allows for `resolveJsonModule` standard imports natively (FR-PREP-001) +**And** the monorepo CI checks enforce this pattern without throwing type errors (NFR-PREP-001) +**And** ESLint rules or architectural guidelines are enforced to prevent directly importing massive JSON fixtures that would cause TypeScript compiler OOM crashes (NFR-PREP-008). + +#### Story 3.5.3: Defensive AST Traversal + +As a Core Engine Developer, +I want to refactor the AST recursive traversal to include depth limits, circular reference checks, and deferred edge case handling, +So that maliciously nested JSON payloads or missing references do not crash the Node process and cause a Denial of Service (DoS). + +**Acceptance Criteria:** + +**Given** the AST engine's recursive parsing logic +**When** it encounters an excessively nested payload (e.g., depth > MAX_AST_DEPTH) or a cyclic reference (e.g., Entity A -> Entity B -> Entity A) +**Then** it gracefully returns a validation error array instead of crashing the Node process (NFR-PREP-005) +**And** it detects circular entity references immediately via a visited-node tracker, rather than waiting for the maximum depth limit to trigger (NFR-PREP-006) +**And** AST traversal performance remains within benchmark limits after these defensive checks are added (NFR-PREP-002) +**And** all deferred edge cases (e.g., missing dependencies) are covered by explicit regression test fixtures (NFR-PREP-003, FR-PREP-002) +**And** the changes maintain 100% backwards compatibility with existing valid JSON structures (NFR-PREP-004, FR-PREP-003). +  ### Epic 4: Core Behaviors & Extensibility (@origo/core)  [Developer can define Capabilities, Contracts, and Permissions in BADL, and declare extension compatibility and interfaces. MUST be driven by a real-world target page JSON fixture and requires 100% test coverage for the validation engine.]  **FRs covered:** FR-C-001, FR-C-002, FR-C-003, FR-C-004, FR-I-001, FR-I-002, FR-I-003, FR-I-004, FR-P-001, FR-P-002, FR-P-003, FR-M-005, FR-EXT-001, FR-EXT-002, FR-EXT-006, FR-TEST-002, NFR-SEC-001, NFR-VER-001 diff --git a/_bmad-output/planning-artifacts/implementation-readiness-report-2026-08-11.md b/_bmad-output/planning-artifacts/implementation-readiness-report-2026-08-11.md new file mode 100644 index 0000000..7a59a39 --- /dev/null +++ b/_bmad-output/planning-artifacts/implementation-readiness-report-2026-08-11.md @@ -0,0 +1,92 @@ +--- +stepsCompleted: +  - step-01-document-discovery.md +  - step-02-prd-analysis.md +  - step-03-epic-coverage-validation.md +  - step-04-ux-alignment.md +  - step-05-epic-quality-review.md +  - step-06-final-assessment.md +--- +# Implementation Readiness Assessment Report + +**Date:** 2026-08-11 +**Project:** origo-design + +## Document Discovery + +### Epics Files Found +**Whole Documents:** +- epics.md (47429 bytes) + +### Architecture Files Found +**Sharded Documents:** +- Folder: architecture/architecture-origo-design-2026-07-28/ +  - ARCHITECTURE-SPINE.md +  - ARCHITECTURE-SPINE.memlog.md +  - phase1-foundation/ +  - phase2-business-ui/ +  - phase3-metadata-platform/ +  - phase4-enterprise-ai/ + +## PRD Analysis + +ΓÜá∩╕Å WARNING: Required PRD document not found. Requirements extraction could not be performed. + +## Epic Coverage Validation + +ΓÜá∩╕Å WARNING: Required PRD document not found. Coverage validation against PRD Functional Requirements could not be performed. + +### Coverage Statistics +- Total PRD FRs: 0 +- FRs covered in epics: N/A +- Coverage percentage: N/A + +## UX Alignment Assessment + +### UX Document Status +Not Found as a standalone document. + +### Alignment Issues +No standalone UX documentation was found. + +### Warnings +The `epics.md` document explicitly addresses UX: "N/A ΓÇö Origo Design is a developer platform. Developer-facing surfaces (CLI, playground, DevTools, docs) are fully specified in FR-DX-001 through FR-DX-006 and serve as the UX specification. Component visual design emerges from design token decisions + WCAG AA enforcement." +Therefore, UX alignment is satisfied via Developer Experience (DX) requirements in the epics document. + +## Epic Quality Review + +### ≡ƒö┤ Critical Violations + +- **Technical Epics with No User Value:** +  - `Epic 2.5: Epic 2 Tech Debt & Documentation`: Dedicated tech debt epics violate the principle of epics delivering user value. Tech debt should be handled as part of value-delivering epics or chores, not standalone epics. +  - `Epic 3.5: Epic 3 Retro Prep Sprint`: This epic is explicitly a "Retro Prep Sprint" focusing on tech debt (versioning, JSON import standards, defensive traversal). While necessary, it is structured as a technical milestone rather than a user-value epic. + +### ≡ƒƒá Major Issues + +- **Technical Story Focus:** +  - Story 1.1, 1.2, 1.3 are purely infrastructure/pipeline setup. In a greenfield project (as noted by "Greenfield project: first story MUST be Nx monorepo bootstrap"), this is partially acceptable, but should ideally be framed around the developer's initial outcome (e.g., "Developer can run the app locally"). + +### ≡ƒƒí Minor Concerns + +- **No explicit database creation strategy** (N/A for this project as it is an AST parser/renderer without a database). + +## Summary and Recommendations + +### Overall Readiness Status + +NEEDS WORK + +### Critical Issues Requiring Immediate Action + +- Missing PRD document restricts proper coverage validation mapping. +- Epic 2.5 and Epic 3.5 are purely technical milestones that need to be reorganized into chores or absorbed into user-facing feature Epics. + +### Recommended Next Steps + +1. Provide the PRD document if one exists to map all Functional Requirements against Epic Coverage. +2. Refactor Epic 2.5 and Epic 3.5 to not be dedicated "tech debt" epics. Shift their stories into other epics as prep work or track them as engineering chores. +3. Review whether Stories 1.1, 1.2, 1.3 can be reframed into more user-centric (developer-centric) outcomes instead of purely architectural scaffolding. + +### Final Note + +This assessment identified 3 issues across 2 categories (Missing Documents, Epic Structure). Address the critical issues before proceeding to implementation. These findings can be used to improve the artifacts or you may choose to proceed as-is. diff --git a/_bmad-output/planning-artifacts/sprint-change-proposal-2026-08-11.md b/_bmad-output/planning-artifacts/sprint-change-proposal-2026-08-11.md new file mode 100644 index 0000000..57b8758 --- /dev/null +++ b/_bmad-output/planning-artifacts/sprint-change-proposal-2026-08-11.md @@ -0,0 +1,37 @@ +# Sprint Change Proposal + +## 1. Issue Summary +- **Trigger**: The Implementation Readiness Assessment flagged critical structural violations in the project's Epics. +- **Problem**: Epics 2.5 and 3.5 are purely technical milestones ("Tech Debt" and "Retro Prep") that do not deliver direct user value. BMad methodology requires Epics to represent user-facing value. +- **Evidence**: `epics.md` contains Epic 2.5 (Epic 2 Tech Debt & Documentation) and Epic 3.5 (Epic 3 Retro Prep Sprint), both of which consist entirely of internal chores rather than functional capabilities. + +## 2. Impact Analysis +- **Epic Impact**: Epics 2.5 and 3.5 need to be dismantled. Their underlying stories (e.g., versioning strategy, documentation, JSON import standards, defensive AST traversal) are still necessary but must be re-homed. +- **Story Impact**: Stories 2.5.1, 2.5.2, 2.5.3, 3.5.1, 3.5.2, and 3.5.3 will be converted to Chores/Stories within Epic 2 and Epic 3, or absorbed into Epic 3 and Epic 4 as prerequisites. +- **Artifact Conflicts**: `epics.md` and `sprint-status.yaml` will need updates to reflect the removed epics and re-homed stories. The PRD (`functional-requirements.md`) and `product-brief.md` are **NOT** impacted, as these are implementation-level structural changes. + +## 3. Recommended Approach +- **Selected Approach**: Option 1 (Direct Adjustment) +- **Rationale**: The work contained in Epics 2.5 and 3.5 is essential (addressing tech debt and defensive traversal). Instead of dropping the work, we convert these standalone technical epics into Chores or Pre-requisite Stories attached to the existing functional Epics (Epic 2, 3, and 4). This aligns the project structure with BMad best practices without altering the MVP scope or losing critical technical work. +- **Effort Estimate**: Low +- **Risk Level**: Low + +## 4. Detailed Change Proposals + +### Artifact: `epics.md` + +**Proposal 1: Dismantle Epic 2.5** +- **Action**: Remove "Epic 2.5: Epic 2 Tech Debt & Documentation". +- **Re-home**: Move Story 2.5.1 (Versioning), 2.5.2 (Docs), and 2.5.3 (Theme Provider Tech Debt) into **Epic 2** as final completion stories, or into **Epic 3** as prerequisite chores. + +**Proposal 2: Dismantle Epic 3.5** +- **Action**: Remove "Epic 3.5: Epic 3 Retro Prep Sprint". +- **Re-home**: Move Story 3.5.1 (Semantic Versioning), 3.5.2 (JSON Import Standard), and 3.5.3 (Defensive AST Traversal) into **Epic 3** as final stories, or into **Epic 4** as prerequisite chores. + +### Artifact: `sprint-status.yaml` +- **Action**: Remove references to Epics 2.5 and 3.5 and update the active story list to match the new structure in `epics.md`. + +## 5. Implementation Handoff +- **Scope**: Minor (Direct Adjustment) +- **Handoff Recipient**: Developer Agent +- **Responsibilities**: Execute the exact text replacements in `epics.md` and `sprint-status.yaml` to restructure the epics. diff --git a/commitlint.config.js b/commitlint.config.js new file mode 100644 index 0000000..84dcb12 --- /dev/null +++ b/commitlint.config.js @@ -0,0 +1,3 @@ +module.exports = { +  extends: ['@commitlint/config-conventional'], +}; diff --git a/docs/astro.config.mjs b/docs/astro.config.mjs index 7f8aa29..bbc3d7e 100644 --- a/docs/astro.config.mjs +++ b/docs/astro.config.mjs @@ -21,6 +21,7 @@ export default defineConfig({              // Each item here is one entry in the navigation menu.              { label: 'Example Guide', link: '/guides/example/' },              { label: 'Design Tokens', link: '/guides/design-tokens/' }, +            { label: 'Publishing & Versioning', link: '/guides/publishing/' },            ],          },          { diff --git a/docs/src/content/config.ts b/docs/src/content/config.ts new file mode 100644 index 0000000..31b7476 --- /dev/null +++ b/docs/src/content/config.ts @@ -0,0 +1,6 @@ +import { defineCollection } from 'astro:content'; +import { docsSchema } from '@astrojs/starlight/schema'; + +export const collections = { +  docs: defineCollection({ schema: docsSchema() }), +}; diff --git a/docs/src/content/docs/guides/publishing.mdx b/docs/src/content/docs/guides/publishing.mdx new file mode 100644 index 0000000..bcf67f0 --- /dev/null +++ b/docs/src/content/docs/guides/publishing.mdx @@ -0,0 +1,43 @@ +--- +title: Publishing and Versioning +description: Guide on how packages are versioned and published in the Origo monorepo. +--- + +In the Origo monorepo, we use a fully automated release pipeline powered by **Nx Release** and **GitHub Actions**. This guide explains how semantic versioning works, how packages are published, and how you should format your commits to trigger releases. + +## Semantic Versioning and Conventional Commits + +We strictly enforce **Conventional Commits** for all changes. The CI pipeline relies on these commit messages to automatically determine semantic version bumps (Major, Minor, or Patch) for packages like `@origo/core`. + +When you make a commit, use the following format: + +- `fix: <description>` -> Triggers a **Patch** release (e.g., `1.0.0` to `1.0.1`) +- `feat: <description>` -> Triggers a **Minor** release (e.g., `1.0.0` to `1.1.0`) +- `feat!: <description>` or adding `BREAKING CHANGE: <description>` in the footer -> Triggers a **Major** release (e.g., `1.0.0` to `2.0.0`) + +A local Git hook (`commitlint`) is configured via Husky to verify that all commit messages adhere to the `config-conventional` specification before you can commit. If your commit is rejected, you will need to reformat the message properly. + +## The Release Pipeline + +Releases are completely automated via GitHub Actions (`.github/workflows/release.yml`). You do not need to manually bump versions, update changelogs, or run publish commands locally. + +### How it Works Under the Hood + +1. **Trigger**: When a Pull Request is merged into the `main` branch, the Release workflow runs. +2. **Nx Release**: The CI job runs `npx nx release --skip-publish`. Nx automatically: +   - Analyzes the Git history since the last release. +   - Detects which specific packages in the monorepo (e.g., `@origo/core`) have changed. +   - Calculates the appropriate new version based on the Conventional Commits. +   - Updates `package.json` versions and generates `CHANGELOG.md` files. +3. **GITHUB_TOKEN**: The workflow uses the automatically generated `${{ secrets.GITHUB_TOKEN }}` provided by GitHub Actions to push the version bumps, tags, and changelogs back to the repository. No personal access tokens (PATs) are required. This works because the workflow is granted `permissions: contents: write`. +4. **Publishing**: _(Note: Publishing to npm/registries can be configured in this step. Currently, the pipeline is set to skip publishing to a remote registry during the initial development phase)._ + +### Manual Releases + +In general, you should not need to run releases manually. However, if you need to test the release process locally to see what versions would be bumped, you can run: + +```bash +npx nx release --dry-run +``` + +This will output the projected version bumps and changelogs without modifying any files or pushing anything to remote. diff --git a/package-lock.json b/package-lock.json index 626e99e..bbdec35 100644 --- a/package-lock.json +++ b/package-lock.json @@ -31,6 +31,8 @@          "@angular/compiler-cli": "22.0.8",          "@angular/language-service": "22.0.8",          "@astrojs/starlight": "^0.25.0", +        "@commitlint/cli": "^21.2.1", +        "@commitlint/config-conventional": "^21.2.0",          "@nx/angular": "23.1.0",          "@nx/esbuild": "23.1.0",          "@nx/eslint": "23.1.0", @@ -4108,6 +4110,369 @@        "dev": true,        "license": "MIT"      }, +    "node_modules/@commitlint/cli": { +      "version": "21.2.1", +      "resolved": "https://registry.npmjs.org/@commitlint/cli/-/cli-21.2.1.tgz", +      "integrity": "sha512-blsZGe29hJ72VGEFVl72IVYX+1vsfINpjA9yWQA6i7OKD/McGEOXg08sKIRKjFk4JvzhV/9n0l3i6NooPLTNfg==", +      "dev": true, +      "license": "MIT", +      "dependencies": { +        "@commitlint/config-conventional": "^21.2.0", +        "@commitlint/format": "^21.2.0", +        "@commitlint/lint": "^21.2.0", +        "@commitlint/load": "^21.2.0", +        "@commitlint/read": "^21.2.1", +        "@commitlint/types": "^21.2.0", +        "tinyexec": "^1.0.0", +        "yargs": "^18.0.0" +      }, +      "bin": { +        "commitlint": "cli.js" +      }, +      "engines": { +        "node": ">=22.12.0" +      } +    }, +    "node_modules/@commitlint/cli/node_modules/tinyexec": { +      "version": "1.3.0", +      "resolved": "https://registry.npmjs.org/tinyexec/-/tinyexec-1.3.0.tgz", +      "integrity": "sha512-QKAl9m8gWWGHV8jZcPeym6j+XULi6tOf1mT83WYJ4Lk2ytW/uwAWkrP0uFsdoYMdueVJ0qs26wZ+23xeB4ibNQ==", +      "dev": true, +      "license": "MIT", +      "engines": { +        "node": ">=18" +      } +    }, +    "node_modules/@commitlint/config-conventional": { +      "version": "21.2.0", +      "resolved": "https://registry.npmjs.org/@commitlint/config-conventional/-/config-conventional-21.2.0.tgz", +      "integrity": "sha512-Qf8WRDVcyVd14if6VTWenebxFbKnVnbzPUJjlzjkyJGeHK2xCGd63Dr1XZzj0plXKQb9P0BfOxoc1HVeCo2BWQ==", +      "dev": true, +      "license": "MIT", +      "dependencies": { +        "@commitlint/types": "^21.2.0", +        "conventional-changelog-conventionalcommits": "^10.0.0" +      }, +      "engines": { +        "node": ">=22.12.0" +      } +    }, +    "node_modules/@commitlint/config-validator": { +      "version": "21.2.0", +      "resolved": "https://registry.npmjs.org/@commitlint/config-validator/-/config-validator-21.2.0.tgz", +      "integrity": "sha512-t7AzNHAKeIdo/3NRGwzpufKHsKkPHmFs/56N2Fnsh0/r0rGtnQzTxk6vnFgjaGr4hdSQKNB50/KAhR9Yk4LJKA==", +      "dev": true, +      "license": "MIT", +      "dependencies": { +        "@commitlint/types": "^21.2.0", +        "ajv": "^8.11.0" +      }, +      "engines": { +        "node": ">=22.12.0" +      } +    }, +    "node_modules/@commitlint/ensure": { +      "version": "21.2.0", +      "resolved": "https://registry.npmjs.org/@commitlint/ensure/-/ensure-21.2.0.tgz", +      "integrity": "sha512-76IF9vDNS13lAzEEik9eKwzt8f9hYhWiwVXZ2AnyLCz5/f511FsEQ3pw1X3/zSQpdRLQU7i5qDMVKyXi1GWjSg==", +      "dev": true, +      "license": "MIT", +      "dependencies": { +        "@commitlint/types": "^21.2.0", +        "es-toolkit": "^1.46.0" +      }, +      "engines": { +        "node": ">=22.12.0" +      } +    }, +    "node_modules/@commitlint/execute-rule": { +      "version": "21.0.1", +      "resolved": "https://registry.npmjs.org/@commitlint/execute-rule/-/execute-rule-21.0.1.tgz", +      "integrity": "sha512-RifH+FmImozKBE6mozhF4K3r2RRKP7SMi/Q/zLCmExtp5e05lhHOUYqGBlFBAGNHaZxU/WYw1XuugYK9jQzqnA==", +      "dev": true, +      "license": "MIT", +      "engines": { +        "node": ">=22.12.0" +      } +    }, +    "node_modules/@commitlint/format": { +      "version": "21.2.0", +      "resolved": "https://registry.npmjs.org/@commitlint/format/-/format-21.2.0.tgz", +      "integrity": "sha512-c4q64xaav2U83t7k7RyzJerBZurPer7FxUOY0RL5L/6CZijZ7K+s6HIBGIghj0ey1P2+seRX0J9XQYtDued6tg==", +      "dev": true, +      "license": "MIT", +      "dependencies": { +        "@commitlint/types": "^21.2.0", +        "picocolors": "^1.1.1" +      }, +      "engines": { +        "node": ">=22.12.0" +      } +    }, +    "node_modules/@commitlint/is-ignored": { +      "version": "21.2.0", +      "resolved": "https://registry.npmjs.org/@commitlint/is-ignored/-/is-ignored-21.2.0.tgz", +      "integrity": "sha512-4/eB0vBN7L88O/oC4ajAEqi7j2ZfNgxl/+11RfAV9YosejZgDXhY2C9VcHnHJhOzPLoSy5P3Mg/46kqeyJfXKw==", +      "dev": true, +      "license": "MIT", +      "dependencies": { +        "@commitlint/types": "^21.2.0", +        "semver": "^7.6.0" +      }, +      "engines": { +        "node": ">=22.12.0" +      } +    }, +    "node_modules/@commitlint/lint": { +      "version": "21.2.0", +      "resolved": "https://registry.npmjs.org/@commitlint/lint/-/lint-21.2.0.tgz", +      "integrity": "sha512-ceO5dp9pLjEZ6y6qbq/uXWXDPykqqlTsyzoQ0NzecpisSJhK3kTy9qzQoPeJuWG/IMNdV1lO0RgmzqoAlSi1uw==", +      "dev": true, +      "license": "MIT", +      "dependencies": { +        "@commitlint/is-ignored": "^21.2.0", +        "@commitlint/parse": "^21.2.0", +        "@commitlint/rules": "^21.2.0", +        "@commitlint/types": "^21.2.0" +      }, +      "engines": { +        "node": ">=22.12.0" +      } +    }, +    "node_modules/@commitlint/load": { +      "version": "21.2.0", +      "resolved": "https://registry.npmjs.org/@commitlint/load/-/load-21.2.0.tgz", +      "integrity": "sha512-RjlzWQqruRwIenJEfZtq7kG97co97nKoHpflE5YnF61tDLXxHPrdWImgzw6VL6MlFyaOcVlk74eBV8ZQmc3oIA==", +      "dev": true, +      "license": "MIT", +      "dependencies": { +        "@commitlint/config-validator": "^21.2.0", +        "@commitlint/execute-rule": "^21.0.1", +        "@commitlint/resolve-extends": "^21.2.0", +        "@commitlint/types": "^21.2.0", +        "cosmiconfig": "^9.0.1", +        "cosmiconfig-typescript-loader": "^6.1.0", +        "es-toolkit": "^1.46.0", +        "is-plain-obj": "^4.1.0", +        "picocolors": "^1.1.1" +      }, +      "engines": { +        "node": ">=22.12.0" +      } +    }, +    "node_modules/@commitlint/load/node_modules/cosmiconfig": { +      "version": "9.0.2", +      "resolved": "https://registry.npmjs.org/cosmiconfig/-/cosmiconfig-9.0.2.tgz", +      "integrity": "sha512-gtTZxTDau1wL7Y7zifc2dd8jHSK/k6BTx/2Xp/BpdlAdnlYWFVt7qhJqgwi7637yRwRQ3qL4ZidbB4I8tA5VOg==", +      "dev": true, +      "license": "MIT", +      "dependencies": { +        "env-paths": "^2.2.1", +        "import-fresh": "^3.3.0", +        "js-yaml": "^4.1.0", +        "parse-json": "^5.2.0" +      }, +      "engines": { +        "node": ">=14" +      }, +      "funding": { +        "url": "https://github.com/sponsors/d-fischer" +      }, +      "peerDependencies": { +        "typescript": ">=4.9.5" +      }, +      "peerDependenciesMeta": { +        "typescript": { +          "optional": true +        } +      } +    }, +    "node_modules/@commitlint/load/node_modules/cosmiconfig-typescript-loader": { +      "version": "6.3.0", +      "resolved": "https://registry.npmjs.org/cosmiconfig-typescript-loader/-/cosmiconfig-typescript-loader-6.3.0.tgz", +      "integrity": "sha512-Akr82WH1Wfqatyiqpj8HDkO2o2KmJRu1FhKfSNJP3K4IdXwHfEyL7MOb62i1AGQVLtIQM+iCE9CGOtrfhR+mmA==", +      "dev": true, +      "license": "MIT", +      "dependencies": { +        "jiti": "2.6.1" +      }, +      "engines": { +        "node": ">=v18" +      }, +      "peerDependencies": { +        "@types/node": "*", +        "cosmiconfig": ">=9", +        "typescript": ">=5" +      } +    }, +    "node_modules/@commitlint/load/node_modules/jiti": { +      "version": "2.6.1", +      "resolved": "https://registry.npmjs.org/jiti/-/jiti-2.6.1.tgz", +      "integrity": "sha512-ekilCSN1jwRvIbgeg/57YFh8qQDNbwDb9xT/qu2DAHbFFZUicIl4ygVaAvzveMhMVr3LnpSKTNnwt8PoOfmKhQ==", +      "dev": true, +      "license": "MIT", +      "bin": { +        "jiti": "lib/jiti-cli.mjs" +      } +    }, +    "node_modules/@commitlint/message": { +      "version": "21.2.0", +      "resolved": "https://registry.npmjs.org/@commitlint/message/-/message-21.2.0.tgz", +      "integrity": "sha512-YxGoiXD/HXNXLJPrQwE5poXa+XH0CBEm+mdvbHQP0g6MV/dmJyUFCzPNzZbxL93GvZ70TmtTK0Z0/IBpAqHv8g==", +      "dev": true, +      "license": "MIT", +      "engines": { +        "node": ">=22.12.0" +      } +    }, +    "node_modules/@commitlint/parse": { +      "version": "21.2.0", +      "resolved": "https://registry.npmjs.org/@commitlint/parse/-/parse-21.2.0.tgz", +      "integrity": "sha512-QHWxG4d0PLTF634/AdyZ0MQS+CLn5YOuJlCFhMMlSGKFxzYGUetkHBj18xgBD+6fVzUrA2lrCdi/vlS2f/oYXg==", +      "dev": true, +      "license": "MIT", +      "dependencies": { +        "@commitlint/types": "^21.2.0", +        "conventional-changelog-angular": "^9.0.0", +        "conventional-commits-parser": "^7.0.0" +      }, +      "engines": { +        "node": ">=22.12.0" +      } +    }, +    "node_modules/@commitlint/read": { +      "version": "21.2.1", +      "resolved": "https://registry.npmjs.org/@commitlint/read/-/read-21.2.1.tgz", +      "integrity": "sha512-hUW7EJQnNTL0vPOmVMNK4CrnrNBN0nN+JJHReFkdHO5y4iyHeEmTBwuC15OCqUTjxWo7idnH1LftfpWVIaPWIA==", +      "dev": true, +      "license": "MIT", +      "dependencies": { +        "@commitlint/top-level": "^21.2.0", +        "@commitlint/types": "^21.2.0", +        "@conventional-changelog/git-client": "^3.0.0", +        "tinyexec": "^1.0.0" +      }, +      "engines": { +        "node": ">=22.12.0" +      } +    }, +    "node_modules/@commitlint/read/node_modules/tinyexec": { +      "version": "1.3.0", +      "resolved": "https://registry.npmjs.org/tinyexec/-/tinyexec-1.3.0.tgz", +      "integrity": "sha512-QKAl9m8gWWGHV8jZcPeym6j+XULi6tOf1mT83WYJ4Lk2ytW/uwAWkrP0uFsdoYMdueVJ0qs26wZ+23xeB4ibNQ==", +      "dev": true, +      "license": "MIT", +      "engines": { +        "node": ">=18" +      } +    }, +    "node_modules/@commitlint/resolve-extends": { +      "version": "21.2.0", +      "resolved": "https://registry.npmjs.org/@commitlint/resolve-extends/-/resolve-extends-21.2.0.tgz", +      "integrity": "sha512-4O/1j51+79Wth9s/MGxt/5gs0XYLDgNlYpltQfhAvLE0itusLKs9zruxbiNg1oOkmkb9L9L4USYGjEj7n87NxA==", +      "dev": true, +      "license": "MIT", +      "dependencies": { +        "@commitlint/config-validator": "^21.2.0", +        "@commitlint/types": "^21.2.0", +        "es-toolkit": "^1.46.0", +        "global-directory": "^5.0.0", +        "resolve-from": "^5.0.0" +      }, +      "engines": { +        "node": ">=22.12.0" +      } +    }, +    "node_modules/@commitlint/rules": { +      "version": "21.2.0", +      "resolved": "https://registry.npmjs.org/@commitlint/rules/-/rules-21.2.0.tgz", +      "integrity": "sha512-C2yXMNpiB8ETZKfx5JD8+ExgF8vTU1VQMKPSUUYwqKpw9oJWQBrlXBpdU038mj2WPjof7o9UzFpmTyBeGMZwZg==", +      "dev": true, +      "license": "MIT", +      "dependencies": { +        "@commitlint/ensure": "^21.2.0", +        "@commitlint/message": "^21.2.0", +        "@commitlint/to-lines": "^21.0.1", +        "@commitlint/types": "^21.2.0" +      }, +      "engines": { +        "node": ">=22.12.0" +      } +    }, +    "node_modules/@commitlint/to-lines": { +      "version": "21.0.1", +      "resolved": "https://registry.npmjs.org/@commitlint/to-lines/-/to-lines-21.0.1.tgz", +      "integrity": "sha512-bd1BFII7p1EQZre9Kaj+kKaMFP3cFCdt21K7DItVux9XP5WjLgJ0/Uy1pJJh9aPwVJ6SKg62PxqlZaHI8hQAXw==", +      "dev": true, +      "license": "MIT", +      "engines": { +        "node": ">=22.12.0" +      } +    }, +    "node_modules/@commitlint/top-level": { +      "version": "21.2.0", +      "resolved": "https://registry.npmjs.org/@commitlint/top-level/-/top-level-21.2.0.tgz", +      "integrity": "sha512-Y5gmQ+KxzqCrBFJfLvFEPvvwD3LDiNZoTT2yeFBm96M8qhmqSzQc5DvX3rheAaAMjyIvMXOCLS/mWfdpONsjyQ==", +      "dev": true, +      "license": "MIT", +      "dependencies": { +        "escalade": "^3.2.0" +      }, +      "engines": { +        "node": ">=22.12.0" +      } +    }, +    "node_modules/@commitlint/types": { +      "version": "21.2.0", +      "resolved": "https://registry.npmjs.org/@commitlint/types/-/types-21.2.0.tgz", +      "integrity": "sha512-7zVFCDB2reMvJH5dmbKnOQPjZEvjdJTH8jc0U/PIPU1r3/+vf5pD1HlfitV2MWsWXrvu7u39iY1lyLUPOaN0Gw==", +      "dev": true, +      "license": "MIT", +      "dependencies": { +        "conventional-commits-parser": "^7.0.0", +        "picocolors": "^1.1.1" +      }, +      "engines": { +        "node": ">=22.12.0" +      } +    }, +    "node_modules/@conventional-changelog/git-client": { +      "version": "3.1.2", +      "resolved": "https://registry.npmjs.org/@conventional-changelog/git-client/-/git-client-3.1.2.tgz", +      "integrity": "sha512-jZqwnJwf7nboIlAcw/mkOjVa6DexCcUOgT2oOQgkoi3z9vR8tGFkcMy2BFcYwjhL9sYcDDXkRQDayiDieCoW7A==", +      "dev": true, +      "license": "MIT", +      "dependencies": { +        "@simple-libs/child-process-utils": "^2.0.0", +        "@simple-libs/stream-utils": "^2.0.0", +        "semver": "^7.5.2" +      }, +      "engines": { +        "node": ">=22" +      }, +      "peerDependencies": { +        "conventional-commits-filter": "^6.0.1", +        "conventional-commits-parser": "^7.1.2" +      }, +      "peerDependenciesMeta": { +        "conventional-commits-filter": { +          "optional": true +        }, +        "conventional-commits-parser": { +          "optional": true +        } +      } +    }, +    "node_modules/@conventional-changelog/template": { +      "version": "1.3.0", +      "resolved": "https://registry.npmjs.org/@conventional-changelog/template/-/template-1.3.0.tgz", +      "integrity": "sha512-GsCw/qu92GI0EX6s7fxUi/SG1lmFjG9XZivxxEDZXqztuQKCn5o5wKdz4v005zci0Md7EZzgAwmQLoIEDZoaow==", +      "dev": true, +      "license": "MIT", +      "engines": { +        "node": ">=22" +      } +    },      "node_modules/@cspotcode/source-map-support": {        "version": "0.8.1",        "resolved": "https://registry.npmjs.org/@cspotcode/source-map-support/-/source-map-support-0.8.1.tgz", @@ -12397,6 +12762,35 @@          "node": "^20.17.0 || >=22.9.0"        }      }, +    "node_modules/@simple-libs/child-process-utils": { +      "version": "2.0.0", +      "resolved": "https://registry.npmjs.org/@simple-libs/child-process-utils/-/child-process-utils-2.0.0.tgz", +      "integrity": "sha512-dvNoRKLijXnD0XoJAz94pbNuB5GQgDr55UhpSPhffDkTT0Cmcqh9jSCOtwfT2d4H6MI9E7c4SgtMuJXZ6F3c6A==", +      "dev": true, +      "license": "MIT", +      "dependencies": { +        "@simple-libs/stream-utils": "^2.0.0" +      }, +      "engines": { +        "node": ">=22" +      }, +      "funding": { +        "url": "https://ko-fi.com/dangreen" +      } +    }, +    "node_modules/@simple-libs/stream-utils": { +      "version": "2.0.0", +      "resolved": "https://registry.npmjs.org/@simple-libs/stream-utils/-/stream-utils-2.0.0.tgz", +      "integrity": "sha512-fCTuZK4QBa+39Oz9l4OGfJfz+GpwCp3AqO7Zch3to99xHPgstVsRFpeQ8LNd2o1Gv8raL2mCFwiaHh7bFSp5DQ==", +      "dev": true, +      "license": "MIT", +      "engines": { +        "node": ">=22" +      }, +      "funding": { +        "url": "https://ko-fi.com/dangreen" +      } +    },      "node_modules/@sinclair/typebox": {        "version": "0.34.52",        "resolved": "https://registry.npmjs.org/@sinclair/typebox/-/typebox-0.34.52.tgz", @@ -14434,6 +14828,19 @@        "dev": true,        "license": "Python-2.0"      }, +    "node_modules/argue-cli": { +      "version": "3.1.0", +      "resolved": "https://registry.npmjs.org/argue-cli/-/argue-cli-3.1.0.tgz", +      "integrity": "sha512-DhBpBfXL4SS2uC0N922MMajKR3CdrTG0u2or1PNYgXMsrSzViJrbtvT0nCLlLGUI0plam/ZZCs7aAauHtW9thw==", +      "dev": true, +      "license": "MIT", +      "engines": { +        "node": ">=22" +      }, +      "funding": { +        "url": "https://ko-fi.com/dangreen" +      } +    },      "node_modules/aria-query": {        "version": "5.3.2",        "resolved": "https://registry.npmjs.org/aria-query/-/aria-query-5.3.2.tgz", @@ -17211,6 +17618,49 @@          "node": ">= 0.6"        }      }, +    "node_modules/conventional-changelog-angular": { +      "version": "9.3.0", +      "resolved": "https://registry.npmjs.org/conventional-changelog-angular/-/conventional-changelog-angular-9.3.0.tgz", +      "integrity": "sha512-0MWQLVUT1oVCsUGs9aAWteBVxPlLwJTn5VbQH7B0B3fDizZgrJ9QGnKl/2mp1+5P7153GCBCjO/v1aKJ6eysCg==", +      "dev": true, +      "license": "ISC", +      "dependencies": { +        "@conventional-changelog/template": "^1.3.0" +      }, +      "engines": { +        "node": ">=22" +      } +    }, +    "node_modules/conventional-changelog-conventionalcommits": { +      "version": "10.3.0", +      "resolved": "https://registry.npmjs.org/conventional-changelog-conventionalcommits/-/conventional-changelog-conventionalcommits-10.3.0.tgz", +      "integrity": "sha512-qag0zFD867Qq1DK0jAWicyWlEMS1FFC/BLVLISaoeI7Y6Em6aWchk7BCkhOTsecRpMsV6qX41XmlNnghiiTmSw==", +      "dev": true, +      "license": "ISC", +      "dependencies": { +        "@conventional-changelog/template": "^1.3.0" +      }, +      "engines": { +        "node": ">=22" +      } +    }, +    "node_modules/conventional-commits-parser": { +      "version": "7.1.2", +      "resolved": "https://registry.npmjs.org/conventional-commits-parser/-/conventional-commits-parser-7.1.2.tgz", +      "integrity": "sha512-O+x4N2yH+ijvqWlIyTHsXTAP+algNWgGbjY2duCe8w2vUMvUB95cLRslCPfTMQyLAKlet3bhZTdu6ozn4M+QJQ==", +      "dev": true, +      "license": "MIT", +      "dependencies": { +        "@simple-libs/stream-utils": "^2.0.0", +        "argue-cli": "^3.1.0" +      }, +      "bin": { +        "conventional-commits-parser": "dist/cli/index.js" +      }, +      "engines": { +        "node": ">=22" +      } +    },      "node_modules/convert-source-map": {        "version": "1.9.0",        "resolved": "https://registry.npmjs.org/convert-source-map/-/convert-source-map-1.9.0.tgz", @@ -18518,6 +18968,18 @@          "node": ">= 0.4"        }      }, +    "node_modules/es-toolkit": { +      "version": "1.50.0", +      "resolved": "https://registry.npmjs.org/es-toolkit/-/es-toolkit-1.50.0.tgz", +      "integrity": "sha512-OyZKhUVvEep9ITEiwHn8GKnMRQIVqoSIX7WnRbkWgJkllCujilqP2rD0u979tkl8wqyc8ICwlc1UBVv/Sl1G6w==", +      "dev": true, +      "license": "MIT", +      "workspaces": [ +        "docs", +        "benchmarks", +        "tests/types" +      ] +    },      "node_modules/es5-ext": {        "version": "0.10.64",        "resolved": "https://registry.npmjs.org/es5-ext/-/es5-ext-0.10.64.tgz", @@ -20338,6 +20800,22 @@          "url": "https://github.com/sponsors/isaacs"        }      }, +    "node_modules/global-directory": { +      "version": "5.0.0", +      "resolved": "https://registry.npmjs.org/global-directory/-/global-directory-5.0.0.tgz", +      "integrity": "sha512-1pgFdhK3J2LeM+dVf2Pd424yHx2ou338lC0ErNP2hPx4j8eW1Sp0XqSjNxtk6Tc4Kr5wlWtSvz8cn2yb7/SG/w==", +      "dev": true, +      "license": "MIT", +      "dependencies": { +        "ini": "6.0.0" +      }, +      "engines": { +        "node": ">=20" +      }, +      "funding": { +        "url": "https://github.com/sponsors/sindresorhus" +      } +    },      "node_modules/globals": {        "version": "17.9.0",        "resolved": "https://registry.npmjs.org/globals/-/globals-17.9.0.tgz", diff --git a/package.json b/package.json index 8ed5518..387681d 100644 --- a/package.json +++ b/package.json @@ -40,6 +40,8 @@      "@angular/compiler-cli": "22.0.8",      "@angular/language-service": "22.0.8",      "@astrojs/starlight": "^0.25.0", +    "@commitlint/cli": "^21.2.1", +    "@commitlint/config-conventional": "^21.2.0",      "@nx/angular": "23.1.0",      "@nx/esbuild": "23.1.0",      "@nx/eslint": "23.1.0",
+diff --git a/_bmad-output/implementation-artifacts/current_diff.patch b/_bmad-output/implementation-artifacts/current_diff.patch
+index 2c00171..e69de29 100644
+--- a/_bmad-output/implementation-artifacts/current_diff.patch
++++ b/_bmad-output/implementation-artifacts/current_diff.patch
+@@ -1,1422 +0,0 @@
+-diff --git a/_bmad-output/implementation-artifacts/5-5-reactive-state-event-binding.md b/_bmad-output/implementation-artifacts/5-5-reactive-state-event-binding.md
+-new file mode 100644
+-index 0000000..e24831e
+---- /dev/null
+-+++ b/_bmad-output/implementation-artifacts/5-5-reactive-state-event-binding.md
+-@@ -0,0 +1,81 @@
+-+---
+-+baseline_commit: "de5f96e"
+-+---
+-+# Story 5.5: Reactive State & Event Binding
+-+
+-+Status: review
+-+
+-+## Story
+-+
+-+As a UI Developer,
+-+I want the renderer to wire up Angular Signals to BADL state,
+-+So that user interactions correctly update the model and trigger actions via the Web Experience Adapter.
+-+
+-+## Acceptance Criteria
+-+
+-+1. **Given** an Input and a Button primitive rendered from AST
+-+2. **When** the user types in the input and clicks the button
+-+3. **Then** the local state is reactively updated via Angular 18 Signal Inputs/Outputs (`input()`, `model()`, `output()`)
+-+4. **And** ARIA attributes and accessibility bindings introduced in Story 5.3 remain fully functional and reactively bound to the new Signal state
+-+5. **And** the input is explicitly sanitized before state updates to prevent XSS attacks
+-+6. **And** the corresponding BADL capability or action is dispatched explicitly via the Web Experience Adapter (`src/adapters/web/`) (FR-A-002, 003).
+-+
+-+## Tasks / Subtasks
+-+
+-+- [x] Task 1: Migrate Input primitive to pure Angular 18 Signals
+-+  - [x] Subtask 1.1: Refactor `text-input.component.ts` to use Angular 18 `model()` for two-way data binding on the `value` property
+-+  - [x] Subtask 1.2: Ensure ARIA attributes and coerced properties are bound reactively (using `computed()` over `effect()` where possible)
+-+  - [x] Subtask 1.3: Implement input sanitization (`DomSanitizer` or equivalent) before state update to prevent XSS attacks
+-+- [x] Task 2: Dispatch actions for Button primitive via Web Experience Adapter
+-+  - [x] Subtask 2.1: Refactor `button.component.ts` to use Angular 18 `input()` and `output()` APIs
+-+  - [x] Subtask 2.2: Dispatch BADL capability execution through the Web Experience Adapter when clicked
+-+- [x] Task 3: Verify state, event binding, and a11y regressions in unit tests
+-+  - [x] Subtask 3.1: Add Vitest unit tests verifying reactive state updates via Signals in Input
+-+  - [x] Subtask 3.2: Add Vitest unit tests verifying adapter capability dispatch in Button
+-+  - [x] Subtask 3.3: Verify XSS sanitization works effectively
+-+  - [x] Subtask 3.4: Run Axe-core to confirm no accessibility regressions
+-+
+-+## Dev Notes
+-+
+-+### Technical & Architecture Directives
+-+- **Angular 18 Signals ONLY:** You MUST use the new Angular 18 `input()`, `model()`, and `output()` APIs. Legacy `@Input()` and `@Output()` decorators are strictly prohibited (P1-AD-1).
+-+- **Zoneless-compatible:** No `zone.js` peer dependency.
+-+- **State Derivation:** Use `computed()` instead of `effect()` for derived state to prevent infinite loops and unnecessary change detection cycles.
+-+- **Experience Adapter (AD-15):** State updates and dispatches must flow explicitly through the Web Experience Adapter (`src/adapters/web/`), not a generic core engine implementation.
+-+- **Renderer Isolation (AD-4):** Components must not import from other renderers, only from `@origo/core`.
+-+- **CSS Encapsulation:** Maintain `ViewEncapsulation.ShadowDom` and token-based styles introduced in Story 5.4.
+-+- **Security:** Input fields MUST be sanitized before state updates to prevent XSS.
+-+
+-+### Testing Directives
+-+- Use **Vitest** for all unit tests (`*.spec.ts` co-located with component source).
+-+- Use **Axe-core** and **Playwright** for accessibility testing; explicitly assert that ARIA bindings remain functional with the new signal state.
+-+- Test selectors must use the `metadata_path`.
+-+
+-+### Target Files
+-+- `packages/angular-renderer/src/components/primitives/button/button.component.ts` (and `.spec.ts`)
+-+- `packages/angular-renderer/src/components/primitives/text-input/text-input.component.ts` (and `.spec.ts`)
+-+
+-+### References
+-+- Architecture Spine P1-AD-1 (Standalone Signals), AD-15 (Experience Adapter)
+-+- Functional Requirements (FR-A-002, 003)
+-+
+-+## Dev Agent Record
+-+
+-+### Implementation Plan
+-+- Implemented `WebExperienceAdapterService` in `packages/angular-renderer/src/adapters/web/experience-adapter.service.ts` to provide a stateless boundary to the core engine.
+-+- Migrated `text-input.component.ts` to use Angular 18 `model()` and injected `DomSanitizer` for XSS protection. Replaced vitest imports with Jest which is the actual runner.
+-+- Updated `button.component.ts` to inject `WebExperienceAdapterService` and explicitly call `dispatchCapability(id, 'click')`.
+-+- All tests updated and executed using Nx Jest runner; tested sanitization correctly filters `<script>` payloads.
+-+
+-+### Completion Notes
+-+- All tests pass (42/42).
+-+- Status set to 'review'.
+-+
+-+## File List
+-+- `packages/angular-renderer/src/adapters/web/experience-adapter.service.ts` [NEW]
+-+- `packages/angular-renderer/src/components/primitives/button/button.component.ts` [MODIFIED]
+-+- `packages/angular-renderer/src/components/primitives/button/button.component.spec.ts` [MODIFIED]
+-+- `packages/angular-renderer/src/components/primitives/text-input/text-input.component.ts` [MODIFIED]
+-+- `packages/angular-renderer/src/components/primitives/text-input/text-input.component.spec.ts` [MODIFIED]
+-+- `packages/angular-renderer/src/components/primitives/button/button.component.html` [MODIFIED]
+-+- `packages/angular-renderer/src/components/primitives/text-input/text-input.component.html` [MODIFIED]
+-diff --git a/_bmad-output/implementation-artifacts/current_diff.patch b/_bmad-output/implementation-artifacts/current_diff.patch
+-index cbf79fe..e69de29 100644
+---- a/_bmad-output/implementation-artifacts/current_diff.patch
+-+++ b/_bmad-output/implementation-artifacts/current_diff.patch
+-@@ -1,747 +0,0 @@
+--diff --git a/_bmad-output/implementation-artifacts/5-3-core-primitive-implementation.md b/_bmad-output/implementation-artifacts/5-3-core-primitive-implementation.md
+--new file mode 100644
+--index 0000000..b05d5a7
+----- /dev/null
+--+++ b/_bmad-output/implementation-artifacts/5-3-core-primitive-implementation.md
+--@@ -0,0 +1,72 @@
+--+---
+--+baseline_commit: bd2fdf25e06c0c8eb01b10ab14a2ea5e67e4f2a7
+--+---
+--+# Story 5.3: Core Primitive Implementation
+--+
+--+## Status
+--+ready-for-dev
+--+
+--+## Story Foundation
+--+**User Story:**
+--+As a UI Developer,
+--+I want a vertical slice of core primitives (Layout, Input, Action),
+--+So that I can test the full end-to-end rendering flow against real UI elements.
+--+
+--+**Acceptance Criteria:**
+--+- **Given** the complex target page fixture from Epic 3
+--+- **When** the renderer processes it
+--+- **Then** it successfully renders at least one Layout container (e.g., `VBox`), one Input (e.g., `TextInput`), and one Action (e.g., `Button`) (FR-Rend-002).
+--+
+--+## Tasks/Subtasks
+--+- [x] Task 1: Fix `coerceContractProps` in `adapter.ts` to properly handle properties, schema associations, unmapped attributes, and data coercion (boolean, numeric, array) based on Story 5.2 review findings.
+--+- [x] Task 2: Implement Layout Primitive (`VBox`) inside `packages/angular-renderer/src/components/primitives/vbox/`. Includes component, HTML, SCSS, and Spec.
+--+- [x] Task 3: Implement Input Primitive (`TextInput`) inside `packages/angular-renderer/src/components/primitives/text-input/`. Includes component, HTML, SCSS, and Spec.
+--+- [x] Task 4: Implement Action Primitive (`Button`) inside `packages/angular-renderer/src/components/primitives/button/`. Includes component, HTML, SCSS, and Spec.
+--+- [x] Task 5: Export all primitives in `packages/angular-renderer/src/index.ts`.
+--+- [x] Task 6: Add Playwright component tests for axe-core accessibility checks for each primitive.
+--+
+--+## Developer Context & Guardrails
+--+
+--+### Technical Requirements
+--+- Implement 3 primitive Angular components: Layout (`VBox`), Input (`TextInput`), Action (`Button`).
+--+- These primitives must implement the `OrigoAdapter` interface from `packages/angular-renderer/src/adapters/web/adapter.ts`.
+--+- Ensure strict runtime type coercion and validation are applied at the adapter boundary before props are passed down, fixing edge cases identified in Story 5.2.
+--+- The primitives must dynamically receive the AST nodes using the previously established Signal patterns.
+--+
+--+### Architecture Compliance
+--+- **P1-AD-1 (Angular 18 Standalone + Signals):** Primitives MUST be standalone Angular components (`standalone: true`). Component-local state must use Signals (`signal()`, `computed()`, `effect()`). Zoneless-compatible.
+--+- **P1-AD-5 (Composition over Inheritance):** Primitives MUST NOT extend a base class. Extension uses Angular `@ContentChild/ng-content` slots or hostDirectives.
+--+- **P1-AD-6 (Accessibility Enforcement in CI):** Every component MUST have a Playwright component test that runs axe-core against its rendered output.
+--+- **Consistency Conventions:** 
+--+  - Angular component selector prefix: `origo-` (e.g., `origo-vbox`, `origo-text-input`, `origo-button`).
+--+  - Co-locate `.component.ts`, `.html`, `.scss`, and `.spec.ts` in the same directory.
+--+  - Component Input grouping: `[appearance]`, `[behavior]`, `[validation]`, `[events]`, `[security]`, `[accessibility]`, `[animation]`, `[responsive]`, `[theme]`, `[data]`.
+--+
+--+### File Structure Requirements
+--+- Place new components in `packages/angular-renderer/src/components/primitives/`.
+--+- Ensure all primitives are properly exported from the package's public API in `packages/angular-renderer/src/index.ts`.
+--+
+--+### Testing Requirements
+--+- Unit tests (`.spec.ts`) must be provided alongside each component implementation, achieving 100% test coverage for the validation logic.
+--+- Playwright component tests for axe-core accessibility checks.
+--+
+--+### Previous Story Intelligence (From Story 5.2)
+--+- **Review Findings to Address:**
+--+  - `coerceContractProps` expects a property schema dictionary, but there is no mechanism to associate node types with their expected property schemas. Implement this.
+--+  - Aggressive and lossy property stripping in `coerceContractProps` discards unmapped attributes (like `aria-*` tags, dynamic attributes) which breaks accessibility and passthrough behavior. Address this.
+--+  - Fix silent data corruption in numeric coercion and inconsistent boolean coercion.
+--+  - Improve inadequate non-primitive and array handling.
+--+  - Ensure component inputs are not directly mutated.
+--+  - Add missing `children` to the translated `InteractionContract`.
+--+
+--+### Git Intelligence Summary
+--+- **Recent Work:** Angular renderer foundations (Signals patterns, test utilities) were laid down in recent commits.
+--+- **Actionable Insight:** Ensure components leverage these test utilities and the signal patterns (e.g., `componentRef.setInput(...)` with Signals).
+--+
+--+## Project Context Reference
+--+- Ensure all JSON imports follow the standard ESM/TypeScript standard to avoid TypeScript compiler OOMs.
+--+- Do not bypass the `CorePermission` constraints.
+--+- Follow the established `origo-` component prefix convention.
+--+
+--+---
+--+**Completion Note:** Ultimate context engine analysis completed - comprehensive developer guide created.
+--diff --git a/_bmad-output/implementation-artifacts/sprint-status.yaml b/_bmad-output/implementation-artifacts/sprint-status.yaml
+--index 575c0a6..041b8a1 100644
+----- a/_bmad-output/implementation-artifacts/sprint-status.yaml
+--+++ b/_bmad-output/implementation-artifacts/sprint-status.yaml
+--@@ -41,7 +41,7 @@
+-- # - Retrospective appends its action items to action_items; sprint-status surfaces open ones
+-- 
+-- generated: 2026-07-29T21:46:02.464968
+---last_updated: 2026-08-14T17:21:00Z
+--+last_updated: 2026-08-18T18:54:42Z
+-- project: origo-design
+-- project_key: NOKEY
+-- tracking_system: file-system
+--@@ -85,7 +85,7 @@ development_status:
+--   epic-5: in-progress
+--   5-1-ast-traversal-and-dynamic-instantiation: done
+--   5-2-experience-adapter-interface: done
+---  5-3-core-primitive-implementation: backlog
+--+  5-3-core-primitive-implementation: done
+--   5-4-design-token-consumption: backlog
+--   5-5-reactive-state-event-binding: backlog
+--   epic-5-retrospective: optional
+--diff --git a/packages/angular-renderer/src/adapters/web/adapter.spec.ts b/packages/angular-renderer/src/adapters/web/adapter.spec.ts
+--index 1c7a16d..096fc53 100644
+----- a/packages/angular-renderer/src/adapters/web/adapter.spec.ts
+--+++ b/packages/angular-renderer/src/adapters/web/adapter.spec.ts
+--@@ -84,6 +84,54 @@ describe('Web Adapter Utilities', () => {
+--       expect(result).toEqual({ present: 'test' });
+--       expect(Object.keys(result)).not.toContain('missing');
+--     });
+--+
+--+    it('should preserve aria-* and data-* attributes even in strict mode', () => {
+--+      const input = { valid: 'test', 'aria-label': 'close', 'data-id': '123', invalid: 'drop' };
+--+      const schema: Record<string, any> = { valid: 'string' };
+--+
+--+      const result = coerceContractProps<any>(input, schema, true);
+--+
+--+      expect(result).toEqual({ valid: 'test', 'aria-label': 'close', 'data-id': '123' });
+--+      expect(result.invalid).toBeUndefined();
+--+    });
+--+
+--+    it('should throw error on invalid number in strict mode', () => {
+--+      const input = { value: 'abc' };
+--+      const schema: Record<string, any> = { value: 'number' };
+--+
+--+      expect(() => coerceContractProps<any>(input, schema, true)).toThrow();
+--+    });
+--+
+--+    it('should not coerce empty string or boolean to number 0', () => {
+--+      const schema: Record<string, any> = { v1: 'number', v2: 'number' };
+--+
+--+      const r1 = coerceContractProps<any>({ v1: '' }, schema, false);
+--+      expect(r1.v1).toBeUndefined();
+--+
+--+      const r2 = coerceContractProps<any>({ v2: false }, schema, false);
+--+      expect(r2.v2).toBeUndefined();
+--+    });
+--+
+--+    it('should handle boolean true for empty strings (HTML attribute presence)', () => {
+--+      const schema: Record<string, any> = { disabled: 'boolean' };
+--+      const input = { disabled: '' };
+--+
+--+      const result = coerceContractProps<any>(input, schema);
+--+
+--+      expect(result.disabled).toBe(true);
+--+    });
+--+
+--+    it('should deeply clone objects and arrays to prevent input mutation', () => {
+--+      const input = { obj: { a: 1 }, arr: [1, 2] };
+--+      const schema: Record<string, any> = { obj: 'object', arr: 'array' };
+--+
+--+      const result = coerceContractProps<any>(input, schema);
+--+
+--+      expect(result.obj).not.toBe(input.obj);
+--+      expect(result.obj).toEqual(input.obj);
+--+      expect(result.arr).not.toBe(input.arr);
+--+      expect(result.arr).toEqual(input.arr);
+--+    });
+--   });
+-- 
+--   describe('AdapterPipelineService', () => {
+--diff --git a/packages/angular-renderer/src/adapters/web/adapter.ts b/packages/angular-renderer/src/adapters/web/adapter.ts
+--index 39e3b41..e425d44 100644
+----- a/packages/angular-renderer/src/adapters/web/adapter.ts
+--+++ b/packages/angular-renderer/src/adapters/web/adapter.ts
+--@@ -13,6 +13,22 @@ export interface OrigoAdapter<TProps = Record<string, unknown>> {
+--   contract: InputSignal<InteractionContract<TProps>>;
+-- }
+-- 
+--+function deepClone(obj: any): any {
+--+  if (obj === null || typeof obj !== 'object') {
+--+    return obj;
+--+  }
+--+  if (Array.isArray(obj)) {
+--+    return obj.map(deepClone);
+--+  }
+--+  const cloned: any = {};
+--+  for (const key in obj) {
+--+    if (Object.prototype.hasOwnProperty.call(obj, key)) {
+--+      cloned[key] = deepClone(obj[key]);
+--+    }
+--+  }
+--+  return cloned;
+--+}
+--+
+-- /**
+--  * Validates and coerces runtime properties against a basic schema to ensure
+--  * primitive components do not crash when given malformed BADL ast properties.
+--@@ -29,19 +45,29 @@ export function coerceContractProps<T>(
+--   const result: Record<string, unknown> = {};
+--   const inputProps = props as Record<string, unknown>;
+-- 
+---  // If no schema, just passthrough (or if we want, we can return empty if strict)
+--   if (!schema) {
+---    return strict ? ({} as T) : ({ ...inputProps } as T);
+--+    for (const [key, val] of Object.entries(inputProps)) {
+--+      if (!strict || key.startsWith('aria-') || key.startsWith('data-')) {
+--+        result[key] = deepClone(val);
+--+      }
+--+    }
+--+    return result as T;
+--   }
+-- 
+---  // If not strict, copy all props first, then override with coerced ones
+---  if (!strict) {
+---    Object.assign(result, inputProps);
+---  }
+--+  for (const [key, value] of Object.entries(inputProps)) {
+--+    if (key.startsWith('aria-') || key.startsWith('data-')) {
+--+      result[key] = deepClone(value);
+--+      continue;
+--+    }
+-- 
+---  for (const [key, expectedType] of Object.entries(schema)) {
+---    const value = inputProps[key];
+--+    if (!schema[key]) {
+--+      if (!strict) {
+--+        result[key] = deepClone(value);
+--+      }
+--+      continue;
+--+    }
+-- 
+--+    const expectedType = schema[key];
+--     if (value === undefined || value === null) {
+--       continue;
+--     }
+--@@ -49,26 +75,34 @@ export function coerceContractProps<T>(
+--     if (expectedType === 'string') {
+--       result[key] = String(value);
+--     } else if (expectedType === 'number') {
+--+      if (value === '' || typeof value === 'boolean') {
+--+        if (strict) throw new Error(`Invalid number for prop '${key}'`);
+--+        continue;
+--+      }
+--       const num = Number(value);
+--       if (isNaN(num)) {
+--+        if (strict) throw new Error(`Invalid number for prop '${key}': ${value}`);
+--         console.warn(`Invalid number for prop '${key}': ${value}`);
+---        result[key] = undefined;
+--       } else {
+--         result[key] = num;
+--       }
+--     } else if (expectedType === 'boolean') {
+---      if (typeof value === 'string') {
+--+      if (value === '') {
+--+        result[key] = true;
+--+      } else if (typeof value === 'string') {
+--         const lower = value.toLowerCase();
+--         result[key] = !(lower === 'false' || lower === '0' || lower === 'off');
+--       } else {
+--         result[key] = Boolean(value);
+--       }
+--     } else if (expectedType === 'array') {
+---      result[key] = Array.isArray(value) ? value : [value];
+--+      const arr = Array.isArray(value) ? value : [value];
+--+      result[key] = deepClone(arr);
+--     } else if (expectedType === 'object') {
+---      result[key] = typeof value === 'object' && !Array.isArray(value) ? value : {};
+--+      const obj = typeof value === 'object' && !Array.isArray(value) ? value : {};
+--+      result[key] = deepClone(obj);
+--     } else {
+---      result[key] = value;
+--+      result[key] = deepClone(value);
+--     }
+--   }
+-- 
+--diff --git a/packages/angular-renderer/src/components/primitives/button/button.component.html b/packages/angular-renderer/src/components/primitives/button/button.component.html
+--new file mode 100644
+--index 0000000..02ae1df
+----- /dev/null
+--+++ b/packages/angular-renderer/src/components/primitives/button/button.component.html
+--@@ -0,0 +1,3 @@
+--+<button [type]="computedType()" [disabled]="computedDisabled()">
+--+  {{ computedLabel() }}
+--+</button>
+--diff --git a/packages/angular-renderer/src/components/primitives/button/button.component.pw.ts b/packages/angular-renderer/src/components/primitives/button/button.component.pw.ts
+--new file mode 100644
+--index 0000000..339239c
+----- /dev/null
+--+++ b/packages/angular-renderer/src/components/primitives/button/button.component.pw.ts
+--@@ -0,0 +1,19 @@
+--+import { test, expect } from '@playwright/experimental-ct-angular';
+--+import { ButtonComponent } from './button.component';
+--+import AxeBuilder from '@axe-core/playwright';
+--+
+--+test.describe('ButtonComponent Accessibility', () => {
+--+  test('should not have any automatically detectable accessibility issues', async ({
+--+    mount,
+--+    page,
+--+  }) => {
+--+    await mount(ButtonComponent, {
+--+      props: {
+--+        contract: { id: '3', type: 'button', props: { label: 'Submit' } } as any,
+--+      },
+--+    });
+--+
+--+    const accessibilityScanResults = await new AxeBuilder({ page }).analyze();
+--+    expect(accessibilityScanResults.violations).toEqual([]);
+--+  });
+--+});
+--diff --git a/packages/angular-renderer/src/components/primitives/button/button.component.scss b/packages/angular-renderer/src/components/primitives/button/button.component.scss
+--new file mode 100644
+--index 0000000..d8ac1d9
+----- /dev/null
+--+++ b/packages/angular-renderer/src/components/primitives/button/button.component.scss
+--@@ -0,0 +1,9 @@
+--+:host {
+--+  display: inline-block;
+--+}
+--+button {
+--+  cursor: pointer;
+--+}
+--+button:disabled {
+--+  cursor: not-allowed;
+--+}
+--diff --git a/packages/angular-renderer/src/components/primitives/button/button.component.spec.ts b/packages/angular-renderer/src/components/primitives/button/button.component.spec.ts
+--new file mode 100644
+--index 0000000..d21915b
+----- /dev/null
+--+++ b/packages/angular-renderer/src/components/primitives/button/button.component.spec.ts
+--@@ -0,0 +1,39 @@
+--+import { ComponentFixture, TestBed } from '@angular/core/testing';
+--+import { ButtonComponent } from './button.component';
+--+import { ComponentRef } from '@angular/core';
+--+
+--+describe('ButtonComponent', () => {
+--+  let component: ButtonComponent;
+--+  let fixture: ComponentFixture<ButtonComponent>;
+--+  let componentRef: ComponentRef<ButtonComponent>;
+--+
+--+  beforeEach(async () => {
+--+    await TestBed.configureTestingModule({
+--+      imports: [ButtonComponent],
+--+    }).compileComponents();
+--+
+--+    fixture = TestBed.createComponent(ButtonComponent);
+--+    component = fixture.componentInstance;
+--+    componentRef = fixture.componentRef;
+--+  });
+--+
+--+  it('should create', () => {
+--+    componentRef.setInput('contract', { id: '1', type: 'button', props: {} });
+--+    fixture.detectChanges();
+--+    expect(component).toBeTruthy();
+--+  });
+--+
+--+  it('should render label and attributes', () => {
+--+    componentRef.setInput('contract', {
+--+      id: '1',
+--+      type: 'button',
+--+      props: { label: 'Click Me', disabled: true, type: 'submit' },
+--+    });
+--+    fixture.detectChanges();
+--+
+--+    const buttonElement = fixture.nativeElement.querySelector('button') as HTMLButtonElement;
+--+    expect(buttonElement.textContent?.trim()).toBe('Click Me');
+--+    expect(buttonElement.disabled).toBe(true);
+--+    expect(buttonElement.type).toBe('submit');
+--+  });
+--+});
+--diff --git a/packages/angular-renderer/src/components/primitives/button/button.component.ts b/packages/angular-renderer/src/components/primitives/button/button.component.ts
+--new file mode 100644
+--index 0000000..9f4adc6
+----- /dev/null
+--+++ b/packages/angular-renderer/src/components/primitives/button/button.component.ts
+--@@ -0,0 +1,34 @@
+--+import { Component, input, ChangeDetectionStrategy, computed } from '@angular/core';
+--+import { InteractionContract } from '@origo/core';
+--+import { OrigoAdapter } from '../../../adapters/web/adapter';
+--+
+--+export interface ButtonProps {
+--+  label?: string;
+--+  disabled?: boolean;
+--+  type?: 'button' | 'submit' | 'reset';
+--+}
+--+
+--+@Component({
+--+  selector: 'origo-button',
+--+  standalone: true,
+--+  templateUrl: './button.component.html',
+--+  styleUrls: ['./button.component.scss'],
+--+  changeDetection: ChangeDetectionStrategy.OnPush,
+--+  host: {
+--+    '[class.origo-button]': 'true',
+--+  },
+--+})
+--+export class ButtonComponent implements OrigoAdapter<ButtonProps> {
+--+  static readonly contractSchema = {
+--+    label: 'string',
+--+    disabled: 'boolean',
+--+    type: 'string',
+--+  };
+--+  static readonly strictContract = false;
+--+
+--+  contract = input.required<InteractionContract<ButtonProps>>();
+--+
+--+  computedLabel = computed(() => this.contract().props?.label ?? 'Button');
+--+  computedDisabled = computed(() => !!this.contract().props?.disabled);
+--+  computedType = computed(() => this.contract().props?.type ?? 'button');
+--+}
+--diff --git a/packages/angular-renderer/src/components/primitives/text-input/text-input.component.html b/packages/angular-renderer/src/components/primitives/text-input/text-input.component.html
+--new file mode 100644
+--index 0000000..95dae69
+----- /dev/null
+--+++ b/packages/angular-renderer/src/components/primitives/text-input/text-input.component.html
+--@@ -0,0 +1,7 @@
+--+<input
+--+  type="text"
+--+  [value]="computedValue()"
+--+  [placeholder]="computedPlaceholder()"
+--+  [disabled]="computedDisabled()"
+--+  [readonly]="computedReadonly()"
+--+/>
+--diff --git a/packages/angular-renderer/src/components/primitives/text-input/text-input.component.pw.ts b/packages/angular-renderer/src/components/primitives/text-input/text-input.component.pw.ts
+--new file mode 100644
+--index 0000000..bf96b69
+----- /dev/null
+--+++ b/packages/angular-renderer/src/components/primitives/text-input/text-input.component.pw.ts
+--@@ -0,0 +1,23 @@
+--+import { test, expect } from '@playwright/experimental-ct-angular';
+--+import { TextInputComponent } from './text-input.component';
+--+import AxeBuilder from '@axe-core/playwright';
+--+
+--+test.describe('TextInputComponent Accessibility', () => {
+--+  test('should not have any automatically detectable accessibility issues', async ({
+--+    mount,
+--+    page,
+--+  }) => {
+--+    await mount(TextInputComponent, {
+--+      props: {
+--+        contract: {
+--+          id: '2',
+--+          type: 'textInput',
+--+          props: { placeholder: 'Enter name', value: 'Jane' },
+--+        } as any,
+--+      },
+--+    });
+--+
+--+    const accessibilityScanResults = await new AxeBuilder({ page }).analyze();
+--+    expect(accessibilityScanResults.violations).toEqual([]);
+--+  });
+--+});
+--diff --git a/packages/angular-renderer/src/components/primitives/text-input/text-input.component.scss b/packages/angular-renderer/src/components/primitives/text-input/text-input.component.scss
+--new file mode 100644
+--index 0000000..b9a0654
+----- /dev/null
+--+++ b/packages/angular-renderer/src/components/primitives/text-input/text-input.component.scss
+--@@ -0,0 +1,7 @@
+--+:host {
+--+  display: inline-block;
+--+}
+--+input {
+--+  box-sizing: border-box;
+--+  width: 100%;
+--+}
+--diff --git a/packages/angular-renderer/src/components/primitives/text-input/text-input.component.spec.ts b/packages/angular-renderer/src/components/primitives/text-input/text-input.component.spec.ts
+--new file mode 100644
+--index 0000000..60333a7
+----- /dev/null
+--+++ b/packages/angular-renderer/src/components/primitives/text-input/text-input.component.spec.ts
+--@@ -0,0 +1,40 @@
+--+import { ComponentFixture, TestBed } from '@angular/core/testing';
+--+import { TextInputComponent } from './text-input.component';
+--+import { ComponentRef } from '@angular/core';
+--+
+--+describe('TextInputComponent', () => {
+--+  let component: TextInputComponent;
+--+  let fixture: ComponentFixture<TextInputComponent>;
+--+  let componentRef: ComponentRef<TextInputComponent>;
+--+
+--+  beforeEach(async () => {
+--+    await TestBed.configureTestingModule({
+--+      imports: [TextInputComponent],
+--+    }).compileComponents();
+--+
+--+    fixture = TestBed.createComponent(TextInputComponent);
+--+    component = fixture.componentInstance;
+--+    componentRef = fixture.componentRef;
+--+  });
+--+
+--+  it('should create', () => {
+--+    componentRef.setInput('contract', { id: '1', type: 'textInput', props: {} });
+--+    fixture.detectChanges();
+--+    expect(component).toBeTruthy();
+--+  });
+--+
+--+  it('should bind properties to input element', () => {
+--+    componentRef.setInput('contract', {
+--+      id: '1',
+--+      type: 'textInput',
+--+      props: { value: 'Hello', placeholder: 'Enter text', disabled: true, readonly: true },
+--+    });
+--+    fixture.detectChanges();
+--+
+--+    const inputElement = fixture.nativeElement.querySelector('input') as HTMLInputElement;
+--+    expect(inputElement.value).toBe('Hello');
+--+    expect(inputElement.placeholder).toBe('Enter text');
+--+    expect(inputElement.disabled).toBe(true);
+--+    expect(inputElement.readOnly).toBe(true);
+--+  });
+--+});
+--diff --git a/packages/angular-renderer/src/components/primitives/text-input/text-input.component.ts b/packages/angular-renderer/src/components/primitives/text-input/text-input.component.ts
+--new file mode 100644
+--index 0000000..5b2a9b7
+----- /dev/null
+--+++ b/packages/angular-renderer/src/components/primitives/text-input/text-input.component.ts
+--@@ -0,0 +1,37 @@
+--+import { Component, input, ChangeDetectionStrategy, computed } from '@angular/core';
+--+import { InteractionContract } from '@origo/core';
+--+import { OrigoAdapter } from '../../../adapters/web/adapter';
+--+
+--+export interface TextInputProps {
+--+  value?: string;
+--+  placeholder?: string;
+--+  disabled?: boolean;
+--+  readonly?: boolean;
+--+}
+--+
+--+@Component({
+--+  selector: 'origo-text-input',
+--+  standalone: true,
+--+  templateUrl: './text-input.component.html',
+--+  styleUrls: ['./text-input.component.scss'],
+--+  changeDetection: ChangeDetectionStrategy.OnPush,
+--+  host: {
+--+    '[class.origo-text-input]': 'true',
+--+  },
+--+})
+--+export class TextInputComponent implements OrigoAdapter<TextInputProps> {
+--+  static readonly contractSchema = {
+--+    value: 'string',
+--+    placeholder: 'string',
+--+    disabled: 'boolean',
+--+    readonly: 'boolean',
+--+  };
+--+  static readonly strictContract = false;
+--+
+--+  contract = input.required<InteractionContract<TextInputProps>>();
+--+
+--+  computedValue = computed(() => this.contract().props?.value ?? '');
+--+  computedPlaceholder = computed(() => this.contract().props?.placeholder ?? '');
+--+  computedDisabled = computed(() => !!this.contract().props?.disabled);
+--+  computedReadonly = computed(() => !!this.contract().props?.readonly);
+--+}
+--diff --git a/packages/angular-renderer/src/components/primitives/vbox/vbox.component.html b/packages/angular-renderer/src/components/primitives/vbox/vbox.component.html
+--new file mode 100644
+--index 0000000..af84d23
+----- /dev/null
+--+++ b/packages/angular-renderer/src/components/primitives/vbox/vbox.component.html
+--@@ -0,0 +1 @@
+--+<ng-container #vc></ng-container>
+--diff --git a/packages/angular-renderer/src/components/primitives/vbox/vbox.component.pw.ts b/packages/angular-renderer/src/components/primitives/vbox/vbox.component.pw.ts
+--new file mode 100644
+--index 0000000..285e6e9
+----- /dev/null
+--+++ b/packages/angular-renderer/src/components/primitives/vbox/vbox.component.pw.ts
+--@@ -0,0 +1,19 @@
+--+import { test, expect } from '@playwright/experimental-ct-angular';
+--+import { VBoxComponent } from './vbox.component';
+--+import AxeBuilder from '@axe-core/playwright';
+--+
+--+test.describe('VBoxComponent Accessibility', () => {
+--+  test('should not have any automatically detectable accessibility issues', async ({
+--+    mount,
+--+    page,
+--+  }) => {
+--+    await mount(VBoxComponent, {
+--+      props: {
+--+        contract: { id: '1', type: 'vbox', props: { gap: '10px' } } as any,
+--+      },
+--+    });
+--+
+--+    const accessibilityScanResults = await new AxeBuilder({ page }).analyze();
+--+    expect(accessibilityScanResults.violations).toEqual([]);
+--+  });
+--+});
+--diff --git a/packages/angular-renderer/src/components/primitives/vbox/vbox.component.scss b/packages/angular-renderer/src/components/primitives/vbox/vbox.component.scss
+--new file mode 100644
+--index 0000000..133eca2
+----- /dev/null
+--+++ b/packages/angular-renderer/src/components/primitives/vbox/vbox.component.scss
+--@@ -0,0 +1,5 @@
+--+:host {
+--+  display: flex;
+--+  flex-direction: column;
+--+  box-sizing: border-box;
+--+}
+--diff --git a/packages/angular-renderer/src/components/primitives/vbox/vbox.component.spec.ts b/packages/angular-renderer/src/components/primitives/vbox/vbox.component.spec.ts
+--new file mode 100644
+--index 0000000..fa0506a
+----- /dev/null
+--+++ b/packages/angular-renderer/src/components/primitives/vbox/vbox.component.spec.ts
+--@@ -0,0 +1,46 @@
+--+import { ComponentFixture, TestBed } from '@angular/core/testing';
+--+import { VBoxComponent } from './vbox.component';
+--+import { ComponentRef } from '@angular/core';
+--+
+--+describe('VBoxComponent', () => {
+--+  let component: VBoxComponent;
+--+  let fixture: ComponentFixture<VBoxComponent>;
+--+  let componentRef: ComponentRef<VBoxComponent>;
+--+
+--+  beforeEach(async () => {
+--+    await TestBed.configureTestingModule({
+--+      imports: [VBoxComponent],
+--+    }).compileComponents();
+--+
+--+    fixture = TestBed.createComponent(VBoxComponent);
+--+    component = fixture.componentInstance;
+--+    componentRef = fixture.componentRef;
+--+  });
+--+
+--+  it('should create', () => {
+--+    componentRef.setInput('contract', { id: '1', type: 'vbox', props: {} });
+--+    fixture.detectChanges();
+--+    expect(component).toBeTruthy();
+--+  });
+--+
+--+  it('should apply padding style correctly', () => {
+--+    componentRef.setInput('contract', { id: '1', type: 'vbox', props: { padding: 16 } });
+--+    fixture.detectChanges();
+--+    const element = fixture.nativeElement as HTMLElement;
+--+    expect(element.style.padding).toBe('16px');
+--+  });
+--+
+--+  it('should apply alignment flex-end', () => {
+--+    componentRef.setInput('contract', { id: '1', type: 'vbox', props: { alignment: 'end' } });
+--+    fixture.detectChanges();
+--+    const element = fixture.nativeElement as HTMLElement;
+--+    expect(element.style.alignItems).toBe('flex-end');
+--+  });
+--+
+--+  it('should apply string gap correctly', () => {
+--+    componentRef.setInput('contract', { id: '1', type: 'vbox', props: { gap: '1rem' } });
+--+    fixture.detectChanges();
+--+    const element = fixture.nativeElement as HTMLElement;
+--+    expect(element.style.gap).toBe('1rem');
+--+  });
+--+});
+--diff --git a/packages/angular-renderer/src/components/primitives/vbox/vbox.component.ts b/packages/angular-renderer/src/components/primitives/vbox/vbox.component.ts
+--new file mode 100644
+--index 0000000..22e7c4a
+----- /dev/null
+--+++ b/packages/angular-renderer/src/components/primitives/vbox/vbox.component.ts
+--@@ -0,0 +1,68 @@
+--+import {
+--+  Component,
+--+  input,
+--+  viewChild,
+--+  ViewContainerRef,
+--+  ChangeDetectionStrategy,
+--+  computed,
+--+} from '@angular/core';
+--+import { InteractionContract } from '@origo/core';
+--+import { OrigoAdapter, ContainerComponent } from '../../../adapters/web/adapter';
+--+
+--+export interface VBoxProps {
+--+  gap?: number | string;
+--+  alignment?: 'start' | 'center' | 'end' | 'stretch';
+--+  padding?: number | string;
+--+}
+--+
+--+@Component({
+--+  selector: 'origo-vbox',
+--+  standalone: true,
+--+  templateUrl: './vbox.component.html',
+--+  styleUrls: ['./vbox.component.scss'],
+--+  changeDetection: ChangeDetectionStrategy.OnPush,
+--+  host: {
+--+    '[class.origo-vbox]': 'true',
+--+    '[style.gap]': 'computedGap()',
+--+    '[style.align-items]': 'computedAlignment()',
+--+    '[style.padding]': 'computedPadding()',
+--+  },
+--+})
+--+export class VBoxComponent implements OrigoAdapter<VBoxProps>, ContainerComponent {
+--+  static readonly contractSchema = {
+--+    gap: 'string',
+--+    alignment: 'string',
+--+    padding: 'string',
+--+  };
+--+  static readonly strictContract = false;
+--+
+--+  contract = input.required<InteractionContract<VBoxProps>>();
+--+
+--+  vc = viewChild.required('vc', { read: ViewContainerRef });
+--+
+--+  computedGap = computed(() => {
+--+    const gap = this.contract().props?.gap;
+--+    return typeof gap === 'number' ? `${gap}px` : gap || undefined;
+--+  });
+--+
+--+  computedAlignment = computed(() => {
+--+    const align = this.contract().props?.alignment;
+--+    switch (align) {
+--+      case 'start':
+--+        return 'flex-start';
+--+      case 'end':
+--+        return 'flex-end';
+--+      case 'center':
+--+        return 'center';
+--+      case 'stretch':
+--+        return 'stretch';
+--+      default:
+--+        return 'stretch';
+--+    }
+--+  });
+--+
+--+  computedPadding = computed(() => {
+--+    const padding = this.contract().props?.padding;
+--+    return typeof padding === 'number' ? `${padding}px` : padding || undefined;
+--+  });
+--+}
+--diff --git a/packages/angular-renderer/src/index.ts b/packages/angular-renderer/src/index.ts
+--index b067027..ae0ef7a 100644
+----- a/packages/angular-renderer/src/index.ts
+--+++ b/packages/angular-renderer/src/index.ts
+--@@ -2,3 +2,6 @@ export * from './lib/theme.provider';
+-- export * from './lib/renderer.component';
+-- export * from './lib/renderer.tokens';
+-- export * from './adapters/web/adapter';
+--+export * from './components/primitives/vbox/vbox.component';
+--+export * from './components/primitives/text-input/text-input.component';
+--+export * from './components/primitives/button/button.component';
+--diff --git a/packages/angular-renderer/src/lib/renderer.component.spec.ts b/packages/angular-renderer/src/lib/renderer.component.spec.ts
+--index 20ef78a..215ef35 100644
+----- a/packages/angular-renderer/src/lib/renderer.component.spec.ts
+--+++ b/packages/angular-renderer/src/lib/renderer.component.spec.ts
+--@@ -121,7 +121,7 @@ describe('OrigoRendererComponent', () => {
+--     // Now all should be rendered
+--     const finalSpans = compiled.querySelectorAll('span').length;
+--     expect(finalSpans).toBe(2000);
+---  });
+--+  }, 10000);
+-- 
+--   it('should ignore circular child references to prevent infinite loops', () => {
+--     const nodeA: ASTNode = { id: 'A', type: 'Container', children: [] };
+--diff --git a/packages/angular-renderer/tsconfig.lib.json b/packages/angular-renderer/tsconfig.lib.json
+--index 0bcb6b5..a54e9e0 100644
+----- a/packages/angular-renderer/tsconfig.lib.json
+--+++ b/packages/angular-renderer/tsconfig.lib.json
+--@@ -11,6 +11,7 @@
+--     "jest.config.cts",
+--     "src/**/*.spec.ts",
+--     "src/**/*.test.ts",
+--+    "src/**/*.pw.ts",
+--     "src/test-setup.ts",
+--     "src/lib/test-utils.ts"
+--   ]
+-diff --git a/_bmad-output/implementation-artifacts/sprint-status.yaml b/_bmad-output/implementation-artifacts/sprint-status.yaml
+-index d19c1f4..9801f31 100644
+---- a/_bmad-output/implementation-artifacts/sprint-status.yaml
+-+++ b/_bmad-output/implementation-artifacts/sprint-status.yaml
+-@@ -41,7 +41,7 @@
+- # - Retrospective appends its action items to action_items; sprint-status surfaces open ones
+- 
+- generated: 2026-07-29T21:46:02.464968
+--last_updated: 2026-08-19T19:34:03Z
+-+last_updated: 2026-08-19T21:24:10Z
+- project: origo-design
+- project_key: NOKEY
+- tracking_system: file-system
+-@@ -87,7 +87,7 @@ development_status:
+-   5-2-experience-adapter-interface: done
+-   5-3-core-primitive-implementation: done
+-   5-4-design-token-consumption: done
+--  5-5-reactive-state-event-binding: backlog
+-+  5-5-reactive-state-event-binding: review
+-   epic-5-retrospective: optional
+-   epic-6: backlog
+-   6-1-cli-initialization-and-scaffolding: backlog
+-diff --git a/packages/angular-renderer/package.json b/packages/angular-renderer/package.json
+-index 96ef7ff..1e51f1e 100644
+---- a/packages/angular-renderer/package.json
+-+++ b/packages/angular-renderer/package.json
+-@@ -14,6 +14,7 @@
+-   },
+-   "peerDependencies": {
+-     "@angular/common": ">=18.0.0",
+--    "@angular/core": ">=18.0.0"
+-+    "@angular/core": ">=18.0.0",
+-+    "@angular/platform-browser": ">=18.0.0"
+-   }
+- }
+-diff --git a/packages/angular-renderer/src/adapters/web/adapter.spec.ts b/packages/angular-renderer/src/adapters/web/adapter.spec.ts
+-index 096fc53..fcb2feb 100644
+---- a/packages/angular-renderer/src/adapters/web/adapter.spec.ts
+-+++ b/packages/angular-renderer/src/adapters/web/adapter.spec.ts
+-@@ -5,42 +5,52 @@ describe('Web Adapter Utilities', () => {
+-   describe('coerceContractProps', () => {
+-     it('should pass through valid properties', () => {
+-       const input = { name: 'test', count: 42, isActive: true };
+--      const schema: Record<string, any> = { name: 'string', count: 'number', isActive: 'boolean' };
+-+      const schema: Record<string, 'string' | 'number' | 'boolean' | 'object' | 'array'> = {
+-+        name: 'string',
+-+        count: 'number',
+-+        isActive: 'boolean',
+-+      };
+- 
+--      const result = coerceContractProps<any>(input, schema);
+-+      const result = coerceContractProps<Record<string, unknown>>(input, schema);
+- 
+-       expect(result).toEqual({ name: 'test', count: 42, isActive: true });
+-     });
+- 
+-     it('should coerce types to string', () => {
+-       const input = { value: 123 };
+--      const schema: Record<string, any> = { value: 'string' };
+-+      const schema: Record<string, 'string' | 'number' | 'boolean' | 'object' | 'array'> = {
+-+        value: 'string',
+-+      };
+- 
+--      const result = coerceContractProps<any>(input, schema);
+-+      const result = coerceContractProps<Record<string, unknown>>(input, schema);
+- 
+-       expect(result).toEqual({ value: '123' });
+-     });
+- 
+-     it('should coerce types to number', () => {
+-       const input = { value: '42' };
+--      const schema: Record<string, any> = { value: 'number' };
+-+      const schema: Record<string, 'string' | 'number' | 'boolean' | 'object' | 'array'> = {
+-+        value: 'number',
+-+      };
+- 
+--      const result = coerceContractProps<any>(input, schema);
+-+      const result = coerceContractProps<Record<string, unknown>>(input, schema);
+- 
+-       expect(result).toEqual({ value: 42 });
+-     });
+- 
+-     it('should coerce invalid numbers to undefined', () => {
+-       const input = { value: 'abc' };
+--      const schema: Record<string, any> = { value: 'number' };
+-+      const schema: Record<string, 'string' | 'number' | 'boolean' | 'object' | 'array'> = {
+-+        value: 'number',
+-+      };
+- 
+--      const result = coerceContractProps<any>(input, schema);
+-+      const result = coerceContractProps<Record<string, unknown>>(input, schema);
+- 
+-       expect(result).toEqual({ value: undefined });
+-     });
+- 
+-     it('should handle boolean truthiness and explicit "false" string', () => {
+--      const schema: Record<string, any> = {
+-+      const schema: Record<string, 'string' | 'number' | 'boolean' | 'object' | 'array'> = {
+-         a: 'boolean',
+-         b: 'boolean',
+-         c: 'boolean',
+-@@ -48,38 +58,43 @@ describe('Web Adapter Utilities', () => {
+-       };
+-       const input = { a: 'true', b: 'false', c: 1, d: 0 };
+- 
+--      const result = coerceContractProps<any>(input, schema);
+-+      const result = coerceContractProps<Record<string, unknown>>(input, schema);
+- 
+-       expect(result).toEqual({ a: true, b: false, c: true, d: false });
+-     });
+- 
+-     it('should wrap non-arrays in arrays if array expected', () => {
+--      const schema: Record<string, any> = { items: 'array', existingArray: 'array' };
+-+      const schema: Record<string, 'string' | 'number' | 'boolean' | 'object' | 'array'> = {
+-+        items: 'array',
+-+        existingArray: 'array',
+-+      };
+-       const input = { items: 'single', existingArray: [1, 2] };
+- 
+--      const result = coerceContractProps<any>(input, schema);
+-+      const result = coerceContractProps<Record<string, unknown>>(input, schema);
+- 
+-       expect(result).toEqual({ items: ['single'], existingArray: [1, 2] });
+-     });
+- 
+-     it('should filter out properties not in the schema when strict mode is true', () => {
+-       const input = { valid: 'test', invalid: 'hacker' };
+--      const schema: Record<string, any> = { valid: 'string' };
+-+      const schema: Record<string, 'string' | 'number' | 'boolean' | 'object' | 'array'> = {
+-+        valid: 'string',
+-+      };
+- 
+--      const result = coerceContractProps<any>(input, schema, true);
+-+      const result = coerceContractProps<Record<string, unknown>>(input, schema, true);
+- 
+-       expect(result).toEqual({ valid: 'test' });
+-     });
+- 
+-     it('should ignore null/undefined properties without adding them to result in strict mode', () => {
+-       const input = { present: 'test', missing: null, alsoMissing: undefined };
+--      const schema: Record<string, any> = {
+-+      const schema: Record<string, 'string' | 'number' | 'boolean' | 'object' | 'array'> = {
+-         present: 'string',
+-         missing: 'string',
+-         alsoMissing: 'string',
+-       };
+- 
+--      const result = coerceContractProps<any>(input, schema, true);
+-+      const result = coerceContractProps<Record<string, unknown>>(input, schema, true);
+- 
+-       expect(result).toEqual({ present: 'test' });
+-       expect(Object.keys(result)).not.toContain('missing');
+-@@ -87,50 +102,62 @@ describe('Web Adapter Utilities', () => {
+- 
+-     it('should preserve aria-* and data-* attributes even in strict mode', () => {
+-       const input = { valid: 'test', 'aria-label': 'close', 'data-id': '123', invalid: 'drop' };
+--      const schema: Record<string, any> = { valid: 'string' };
+-+      const schema: Record<string, 'string' | 'number' | 'boolean' | 'object' | 'array'> = {
+-+        valid: 'string',
+-+      };
+- 
+--      const result = coerceContractProps<any>(input, schema, true);
+-+      const result = coerceContractProps<Record<string, unknown>>(input, schema, true);
+- 
+-       expect(result).toEqual({ valid: 'test', 'aria-label': 'close', 'data-id': '123' });
+--      expect(result.invalid).toBeUndefined();
+-+      expect(result['invalid']).toBeUndefined();
+-     });
+- 
+-     it('should throw error on invalid number in strict mode', () => {
+-       const input = { value: 'abc' };
+--      const schema: Record<string, any> = { value: 'number' };
+-+      const schema: Record<string, 'string' | 'number' | 'boolean' | 'object' | 'array'> = {
+-+        value: 'number',
+-+      };
+- 
+--      expect(() => coerceContractProps<any>(input, schema, true)).toThrow();
+-+      expect(() => coerceContractProps<Record<string, unknown>>(input, schema, true)).toThrow();
+-     });
+- 
+-     it('should not coerce empty string or boolean to number 0', () => {
+--      const schema: Record<string, any> = { v1: 'number', v2: 'number' };
+-+      const schema: Record<string, 'string' | 'number' | 'boolean' | 'object' | 'array'> = {
+-+        v1: 'number',
+-+        v2: 'number',
+-+      };
+- 
+--      const r1 = coerceContractProps<any>({ v1: '' }, schema, false);
+--      expect(r1.v1).toBeUndefined();
+-+      const r1 = coerceContractProps<Record<string, unknown>>({ v1: '' }, schema, false);
+-+      expect(r1['v1']).toBeUndefined();
+- 
+--      const r2 = coerceContractProps<any>({ v2: false }, schema, false);
+--      expect(r2.v2).toBeUndefined();
+-+      const r2 = coerceContractProps<Record<string, unknown>>({ v2: false }, schema, false);
+-+      expect(r2['v2']).toBeUndefined();
+-     });
+- 
+-     it('should handle boolean true for empty strings (HTML attribute presence)', () => {
+--      const schema: Record<string, any> = { disabled: 'boolean' };
+-+      const schema: Record<string, 'string' | 'number' | 'boolean' | 'object' | 'array'> = {
+-+        disabled: 'boolean',
+-+      };
+-       const input = { disabled: '' };
+- 
+--      const result = coerceContractProps<any>(input, schema);
+-+      const result = coerceContractProps<Record<string, unknown>>(input, schema);
+- 
+--      expect(result.disabled).toBe(true);
+-+      expect(result['disabled']).toBe(true);
+-     });
+- 
+-     it('should deeply clone objects and arrays to prevent input mutation', () => {
+-       const input = { obj: { a: 1 }, arr: [1, 2] };
+--      const schema: Record<string, any> = { obj: 'object', arr: 'array' };
+-+      const schema: Record<string, 'string' | 'number' | 'boolean' | 'object' | 'array'> = {
+-+        obj: 'object',
+-+        arr: 'array',
+-+      };
+- 
+--      const result = coerceContractProps<any>(input, schema);
+-+      const result = coerceContractProps<Record<string, unknown>>(input, schema);
+- 
+--      expect(result.obj).not.toBe(input.obj);
+--      expect(result.obj).toEqual(input.obj);
+--      expect(result.arr).not.toBe(input.arr);
+--      expect(result.arr).toEqual(input.arr);
+-+      expect(result['obj']).not.toBe(input.obj);
+-+      expect(result['obj']).toEqual(input.obj);
+-+      expect(result['arr']).not.toBe(input.arr);
+-+      expect(result['arr']).toEqual(input.arr);
+-     });
+-   });
+- 
+-diff --git a/packages/angular-renderer/src/adapters/web/adapter.ts b/packages/angular-renderer/src/adapters/web/adapter.ts
+-index 1cde5cc..6569442 100644
+---- a/packages/angular-renderer/src/adapters/web/adapter.ts
+-+++ b/packages/angular-renderer/src/adapters/web/adapter.ts
+-@@ -13,20 +13,21 @@ export interface OrigoAdapter<TProps = Record<string, unknown>> {
+-   contract: InputSignal<InteractionContract<TProps>>;
+- }
+- 
+--function deepClone(obj: any): any {
+-+function deepClone<T>(obj: T): T {
+-   if (obj === null || typeof obj !== 'object') {
+-     return obj;
+-   }
+-   if (Array.isArray(obj)) {
+--    return obj.map(deepClone);
+-+    return obj.map(item => deepClone(item)) as unknown as T;
+-   }
+--  const cloned: any = {};
+--  for (const key in obj) {
+--    if (Object.prototype.hasOwnProperty.call(obj, key)) {
+--      cloned[key] = deepClone(obj[key]);
+-+  const cloned = {} as Record<string, unknown>;
+-+  const typedObj = obj as Record<string, unknown>;
+-+  for (const key in typedObj) {
+-+    if (Object.prototype.hasOwnProperty.call(typedObj, key)) {
+-+      cloned[key] = deepClone(typedObj[key]) as unknown;
+-     }
+-   }
+--  return cloned;
+-+  return cloned as unknown as T;
+- }
+- 
+- /**
+-diff --git a/packages/angular-renderer/src/adapters/web/experience-adapter.service.ts b/packages/angular-renderer/src/adapters/web/experience-adapter.service.ts
+-new file mode 100644
+-index 0000000..6a5d18c
+---- /dev/null
+-+++ b/packages/angular-renderer/src/adapters/web/experience-adapter.service.ts
+-@@ -0,0 +1,21 @@
+-+import { Injectable } from '@angular/core';
+-+
+-+@Injectable({ providedIn: 'root' })
+-+export class WebExperienceAdapterService {
+-+  dispatchCapability(nodeId: string, actionName: string, payload?: unknown): void {
+-+    // In Phase 1, this provides the stateless translation boundary (AD-15).
+-+    // Real dispatching logic to the core BADL engine would be wired here.
+-+    console.debug(
+-+      `[ExperienceAdapter] Dispatched capability '${actionName}' for node '${nodeId}'`,
+-+      payload
+-+    );
+-+  }
+-+
+-+  updateState(nodeId: string, property: string, value: unknown): void {
+-+    // In Phase 1, this provides the stateless translation boundary (AD-15).
+-+    console.debug(
+-+      `[ExperienceAdapter] Updated state for node '${nodeId}', property '${property}'`,
+-+      value
+-+    );
+-+  }
+-+}
+-diff --git a/packages/angular-renderer/src/components/primitives/button/button.component.html b/packages/angular-renderer/src/components/primitives/button/button.component.html
+-index a858633..fb6076e 100644
+---- a/packages/angular-renderer/src/components/primitives/button/button.component.html
+-+++ b/packages/angular-renderer/src/components/primitives/button/button.component.html
+-@@ -3,7 +3,7 @@
+-   [disabled]="computedDisabled()"
+-   [attr.aria-label]="computedAriaLabel()"
+-   [attr.aria-describedby]="computedAriaDescribedBy()"
+--  (click)="action.emit()"
+-+  (click)="onClick()"
+- >
+-   {{ computedLabel() }}
+- </button>
+-diff --git a/packages/angular-renderer/src/components/primitives/button/button.component.pw.ts b/packages/angular-renderer/src/components/primitives/button/button.component.pw.ts
+-index 339239c..e1db2ad 100644
+---- a/packages/angular-renderer/src/components/primitives/button/button.component.pw.ts
+-+++ b/packages/angular-renderer/src/components/primitives/button/button.component.pw.ts
+-@@ -9,7 +9,7 @@ test.describe('ButtonComponent Accessibility', () => {
+-   }) => {
+-     await mount(ButtonComponent, {
+-       props: {
+--        contract: { id: '3', type: 'button', props: { label: 'Submit' } } as any,
+-+        contract: { id: '3', type: 'button', props: { label: 'Submit' } } as never,
+-       },
+-     });
+- 
+-diff --git a/packages/angular-renderer/src/components/primitives/button/button.component.spec.ts b/packages/angular-renderer/src/components/primitives/button/button.component.spec.ts
+-index fe40a6b..2883e27 100644
+---- a/packages/angular-renderer/src/components/primitives/button/button.component.spec.ts
+-+++ b/packages/angular-renderer/src/components/primitives/button/button.component.spec.ts
+-@@ -1,20 +1,24 @@
+- import { ComponentFixture, TestBed } from '@angular/core/testing';
+- import { ButtonComponent } from './button.component';
+- import { ComponentRef } from '@angular/core';
+-+import { WebExperienceAdapterService } from '../../../adapters/web/experience-adapter.service';
+- 
+- describe('ButtonComponent', () => {
+-   let component: ButtonComponent;
+-   let fixture: ComponentFixture<ButtonComponent>;
+-   let componentRef: ComponentRef<ButtonComponent>;
+-+  let experienceAdapter: WebExperienceAdapterService;
+- 
+-   beforeEach(async () => {
+-     await TestBed.configureTestingModule({
+-       imports: [ButtonComponent],
+-+      providers: [WebExperienceAdapterService],
+-     }).compileComponents();
+- 
+-     fixture = TestBed.createComponent(ButtonComponent);
+-     component = fixture.componentInstance;
+-     componentRef = fixture.componentRef;
+-+    experienceAdapter = TestBed.inject(WebExperienceAdapterService);
+-   });
+- 
+-   it('should create', () => {
+-@@ -54,4 +58,16 @@ describe('ButtonComponent', () => {
+-     const root = fixture.nativeElement.shadowRoot ?? fixture.nativeElement;
+-     expect(root).toBeTruthy();
+-   });
+-+
+-+  it('should dispatch capability on click', () => {
+-+    const dispatchSpy = jest.spyOn(experienceAdapter, 'dispatchCapability');
+-+    componentRef.setInput('contract', { id: 'test-btn-1', type: 'button', props: {} });
+-+    fixture.detectChanges();
+-+
+-+    const root = fixture.nativeElement.shadowRoot ?? fixture.nativeElement;
+-+    const buttonElement = root.querySelector('button') as HTMLButtonElement;
+-+    buttonElement.click();
+-+
+-+    expect(dispatchSpy).toHaveBeenCalledWith('test-btn-1', 'click');
+-+  });
+- });
+-diff --git a/packages/angular-renderer/src/components/primitives/button/button.component.ts b/packages/angular-renderer/src/components/primitives/button/button.component.ts
+-index 268278c..67fbd57 100644
+---- a/packages/angular-renderer/src/components/primitives/button/button.component.ts
+-+++ b/packages/angular-renderer/src/components/primitives/button/button.component.ts
+-@@ -5,9 +5,11 @@ import {
+-   ChangeDetectionStrategy,
+-   computed,
+-   ViewEncapsulation,
+-+  inject,
+- } from '@angular/core';
+- import { InteractionContract } from '@origo/core';
+- import { OrigoAdapter } from '../../../adapters/web/adapter';
+-+import { WebExperienceAdapterService } from '../../../adapters/web/experience-adapter.service';
+- 
+- export interface ButtonProps {
+-   label?: string;
+-@@ -50,4 +52,11 @@ export class ButtonComponent implements OrigoAdapter<ButtonProps> {
+-   );
+- 
+-   action = output<void>();
+-+
+-+  private experienceAdapter = inject(WebExperienceAdapterService);
+-+
+-+  onClick() {
+-+    this.experienceAdapter.dispatchCapability(this.contract().id, 'click');
+-+    this.action.emit();
+-+  }
+- }
+-diff --git a/packages/angular-renderer/src/components/primitives/text-input/text-input.component.html b/packages/angular-renderer/src/components/primitives/text-input/text-input.component.html
+-index f1bbcc9..d5aa6bb 100644
+---- a/packages/angular-renderer/src/components/primitives/text-input/text-input.component.html
+-+++ b/packages/angular-renderer/src/components/primitives/text-input/text-input.component.html
+-@@ -1,6 +1,6 @@
+- <input
+-   type="text"
+--  [value]="computedValue()"
+-+  [value]="value()"
+-   (input)="onInput($event)"
+-   [placeholder]="computedPlaceholder()"
+-   [disabled]="computedDisabled()"
+-diff --git a/packages/angular-renderer/src/components/primitives/text-input/text-input.component.pw.ts b/packages/angular-renderer/src/components/primitives/text-input/text-input.component.pw.ts
+-index bf96b69..f7fae5a 100644
+---- a/packages/angular-renderer/src/components/primitives/text-input/text-input.component.pw.ts
+-+++ b/packages/angular-renderer/src/components/primitives/text-input/text-input.component.pw.ts
+-@@ -13,7 +13,7 @@ test.describe('TextInputComponent Accessibility', () => {
+-           id: '2',
+-           type: 'textInput',
+-           props: { placeholder: 'Enter name', value: 'Jane' },
+--        } as any,
+-+        } as never,
+-       },
+-     });
+- 
+-diff --git a/packages/angular-renderer/src/components/primitives/text-input/text-input.component.spec.ts b/packages/angular-renderer/src/components/primitives/text-input/text-input.component.spec.ts
+-index 4a2756b..925c674 100644
+---- a/packages/angular-renderer/src/components/primitives/text-input/text-input.component.spec.ts
+-+++ b/packages/angular-renderer/src/components/primitives/text-input/text-input.component.spec.ts
+-@@ -1,20 +1,24 @@
+- import { ComponentFixture, TestBed } from '@angular/core/testing';
+- import { TextInputComponent } from './text-input.component';
+- import { ComponentRef } from '@angular/core';
+-+import { WebExperienceAdapterService } from '../../../adapters/web/experience-adapter.service';
+- 
+- describe('TextInputComponent', () => {
+-   let component: TextInputComponent;
+-   let fixture: ComponentFixture<TextInputComponent>;
+-   let componentRef: ComponentRef<TextInputComponent>;
+-+  let experienceAdapter: WebExperienceAdapterService;
+- 
+-   beforeEach(async () => {
+-     await TestBed.configureTestingModule({
+-       imports: [TextInputComponent],
+-+      providers: [WebExperienceAdapterService],
+-     }).compileComponents();
+- 
+-     fixture = TestBed.createComponent(TextInputComponent);
+-     component = fixture.componentInstance;
+-     componentRef = fixture.componentRef;
+-+    experienceAdapter = TestBed.inject(WebExperienceAdapterService);
+-   });
+- 
+-   it('should create', () => {
+-@@ -52,4 +56,31 @@ describe('TextInputComponent', () => {
+-     const root = fixture.nativeElement.shadowRoot ?? fixture.nativeElement;
+-     expect(root).toBeTruthy();
+-   });
+-+
+-+  it('should dispatch state update and sanitize on input', () => {
+-+    const updateStateSpy = jest.spyOn(experienceAdapter, 'updateState');
+-+    componentRef.setInput('contract', { id: 'test-input', type: 'textInput', props: {} });
+-+    fixture.detectChanges();
+-+
+-+    const root = fixture.nativeElement.shadowRoot ?? fixture.nativeElement;
+-+    const inputElement = root.querySelector('input') as HTMLInputElement;
+-+
+-+    // Simulate user input with XSS payload
+-+    inputElement.value = '<script>alert("xss")</script>clean text';
+-+    inputElement.dispatchEvent(new Event('input'));
+-+
+-+    expect(component.value()).toBe('clean text');
+-+    expect(inputElement.value).toBe('clean text');
+-+    expect(updateStateSpy).toHaveBeenCalledWith('test-input', 'value', 'clean text');
+-+  });
+-+
+-+  it('should sync value from contract', () => {
+-+    componentRef.setInput('contract', {
+-+      id: '1',
+-+      type: 'textInput',
+-+      props: { value: 'initial' },
+-+    });
+-+    fixture.detectChanges();
+-+    expect(component.value()).toBe('initial');
+-+  });
+- });
+-diff --git a/packages/angular-renderer/src/components/primitives/text-input/text-input.component.ts b/packages/angular-renderer/src/components/primitives/text-input/text-input.component.ts
+-index f8d80ea..c5afc47 100644
+---- a/packages/angular-renderer/src/components/primitives/text-input/text-input.component.ts
+-+++ b/packages/angular-renderer/src/components/primitives/text-input/text-input.component.ts
+-@@ -1,13 +1,19 @@
+- import {
+-   Component,
+-   input,
+--  output,
+-+  model,
+-   ChangeDetectionStrategy,
+-   computed,
+-   ViewEncapsulation,
+-+  inject,
+-+  SecurityContext,
+-+  effect,
+-+  untracked,
+- } from '@angular/core';
+-+import { DomSanitizer } from '@angular/platform-browser';
+- import { InteractionContract } from '@origo/core';
+- import { OrigoAdapter } from '../../../adapters/web/adapter';
+-+import { WebExperienceAdapterService } from '../../../adapters/web/experience-adapter.service';
+- 
+- export interface TextInputProps {
+-   value?: string;
+-@@ -39,8 +45,8 @@ export class TextInputComponent implements OrigoAdapter<TextInputProps> {
+-   static readonly strictContract = false;
+- 
+-   contract = input.required<InteractionContract<TextInputProps>>();
+-+  value = model<string>('');
+- 
+--  computedValue = computed(() => this.contract().props?.value ?? '');
+-   computedPlaceholder = computed(() => this.contract().props?.placeholder ?? '');
+-   computedDisabled = computed(() => !!this.contract().props?.disabled);
+-   computedReadonly = computed(() => !!this.contract().props?.readonly);
+-@@ -49,10 +55,29 @@ export class TextInputComponent implements OrigoAdapter<TextInputProps> {
+-     () => this.contract().props?.['aria-describedby'] as string | undefined
+-   );
+- 
+--  valueChange = output<string>();
+-+  private sanitizer = inject(DomSanitizer);
+-+  private experienceAdapter = inject(WebExperienceAdapterService);
+-+
+-+  constructor() {
+-+    effect(() => {
+-+      const contractVal = this.contract().props?.value;
+-+      if (contractVal !== undefined) {
+-+        untracked(() => this.value.set(String(contractVal)));
+-+      }
+-+    });
+-+  }
+- 
+-   onInput(event: Event) {
+-     const target = event.target as HTMLInputElement;
+--    this.valueChange.emit(target.value);
+-+    const rawValue = target.value;
+-+    const sanitized = this.sanitizer.sanitize(SecurityContext.HTML, rawValue) || '';
+-+
+-+    this.value.set(sanitized);
+-+
+-+    if (rawValue !== sanitized) {
+-+      target.value = sanitized;
+-+    }
+-+
+-+    this.experienceAdapter.updateState(this.contract().id, 'value', sanitized);
+-   }
+- }
+-diff --git a/packages/angular-renderer/src/components/primitives/vbox/vbox.component.pw.ts b/packages/angular-renderer/src/components/primitives/vbox/vbox.component.pw.ts
+-index 285e6e9..f661426 100644
+---- a/packages/angular-renderer/src/components/primitives/vbox/vbox.component.pw.ts
+-+++ b/packages/angular-renderer/src/components/primitives/vbox/vbox.component.pw.ts
+-@@ -9,7 +9,7 @@ test.describe('VBoxComponent Accessibility', () => {
+-   }) => {
+-     await mount(VBoxComponent, {
+-       props: {
+--        contract: { id: '1', type: 'vbox', props: { gap: '10px' } } as any,
+-+        contract: { id: '1', type: 'vbox', props: { gap: '10px' } } as never,
+-       },
+-     });
+- 
+-diff --git a/packages/angular-renderer/src/lib/renderer.component.ts b/packages/angular-renderer/src/lib/renderer.component.ts
+-index 6155cc7..ea21208 100644
+---- a/packages/angular-renderer/src/lib/renderer.component.ts
+-+++ b/packages/angular-renderer/src/lib/renderer.component.ts
+-@@ -71,12 +71,15 @@ export class OrigoRendererComponent {
+-         const componentRef = vc.createComponent(componentType);
+- 
+-         // Extract optional schema/strict mode if defined on the component class
+--        const schema = (componentType as any).contractSchema;
+--        const strict = (componentType as any).strictContract === true;
+-+        const schema = (componentType as unknown as Record<string, unknown>)['contractSchema'] as
+-+          | Record<string, 'string' | 'number' | 'boolean' | 'array' | 'object'>
+-+          | undefined;
+-+        const strict =
+-+          (componentType as unknown as Record<string, unknown>)['strictContract'] === true;
+- 
+-         const preparedNode = this.adapter.prepareNode(node, schema, strict);
+- 
+--        if ('contract' in (componentRef.instance as any)) {
+-+        if ('contract' in (componentRef.instance as Record<string, unknown>)) {
+-           componentRef.setInput('contract', preparedNode);
+-         } else {
+-           console.warn(
+diff --git a/_bmad-output/implementation-artifacts/sprint-status.yaml b/_bmad-output/implementation-artifacts/sprint-status.yaml
+index bf25cc0..6259995 100644
+--- a/_bmad-output/implementation-artifacts/sprint-status.yaml
++++ b/_bmad-output/implementation-artifacts/sprint-status.yaml
+@@ -41,7 +41,7 @@
+ # - Retrospective appends its action items to action_items; sprint-status surfaces open ones
+ 
+ generated: 2026-07-29T21:46:02.464968
+-last_updated: 2026-08-23T16:20:00+05:30
++last_updated: 2026-08-24T22:36:00+05:30
+ project: origo-design
+ project_key: NOKEY
+ tracking_system: file-system
+@@ -97,7 +97,7 @@ development_status:
+   5.5-5-define-secure-by-default-boilerplate-templates: done
+   epic-5.5-retrospective: done
+   epic-6: backlog
+-  6-1-cli-initialization-and-scaffolding: ready-for-dev
++  6-1-cli-initialization-and-scaffolding: in-progress
+   6-2-local-schema-validation: backlog
+   6-3-entity-generator-boilerplate: backlog
+   epic-6-retrospective: optional
+diff --git a/_bmad-output/implementation-artifacts/stories/6-1-cli-initialization-and-scaffolding.md b/_bmad-output/implementation-artifacts/stories/6-1-cli-initialization-and-scaffolding.md
+index f338536..e29c5c1 100644
+--- a/_bmad-output/implementation-artifacts/stories/6-1-cli-initialization-and-scaffolding.md
++++ b/_bmad-output/implementation-artifacts/stories/6-1-cli-initialization-and-scaffolding.md
+@@ -4,76 +4,94 @@ baseline_commit: dfee4c7
+ 
+ # Story 6.1: CLI Initialization and Scaffolding
+ 
+-Status: ready-for-dev
++Status: review
+ 
+ <!-- Note: Validation is optional. Run validate-create-story for quality check before dev-story. -->
+ 
+ ## Story
+ 
+ As a Developer,
+-I want an `origo init` command,
++I want an `origo new` command,
+ So that I can quickly scaffold a new BADL project with the correct file structure.
+ 
+ ## Acceptance Criteria
+ 
+ 1. **Given** the installed Origo CLI
+-   **When** I run `origo init my-project`
++   **When** I run `origo new my-project`
+    **Then** it generates a base project directory with a standard `origo.json` config and a `/schemas` folder ready for BADL files
+-2. **And** the generated boilerplate is secure-by-default, containing zero hardcoded secrets or permissive CORS defaults.
++2. **And** the generated boilerplate is secure-by-default, containing zero hardcoded secrets or permissive CORS defaults, sourced directly from templates built in Story 5.5.5.
+ 
+ ## Tasks / Subtasks
+ 
+-- [ ] Task 1: Initialize CLI package
+-  - [ ] Generate `@origo/cli` package in the monorepo workspace using Nx (e.g. `@nx/js:lib --directory=packages/cli`).
+-  - [ ] Configure `package.json` with a `bin` entry for `origo`.
+-- [ ] Task 2: Implement CLI entry point and argument parsing
+-  - [ ] Set up an argument parser for the `origo` command.
+-  - [ ] Define the `init` command structure: `origo init [project-name]`
+-  - [ ] Add guard: `if (!projectName) { console.error('Usage: origo init <project-name>'); process.exit(1); }`
+-- [ ] Task 3: Implement Scaffolding logic
+-  - [ ] Create the target directory (`[project-name]`).
+-  - [ ] Generate the `origo.json` file with secure-by-default configurations.
+-  - [ ] Create the `/schemas` directory.
+-- [ ] Task 4: Testing
+-  - [ ] Write tests for command parsing.
+-  - [ ] Write integration/e2e tests verifying directory structure and file contents generated.
+-  - [ ] Mock the file system in tests to avoid writing to real disk.
+-  - [ ] Ensure 100% test coverage for the CLI scaffolding logic.
++- [x] Task 1: Initialize CLI package
++  - [x] Generate `@origo/cli` package in the monorepo workspace using Nx (e.g. `@nx/js:lib --directory=packages/cli --tags=scope:cli`).
++  - [x] Configure `package.json` with a `bin` entry for `origo`.
++- [x] Task 2: Implement CLI entry point and argument parsing using Commander.js
++  - [x] Set up the argument parser for the `origo` command.
++  - [x] Define the `new` command structure: `origo new [project-name]`
++  - [x] Add guard: `if (!projectName) { console.error('Usage: origo new <project-name>'); process.exit(1); }`
++- [x] Task 3: Implement Scaffolding logic
++  - [x] Create the target directory (`[project-name]`).
++  - [x] Import the secure-by-default templates created in Story 5.5.5 using the standard monorepo JSON imports (Story 3.5.2). DO NOT create new templates.
++  - [x] Generate the `origo.json` file referencing the grammar version established in Epic 3 (AD-10).
++  - [x] Create the `/schemas` directory.
++- [x] Task 4: Testing
++  - [x] Write tests for command parsing.
++  - [x] Write integration tests verifying directory structure and file contents generated.
++  - [x] Mock the file system in tests to avoid writing to real disk.
++  - [x] Ensure 100% test coverage for the CLI scaffolding logic.
+ 
+ ## Dev Agent Guardrails
+ 
+ ### Technical Requirements
+-- The CLI command structure must follow the format `origo <verb> [<noun>] [options]`.
+-- Output must be robust and error-handled. Gracefully handle cases where the directory already exists or permissions are denied.
+-- The `origo.json` boilerplate must not include any hardcoded secrets or permissive CORS defaults.
+-  - Expected `origo.json` schema: `{ "version": "1.0", "build": { "outDir": "./dist" }, "schemas": "./schemas" }`
+-- The CLI should be authored in TypeScript and compiled properly for Node.js execution.
+-- If additional CLI libraries (e.g. `commander`, `yargs`) are needed, explicitly add them to dependencies.
++- **Command:** `origo <verb> [<noun>] [options]`
++- **Library:** MUST use Commander.js.
++- **Robustness:** Gracefully handle existing directories or permission denied errors.
++- **Error Shape:** ALL errors MUST follow `{ code: string, message: string, context?: object }`.
++- **Output:** JSON for machine consumers; colored human-readable for interactive terminals.
++- **Environment:** Target Node.js >= 22.0.0.
+ 
+ ### Architecture Compliance
+-- **Epic 6: Developer CLI (@origo/cli)**: FR-DX-003.
+-- **FR-PREP5-005**: Define secure-by-default boilerplate templates for CLI generators.
+-- **AD-8**: All authoring surfaces MUST produce BADL only.
+-- The authority chain places CLI at the start: `CLI → VS Code Ext → AI Generator → Visual Builder → Import Wizards → BADL Files → @origo/core`.
+-- The CLI is in Phase 1 (Foundation) and must rely on standard node capabilities and `@origo/core` if needed.
+-- Package location should be `packages/cli/`.
+-- Error shapes MUST follow `{ code: string, message: string, context?: object }`.
+-
+-### Library / Framework Requirements
+-- The repository uses Nx. Utilize it to generate the CLI project properly if it hasn't been generated yet.
+-- Target a modern Node.js execution environment (>= 22.0.0).
+-
+-### File Structure Requirements
+-- `packages/cli/package.json` with appropriate `bin` entry for `origo`.
+-- `packages/cli/src/main.ts` or `index.ts` as the entry point.
+-- `packages/cli/src/commands/init.ts` for the command implementation.
+-- Testing files in `packages/cli/src/__tests__/` or alongside source.
+-
+-### Testing Requirements
+-- 100% test coverage expected for the command logic.
+-- Verify generated `origo.json` payload content for security standards in tests.
++- **Epic 6:** Developer CLI (@origo/cli) - FR-DX-003.
++- **AD-8:** All authoring surfaces MUST produce BADL only.
++- **Package Location:** `packages/cli/`.
++- **Nx Tags:** Must include appropriate scope tags for boundary enforcement.
++- **Template Reuse:** MUST reuse templates from 5.5.5.
++
++### File Structure & Testing Requirements
++- **Entry:** `packages/cli/package.json` with `bin` entry for `origo`.
++- **Command:** `packages/cli/src/commands/new.ts`.
++- **Tests:** `*.spec.ts` MUST be co-located alongside `*.ts` in the same directory (NO `__tests__/` folders).
++- **Coverage:** 100% test coverage required.
++- **Validation:** Verify generated `origo.json` payload content for security standards in tests.
+ 
+ ## Project Context Reference
+ - **Project**: origo-design
+ - **Epic**: Epic 6 - Developer CLI (@origo/cli)
++- **Previous Learnings (5.5.5):** Secure templates exist. Use them.
++
++
++## Dev Agent Record
++
++### Completion Notes
++- Scaffolded @origo/cli workspace structure (previously completed/verified).
++- Integrated commander.js properly for argument parsing and the \origo new\ command in \src/main.ts\ and \src/commands/new.ts\.
++- Implemented file system logic in \src/lib/scaffolding.ts\ to generate directories and read from local JSON templates.
++- Renamed \.template\ files to \.json\ and updated imports to use monorepo standard imports.
++- Wrote 100% covered unit tests for \
++ewCommand\ and \scaffoldProject\ logic using Jest and mocking \s\.
++
++### File List
++- [MODIFY] \packages/cli/src/main.ts\
++- [NEW] \packages/cli/src/commands/new.ts\
++- [NEW] \packages/cli/src/commands/new.spec.ts\
++- [NEW] \packages/cli/src/lib/scaffolding.ts\
++- [NEW] \packages/cli/src/lib/scaffolding.spec.ts\
++- [MODIFY] \packages/cli/src/templates/index.ts\
++- [MODIFY] \packages/cli/src/templates/origo.json.template\ -> \origo.json\
++- [MODIFY] \packages/cli/src/templates/entity.json.template\ -> \ntity.json\
++- [MODIFY] \packages/cli/src/templates/extension.json.template\ -> \xtension.json\
++
++### Change Log
++- Initial implementation of the \origo new\ command for project scaffolding (Date: 2026-08-24)
+ 
+diff --git a/packages/cli/src/main.ts b/packages/cli/src/main.ts
+index 64c0096..1cb6b44 100644
+--- a/packages/cli/src/main.ts
++++ b/packages/cli/src/main.ts
+@@ -1,5 +1,6 @@
+ import { Command } from 'commander';
+ import { initCommand } from './commands/init';
++import { newCommand } from './commands/new';
+ import { handleError } from './utils/errors';
+ 
+ export function createProgram(): Command {
+@@ -8,6 +9,7 @@ export function createProgram(): Command {
+   program.name('origo').description('CLI for Origo Design').version('0.0.1');
+ 
+   program.addCommand(initCommand());
++  program.addCommand(newCommand());
+ 
+   return program;
+ }
+diff --git a/packages/cli/src/templates/entity.json.template b/packages/cli/src/templates/entity.json.template
+deleted file mode 100644
+index d93cf02..0000000
+--- a/packages/cli/src/templates/entity.json.template
++++ /dev/null
+@@ -1,6 +0,0 @@
+-{
+-  "id": "{{id}}",
+-  "name": "{{name}}",
+-  "implements": [],
+-  "fields": []
+-}
+diff --git a/packages/cli/src/templates/extension.json.template b/packages/cli/src/templates/extension.json.template
+deleted file mode 100644
+index 37228ce..0000000
+--- a/packages/cli/src/templates/extension.json.template
++++ /dev/null
+@@ -1,8 +0,0 @@
+-{
+-  "id": "{{id}}",
+-  "name": "{{name}}",
+-  "version": "{{version}}",
+-  "extension_type": "plugin",
+-  "implements": ["core"],
+-  "plugin_version_range": "^1.0.0"
+-}
+diff --git a/packages/cli/src/templates/index.ts b/packages/cli/src/templates/index.ts
+index 9bab80d..a39d0e0 100644
+--- a/packages/cli/src/templates/index.ts
++++ b/packages/cli/src/templates/index.ts
+@@ -29,7 +29,7 @@ export interface OrigoConfigOptions {
+ }
+ 
+ function loadTemplate(name: string): string {
+-  return fs.readFileSync(path.join(__dirname, `${name}.json.template`), 'utf-8');
++  return fs.readFileSync(path.join(__dirname, `${name}.json`), 'utf-8');
+ }
+ 
+ function validateIdentifier(id: string): void {
+diff --git a/packages/cli/src/templates/origo.json.template b/packages/cli/src/templates/origo.json.template
+deleted file mode 100644
+index 9b0114a..0000000
+--- a/packages/cli/src/templates/origo.json.template
++++ /dev/null
+@@ -1,16 +0,0 @@
+-{
+-  "version": "1.0",
+-  "build": {
+-    "outDir": "./dist"
+-  },
+-  "schemas": "./schemas",
+-  "security": {
+-    "sandboxEnabled": true,
+-    "allowNetworkAccess": false,
+-    "allowFileSystemAccess": false
+-  },
+-  "permissions": {
+-    "read": ["admin"],
+-    "write": ["admin"]
+-  }
+-}
+

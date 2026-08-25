@@ -1,5 +1,7 @@
+#!/usr/bin/env node
 import { Command } from 'commander';
 import { initCommand } from './commands/init';
+import { newCommand } from './commands/new';
 import { handleError } from './utils/errors';
 
 export function createProgram(): Command {
@@ -8,6 +10,7 @@ export function createProgram(): Command {
   program.name('origo').description('CLI for Origo Design').version('0.0.1');
 
   program.addCommand(initCommand());
+  program.addCommand(newCommand());
 
   return program;
 }

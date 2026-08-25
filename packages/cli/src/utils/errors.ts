@@ -16,7 +16,57 @@ export class CliError extends Error {
   }
 }
 
-export function handleError(error: unknown): void {
+export interface ErrorOptions {
+  json?: boolean;
+}
+
+export function handleError(error: unknown, options: ErrorOptions = {}): void {
+  if (options.json) {
+    if (error instanceof CliError) {
+      console.error(
+        JSON.stringify(
+          {
+            error: {
+              code: error.code,
+              message: error.message,
+              context: error.context,
+            },
+          },
+          null,
+          2
+        )
+      );
+    } else if (error instanceof Error) {
+      console.error(
+        JSON.stringify(
+          {
+            error: {
+              code: 'UNEXPECTED_ERROR',
+              message: error.message,
+            },
+          },
+          null,
+          2
+        )
+      );
+    } else {
+      console.error(
+        JSON.stringify(
+          {
+            error: {
+              code: 'UNKNOWN_ERROR',
+              message: String(error),
+            },
+          },
+          null,
+          2
+        )
+      );
+    }
+    process.exit(1);
+    return;
+  }
+
   if (error instanceof CliError) {
     console.error(`Error [${error.code}]: ${error.message}`);
     if (error.context) {
