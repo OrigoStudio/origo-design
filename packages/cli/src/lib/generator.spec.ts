@@ -19,6 +19,7 @@ describe('generator', () => {
   let readdirSpy: jest.SpyInstance;
 
   beforeEach(() => {
+    jest.clearAllMocks();
     accessSpy = (fs.access as jest.Mock).mockRejectedValue({ code: 'ENOENT' });
     readFileSpy = (fs.readFile as jest.Mock).mockRejectedValue({ code: 'ENOENT' });
     writeFileSpy = (fs.writeFile as jest.Mock).mockResolvedValue(undefined);
@@ -31,7 +32,6 @@ describe('generator', () => {
       'index.ts',
     ]);
     logSpy = jest.spyOn(console, 'log').mockImplementation(jest.fn());
-    jest.clearAllMocks();
   });
 
   afterEach(() => {
@@ -62,10 +62,9 @@ describe('generator', () => {
     });
 
     it('should fail if file exists and --force is not provided', async () => {
-      // First access check is for custom template (returns ENOENT normally)
-      // Second access check is for target file (returns OK)
+      const expectedPath = path.join(process.cwd(), 'schemas', 'user.json');
       accessSpy.mockImplementation(async filePath => {
-        if (filePath.includes('schemas')) {
+        if (filePath === expectedPath) {
           return undefined; // exists
         }
         throw { code: 'ENOENT' };
@@ -78,8 +77,9 @@ describe('generator', () => {
     });
 
     it('should overwrite if file exists and --force is provided', async () => {
+      const expectedPath = path.join(process.cwd(), 'schemas', 'user.json');
       accessSpy.mockImplementation(async filePath => {
-        if (filePath.includes('schemas')) {
+        if (filePath === expectedPath) {
           return undefined; // exists
         }
         throw { code: 'ENOENT' };
@@ -87,6 +87,14 @@ describe('generator', () => {
 
       await generateEntity('User', { force: true });
       expect(writeFileSpy).toHaveBeenCalled();
+    });
+
+    it('should fail on empty name', async () => {
+      await expect(generateEntity('   ', {})).rejects.toThrow(CliError);
+    });
+
+    it('should fail on path traversal in name', async () => {
+      await expect(generateEntity('../User', {})).rejects.toThrow(CliError);
     });
 
     it('should output JSON when --json is provided', async () => {
@@ -98,11 +106,18 @@ describe('generator', () => {
       expect(parsedLog.status).toBe('success');
       expect(parsedLog.data.entityName).toBe('User');
     });
+
+    it('should output text when --json is not provided', async () => {
+      await generateEntity('User', {});
+      expect(logSpy).toHaveBeenCalledWith(
+        expect.stringContaining('Successfully generated entity User')
+      );
+    });
   });
 
   describe('ejectTemplates', () => {
     it('should copy .json templates and output JSON on success', async () => {
-      await ejectTemplates({ json: true });
+      await ejectTemplates({ json: true, force: true });
 
       expect(mkdirSpy).toHaveBeenCalledWith(path.join(process.cwd(), '.origo', 'templates'), {
         recursive: true,
@@ -116,6 +131,23 @@ describe('generator', () => {
       expect(parsedLog.status).toBe('success');
       expect(parsedLog.data.filesEjected).toContain('entity.json');
       expect(parsedLog.data.filesEjected).not.toContain('index.ts');
+    });
+
+    it('should fail if no templates found', async () => {
+      readdirSpy.mockResolvedValue(['index.ts']); // no .json files
+      await expect(ejectTemplates({ json: true })).rejects.toThrow(CliError);
+    });
+
+    it('should fail if destination file exists and no --force', async () => {
+      accessSpy.mockResolvedValue(undefined); // all exist
+      await expect(ejectTemplates({})).rejects.toThrow(CliError);
+    });
+
+    it('should output text when --json is not provided', async () => {
+      await ejectTemplates({ force: true });
+      expect(logSpy).toHaveBeenCalledWith(
+        expect.stringContaining('Successfully ejected 3 templates')
+      );
     });
   });
 });

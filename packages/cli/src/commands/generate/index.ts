@@ -10,14 +10,17 @@ export function generateCommand(): Command {
 
   cmd
     .option('--eject', 'Copy internal templates to .origo/templates/ for customization')
+    .option('--force', 'Overwrite existing templates if they exist')
     .option('--json', 'Output machine-readable JSON format')
-    .action(async (options: { eject?: boolean; json?: boolean }) => {
+    .action(async (options: { eject?: boolean; force?: boolean; json?: boolean }) => {
       if (options.eject) {
         try {
-          await ejectTemplates({ json: options.json });
+          await ejectTemplates({ force: options.force, json: options.json });
         } catch (error: unknown) {
           handleError(error, { json: options.json });
         }
+      } else {
+        cmd.outputHelp();
       }
     });
 

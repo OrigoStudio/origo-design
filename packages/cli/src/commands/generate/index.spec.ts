@@ -23,12 +23,12 @@ describe('generateCommand', () => {
 
   it('should parse --eject and call ejectTemplates', async () => {
     await program.parseAsync(['node', 'test', 'generate', '--eject']);
-    expect(ejectTemplates).toHaveBeenCalledWith({ json: undefined });
+    expect(ejectTemplates).toHaveBeenCalledWith({ force: undefined, json: undefined });
   });
 
-  it('should parse --eject --json', async () => {
-    await program.parseAsync(['node', 'test', 'generate', '--eject', '--json']);
-    expect(ejectTemplates).toHaveBeenCalledWith({ json: true });
+  it('should parse --eject --json --force', async () => {
+    await program.parseAsync(['node', 'test', 'generate', '--eject', '--json', '--force']);
+    expect(ejectTemplates).toHaveBeenCalledWith({ force: true, json: true });
   });
 
   it('should call handleError on exception', async () => {
@@ -37,5 +37,15 @@ describe('generateCommand', () => {
 
     await program.parseAsync(['node', 'test', 'generate', '--eject']);
     expect(handleError).toHaveBeenCalledWith(error, { json: undefined });
+  });
+
+  it('should output help if no options provided', async () => {
+    const cmd = generateCommand();
+    const outputHelpSpy = jest.spyOn(cmd, 'outputHelp').mockImplementation(() => undefined);
+    const p = new Command();
+    p.addCommand(cmd);
+
+    await p.parseAsync(['node', 'test', 'generate']);
+    expect(outputHelpSpy).toHaveBeenCalled();
   });
 });

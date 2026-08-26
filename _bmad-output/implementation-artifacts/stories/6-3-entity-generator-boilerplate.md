@@ -4,7 +4,7 @@ baseline_commit: current
 
 # Story 6.3: Entity Generator Boilerplate
 
-Status: review
+Status: done
 
 <!-- Note: Validation is optional. Run validate-create-story for quality check before dev-story. -->
 
@@ -265,6 +265,24 @@ For `--eject` success:
 - [x] Update `packages/cli/src/main.ts` — add `import { generateCommand } from './commands/generate'` and `program.addCommand(generateCommand())`
 - [x] Write unit tests for `packages/cli/src/lib/generator.ts` (mock `fs.promises` and `generateEntityTemplate`)
 - [x] Write unit tests for command wrappers (`commands/generate/index.spec.ts`, `commands/generate/entity.spec.ts`)
+
+### Review Findings
+- [x] [Review][Patch] Complete Disregard for Acceptance Criterion 3 (FR-AI-005 Extensibility) — The implementation contains zero extension hooks, plugin registries, or template resolver interfaces.
+- [x] [Review][Patch] Missing Package Exports in CLI Index [packages/cli/src/index.ts]
+- [x] [Review][Patch] Silent No-Op When Running `origo generate` Without Arguments [packages/cli/src/commands/generate/index.ts]
+- [x] [Review][Patch] Missing Human-Readable Output in Non-JSON Mode [packages/cli/src/lib/generator.ts]
+- [x] [Review][Patch] Unvalidated and Fragile User Template String Substitution [packages/cli/src/lib/generator.ts]
+- [x] [Review][Patch] Identifier Validation, Sanitization Bypassed, and Path Traversal Vulnerability [packages/cli/src/lib/generator.ts]
+- [x] [Review][Patch] Blanket Error Swallowing in `fs.access` File Existence Check [packages/cli/src/lib/generator.ts]
+- [x] [Review][Patch] Blind Error Swallowing in Directory Creation [packages/cli/src/lib/generator.ts]
+- [x] [Review][Patch] Destructive Template Overwrite in `ejectTemplates` Without Warning or `--force` [packages/cli/src/lib/generator.ts]
+- [x] [Review][Patch] Fragile Runtime Source Path Resolution in `ejectTemplates` [packages/cli/src/lib/generator.ts]
+- [x] [Review][Patch] Inconsistent Output Path Formatting in JSON Payloads [packages/cli/src/lib/generator.ts]
+- [x] [Review][Patch] Inadequate Branch and Failure Testing in Command Specs [packages/cli/src/commands/generate/index.spec.ts]
+- [x] [Review][Patch] Brittle and Coincidental Mock Matchers in Generator Tests [packages/cli/src/lib/generator.spec.ts]
+- [x] [Review][Patch] Overly Broad Catch Block Swallows Template Read & I/O Errors [packages/cli/src/lib/generator.ts]
+- [x] [Review][Patch] `ejectTemplates` silently succeeds if `fs.readdir` returns zero files [packages/cli/src/lib/generator.ts]
+- [x] [Review][Patch] `fs.copyFile` failure inside loop leaves partial eject [packages/cli/src/lib/generator.ts]
 
 ## Dev Agent Record
 

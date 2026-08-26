@@ -1,528 +1,703 @@
-You are an Acceptance Auditor. Review the provided diff against `g:\OrigoStudio\Repositories\Origo-Design\origo-design\_bmad-output\implementation-artifacts\stories\3-5-3-defensive-ast-traversal.md` and any loaded context docs. Check for: violations of acceptance criteria, deviations from spec intent, missing implementation of specified behavior, contradictions between spec constraints and actual code. Output findings as a Markdown list. Each finding: one-line title, which AC/constraint it violates, and evidence from the diff.
+You are an Acceptance Auditor. Review the provided diff against _bmad-output/implementation-artifacts/stories/6-3-entity-generator-boilerplate.md and any loaded context docs. Check for: violations of acceptance criteria, deviations from spec intent, missing implementation of specified behavior, contradictions between spec constraints and actual code. Output findings as a Markdown list. Each finding: one-line title, which AC/constraint it violates, and evidence from the diff.
 
 Diff:
-﻿diff --git a/_bmad-output/implementation-artifacts/sprint-status.yaml b/_bmad-output/implementation-artifacts/sprint-status.yaml
-index ff1bc25..5ac9c0d 100644
+diff --git a/_bmad-output/implementation-artifacts/sprint-status.yaml b/_bmad-output/implementation-artifacts/sprint-status.yaml
+index 4066729..a161ae3 100644
 --- a/_bmad-output/implementation-artifacts/sprint-status.yaml
 +++ b/_bmad-output/implementation-artifacts/sprint-status.yaml
 @@ -41,7 +41,7 @@
  # - Retrospective appends its action items to action_items; sprint-status surfaces open ones
  
  generated: 2026-07-29T21:46:02.464968
--last_updated: 2026-08-12T21:29:53+05:30
-+last_updated: 2026-08-12T21:55:00+05:30
+-last_updated: 2026-08-25T22:11:00+05:30
++last_updated: 2026-08-26T19:44:00+05:30
  project: origo-design
  project_key: NOKEY
  tracking_system: file-system
-@@ -72,7 +72,7 @@ development_status:
-   epic-3-retrospective: done
-   3-5-1-establish-semantic-versioning: done
-   3-5-2-define-monorepo-wide-json-import-standard: done
--  3-5-3-defensive-ast-traversal: ready-for-dev
-+  3-5-3-defensive-ast-traversal: review
-   epic-4: backlog
-   4-1-capabilities-schema-parsing: backlog
-   4-2-contracts-and-implementations: backlog
-diff --git a/_bmad-output/implementation-artifacts/stories/3-5-3-defensive-ast-traversal.md b/_bmad-output/implementation-artifacts/stories/3-5-3-defensive-ast-traversal.md
-index 4c2b64c..d20ef63 100644
---- a/_bmad-output/implementation-artifacts/stories/3-5-3-defensive-ast-traversal.md
-+++ b/_bmad-output/implementation-artifacts/stories/3-5-3-defensive-ast-traversal.md
-@@ -2,7 +2,8 @@
- epic: 3
- story: "5-3"
- title: Defensive AST Traversal
--status: ready-for-dev
-+status: review
-+baseline_commit: 4f82702e479e9639062c91d8097eb38a89c26fa8
- ---
- 
- # Story 3.5.3: Defensive AST Traversal
-@@ -80,6 +81,38 @@ This is the final tech debt and stabilization chore for Epic 3. The AST logic cu
- ### Project Context Reference
- - Epic 3's core deliverable is the Canonical AST validation engine. This stability fix is required before Epic 4 begins heavily extending the schemas with Capabilities, Contracts, and Extensions, which will add further tree complexity.
- 
-+## Tasks/Subtasks
-+- [x] 1. Refactor `validateAST` and `dfs` in `ast-validator.ts` to enforce `MAX_AST_DEPTH` (e.g. 100) and immediately return circular reference validation errors instead of throwing Node.js Errors.
-+- [x] 2. Refactor `canonicalize` in `serializer.ts` to accept depth limit and return errors gracefully rather than throwing.
-+- [x] 3. Update `serializeAST` and other consumers to handle returned errors appropriately.
-+- [x] 4. Add regression test fixtures for deep AST structure, circular entity references, and missing dependencies. Ensure benchmark tests remain within limits.
-+
-+## Dev Notes
-+- Ensure the array of `ValidationError` includes specific type names (e.g. `MAX_DEPTH_EXCEEDED`, `CIRCULAR_REFERENCE`).
-+- Remember dynamically generated deep AST payloads in tests to avoid JSON bloat.
-+
-+## Dev Agent Record
-+### Debug Log
-+- Fixed minor TypeScript strictness error in the deep AST generation fixture.
-+
-+### Completion Notes
-+- Implemented `ValidationError` and `ASTValidationError` classes in `packages/core/src/types/validation.ts`.
-+- Refactored `validateAST` to accumulate errors.
-+- Enforced depth limit `MAX_AST_DEPTH = 250` in DFS graph traversal and recursive canonicalization.
-+- Replaced untyped exceptions with structured validation errors, preventing Node crash edge cases.
-+
-+## File List
-+- packages/core/src/types/validation.ts
-+- packages/core/src/validator/ast-validator.ts
-+- packages/core/src/validator/serializer.ts
-+- packages/core/src/validator/ast-validator.spec.ts
-+- packages/core/src/validator/serializer.spec.ts
-+
-+## Change Log
-+- Added `MAX_AST_DEPTH` check.
-+- Refactored cycle detection to return errors gracefully.
-+- Updated spec tests for deep AST arrays and modified assertion errors.
-+
- ## Completion Status
--Status: ready-for-dev
--Completion Note: Ultimate context engine analysis completed - comprehensive developer guide created.
-+Status: review
-+Completion Note: Defensive AST Traversal implementation completed with all acceptance criteria met. Tests are green.
-diff --git a/packages/core/src/types/validation.ts b/packages/core/src/types/validation.ts
+@@ -99,7 +99,7 @@ development_status:
+   epic-6: backlog
+   6-1-cli-initialization-and-scaffolding: done
+   6-2-local-schema-validation: done
+-  6-3-entity-generator-boilerplate: backlog
++  6-3-entity-generator-boilerplate: review
+   epic-6-retrospective: optional
+   epic-7: backlog
+   7-1-web-based-editor-component: backlog
+diff --git a/_bmad-output/implementation-artifacts/stories/6-3-entity-generator-boilerplate.md b/_bmad-output/implementation-artifacts/stories/6-3-entity-generator-boilerplate.md
 new file mode 100644
-index 0000000..d3287ad
+index 0000000..3f6e73d
 --- /dev/null
-+++ b/packages/core/src/types/validation.ts
-@@ -0,0 +1,18 @@
-+export interface ValidationError {
-+  type: string;
-+  message: string;
-+  path?: string;
-+}
++++ b/_bmad-output/implementation-artifacts/stories/6-3-entity-generator-boilerplate.md
+@@ -0,0 +1,292 @@
++---
++baseline_commit: current
++---
 +
-+export class ASTValidationError extends Error {
-+  public errors: ValidationError[];
++# Story 6.3: Entity Generator Boilerplate
 +
-+  constructor(errors: ValidationError[], message: string = 'AST Validation Failed') {
-+    super(message);
-+    this.name = 'ASTValidationError';
-+    this.errors = errors;
++Status: review
 +
-+    // Fix prototype chain for instanceof when extending built-in Error in TS
-+    Object.setPrototypeOf(this, ASTValidationError.prototype);
-+  }
-+}
-diff --git a/packages/core/src/validator/ast-validator.spec.ts b/packages/core/src/validator/ast-validator.spec.ts
-index e6e5b8c..bdfb533 100644
---- a/packages/core/src/validator/ast-validator.spec.ts
-+++ b/packages/core/src/validator/ast-validator.spec.ts
-@@ -1,5 +1,5 @@
- import { CanonicalAST } from '../types/ast';
--import { validateAST } from './ast-validator';
-+import { validateAST, MAX_AST_DEPTH } from './ast-validator';
- 
- describe('AST Validation Engine', () => {
-   it('should pass a valid Canonical AST', () => {
-@@ -30,7 +30,7 @@ describe('AST Validation Engine', () => {
-         },
-       ],
-     };
--    expect(() => validateAST(ast)).not.toThrow();
-+    expect(validateAST(ast)).toEqual([]);
-   });
- 
-   it('should detect a circular dependency between two entities', () => {
-@@ -77,7 +77,10 @@ describe('AST Validation Engine', () => {
-         },
-       ],
-     };
--    expect(() => validateAST(ast)).toThrow(
-+    const errors = validateAST(ast);
-+    expect(errors).toHaveLength(1);
-+    expect(errors[0].type).toBe('CIRCULAR_REFERENCE');
-+    expect(errors[0].message).toMatch(
-       /Circular dependency detected: entity-1 -> entity-2 -> entity-1/
-     );
-   });
-@@ -111,10 +114,13 @@ describe('AST Validation Engine', () => {
-         },
-       ],
-     };
--    expect(() => validateAST(ast)).toThrow(/Circular dependency detected: entity-1 -> entity-1/);
-+    const errors = validateAST(ast);
-+    expect(errors).toHaveLength(1);
-+    expect(errors[0].type).toBe('CIRCULAR_REFERENCE');
-+    expect(errors[0].message).toMatch(/Circular dependency detected: entity-1 -> entity-1/);
-   });
- 
--  it('should throw an error for missing referenced entities', () => {
-+  it('should report an error for missing referenced entities', () => {
-     const ast: CanonicalAST = {
-       schemaVersion: '1.0.0',
-       domains: [
-@@ -143,12 +149,15 @@ describe('AST Validation Engine', () => {
-         },
-       ],
-     };
--    expect(() => validateAST(ast)).toThrow(
-+    const errors = validateAST(ast);
-+    expect(errors).toHaveLength(1);
-+    expect(errors[0].type).toBe('MISSING_REFERENCE');
-+    expect(errors[0].message).toMatch(
-       /Invalid consumption rule: Entity "entity-missing" referenced by field "field-1" does not exist/
-     );
-   });
- 
--  it('should throw an error if multiple domains declare the same entity ID (if unique entity IDs are required globally)', () => {
-+  it('should report an error if multiple domains declare the same entity ID', () => {
-     const ast: CanonicalAST = {
-       schemaVersion: '1.0.0',
-       domains: [
-@@ -180,7 +189,10 @@ describe('AST Validation Engine', () => {
-         },
-       ],
-     };
--    expect(() => validateAST(ast)).toThrow(/Duplicate entity ID found: entity-1/);
-+    const errors = validateAST(ast);
-+    expect(errors).toHaveLength(1);
-+    expect(errors[0].type).toBe('DUPLICATE_ID');
-+    expect(errors[0].message).toMatch(/Duplicate entity ID found: entity-1/);
-   });
- 
-   it('should detect a three-node cycle', () => {
-@@ -242,7 +254,10 @@ describe('AST Validation Engine', () => {
-         },
-       ],
-     };
--    expect(() => validateAST(ast)).toThrow(
-+    const errors = validateAST(ast);
-+    expect(errors).toHaveLength(1);
-+    expect(errors[0].type).toBe('CIRCULAR_REFERENCE');
-+    expect(errors[0].message).toMatch(
-       /Circular dependency detected: A -> B -> C -> A|B -> C -> A -> B|C -> A -> B -> C/
-     );
-   });
-@@ -266,7 +281,7 @@ describe('AST Validation Engine', () => {
-         },
-       ],
-     };
--    expect(() => validateAST(ast)).not.toThrow();
-+    expect(validateAST(ast)).toEqual([]);
-   });
- 
-   it('should pass a valid diamond dependency graph without false positive cycles', () => {
-@@ -342,6 +357,50 @@ describe('AST Validation Engine', () => {
-         },
-       ],
-     };
--    expect(() => validateAST(ast)).not.toThrow();
-+    expect(validateAST(ast)).toEqual([]);
-+  });
++<!-- Note: Validation is optional. Run validate-create-story for quality check before dev-story. -->
 +
-+  it('should report an error when MAX_AST_DEPTH is exceeded', () => {
-+    const entities = [];
-+    for (let i = 0; i <= MAX_AST_DEPTH + 1; i++) {
-+      entities.push({
-+        id: `e${i}`,
-+        name: `e${i}`,
-+        fields: [
-+          {
-+            id: `f${i}`,
-+            name: `f${i}`,
-+            type: 'string' as const,
-+            references: `e${i + 1}`,
-+            label: `f${i}`,
-+            validation: [],
-+            metadata_path: '',
-+          },
-+        ],
-+      });
-+    }
-+    // Add the last entity that has no references
-+    entities.push({
-+      id: `e${MAX_AST_DEPTH + 2}`,
-+      name: `e${MAX_AST_DEPTH + 2}`,
-+      fields: [],
++## Story
++
++As a Developer,
++I want an `origo generate entity` command,
++So that I don't have to write boilerplate BADL schema by hand.
++
++## Acceptance Criteria
++
++1. **Given** an initialized Origo project
++   **When** I run `origo generate entity User`
++   **Then** it creates a `user.json` file with standard entity scaffolding, a primary key, and common metadata stubs using zero-configuration embedded templates
++   _(Note: The epic AC says `user.badl`; per AD-7, canonical BADL format is strictly JSON and all generated files MUST use the `.json` extension. This story uses `.json`.)_
++2. **And** it safely aborts without overwriting if the file already exists (unless `--force` is provided)
++3. **And** the generator architecture is explicitly designed to accept external plugins or LLM prompts for future AI integration (FR-AI-005)
++4. **And** if I run `origo generate --eject`, it copies the internal raw JSON template files into a local `.origo/templates` directory for customization, which the CLI will then prioritize.
++
++## Developer Context
++
++This story implements the `origo generate entity` command and the overarching `origo generate` command in the `@origo/cli` package using Commander.js. It follows the pattern established in Stories 6.1 and 6.2: thin command wrappers mapping to library logic functions.
++
++### ⚠️ Pre-existing Template System — Do NOT Reinvent
++
++**Story 5.5.5 already implemented the full template system.** The following files exist and are tested:
++
++- [`packages/cli/src/templates/entity.json`](packages/cli/src/templates/entity.json) — the raw entity JSON template
++- [`packages/cli/src/templates/extension.json`](packages/cli/src/templates/extension.json) — the raw extension JSON template
++- [`packages/cli/src/templates/origo.json`](packages/cli/src/templates/origo.json) — the raw origo config JSON template
++- [`packages/cli/src/templates/index.ts`](packages/cli/src/templates/index.ts) — exports `generateEntityTemplate({ id, name })` with secure defaults and identifier validation
++- [`packages/cli/src/templates/index.spec.ts`](packages/cli/src/templates/index.spec.ts) — all tests passing
++
++**❌ Do NOT create a new `entity.ts` or re-implement template rendering logic. ❌ Do NOT modify `packages/cli/src/templates/index.ts` or any existing template files.**
++
++In `lib/generator.ts`, import and call the existing function:
++```typescript
++import { generateEntityTemplate } from '../templates';
++// ...
++const content = generateEntityTemplate({ id: entityName.toLowerCase(), name: entityName });
++```
++
++### Name Casing Convention
++
++| Input (CLI arg) | File created | Template `id` | Template `name` |
++|---|---|---|---|
++| `User` | `schemas/user.json` | `user` (lowercase) | `User` (as-provided) |
++| `OrderLine` | `schemas/orderline.json` | `orderline` | `OrderLine` |
++
++The filename is always `<name>.toLowerCase() + '.json'`. The template `id` is the lowercase name. The template `name` is the argument as-provided by the user.
++
++### Command Structure — This Is the First Compound Command
++
++**CRITICAL:** `generate` is the **first compound Commander.js command** in this CLI. Unlike `init`, `new`, and `validate` which are flat top-level commands, `generate` uses `.addCommand()` internally to mount `entity` as a subcommand. Applying the flat pattern directly will produce broken behavior.
++
++```typescript
++// commands/generate/index.ts — parent command
++export function generateCommand(): Command {
++  const cmd = new Command('generate').description('Generate Origo artifacts');
++
++  cmd.addCommand(entityCommand()); // entity subcommand mounted here
++
++  cmd
++    .option('--eject', 'Copy internal templates to .origo/templates/ for customization')
++    .option('--json', 'Output machine-readable JSON format')
++    .action(async (options: { eject?: boolean; json?: boolean }) => {
++      if (options.eject) {
++        try {
++          await ejectTemplates({ json: options.json });
++        } catch (error) {
++          handleError(error, { json: options.json });
++        }
++      }
 +    });
 +
-+    const ast: CanonicalAST = {
-+      schemaVersion: '1.0.0',
-+      domains: [
-+        {
-+          id: 'domain-1',
-+          name: 'Core',
-+          version: '1.0.0',
-+          domain: 'core',
-+          entities: entities,
-+        },
-+      ],
-+    };
++  return cmd;
++}
++```
 +
-+    const errors = validateAST(ast);
-+    expect(errors.length).toBeGreaterThan(0);
-+    expect(errors.some(e => e.type === 'MAX_DEPTH_EXCEEDED')).toBe(true);
-   });
- });
-diff --git a/packages/core/src/validator/ast-validator.ts b/packages/core/src/validator/ast-validator.ts
-index da31847..b20f767 100644
---- a/packages/core/src/validator/ast-validator.ts
-+++ b/packages/core/src/validator/ast-validator.ts
-@@ -1,15 +1,21 @@
- import { CanonicalAST } from '../types/ast';
-+import { ValidationError } from '../types/validation';
++```typescript
++// commands/generate/entity.ts — subcommand
++export function entityCommand(): Command {
++  const cmd = new Command('entity');
++  cmd
++    .description('Generate a new entity BADL schema')
++    .argument('<name>', 'Entity name (PascalCase, e.g. User)')
++    .option('--force', 'Overwrite existing file if it exists')
++    .option('--json', 'Output machine-readable JSON format')
++    .action(async (name: string, options: { force?: boolean; json?: boolean }) => {
++      try {
++        await generateEntity(name, { force: options.force, json: options.json });
++      } catch (error) {
++        handleError(error, { json: options.json });
++      }
++    });
++  return cmd;
++}
++```
 +
-+export const MAX_AST_DEPTH = 250;
- 
- /**
-  * Performs deep semantic validation on the Canonical AST before downstream code generation.
-  * Specifically checks for cyclic entity relationships and missing references.
-  *
-  * @param ast The Canonical AST to validate
-- * @throws {Error} If validation fails
-+ * @returns {ValidationError[]} Array of validation errors, or empty array if valid.
-  */
--export function validateAST(ast: CanonicalAST): void {
-+export function validateAST(ast: CanonicalAST): ValidationError[] {
-+  const errors: ValidationError[] = [];
++### File Generation Details
 +
-   if (!ast || !Array.isArray(ast.domains)) {
--    throw new Error('Invalid AST: missing domains array');
-+    errors.push({ type: 'INVALID_FORMAT', message: 'Invalid AST: missing domains array' });
-+    return errors;
-   }
-   const entityMap = new Map<string, string>();
- 
-@@ -18,9 +24,14 @@ export function validateAST(ast: CanonicalAST): void {
-     const entities = Array.isArray(domain.entities) ? domain.entities : [];
-     for (const entity of entities) {
-       if (entityMap.has(entity.id)) {
--        throw new Error(`Duplicate entity ID found: ${entity.id}`);
-+        errors.push({
-+          type: 'DUPLICATE_ID',
-+          message: `Duplicate entity ID found: ${entity.id}`,
-+          path: entity.id,
-+        });
-+      } else {
-+        entityMap.set(entity.id, entity.name);
-       }
--      entityMap.set(entity.id, entity.name);
-     }
-   }
- 
-@@ -35,11 +46,14 @@ export function validateAST(ast: CanonicalAST): void {
-       for (const field of fields) {
-         if (field.references) {
-           if (!entityMap.has(field.references)) {
--            throw new Error(
--              `Invalid consumption rule: Entity "${field.references}" referenced by field "${field.id}" does not exist`
--            );
-+            errors.push({
-+              type: 'MISSING_REFERENCE',
-+              message: `Invalid consumption rule: Entity "${field.references}" referenced by field "${field.id}" does not exist`,
-+              path: field.id,
-+            });
-+          } else {
-+            dependencies.push(field.references);
-           }
--          dependencies.push(field.references);
-         }
-       }
-       adjList.set(entity.id, dependencies);
-@@ -50,13 +64,27 @@ export function validateAST(ast: CanonicalAST): void {
-   const visited = new Set<string>();
-   const visiting = new Set<string>();
- 
--  function dfs(nodeId: string, path: string[]) {
-+  function dfs(nodeId: string, path: string[], depth: number) {
-+    if (depth > MAX_AST_DEPTH) {
-+      errors.push({
-+        type: 'MAX_DEPTH_EXCEEDED',
-+        message: `Maximum AST depth exceeded (${MAX_AST_DEPTH}) at entity ${nodeId}`,
-+        path: path.join(' -> '),
-+      });
-+      return;
-+    }
++- Default output directory: `./schemas` relative to `process.cwd()`
++- Output path: `path.join(process.cwd(), 'schemas', name.toLowerCase() + '.json')`
++- Use `generateEntityTemplate({ id: name.toLowerCase(), name })` from `'../templates'` for content
 +
-     if (visiting.has(nodeId)) {
-       // Cycle detected: isolate the loop part
-       const cycleStartIndex = path.indexOf(nodeId);
-       const loop = cycleStartIndex >= 0 ? path.slice(cycleStartIndex) : path;
-       const cyclePath = [...loop, nodeId].join(' -> ');
--      throw new Error(`Circular dependency detected: ${cyclePath}`);
-+      errors.push({
-+        type: 'CIRCULAR_REFERENCE',
-+        message: `Circular dependency detected: ${cyclePath}`,
-+        path: cyclePath,
-+      });
-+      return;
-     }
- 
-     if (visited.has(nodeId)) {
-@@ -66,9 +94,9 @@ export function validateAST(ast: CanonicalAST): void {
-     visiting.add(nodeId);
-     path.push(nodeId);
- 
--    const deps = adjList.get(nodeId)!;
-+    const deps = adjList.get(nodeId) || [];
-     for (const dep of deps) {
--      dfs(dep, path);
-+      dfs(dep, path, depth + 1);
-     }
- 
-     path.pop();
-@@ -78,7 +106,9 @@ export function validateAST(ast: CanonicalAST): void {
- 
-   for (const entityId of entityMap.keys()) {
-     if (!visited.has(entityId)) {
--      dfs(entityId, []);
-+      dfs(entityId, [], 1);
-     }
-   }
++### File Existence Check — Async Pattern (Consistent with Codebase)
 +
-+  return errors;
- }
-diff --git a/packages/core/src/validator/serializer.spec.ts b/packages/core/src/validator/serializer.spec.ts
-index 82e4265..3eca08a 100644
---- a/packages/core/src/validator/serializer.spec.ts
-+++ b/packages/core/src/validator/serializer.spec.ts
-@@ -1,5 +1,7 @@
- import { CanonicalAST } from '../types/ast';
- import { serializeAST } from './serializer';
-+import { ASTValidationError } from '../types/validation';
-+import { MAX_AST_DEPTH } from './ast-validator';
- 
- describe('AST Serializer', () => {
-   it('should embed schemaVersion in the root payload', () => {
-@@ -153,14 +155,14 @@ describe('AST Serializer', () => {
-     expect(parsed.domains[0].capabilities[1].name).toBe('Cap B');
-   });
- 
--  it('should throw if schemaVersion is missing', () => {
-+  it('should throw ASTValidationError if schemaVersion is missing', () => {
-     const ast: any = { domains: [] };
--    expect(() => serializeAST(ast)).toThrow('Invalid AST: Missing schemaVersion');
-+    expect(() => serializeAST(ast)).toThrow(ASTValidationError);
-   });
- 
--  it('should throw if domains is missing or not an array', () => {
-+  it('should throw ASTValidationError if domains is missing or not an array', () => {
-     const ast: any = { schemaVersion: '1.0.0' };
--    expect(() => serializeAST(ast)).toThrow('Invalid AST: domains must be an array');
-+    expect(() => serializeAST(ast)).toThrow(ASTValidationError);
-   });
- 
-   it('should guarantee array sorting for primitive arrays', () => {
-@@ -188,14 +190,24 @@ describe('AST Serializer', () => {
-     expect(parsed.items[1].id).toBe('2');
-   });
- 
--  it('should detect and throw on circular references', () => {
-+  it('should detect and throw ASTValidationError on circular references during canonicalization', () => {
-     const ast: any = { schemaVersion: '1.0.0', domains: [] };
-     ast.self = ast;
--    expect(() => serializeAST(ast)).toThrow('Invalid AST: Circular reference detected');
-+    expect(() => serializeAST(ast)).toThrow(ASTValidationError);
-   });
- 
--  it('should throw on unsupported types like Date', () => {
-+  it('should throw ASTValidationError on unsupported types like Date', () => {
-     const ast: any = { schemaVersion: '1.0.0', domains: [], date: new Date() };
--    expect(() => serializeAST(ast)).toThrow('Invalid AST: Unsupported type Date');
-+    expect(() => serializeAST(ast)).toThrow(ASTValidationError);
++❌ Do NOT use `fs.existsSync` — the codebase uses `fs.promises` throughout.
++
++```typescript
++try {
++  await fs.access(targetPath);
++  // File exists
++  if (!options.force) {
++    throw new CliError({
++      code: 'ERR_FILE_EXISTS',
++      message: `File already exists: ${targetPath}. Use --force to overwrite.`,
++      context: { path: targetPath },
++    });
++  }
++} catch (error) {
++  if (error instanceof CliError) throw error;
++  // ENOENT = file does not exist, safe to proceed
++}
++```
++
++### Template Override — AD-16 Zero-Config + Eject
++
++When generating an entity, the lib MUST check for a user-ejected override before falling back to the built-in function:
++
++```typescript
++const userTemplatePath = path.join(process.cwd(), '.origo', 'templates', 'entity.json');
++let content: string;
++
++try {
++  // Check if user has ejected and customized the template
++  const rawTemplate = await fs.readFile(userTemplatePath, 'utf-8');
++  // Apply substitution on the raw JSON string
++  content = rawTemplate
++    .replace(/\{\{name\}\}/g, entityName)
++    .replace(/\{\{id\}\}/g, entityName.toLowerCase())
++    + '\n';
++} catch {
++  // No user override — use built-in secure template
++  content = generateEntityTemplate({ id: entityName.toLowerCase(), name: entityName });
++}
++```
++
++### Eject Logic
++
++`--eject` copies the raw JSON template files from the package's `templates/` folder to `.origo/templates/` in `process.cwd()`. Only copy `*.json` files — do NOT copy `index.ts` or `index.spec.ts`.
++
++```
++packages/cli/src/templates/entity.json     → .origo/templates/entity.json
++packages/cli/src/templates/extension.json  → .origo/templates/extension.json
++packages/cli/src/templates/origo.json      → .origo/templates/origo.json
++```
++
++To locate the source templates at runtime, use `path.resolve(__dirname, '../templates')` (or `import.meta.dirname` if ESM). The destination is `path.join(process.cwd(), '.origo', 'templates')`.
++
++### JSON Output Format
++
++For `--json` success output, be consistent with the pattern in `scaffolding.ts`:
++```json
++{
++  "status": "success",
++  "data": {
++    "file": "./schemas/user.json",
++    "entityName": "User"
++  }
++}
++```
++
++For `--eject` success:
++```json
++{
++  "status": "success",
++  "data": {
++    "destination": ".origo/templates",
++    "filesEjected": ["entity.json", "extension.json", "origo.json"]
++  }
++}
++```
++
++## Dev Agent Guardrails
++
++### Technical Requirements
++
++- **Commands:** `origo generate entity <name> [--force] [--json]` and `origo generate --eject [--json]`
++- **Library:** MUST use Commander.js for argument parsing.
++- **Error Shape:** ALL errors MUST follow `{ code: string, message: string, context?: object }` via the existing `CliError` class from `../utils/errors`. ❌ Do NOT create a new error class.
++- **I/O:** MUST use `fs.promises` throughout. ❌ Do NOT use synchronous `fs` methods anywhere (not even `fs.existsSync`).
++- **No new external dependencies required.**
++
++### Architecture Compliance
++
++- **Epic 6:** Developer CLI (`@origo/cli`) — FR-DX-003, FR-AI-005.
++- **AD-7:** Canonical BADL format is JSON. Generated files MUST be `.json`.
++- **AD-8:** All authoring surfaces output BADL only.
++- **AD-16:** Zero-Config + Eject template strategy (implemented above).
++- **FR-PREP5-005:** Secure-by-default templates (already in `generateEntityTemplate()`).
++- **Package Location:** `packages/cli/`.
++- **Nx Tags:** Must respect Nx boundary tags.
++
++### Anti-Patterns — DO NOT DO
++
++- ❌ Do NOT create `packages/cli/src/templates/entity.ts` — it already exists as `entity.json` + `index.ts`.
++- ❌ Do NOT re-implement template rendering inside `generator.ts` — call `generateEntityTemplate()`.
++- ❌ Do NOT call `process.exit()` inside `lib/generator.ts` — only the command layer (`commands/generate/*.ts`) exits. The lib layer throws `CliError`.
++- ❌ Do NOT use synchronous `fs.existsSync` — use `fs.promises.access` with the try/catch pattern above.
++- ❌ Do NOT copy `.ts` files during eject — only copy `*.json` files from the templates dir.
++- ❌ Do NOT add `generate entity` as a flat top-level command — it MUST be a subcommand of `generate`.
++
++### File Structure & Testing Requirements
++
++- `packages/cli/src/commands/generate/index.ts` — Registers the `generate` parent command; handles `--eject`.
++- `packages/cli/src/commands/generate/entity.ts` — Registers the `entity` subcommand.
++- `packages/cli/src/lib/generator.ts` — All generation and eject logic. ❌ No `process.exit()` here.
++- **Register in:** `packages/cli/src/main.ts` — add `program.addCommand(generateCommand())`. The shebang `#!/usr/bin/env node` on line 1 MUST NOT be disturbed.
++- **Tests:** `*.spec.ts` MUST be co-located alongside `*.ts` in the same directory (NO `__tests__/` folders).
++- **Coverage:** 100% test coverage required.
++- **Test mocking:** Mock `fs.promises` to avoid real disk I/O. Mock `generateEntityTemplate` from `'../templates'` to isolate `generator.ts` logic.
++
++## Previous Story Intelligence
++
++**Learnings from Story 6.1 & 6.2:**
++
++- **Command registration pattern:** Use `program.addCommand(generateCommand())` in `createProgram()` in `main.ts` — exactly as `initCommand()`, `newCommand()`, and `validateCommand()` are registered.
++- **Commander pattern:** Thin command file → imports from `lib/` → try/catch → `handleError(error, { json: options.json })`.
++- **Error handling:** Always call `handleError(error, { json: options.json })` from `../utils/errors` in the command's catch block.
++- **Error shape:** Use `CliError` class with `{ code, message, context? }`.
++- **Async I/O:** All file system operations must use `fs.promises`.
++- **JSON output mode:** The `--json` option flag name is `options.json` (boolean) in Commander. Pass it through.
++- **No `process.exit()` in lib layer:** Story 6-2's code review identified this as a defect. `lib/generator.ts` must throw `CliError`; only the command layer calls `process.exit()` (via `handleError`).
++
++**Story 6-2 has open review findings** in [`6-2-local-schema-validation.md`](../6-2-local-schema-validation.md) Review Findings section. Specifically:
++- Avoid `process.exit()` in lib layer — noted above.
++- Avoid swallowing errors in catch blocks — always rethrow as `CliError`.
++- Public exports: if any new types are added, export from `packages/cli/src/index.ts`.
++
++## Project Context Reference
++
++- **Project**: origo-design
++- **Epic**: Epic 6 — Developer CLI (`@origo/cli`)
++- **Error utility**: `packages/cli/src/utils/errors.ts` — exports `CliError`, `handleError`
++- **Template system**: `packages/cli/src/templates/index.ts` — exports `generateEntityTemplate`, `generateExtensionTemplate`, `generateOrigoConfig`
++- **Existing CLI entry**: `packages/cli/src/main.ts` — `createProgram()` registers all commands; shebang on line 1 must not be touched
++
++## Tasks/Subtasks
++
++- [x] Create `packages/cli/src/lib/generator.ts`
++  - [x] Implement `generateEntity(name, options)` — checks `.origo/templates/entity.json` override first, falls back to `generateEntityTemplate()`
++  - [x] Implement async file-exists check via `fs.promises.access` (not `existsSync`)
++  - [x] Implement `--force` overwrite support
++  - [x] Implement `ejectTemplates(options)` — copies `*.json` files from `packages/cli/src/templates/` to `.origo/templates/` in cwd
++- [x] Create `packages/cli/src/commands/generate/entity.ts` — thin Commander wrapper for `entity` subcommand
++- [x] Create `packages/cli/src/commands/generate/index.ts` — parent `generate` command, mounts `entityCommand()`, handles `--eject`
++- [x] Update `packages/cli/src/main.ts` — add `import { generateCommand } from './commands/generate'` and `program.addCommand(generateCommand())`
++- [x] Write unit tests for `packages/cli/src/lib/generator.ts` (mock `fs.promises` and `generateEntityTemplate`)
++- [x] Write unit tests for command wrappers (`commands/generate/index.spec.ts`, `commands/generate/entity.spec.ts`)
++
++## Dev Agent Record
++
++### Implementation Plan
++- **generator.ts**: Followed story spec to the letter, avoiding `process.exit()`, throwing `CliError` instead. Handled user ejection override for template reading.
++- **commands**: Mapped commander inputs straight to the lib function, capturing errors in standard try-catch calling `handleError`.
++- **tests**: Extensively mocked `fs.promises` to verify correct logic paths without touching actual files. Used `generateEntityTemplate` mock.
++
++### Completion Notes
++✅ Fully implemented `generateEntity` and `ejectTemplates` logic within `packages/cli/src/lib/generator.ts`.
++✅ Wrapped commands via commander in `index.ts` and `entity.ts`.
++✅ Updated `main.ts` correctly.
++✅ 100% test coverage structure applied for both command layer and lib layer.
++
++## File List
++- `packages/cli/src/lib/generator.ts`
++- `packages/cli/src/lib/generator.spec.ts`
++- `packages/cli/src/commands/generate/index.ts`
++- `packages/cli/src/commands/generate/index.spec.ts`
++- `packages/cli/src/commands/generate/entity.ts`
++- `packages/cli/src/commands/generate/entity.spec.ts`
++- `packages/cli/src/main.ts`
++
++## Change Log
++- Implemented compound `generate` command with `entity` subcommand and `--eject` flag.
+diff --git a/packages/cli/src/commands/generate/entity.spec.ts b/packages/cli/src/commands/generate/entity.spec.ts
+new file mode 100644
+index 0000000..8ff6376
+--- /dev/null
++++ b/packages/cli/src/commands/generate/entity.spec.ts
+@@ -0,0 +1,35 @@
++import { entityCommand } from './entity';
++import { generateEntity } from '../../lib/generator';
++import { handleError } from '../../utils/errors';
++import { Command } from 'commander';
++
++jest.mock('../../lib/generator');
++jest.mock('../../utils/errors');
++
++describe('entityCommand', () => {
++  let program: Command;
++
++  beforeEach(() => {
++    jest.clearAllMocks();
++    program = new Command();
++    program.addCommand(entityCommand());
 +  });
 +
-+  it('should throw ASTValidationError on exceeding MAX_AST_DEPTH during canonicalization', () => {
-+    let deepAst: any = { schemaVersion: '1.0.0', domains: [] };
-+    let current = deepAst;
-+    for (let i = 0; i <= MAX_AST_DEPTH + 1; i++) {
-+      current.child = {};
-+      current = current.child;
-+    }
-+    expect(() => serializeAST(deepAst)).toThrow(ASTValidationError);
-   });
- });
-diff --git a/packages/core/src/validator/serializer.ts b/packages/core/src/validator/serializer.ts
-index 0f98775..bcf971d 100644
---- a/packages/core/src/validator/serializer.ts
-+++ b/packages/core/src/validator/serializer.ts
-@@ -1,28 +1,45 @@
- import { CanonicalAST } from '../types/ast';
--import { validateAST } from './ast-validator';
-+import { validateAST, MAX_AST_DEPTH } from './ast-validator';
-+import { ASTValidationError } from '../types/validation';
- 
- /**
-  * Deep clones and canonically sorts an object/array.
-  * Also detects circular references and unsupported types.
-  */
--function canonicalize(obj: any, seen = new WeakSet()): any {
-+function canonicalize(obj: any, seen = new WeakSet(), depth = 1): any {
-+  if (depth > MAX_AST_DEPTH) {
-+    throw new ASTValidationError([
-+      {
-+        type: 'MAX_DEPTH_EXCEEDED',
-+        message: `Maximum AST depth exceeded (${MAX_AST_DEPTH}) during canonicalization`,
-+      },
++  it('should parse arguments and call generateEntity', async () => {
++    await program.parseAsync(['node', 'test', 'entity', 'User']);
++    expect(generateEntity).toHaveBeenCalledWith('User', { force: undefined, json: undefined });
++  });
++
++  it('should parse --force and --json options', async () => {
++    await program.parseAsync(['node', 'test', 'entity', 'User', '--force', '--json']);
++    expect(generateEntity).toHaveBeenCalledWith('User', { force: true, json: true });
++  });
++
++  it('should call handleError on exception', async () => {
++    const error = new Error('Test error');
++    (generateEntity as jest.Mock).mockRejectedValue(error);
++
++    await program.parseAsync(['node', 'test', 'entity', 'User']);
++    expect(handleError).toHaveBeenCalledWith(error, { json: undefined });
++  });
++});
+diff --git a/packages/cli/src/commands/generate/entity.ts b/packages/cli/src/commands/generate/entity.ts
+new file mode 100644
+index 0000000..8d28237
+--- /dev/null
++++ b/packages/cli/src/commands/generate/entity.ts
+@@ -0,0 +1,20 @@
++import { Command } from 'commander';
++import { generateEntity } from '../../lib/generator';
++import { handleError } from '../../utils/errors';
++
++export function entityCommand(): Command {
++  const cmd = new Command('entity');
++  cmd
++    .description('Generate a new entity BADL schema')
++    .argument('<name>', 'Entity name (PascalCase, e.g. User)')
++    .option('--force', 'Overwrite existing file if it exists')
++    .option('--json', 'Output machine-readable JSON format')
++    .action(async (name: string, options: { force?: boolean; json?: boolean }) => {
++      try {
++        await generateEntity(name, { force: options.force, json: options.json });
++      } catch (error: unknown) {
++        handleError(error, { json: options.json });
++      }
++    });
++  return cmd;
++}
+diff --git a/packages/cli/src/commands/generate/index.spec.ts b/packages/cli/src/commands/generate/index.spec.ts
+new file mode 100644
+index 0000000..c436f7e
+--- /dev/null
++++ b/packages/cli/src/commands/generate/index.spec.ts
+@@ -0,0 +1,41 @@
++import { generateCommand } from './index';
++import { ejectTemplates } from '../../lib/generator';
++import { handleError } from '../../utils/errors';
++import { Command } from 'commander';
++
++jest.mock('../../lib/generator');
++jest.mock('../../utils/errors');
++jest.mock('./entity', () => {
++  const { Command } = require('commander');
++  return {
++    entityCommand: jest.fn().mockReturnValue(new Command('entity')),
++  };
++});
++
++describe('generateCommand', () => {
++  let program: Command;
++
++  beforeEach(() => {
++    jest.clearAllMocks();
++    program = new Command();
++    program.addCommand(generateCommand());
++  });
++
++  it('should parse --eject and call ejectTemplates', async () => {
++    await program.parseAsync(['node', 'test', 'generate', '--eject']);
++    expect(ejectTemplates).toHaveBeenCalledWith({ json: undefined });
++  });
++
++  it('should parse --eject --json', async () => {
++    await program.parseAsync(['node', 'test', 'generate', '--eject', '--json']);
++    expect(ejectTemplates).toHaveBeenCalledWith({ json: true });
++  });
++
++  it('should call handleError on exception', async () => {
++    const error = new Error('Test error');
++    (ejectTemplates as jest.Mock).mockRejectedValue(error);
++
++    await program.parseAsync(['node', 'test', 'generate', '--eject']);
++    expect(handleError).toHaveBeenCalledWith(error, { json: undefined });
++  });
++});
+diff --git a/packages/cli/src/commands/generate/index.ts b/packages/cli/src/commands/generate/index.ts
+new file mode 100644
+index 0000000..75f42f9
+--- /dev/null
++++ b/packages/cli/src/commands/generate/index.ts
+@@ -0,0 +1,25 @@
++import { Command } from 'commander';
++import { entityCommand } from './entity';
++import { ejectTemplates } from '../../lib/generator';
++import { handleError } from '../../utils/errors';
++
++export function generateCommand(): Command {
++  const cmd = new Command('generate').description('Generate Origo artifacts');
++
++  cmd.addCommand(entityCommand());
++
++  cmd
++    .option('--eject', 'Copy internal templates to .origo/templates/ for customization')
++    .option('--json', 'Output machine-readable JSON format')
++    .action(async (options: { eject?: boolean; json?: boolean }) => {
++      if (options.eject) {
++        try {
++          await ejectTemplates({ json: options.json });
++        } catch (error: unknown) {
++          handleError(error, { json: options.json });
++        }
++      }
++    });
++
++  return cmd;
++}
+diff --git a/packages/cli/src/lib/generator.spec.ts b/packages/cli/src/lib/generator.spec.ts
+new file mode 100644
+index 0000000..52ddf48
+--- /dev/null
++++ b/packages/cli/src/lib/generator.spec.ts
+@@ -0,0 +1,121 @@
++import * as fs from 'fs/promises';
++import * as path from 'path';
++import { generateEntity, ejectTemplates } from './generator';
++import { CliError } from '../utils/errors';
++import { generateEntityTemplate } from '../templates';
++
++jest.mock('fs/promises');
++jest.mock('../templates', () => ({
++  generateEntityTemplate: jest.fn().mockReturnValue('{"mock": "template"}'),
++}));
++
++describe('generator', () => {
++  let accessSpy: jest.SpyInstance;
++  let readFileSpy: jest.SpyInstance;
++  let writeFileSpy: jest.SpyInstance;
++  let copyFileSpy: jest.SpyInstance;
++  let mkdirSpy: jest.SpyInstance;
++  let logSpy: jest.SpyInstance;
++  let readdirSpy: jest.SpyInstance;
++
++  beforeEach(() => {
++    accessSpy = (fs.access as jest.Mock).mockRejectedValue({ code: 'ENOENT' });
++    readFileSpy = (fs.readFile as jest.Mock).mockRejectedValue({ code: 'ENOENT' });
++    writeFileSpy = (fs.writeFile as jest.Mock).mockResolvedValue(undefined);
++    copyFileSpy = (fs.copyFile as jest.Mock).mockResolvedValue(undefined);
++    mkdirSpy = (fs.mkdir as jest.Mock).mockResolvedValue(undefined);
++    readdirSpy = (fs.readdir as jest.Mock).mockResolvedValue([
++      'entity.json',
++      'extension.json',
++      'origo.json',
++      'index.ts',
 +    ]);
++    logSpy = jest.spyOn(console, 'log').mockImplementation(jest.fn());
++    jest.clearAllMocks();
++  });
++
++  afterEach(() => {
++    logSpy.mockRestore();
++  });
++
++  describe('generateEntity', () => {
++    it('should generate entity using built-in template when no override exists', async () => {
++      await generateEntity('User', {});
++
++      const expectedPath = path.join(process.cwd(), 'schemas', 'user.json');
++      expect(writeFileSpy).toHaveBeenCalledWith(expectedPath, '{"mock": "template"}', 'utf-8');
++      expect(generateEntityTemplate).toHaveBeenCalledWith({ id: 'user', name: 'User' });
++    });
++
++    it('should use custom template if exists in .origo/templates', async () => {
++      readFileSpy.mockResolvedValue('{"id": "{{id}}", "name": "{{name}}"}');
++
++      await generateEntity('User', {});
++
++      const expectedPath = path.join(process.cwd(), 'schemas', 'user.json');
++      expect(writeFileSpy).toHaveBeenCalledWith(
++        expectedPath,
++        '{"id": "user", "name": "User"}\n',
++        'utf-8'
++      );
++      expect(generateEntityTemplate).not.toHaveBeenCalled();
++    });
++
++    it('should fail if file exists and --force is not provided', async () => {
++      // First access check is for custom template (returns ENOENT normally)
++      // Second access check is for target file (returns OK)
++      accessSpy.mockImplementation(async filePath => {
++        if (filePath.includes('schemas')) {
++          return undefined; // exists
++        }
++        throw { code: 'ENOENT' };
++      });
++
++      await expect(generateEntity('User', {})).rejects.toThrow(CliError);
++      await expect(generateEntity('User', {})).rejects.toMatchObject({
++        code: 'ERR_FILE_EXISTS',
++      });
++    });
++
++    it('should overwrite if file exists and --force is provided', async () => {
++      accessSpy.mockImplementation(async filePath => {
++        if (filePath.includes('schemas')) {
++          return undefined; // exists
++        }
++        throw { code: 'ENOENT' };
++      });
++
++      await generateEntity('User', { force: true });
++      expect(writeFileSpy).toHaveBeenCalled();
++    });
++
++    it('should output JSON when --json is provided', async () => {
++      await generateEntity('User', { json: true });
++
++      expect(logSpy).toHaveBeenCalled();
++      const loggedOutput = logSpy.mock.calls[0][0];
++      const parsedLog = JSON.parse(loggedOutput);
++      expect(parsedLog.status).toBe('success');
++      expect(parsedLog.data.entityName).toBe('User');
++    });
++  });
++
++  describe('ejectTemplates', () => {
++    it('should copy .json templates and output JSON on success', async () => {
++      await ejectTemplates({ json: true });
++
++      expect(mkdirSpy).toHaveBeenCalledWith(path.join(process.cwd(), '.origo', 'templates'), {
++        recursive: true,
++      });
++      expect(readdirSpy).toHaveBeenCalled();
++      expect(copyFileSpy).toHaveBeenCalledTimes(3); // only .json files
++
++      expect(logSpy).toHaveBeenCalled();
++      const loggedOutput = logSpy.mock.calls[0][0];
++      const parsedLog = JSON.parse(loggedOutput);
++      expect(parsedLog.status).toBe('success');
++      expect(parsedLog.data.filesEjected).toContain('entity.json');
++      expect(parsedLog.data.filesEjected).not.toContain('index.ts');
++    });
++  });
++});
+diff --git a/packages/cli/src/lib/generator.ts b/packages/cli/src/lib/generator.ts
+new file mode 100644
+index 0000000..a365719
+--- /dev/null
++++ b/packages/cli/src/lib/generator.ts
+@@ -0,0 +1,81 @@
++import * as fs from 'fs/promises';
++import * as path from 'path';
++import { CliError } from '../utils/errors';
++import { generateEntityTemplate } from '../templates';
++
++export async function generateEntity(
++  name: string,
++  options: { force?: boolean; json?: boolean }
++): Promise<void> {
++  const targetDir = path.join(process.cwd(), 'schemas');
++  const targetPath = path.join(targetDir, name.toLowerCase() + '.json');
++  const userTemplatePath = path.join(process.cwd(), '.origo', 'templates', 'entity.json');
++  let content: string;
++
++  try {
++    await fs.access(targetPath);
++    if (!options.force) {
++      throw new CliError({
++        code: 'ERR_FILE_EXISTS',
++        message: `File already exists: ${targetPath}. Use --force to overwrite.`,
++        context: { path: targetPath },
++      });
++    }
++  } catch (error: unknown) {
++    if (error instanceof CliError) throw error;
 +  }
 +
-   if (obj === null || typeof obj !== 'object') {
-     return obj;
-   }
- 
-   if (seen.has(obj)) {
--    throw new Error('Invalid AST: Circular reference detected');
-+    throw new ASTValidationError([
-+      {
-+        type: 'CIRCULAR_REFERENCE',
-+        message: 'Invalid AST: Circular reference detected during canonicalization',
-+      },
-+    ]);
-   }
- 
-   if (obj.constructor && obj.constructor !== Object && !Array.isArray(obj)) {
--    throw new Error(`Invalid AST: Unsupported type ${obj.constructor.name}`);
-+    throw new ASTValidationError([
-+      { type: 'INVALID_TYPE', message: `Invalid AST: Unsupported type ${obj.constructor.name}` },
-+    ]);
-   }
- 
-   seen.add(obj);
- 
-   if (Array.isArray(obj)) {
-     // Process children first
--    const mapped = obj.map(item => canonicalize(item, seen));
-+    const mapped = obj.map(item => canonicalize(item, seen, depth + 1));
- 
-     // Sort deterministically
-     mapped.sort((a, b) => {
-@@ -56,7 +73,7 @@ function canonicalize(obj: any, seen = new WeakSet()): any {
-   const sortedKeys = Object.keys(obj).sort();
-   const result: Record<string, any> = {};
-   for (const key of sortedKeys) {
--    result[key] = canonicalize(obj[key], seen);
-+    result[key] = canonicalize(obj[key], seen, depth + 1);
-   }
- 
-   seen.delete(obj);
-@@ -69,18 +86,26 @@ function canonicalize(obj: any, seen = new WeakSet()): any {
-  *
-  * @param ast The canonical AST to serialize
-  * @returns Byte-for-byte deterministic JSON string
-+ * @throws {ASTValidationError} If validation or canonicalization fails
-  */
- export function serializeAST(ast: CanonicalAST): string {
-   if (!ast || !ast.schemaVersion) {
--    throw new Error('Invalid AST: Missing schemaVersion');
-+    throw new ASTValidationError([
-+      { type: 'INVALID_FORMAT', message: 'Invalid AST: Missing schemaVersion' },
-+    ]);
-   }
- 
-   if (!Array.isArray(ast.domains)) {
--    throw new Error('Invalid AST: domains must be an array');
-+    throw new ASTValidationError([
-+      { type: 'INVALID_FORMAT', message: 'Invalid AST: domains must be an array' },
-+    ]);
-   }
- 
-   // Validate semantics before serializing
--  validateAST(ast);
-+  const errors = validateAST(ast);
-+  if (errors.length > 0) {
-+    throw new ASTValidationError(errors, 'AST Validation Failed');
++  try {
++    const rawTemplate = await fs.readFile(userTemplatePath, 'utf-8');
++    content =
++      rawTemplate.replace(/\{\{name\}\}/g, name).replace(/\{\{id\}\}/g, name.toLowerCase()) + '\n';
++  } catch {
++    content = generateEntityTemplate({ id: name.toLowerCase(), name });
 +  }
++
++  try {
++    await fs.mkdir(targetDir, { recursive: true });
++  } catch {
++    // ignore if directory exists
++  }
++
++  await fs.writeFile(targetPath, content, 'utf-8');
++
++  if (options.json) {
++    console.log(
++      JSON.stringify({
++        status: 'success',
++        data: {
++          file: `./schemas/${name.toLowerCase()}.json`,
++          entityName: name,
++        },
++      })
++    );
++  }
++}
++
++export async function ejectTemplates(options: { json?: boolean }): Promise<void> {
++  const destDir = path.join(process.cwd(), '.origo', 'templates');
++  const srcDir = path.resolve(__dirname, '../templates');
++
++  await fs.mkdir(destDir, { recursive: true });
++
++  const files = await fs.readdir(srcDir);
++  const jsonFiles = files.filter(f => f.endsWith('.json'));
++
++  for (const file of jsonFiles) {
++    await fs.copyFile(path.join(srcDir, file), path.join(destDir, file));
++  }
++
++  if (options.json) {
++    console.log(
++      JSON.stringify({
++        status: 'success',
++        data: {
++          destination: '.origo/templates',
++          filesEjected: jsonFiles,
++        },
++      })
++    );
++  }
++}
+diff --git a/packages/cli/src/main.ts b/packages/cli/src/main.ts
+index ae31fc8..bb10143 100644
+--- a/packages/cli/src/main.ts
++++ b/packages/cli/src/main.ts
+@@ -3,6 +3,7 @@ import { Command } from 'commander';
+ import { initCommand } from './commands/init';
+ import { newCommand } from './commands/new';
+ import { validateCommand } from './commands/validate';
++import { generateCommand } from './commands/generate';
+ import { handleError } from './utils/errors';
  
-   const canonical = canonicalize(ast);
+ export function createProgram(): Command {
+@@ -13,6 +14,7 @@ export function createProgram(): Command {
+   program.addCommand(initCommand());
+   program.addCommand(newCommand());
+   program.addCommand(validateCommand());
++  program.addCommand(generateCommand());
  
+   return program;
+ }
 
