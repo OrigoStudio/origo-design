@@ -3,6 +3,7 @@ import { Command } from 'commander';
 import { initCommand } from './commands/init';
 import { newCommand } from './commands/new';
 import { validateCommand } from './commands/validate';
+import { generateCommand } from './commands/generate';
 import { handleError } from './utils/errors';
 
 export function createProgram(): Command {
@@ -13,6 +14,7 @@ export function createProgram(): Command {
   program.addCommand(initCommand());
   program.addCommand(newCommand());
   program.addCommand(validateCommand());
+  program.addCommand(generateCommand());
 
   return program;
 }
