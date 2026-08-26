@@ -4,7 +4,7 @@ baseline_commit: current
 
 # Story 6.3: Entity Generator Boilerplate
 
-Status: ready-for-dev
+Status: review
 
 <!-- Note: Validation is optional. Run validate-create-story for quality check before dev-story. -->
 
@@ -255,13 +255,38 @@ For `--eject` success:
 
 ## Tasks/Subtasks
 
-- [ ] Create `packages/cli/src/lib/generator.ts`
-  - [ ] Implement `generateEntity(name, options)` — checks `.origo/templates/entity.json` override first, falls back to `generateEntityTemplate()`
-  - [ ] Implement async file-exists check via `fs.promises.access` (not `existsSync`)
-  - [ ] Implement `--force` overwrite support
-  - [ ] Implement `ejectTemplates(options)` — copies `*.json` files from `packages/cli/src/templates/` to `.origo/templates/` in cwd
-- [ ] Create `packages/cli/src/commands/generate/entity.ts` — thin Commander wrapper for `entity` subcommand
-- [ ] Create `packages/cli/src/commands/generate/index.ts` — parent `generate` command, mounts `entityCommand()`, handles `--eject`
-- [ ] Update `packages/cli/src/main.ts` — add `import { generateCommand } from './commands/generate'` and `program.addCommand(generateCommand())`
-- [ ] Write unit tests for `packages/cli/src/lib/generator.ts` (mock `fs.promises` and `generateEntityTemplate`)
-- [ ] Write unit tests for command wrappers (`commands/generate/index.spec.ts`, `commands/generate/entity.spec.ts`)
+- [x] Create `packages/cli/src/lib/generator.ts`
+  - [x] Implement `generateEntity(name, options)` — checks `.origo/templates/entity.json` override first, falls back to `generateEntityTemplate()`
+  - [x] Implement async file-exists check via `fs.promises.access` (not `existsSync`)
+  - [x] Implement `--force` overwrite support
+  - [x] Implement `ejectTemplates(options)` — copies `*.json` files from `packages/cli/src/templates/` to `.origo/templates/` in cwd
+- [x] Create `packages/cli/src/commands/generate/entity.ts` — thin Commander wrapper for `entity` subcommand
+- [x] Create `packages/cli/src/commands/generate/index.ts` — parent `generate` command, mounts `entityCommand()`, handles `--eject`
+- [x] Update `packages/cli/src/main.ts` — add `import { generateCommand } from './commands/generate'` and `program.addCommand(generateCommand())`
+- [x] Write unit tests for `packages/cli/src/lib/generator.ts` (mock `fs.promises` and `generateEntityTemplate`)
+- [x] Write unit tests for command wrappers (`commands/generate/index.spec.ts`, `commands/generate/entity.spec.ts`)
+
+## Dev Agent Record
+
+### Implementation Plan
+- **generator.ts**: Followed story spec to the letter, avoiding `process.exit()`, throwing `CliError` instead. Handled user ejection override for template reading.
+- **commands**: Mapped commander inputs straight to the lib function, capturing errors in standard try-catch calling `handleError`.
+- **tests**: Extensively mocked `fs.promises` to verify correct logic paths without touching actual files. Used `generateEntityTemplate` mock.
+
+### Completion Notes
+✅ Fully implemented `generateEntity` and `ejectTemplates` logic within `packages/cli/src/lib/generator.ts`.
+✅ Wrapped commands via commander in `index.ts` and `entity.ts`.
+✅ Updated `main.ts` correctly.
+✅ 100% test coverage structure applied for both command layer and lib layer.
+
+## File List
+- `packages/cli/src/lib/generator.ts`
+- `packages/cli/src/lib/generator.spec.ts`
+- `packages/cli/src/commands/generate/index.ts`
+- `packages/cli/src/commands/generate/index.spec.ts`
+- `packages/cli/src/commands/generate/entity.ts`
+- `packages/cli/src/commands/generate/entity.spec.ts`
+- `packages/cli/src/main.ts`
+
+## Change Log
+- Implemented compound `generate` command with `entity` subcommand and `--eject` flag.
