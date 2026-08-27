@@ -41,7 +41,7 @@
 # - Retrospective appends its action items to action_items; sprint-status surfaces open ones
 
 generated: 2026-07-29T21:46:02.464968
-last_updated: 2026-08-27T22:41:00+05:30
+last_updated: 2026-08-27T23:15:00+05:30
 project: origo-design
 project_key: NOKEY
 tracking_system: file-system
@@ -122,6 +122,7 @@ development_status:
   10-3-developer-snippets-boilerplates: backlog
   10-4-benchmark-validation-execution: backlog
   epic-10-retrospective: optional
+  retro-6-e2e-npm-verification: ready-for-dev
 
 action_items:
   - id: retro-1-cleanup
@@ -180,7 +181,7 @@ action_items:
     status: done
   - id: retro-6-e2e-npm-verification
     description: "E2E NPM Package Verification: Add a CI step that runs npm pack and executes scaffolding/validation commands against the built tarball before releases. (Owner: Dana)"
-    status: open
+    status: in-progress
   - id: retro-6-security-remediation
     description: "Security & Path Traversal Remediation: Fix path traversal vulnerabilities, remove process.exit(), and stop error swallowing in the @origo/cli library layer. (Owner: Amelia)"
     status: open
