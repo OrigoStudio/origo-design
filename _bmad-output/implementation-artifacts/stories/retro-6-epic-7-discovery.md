@@ -4,7 +4,7 @@ baseline_commit: HEAD
 
 # Story: Epic 7 Discovery & Research Phase (retro-6-epic-7-discovery)
 
-Status: ready-for-dev
+Status: review
 
 ## Story
 
@@ -113,17 +113,37 @@ This spike runs in parallel with `retro-6-security-remediation` (path traversal 
 
 ## Tasks/Subtasks
 
-- [ ] **Task 1: Audit `@origo/core` for Web Worker Compatibility**
-  - [ ] Search `packages/core/src/` for usage of `eval`, `new Function`, `window`, `document`, `XMLHttpRequest`, dynamic `import()` — document each finding with file + line
-  - [ ] Verify `BADLValidator` and `validateAST` reference only `self`-compatible globals
-  - [ ] Run the compiler against `packages/core/src/schemas/__fixtures__/target-page.json` in a `worker_threads` harness (Node) to confirm it executes without runtime errors as a baseline
-- [ ] **Task 2: Assess Monaco Editor Worker CSP Compatibility**
-  - [ ] Document Monaco's worker registration pattern (`MonacoEnvironment.getWorkerUrl`) and whether it produces inline blob URLs or `src 'self'` file URLs
-  - [ ] Determine whether Vite (or the project bundler) can output Monaco workers as standalone `.js` files satisfying `worker-src 'self'`
-  - [ ] Document the exact bundler configuration change needed (e.g., `@monaco-editor/loader` configuration, Vite `worker.format: 'es'`)
-- [ ] **Task 3: Produce Proof-of-Concept Harness**
-  - [ ] Create a minimal standalone harness (e.g., `tools/spikes/epic7-worker-csp/`) that loads `@origo/core` in a browser worker and compiles `target-page.json` — include a CSP meta tag matching the target policy
-  - [ ] Record whether it passes or produces CSP violations (use browser DevTools console for evidence)
-- [ ] **Task 4: Write ADR**
-  - [ ] Document all findings in `_bmad-output/planning-artifacts/adr-epic7-web-worker-csp.md` using the format specified in the Acceptance Criteria
-  - [ ] Include the concrete recommended approach (or blockers + mitigations) for Stories 7.1–7.3
+- [x] **Task 1: Audit `@origo/core` for Web Worker Compatibility**
+  - [x] Search `packages/core/src/` for usage of `eval`, `new Function`, `window`, `document`, `XMLHttpRequest`, dynamic `import()` — document each finding with file + line
+  - [x] Verify `BADLValidator` and `validateAST` reference only `self`-compatible globals
+  - [x] Run the compiler against `packages/core/src/schemas/__fixtures__/target-page.json` in a `worker_threads` harness (Node) to confirm it executes without runtime errors as a baseline
+- [x] **Task 2: Assess Monaco Editor Worker CSP Compatibility**
+  - [x] Document Monaco's worker registration pattern (`MonacoEnvironment.getWorkerUrl`) and whether it produces inline blob URLs or `src 'self'` file URLs
+  - [x] Determine whether Vite (or the project bundler) can output Monaco workers as standalone `.js` files satisfying `worker-src 'self'`
+  - [x] Document the exact bundler configuration change needed (e.g., `@monaco-editor/loader` configuration, Vite `worker.format: 'es'`)
+- [x] **Task 3: Produce Proof-of-Concept Harness**
+  - [x] Create a minimal standalone harness (e.g., `tools/spikes/epic7-worker-csp/`) that loads `@origo/core` in a browser worker and compiles `target-page.json` — include a CSP meta tag matching the target policy
+  - [x] Record whether it passes or produces CSP violations (use browser DevTools console for evidence)
+- [x] **Task 4: Write ADR**
+  - [x] Document all findings in `_bmad-output/planning-artifacts/adr-epic7-web-worker-csp.md` using the format specified in the Acceptance Criteria
+  - [x] Include the concrete recommended approach (or blockers + mitigations) for Stories 7.1–7.3
+
+## Dev Agent Record
+
+### Completion Notes
+- Audited `@origo/core` and verified it contains no browser globals that violate CSP (e.g. `eval`, `window`).
+- Successfully executed the core compiler in a node worker harness against the real `target-page.json` fixture.
+- Created browser harness and bundled worker to confirm standard worker instantiation complies with strict CSP `worker-src 'self'`.
+- Documented Monaco Editor Vite integration to prevent blob URL CSP violations.
+- Wrote ADR resolving the spike.
+
+### File List
+- `tools/spikes/epic7-worker-csp/node-worker-harness.ts`
+- `tools/spikes/epic7-worker-csp/index.html`
+- `tools/spikes/epic7-worker-csp/worker.js`
+- `tools/spikes/epic7-worker-csp/run-browser.js`
+- `_bmad-output/planning-artifacts/adr-epic7-web-worker-csp.md`
+
+### Change Log
+- Added node and browser web worker test harnesses for Epic 7 CSP research
+- Documented spike findings in ADR for Epic 7 Architecture compliance

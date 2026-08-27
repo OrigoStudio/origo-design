@@ -177,7 +177,7 @@ action_items:
     status: done
   - id: retro-6-epic-7-discovery
     description: "Epic 7 Discovery & Research Phase: Technical spike on running AST compilation/validation in a web worker under strict CSP constraints. (Owner: Charlie)"
-    status: in-progress
+    status: review
   - id: retro-6-e2e-npm-verification
     description: "E2E NPM Package Verification: Add a CI step that runs npm pack and executes scaffolding/validation commands against the built tarball before releases. (Owner: Dana)"
     status: open

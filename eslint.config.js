@@ -13,6 +13,7 @@ module.exports = [
       '**/_bmad-output',
       '**/_bmad',
       '**/.agent',
+      'tools/spikes/**/worker.bundle.js',
     ],
   },
   {

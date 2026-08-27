@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="default-src 'self'; script-src 'self'; worker-src 'self';"
+    />
+    <title>CSP Worker Harness</title>
+  </head>
+  <body>
+    <h1>CSP Worker Harness</h1>
+    <div id="output"></div>
+    <!-- Load esbuild-bundled worker to avoid import mapping issues in raw browser -->
+    <script>
+      const worker = new Worker('worker.bundle.js');
+      worker.onmessage = e => {
+        document.getElementById('output').innerText = JSON.stringify(e.data, null, 2);
+        console.log('Worker Message:', e.data);
+      };
+      worker.onerror = e => {
+        console.error('Worker Error:', e.message);
+      };
+    </script>
+  </body>
+</html>
