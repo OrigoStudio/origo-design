@@ -41,7 +41,7 @@
 # - Retrospective appends its action items to action_items; sprint-status surfaces open ones
 
 generated: 2026-07-29T21:46:02.464968
-last_updated: 2026-08-26T22:07:00+05:30
+last_updated: 2026-08-27T22:41:00+05:30
 project: origo-design
 project_key: NOKEY
 tracking_system: file-system
@@ -177,7 +177,7 @@ action_items:
     status: done
   - id: retro-6-epic-7-discovery
     description: "Epic 7 Discovery & Research Phase: Technical spike on running AST compilation/validation in a web worker under strict CSP constraints. (Owner: Charlie)"
-    status: review
+    status: done
   - id: retro-6-e2e-npm-verification
     description: "E2E NPM Package Verification: Add a CI step that runs npm pack and executes scaffolding/validation commands against the built tarball before releases. (Owner: Dana)"
     status: open

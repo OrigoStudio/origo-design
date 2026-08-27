@@ -4008,13 +4008,11 @@
         return (
           (scheme &&
             /** @type {SchemeName} */
-            (
-              SCHEMES[scheme] ||
-                SCHEMES[
-                  /** @type {SchemeName} */
-                  scheme.toLowerCase()
-                ]
-            )) ||
+            (SCHEMES[scheme] ||
+              SCHEMES[
+                /** @type {SchemeName} */
+                scheme.toLowerCase()
+              ])) ||
           void 0
         );
       }
@@ -12642,17 +12640,28 @@
   try {
     const rawJson = JSON.stringify(target_page_default);
     const validator = new BADLValidator();
-    const validatorErrors = validator.validateDomain(rawJson);
-    const astErrors = validateAST(target_page_default);
+    const domainObj =
+      typeof target_page_default === 'string'
+        ? JSON.parse(target_page_default)
+        : target_page_default;
+    const canonicalAst = {
+      schemaVersion: '1.0.0',
+      domains: [domainObj],
+    };
+    const isDomainValid = validator.validateDomain(rawJson);
+    const validatorErrors = validator.errors;
+    const astErrors = validateAST(canonicalAst);
+    const isPassed = isDomainValid && Array.isArray(astErrors) && astErrors.length === 0;
     self.postMessage({
-      status: 'success',
+      status: isPassed ? 'success' : 'validation_failed',
       validatorErrors,
       astErrors,
     });
   } catch (e) {
+    const errorMessage = e instanceof Error ? e.message : String(e);
     self.postMessage({
       status: 'error',
-      error: e.message,
+      error: errorMessage,
     });
   }
 })();

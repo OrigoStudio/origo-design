@@ -4,7 +4,7 @@ baseline_commit: HEAD
 
 # Story: Epic 7 Discovery & Research Phase (retro-6-epic-7-discovery)
 
-Status: review
+Status: done
 
 ## Story
 
@@ -147,3 +147,23 @@ This spike runs in parallel with `retro-6-security-remediation` (path traversal 
 ### Change Log
 - Added node and browser web worker test harnesses for Epic 7 CSP research
 - Documented spike findings in ADR for Epic 7 Architecture compliance
+
+### Review Findings
+
+- [x] [Review][Patch] Update ADR-9 to clarify Monaco worker CSP status as recommended design strategy for Story 7.1 [_bmad-output/planning-artifacts/adr-epic7-web-worker-csp.md:9]
+- [x] [Review][Patch] Update ADR-9 specifying static JSON schema bundling strategy for Monaco under CSP [_bmad-output/planning-artifacts/adr-epic7-web-worker-csp.md:10]
+- [x] [Review][Patch] Expand ADR-9 with architectural specifications (Comlink, latency guidelines, iframe bundler rules) [_bmad-output/planning-artifacts/adr-epic7-web-worker-csp.md:1]
+- [x] [Review][Patch] Inline `<script>` block in HTML test harness violates `script-src 'self'` CSP directive [tools/spikes/epic7-worker-csp/index.html:15]
+- [x] [Review][Patch] Missing build script to generate `worker.bundle.js` from `worker.js` [tools/spikes/epic7-worker-csp/index.html:16]
+- [x] [Review][Patch] Browser test harness executes against `file:///` URL instead of local HTTP server [tools/spikes/epic7-worker-csp/run-browser.js:12]
+- [x] [Review][Patch] `run-browser.js` lacks assertions and exits zero even on worker/browser errors [tools/spikes/epic7-worker-csp/run-browser.js:15]
+- [x] [Review][Patch] Worker harness posts `{ status: 'success' }` regardless of validation error content [tools/spikes/epic7-worker-csp/worker.js:12]
+- [x] [Review][Patch] Catch block accesses `e.message` without verifying `e instanceof Error` [tools/spikes/epic7-worker-csp/worker.js:17]
+- [x] [Review][Patch] `node-worker-harness.ts` uses Node `worker_threads` with `require()` and unsafe `parentPort` access [tools/spikes/epic7-worker-csp/node-worker-harness.ts:9]
+- [x] [Review][Patch] Redundant `.eslintignore` file added to ESLint v9 Flat Config setup [.eslintignore:2]
+- [x] [Review][Patch] Spike scripts require undeclared dependencies (`puppeteer`, `ts-node`) [tools/spikes/epic7-worker-csp/run-browser.js:1]
+- [x] [Review][Patch] CSP meta tag missing explicit `connect-src`, `style-src`, `img-src` directives [tools/spikes/epic7-worker-csp/index.html:6]
+- [x] [Review][Patch] Worker message handler lacks null check for `document.getElementById('output')` [tools/spikes/epic7-worker-csp/index.html:18]
+
+
+
