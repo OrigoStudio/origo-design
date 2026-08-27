@@ -10,6 +10,7 @@
     "e2e": "nx run-many -t e2e",
     "perf:benchmark": "ts-node tools/benchmarks/compare-baseline.ts",
     "perf:test": "ts-node tools/benchmarks/run-tests.ts",
+    "spike:epic7": "node tools/spikes/epic7-worker-csp/build-spike.js",
     "prepare": "husky",
     "release": "nx release --skip-publish"
   },
