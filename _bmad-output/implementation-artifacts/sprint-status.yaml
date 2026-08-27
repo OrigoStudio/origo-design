@@ -96,11 +96,11 @@ development_status:
   5.5-4-verify-core-compiler-source-map-preservation: done
   5.5-5-define-secure-by-default-boilerplate-templates: done
   epic-5.5-retrospective: done
-  epic-6: in-progress
+  epic-6: done
   6-1-cli-initialization-and-scaffolding: done
   6-2-local-schema-validation: done
   6-3-entity-generator-boilerplate: done
-  epic-6-retrospective: optional
+  epic-6-retrospective: done
   epic-7: backlog
   7-1-web-based-editor-component: backlog
   7-2-live-compilation-rendering-pipeline: backlog
@@ -175,3 +175,18 @@ action_items:
   - id: retro-5.5-winston-sync
     description: "Architectural Alignment Sync: Discuss CLI template architecture and physical file generation with Winston to prevent architecture drift in Epic 6. (Owner: Charlie/Patel)"
     status: done
+  - id: retro-6-epic-7-discovery
+    description: "Epic 7 Discovery & Research Phase: Technical spike on running AST compilation/validation in a web worker under strict CSP constraints. (Owner: Charlie)"
+    status: open
+  - id: retro-6-e2e-npm-verification
+    description: "E2E NPM Package Verification: Add a CI step that runs npm pack and executes scaffolding/validation commands against the built tarball before releases. (Owner: Dana)"
+    status: open
+  - id: retro-6-security-remediation
+    description: "Security & Path Traversal Remediation: Fix path traversal vulnerabilities, remove process.exit(), and stop error swallowing in the @origo/cli library layer. (Owner: Amelia)"
+    status: open
+  - id: retro-6-negative-testing
+    description: "Negative Testing & Mock Cleanup: Update CLI unit tests to explicitly test negative scenarios (malformed inputs, traversals) and remove deceptive mocks. (Owner: Elena)"
+    status: open
+  - id: retro-6-central-test-registry
+    description: "Central Test Case Registry Strategy: Create and manage a centralized test case ledger containing test scenarios, mapped affected stories, and release-by-release test results tracking to prevent regressions. (Owner: Dana/Amelia)"
+    status: open
