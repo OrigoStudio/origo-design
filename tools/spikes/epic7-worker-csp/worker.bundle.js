@@ -4008,11 +4008,13 @@
         return (
           (scheme &&
             /** @type {SchemeName} */
-            (SCHEMES[scheme] ||
-              SCHEMES[
-                /** @type {SchemeName} */
-                scheme.toLowerCase()
-              ])) ||
+            (
+              SCHEMES[scheme] ||
+                SCHEMES[
+                  /** @type {SchemeName} */
+                  scheme.toLowerCase()
+                ]
+            )) ||
           void 0
         );
       }
