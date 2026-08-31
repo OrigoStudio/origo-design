@@ -41,7 +41,7 @@
 # - Retrospective appends its action items to action_items; sprint-status surfaces open ones
 
 generated: 2026-07-29T21:46:02.464968
-last_updated: 2026-08-27T23:15:00+05:30
+last_updated: 2026-08-31T21:57:00+05:30
 project: origo-design
 project_key: NOKEY
 tracking_system: file-system
@@ -122,7 +122,7 @@ development_status:
   10-3-developer-snippets-boilerplates: backlog
   10-4-benchmark-validation-execution: backlog
   epic-10-retrospective: optional
-  retro-6-e2e-npm-verification: ready-for-dev
+  retro-6-e2e-npm-verification: done
 
 action_items:
   - id: retro-1-cleanup

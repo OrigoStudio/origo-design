@@ -133,3 +133,9 @@
 ## Deferred from: code review of 6-2-local-schema-validation.md (2026-08-25)
 
 - Directory exists but contains zero .json files [packages/cli/src/lib/validation.ts:325] — (confusing UX but not a bug)
+
+## Deferred from: code review of retro-6-e2e-npm-verification.md (2026-08-31)
+
+- Artificial Multi-Tarball Installation Masks Real Dependency Resolution [tools/scripts/verify-npm-pack.sh]
+- Incomplete CLI Command Surface Testing (e.g. `origo init`) [tools/scripts/verify-npm-pack.sh]
+- Redundant and Uncached Builds in CI Pipelines [.github/workflows/ci.yml]
