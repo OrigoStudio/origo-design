@@ -35,6 +35,12 @@ jobs:
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
 
+      - name: Build Packages
+        run: npx nx run-many -t build -p core cli
+
+      - name: Verify CLI npm pack
+        run: bash tools/scripts/verify-npm-pack.sh
+
       - name: Run Nx Release
         # nx release will exit 0 if there are no releasable commits
         run: npx nx release --skip-publish
