@@ -1,50 +1,184 @@
----
-story_id: retro-6
-story_key: retro-6-security-remediation
-status: ready-for-dev
----
-
-# Story retro-6: security-remediation
+# Story retro-6: Security & Path Traversal Remediation
 
 Status: ready-for-dev
 
 ## Story
 
 As a Platform Engineer,
-I want to fix path traversal vulnerabilities, remove `process.exit()`, and stop error swallowing in the `@origo/cli` library layer,
+I want to fix path traversal vulnerabilities, remove `process.exit()` from library layers, and stop error swallowing in the `@origo/cli` library,
 so that the CLI is secure, can be safely consumed programmatically, and provides transparent error reporting.
 
 ## Acceptance Criteria
 
-1. **Path Traversal Remediation**: Fix path traversal vulnerabilities in `packages/cli/src/lib/validation.ts` and `packages/cli/src/lib/scaffolding.ts` to ensure user-provided paths stay within intended boundaries or are safely resolved.
-2. **Remove `process.exit()` from Library Layer**: Remove all instances of `process.exit()` from the library and command logic (e.g., `utils/errors.ts`, `commands/validate.ts`). The library functions and command actions must `throw` errors or return failure codes. Only the topmost executable entry point (`main.ts` or similar) should call `process.exit()`.
-3. **Stop Error Swallowing**: Ensure `CliError` and other error constructors correctly preserve original stack traces and context. Refactor `lib/validation.ts` and `lib/scaffolding.ts` to stop masking original errors behind generic ones without attaching the original cause.
-4. **Negative Testing & Mock Cleanup**: Update CLI unit tests (e.g. `validate.spec.ts`, `new.spec.ts`, `validation.spec.ts`) to explicitly test negative scenarios (malformed inputs, path traversals). Remove deceptive mocks that might hide actual failures.
+1. [AC-1] **Path Traversal Guard**: `validateDirectory` in `lib/validation.ts` MUST reject any resolved `targetDir` path that escapes the process working directory — i.e. if `path.resolve(process.cwd(), directory)` produces a path NOT prefixed by `process.cwd()`, throw `CliError({ code: 'ERR_PATH_TRAVERSAL' })`.
+2. [AC-2] **Remove `process.exit()` from library/command layer**: All 4 `process.exit(1)` calls in `utils/errors.ts` and both calls in `commands/validate.ts` MUST be removed. The library layer MUST only print and return (or throw). Only `main()` in `main.ts` calls `process.exit(1)`.
+3. [AC-3] **Error cause preservation**: `CliError` constructor MUST pass the original error as the native `cause` option: `super(error.message, { cause: error.originalCause })`. All catch blocks in `lib/validation.ts` and `lib/scaffolding.ts` that construct a new `CliError` from a caught error MUST pass the original as `cause`.
+4. [AC-4] **Deceptive `process.exit` spy removal**: Remove `jest.spyOn(process, 'exit')` from `validate.spec.ts` and `validation.spec.ts`. Tests MUST assert thrown errors/promise rejections instead of intercepting `process.exit`.
+5. [AC-5] **Negative path traversal tests**: Add tests in `validation.spec.ts` that pass `'../../../etc/passwd'` and `'../../sensitive'` as the `directory` argument and verify a `CliError` with code `ERR_PATH_TRAVERSAL` is thrown.
+6. [AC-6] **No process termination during unit tests**: All tests in `validate.spec.ts`, `validation.spec.ts`, and `new.spec.ts` MUST complete without triggering `process.exit()`. A spy on `process.exit` that fires = test failure (i.e., do not mock it away — detect it as a test failure).
 
-## Developer Context
+## Tasks / Subtasks
 
-### Architecture & Standards Compliance
-- **Library vs. Executable Boundary**: Functions exposed in `src/lib/` and `src/commands/` are library code. They MUST NOT call `process.exit()`. If they encounter a fatal state, they should throw a strongly typed error (e.g., `CliError`). 
-- **Error Propagation**: Use the `Error.cause` property or `CliError`'s `context` to preserve the original wrapped error. Swallowing an error means catching an error and throwing a new one without passing the original error context along.
+- [ ] Task 1: Add Path Traversal Guard to `validation.ts` (AC: 1, 5)
+  - [ ] After `const targetDir = path.resolve(process.cwd(), directory)`, add:
+    ```ts
+    const cwd = process.cwd();
+    if (!targetDir.startsWith(cwd + path.sep) && targetDir !== cwd) {
+      throw new CliError({
+        code: 'ERR_PATH_TRAVERSAL',
+        message: `Access denied: path "${directory}" resolves outside the working directory.`,
+        context: { directory, resolvedPath: targetDir, cwd },
+      });
+    }
+    ```
+  - [ ] This guard MUST run BEFORE the `fs.promises.stat()` call — never touch the filesystem on a traversal attempt
 
-### Files Being Modified & Their Current State
-- **`packages/cli/src/lib/validation.ts`**: Currently resolves paths using `path.resolve(process.cwd(), directory)` without checking if it escapes the intended directory structure. It also masks errors in the `catch` blocks.
-- **`packages/cli/src/utils/errors.ts`**: `handleError` directly calls `process.exit(1)`. This forces the process to terminate, preventing programmatic consumption.
-- **`packages/cli/src/commands/validate.ts`**: Calls `process.exit(1)` upon finding validation errors.
-- **`packages/cli/src/lib/scaffolding.ts`**: Already has a regex guard for `projectName`, but it uses `path.resolve(options.cwd)`. Ensure error handling is not swallowing the original file system errors.
-- **`packages/cli/src/commands/validate.spec.ts` & `new.spec.ts`**: Currently lack negative path traversal tests and might use `process.exit` mocks. You need to update them.
+- [ ] Task 2: Add `cause` to `CliError` constructor (AC: 3)
+  - [ ] In `utils/errors.ts`, update `CliError`:
+    ```ts
+    constructor(error: OrigoCliError & { cause?: unknown } = {}) {
+      super(error.message, { cause: error.cause });
+      ...
+    }
+    ```
+  - [ ] In `lib/validation.ts` catch blocks (lines ~53–56): pass `cause: error` when wrapping fs errors in `CliError`
+  - [ ] In `lib/scaffolding.ts` catch blocks (lines ~96–100): pass `cause: error` when wrapping scaffold errors in `CliError`
 
-### Expected Implementation Details
-1. **Validation Path Guard**: In `validateDirectory`, add a check to ensure the resolved `targetDir` path makes sense. However, since the user can validate *any* directory, consider what the exact vulnerability is. If the issue is that it shouldn't traverse beyond intended workspace roots, implement a secure boundary check.
-2. **Error Handling**: 
-   - Modify `handleError` in `errors.ts` to NOT exit. It should just format and print the error. Or better, let the top-level `main.ts` call `handleError` and then exit.
-   - For `validate.ts`, instead of calling `process.exit(1)`, return a rejected promise or throw an error, so the commander action rejects.
-3. **Mocks Cleanup**: Search for `jest.spyOn(process, 'exit')` in the `.spec.ts` files. Remove them. The tests should now expect errors to be thrown, which is the correct pattern.
+- [ ] Task 3: Refactor `handleError` — remove all `process.exit()` calls (AC: 2)
+  - [ ] In `utils/errors.ts`: remove all 4 `process.exit(1)` calls. `handleError` MUST only print and return `void`.
+  - [ ] Update `main.ts` → `program.parseAsync(process.argv).catch(err => { handleError(err); process.exit(1); })` so only the top-level entry point exits
+  - [ ] `handleError` signature stays the same: `(error: unknown, options?: ErrorOptions): void` — no return type change needed
 
-## Testing Requirements
-- **Negative Scenarios**: Add tests that attempt to pass `../../../etc/passwd` to the CLI commands. Verify that the CLI rejects these gracefully.
-- **Error Propagation**: Add tests to ensure that file system errors are wrapped but their messages are preserved.
-- **No `process.exit`**: Verify that calling the command functions directly does not terminate the test runner.
+- [ ] Task 4: Refactor `validate.ts` command action — remove `process.exit()` calls (AC: 2)
+  - [ ] **Line 15–16 (success path):** Replace `process.exit(1)` with `process.exitCode = 1`. Commander will exit naturally after the action resolves. This is the safest approach for programmatic consumption — the caller gets a chance to clean up.
+  - [ ] **Line 37–38 (JSON error path in catch):** Replace `process.exit(1)` with `process.exitCode = 1` (same approach)
+  - [ ] Do NOT throw from the command action catch block — Commander already wraps unhandled promise rejections. Setting `process.exitCode` is the correct library-layer pattern.
 
-## Completion Notes
-Ultimate context engine analysis completed - comprehensive developer guide created.
+- [ ] Task 5: Update `validate.spec.ts` — replace `process.exit` spy with error-driven assertions (AC: 4, 6)
+  - [ ] Remove `processExitSpy` declaration, `jest.spyOn(process, 'exit').mockImplementation(...)`, and `afterEach` restore
+  - [ ] Rename test at line 54: `'sets process.exitCode to 1 if validateDirectory returns > 0'`
+    - Assert: `await program.parseAsync(...)` resolves without rejection AND `process.exitCode === 1`
+    - Reset `process.exitCode` in `beforeEach`: `process.exitCode = 0`
+  - [ ] Rename test at line 62: `'sets process.exitCode to 1 and prints unified JSON if validateDirectory throws with --json'`
+    - Same pattern: assert `process.exitCode === 1` after `parseAsync`
+
+- [ ] Task 6: Update `validation.spec.ts` — remove spy, add traversal tests (AC: 4, 5, 6)
+  - [ ] Remove `processExitSpy` setup (lines 27–34) and `afterEach` restore — `validation.ts` never called `process.exit()`; the spy was dead code
+  - [ ] Add new `describe` block: `'path traversal guard'`:
+    - Test 1: `'rejects ../../../etc/passwd with ERR_PATH_TRAVERSAL'` — mock `fs.promises.stat` to NOT be called (assert it was never called after the guard fires)
+    - Test 2: `'rejects relative path escaping cwd with ERR_PATH_TRAVERSAL'` — e.g., `'../../sensitive'`
+    - Test 3: `'accepts a path within cwd'` — e.g., `'./schemas'` resolves within `process.cwd()` → guard passes, `stat` is called
+
+- [ ] Task 7: Verify `new.spec.ts` compliance (AC: 6)
+  - [ ] `new.spec.ts` line 24: Remove `exitSpy = jest.spyOn(process, 'exit').mockImplementation(...)` and the `afterEach` restore
+  - [ ] Since `newCommand` calls `handleError` in the catch block, and `handleError` no longer exits, verify the existing test at line 49–55 (`'should invoke handleError when scaffoldProject throws'`) still passes — it should, since `handleError` is still mocked
+
+## Dev Notes
+
+### CRITICAL: Exact Vulnerability in `validation.ts`
+
+Reading the **actual current code** (`line 14`):
+```ts
+const targetDir = path.resolve(process.cwd(), directory);
+```
+`path.resolve('/app', '../../../etc/passwd')` → `/etc/passwd` — this is a valid resolved path that escapes the CWD. The fix (Task 1) MUST check `targetDir.startsWith(cwd + path.sep)` — the `+ path.sep` prevents a false negative where `cwd = '/app'` and `targetDir = '/app-other'` would incorrectly pass a `startsWith('/app')` check.
+
+### CRITICAL: `scaffolding.ts` Already Has a Valid Guard
+
+Inspection of the actual code shows `scaffolding.ts` **already has a `projectName` regex guard** (`/^[a-zA-Z0-9_.-]+$/` + `path.basename` check) at lines 16–26. Do NOT add a second traversal guard to `scaffolding.ts` — the existing guard already prevents traversal via `projectName`. The only change needed there is adding `cause:` to the `CliError` constructors in the `catch` blocks (Task 2).
+
+### CRITICAL: `main.ts` Refactor Pattern
+
+Current `main.ts` line 25:
+```ts
+program.parseAsync(process.argv).catch(handleError);
+```
+After refactoring `handleError` to not exit, this becomes a silent no-op on error. The correct fix:
+```ts
+program.parseAsync(process.argv).catch(err => {
+  handleError(err);
+  process.exit(1);
+});
+```
+This is the ONLY place in the entire CLI where `process.exit()` is permitted (per AC-2).
+
+### CRITICAL: `validate.ts` — Use `process.exitCode`, Not `throw`
+
+Do NOT throw from the `.action(...)` callback when `totalErrors > 0`. Commander 12.x wraps unhandled action rejections and calls its own error handler, which may log an additional "error" line. The correct pattern is `process.exitCode = 1` — the process exits with code 1 naturally after the event loop drains, without terminating synchronously.
+
+### CRITICAL: Test Framework is Jest (NOT Vitest)
+
+All `.spec.ts` files in `packages/cli/src/` use **Jest** (`jest.mock`, `jest.fn()`, `jest.spyOn`). Do NOT use Vitest APIs (`vi.mock`, `vi.fn()`). The CLI package is configured with Jest (check `packages/cli/jest.config.ts` or root `jest.config.ts`).
+
+### Files Being Modified — Current State Summary
+
+| File | Current Problem | Required Fix |
+|---|---|---|
+| `lib/validation.ts:14` | No CWD boundary check after `path.resolve` | Add traversal guard before `fs.promises.stat` |
+| `lib/validation.ts:53–56` | `CliError` wraps fs error without `cause` | Pass `cause: error` to `CliError` constructor |
+| `lib/scaffolding.ts:96–100` | `CliError` wraps error without `cause` | Pass `cause: error` to `CliError` constructor |
+| `utils/errors.ts:66,75,78,81` | 4× `process.exit(1)` calls | Remove all; print-only |
+| `utils/errors.ts:11–16` | `CliError` ignores `cause` | Add `{ cause }` to `super()` |
+| `commands/validate.ts:16,38` | 2× `process.exit(1)` | Replace with `process.exitCode = 1` |
+| `main.ts:25` | `catch(handleError)` won't exit anymore | Wrap: `catch(err => { handleError(err); process.exit(1); })` |
+| `commands/validate.spec.ts:27–29` | Mocks `process.exit` — masks real bug | Remove spy; assert `process.exitCode` |
+| `commands/validate.spec.ts:54,62` | Test title/assertion wrong after refactor | Update assertions |
+| `lib/validation.spec.ts:27–34` | Dead `process.exit` spy (never fired) | Remove spy; add traversal tests |
+| `commands/new.spec.ts:24` | Live `process.exit` spy | Remove spy |
+
+### `CliError` Type Extension for `cause`
+
+Update `OrigoCliError` interface to optionally accept `cause`:
+```ts
+export interface OrigoCliError {
+  code: string;
+  message: string;
+  context?: Record<string, unknown>;
+  cause?: unknown; // add this
+}
+```
+Then in `CliError` constructor:
+```ts
+constructor(error: OrigoCliError) {
+  super(error.message, { cause: error.cause }); // ES2022 cause chaining
+  this.name = 'CliError';
+  this.code = error.code;
+  this.context = error.context;
+}
+```
+
+### Path Traversal Test Setup
+
+In `validation.spec.ts`, the path traversal tests do **not** need to mock `fs.promises.stat` to throw — the guard fires BEFORE the `stat` call. Use `jest.spyOn(fs.promises, 'stat')` to assert it was **not called**:
+```ts
+it('rejects ../../../etc/passwd with ERR_PATH_TRAVERSAL', async () => {
+  const statSpy = jest.spyOn(fs.promises, 'stat');
+  await expect(validateDirectory('../../../etc/passwd')).rejects.toMatchObject({
+    code: 'ERR_PATH_TRAVERSAL',
+  });
+  expect(statSpy).not.toHaveBeenCalled();
+});
+```
+
+### References
+
+- [Source: packages/cli/src/lib/validation.ts#L14] — Vulnerable `path.resolve` without boundary check
+- [Source: packages/cli/src/utils/errors.ts#L66,75,78,81] — All 4 `process.exit` sites
+- [Source: packages/cli/src/commands/validate.ts#L16,38] — 2 `process.exit` sites in command
+- [Source: packages/cli/src/main.ts#L25] — Top-level catch; needs explicit exit after `handleError`
+- [Source: packages/cli/src/lib/scaffolding.ts#L16–26] — Existing projectName guard (do NOT duplicate)
+- [Source: _bmad-output/implementation-artifacts/retro-6-e2e-npm-verification.md] — Companion retro story for context
+- [Source: _bmad-output/planning-artifacts/epics.md#FR-DX-003] — CLI security requirements
+- [Source: _bmad-output/implementation-artifacts/sprint-status.yaml] — `retro-6-security-remediation: ready-for-dev`
+
+## Dev Agent Record
+
+### Agent Model Used
+
+Claude Sonnet 4.6 (Thinking)
+
+### Debug Log References
+
+### Completion Notes List
+
+### File List
