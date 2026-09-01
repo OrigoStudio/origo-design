@@ -181,7 +181,7 @@ action_items:
     status: done
   - id: retro-6-e2e-npm-verification
     description: "E2E NPM Package Verification: Add a CI step that runs npm pack and executes scaffolding/validation commands against the built tarball before releases. (Owner: Dana)"
-    status: in-progress
+    status: done
   - id: retro-6-security-remediation
     description: "Security & Path Traversal Remediation: Fix path traversal vulnerabilities, remove process.exit(), and stop error swallowing in the @origo/cli library layer. (Owner: Amelia)"
     status: open
