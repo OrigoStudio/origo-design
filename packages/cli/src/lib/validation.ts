@@ -12,6 +12,14 @@ export async function validateDirectory(
   options: ValidationOptions = {}
 ): Promise<number> {
   const targetDir = path.resolve(process.cwd(), directory);
+  const cwd = process.cwd();
+  if (!targetDir.startsWith(cwd + path.sep) && targetDir !== cwd) {
+    throw new CliError({
+      code: 'ERR_PATH_TRAVERSAL',
+      message: `Access denied: path "${directory}" resolves outside the working directory.`,
+      context: { directory, resolvedPath: targetDir, cwd },
+    });
+  }
 
   let files: string[] = [];
   let targetDirBase = targetDir;
@@ -48,11 +56,13 @@ export async function validateDirectory(
       throw new CliError({
         code: 'ERR_DIRECTORY_NOT_FOUND',
         message: `Path not found: ${directory}`,
+        cause: error,
       });
     }
     throw new CliError({
       code: 'ERR_DIRECTORY_READ',
       message: `Failed to read path: ${err.message}`,
+      cause: error,
     });
   }
 

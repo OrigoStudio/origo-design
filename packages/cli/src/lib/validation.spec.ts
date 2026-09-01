@@ -24,22 +24,42 @@ jest.mock('@origo/core', () => {
 
 describe('Validation Library', () => {
   let consoleLogSpy: jest.SpyInstance;
-  let processExitSpy: jest.SpyInstance;
 
   beforeEach(() => {
     jest.clearAllMocks();
     consoleLogSpy = jest.spyOn(console, 'log').mockImplementation();
-    processExitSpy = jest.spyOn(process, 'exit').mockImplementation(code => {
-      throw new Error(`process.exit: ${code}`);
-    });
   });
 
   afterEach(() => {
     consoleLogSpy.mockRestore();
-    processExitSpy.mockRestore();
   });
 
   describe('validateDirectory', () => {
+    describe('path traversal guard', () => {
+      it('rejects ../../../etc/passwd with ERR_PATH_TRAVERSAL', async () => {
+        const statSpy = jest.spyOn(fs.promises, 'stat');
+        await expect(validateDirectory('../../../etc/passwd')).rejects.toMatchObject({
+          code: 'ERR_PATH_TRAVERSAL',
+        });
+        expect(statSpy).not.toHaveBeenCalled();
+      });
+
+      it('rejects relative path escaping cwd with ERR_PATH_TRAVERSAL', async () => {
+        const statSpy = jest.spyOn(fs.promises, 'stat');
+        await expect(validateDirectory('../../sensitive')).rejects.toMatchObject({
+          code: 'ERR_PATH_TRAVERSAL',
+        });
+        expect(statSpy).not.toHaveBeenCalled();
+      });
+
+      it('accepts a path within cwd', async () => {
+        (fs.promises.stat as jest.Mock).mockRejectedValue({ code: 'ENOENT' });
+        await expect(validateDirectory('./schemas')).rejects.toMatchObject({
+          code: 'ERR_DIRECTORY_NOT_FOUND',
+        });
+      });
+    });
+
     it('throws CliError if path does not exist', async () => {
       (fs.promises.stat as jest.Mock).mockRejectedValue({ code: 'ENOENT' });
 
@@ -113,7 +133,7 @@ describe('Validation Library', () => {
       }));
       (validateAST as jest.Mock).mockReturnValue([]);
 
-      const totalErrors = await validateDirectory('/schemas', { json: true });
+      const totalErrors = await validateDirectory('./schemas', { json: true });
 
       expect(totalErrors).toBe(0);
       expect(consoleLogSpy).toHaveBeenCalledWith(expect.stringContaining('"status": "success"'));
@@ -144,7 +164,7 @@ describe('Validation Library', () => {
         ],
       }));
 
-      const totalErrors = await validateDirectory('/schemas', { json: true });
+      const totalErrors = await validateDirectory('./schemas', { json: true });
       expect(totalErrors).toBe(1);
       expect(consoleLogSpy).toHaveBeenCalledWith(expect.stringContaining('"status": "error"'));
       expect(consoleLogSpy).toHaveBeenCalledWith(expect.stringContaining('"errorsFound": 1'));
@@ -174,7 +194,7 @@ describe('Validation Library', () => {
         },
       ]);
 
-      const totalErrors = await validateDirectory('/schemas', { json: false });
+      const totalErrors = await validateDirectory('./schemas', { json: false });
       expect(totalErrors).toBe(1);
       expect(consoleLogSpy).toHaveBeenCalledWith(expect.stringContaining('MISSING_REFERENCE'));
     });
@@ -189,7 +209,7 @@ describe('Validation Library', () => {
       ]);
       (fs.promises.readFile as jest.Mock).mockRejectedValue(new Error('Cannot read'));
 
-      const totalErrors = await validateDirectory('/schemas', { json: false });
+      const totalErrors = await validateDirectory('./schemas', { json: false });
       expect(totalErrors).toBe(1);
       expect(consoleLogSpy).toHaveBeenCalledWith(expect.stringContaining('ERR_JSON_PARSE'));
     });
@@ -213,7 +233,7 @@ describe('Validation Library', () => {
         throw new Error('JSON parse error');
       });
 
-      const totalErrors = await validateDirectory('/schemas', { json: false });
+      const totalErrors = await validateDirectory('./schemas', { json: false });
       expect(totalErrors).toBe(1);
       expect(consoleLogSpy).toHaveBeenCalledWith(expect.stringContaining('ERR_JSON_PARSE'));
     });

@@ -22,7 +22,10 @@ export function createProgram(): Command {
 export function main() {
   const program = createProgram();
 
-  program.parseAsync(process.argv).catch(handleError);
+  program.parseAsync(process.argv).catch(err => {
+    handleError(err);
+    process.exit(1);
+  });
 }
 
 if (require.main === module) {

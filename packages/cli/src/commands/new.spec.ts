@@ -8,7 +8,6 @@ jest.mock('../utils/errors');
 
 describe('newCommand', () => {
   let program: Command;
-  let exitSpy: jest.SpyInstance;
   let errorSpy: jest.SpyInstance;
   let cmdInstance: Command;
 
@@ -21,13 +20,11 @@ describe('newCommand', () => {
     program.exitOverride();
     program.configureOutput({ writeErr: jest.fn() });
 
-    exitSpy = jest.spyOn(process, 'exit').mockImplementation(() => undefined as never);
     errorSpy = jest.spyOn(console, 'error').mockImplementation(jest.fn());
     jest.clearAllMocks();
   });
 
   afterEach(() => {
-    exitSpy.mockRestore();
     errorSpy.mockRestore();
   });
 

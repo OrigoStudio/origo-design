@@ -13,7 +13,7 @@ export function validateCommand(): Command {
       try {
         const totalErrors = await validateDirectory(directory, { json: options.json });
         if (totalErrors > 0) {
-          process.exit(1);
+          process.exitCode = 1;
         }
       } catch (error: unknown) {
         if (options.json) {
@@ -35,7 +35,7 @@ export function validateCommand(): Command {
             },
           };
           console.log(JSON.stringify(jsonOutput, null, 2));
-          process.exit(1);
+          process.exitCode = 1;
         } else {
           handleError(error, { json: false });
         }
