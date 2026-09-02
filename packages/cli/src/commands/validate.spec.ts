@@ -17,22 +17,19 @@ jest.mock('../utils/errors', () => {
 
 describe('validateCommand', () => {
   let program: Command;
-  let processExitSpy: jest.SpyInstance;
   let consoleLogSpy: jest.SpyInstance;
 
   beforeEach(() => {
     jest.clearAllMocks();
     program = new Command();
     program.addCommand(validateCommand());
-    processExitSpy = jest.spyOn(process, 'exit').mockImplementation(code => {
-      throw new Error(`process.exit: ${code}`);
-    });
+    process.exitCode = 0;
     consoleLogSpy = jest.spyOn(console, 'log').mockImplementation();
   });
 
   afterEach(() => {
-    processExitSpy.mockRestore();
     consoleLogSpy.mockRestore();
+    process.exitCode = 0;
   });
 
   it('calls validateDirectory with default arguments', async () => {
@@ -51,21 +48,21 @@ describe('validateCommand', () => {
     expect(validateDirectory).toHaveBeenCalledWith('./custom', { json: true });
   });
 
-  it('calls process.exit(1) if validateDirectory returns > 0', async () => {
+  it('sets process.exitCode to 1 if validateDirectory returns > 0', async () => {
     (validateDirectory as jest.Mock).mockResolvedValue(1);
+    process.exitCode = 0;
+    await program.parseAsync(['node', 'test', 'validate', '--json']);
 
-    await expect(program.parseAsync(['node', 'test', 'validate', '--json'])).rejects.toThrow(
-      'process.exit: 1'
-    );
+    expect(process.exitCode).toBe(1);
   });
 
-  it('prints unified JSON and calls process.exit(1) if validateDirectory throws with --json', async () => {
+  it('sets process.exitCode to 1 and prints unified JSON if validateDirectory throws with --json', async () => {
     const error = new CliError({ code: 'ERR_TEST', message: 'Test error' });
     (validateDirectory as jest.Mock).mockRejectedValue(error);
+    process.exitCode = 0;
+    await program.parseAsync(['node', 'test', 'validate', '--json']);
 
-    await expect(program.parseAsync(['node', 'test', 'validate', '--json'])).rejects.toThrow(
-      'process.exit: 1'
-    );
+    expect(process.exitCode).toBe(1);
 
     expect(consoleLogSpy).toHaveBeenCalledWith(expect.stringContaining('"status": "error"'));
     expect(consoleLogSpy).toHaveBeenCalledWith(expect.stringContaining('ERR_TEST'));
@@ -74,9 +71,10 @@ describe('validateCommand', () => {
   it('calls handleError if validateDirectory throws without --json', async () => {
     const error = new Error('Test error');
     (validateDirectory as jest.Mock).mockRejectedValue(error);
-
+    process.exitCode = 0;
     await program.parseAsync(['node', 'test', 'validate']);
 
     expect(handleError).toHaveBeenCalledWith(error, { json: false });
+    expect(process.exitCode).toBe(1);
   });
 });

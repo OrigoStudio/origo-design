@@ -8,7 +8,6 @@ jest.mock('../utils/errors');
 
 describe('newCommand', () => {
   let program: Command;
-  let exitSpy: jest.SpyInstance;
   let errorSpy: jest.SpyInstance;
   let cmdInstance: Command;
 
@@ -21,14 +20,13 @@ describe('newCommand', () => {
     program.exitOverride();
     program.configureOutput({ writeErr: jest.fn() });
 
-    exitSpy = jest.spyOn(process, 'exit').mockImplementation(() => undefined as never);
     errorSpy = jest.spyOn(console, 'error').mockImplementation(jest.fn());
     jest.clearAllMocks();
   });
 
   afterEach(() => {
-    exitSpy.mockRestore();
     errorSpy.mockRestore();
+    process.exitCode = 0;
   });
 
   it('should require a project name via Commander argument contract', async () => {
@@ -46,11 +44,12 @@ describe('newCommand', () => {
     expect(scaffoldProject).toHaveBeenCalledWith('my-project', { json: true });
   });
 
-  it('should invoke handleError when scaffoldProject throws an error', async () => {
+  it('should invoke handleError and set process.exitCode to 1 when scaffoldProject throws an error', async () => {
     const error = new Error('Scaffold failed');
     (scaffoldProject as jest.Mock).mockRejectedValueOnce(error);
-
+    process.exitCode = 0;
     await program.parseAsync(['node', 'test', 'new', 'my-project']);
     expect(handleError).toHaveBeenCalledWith(error, { json: undefined });
+    expect(process.exitCode).toBe(1);
   });
 });

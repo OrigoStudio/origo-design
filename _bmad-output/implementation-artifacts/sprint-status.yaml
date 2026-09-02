@@ -41,7 +41,7 @@
 # - Retrospective appends its action items to action_items; sprint-status surfaces open ones
 
 generated: 2026-07-29T21:46:02.464968
-last_updated: 2026-08-31T21:57:00+05:30
+last_updated: 2026-09-01T20:28:00+05:30
 project: origo-design
 project_key: NOKEY
 tracking_system: file-system
@@ -101,9 +101,9 @@ development_status:
   6-2-local-schema-validation: done
   6-3-entity-generator-boilerplate: done
   epic-6-retrospective: done
-  epic-7: backlog
-  7-1-web-based-editor-component: backlog
-  7-2-live-compilation-rendering-pipeline: backlog
+  epic-7: in-progress
+  7-1-web-based-editor-component: ready-for-dev
+  7-2-live-compilation-rendering-pipeline: ready-for-dev
   7-3-live-preview-latency-optimization: backlog
   epic-7-retrospective: optional
   epic-8: backlog
@@ -123,6 +123,7 @@ development_status:
   10-4-benchmark-validation-execution: backlog
   epic-10-retrospective: optional
   retro-6-e2e-npm-verification: done
+  retro-6-security-remediation: review
 
 action_items:
   - id: retro-1-cleanup
@@ -184,7 +185,7 @@ action_items:
     status: done
   - id: retro-6-security-remediation
     description: "Security & Path Traversal Remediation: Fix path traversal vulnerabilities, remove process.exit(), and stop error swallowing in the @origo/cli library layer. (Owner: Amelia)"
-    status: open
+    status: done
   - id: retro-6-negative-testing
     description: "Negative Testing & Mock Cleanup: Update CLI unit tests to explicitly test negative scenarios (malformed inputs, traversals) and remove deceptive mocks. (Owner: Elena)"
     status: open

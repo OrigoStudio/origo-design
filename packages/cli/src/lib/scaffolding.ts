@@ -50,6 +50,7 @@ export async function scaffoldProject(
         code: 'SCAFFOLD_ERROR',
         message: `Failed to inspect target directory: ${error instanceof Error ? error.message : String(error)}`,
         context: { targetDir },
+        cause: error,
       });
     }
   }
@@ -97,6 +98,7 @@ export async function scaffoldProject(
       code: 'SCAFFOLD_ERROR',
       message: `Failed to scaffold project: ${error instanceof Error ? error.message : String(error)}`,
       context: { projectName, targetDir, error },
+      cause: error,
     });
   }
 }

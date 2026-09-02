@@ -22,7 +22,15 @@ export function createProgram(): Command {
 export function main() {
   const program = createProgram();
 
-  program.parseAsync(process.argv).catch(handleError);
+  program.parseAsync(process.argv).catch(err => {
+    try {
+      handleError(err);
+    } catch (e) {
+      console.error('Fatal error in error handler:', e);
+    } finally {
+      process.exit(1);
+    }
+  });
 }
 
 if (require.main === module) {
