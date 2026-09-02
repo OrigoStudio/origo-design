@@ -68,6 +68,18 @@ describe('validateCommand', () => {
     expect(consoleLogSpy).toHaveBeenCalledWith(expect.stringContaining('ERR_TEST'));
   });
 
+  it('handles non-CliError and non-Error objects being thrown with --json', async () => {
+    (validateDirectory as jest.Mock).mockRejectedValue('String exception');
+    process.exitCode = 0;
+    await program.parseAsync(['node', 'test', 'validate', '--json']);
+
+    expect(process.exitCode).toBe(1);
+
+    expect(consoleLogSpy).toHaveBeenCalledWith(expect.stringContaining('"status": "error"'));
+    expect(consoleLogSpy).toHaveBeenCalledWith(expect.stringContaining('UNKNOWN_ERROR'));
+    expect(consoleLogSpy).toHaveBeenCalledWith(expect.stringContaining('String exception'));
+  });
+
   it('calls handleError if validateDirectory throws without --json', async () => {
     const error = new Error('Test error');
     (validateDirectory as jest.Mock).mockRejectedValue(error);
