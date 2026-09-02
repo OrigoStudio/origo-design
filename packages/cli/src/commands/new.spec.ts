@@ -26,6 +26,7 @@ describe('newCommand', () => {
 
   afterEach(() => {
     errorSpy.mockRestore();
+    process.exitCode = 0;
   });
 
   it('should require a project name via Commander argument contract', async () => {
