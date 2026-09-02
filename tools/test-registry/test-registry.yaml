@@ -1,0 +1,276 @@
+# tools/test-registry/test-registry.yaml
+# Central Test Case Ledger — origo-design
+# Schema Version: 1.0
+# ==========================================
+# FIELD DEFINITIONS:
+#   id:               Unique kebab-case identifier
+#   description:      One-line human description of what the test suite verifies
+#   package:          Nx package / app name (@origo/cli, @origo/core, @origo/design-tokens, @origo/angular-renderer, origo-e2e)
+#   spec_file:        Repo-root-relative path using POSIX forward slashes
+#   type:             unit | e2e | integration | perf
+#   affected_stories: Non-empty list of story keys that introduced or modified this spec
+#   last_result:      pass | fail | skipped | unknown (baseline: unknown)
+#   results:          Map of release tag -> pass | fail | skipped
+# ==========================================
+
+schema_version: '1.0'
+generated: '2026-09-02'
+test_cases:
+  - id: cli-commands-validate
+    description: 'validateCommand'
+    package: '@origo/cli'
+    spec_file: packages/cli/src/commands/validate.spec.ts
+    type: unit
+    affected_stories:
+      - 6-2-local-schema-validation
+      - retro-6-security-remediation
+    last_result: unknown
+    results: {}
+  - id: cli-commands-new
+    description: 'newCommand'
+    package: '@origo/cli'
+    spec_file: packages/cli/src/commands/new.spec.ts
+    type: unit
+    affected_stories:
+      - 6-1-cli-initialization-and-scaffolding
+      - retro-6-security-remediation
+    last_result: unknown
+    results: {}
+  - id: cli-commands-init
+    description: 'init command'
+    package: '@origo/cli'
+    spec_file: packages/cli/src/commands/init.spec.ts
+    type: unit
+    affected_stories:
+      - 6-1-cli-initialization-and-scaffolding
+    last_result: unknown
+    results: {}
+  - id: cli-commands-generate-entity
+    description: 'entityCommand'
+    package: '@origo/cli'
+    spec_file: packages/cli/src/commands/generate/entity.spec.ts
+    type: unit
+    affected_stories:
+      - 6-3-entity-generator-boilerplate
+    last_result: unknown
+    results: {}
+  - id: cli-commands-generate-index
+    description: 'generateCommand'
+    package: '@origo/cli'
+    spec_file: packages/cli/src/commands/generate/index.spec.ts
+    type: unit
+    affected_stories:
+      - 6-3-entity-generator-boilerplate
+    last_result: unknown
+    results: {}
+  - id: cli-lib-cli
+    description: 'cli'
+    package: '@origo/cli'
+    spec_file: packages/cli/src/lib/cli.spec.ts
+    type: unit
+    affected_stories:
+      - 6-1-cli-initialization-and-scaffolding
+    last_result: unknown
+    results: {}
+  - id: cli-lib-generator
+    description: 'generator'
+    package: '@origo/cli'
+    spec_file: packages/cli/src/lib/generator.spec.ts
+    type: unit
+    affected_stories:
+      - 6-3-entity-generator-boilerplate
+    last_result: unknown
+    results: {}
+  - id: cli-lib-scaffolding
+    description: 'scaffoldProject'
+    package: '@origo/cli'
+    spec_file: packages/cli/src/lib/scaffolding.spec.ts
+    type: unit
+    affected_stories:
+      - 6-1-cli-initialization-and-scaffolding
+      - retro-6-security-remediation
+    last_result: unknown
+    results: {}
+  - id: cli-lib-validation
+    description: 'Validation Library'
+    package: '@origo/cli'
+    spec_file: packages/cli/src/lib/validation.spec.ts
+    type: unit
+    affected_stories:
+      - 6-2-local-schema-validation
+      - retro-6-security-remediation
+      - retro-6-negative-testing
+    last_result: unknown
+    results: {}
+  - id: cli-templates-index
+    description: 'Boilerplate Templates'
+    package: '@origo/cli'
+    spec_file: packages/cli/src/templates/index.spec.ts
+    type: unit
+    affected_stories:
+      - 6-1-cli-initialization-and-scaffolding
+    last_result: unknown
+    results: {}
+  - id: cli-utils-errors
+    description: 'errors utils'
+    package: '@origo/cli'
+    spec_file: packages/cli/src/utils/errors.spec.ts
+    type: unit
+    affected_stories:
+      - 6-1-cli-initialization-and-scaffolding
+      - retro-6-security-remediation
+    last_result: unknown
+    results: {}
+  - id: core-validator-index
+    description: 'BADLValidator'
+    package: '@origo/core'
+    spec_file: packages/core/src/validator/index.spec.ts
+    type: unit
+    affected_stories:
+      - 3-2-domain-entity-schema-parser
+    last_result: unknown
+    results: {}
+  - id: core-validator-ast
+    description: 'AST Validation Engine'
+    package: '@origo/core'
+    spec_file: packages/core/src/validator/ast-validator.spec.ts
+    type: unit
+    affected_stories:
+      - 3-4-ast-validation-engine
+    last_result: unknown
+    results: {}
+  - id: core-validator-serializer
+    description: 'AST Serializer'
+    package: '@origo/core'
+    spec_file: packages/core/src/validator/serializer.spec.ts
+    type: unit
+    affected_stories:
+      - 3-3-canonical-ast-serialization
+    last_result: unknown
+    results: {}
+  - id: core-extension-manager
+    description: 'ExtensionManager'
+    package: '@origo/core'
+    spec_file: packages/core/src/extension-api/__tests__/extension-manager.spec.ts
+    type: unit
+    affected_stories:
+      - 4-6-formal-extension-manifest-lifecycle-fr-ext-008-to-013
+    last_result: unknown
+    results: {}
+  - id: tokens-build
+    description: 'Token Compilation Pipeline'
+    package: '@origo/design-tokens'
+    spec_file: packages/design-tokens/src/build.spec.ts
+    type: unit
+    affected_stories:
+      - 2-2-token-compilation-pipeline
+    last_result: unknown
+    results: {}
+  - id: tokens-lib-foundation
+    description: 'Design Tokens Schema Validation'
+    package: '@origo/design-tokens'
+    spec_file: packages/design-tokens/src/lib/design-tokens.spec.ts
+    type: unit
+    affected_stories:
+      - 2-1-design-token-schema-foundation
+    last_result: unknown
+    results: {}
+  - id: tokens-theme-fetcher
+    description: 'fetchTheme'
+    package: '@origo/design-tokens'
+    spec_file: packages/design-tokens/src/runtime/theme-fetcher.spec.ts
+    type: unit
+    affected_stories:
+      - 2-3-zero-code-theme-overrides
+    last_result: unknown
+    results: {}
+  - id: tokens-theme-fetcher-perf
+    description: 'Performance Benchmark: NFR-PERF-005'
+    package: '@origo/design-tokens'
+    spec_file: packages/design-tokens/src/runtime/theme-fetcher.perf.spec.ts
+    type: perf
+    affected_stories:
+      - 2-3-zero-code-theme-overrides
+    last_result: unknown
+    results: {}
+  - id: tokens-theme-injector
+    description: 'theme-injector'
+    package: '@origo/design-tokens'
+    spec_file: packages/design-tokens/src/runtime/theme-injector.spec.ts
+    type: unit
+    affected_stories:
+      - 2-3-zero-code-theme-overrides
+    last_result: unknown
+    results: {}
+  - id: tokens-theme-injector-ssr
+    description: 'theme-injector (SSR Environment)'
+    package: '@origo/design-tokens'
+    spec_file: packages/design-tokens/src/runtime/theme-injector.ssr.spec.ts
+    type: unit
+    affected_stories:
+      - 2-3-zero-code-theme-overrides
+    last_result: unknown
+    results: {}
+  - id: renderer-component
+    description: 'OrigoRendererComponent'
+    package: '@origo/angular-renderer'
+    spec_file: packages/angular-renderer/src/lib/renderer.component.spec.ts
+    type: unit
+    affected_stories:
+      - 5-1-ast-traversal-and-dynamic-instantiation
+    last_result: unknown
+    results: {}
+  - id: renderer-theme-provider
+    description: 'theme.provider'
+    package: '@origo/angular-renderer'
+    spec_file: packages/angular-renderer/src/lib/theme.provider.spec.ts
+    type: unit
+    affected_stories:
+      - 5-4-design-token-consumption
+    last_result: unknown
+    results: {}
+  - id: renderer-adapter-web
+    description: 'Web Adapter Utilities'
+    package: '@origo/angular-renderer'
+    spec_file: packages/angular-renderer/src/adapters/web/adapter.spec.ts
+    type: unit
+    affected_stories:
+      - 5-2-experience-adapter-interface
+    last_result: unknown
+    results: {}
+  - id: renderer-primitive-button
+    description: 'ButtonComponent'
+    package: '@origo/angular-renderer'
+    spec_file: packages/angular-renderer/src/components/primitives/button/button.component.spec.ts
+    type: unit
+    affected_stories:
+      - 5-3-core-primitive-implementation
+    last_result: unknown
+    results: {}
+  - id: renderer-primitive-text-input
+    description: 'TextInputComponent'
+    package: '@origo/angular-renderer'
+    spec_file: packages/angular-renderer/src/components/primitives/text-input/text-input.component.spec.ts
+    type: unit
+    affected_stories:
+      - 5-3-core-primitive-implementation
+    last_result: unknown
+    results: {}
+  - id: renderer-primitive-vbox
+    description: 'VBoxComponent'
+    package: '@origo/angular-renderer'
+    spec_file: packages/angular-renderer/src/components/primitives/vbox/vbox.component.spec.ts
+    type: unit
+    affected_stories:
+      - 5-3-core-primitive-implementation
+    last_result: unknown
+    results: {}
+  - id: e2e-quickstart-workflow
+    description: 'End-to-End CLI to Playground Workflow'
+    package: 'origo-e2e'
+    spec_file: apps/origo-e2e/src/e2e/quickstart-workflow.spec.ts
+    type: e2e
+    affected_stories:
+      - 5.5-2-establish-end-to-end-qa-protocols
+    last_result: unknown
+    results: {}

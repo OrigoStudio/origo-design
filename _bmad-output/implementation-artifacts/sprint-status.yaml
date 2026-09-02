@@ -41,7 +41,7 @@
 # - Retrospective appends its action items to action_items; sprint-status surfaces open ones
 
 generated: 2026-07-29T21:46:02.464968
-last_updated: 2026-09-02T16:09:00+05:30
+last_updated: 2026-09-02T19:39:00+05:30
 project: origo-design
 project_key: NOKEY
 tracking_system: file-system
@@ -125,6 +125,7 @@ development_status:
   retro-6-e2e-npm-verification: done
   retro-6-security-remediation: review
   retro-6-negative-testing: review
+  retro-6-central-test-registry: review
 
 action_items:
   - id: retro-1-cleanup
@@ -192,4 +193,4 @@ action_items:
     status: done
   - id: retro-6-central-test-registry
     description: "Central Test Case Registry Strategy: Create and manage a centralized test case ledger containing test scenarios, mapped affected stories, and release-by-release test results tracking to prevent regressions. (Owner: Dana/Amelia)"
-    status: open
+    status: review
