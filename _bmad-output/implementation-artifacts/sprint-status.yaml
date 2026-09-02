@@ -189,7 +189,7 @@ action_items:
     status: done
   - id: retro-6-negative-testing
     description: "Negative Testing & Mock Cleanup: Update CLI unit tests to explicitly test negative scenarios (malformed inputs, traversals) and remove deceptive mocks. (Owner: Elena)"
-    status: in-progress
+    status: done
   - id: retro-6-central-test-registry
     description: "Central Test Case Registry Strategy: Create and manage a centralized test case ledger containing test scenarios, mapped affected stories, and release-by-release test results tracking to prevent regressions. (Owner: Dana/Amelia)"
     status: open
