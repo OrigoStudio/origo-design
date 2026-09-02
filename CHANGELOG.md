@@ -1,3 +1,29 @@
+## 0.0.21 (2026-09-02)
+
+### 🚀 Features
+
+- implementation of 6-2-local-schema-validation ([45e67f6](https://github.com/OrigoStudio/origo-design/commit/45e67f6))
+- implement entity generator command and template ejection logic in CLI ([d7d519a](https://github.com/OrigoStudio/origo-design/commit/d7d519a))
+- implement entity generator command with template customization and ejection support ([02a3193](https://github.com/OrigoStudio/origo-design/commit/02a3193))
+- initialize sprint status tracking and create Epic 7 discovery research story ([b37b967](https://github.com/OrigoStudio/origo-design/commit/b37b967))
+- add technical spike story for Epic 7 web worker CSP validation and ADR planning ([c977487](https://github.com/OrigoStudio/origo-design/commit/c977487))
+- implement web worker CSP spike with supporting documentation and harness tools ([f57b1e5](https://github.com/OrigoStudio/origo-design/commit/f57b1e5))
+- add web worker CSP spike and associated implementation documentation ([ebf5aa4](https://github.com/OrigoStudio/origo-design/commit/ebf5aa4))
+- add generated bundle for epic7-worker-csp spike ([16ca492](https://github.com/OrigoStudio/origo-design/commit/16ca492))
+- initialize sprint status tracking and retrospective verification story for npm packaging ([c326751](https://github.com/OrigoStudio/origo-design/commit/c326751))
+- document e2e npm verification plan for cli package releases ([22dab4c](https://github.com/OrigoStudio/origo-design/commit/22dab4c))
+- initialize web-based editor component and track security remediation tasks in implementation artifacts ([65716bd](https://github.com/OrigoStudio/origo-design/commit/65716bd))
+- implement path traversal guards, remove process termination from library logic, and enable error cause preservation in @origo/cli ([0854f78](https://github.com/OrigoStudio/origo-design/commit/0854f78))
+- implement validate command and schema validation logic for BADL files ([4f9e41d](https://github.com/OrigoStudio/origo-design/commit/4f9e41d))
+- implement CLI framework with validation, testing, and CI/CD workflows ([ff6ce55](https://github.com/OrigoStudio/origo-design/commit/ff6ce55))
+- initialize negative testing story and update sprint status tracking ([bbe5fdc](https://github.com/OrigoStudio/origo-design/commit/bbe5fdc))
+- implement central test registry with validation tools and CI integration ([02cf656](https://github.com/OrigoStudio/origo-design/commit/02cf656))
+- add centralized test registry tool with validation logic, CI integration, and documentation artifacts ([384c1c7](https://github.com/OrigoStudio/origo-design/commit/384c1c7))
+
+### ❤️ Thank You
+
+- Hardik Patel @hardikpatelse
+
 ## 0.0.20 (2026-08-25)
 
 ### 🚀 Features

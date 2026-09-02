@@ -1,6 +1,6 @@
 {
   "name": "@origo/cli",
-  "version": "0.0.20",
+  "version": "0.0.21",
   "private": true,
   "type": "commonjs",
   "main": "./src/index.js",
@@ -9,7 +9,7 @@
     "origo": "./src/main.js"
   },
   "dependencies": {
-    "@origo/core": "workspace:*",
+    "@origo/core": "0.0.21",
     "commander": "^15.0.0",
     "tslib": "^2.3.0"
   }
