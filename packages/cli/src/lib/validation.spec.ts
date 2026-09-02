@@ -58,6 +58,24 @@ describe('Validation Library', () => {
           code: 'ERR_DIRECTORY_NOT_FOUND',
         });
       });
+
+      it('rejects an empty directory string with ERR_INVALID_DIRECTORY', async () => {
+        await expect(validateDirectory('')).rejects.toMatchObject({
+          code: 'ERR_INVALID_DIRECTORY',
+        });
+      });
+
+      it('rejects an absolute path that escapes cwd with ERR_PATH_TRAVERSAL', async () => {
+        const statSpy = jest.spyOn(fs.promises, 'stat');
+        await expect(
+          validateDirectory(
+            process.platform === 'win32' ? 'C:\\\\Windows\\\\System32' : '/etc/passwd'
+          )
+        ).rejects.toMatchObject({
+          code: 'ERR_PATH_TRAVERSAL',
+        });
+        expect(statSpy).not.toHaveBeenCalled();
+      });
     });
 
     it('throws CliError if path does not exist', async () => {

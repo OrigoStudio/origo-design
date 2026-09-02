@@ -9,7 +9,7 @@ export class CliError extends Error {
   public code: string;
   public context?: Record<string, unknown>;
 
-  constructor(error: OrigoCliError & { cause?: unknown }) {
+  constructor(error: OrigoCliError) {
     super(error.message, { cause: error.cause });
     this.name = 'CliError';
     this.code = error.code;

@@ -38,6 +38,7 @@ export function validateCommand(): Command {
           process.exitCode = 1;
         } else {
           handleError(error, { json: false });
+          process.exitCode = 1;
         }
       }
     });

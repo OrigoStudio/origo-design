@@ -11,9 +11,16 @@ export async function validateDirectory(
   directory = './schemas',
   options: ValidationOptions = {}
 ): Promise<number> {
-  const targetDir = path.resolve(process.cwd(), directory);
+  if (!directory || directory.trim() === '') {
+    throw new CliError({
+      code: 'ERR_INVALID_DIRECTORY',
+      message: 'Directory argument must not be empty.',
+    });
+  }
   const cwd = process.cwd();
-  if (!targetDir.startsWith(cwd + path.sep) && targetDir !== cwd) {
+  const targetDir = path.resolve(cwd, directory);
+  const relativePath = path.relative(cwd, targetDir);
+  if (relativePath.startsWith('..') || path.isAbsolute(relativePath)) {
     throw new CliError({
       code: 'ERR_PATH_TRAVERSAL',
       message: `Access denied: path "${directory}" resolves outside the working directory.`,
@@ -87,6 +94,7 @@ export async function validateDirectory(
     throw new CliError({
       code: 'ERR_VALIDATOR_INIT',
       message: `Failed to initialize BADLValidator: ${error instanceof Error ? error.message : String(error)}`,
+      cause: error,
     });
   }
 

@@ -14,6 +14,7 @@ export function newCommand(): Command {
         await scaffoldProject(projectName, { json: options.json });
       } catch (error) {
         handleError(error, { json: options.json });
+        process.exitCode = 1;
       }
     });
 

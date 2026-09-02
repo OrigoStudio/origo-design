@@ -23,8 +23,13 @@ export function main() {
   const program = createProgram();
 
   program.parseAsync(process.argv).catch(err => {
-    handleError(err);
-    process.exit(1);
+    try {
+      handleError(err);
+    } catch (e) {
+      console.error('Fatal error in error handler:', e);
+    } finally {
+      process.exit(1);
+    }
   });
 }
 

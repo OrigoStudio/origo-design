@@ -43,11 +43,12 @@ describe('newCommand', () => {
     expect(scaffoldProject).toHaveBeenCalledWith('my-project', { json: true });
   });
 
-  it('should invoke handleError when scaffoldProject throws an error', async () => {
+  it('should invoke handleError and set process.exitCode to 1 when scaffoldProject throws an error', async () => {
     const error = new Error('Scaffold failed');
     (scaffoldProject as jest.Mock).mockRejectedValueOnce(error);
-
+    process.exitCode = 0;
     await program.parseAsync(['node', 'test', 'new', 'my-project']);
     expect(handleError).toHaveBeenCalledWith(error, { json: undefined });
+    expect(process.exitCode).toBe(1);
   });
 });

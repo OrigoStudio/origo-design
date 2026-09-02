@@ -4,7 +4,7 @@ baseline_commit: 0854f78c2ecbbfc48bc83bbea3d49e7f72b01ce2
 
 # Story retro-6: Security & Path Traversal Remediation
 
-Status: review
+Status: done
 
 ## Story
 
@@ -76,6 +76,20 @@ so that the CLI is secure, can be safely consumed programmatically, and provides
 - [x] Task 7: Verify `new.spec.ts` compliance (AC: 6)
   - [x] `new.spec.ts` line 24: Remove `exitSpy = jest.spyOn(process, 'exit').mockImplementation(...)` and the `afterEach` restore
   - [x] Since `newCommand` calls `handleError` in the catch block, and `handleError` no longer exits, verify the existing test at line 49–55 (`'should invoke handleError when scaffoldProject throws'`) still passes — it should, since `handleError` is still mocked
+
+### Review Findings
+
+- [x] [Review][Decision] CliError constructor cause parameter name (`cause` vs `originalCause`) — AC contradicts Dev Notes.
+- [x] [Review][Patch] Path traversal guard in `validation.ts` is brittle (Windows path sep, double cwd call, symlinks) [validation.ts]
+- [x] [Review][Patch] Inconsistent `cause` passing in `validation.ts` (`error` vs `err` variable scopes) [validation.ts]
+- [x] [Review][Patch] `validate.ts` missing `process.exitCode = 1` in non-JSON branch [validate.ts]
+- [x] [Review][Patch] `new.ts` silent exit code 0 when `scaffoldProject` throws [new.ts]
+- [x] [Review][Patch] `validate.spec.ts` relies on global `process.exitCode` without robust reset and doesn't assert throws [validate.spec.ts]
+- [x] [Review][Patch] `new.spec.ts` removes `exitSpy` but leaves real exit behavior untested [new.spec.ts]
+- [x] [Review][Patch] `validation.spec.ts` path traversal tests leak `statSpy` [validation.spec.ts]
+- [x] [Review][Patch] `validation.spec.ts` path within cwd test casts to `jest.Mock` unsafely [validation.spec.ts]
+- [x] [Review][Patch] Empty `## Dev Agent Record` in newly added Story 7.1 and 7.2 files
+- [x] [Review][Patch] `main.ts` refactor untested, unhandled exception in `handleError` drops `process.exit` [main.ts]
 
 ## Dev Notes
 

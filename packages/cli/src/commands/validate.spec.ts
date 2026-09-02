@@ -50,7 +50,7 @@ describe('validateCommand', () => {
 
   it('sets process.exitCode to 1 if validateDirectory returns > 0', async () => {
     (validateDirectory as jest.Mock).mockResolvedValue(1);
-
+    process.exitCode = 0;
     await program.parseAsync(['node', 'test', 'validate', '--json']);
 
     expect(process.exitCode).toBe(1);
@@ -59,7 +59,7 @@ describe('validateCommand', () => {
   it('sets process.exitCode to 1 and prints unified JSON if validateDirectory throws with --json', async () => {
     const error = new CliError({ code: 'ERR_TEST', message: 'Test error' });
     (validateDirectory as jest.Mock).mockRejectedValue(error);
-
+    process.exitCode = 0;
     await program.parseAsync(['node', 'test', 'validate', '--json']);
 
     expect(process.exitCode).toBe(1);
@@ -71,9 +71,10 @@ describe('validateCommand', () => {
   it('calls handleError if validateDirectory throws without --json', async () => {
     const error = new Error('Test error');
     (validateDirectory as jest.Mock).mockRejectedValue(error);
-
+    process.exitCode = 0;
     await program.parseAsync(['node', 'test', 'validate']);
 
     expect(handleError).toHaveBeenCalledWith(error, { json: false });
+    expect(process.exitCode).toBe(1);
   });
 });
