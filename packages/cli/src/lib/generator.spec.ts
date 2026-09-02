@@ -1,6 +1,11 @@
 import * as fs from 'fs/promises';
 import * as path from 'path';
-import { generateEntity, ejectTemplates } from './generator';
+import {
+  generateEntity,
+  ejectTemplates,
+  registerGeneratorPlugin,
+  GeneratorPlugin,
+} from './generator';
 import { CliError } from '../utils/errors';
 import { generateEntityTemplate } from '../templates';
 
@@ -89,12 +94,29 @@ describe('generator', () => {
       expect(writeFileSpy).toHaveBeenCalled();
     });
 
-    it('should fail on empty name', async () => {
-      await expect(generateEntity('   ', {})).rejects.toThrow(CliError);
+    it('should fail on empty or whitespace name without filesystem mutations', async () => {
+      for (const name of ['', '   ']) {
+        jest.clearAllMocks();
+        await expect(generateEntity(name, {})).rejects.toMatchObject({
+          code: 'ERR_INVALID_NAME',
+        });
+        expect(writeFileSpy).not.toHaveBeenCalled();
+        expect(mkdirSpy).not.toHaveBeenCalled();
+        expect(accessSpy).not.toHaveBeenCalled();
+      }
     });
 
-    it('should fail on path traversal in name', async () => {
-      await expect(generateEntity('../User', {})).rejects.toThrow(CliError);
+    it('should fail on path traversal in name without filesystem mutations', async () => {
+      const traversalNames = ['../User', 'sub/User', '..\\User', 'sub\\User'];
+      for (const name of traversalNames) {
+        jest.clearAllMocks();
+        await expect(generateEntity(name, {})).rejects.toMatchObject({
+          code: 'ERR_INVALID_NAME',
+        });
+        expect(writeFileSpy).not.toHaveBeenCalled();
+        expect(mkdirSpy).not.toHaveBeenCalled();
+        expect(accessSpy).not.toHaveBeenCalled();
+      }
     });
 
     it('should output JSON when --json is provided', async () => {
@@ -111,6 +133,69 @@ describe('generator', () => {
       await generateEntity('User', {});
       expect(logSpy).toHaveBeenCalledWith(
         expect.stringContaining('Successfully generated entity User')
+      );
+    });
+
+    it('should throw generic error if fs.access throws non-ENOENT', async () => {
+      accessSpy.mockRejectedValue(new Error('Permission denied'));
+      await expect(generateEntity('User', {})).rejects.toThrow('Permission denied');
+    });
+
+    it('should throw ERR_INVALID_TEMPLATE if custom template produces invalid JSON', async () => {
+      readFileSpy.mockResolvedValue('{"id": "{{id}}", "invalid" }');
+      await expect(generateEntity('User', {})).rejects.toMatchObject({
+        code: 'ERR_INVALID_TEMPLATE',
+      });
+    });
+
+    it('should throw generic error if fs.readFile throws non-ENOENT', async () => {
+      const err = new Error('Read error') as NodeJS.ErrnoException;
+      err.code = 'EACCES';
+      readFileSpy.mockRejectedValue(err);
+      await expect(generateEntity('User', {})).rejects.toThrow('Read error');
+    });
+
+    it('should throw generic error if fs.mkdir throws non-EEXIST', async () => {
+      const err = new Error('Mkdir error') as NodeJS.ErrnoException;
+      err.code = 'EACCES';
+      mkdirSpy.mockRejectedValue(err);
+      await expect(generateEntity('User', {})).rejects.toThrow('Mkdir error');
+    });
+
+    it('should throw ERR_UNEXPECTED if content is somehow null', async () => {
+      // We can force content to be null if resolveTemplate returns null and there is no user template and fallback returns null
+      // But fallback generateEntityTemplate always returns a string because it's mocked.
+      // So we can temporarily mock the fallback to return null (casting to any)
+      (generateEntityTemplate as jest.Mock).mockReturnValueOnce(null as unknown);
+      await expect(generateEntity('User', {})).rejects.toMatchObject({
+        code: 'ERR_UNEXPECTED',
+      });
+    });
+  });
+
+  describe('plugins', () => {
+    it('should call resolveTemplate and postGenerate on registered plugins', async () => {
+      const resolveMock = jest.fn().mockResolvedValue('{"plugin": "generated"}');
+      const postMock = jest.fn().mockResolvedValue(undefined);
+
+      const plugin: GeneratorPlugin = {
+        resolveTemplate: resolveMock,
+        postGenerate: postMock,
+      };
+
+      registerGeneratorPlugin(plugin);
+
+      await generateEntity('PluginUser', {});
+
+      expect(resolveMock).toHaveBeenCalledWith('PluginUser');
+      expect(postMock).toHaveBeenCalledWith({
+        name: 'PluginUser',
+        targetPath: expect.stringContaining('pluginuser.json'),
+      });
+      expect(writeFileSpy).toHaveBeenCalledWith(
+        expect.anything(),
+        '{"plugin": "generated"}',
+        'utf-8'
       );
     });
   });
@@ -148,6 +233,27 @@ describe('generator', () => {
       expect(logSpy).toHaveBeenCalledWith(
         expect.stringContaining('Successfully ejected 3 templates')
       );
+    });
+
+    it('should throw ERR_NO_TEMPLATES if fs.readdir fails', async () => {
+      readdirSpy.mockRejectedValue(new Error('Read dir error'));
+      await expect(ejectTemplates({})).rejects.toMatchObject({
+        code: 'ERR_NO_TEMPLATES',
+      });
+    });
+
+    it('should throw generic error if fs.access throws non-ENOENT when ejecting without force', async () => {
+      const err = new Error('Access error') as NodeJS.ErrnoException;
+      err.code = 'EACCES';
+      accessSpy.mockRejectedValue(err);
+      await expect(ejectTemplates({})).rejects.toThrow('Access error');
+    });
+
+    it('should throw generic error if fs.mkdir throws non-EEXIST in ejectTemplates', async () => {
+      const err = new Error('Mkdir error') as NodeJS.ErrnoException;
+      err.code = 'EACCES';
+      mkdirSpy.mockRejectedValue(err);
+      await expect(ejectTemplates({ force: true })).rejects.toThrow('Mkdir error');
     });
   });
 });

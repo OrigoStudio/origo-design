@@ -1,56 +1,106 @@
-import { initializeProject } from './init';
+import { initializeProject, initCommand } from './init';
 import * as fs from 'fs/promises';
 import * as path from 'path';
-import { CliError } from '../utils/errors';
+import { CliError, handleError } from '../utils/errors';
 
 jest.mock('fs/promises');
+jest.mock('../utils/errors', () => ({
+  ...jest.requireActual('../utils/errors'),
+  handleError: jest.fn(),
+}));
 
-describe('initCommand', () => {
+describe('init command', () => {
   const mockFs = fs as jest.Mocked<typeof fs>;
   const mockTarget = '/mock/cwd';
 
   beforeEach(() => {
     jest.resetAllMocks();
+    jest.spyOn(process, 'cwd').mockReturnValue(mockTarget);
   });
 
-  it('should initialize a project successfully', async () => {
-    mockFs.access.mockRejectedValue({ code: 'ENOENT' });
-    mockFs.mkdir.mockResolvedValue(undefined);
-    mockFs.writeFile.mockResolvedValue(undefined);
-
-    await initializeProject('test-project', mockTarget);
-
-    const expectedProjectDir = path.resolve(mockTarget, 'test-project');
-    const expectedSchemasDir = path.join(expectedProjectDir, 'schemas');
-    const expectedConfigFile = path.join(expectedProjectDir, 'origo.json');
-
-    expect(mockFs.access).toHaveBeenCalledWith(expectedProjectDir);
-    expect(mockFs.mkdir).toHaveBeenCalledWith(expectedProjectDir, { recursive: true });
-    expect(mockFs.mkdir).toHaveBeenCalledWith(expectedSchemasDir, { recursive: true });
-
-    expect(mockFs.writeFile).toHaveBeenCalledWith(
-      expectedConfigFile,
-      expect.stringContaining('"version": "1.0"'),
-      'utf-8'
-    );
+  afterEach(() => {
+    jest.restoreAllMocks();
   });
 
-  it('should throw an error if the directory already exists', async () => {
-    mockFs.access.mockResolvedValue(undefined); // Directory exists
+  describe('initCommand', () => {
+    it('should initialize a project and exit successfully', async () => {
+      mockFs.access.mockRejectedValue({ code: 'ENOENT' });
+      mockFs.mkdir.mockResolvedValue(undefined);
+      mockFs.writeFile.mockResolvedValue(undefined);
 
-    await expect(initializeProject('test-project', mockTarget)).rejects.toThrow(CliError);
-    await expect(initializeProject('test-project', mockTarget)).rejects.toMatchObject({
-      code: 'EEXIST',
+      const command = initCommand();
+      await command.parseAsync(['node', 'test', 'my-proj']);
+
+      const expectedProjectDir = path.resolve(mockTarget, 'my-proj');
+      expect(mockFs.mkdir).toHaveBeenCalledWith(expectedProjectDir, { recursive: true });
+    });
+
+    it('should pass json option to initializeProject', async () => {
+      mockFs.access.mockRejectedValue({ code: 'ENOENT' });
+      mockFs.mkdir.mockResolvedValue(undefined);
+      mockFs.writeFile.mockResolvedValue(undefined);
+
+      const command = initCommand();
+      await command.parseAsync(['node', 'test', 'my-proj', '--json']);
+
+      // The JSON option logic should hit the success path
+      const expectedProjectDir = path.resolve(mockTarget, 'my-proj');
+      expect(mockFs.mkdir).toHaveBeenCalledWith(expectedProjectDir, { recursive: true });
+    });
+
+    it('should invoke handleError when an exception is thrown', async () => {
+      const error = new Error('Permission denied');
+      mockFs.access.mockRejectedValue({ code: 'ENOENT' });
+      mockFs.mkdir.mockRejectedValue(error);
+
+      const command = initCommand();
+      // commander might throw, catch it
+      await command.parseAsync(['node', 'test', 'my-proj', '--json']).catch(() => undefined);
+
+      expect(handleError).toHaveBeenCalled();
     });
   });
 
-  it('should throw a generic error if fs.mkdir fails', async () => {
-    mockFs.access.mockRejectedValue({ code: 'ENOENT' });
-    mockFs.mkdir.mockRejectedValue(new Error('Permission denied'));
+  describe('initializeProject', () => {
+    it('should initialize a project successfully', async () => {
+      mockFs.access.mockRejectedValue({ code: 'ENOENT' });
+      mockFs.mkdir.mockResolvedValue(undefined);
+      mockFs.writeFile.mockResolvedValue(undefined);
 
-    await expect(initializeProject('test-project', mockTarget)).rejects.toThrow(CliError);
-    await expect(initializeProject('test-project', mockTarget)).rejects.toMatchObject({
-      code: 'SCAFFOLD_ERROR',
+      await initializeProject('test-project', mockTarget);
+
+      const expectedProjectDir = path.resolve(mockTarget, 'test-project');
+      const expectedSchemasDir = path.join(expectedProjectDir, 'schemas');
+      const expectedConfigFile = path.join(expectedProjectDir, 'origo.json');
+
+      expect(mockFs.access).toHaveBeenCalledWith(expectedProjectDir);
+      expect(mockFs.mkdir).toHaveBeenCalledWith(expectedProjectDir, { recursive: true });
+      expect(mockFs.mkdir).toHaveBeenCalledWith(expectedSchemasDir, { recursive: true });
+
+      expect(mockFs.writeFile).toHaveBeenCalledWith(
+        expectedConfigFile,
+        expect.stringContaining('"version": "1.0"'),
+        'utf-8'
+      );
+    });
+
+    it('should throw an error if the directory already exists', async () => {
+      mockFs.access.mockResolvedValue(undefined); // Directory exists
+
+      await expect(initializeProject('test-project', mockTarget)).rejects.toThrow(CliError);
+      await expect(initializeProject('test-project', mockTarget)).rejects.toMatchObject({
+        code: 'EEXIST',
+      });
+    });
+
+    it('should throw a generic error if fs.mkdir fails', async () => {
+      mockFs.access.mockRejectedValue({ code: 'ENOENT' });
+      mockFs.mkdir.mockRejectedValue(new Error('Permission denied'));
+
+      await expect(initializeProject('test-project', mockTarget)).rejects.toThrow(CliError);
+      await expect(initializeProject('test-project', mockTarget)).rejects.toMatchObject({
+        code: 'SCAFFOLD_ERROR',
+      });
     });
   });
 });

@@ -49,11 +49,27 @@ describe('scaffoldProject', () => {
     expect(parsedConfig.security.allowFileSystemAccess).toBe(false);
   });
 
-  it('should reject path traversal in project name', async () => {
-    await expect(scaffoldProject('../evil-project')).rejects.toThrow(CliError);
-    await expect(scaffoldProject('../evil-project')).rejects.toMatchObject({
-      code: 'ERR_INVALID_PROJECT_NAME',
-    });
+  it('should reject invalid project names without filesystem mutations', async () => {
+    const invalidNames = [
+      '../evil-project',
+      './nested/name',
+      'nested/project',
+      'nested\\project',
+      'bad*name',
+      'bad?name',
+      '',
+      '   ',
+    ];
+
+    for (const name of invalidNames) {
+      jest.clearAllMocks();
+      await expect(scaffoldProject(name)).rejects.toMatchObject({
+        code: 'ERR_INVALID_PROJECT_NAME',
+      });
+      expect(mkdirSpy).not.toHaveBeenCalled();
+      expect(writeFileSpy).not.toHaveBeenCalled();
+      expect(accessSpy).not.toHaveBeenCalled();
+    }
   });
 
   it('should fail if project directory already exists', async () => {
@@ -77,5 +93,30 @@ describe('scaffoldProject', () => {
     const parsedLog = JSON.parse(loggedOutput);
     expect(parsedLog.status).toBe('success');
     expect(parsedLog.data.projectName).toBe('json-project');
+  });
+
+  it('should throw CliError if fs.access throws non-ENOENT', async () => {
+    accessSpy.mockRejectedValue(new Error('Permission denied'));
+    await expect(scaffoldProject('test-project')).rejects.toMatchObject({
+      code: 'SCAFFOLD_ERROR',
+      message: expect.stringContaining('Permission denied'),
+    });
+  });
+
+  it('should throw existing CliError if thrown inside the try block', async () => {
+    const error = new CliError({ code: 'CUSTOM_ERR', message: 'Custom message' });
+    mkdirSpy.mockRejectedValue(error);
+    await expect(scaffoldProject('test-project')).rejects.toMatchObject({
+      code: 'CUSTOM_ERR',
+      message: 'Custom message',
+    });
+  });
+
+  it('should handle non-Error exceptions in catch block', async () => {
+    mkdirSpy.mockRejectedValue('String exception');
+    await expect(scaffoldProject('test-project')).rejects.toMatchObject({
+      code: 'SCAFFOLD_ERROR',
+      message: expect.stringContaining('String exception'),
+    });
   });
 });

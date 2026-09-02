@@ -124,7 +124,7 @@ development_status:
   epic-10-retrospective: optional
   retro-6-e2e-npm-verification: done
   retro-6-security-remediation: review
-  retro-6-negative-testing: ready-for-dev
+  retro-6-negative-testing: review
 
 action_items:
   - id: retro-1-cleanup

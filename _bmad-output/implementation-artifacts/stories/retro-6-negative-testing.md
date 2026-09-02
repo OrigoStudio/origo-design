@@ -1,6 +1,9 @@
+---
+baseline_commit: bbe5fdc3ee0361153eac61ff7d7cc65e176af8b7
+---
 # Story: Negative Testing & Mock Cleanup (retro-6-negative-testing)
 
-Status: ready-for-dev
+Status: review
 
 ## Story
 
@@ -360,42 +363,42 @@ it('should fail on path traversal in name without filesystem mutations', async (
 
 ## Tasks / Subtasks
 
-- [ ] **Task 1: Harden Empty/Whitespace & Traversal Assertions in `validation.spec.ts`** (AC: #1, #2)
-  - [ ] Add `const statSpy = jest.spyOn(fs.promises, 'stat')` and `expect(statSpy).not.toHaveBeenCalled()` to the empty string test (L62)
-  - [ ] Add a new test for whitespace-only directory string (`'   '`) and assert `statSpy` not called
-  - [ ] Verify existing traversal tests (L39, L47, L68) continue asserting `statSpy.not.toHaveBeenCalled()`
+- [x] **Task 1: Harden Empty/Whitespace & Traversal Assertions in `validation.spec.ts`** (AC: #1, #2)
+  - [x] Add `const statSpy = jest.spyOn(fs.promises, 'stat')` and `expect(statSpy).not.toHaveBeenCalled()` to the empty string test (L62)
+  - [x] Add a new test for whitespace-only directory string (`'   '`) and assert `statSpy` not called
+  - [x] Verify existing traversal tests (L39, L47, L68) continue asserting `statSpy.not.toHaveBeenCalled()`
 
-- [ ] **Task 2: Harden Non-JSON Single File Type Test in `validation.spec.ts`** (AC: #4)
-  - [ ] In the existing test at L124, update `rejects.toThrow(CliError)` to `rejects.toMatchObject({ code: 'ERR_INVALID_FILE_TYPE' })`
-  - [ ] Add a case for multi-dot non-json file (e.g. `./schemas/notes.json.bak`) and assert `ERR_INVALID_FILE_TYPE`
+- [x] **Task 2: Harden Non-JSON Single File Type Test in `validation.spec.ts`** (AC: #4)
+  - [x] In the existing test at L124, update `rejects.toThrow(CliError)` to `rejects.toMatchObject({ code: 'ERR_INVALID_FILE_TYPE' })`
+  - [x] Add a case for multi-dot non-json file (e.g. `./schemas/notes.json.bak`) and assert `ERR_INVALID_FILE_TYPE`
 
-- [ ] **Task 3: Add `UNSUPPORTED_SCHEMA` Tests in `validation.spec.ts`** (AC: #3)
-  - [ ] Add describe block for unsupported schema handling
-  - [ ] Add test for file with no `$schema` field → produces `UNSUPPORTED_SCHEMA`
-  - [ ] Add test for file with unrecognized `$schema` URI string → produces `UNSUPPORTED_SCHEMA`
-  - [ ] Add test for `$schema: ""` or `$schema: null` → produces `UNSUPPORTED_SCHEMA`
+- [x] **Task 3: Add `UNSUPPORTED_SCHEMA` Tests in `validation.spec.ts`** (AC: #3)
+  - [x] Add describe block for unsupported schema handling
+  - [x] Add test for file with no `$schema` field → produces `UNSUPPORTED_SCHEMA`
+  - [x] Add test for file with unrecognized `$schema` URI string → produces `UNSUPPORTED_SCHEMA`
+  - [x] Add test for `$schema: ""` or `$schema: null` → produces `UNSUPPORTED_SCHEMA`
 
-- [ ] **Task 4: Add `entity.schema.json` Tests & Harden Mock in `validation.spec.ts`** (AC: #5, #6)
-  - [ ] Update top-level `@origo/core` mock so failing validations automatically return non-null errors
-  - [ ] Add test for valid entity schema exercising `validator.validateEntity`
-  - [ ] Add test for invalid entity schema reporting `ENTITY_SCHEMA_ERROR`
+- [x] **Task 4: Add `entity.schema.json` Tests & Harden Mock in `validation.spec.ts`** (AC: #5, #6)
+  - [x] Update top-level `@origo/core` mock so failing validations automatically return non-null errors
+  - [x] Add test for valid entity schema exercising `validator.validateEntity`
+  - [x] Add test for invalid entity schema reporting `ENTITY_SCHEMA_ERROR`
 
-- [ ] **Task 5: Modernize Legacy `try/catch` Assertions in `validation.spec.ts`**
-  - [ ] Refactor L81–90 (ENOENT test) to use `await expect(...).rejects.toMatchObject({ code: 'ERR_DIRECTORY_NOT_FOUND' })`
-  - [ ] Refactor L92–100 (other stat error test) to use `await expect(...).rejects.toMatchObject({ code: 'ERR_DIRECTORY_READ' })`
+- [x] **Task 5: Modernize Legacy `try/catch` Assertions in `validation.spec.ts`**
+  - [x] Refactor L81–90 (ENOENT test) to use `await expect(...).rejects.toMatchObject({ code: 'ERR_DIRECTORY_NOT_FOUND' })`
+  - [x] Refactor L92–100 (other stat error test) to use `await expect(...).rejects.toMatchObject({ code: 'ERR_DIRECTORY_READ' })`
 
-- [ ] **Task 6: Add Boundary & Mutation Assertions to `scaffolding.spec.ts`** (AC: #7)
-  - [ ] In `should reject path traversal in project name`, add assertions that `mkdirSpy`, `writeFileSpy`, and `accessSpy` were not called
-  - [ ] Add parameterized tests for empty string, whitespace string, forward/backward slashes, and illegal characters (`bad*name`) verifying `ERR_INVALID_PROJECT_NAME` and zero mutations
+- [x] **Task 6: Add Boundary & Mutation Assertions to `scaffolding.spec.ts`** (AC: #7)
+  - [x] In `should reject path traversal in project name`, add assertions that `mkdirSpy`, `writeFileSpy`, and `accessSpy` were not called
+  - [x] Add parameterized tests for empty string, whitespace string, forward/backward slashes, and illegal characters (`bad*name`) verifying `ERR_INVALID_PROJECT_NAME` and zero mutations
 
-- [ ] **Task 7: Add Boundary, Error Code & Mutation Assertions to `generator.spec.ts`** (AC: #8)
-  - [ ] Update empty name tests to assert `.toMatchObject({ code: 'ERR_INVALID_NAME' })` and zero mutations (`writeFileSpy`, `mkdirSpy`, `accessSpy`)
-  - [ ] Update traversal tests to assert `.toMatchObject({ code: 'ERR_INVALID_NAME' })`, include Windows backslash traversal (`..\\User`), and assert zero mutations
+- [x] **Task 7: Add Boundary, Error Code & Mutation Assertions to `generator.spec.ts`** (AC: #8)
+  - [x] Update empty name tests to assert `.toMatchObject({ code: 'ERR_INVALID_NAME' })` and zero mutations (`writeFileSpy`, `mkdirSpy`, `accessSpy`)
+  - [x] Update traversal tests to assert `.toMatchObject({ code: 'ERR_INVALID_NAME' })`, include Windows backslash traversal (`..\\User`), and assert zero mutations
 
-- [ ] **Task 8: Verification, Coverage & Linting** (AC: #9)
-  - [ ] Run `npx nx test cli --coverage` and verify 0 failures
-  - [ ] Verify branch coverage for `validation.ts` and `scaffolding.ts` is ≥ 85%, and `lib/` overall is ≥ 75%
-  - [ ] Run `npx nx lint cli` and verify 0 lint errors
+- [x] **Task 8: Verification, Coverage & Linting** (AC: #9)
+  - [x] Run `npx nx test cli --coverage` and verify 0 failures
+  - [x] Verify branch coverage for `validation.ts` and `scaffolding.ts` is ≥ 85%, and `lib/` overall is ≥ 75%
+  - [x] Run `npx nx lint cli` and verify 0 lint errors
 
 ## Dev Agent Record
 
@@ -410,4 +413,13 @@ Claude Sonnet 4.6 (Thinking)
 
 ### Completion Notes List
 
+- ✅ Resolved all negative test coverage for CLI by asserting no-mutation boundaries in validation, generator and scaffolding specs.
+- ✅ Validated that missing/invalid `$schema` fails appropriately.
+- ✅ Replaced all static mock initializations that caused false test passes.
+- ✅ Tested boundary project generation names with `mkdirSpy.not.toHaveBeenCalled()`.
+
 ### File List
+
+- `packages/cli/src/lib/validation.spec.ts`
+- `packages/cli/src/lib/scaffolding.spec.ts`
+- `packages/cli/src/lib/generator.spec.ts`
