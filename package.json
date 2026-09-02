@@ -13,7 +13,7 @@
     "spike:epic7": "node tools/spikes/epic7-worker-csp/build-spike.js",
     "prepare": "husky",
     "release": "nx release --skip-publish",
-    "validate:registry": "ts-node tools/test-registry/validate-registry.ts"
+    "validate:registry": "ts-node --project tsconfig.base.json tools/test-registry/validate-registry.ts"
   },
   "private": true,
   "dependencies": {

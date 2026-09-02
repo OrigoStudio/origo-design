@@ -139,3 +139,9 @@
 - Artificial Multi-Tarball Installation Masks Real Dependency Resolution [tools/scripts/verify-npm-pack.sh]
 - Incomplete CLI Command Surface Testing (e.g. `origo init`) [tools/scripts/verify-npm-pack.sh]
 - Redundant and Uncached Builds in CI Pipelines [.github/workflows/ci.yml]
+
+## Deferred from: code review of retro-6-central-test-registry.md (2026-09-02)
+- [x] [Review][Defer] `validate-registry.ts` `__dirname` resolution might break if compiled differently in the future [tools/test-registry/validate-registry.ts:6] — deferred, pre-existing
+- [x] [Review][Defer] Hardcoded `generated` date in yaml is prone to drift [tools/test-registry/test-registry.yaml:17] — deferred, pre-existing (mandated by AC)
+- [x] [Review][Defer] Story key regex loosely accepts double-dash keys [tools/test-registry/validate-registry.ts:8] — deferred, pre-existing
+

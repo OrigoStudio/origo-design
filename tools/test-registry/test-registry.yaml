@@ -17,7 +17,7 @@ schema_version: '1.0'
 generated: '2026-09-02'
 test_cases:
   - id: cli-commands-validate
-    description: 'validateCommand'
+    description: 'Verifies the validate CLI command behavior'
     package: '@origo/cli'
     spec_file: packages/cli/src/commands/validate.spec.ts
     type: unit
@@ -27,7 +27,7 @@ test_cases:
     last_result: unknown
     results: {}
   - id: cli-commands-new
-    description: 'newCommand'
+    description: 'Verifies the new CLI command scaffolding'
     package: '@origo/cli'
     spec_file: packages/cli/src/commands/new.spec.ts
     type: unit
@@ -37,7 +37,7 @@ test_cases:
     last_result: unknown
     results: {}
   - id: cli-commands-init
-    description: 'init command'
+    description: 'Verifies the init CLI command initialization'
     package: '@origo/cli'
     spec_file: packages/cli/src/commands/init.spec.ts
     type: unit
@@ -46,7 +46,7 @@ test_cases:
     last_result: unknown
     results: {}
   - id: cli-commands-generate-entity
-    description: 'entityCommand'
+    description: 'Verifies entity generation logic'
     package: '@origo/cli'
     spec_file: packages/cli/src/commands/generate/entity.spec.ts
     type: unit
@@ -55,7 +55,7 @@ test_cases:
     last_result: unknown
     results: {}
   - id: cli-commands-generate-index
-    description: 'generateCommand'
+    description: 'Verifies generic generation index command'
     package: '@origo/cli'
     spec_file: packages/cli/src/commands/generate/index.spec.ts
     type: unit
@@ -64,7 +64,7 @@ test_cases:
     last_result: unknown
     results: {}
   - id: cli-lib-cli
-    description: 'cli'
+    description: 'Verifies CLI parsing and argument routing'
     package: '@origo/cli'
     spec_file: packages/cli/src/lib/cli.spec.ts
     type: unit
@@ -73,7 +73,7 @@ test_cases:
     last_result: unknown
     results: {}
   - id: cli-lib-generator
-    description: 'generator'
+    description: 'Verifies the internal generator library functions'
     package: '@origo/cli'
     spec_file: packages/cli/src/lib/generator.spec.ts
     type: unit
@@ -82,7 +82,7 @@ test_cases:
     last_result: unknown
     results: {}
   - id: cli-lib-scaffolding
-    description: 'scaffoldProject'
+    description: 'Verifies the project scaffolding routines'
     package: '@origo/cli'
     spec_file: packages/cli/src/lib/scaffolding.spec.ts
     type: unit
@@ -92,7 +92,7 @@ test_cases:
     last_result: unknown
     results: {}
   - id: cli-lib-validation
-    description: 'Validation Library'
+    description: 'Verifies CLI validation utility functions'
     package: '@origo/cli'
     spec_file: packages/cli/src/lib/validation.spec.ts
     type: unit
@@ -103,7 +103,7 @@ test_cases:
     last_result: unknown
     results: {}
   - id: cli-templates-index
-    description: 'Boilerplate Templates'
+    description: 'Verifies boilerplate templates'
     package: '@origo/cli'
     spec_file: packages/cli/src/templates/index.spec.ts
     type: unit
@@ -112,7 +112,7 @@ test_cases:
     last_result: unknown
     results: {}
   - id: cli-utils-errors
-    description: 'errors utils'
+    description: 'Verifies error formatting and utilities'
     package: '@origo/cli'
     spec_file: packages/cli/src/utils/errors.spec.ts
     type: unit
@@ -122,7 +122,7 @@ test_cases:
     last_result: unknown
     results: {}
   - id: core-validator-index
-    description: 'BADLValidator'
+    description: 'Verifies the core BADL Validator'
     package: '@origo/core'
     spec_file: packages/core/src/validator/index.spec.ts
     type: unit
@@ -131,7 +131,7 @@ test_cases:
     last_result: unknown
     results: {}
   - id: core-validator-ast
-    description: 'AST Validation Engine'
+    description: 'Verifies the AST Validation Engine'
     package: '@origo/core'
     spec_file: packages/core/src/validator/ast-validator.spec.ts
     type: unit
@@ -140,7 +140,7 @@ test_cases:
     last_result: unknown
     results: {}
   - id: core-validator-serializer
-    description: 'AST Serializer'
+    description: 'Verifies the Canonical AST Serializer'
     package: '@origo/core'
     spec_file: packages/core/src/validator/serializer.spec.ts
     type: unit
@@ -149,7 +149,7 @@ test_cases:
     last_result: unknown
     results: {}
   - id: core-extension-manager
-    description: 'ExtensionManager'
+    description: 'Verifies the ExtensionManager lifecycle'
     package: '@origo/core'
     spec_file: packages/core/src/extension-api/__tests__/extension-manager.spec.ts
     type: unit
@@ -158,7 +158,7 @@ test_cases:
     last_result: unknown
     results: {}
   - id: tokens-build
-    description: 'Token Compilation Pipeline'
+    description: 'Verifies token compilation pipeline'
     package: '@origo/design-tokens'
     spec_file: packages/design-tokens/src/build.spec.ts
     type: unit
@@ -167,7 +167,7 @@ test_cases:
     last_result: unknown
     results: {}
   - id: tokens-lib-foundation
-    description: 'Design Tokens Schema Validation'
+    description: 'Verifies design tokens schema foundation'
     package: '@origo/design-tokens'
     spec_file: packages/design-tokens/src/lib/design-tokens.spec.ts
     type: unit
@@ -176,7 +176,7 @@ test_cases:
     last_result: unknown
     results: {}
   - id: tokens-theme-fetcher
-    description: 'fetchTheme'
+    description: 'Verifies the runtime theme fetcher'
     package: '@origo/design-tokens'
     spec_file: packages/design-tokens/src/runtime/theme-fetcher.spec.ts
     type: unit
@@ -185,7 +185,7 @@ test_cases:
     last_result: unknown
     results: {}
   - id: tokens-theme-fetcher-perf
-    description: 'Performance Benchmark: NFR-PERF-005'
+    description: 'Measures performance of the theme fetcher'
     package: '@origo/design-tokens'
     spec_file: packages/design-tokens/src/runtime/theme-fetcher.perf.spec.ts
     type: perf
@@ -194,7 +194,7 @@ test_cases:
     last_result: unknown
     results: {}
   - id: tokens-theme-injector
-    description: 'theme-injector'
+    description: 'Verifies DOM theme injection'
     package: '@origo/design-tokens'
     spec_file: packages/design-tokens/src/runtime/theme-injector.spec.ts
     type: unit
@@ -203,7 +203,7 @@ test_cases:
     last_result: unknown
     results: {}
   - id: tokens-theme-injector-ssr
-    description: 'theme-injector (SSR Environment)'
+    description: 'Verifies SSR safe theme injection'
     package: '@origo/design-tokens'
     spec_file: packages/design-tokens/src/runtime/theme-injector.ssr.spec.ts
     type: unit
@@ -212,7 +212,7 @@ test_cases:
     last_result: unknown
     results: {}
   - id: renderer-component
-    description: 'OrigoRendererComponent'
+    description: 'Verifies the OrigoRenderer Component'
     package: '@origo/angular-renderer'
     spec_file: packages/angular-renderer/src/lib/renderer.component.spec.ts
     type: unit
@@ -221,7 +221,7 @@ test_cases:
     last_result: unknown
     results: {}
   - id: renderer-theme-provider
-    description: 'theme.provider'
+    description: 'Verifies the Angular theme provider'
     package: '@origo/angular-renderer'
     spec_file: packages/angular-renderer/src/lib/theme.provider.spec.ts
     type: unit
@@ -230,7 +230,7 @@ test_cases:
     last_result: unknown
     results: {}
   - id: renderer-adapter-web
-    description: 'Web Adapter Utilities'
+    description: 'Verifies Web Adapter coercion utilities'
     package: '@origo/angular-renderer'
     spec_file: packages/angular-renderer/src/adapters/web/adapter.spec.ts
     type: unit
@@ -239,7 +239,7 @@ test_cases:
     last_result: unknown
     results: {}
   - id: renderer-primitive-button
-    description: 'ButtonComponent'
+    description: 'Verifies Button primitive rendering'
     package: '@origo/angular-renderer'
     spec_file: packages/angular-renderer/src/components/primitives/button/button.component.spec.ts
     type: unit
@@ -248,7 +248,7 @@ test_cases:
     last_result: unknown
     results: {}
   - id: renderer-primitive-text-input
-    description: 'TextInputComponent'
+    description: 'Verifies TextInput primitive rendering'
     package: '@origo/angular-renderer'
     spec_file: packages/angular-renderer/src/components/primitives/text-input/text-input.component.spec.ts
     type: unit
@@ -257,7 +257,7 @@ test_cases:
     last_result: unknown
     results: {}
   - id: renderer-primitive-vbox
-    description: 'VBoxComponent'
+    description: 'Verifies VBox layout primitive'
     package: '@origo/angular-renderer'
     spec_file: packages/angular-renderer/src/components/primitives/vbox/vbox.component.spec.ts
     type: unit

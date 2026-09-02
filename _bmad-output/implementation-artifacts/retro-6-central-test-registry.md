@@ -1,9 +1,9 @@
 ---
 baseline_commit: ab301e41e5e180a918241304ae29345c82daa0c0
 ---
-# Story retro-6: Central Test Case Registry Strategy (retro-6-central-test-registry)
-
-Status: in-progress
+# Story: retro-6-central-test-registry
+Epic: retro-6
+Status: review
 
 ## Story
 
@@ -374,3 +374,20 @@ Gemini 3.7 Flash (High)
 - `tools/test-registry/README.md` [NEW]
 - `package.json` [MODIFIED]
 - `.github/workflows/ci.yml` [MODIFIED]
+
+### Review Findings
+
+- [ ] [Review][Patch] Missing validation for mandatory `results` field and release statuses [tools/test-registry/validate-registry.ts:31]
+- [ ] [Review][Patch] Missing example entry and omitted `results` schema definition in README [tools/test-registry/README.md:10]
+- [ ] [Review][Patch] Missing validation for `schema_version` and `generated` fields [tools/test-registry/validate-registry.ts:52]
+- [ ] [Review][Patch] `spec_file` must enforce relative paths (reject absolute `/`) [tools/test-registry/validate-registry.ts:91]
+- [ ] [Review][Patch] CI step lacks step-level timeout for `ts-node` execution [.github/workflows/ci.yml:47]
+- [ ] [Review][Patch] Story document header status contradicts sprint status (in-progress vs review) [_bmad-output/implementation-artifacts/retro-6-central-test-registry.md:6]
+- [ ] [Review][Patch] `validate:registry` npm script missing `--project` flag to avoid tsconfig resolution issues [package.json:16]
+- [ ] [Review][Patch] `test-registry.yaml` descriptions are raw describe blocks, not human descriptions [tools/test-registry/test-registry.yaml:20]
+- [ ] [Review][Patch] `validate-registry.ts` uses `process.exit(1)` mid-function which breaks testability [tools/test-registry/validate-registry.ts:37]
+- [ ] [Review][Patch] `spec_file` values are not checked for uniqueness across entries [tools/test-registry/validate-registry.ts:58]
+- [x] [Review][Defer] `validate-registry.ts` `__dirname` resolution might break if compiled differently in the future [tools/test-registry/validate-registry.ts:6] — deferred, pre-existing
+- [x] [Review][Defer] Hardcoded `generated` date in yaml is prone to drift [tools/test-registry/test-registry.yaml:17] — deferred, pre-existing (mandated by AC)
+- [x] [Review][Defer] Story key regex loosely accepts double-dash keys [tools/test-registry/validate-registry.ts:8] — deferred, pre-existing
+

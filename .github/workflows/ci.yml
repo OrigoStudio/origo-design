@@ -45,6 +45,7 @@ jobs:
         run: npx nx format:check --base=${{ env.NX_BASE }} --head=${{ env.NX_HEAD }}
 
       - name: Validate Test Registry
+        timeout-minutes: 2
         run: npm run validate:registry
 
       - name: Run Nx Lint (Affected)
