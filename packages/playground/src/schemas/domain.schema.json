@@ -1,0 +1,47 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://origo.design/schemas/v1/domain.schema.json",
+  "title": "Domain",
+  "description": "BADL Domain Definition",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string"
+    },
+    "name": {
+      "type": "string"
+    },
+    "version": {
+      "type": "string"
+    },
+    "domain": {
+      "type": "string"
+    },
+    "entities": {
+      "type": "array",
+      "items": {
+        "$ref": "entity.schema.json"
+      }
+    },
+    "capabilities": {
+      "type": "array",
+      "items": {
+        "$ref": "capability.schema.json"
+      }
+    },
+    "contracts": {
+      "type": "array",
+      "items": {
+        "$ref": "contract.schema.json"
+      }
+    },
+    "extensions": {
+      "type": "array",
+      "items": {
+        "$ref": "extension.schema.json"
+      }
+    }
+  },
+  "required": ["id", "name", "version", "domain", "entities"],
+  "additionalProperties": false
+}

@@ -1,0 +1,21 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://origo.design/schemas/v1/permission.schema.json",
+  "title": "Permission",
+  "description": "BADL Role-Based Permission Definition",
+  "type": "object",
+  "properties": {
+    "role": {
+      "type": "string",
+      "description": "The role required for this permission",
+      "minLength": 1
+    },
+    "access": {
+      "type": "string",
+      "enum": ["grant", "deny"],
+      "default": "grant"
+    }
+  },
+  "required": ["role"],
+  "additionalProperties": false
+}

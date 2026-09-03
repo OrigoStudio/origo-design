@@ -14,9 +14,24 @@
     "sharedGlobals": []
   },
   "plugins": [
-    { "plugin": "@nx/eslint/plugin", "options": { "targetName": "lint" } },
-    { "plugin": "@nx/jest/plugin", "options": { "targetName": "test" } },
-    { "plugin": "@nx/playwright/plugin", "options": { "targetName": "e2e" } }
+    {
+      "plugin": "@nx/eslint/plugin",
+      "options": {
+        "targetName": "lint"
+      }
+    },
+    {
+      "plugin": "@nx/jest/plugin",
+      "options": {
+        "targetName": "test"
+      }
+    },
+    {
+      "plugin": "@nx/playwright/plugin",
+      "options": {
+        "targetName": "e2e"
+      }
+    }
   ],
   "targetDefaults": {
     "@angular-devkit/build-angular:application": {
@@ -38,8 +53,15 @@
     "@nx/jest:jest": {
       "cache": true,
       "inputs": ["default", "^production", "{workspaceRoot}/jest.preset.js"],
-      "options": { "passWithNoTests": true },
-      "configurations": { "ci": { "ci": true, "codeCoverage": true } }
+      "options": {
+        "passWithNoTests": true
+      },
+      "configurations": {
+        "ci": {
+          "ci": true,
+          "codeCoverage": true
+        }
+      }
     },
     "@nx/js:tsc": {
       "cache": true,
@@ -50,28 +72,83 @@
       "cache": true,
       "dependsOn": ["^build"],
       "inputs": ["production", "^production"]
+    },
+    "@angular/build:application": {
+      "cache": true,
+      "dependsOn": ["^build"],
+      "inputs": ["production", "^production"]
+    },
+    "@angular/build:unit-test": {
+      "cache": true,
+      "inputs": ["default", "^production"]
     }
   },
-  "workspaceLayout": { "appsDir": "apps", "libsDir": "packages" },
+  "workspaceLayout": {
+    "appsDir": "apps",
+    "libsDir": "packages"
+  },
   "generators": {
-    "@nx/angular:component": { "type": "component", "standalone": true },
-    "@schematics/angular:component": { "type": "component" },
-    "@nx/angular:directive": { "type": "directive" },
-    "@schematics/angular:directive": { "type": "directive" },
-    "@nx/angular:service": { "type": "service" },
-    "@schematics/angular:service": { "type": "service" },
-    "@nx/angular:scam": { "type": "component" },
-    "@nx/angular:scam-directive": { "type": "directive" },
-    "@nx/angular:guard": { "typeSeparator": "." },
-    "@schematics/angular:guard": { "typeSeparator": "." },
-    "@nx/angular:interceptor": { "typeSeparator": "." },
-    "@schematics/angular:interceptor": { "typeSeparator": "." },
-    "@nx/angular:module": { "typeSeparator": "." },
-    "@schematics/angular:module": { "typeSeparator": "." },
-    "@nx/angular:pipe": { "typeSeparator": "." },
-    "@schematics/angular:pipe": { "typeSeparator": "." },
-    "@nx/angular:resolver": { "typeSeparator": "." },
-    "@schematics/angular:resolver": { "typeSeparator": "." }
+    "@nx/angular:component": {
+      "type": "component",
+      "standalone": true
+    },
+    "@schematics/angular:component": {
+      "type": "component"
+    },
+    "@nx/angular:directive": {
+      "type": "directive"
+    },
+    "@schematics/angular:directive": {
+      "type": "directive"
+    },
+    "@nx/angular:service": {
+      "type": "service"
+    },
+    "@schematics/angular:service": {
+      "type": "service"
+    },
+    "@nx/angular:scam": {
+      "type": "component"
+    },
+    "@nx/angular:scam-directive": {
+      "type": "directive"
+    },
+    "@nx/angular:guard": {
+      "typeSeparator": "."
+    },
+    "@schematics/angular:guard": {
+      "typeSeparator": "."
+    },
+    "@nx/angular:interceptor": {
+      "typeSeparator": "."
+    },
+    "@schematics/angular:interceptor": {
+      "typeSeparator": "."
+    },
+    "@nx/angular:module": {
+      "typeSeparator": "."
+    },
+    "@schematics/angular:module": {
+      "typeSeparator": "."
+    },
+    "@nx/angular:pipe": {
+      "typeSeparator": "."
+    },
+    "@schematics/angular:pipe": {
+      "typeSeparator": "."
+    },
+    "@nx/angular:resolver": {
+      "typeSeparator": "."
+    },
+    "@schematics/angular:resolver": {
+      "typeSeparator": "."
+    },
+    "@nx/angular:application": {
+      "e2eTestRunner": "playwright",
+      "linter": "eslint",
+      "style": "scss",
+      "unitTestRunner": "vitest-angular"
+    }
   },
   "analytics": true,
   "nxCloudId": "6a75f22a66c65db5106c4220",

@@ -102,7 +102,7 @@ development_status:
   6-3-entity-generator-boilerplate: done
   epic-6-retrospective: done
   epic-7: in-progress
-  7-1-web-based-editor-component: ready-for-dev
+  7-1-web-based-editor-component: done
   7-2-live-compilation-rendering-pipeline: ready-for-dev
   7-3-live-preview-latency-optimization: backlog
   epic-7-retrospective: optional
