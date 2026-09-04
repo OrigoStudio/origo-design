@@ -14,6 +14,10 @@ try {
   }
 }
 
+afterEach(() => {
+  getTestBed().resetTestingModule();
+});
+
 // Monaco editor requires document.queryCommandSupported in jsdom
 if (typeof document !== 'undefined') {
   document.queryCommandSupported = () => false;
