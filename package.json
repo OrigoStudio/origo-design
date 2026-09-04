@@ -58,7 +58,7 @@
     "@nx/jest": "23.1.0",
     "@nx/js": "23.1.0",
     "@nx/playwright": "23.1.0",
-    "@nx/vite": "^23.2.0",
+    "@nx/vite": "23.1.0",
     "@nx/web": "23.1.0",
     "@nx/workspace": "23.1.0",
     "@playwright/test": "^1.36.0",
@@ -102,10 +102,10 @@
   },
   "lint-staged": {
     "*.{js,ts,html,scss,json,md,yaml,yml}": [
-      "prettier --write"
+      "npx prettier --write"
     ],
     "*.{js,ts}": [
-      "eslint --fix"
+      "npx eslint --fix"
     ]
   }
 }
