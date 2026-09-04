@@ -144,4 +144,10 @@
 - [x] [Review][Defer] `validate-registry.ts` `__dirname` resolution might break if compiled differently in the future [tools/test-registry/validate-registry.ts:6] — deferred, pre-existing
 - [x] [Review][Defer] Hardcoded `generated` date in yaml is prone to drift [tools/test-registry/test-registry.yaml:17] — deferred, pre-existing (mandated by AC)
 - [x] [Review][Defer] Story key regex loosely accepts double-dash keys [tools/test-registry/validate-registry.ts:8] — deferred, pre-existing
+ 
++## Deferred from: code review of 7-1-web-based-editor-component.md (2026-09-03)
++
++- Builder alignment: Angular application builder (`@angular/build:application`) vs pure Vite [packages/playground/project.json:10] — deferred, pre-existing (proven to emit standalone worker ES modules satisfying CSP)
++- Reactive dynamic signal updates for `theme`/`readOnly` after editor mount [packages/playground/src/editor/badl-editor.component.ts:25] — deferred, pre-existing (Story 7.2 live pipeline scope)
++- Tighten production build size budgets [packages/playground/project.json:34] — deferred, pre-existing (Story 7.3 performance optimization)
 

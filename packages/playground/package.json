@@ -1,0 +1,10 @@
+{
+  "name": "@origo/playground",
+  "version": "0.0.1",
+  "private": true,
+  "dependencies": {},
+  "peerDependencies": {
+    "@angular/common": "^18.0.0",
+    "@angular/core": "^18.0.0"
+  }
+}

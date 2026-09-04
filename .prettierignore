@@ -10,3 +10,4 @@
 **/.astro
 /resolved_config.json
 /bmad_resolved_config.json
+.angular

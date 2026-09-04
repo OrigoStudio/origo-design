@@ -1,0 +1,52 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://origo.design/schemas/v1/contract.schema.json",
+  "title": "Contract",
+  "description": "BADL Contract Definition",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string"
+    },
+    "name": {
+      "type": "string"
+    },
+    "requiredFields": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "type": {
+            "type": "string",
+            "enum": ["string", "boolean", "date", "number", "array", "object"]
+          }
+        },
+        "required": ["name", "type"],
+        "additionalProperties": false
+      }
+    },
+    "requiredCapabilities": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "enum": ["Create", "Read", "Update", "Delete", "List"]
+          },
+          "type": {
+            "type": "string",
+            "enum": ["Command", "Query"]
+          }
+        },
+        "required": ["name", "type"],
+        "additionalProperties": false
+      }
+    }
+  },
+  "required": ["id", "name", "requiredFields", "requiredCapabilities"],
+  "additionalProperties": false
+}
