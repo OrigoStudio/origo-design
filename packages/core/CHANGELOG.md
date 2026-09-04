@@ -1,3 +1,14 @@
+## 0.0.22 (2026-09-04)
+
+### 🚀 Features
+
+- scaffold playground application and e2e testing suite with initial editor component and schema registry ([f097894](https://github.com/OrigoStudio/origo-design/commit/f097894))
+- add GitHub Actions workflow to automate library releases using Nx Release ([3d6651f](https://github.com/OrigoStudio/origo-design/commit/3d6651f))
+
+### ❤️ Thank You
+
+- Hardik Patel @hardikpatelse
+
 ## 0.0.21 (2026-09-02)
 
 ### 🚀 Features
