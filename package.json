@@ -15,7 +15,7 @@
     "release": "nx release --skip-publish",
     "validate:registry": "ts-node --project tsconfig.base.json tools/test-registry/validate-registry.ts"
   },
-  "private": true,
+  "private": false,
   "dependencies": {
     "@angular/animations": "22.0.8",
     "@angular/common": "22.0.8",
