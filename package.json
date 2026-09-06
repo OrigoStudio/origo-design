@@ -2,6 +2,10 @@
   "name": "@origostudio/origo-design",
   "version": "0.0.0",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/OrigoStudio/origo-design.git"
+  },
   "scripts": {
     "start": "nx serve origo-design",
     "build": "nx run-many -t build",
