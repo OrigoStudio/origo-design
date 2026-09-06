@@ -11,6 +11,7 @@ concurrency:
 
 permissions:
   contents: write # Needed to push tags and release commits
+  id-token: write
 
 jobs:
   release:
@@ -26,6 +27,7 @@ jobs:
         with:
           node-version: 22
           cache: 'npm'
+          registry-url: 'https://registry.npmjs.org' # REQUIRED to set the registry
 
       - name: Install dependencies
         run: npm ci --no-audit
