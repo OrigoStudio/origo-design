@@ -17,5 +17,9 @@
   "devDependencies": {
     "@types/json-source-map": "^0.6.0",
     "@types/semver": "^7.8.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/OrigoStudio/origo-design.git"
   }
 }

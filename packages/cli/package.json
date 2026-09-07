@@ -12,5 +12,9 @@
     "@origo/core": "0.0.23",
     "commander": "^15.0.0",
     "tslib": "^2.3.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/OrigoStudio/origo-design.git"
   }
 }
