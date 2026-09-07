@@ -1,3 +1,13 @@
+## 0.0.25 (2026-09-07)
+
+### 🚀 Features
+
+- initialize package.json files for cli, core, design-tokens, playground, and angular-renderer packages ([2dee8cc](https://github.com/OrigoStudio/origo-design/commit/2dee8cc))
+
+### ❤️ Thank You
+
+- Hardik Patel @hardikpatelse
+
 ## 0.0.24 (2026-09-07)
 
 This was a version bump only for playground to align it with other projects, there were no code changes.
