@@ -1,3 +1,13 @@
+## 0.0.23 (2026-09-07)
+
+### 🚀 Features
+
+- add CLI package and configure automated Nx release pipeline ([6ec80c7](https://github.com/OrigoStudio/origo-design/commit/6ec80c7))
+
+### ❤️ Thank You
+
+- Hardik Patel @hardikpatelse
+
 ## 0.0.22 (2026-09-04)
 
 ### 🚀 Features

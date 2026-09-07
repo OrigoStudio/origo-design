@@ -1,3 +1,7 @@
+## 0.0.23 (2026-09-07)
+
+This was a version bump only for angular-renderer to align it with other projects, there were no code changes.
+
 ## 0.0.22 (2026-09-04)
 
 ### 🚀 Features
