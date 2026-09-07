@@ -67,7 +67,7 @@ fi
 
 # Template asset check
 shopt -s nullglob
-TEMPLATES=(./node_modules/@origo/cli/src/templates/*.json)
+TEMPLATES=(./node_modules/@origostudio/cli/src/templates/*.json)
 if [ ${#TEMPLATES[@]} -eq 0 ]; then
   echo "ERROR: template .json files missing from installed package — check project.json build assets glob"
   exit 1
