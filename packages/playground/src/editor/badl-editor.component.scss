@@ -1,10 +1,51 @@
 :host {
-  display: block;
+  display: flex;
+  flex-direction: column;
   width: 100%;
   height: 100%;
 }
 
+.editor-header {
+  padding: 12px 24px;
+  background: var(--origo-color-surface, #1e1e1e);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  .editor-title {
+    color: #cccccc;
+    font-size: 0.9rem;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+  }
+
+  .load-sample-btn {
+    background: transparent;
+    border: 1px solid #4a4a4a;
+    color: #e0e0e0;
+    padding: 6px 12px;
+    border-radius: 6px;
+    font-size: 0.8rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    font-family: inherit;
+
+    &:hover {
+      background: rgba(255, 255, 255, 0.1);
+      border-color: #666;
+    }
+
+    &:active {
+      background: rgba(255, 255, 255, 0.15);
+    }
+  }
+}
+
 .editor-container {
+  flex: 1;
   width: 100%;
-  height: 100%;
+  min-height: 0;
 }

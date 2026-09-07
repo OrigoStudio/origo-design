@@ -1,5 +1,6 @@
 import { defineConfig } from 'vite';
 import angular from '@analogjs/vite-plugin-angular';
+import { nxViteTsPaths } from '@nx/vite/plugins/nx-tsconfig-paths.plugin';
 
 export default defineConfig({
   worker: {
@@ -8,5 +9,5 @@ export default defineConfig({
   optimizeDeps: {
     include: ['monaco-editor'],
   },
-  plugins: [angular()],
+  plugins: [angular(), nxViteTsPaths()],
 });

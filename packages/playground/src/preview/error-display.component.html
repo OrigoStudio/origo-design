@@ -1,0 +1,29 @@
+@if (previewService.compilationErrors().length > 0) {
+  <div class="error-container">
+    <h3>Compilation Errors</h3>
+    <ul>
+      @for (error of previewService.compilationErrors(); track $index) {
+        <li class="error-item">
+          <span
+            class="badge"
+            [ngClass]="{
+              'badge-syntax': error.type === 'Syntax Error',
+              'badge-semantic': error.type === 'Semantic Error',
+            }"
+          >
+            {{ error.type }}
+          </span>
+          <div class="error-details">
+            <span class="error-message">{{ error.message }}</span>
+            @if (error.path || error.line) {
+              <span class="error-location">
+                at {{ error.path || 'document' }} (Line: {{ error.line || '?' }}, Col:
+                {{ error.column || '?' }})
+              </span>
+            }
+          </div>
+        </li>
+      }
+    </ul>
+  </div>
+}

@@ -11,6 +11,7 @@ import {
 import * as monaco from 'monaco-editor';
 import './monaco-environment'; // MUST be first monaco import — side-effect only
 import { registerBadlSchema } from './schema-registry';
+import { PreviewService } from '../preview/preview.service';
 
 @Component({
   selector: 'origo-badl-editor',
@@ -27,6 +28,7 @@ export class BadlEditorComponent implements AfterViewInit, OnDestroy {
 
   private editor: monaco.editor.IStandaloneCodeEditor | null = null;
   private zone = inject(NgZone);
+  private previewService = inject(PreviewService);
 
   ngAfterViewInit(): void {
     registerBadlSchema();
@@ -44,10 +46,107 @@ export class BadlEditorComponent implements AfterViewInit, OnDestroy {
           automaticLayout: true, // Required for split-pane resize in Story 7.2
           minimap: { enabled: false },
         });
+
+        // Initial compilation trigger
+        this.previewService.onContentChange(this.initialValue());
+
+        this.editor.onDidChangeModelContent(() => {
+          const val = this.editor?.getValue();
+          if (val !== undefined) {
+            this.previewService.onContentChange(val);
+          }
+        });
       } catch (e) {
         console.error('Failed to initialize Monaco Editor', e);
       }
     });
+  }
+
+  loadSample(): void {
+    if (this.editor) {
+      const sample = {
+        id: 'dom-identity',
+        name: 'Identity Management',
+        version: '1.0.0',
+        domain: 'core',
+        entities: [
+          {
+            id: 'ent-user',
+            name: 'User',
+            fields: [
+              {
+                id: 'fld-user-id',
+                name: 'id',
+                type: 'string',
+                label: 'User ID',
+                validation: ['required', 'uuid'],
+                metadata_path: '/user/id',
+              },
+              {
+                id: 'fld-user-username',
+                name: 'username',
+                type: 'string',
+                label: 'Username',
+                validation: ['required', 'min:3', 'max:50'],
+                metadata_path: '/user/username',
+              },
+              {
+                id: 'fld-user-email',
+                name: 'email',
+                type: 'string',
+                label: 'Email Address',
+                validation: ['required', 'email'],
+                metadata_path: '/user/email',
+              },
+              {
+                id: 'fld-user-roleId',
+                name: 'roleId',
+                type: 'string',
+                label: 'Assigned Role',
+                references: 'ent-role',
+                validation: ['required'],
+                metadata_path: '/user/roleId',
+              },
+            ],
+          },
+          {
+            id: 'ent-role',
+            name: 'Role',
+            fields: [
+              {
+                id: 'fld-role-id',
+                name: 'id',
+                type: 'string',
+                label: 'Role ID',
+                validation: ['required', 'uuid'],
+                metadata_path: '/role/id',
+              },
+              {
+                id: 'fld-role-name',
+                name: 'name',
+                type: 'string',
+                label: 'Role Name',
+                validation: ['required'],
+                metadata_path: '/role/name',
+              },
+              {
+                id: 'fld-role-permissions',
+                name: 'permissions',
+                type: 'array',
+                itemType: 'string',
+                label: 'Permissions List',
+                validation: [],
+                metadata_path: '/role/permissions',
+              },
+            ],
+          },
+        ],
+      };
+
+      const formatted = JSON.stringify(sample, null, 2);
+      this.editor.setValue(formatted);
+      // The onDidChangeModelContent will trigger preview compilation automatically
+    }
   }
 
   ngOnDestroy(): void {

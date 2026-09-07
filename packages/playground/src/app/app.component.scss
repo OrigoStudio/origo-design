@@ -1,4 +1,29 @@
 :host {
   display: block;
+  height: 100vh;
+  width: 100vw;
+  overflow: hidden;
+}
+
+.playground-layout {
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: 1fr 1fr;
+  height: 100%;
+  width: 100%;
+
+  @media (min-width: 768px) {
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr;
+  }
+}
+
+.editor-pane {
+  min-width: 0;
+  height: 100%;
+}
+
+.preview-pane {
+  min-width: 0;
   height: 100%;
 }
