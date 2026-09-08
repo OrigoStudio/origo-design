@@ -26,13 +26,13 @@ import { OrigoRendererComponent } from '@origo/angular-renderer';
         padding: 24px;
         overflow: auto;
         height: 100%;
-        background: #fafafa;
+        background: var(--origo-color-surface-sunken);
         font-size: 13px;
 
         h3 {
           margin-top: 0;
           font-weight: 500;
-          color: #6b7280;
+          color: var(--origo-color-text-muted);
           text-transform: uppercase;
           letter-spacing: 0.05em;
           font-size: 0.85rem;
@@ -40,13 +40,13 @@ import { OrigoRendererComponent } from '@origo/angular-renderer';
         }
 
         pre {
-          background: #ffffff;
+          background: var(--origo-color-surface);
           padding: 16px;
           border-radius: 8px;
-          border: 1px solid #eaeaea;
+          border: 1px solid var(--origo-color-border);
           box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
-          color: #111827;
-          font-family: 'Consolas', 'Monaco', monospace;
+          color: var(--origo-color-text);
+          font-family: var(--origo-typography-family-mono);
         }
       }
       .empty-state {
@@ -54,8 +54,8 @@ import { OrigoRendererComponent } from '@origo/angular-renderer';
         justify-content: center;
         align-items: center;
         height: 100vh;
-        color: #666;
-        font-family: sans-serif;
+        color: var(--origo-color-text-muted);
+        font-family: var(--origo-typography-family-base);
       }
     `,
   ],

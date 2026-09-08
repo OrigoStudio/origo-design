@@ -16,6 +16,14 @@ export class PreviewPaneComponent {
   private isIframeLoaded = signal(false);
 
   constructor() {
+    // Timeout to prevent silent hang if iframe load event drops
+    setTimeout(() => {
+      if (!this.isIframeLoaded()) {
+        console.warn('Iframe load timeout reached, assuming loaded.');
+        this.isIframeLoaded.set(true);
+      }
+    }, 5000);
+
     effect(() => {
       const ast = this.previewService.compiledAstSignal();
       const iframeEl = this.iframe().nativeElement;
