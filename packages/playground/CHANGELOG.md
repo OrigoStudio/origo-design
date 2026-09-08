@@ -1,3 +1,13 @@
+## 0.0.26 (2026-09-08)
+
+### 🚀 Features
+
+- implement live compilation and rendering pipeline in playground environment ([d6dd322](https://github.com/OrigoStudio/origo-design/commit/d6dd322))
+
+### ❤️ Thank You
+
+- Hardik Patel @hardikpatelse
+
 ## 0.0.25 (2026-09-07)
 
 ### 🚀 Features
