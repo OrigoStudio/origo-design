@@ -5,13 +5,13 @@ import {
   ElementRef,
   ViewChild,
   input,
+  output,
   NgZone,
   inject,
 } from '@angular/core';
 import * as monaco from 'monaco-editor';
 import './monaco-environment'; // MUST be first monaco import — side-effect only
 import { registerBadlSchema } from './schema-registry';
-import { PreviewService } from '../preview/preview.service';
 
 @Component({
   selector: 'origo-badl-editor',
@@ -25,10 +25,10 @@ export class BadlEditorComponent implements AfterViewInit, OnDestroy {
   readonly initialValue = input<string>('');
   readonly theme = input<string>('vs-dark');
   readonly readOnly = input<boolean>(false);
+  readonly editorContentChange = output<string>();
 
   private editor: monaco.editor.IStandaloneCodeEditor | null = null;
   private zone = inject(NgZone);
-  private previewService = inject(PreviewService);
 
   ngAfterViewInit(): void {
     registerBadlSchema();
@@ -48,12 +48,12 @@ export class BadlEditorComponent implements AfterViewInit, OnDestroy {
         });
 
         // Initial compilation trigger
-        this.previewService.onContentChange(this.initialValue());
+        this.editorContentChange.emit(this.initialValue());
 
         this.editor.onDidChangeModelContent(() => {
           const val = this.editor?.getValue();
           if (val !== undefined) {
-            this.previewService.onContentChange(val);
+            this.editorContentChange.emit(val);
           }
         });
       } catch (e) {

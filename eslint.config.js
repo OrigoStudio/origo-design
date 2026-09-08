@@ -32,7 +32,6 @@ module.exports = [
                 'type:ui',
                 'type:data-access',
                 'type:util',
-                'type:lib',
               ],
             },
             {

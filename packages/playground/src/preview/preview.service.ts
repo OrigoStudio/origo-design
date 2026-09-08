@@ -7,8 +7,8 @@ export const COMPILATION_DEBOUNCE_MS = 400;
 
 @Injectable({ providedIn: 'root' })
 export class PreviewService implements OnDestroy {
-  public compiledAst = signal<CanonicalAST | null>(null);
-  public compilationErrors = signal<CompilerError[]>([]);
+  public compiledAstSignal = signal<CanonicalAST | null>(null);
+  public compilationErrorsSignal = signal<CompilerError[]>([]);
 
   private worker?: Worker;
   private workerProxy?: comlink.Remote<CompilerWorker>;
@@ -24,6 +24,11 @@ export class PreviewService implements OnDestroy {
       return;
     }
 
+    if (this.workerProxy) {
+      this.workerProxy[comlink.releaseProxy]();
+      this.workerProxy = undefined;
+    }
+
     if (this.worker) {
       this.worker.terminate();
     }
@@ -34,7 +39,7 @@ export class PreviewService implements OnDestroy {
 
     this.worker.onerror = err => {
       console.error('Compiler worker crashed:', err);
-      this.compilationErrors.set([
+      this.compilationErrorsSignal.set([
         { type: 'Worker Crash', message: 'Compiler worker crashed and was restarted.' },
       ]);
       this.initWorker();
@@ -53,21 +58,21 @@ export class PreviewService implements OnDestroy {
       try {
         const result = await this.workerProxy.compile(content);
         if (result.errors) {
-          this.compilationErrors.set(result.errors);
+          this.compilationErrorsSignal.set(result.errors);
           if (!result.ast) {
-            this.compiledAst.set(null);
+            this.compiledAstSignal.set(null);
           }
         } else {
-          this.compilationErrors.set([]);
+          this.compilationErrorsSignal.set([]);
           if (result.ast) {
-            this.compiledAst.set(result.ast);
+            this.compiledAstSignal.set(result.ast);
           }
         }
       } catch (err: unknown) {
         console.error('Worker RPC error:', err);
         const error = err as Error;
         if (!error.message?.includes('proxy has been released')) {
-          this.compilationErrors.set([{ type: 'RPC Error', message: error.message }]);
+          this.compilationErrorsSignal.set([{ type: 'RPC Error', message: error.message }]);
         }
       }
     }, COMPILATION_DEBOUNCE_MS);

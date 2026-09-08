@@ -1,8 +1,8 @@
-@if (previewService.compilationErrors().length > 0) {
+@if (previewService.compilationErrorsSignal().length > 0) {
   <div class="error-container">
     <h3>Compilation Errors</h3>
     <ul>
-      @for (error of previewService.compilationErrors(); track $index) {
+      @for (error of previewService.compilationErrorsSignal(); track $index) {
         <li class="error-item">
           <span
             class="badge"

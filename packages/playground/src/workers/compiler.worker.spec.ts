@@ -7,11 +7,10 @@ describe('CompilerWorker', () => {
     worker = new CompilerWorker();
   });
 
-  it('should return an error for empty string', async () => {
+  it('should return empty errors for empty string', async () => {
     const result = await worker.compile('');
     expect(result.ast).toBeUndefined();
-    expect(result.errors).toBeDefined();
-    expect(result.errors?.[0].message).toBe('Empty document');
+    expect(result.errors).toEqual([]);
   });
 
   it('should return syntax errors for invalid JSON', async () => {

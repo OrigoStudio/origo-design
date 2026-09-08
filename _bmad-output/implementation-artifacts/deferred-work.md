@@ -151,3 +151,6 @@
 +- Reactive dynamic signal updates for `theme`/`readOnly` after editor mount [packages/playground/src/editor/badl-editor.component.ts:25] — deferred, pre-existing (Story 7.2 live pipeline scope)
 +- Tighten production build size budgets [packages/playground/project.json:34] — deferred, pre-existing (Story 7.3 performance optimization)
 
+## Deferred from: code review of 7-2-live-compilation-rendering-pipeline.md (2026-09-08)
+- loadSample called before ngAfterViewInit [packages/playground/src/editor/badl-editor.component.ts] — acceptable but surprising
+

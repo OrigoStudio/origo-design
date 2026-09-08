@@ -14,7 +14,14 @@ export class CompilerWorker {
     badlJson: string
   ): Promise<{ ast?: CanonicalAST; errors?: CompilerError[] }> {
     if (!badlJson || badlJson.trim() === '') {
-      return { errors: [{ type: 'Syntax Error', message: 'Empty document' }] };
+      return { errors: [] };
+    }
+
+    let parsed: any;
+    try {
+      parsed = JSON.parse(badlJson);
+    } catch (err: unknown) {
+      return { errors: [{ type: 'Syntax Error', message: (err as Error).message }] };
     }
 
     const validator = new BADLValidator();
@@ -32,33 +39,24 @@ export class CompilerWorker {
       return { errors };
     }
 
-    try {
-      const parsed = JSON.parse(badlJson);
-      // Ensure we have a CanonicalAST shape to pass to validateAST
-      const ast: CanonicalAST = parsed.domains
-        ? parsed
-        : { schemaVersion: '1.0', domains: [parsed] };
+    const ast: CanonicalAST = parsed.domains ? parsed : { schemaVersion: '1.0', domains: [parsed] };
 
-      const semanticErrors = validateAST(ast);
-      if (semanticErrors && semanticErrors.length > 0) {
-        const errors = semanticErrors.map(err => ({
-          type: 'Semantic Error',
-          message: err.message,
-          path: err.path,
-          line: err.line,
-          column: err.column,
-        }));
-        return { errors };
-      }
-
-      return { ast };
-    } catch (err: unknown) {
-      return { errors: [{ type: 'Syntax Error', message: (err as Error).message }] };
+    const semanticErrors = validateAST(ast);
+    if (semanticErrors && semanticErrors.length > 0) {
+      const errors = semanticErrors.map(err => ({
+        type: 'Semantic Error',
+        message: err.message,
+        path: err.path,
+        line: err.line,
+        column: err.column,
+      }));
+      return { errors };
     }
+
+    return { ast };
   }
 }
 
-// @ts-expect-error worker context requires comlink injection
-if (typeof importScripts === 'function') {
+if (typeof window === 'undefined') {
   comlink.expose(new CompilerWorker());
 }

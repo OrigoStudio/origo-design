@@ -61,6 +61,25 @@ So that I can see immediate visual feedback for my schema changes.
   - [ ] Playwright E2E test: verify iframe `sandbox` attribute is set and `allow-scripts allow-same-origin` are the only tokens (CSP compliance)
   - [ ] axe-core Playwright test on preview + error panel (WCAG 2.1 AA, per P1-AD-6)
 
+### Review Findings
+
+- [ ] [Review][Decision] ESLint Tag Relaxation — `eslint.config.js` adds `'type:lib'` to the allowed tags list silently. Should this be reverted, or is there a valid reason?
+- [ ] [Review][Patch] Iframe renders full app instead of isolated renderer / Double Worker [packages/playground/src/preview/preview-pane.component.html:8]
+- [ ] [Review][Patch] Broken Comlink expose in module worker [packages/playground/src/workers/compiler.worker.ts:61]
+- [ ] [Review][Patch] Missing postMessage origin check [packages/playground/src/preview/preview-root.component.ts]
+- [ ] [Review][Patch] Missing CSP meta tag in iframe [packages/playground/public/preview.html]
+- [ ] [Review][Patch] Missing @origo/angular-renderer integration [packages/playground/src/preview/preview-root.component.ts]
+- [ ] [Review][Patch] BadlEditorComponent bypasses output event [packages/playground/src/editor/badl-editor.component.ts]
+- [ ] [Review][Patch] Missing E2E and Component Tests [packages/playground/src]
+- [ ] [Review][Patch] Hardcoded Colors in Editor Header [packages/playground/src/editor/badl-editor.component.scss]
+- [ ] [Review][Patch] Iframe readiness race conditions [packages/playground/src/preview/preview-pane.component.ts]
+- [ ] [Review][Patch] Signals antipattern (ChangeDetectorRef) [packages/playground/src/preview/preview-root.component.ts]
+- [ ] [Review][Patch] Empty Document UX and Type Mismatch [packages/playground/src/workers/compiler.worker.ts]
+- [ ] [Review][Patch] Signal Naming Convention Violations [packages/playground/src/preview/preview.service.ts]
+- [ ] [Review][Patch] Worker Error Handling and Re-init Races [packages/playground/src/preview/preview.service.ts]
+- [ ] [Review][Patch] Double JSON Parsing [packages/playground/src/workers/compiler.worker.ts]
+- [x] [Review][Defer] loadSample called before ngAfterViewInit [packages/playground/src/editor/badl-editor.component.ts] — deferred, pre-existing (acceptable but surprising)
+
 ## Dev Notes
 
 ### CRITICAL IMPLEMENTATION GUARDRAILS (PREVENT DISASTERS)

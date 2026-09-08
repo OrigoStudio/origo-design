@@ -8,13 +8,13 @@
 .editor-header {
   padding: 12px 24px;
   background: var(--origo-color-surface, #1e1e1e);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  border-bottom: 1px solid var(--origo-color-border-subtle, rgba(255, 255, 255, 0.1));
   display: flex;
   justify-content: space-between;
   align-items: center;
 
   .editor-title {
-    color: #cccccc;
+    color: var(--origo-color-text-secondary, #cccccc);
     font-size: 0.9rem;
     font-weight: 600;
     letter-spacing: 0.05em;
@@ -23,8 +23,8 @@
 
   .load-sample-btn {
     background: transparent;
-    border: 1px solid #4a4a4a;
-    color: #e0e0e0;
+    border: 1px solid var(--origo-color-border, #4a4a4a);
+    color: var(--origo-color-text-primary, #e0e0e0);
     padding: 6px 12px;
     border-radius: 6px;
     font-size: 0.8rem;
@@ -34,12 +34,12 @@
     font-family: inherit;
 
     &:hover {
-      background: rgba(255, 255, 255, 0.1);
-      border-color: #666;
+      background: var(--origo-color-surface-hover, rgba(255, 255, 255, 0.1));
+      border-color: var(--origo-color-border-hover, #666);
     }
 
     &:active {
-      background: rgba(255, 255, 255, 0.15);
+      background: var(--origo-color-surface-active, rgba(255, 255, 255, 0.15));
     }
   }
 }
