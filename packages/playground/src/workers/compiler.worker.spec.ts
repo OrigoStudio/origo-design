@@ -23,25 +23,23 @@ describe('CompilerWorker', () => {
 
   it('should return semantic errors for invalid AST relationships', async () => {
     const astJson = JSON.stringify({
-      schemaVersion: '1.0',
-      domains: [
+      id: 'test-domain',
+      name: 'Test',
+      version: '1.0.0',
+      domain: 'core',
+      entities: [
         {
-          id: 'test-domain',
-          name: 'Test',
-          version: '1.0.0',
-          domain: 'core',
-          entities: [
+          id: 'test-entity',
+          name: 'Test Entity',
+          fields: [
             {
-              id: 'test-entity',
-              name: 'Test Entity',
-              fields: [
-                {
-                  id: 'field-1',
-                  name: 'Ref Field',
-                  type: 'string',
-                  references: 'non-existent-entity',
-                },
-              ],
+              id: 'field-1',
+              name: 'Ref Field',
+              type: 'string',
+              label: 'Reference Field',
+              validation: [],
+              metadata_path: '/ref',
+              references: 'non-existent-entity',
             },
           ],
         },
