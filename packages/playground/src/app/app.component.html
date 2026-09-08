@@ -1,1 +1,11 @@
-<origo-badl-editor [initialValue]="'{}'"></origo-badl-editor>
+<div class="playground-layout">
+  <div class="editor-pane">
+    <origo-badl-editor
+      [initialValue]="'{}'"
+      (editorContentChange)="onContentChange($event)"
+    ></origo-badl-editor>
+  </div>
+  <div class="preview-pane">
+    <origo-playground-preview></origo-playground-preview>
+  </div>
+</div>

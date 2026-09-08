@@ -1,0 +1,44 @@
+:host {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.preview-container {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  background-color: var(--origo-color-surface, #fafafa);
+  border-left: 1px solid var(--origo-color-border, #eaeaea);
+  box-shadow: -4px 0 15px rgba(0, 0, 0, 0.03);
+}
+
+.preview-header {
+  padding: var(--origo-spacing-m, 16px) 24px;
+  background: rgba(255, 255, 255, 0.8);
+  backdrop-filter: blur(8px);
+  border-bottom: 1px solid var(--origo-color-border, #eaeaea);
+  display: flex;
+  align-items: center;
+
+  h2 {
+    margin: 0;
+    font-size: 1.1rem;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    color: var(--origo-color-text, #111827);
+  }
+}
+
+.iframe-wrapper {
+  flex: 1;
+  display: flex;
+  min-height: 0; /* Important for flex child to not overflow */
+
+  iframe {
+    width: 100%;
+    height: 100%;
+    border: none;
+    display: block;
+  }
+}

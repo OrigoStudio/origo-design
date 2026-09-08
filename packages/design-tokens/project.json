@@ -3,7 +3,7 @@
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "packages/design-tokens/src",
   "projectType": "library",
-  "tags": ["scope:design-tokens", "type:lib", "type:tokens"],
+  "tags": ["scope:design-tokens", "type:util", "type:tokens"],
   "targets": {
     "tsc": {
       "executor": "@nx/js:tsc",

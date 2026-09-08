@@ -1,0 +1,79 @@
+:host {
+  display: block;
+  flex-shrink: 0;
+}
+
+.error-container {
+  padding: 20px;
+  background-color: var(--origo-color-surface, #ffffff);
+  border-top: 1px solid var(--origo-color-border, #eaeaea);
+  box-shadow: 0 -4px 15px rgba(0, 0, 0, 0.03);
+  max-height: 300px;
+  overflow-y: auto;
+  border-top-left-radius: 12px;
+  border-top-right-radius: 12px;
+  margin-top: -12px; /* Pull up to overlap slightly */
+  position: relative;
+  z-index: 10;
+
+  h3 {
+    margin-top: 0;
+    margin-bottom: 12px;
+    color: var(--origo-color-danger, #ef4444);
+    font-size: 0.95rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .error-item {
+    display: flex;
+    align-items: flex-start;
+    padding: var(--origo-spacing-xs) 0;
+    border-bottom: 1px solid var(--origo-color-border);
+
+    &:last-child {
+      border-bottom: none;
+    }
+  }
+
+  .badge {
+    padding: 2px 6px;
+    border-radius: var(--origo-border-radius-s);
+    font-size: var(--origo-typography-size-caption);
+    font-weight: 600;
+    margin-right: var(--origo-spacing-s);
+    white-space: nowrap;
+
+    &.badge-syntax {
+      background-color: var(--origo-color-danger);
+      color: white;
+    }
+
+    &.badge-semantic {
+      background-color: var(--origo-color-warning);
+      color: black;
+    }
+  }
+
+  .error-details {
+    display: flex;
+    flex-direction: column;
+
+    .error-message {
+      font-weight: 500;
+    }
+
+    .error-location {
+      font-size: var(--origo-typography-size-caption);
+      color: var(--origo-color-text-muted);
+      margin-top: 2px;
+    }
+  }
+}

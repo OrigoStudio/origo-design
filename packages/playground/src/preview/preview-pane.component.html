@@ -1,0 +1,18 @@
+<div class="preview-container">
+  <div class="preview-header">
+    <h2>Preview</h2>
+  </div>
+
+  <div class="iframe-wrapper">
+    <iframe
+      #previewIframe
+      (load)="onIframeLoad()"
+      sandbox="allow-scripts allow-same-origin"
+      src="/?preview=true"
+      title="Origo Live Preview"
+    >
+    </iframe>
+  </div>
+
+  <origo-playground-error-display></origo-playground-error-display>
+</div>
