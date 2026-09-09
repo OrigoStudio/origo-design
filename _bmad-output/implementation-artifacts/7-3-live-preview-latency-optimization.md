@@ -3,7 +3,7 @@ baseline_commit: cc72f3b
 ---
 # Story 7.3: Live Preview Latency Optimization
 
-Status: in-progress
+Status: done
 
 ## Story
 
