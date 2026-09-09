@@ -1,3 +1,14 @@
+## 0.0.27 (2026-09-09)
+
+### 🚀 Features
+
+- implement live preview rendering pipeline and latency optimizations for web-based editor ([86599e3](https://github.com/OrigoStudio/origo-design/commit/86599e3))
+- initialize playground application with editor and live preview components ([ad55e6d](https://github.com/OrigoStudio/origo-design/commit/ad55e6d))
+
+### ❤️ Thank You
+
+- Hardik Patel @hardikpatelse
+
 ## 0.0.26 (2026-09-08)
 
 ### 🚀 Features
