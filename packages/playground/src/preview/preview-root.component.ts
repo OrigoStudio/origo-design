@@ -20,45 +20,7 @@ import { OrigoRendererComponent } from '@origo/angular-renderer';
       <div class="empty-state">Waiting for compilation...</div>
     }
   `,
-  styles: [
-    `
-      .debug-ast {
-        padding: 24px;
-        overflow: auto;
-        height: 100%;
-        background: var(--origo-color-surface-sunken);
-        font-size: 13px;
-
-        h3 {
-          margin-top: 0;
-          font-weight: 500;
-          color: var(--origo-color-text-muted);
-          text-transform: uppercase;
-          letter-spacing: 0.05em;
-          font-size: 0.85rem;
-          margin-bottom: 16px;
-        }
-
-        pre {
-          background: var(--origo-color-surface);
-          padding: 16px;
-          border-radius: 8px;
-          border: 1px solid var(--origo-color-border);
-          box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
-          color: var(--origo-color-text);
-          font-family: var(--origo-typography-family-mono);
-        }
-      }
-      .empty-state {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        height: 100vh;
-        color: var(--origo-color-text-muted);
-        font-family: var(--origo-typography-family-base);
-      }
-    `,
-  ],
+  styleUrl: './preview-root.component.scss',
 })
 export class PreviewRootComponent {
   public ast = signal<CanonicalAST | null>(null);

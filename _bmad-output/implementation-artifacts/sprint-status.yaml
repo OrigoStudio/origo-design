@@ -104,7 +104,7 @@ development_status:
   epic-7: in-progress
   7-1-web-based-editor-component: done
   7-2-live-compilation-rendering-pipeline: done
-  7-3-live-preview-latency-optimization: ready-for-dev
+  7-3-live-preview-latency-optimization: review
   epic-7-retrospective: optional
   epic-8: backlog
   8-1-diagnostics-api-runtime-hooks: backlog

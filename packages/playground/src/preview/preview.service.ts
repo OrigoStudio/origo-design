@@ -55,9 +55,18 @@ export class PreviewService implements OnDestroy {
       window.clearTimeout(this.debounceTimer);
     }
 
+    const requestId = ++this._compilationId;
+
     this.debounceTimer = window.setTimeout(async () => {
-      if (!this.workerProxy) return;
-      const requestId = ++this._compilationId;
+      if (!this.workerProxy) {
+        if (requestId === this._compilationId) {
+          this.compilationErrorsSignal.set([
+            { type: 'System Error', message: 'Worker is initializing. Please try again.' },
+          ]);
+        }
+        return;
+      }
+
       try {
         const result = await this.workerProxy.compile(content);
         if (requestId !== this._compilationId) return;
@@ -70,7 +79,7 @@ export class PreviewService implements OnDestroy {
                   {
                     type: 'Info',
                     message: `...and ${result.errors.length - MAX_DISPLAYED_ERRORS} more errors`,
-                  } as any,
+                  } as CompilerError,
                 ]
               : result.errors;
           this.compilationErrorsSignal.set(truncated);
@@ -84,10 +93,11 @@ export class PreviewService implements OnDestroy {
           }
         }
       } catch (err: unknown) {
+        if (requestId !== this._compilationId) return;
         console.error('Worker RPC error:', err);
-        const error = err as Error;
-        if (!error.message?.includes('proxy has been released')) {
-          this.compilationErrorsSignal.set([{ type: 'RPC Error', message: error.message }]);
+        const errorMessage = err instanceof Error ? err.message : String(err);
+        if (!errorMessage.includes('proxy has been released')) {
+          this.compilationErrorsSignal.set([{ type: 'RPC Error', message: errorMessage }]);
         }
       }
     }, COMPILATION_DEBOUNCE_MS);

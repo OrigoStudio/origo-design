@@ -140,6 +140,22 @@ These deferred items from Story 7.2's review are within the scope of this story'
 - [Source: architecture/phase1-foundation/ARCHITECTURE-SPINE.md#P1-AD-1] — Angular 18 Signals/Standalone mandate
 - [Source: adr-epic7-web-worker-csp.md] — Worker CSP decisions
 
+### Review Findings
+
+- [x] [Review][Patch] Stale request counter incremented inside debounce instead of on input [preview.service.ts]
+- [x] [Review][Patch] Catch block missing stale request guard [preview.service.ts]
+- [x] [Review][Patch] Iframe 5s timeout lacks OnDestroy cleanup and null contentWindow check [preview-pane.component.ts]
+- [x] [Review][Patch] effect() does not track isIframeLoaded signal properly [preview-pane.component.ts]
+- [x] [Review][Patch] Preview pane fails to clear when editor AST becomes null [preview-pane.component.ts]
+- [x] [Review][Patch] Design token violations: hardcoded pixels, phantom tokens, unextracted SCSS [preview-root.component.ts]
+- [x] [Review][Patch] Error truncation fails if result.errors is undefined and lacks style [preview.service.ts]
+- [x] [Review][Patch] Silently dropped compilations if worker proxy undefined during debounce [preview.service.ts]
+- [x] [Review][Patch] Bogus vitest benchmark only measures setTimeout latency [preview.service.bench.ts]
+- [x] [Review][Patch] Flaky unit tests with real-time sleeps and unverified stale mocks [preview.service.spec.ts]
+- [x] [Review][Patch] Playwright E2E test lacks latency assertions and mass error scale [preview-latency.spec.ts]
+- [x] [Review][Patch] Revert out-of-scope cosmetic changes to index.html and badl-editor [index.html]
+- [x] [Review][Patch] Missing burst input test and misplaced error count test [compiler.worker.spec.ts]
+
 ## Dev Agent Record
 
 ### Agent Model Used

@@ -10,25 +10,38 @@ describe('PreviewService Benchmarks', () => {
       providers: [PreviewService],
     });
     service = TestBed.inject(PreviewService);
-    // Mock the worker Proxy so bench doesn't test actual Web Worker message passing overhead
-    (service as any).workerProxy = {
-      compile: async (input: string) => {
-        // simulate standard AST response
-        return {
-          ast: {
-            schemaVersion: '1.0',
-            domains: [{ id: 'test-domain', name: 'Test', version: '1.0.0', entities: [] }],
-          },
-        };
-      },
-    };
+    // Don't mock the worker proxy, test the real latency of the full pipeline (IPC serialization)
+    // To bench onContentChange properly, we need to await the final result, but bench loops
+    // just call it over and over.
+    // If we call onContentChange, it will debounce.
+    // Instead of benching onContentChange (which just tests setTimeout),
+    // we should bench workerProxy.compile directly if it's available.
   };
 
   bench(
-    'onContentChange with typical payload',
+    'worker compile IPC serialization latency',
+    async () => {
+      if (!service) {
+        setupBench();
+        // Wait for worker to init
+        await new Promise(r => setTimeout(r, 100));
+      }
+      const proxy = (service as any).workerProxy;
+      if (proxy) {
+        await proxy.compile('{"id": "test-domain"}');
+      }
+    },
+    { time: 500 }
+  );
+
+  bench(
+    'onContentChange debounce burst handling',
     async () => {
       if (!service) setupBench();
-      await service.onContentChange('{"id": "test-domain"}');
+      // Calling it 100 times synchronously tests the JS engine's debounce performance
+      for (let i = 0; i < 100; i++) {
+        service.onContentChange(`{"id": "test-domain", "count": ${i}}`);
+      }
     },
     { time: 500 }
   );

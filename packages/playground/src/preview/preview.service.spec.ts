@@ -1,16 +1,22 @@
 import { TestBed } from '@angular/core/testing';
-import { PreviewService } from './preview.service';
-import { describe, it, expect, beforeEach, vi } from 'vitest';
+import { PreviewService, MAX_DISPLAYED_ERRORS } from './preview.service';
+import { describe, it, expect, beforeEach, vi, afterEach } from 'vitest';
 import * as comlink from 'comlink';
 
 describe('PreviewService', () => {
   let service: PreviewService;
 
   beforeEach(() => {
+    vi.useFakeTimers();
     TestBed.configureTestingModule({
       providers: [PreviewService],
     });
     service = TestBed.inject(PreviewService);
+  });
+
+  afterEach(() => {
+    vi.useRealTimers();
+    vi.clearAllMocks();
   });
 
   it('should be created', () => {
@@ -31,45 +37,45 @@ describe('PreviewService', () => {
       message: `Error ${i}`,
     }));
     (service as any).workerProxy = {
-      compile: async () => ({ errors: mockErrors }),
+      compile: vi.fn().mockResolvedValue({ errors: mockErrors }),
       [comlink.releaseProxy]: vi.fn(),
     };
 
     service.onContentChange('test');
 
-    await new Promise(resolve => setTimeout(resolve, 450));
+    await vi.runAllTimersAsync();
 
     const errors = service.compilationErrorsSignal();
-    expect(errors.length).toBe(51);
-    expect(errors[50].message).toContain('9950 more errors');
+    expect(errors.length).toBe(MAX_DISPLAYED_ERRORS + 1);
+    expect(errors[MAX_DISPLAYED_ERRORS].message).toContain('9950 more errors');
   });
 
   it('should discard stale compilation results', async () => {
     let resolveFirst: any;
     const firstPromise = new Promise(resolve => (resolveFirst = resolve));
+    let resolveSecond: any;
+    const secondPromise = new Promise(resolve => (resolveSecond = resolve));
 
     (service as any).workerProxy = {
-      compile: vi
-        .fn()
-        .mockImplementationOnce(() => firstPromise)
-        .mockImplementationOnce(async () => ({ errors: [{ type: 'Error', message: 'Fresh' }] })),
+      compile: vi.fn().mockReturnValueOnce(firstPromise).mockReturnValueOnce(secondPromise),
       [comlink.releaseProxy]: vi.fn(),
     };
 
     // Call 1
     service.onContentChange('call 1');
-    await new Promise(resolve => setTimeout(resolve, 450)); // wait for debounce
+    await vi.advanceTimersByTimeAsync(400); // Trigger first debounce
 
     // Call 2
     service.onContentChange('call 2');
-    await new Promise(resolve => setTimeout(resolve, 450)); // wait for debounce
+    await vi.advanceTimersByTimeAsync(400); // Trigger second debounce
 
-    // Now both calls are in flight or second has returned.
-    // Let's resolve the first call now. It should be discarded.
+    // Resolve second call (fresh) first
+    resolveSecond({ errors: [{ type: 'Error', message: 'Fresh' }] });
+    await Promise.resolve(); // Flush microtasks
+
+    // Resolve first call (stale) after
     resolveFirst({ errors: [{ type: 'Error', message: 'Stale' }] });
-
-    // Wait for microtasks
-    await new Promise(resolve => setTimeout(resolve, 50));
+    await Promise.resolve(); // Flush microtasks
 
     const errors = service.compilationErrorsSignal();
     // It should have the 'Fresh' error, not the 'Stale' error
