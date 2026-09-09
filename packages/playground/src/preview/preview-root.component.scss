@@ -1,0 +1,35 @@
+.debug-ast {
+  padding: var(--origo-spacing-6);
+  overflow: auto;
+  height: 100%;
+  background: var(--origo-color-surface-secondary);
+  font-size: var(--origo-typography-size-sm);
+
+  h3 {
+    margin-top: 0;
+    font-weight: 500;
+    color: var(--origo-color-text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    font-size: var(--origo-typography-size-xs);
+    margin-bottom: var(--origo-spacing-4);
+  }
+
+  pre {
+    background: var(--origo-color-surface);
+    padding: var(--origo-spacing-4);
+    border-radius: var(--origo-radius-md);
+    border: var(--origo-border-thin) solid var(--origo-color-border);
+    box-shadow: var(--origo-shadow-sm);
+    color: var(--origo-color-text-primary);
+    font-family: var(--origo-typography-family-mono);
+  }
+}
+.empty-state {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  color: var(--origo-color-text-muted);
+  font-family: var(--origo-typography-family-sans);
+}
