@@ -50,6 +50,14 @@ export class BadlEditorComponent implements AfterViewInit, OnDestroy {
 
       onCleanup(() => clearTimeout(timer));
     });
+
+    effect(() => {
+      const theme = this.theme();
+      const readOnly = this.readOnly();
+      this.zone.runOutsideAngular(() => {
+        this.editor?.updateOptions({ theme, readOnly });
+      });
+    });
   }
 
   ngAfterViewInit(): void {

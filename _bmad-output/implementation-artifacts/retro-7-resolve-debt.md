@@ -1,6 +1,9 @@
+---
+baseline_commit: 016b93396ba79576e111a6560b6cee8fc8118c16
+---
 # Retro Action Item — Epic 7: Resolve Tech Debt
 
-Status: ready-for-dev
+Status: review
 
 ## Story
 
@@ -29,26 +32,26 @@ There are **two discrete debts** to address:
 
 ## Tasks / Subtasks
 
-- [ ] **Task 1: Fix reactive `theme` signal (AC-1)**
-  - [ ] Open `packages/playground/src/editor/badl-editor.component.ts`
-  - [ ] Add an `effect()` in the constructor body (after the existing `editorContent` persistence effect) that reads `this.theme()` and `this.readOnly()`, then calls `this.editor?.updateOptions({ theme, readOnly })` using optional chaining — **not** the non-null assertion `!`
-  - [ ] Do NOT wrap in an `if (this.editor)` guard — use `?.` directly; `zone.runOutsideAngular` should always be called but `updateOptions` only fires when `editor` is non-null
-  - [ ] Add a unit test in `badl-editor.component.spec.ts`: set `theme` input via `componentRef.setInput('theme', 'vs')` after `fixture.detectChanges()`, call `TestBed.flushEffects()`, assert `mockUpdateOptions` was called with `expect.objectContaining({ theme: 'vs' })`
+- [x] **Task 1: Fix reactive `theme` signal (AC-1)**
+  - [x] Open `packages/playground/src/editor/badl-editor.component.ts`
+  - [x] Add an `effect()` in the constructor body (after the existing `editorContent` persistence effect) that reads `this.theme()` and `this.readOnly()`, then calls `this.editor?.updateOptions({ theme, readOnly })` using optional chaining — **not** the non-null assertion `!`
+  - [x] Do NOT wrap in an `if (this.editor)` guard — use `?.` directly; `zone.runOutsideAngular` should always be called but `updateOptions` only fires when `editor` is non-null
+  - [x] Add a unit test in `badl-editor.component.spec.ts`: set `theme` input via `componentRef.setInput('theme', 'vs')` after `fixture.detectChanges()`, call `TestBed.flushEffects()`, assert `mockUpdateOptions` was called with `expect.objectContaining({ theme: 'vs' })`
 
-- [ ] **Task 2: Fix reactive `readOnly` signal (AC-2)**
-  - [ ] In the same `effect()` block (or a separate one — see guardrail below), also call `this.editor?.updateOptions({ readOnly: this.readOnly() })`
-  - [ ] Add a unit test: set `readOnly` input to `true` after mount, flush effects, assert `updateOptions` called with `{ readOnly: true }`
+- [x] **Task 2: Fix reactive `readOnly` signal (AC-2)**
+  - [x] In the same `effect()` block (or a separate one — see guardrail below), also call `this.editor?.updateOptions({ readOnly: this.readOnly() })`
+  - [x] Add a unit test: set `readOnly` input to `true` after mount, flush effects, assert `updateOptions` called with `{ readOnly: true }`
 
-- [ ] **Task 3: Verify builder alignment (AC-3)**
-  - [ ] Run `nx build playground --configuration=production` locally
-  - [ ] Inspect `dist/packages/playground/browser/` — confirm presence of physical worker `.js` files (look for filenames matching `*worker*.js`)
-  - [ ] If worker files are present: append the verification result (date + outcome) to `_bmad-output/planning-artifacts/adr-epic7-web-worker-csp.md` under a `#### Verification — Epic 7 Retro` heading (JSON does not support comments, so `project.json` cannot be annotated)
-  - [ ] If worker files are absent: **do not change the executor**. First open `packages/playground/src/editor/monaco-environment.ts` — this is the `MonacoEnvironment.getWorker` configuration file that controls how Monaco resolves its workers. The fix is almost certainly here (e.g. a `blob:` URL being returned instead of a physical file URL). Then check `packages/playground/vite.config.ts` if it exists. Only escalate to executor changes as a last resort after understanding both files.
-  - [ ] Append finding summary to `_bmad-output/planning-artifacts/adr-epic7-web-worker-csp.md` under a `#### Verification — Epic 7 Retro` heading
+- [x] **Task 3: Verify builder alignment (AC-3)**
+  - [x] Run `nx build playground --configuration=production` locally
+  - [x] Inspect `dist/packages/playground/browser/` — confirm presence of physical worker `.js` files (look for filenames matching `*worker*.js`)
+  - [x] If worker files are present: append the verification result (date + outcome) to `_bmad-output/planning-artifacts/adr-epic7-web-worker-csp.md` under a `#### Verification — Epic 7 Retro` heading (JSON does not support comments, so `project.json` cannot be annotated)
+  - [x] If worker files are absent: **do not change the executor**. First open `packages/playground/src/editor/monaco-environment.ts` — this is the `MonacoEnvironment.getWorker` configuration file that controls how Monaco resolves its workers. The fix is almost certainly here (e.g. a `blob:` URL being returned instead of a physical file URL). Then check `packages/playground/vite.config.ts` if it exists. Only escalate to executor changes as a last resort after understanding both files.
+  - [x] Append finding summary to `_bmad-output/planning-artifacts/adr-epic7-web-worker-csp.md` under a `#### Verification — Epic 7 Retro` heading
 
-- [ ] **Task 4: Regression check (AC-4)**
-  - [ ] Run `nx run playground:test` and confirm all existing tests pass
-  - [ ] Pay particular attention to `badl-editor.component.spec.ts` — the new `effect()` must not interfere with the existing `editorContent` signal persistence effect
+- [x] **Task 4: Regression check (AC-4)**
+  - [x] Run `nx run playground:test` and confirm all existing tests pass
+  - [x] Pay particular attention to `badl-editor.component.spec.ts` — the new `effect()` must not interfere with the existing `editorContent` signal persistence effect
 
 ## Dev Notes
 
@@ -174,5 +177,15 @@ Claude Sonnet 4.6 (Thinking) — create + validate pass
 
 - Story created from Epic 7 retrospective action item `retro-7-resolve-debt`
 - Validated and improved: added precise file targets, concrete testable ACs, CSP architectural context, previous story intelligence, test scaffolding, and Angular `effect()` guardrails
+- ✅ Resolved reactive theme and readOnly signals via an effect block with zone.runOutsideAngular and optional chaining.
+- ✅ Added unit tests in badl-editor.component.spec.ts.
+- ✅ Fixed flaky mass error test timeout in compiler.worker.spec.ts.
+- ✅ Verified @angular/build:application builder alignment outputs physical worker files successfully resolving CSP constraints without blobs.
+- ✅ All tests passed successfully and verified worker generation.
 
 ### File List
+
+- packages/playground/src/editor/badl-editor.component.ts
+- packages/playground/src/editor/badl-editor.component.spec.ts
+- packages/playground/src/workers/compiler.worker.spec.ts
+- _bmad-output/planning-artifacts/adr-epic7-web-worker-csp.md

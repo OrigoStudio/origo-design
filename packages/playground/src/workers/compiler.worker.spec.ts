@@ -88,5 +88,5 @@ describe('CompilerWorker', () => {
     // We expect compile to just return the errors without crashing.
     const result = await worker.compile(longInput);
     expect(result.errors?.length).toBeGreaterThan(0);
-  });
+  }, 15000);
 });

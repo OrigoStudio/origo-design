@@ -17,12 +17,14 @@ const mockGetModel = vi.fn().mockReturnValue({
   getValue: mockGetValue,
   setValue: mockSetValue,
 });
+const mockUpdateOptions = vi.fn();
 const mockCreate = vi.fn().mockReturnValue({
   dispose: mockDispose,
   onDidChangeModelContent: mockOnDidChangeModelContent,
   setValue: mockSetValue,
   getValue: mockGetValue,
   getModel: mockGetModel,
+  updateOptions: mockUpdateOptions,
 });
 const mockCreateModel = vi.fn().mockReturnValue({});
 
@@ -169,6 +171,28 @@ describe('BadlEditorComponent', () => {
         setItemSpy.mockRestore();
         vi.useRealTimers();
       }
+    });
+  });
+
+  describe('Reactive Inputs', () => {
+    it('should call updateOptions when theme input changes after mount', () => {
+      fixture.detectChanges(); // triggers ngAfterViewInit — editor is created, effect may fire once here
+      vi.clearAllMocks(); // clear any initial effect calls so the assertion is isolated to the input change below
+
+      componentRef.setInput('theme', 'vs');
+      TestBed.flushEffects();
+
+      expect(mockUpdateOptions).toHaveBeenCalledWith(expect.objectContaining({ theme: 'vs' }));
+    });
+
+    it('should call updateOptions when readOnly input changes after mount', () => {
+      fixture.detectChanges(); // same pattern — editor created, then clear mocks before the isolated assertion
+      vi.clearAllMocks();
+
+      componentRef.setInput('readOnly', true);
+      TestBed.flushEffects();
+
+      expect(mockUpdateOptions).toHaveBeenCalledWith(expect.objectContaining({ readOnly: true }));
     });
   });
 });
