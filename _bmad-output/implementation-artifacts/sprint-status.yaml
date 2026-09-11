@@ -105,7 +105,7 @@ development_status:
   7-1-web-based-editor-component: done
   7-2-live-compilation-rendering-pipeline: done
   7-3-live-preview-latency-optimization: done
-  epic-7-retrospective: optional
+  epic-7-retrospective: done
   epic-8: backlog
   8-1-diagnostics-api-runtime-hooks: backlog
   8-2-devtools-inspector-ui: backlog
@@ -194,3 +194,15 @@ action_items:
   - id: retro-6-central-test-registry
     description: "Central Test Case Registry Strategy: Create and manage a centralized test case ledger containing test scenarios, mapped affected stories, and release-by-release test results tracking to prevent regressions. (Owner: Dana/Amelia)"
     status: review
+  - id: retro-7-state-persistence
+    description: "Fix State Persistence: Implement local storage or URL-based sync for the Monaco editor value to survive hot reloads before starting Epic 8. (Owner: Charlie)"
+    status: open
+  - id: retro-7-resolve-debt
+    description: "Resolve Tech Debt: Address deferred reactive signal updates and builder alignment issues from Epic 7. (Owner: Amelia)"
+    status: open
+  - id: retro-7-test-registry-backfill
+    description: "Test Registry Backfill: Document all test registries from initial implementation up through Epic 7 into the Central Test Registry. (Owner: Dana)"
+    status: open
+  - id: retro-7-dod-update
+    description: "Update Definition of Done: Mandate that test registries must be updated at the time a story implementation concludes, and require explicit reference logging (ADRs/spikes) in story acceptance criteria. (Owner: Alice)"
+    status: open
