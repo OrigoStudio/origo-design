@@ -1,4 +1,4 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
 import { BadlEditorComponent } from './badl-editor.component';
 import { NgZone, ComponentRef } from '@angular/core';
 import { registerBadlSchema } from './schema-registry';
@@ -10,8 +10,14 @@ vi.mock('./schema-registry', () => ({
 
 // Mock monaco editor create and dispose
 const mockDispose = vi.fn();
+const mockOnDidChangeModelContent = vi.fn();
+const mockSetValue = vi.fn();
+const mockGetValue = vi.fn().mockReturnValue('{}');
 const mockCreate = vi.fn().mockReturnValue({
   dispose: mockDispose,
+  onDidChangeModelContent: mockOnDidChangeModelContent,
+  setValue: mockSetValue,
+  getValue: mockGetValue,
 });
 const mockCreateModel = vi.fn().mockReturnValue({});
 
@@ -41,6 +47,7 @@ describe('BadlEditorComponent', () => {
 
     // reset mocks
     vi.clearAllMocks();
+    localStorage.clear();
   });
 
   it('should create', () => {
@@ -77,5 +84,58 @@ describe('BadlEditorComponent', () => {
     component.ngOnDestroy();
 
     expect(mockDispose).toHaveBeenCalled();
+  });
+
+  describe('State Persistence', () => {
+    it('should initialize with localStorage draft if valid', () => {
+      localStorage.setItem('origo_playground_draft', JSON.stringify({ valid: 'json' }));
+      componentRef.setInput('initialValue', '{}');
+      fixture.detectChanges();
+
+      expect(mockCreateModel).toHaveBeenCalledWith('{"valid":"json"}', 'json', 'parsed-uri');
+    });
+
+    it('should fallback to initialValue if localStorage has invalid JSON', () => {
+      localStorage.setItem('origo_playground_draft', 'invalid-json');
+      componentRef.setInput('initialValue', '{}');
+      fixture.detectChanges();
+
+      expect(mockCreateModel).toHaveBeenCalledWith('{}', 'json', 'parsed-uri');
+    });
+
+    it('should fallback to initialValue if localStorage access throws SecurityError', () => {
+      const getItemSpy = vi.spyOn(Storage.prototype, 'getItem').mockImplementation(() => {
+        throw new DOMException('SecurityError', 'SecurityError');
+      });
+      componentRef.setInput('initialValue', '{}');
+      fixture.detectChanges();
+
+      expect(mockCreateModel).toHaveBeenCalledWith('{}', 'json', 'parsed-uri');
+      getItemSpy.mockRestore();
+    });
+
+    it('should debounce saving to localStorage', async () => {
+      vi.useFakeTimers();
+      const setItemSpy = vi.spyOn(Storage.prototype, 'setItem');
+      componentRef.setInput('initialValue', '{}');
+      fixture.detectChanges();
+
+      // Simulate editor content change
+      mockGetValue.mockReturnValue('{"new":"content"}');
+      const changeCallback = mockOnDidChangeModelContent.mock.calls[0][0];
+      changeCallback();
+      fixture.detectChanges();
+      TestBed.flushEffects();
+
+      // Timer is 500ms
+      await vi.advanceTimersByTimeAsync(100);
+      expect(setItemSpy).not.toHaveBeenCalled();
+
+      await vi.advanceTimersByTimeAsync(400); // Total 500
+      expect(setItemSpy).toHaveBeenCalledWith('origo_playground_draft', '{"new":"content"}');
+
+      setItemSpy.mockRestore();
+      vi.useRealTimers();
+    });
   });
 });

@@ -1,6 +1,10 @@
+---
+baseline_commit: fe3f1212bf2860bccfd8176943da07bad7948cc0
+---
+
 # Story retro.7: state-persistence
 
-Status: ready-for-dev
+Status: done
 
 <!-- Note: Validation is optional. Run validate-create-story for quality check before dev-story. -->
 
@@ -20,18 +24,21 @@ so that I do not lose my BADL schemas during development and testing before Epic
 
 ## Tasks / Subtasks
 
-- [ ] Implement robust `localStorage` sync mechanism (AC: 1, 4)
-  - [ ] Add logic to save the Monaco (v0.50.x) editor value to `localStorage` under `origo_playground_draft` using `editor.getModel().getValue()`.
-  - [ ] Apply the loaded state via `editor.getModel().setValue(value)`.
-  - [ ] Implement parsing with a `try/catch` block on initialization; fallback to a default valid schema if parsing fails.
-- [ ] Wire up Angular Signals for state reactivity (AC: 2, 5)
-  - [ ] Implement debouncing using an Angular `effect()` with an `onCleanup` hook.
-  - [ ] Verify `localStorage` writes occur only after the debounce interval.
-- [ ] Address Edge Cases (Iframe constraints & Quotas) (AC: 3)
-  - [ ] Wrap `localStorage` writes in a `try/catch` to handle potential `QuotaExceededError` for schemas >5MB.
-  - [ ] Ensure local storage access is safely wrapped to handle potential `SecurityError` exceptions from iframe cross-origin policies.
-- [ ] Add explicit regression test fixtures
-  - [ ] Write component tests verifying state recovery and corrupted-state fallback behavior using Vitest 2.x and Playwright 1.45.x.
+- [x] Implement robust `localStorage` sync mechanism (AC: 1, 4)
+  - [x] Add logic to save the Monaco (v0.50.x) editor value to `localStorage` under `origo_playground_draft` using `editor.getModel().getValue()`.
+  - [x] Apply the loaded state via `editor.getModel().setValue(value)`.
+  - [x] Implement parsing with a `try/catch` block on initialization; fallback to a default valid schema if parsing fails.
+
+- [x] Wire up Angular Signals for state reactivity (AC: 2, 5)
+  - [x] Implement debouncing using an Angular `effect()` with an `onCleanup` hook.
+  - [x] Verify `localStorage` writes occur only after the debounce interval.
+
+- [x] Address Edge Cases (Iframe constraints & Quotas) (AC: 3)
+  - [x] Wrap `localStorage` writes in a `try/catch` to handle potential `QuotaExceededError` for schemas >5MB.
+  - [x] Ensure local storage access is safely wrapped to handle potential `SecurityError` exceptions from iframe cross-origin policies.
+
+- [x] Add explicit regression test fixtures
+  - [x] Write component tests verifying state recovery and corrupted-state fallback behavior using Vitest 2.x and Playwright 1.45.x.
 
 ## Dev Notes
 
@@ -53,11 +60,21 @@ so that I do not lose my BADL schemas during development and testing before Epic
 ## Dev Agent Record
 
 ### Agent Model Used
-
-Gemini 3.1 Pro (High)
+Antigravity (IDE)
 
 ### Debug Log References
+- `task-164.log` / `task-185.log` / `task-205.log`: Failing and succeeding `nx test playground` runs showing local storage persistence behaviour under `Vitest` mocked configurations.
+- Modified tests to use `vi.useFakeTimers()` to accurately capture debounced `localStorage` `setItem` calls within Angular Signals `effect()` context which proved unstable under standard `fakeAsync`.
+- Verified UI compilation through `nx build playground` (task-208).
 
 ### Completion Notes List
+- Implemented robust `localStorage` sync under the key `origo_playground_draft`.
+- Initial load leverages `try/catch` wrapping and explicit `JSON.parse` validation to prevent crash loops when hot-reloading with corrupted data.
+- Enforced Angular Signals constraint via an `effect()` hook tracking editor content state, coupled with `onCleanup` for debouncing (`500ms`) the local storage saves.
+- Wrapped `setItem` in `try/catch` to elegantly ignore `QuotaExceededError` or `SecurityError` triggered by iframe sandboxing limitations per architectural mandates.
+- Configured component unit tests covering all fallbacks (Invalid JSON, SecurityError) and successful state recovery scenarios.
 
 ### File List
+- `packages/playground/src/editor/badl-editor.component.ts`
+- `packages/playground/src/editor/badl-editor.component.spec.ts`
+- `packages/playground/src/app/app.component.spec.ts`

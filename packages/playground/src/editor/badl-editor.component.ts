@@ -8,6 +8,8 @@ import {
   output,
   NgZone,
   inject,
+  signal,
+  effect,
 } from '@angular/core';
 import * as monaco from 'monaco-editor';
 import './monaco-environment'; // MUST be first monaco import — side-effect only
@@ -29,15 +31,45 @@ export class BadlEditorComponent implements AfterViewInit, OnDestroy {
 
   private editor: monaco.editor.IStandaloneCodeEditor | null = null;
   private zone = inject(NgZone);
+  private editorContent = signal<string>('');
+
+  constructor() {
+    effect(onCleanup => {
+      const content = this.editorContent();
+      if (!content) return; // Don't save empty content on initial init
+
+      const timer = setTimeout(() => {
+        try {
+          localStorage.setItem('origo_playground_draft', content);
+        } catch (e) {
+          console.warn('Could not save draft to local storage (Quota or Security Error)', e);
+        }
+      }, 500);
+
+      onCleanup(() => clearTimeout(timer));
+    });
+  }
 
   ngAfterViewInit(): void {
     registerBadlSchema();
     this.zone.runOutsideAngular(() => {
       if (!this.editorContainer?.nativeElement) return;
       try {
+        let savedState = this.initialValue();
+        try {
+          const draft = localStorage.getItem('origo_playground_draft');
+          if (draft) {
+            // Validate it's valid JSON to prevent crash loops
+            JSON.parse(draft);
+            savedState = draft;
+          }
+        } catch (e) {
+          console.warn('Could not restore playground draft, falling back to initialValue', e);
+        }
+
         this.editor = monaco.editor.create(this.editorContainer.nativeElement, {
           model: monaco.editor.createModel(
-            this.initialValue(),
+            savedState,
             'json',
             monaco.Uri.parse('inmemory://model/domain.json')
           ),
@@ -48,11 +80,12 @@ export class BadlEditorComponent implements AfterViewInit, OnDestroy {
         });
 
         // Initial compilation trigger
-        this.editorContentChange.emit(this.initialValue());
+        this.editorContentChange.emit(savedState);
 
         this.editor.onDidChangeModelContent(() => {
           const val = this.editor?.getValue();
           if (val !== undefined) {
+            this.editorContent.set(val);
             this.editorContentChange.emit(val);
           }
         });
