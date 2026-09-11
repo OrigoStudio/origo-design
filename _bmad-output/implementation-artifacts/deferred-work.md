@@ -154,3 +154,7 @@
 ## Deferred from: code review of 7-2-live-compilation-rendering-pipeline.md (2026-09-08)
 - loadSample called before ngAfterViewInit [packages/playground/src/editor/badl-editor.component.ts] — acceptable but surprising
 
+
+## Deferred from: code review of retro-7-state-persistence.md (2026-09-11)
+- Deduplicate Monaco editor mocks between spec files [packages/playground/src/app/app.component.spec.ts]
+- Add comment explaining intentional non-reactivity of initialValue() signal read outside Angular zone [packages/playground/src/editor/badl-editor.component.ts]

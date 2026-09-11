@@ -25,6 +25,8 @@ export class BadlEditorComponent implements AfterViewInit, OnDestroy {
   @ViewChild('editorContainer') editorContainer!: ElementRef<HTMLDivElement>;
 
   readonly initialValue = input<string>('');
+  // Note: initialValue() signal read outside Angular zone in ngAfterViewInit is intentionally non-reactive
+  // as it is only used for the initial model creation.
   readonly theme = input<string>('vs-dark');
   readonly readOnly = input<boolean>(false);
   readonly editorContentChange = output<string>();
@@ -36,7 +38,7 @@ export class BadlEditorComponent implements AfterViewInit, OnDestroy {
   constructor() {
     effect(onCleanup => {
       const content = this.editorContent();
-      if (!content) return; // Don't save empty content on initial init
+      if (content === null || content === undefined) return; // Allow empty string for cleared editor
 
       const timer = setTimeout(() => {
         try {
@@ -55,13 +57,16 @@ export class BadlEditorComponent implements AfterViewInit, OnDestroy {
     this.zone.runOutsideAngular(() => {
       if (!this.editorContainer?.nativeElement) return;
       try {
-        let savedState = this.initialValue();
+        // Fallback to empty valid JSON object
+        let savedState = this.initialValue() || '{}';
         try {
           const draft = localStorage.getItem('origo_playground_draft');
           if (draft) {
-            // Validate it's valid JSON to prevent crash loops
-            JSON.parse(draft);
-            savedState = draft;
+            // Validate it's a valid JSON object to prevent crash loops
+            const parsed = JSON.parse(draft);
+            if (parsed && typeof parsed === 'object' && !Array.isArray(parsed)) {
+              savedState = JSON.stringify(parsed);
+            }
           }
         } catch (e) {
           console.warn('Could not restore playground draft, falling back to initialValue', e);
@@ -83,9 +88,10 @@ export class BadlEditorComponent implements AfterViewInit, OnDestroy {
         this.editorContentChange.emit(savedState);
 
         this.editor.onDidChangeModelContent(() => {
-          const val = this.editor?.getValue();
+          if (!this.editor) return; // Guard against disposed editor
+          const val = this.editor.getModel()?.getValue();
           if (val !== undefined) {
-            this.editorContent.set(val);
+            this.zone.run(() => this.editorContent.set(val));
             this.editorContentChange.emit(val);
           }
         });

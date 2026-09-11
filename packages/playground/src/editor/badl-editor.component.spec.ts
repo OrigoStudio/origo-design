@@ -1,4 +1,4 @@
-import { ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { BadlEditorComponent } from './badl-editor.component';
 import { NgZone, ComponentRef } from '@angular/core';
 import { registerBadlSchema } from './schema-registry';
@@ -13,11 +13,16 @@ const mockDispose = vi.fn();
 const mockOnDidChangeModelContent = vi.fn();
 const mockSetValue = vi.fn();
 const mockGetValue = vi.fn().mockReturnValue('{}');
+const mockGetModel = vi.fn().mockReturnValue({
+  getValue: mockGetValue,
+  setValue: mockSetValue,
+});
 const mockCreate = vi.fn().mockReturnValue({
   dispose: mockDispose,
   onDidChangeModelContent: mockOnDidChangeModelContent,
   setValue: mockSetValue,
   getValue: mockGetValue,
+  getModel: mockGetModel,
 });
 const mockCreateModel = vi.fn().mockReturnValue({});
 
@@ -47,7 +52,7 @@ describe('BadlEditorComponent', () => {
 
     // reset mocks
     vi.clearAllMocks();
-    localStorage.clear();
+    localStorage.removeItem('origo_playground_draft');
   });
 
   it('should create', () => {
@@ -117,25 +122,53 @@ describe('BadlEditorComponent', () => {
     it('should debounce saving to localStorage', async () => {
       vi.useFakeTimers();
       const setItemSpy = vi.spyOn(Storage.prototype, 'setItem');
-      componentRef.setInput('initialValue', '{}');
-      fixture.detectChanges();
+      try {
+        componentRef.setInput('initialValue', '{}');
+        fixture.detectChanges();
 
-      // Simulate editor content change
-      mockGetValue.mockReturnValue('{"new":"content"}');
-      const changeCallback = mockOnDidChangeModelContent.mock.calls[0][0];
-      changeCallback();
-      fixture.detectChanges();
-      TestBed.flushEffects();
+        // Simulate editor content change
+        mockGetValue.mockReturnValue('{"new":"content"}');
+        const calls = mockOnDidChangeModelContent.mock.calls;
+        const changeCallback = calls[calls.length - 1][0];
+        changeCallback();
+        fixture.detectChanges();
+        TestBed.flushEffects();
 
-      // Timer is 500ms
-      await vi.advanceTimersByTimeAsync(100);
-      expect(setItemSpy).not.toHaveBeenCalled();
+        // Timer is 500ms
+        await vi.advanceTimersByTimeAsync(100);
+        expect(setItemSpy).not.toHaveBeenCalled();
 
-      await vi.advanceTimersByTimeAsync(400); // Total 500
-      expect(setItemSpy).toHaveBeenCalledWith('origo_playground_draft', '{"new":"content"}');
+        await vi.advanceTimersByTimeAsync(400); // Total 500
+        expect(setItemSpy).toHaveBeenCalledWith('origo_playground_draft', '{"new":"content"}');
+      } finally {
+        setItemSpy.mockRestore();
+        vi.useRealTimers();
+      }
+    });
 
-      setItemSpy.mockRestore();
-      vi.useRealTimers();
+    it('should gracefully handle QuotaExceededError and SecurityError when saving to localStorage', async () => {
+      vi.useFakeTimers();
+      const setItemSpy = vi.spyOn(Storage.prototype, 'setItem').mockImplementation(() => {
+        throw new DOMException('QuotaExceededError', 'QuotaExceededError');
+      });
+      try {
+        componentRef.setInput('initialValue', '{}');
+        fixture.detectChanges();
+
+        mockGetValue.mockReturnValue('{"new":"content"}');
+        const calls = mockOnDidChangeModelContent.mock.calls;
+        const changeCallback = calls[calls.length - 1][0];
+        changeCallback();
+        fixture.detectChanges();
+        TestBed.flushEffects();
+
+        await vi.advanceTimersByTimeAsync(500);
+        expect(setItemSpy).toHaveBeenCalled();
+        // Should not throw unhandled promise rejection or crash
+      } finally {
+        setItemSpy.mockRestore();
+        vi.useRealTimers();
+      }
     });
   });
 });

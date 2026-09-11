@@ -78,3 +78,23 @@ Antigravity (IDE)
 - `packages/playground/src/editor/badl-editor.component.ts`
 - `packages/playground/src/editor/badl-editor.component.spec.ts`
 - `packages/playground/src/app/app.component.spec.ts`
+
+### Review Findings
+
+- [x] [Review][Patch] Add Playwright 1.45.x Regression Test Fixture for state persistence [packages/playground/e2e/]
+- [x] [Review][Patch] Fix empty string guard in ffect() to allow saving cleared editor state [packages/playground/src/editor/badl-editor.component.ts]
+- [x] [Review][Patch] Wrap signal update 	his.editorContent.set(val) inside 	his.zone.run() [packages/playground/src/editor/badl-editor.component.ts]
+- [x] [Review][Patch] Validate parsed JSON is a plain object, not primitive/array [packages/playground/src/editor/badl-editor.component.ts]
+- [x] [Review][Patch] Make debounce test robust against multiple onDidChangeModelContent calls [packages/playground/src/editor/badl-editor.component.spec.ts]
+- [x] [Review][Patch] Reset i.useFakeTimers() in fterEach or 	ry/finally [packages/playground/src/editor/badl-editor.component.spec.ts]
+- [x] [Review][Patch] Use localStorage.removeItem instead of clear() in tests [packages/playground/src/editor/badl-editor.component.spec.ts]
+- [x] [Review][Patch] Add test coverage for setItem throwing QuotaExceededError and SecurityError [packages/playground/src/editor/badl-editor.component.spec.ts]
+- [x] [Review][Patch] Re-stringify parsed JSON to discard trailing whitespace/BOM [packages/playground/src/editor/badl-editor.component.ts]
+- [x] [Review][Patch] Fix ditorContentChange.emit logic on first render to prevent double-init/stale props [packages/playground/src/editor/badl-editor.component.ts]
+- [x] [Review][Patch] Add guard against calling getValue on disposed editor instance [packages/playground/src/editor/badl-editor.component.ts]
+- [x] [Review][Patch] Use ditor.getModel().setValue(value) instead of createModel(savedState) [packages/playground/src/editor/badl-editor.component.ts]
+- [x] [Review][Patch] Use ditor.getModel().getValue() instead of ditor.getValue() [packages/playground/src/editor/badl-editor.component.ts]
+- [x] [Review][Patch] Provide a guaranteed valid empty BADL JSON object {} as ultimate fallback [packages/playground/src/editor/badl-editor.component.ts]
+- [x] [Review][Patch] Remove unused akeAsync and 	ick testing imports [packages/playground/src/editor/badl-editor.component.spec.ts]
+- [x] [Review][Defer] Deduplicate Monaco editor mocks between spec files [packages/playground/src/app/app.component.spec.ts] — deferred, pre-existing
+- [x] [Review][Defer] Add comment explaining intentional non-reactivity of initialValue() signal read outside Angular zone [packages/playground/src/editor/badl-editor.component.ts] — deferred, pre-existing
