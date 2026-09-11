@@ -41,7 +41,7 @@
 # - Retrospective appends its action items to action_items; sprint-status surfaces open ones
 
 generated: 2026-07-29T21:46:02.464968
-last_updated: 2026-09-11T20:23:00+05:30
+last_updated: 2026-09-11T23:03:00+05:30
 project: origo-design
 project_key: NOKEY
 tracking_system: file-system
@@ -203,7 +203,7 @@ action_items:
     status: done
   - id: retro-7-test-registry-backfill
     description: "Test Registry Backfill: Document all test registries from initial implementation up through Epic 7 into the Central Test Registry. (Owner: Dana)"
-    status: open
+    status: in-progress
   - id: retro-7-dod-update
     description: "Update Definition of Done: Mandate that test registries must be updated at the time a story implementation concludes, and require explicit reference logging (ADRs/spikes) in story acceptance criteria. (Owner: Alice)"
     status: open
