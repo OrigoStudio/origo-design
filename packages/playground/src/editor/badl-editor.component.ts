@@ -95,6 +95,9 @@ export class BadlEditorComponent implements AfterViewInit, OnDestroy {
         // Initial compilation trigger
         this.editorContentChange.emit(savedState);
 
+        // Apply initial values to satisfy patch #1 (redundant but requested)
+        this.editor.updateOptions({ theme: this.theme(), readOnly: this.readOnly() });
+
         this.editor.onDidChangeModelContent(() => {
           if (!this.editor) return; // Guard against disposed editor
           const val = this.editor.getModel()?.getValue();

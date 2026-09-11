@@ -1,5 +1,3 @@
-Invoke the bmad-review-edge-case-hunter skill on this diff:
-
 diff --git a/_bmad-output/implementation-artifacts/retro-7-resolve-debt.md b/_bmad-output/implementation-artifacts/retro-7-resolve-debt.md
 index d385fc7..0ac52b2 100644
 --- a/_bmad-output/implementation-artifacts/retro-7-resolve-debt.md
@@ -176,4 +174,3 @@ index e17728e..737cac7 100644
 -  });
 +  }, 15000);
  });
-

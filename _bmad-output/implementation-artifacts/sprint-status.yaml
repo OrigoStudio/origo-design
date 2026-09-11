@@ -200,7 +200,7 @@ action_items:
     status: done
   - id: retro-7-resolve-debt
     description: "Resolve Tech Debt: Address deferred reactive signal updates and builder alignment issues from Epic 7. (Owner: Amelia)"
-    status: review
+    status: done
   - id: retro-7-test-registry-backfill
     description: "Test Registry Backfill: Document all test registries from initial implementation up through Epic 7 into the Central Test Registry. (Owner: Dana)"
     status: open

@@ -3,7 +3,7 @@ baseline_commit: 016b93396ba79576e111a6560b6cee8fc8118c16
 ---
 # Retro Action Item — Epic 7: Resolve Tech Debt
 
-Status: review
+Status: done
 
 ## Story
 
@@ -189,3 +189,14 @@ Claude Sonnet 4.6 (Thinking) — create + validate pass
 - packages/playground/src/editor/badl-editor.component.spec.ts
 - packages/playground/src/workers/compiler.worker.spec.ts
 - _bmad-output/planning-artifacts/adr-epic7-web-worker-csp.md
+
+
+### Review Findings
+
+- [x] [Review][Decision] Unscoped modification in compiler.worker.spec.ts — Timeout increased to 15s to fix flakiness, but file was not in story scope. Keep or revert? (Dismissed as noise)
+- [x] [Review][Patch] Initial values lost — effect() fires before ngAfterViewInit, so initial theme/readOnly are never applied to the editor. ngAfterViewInit needs to apply them on creation. [packages/playground/src/editor/badl-editor.component.ts:158]
+- [x] [Review][Patch] Flawed tests hide ordering bug — vi.clearAllMocks() resets all mocks instead of just mockUpdateOptions, and hides the lack of initial value application. [packages/playground/src/editor/badl-editor.component.spec.ts:130]
+- [x] [Review][Patch] Missing test coverage — No test verifies that inputs set before mount (via setInput before detectChanges) correctly configure the editor. [packages/playground/src/editor/badl-editor.component.spec.ts]
+- [x] [Review][Patch] Unclosed Deferred Work — deferred-work.md was not updated to mark the resolved debts as done. [_bmad-output/implementation-artifacts/deferred-work.md]
+- [x] [Review][Defer] ADR verification lacks reproducibility — The Epic 7 Retro entry in adr-epic7-web-worker-csp.md lacks a commit SHA and toolchain versions. [_bmad-output/planning-artifacts/adr-epic7-web-worker-csp.md] — deferred, pre-existing
+

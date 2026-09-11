@@ -175,9 +175,24 @@ describe('BadlEditorComponent', () => {
   });
 
   describe('Reactive Inputs', () => {
+    it('should configure editor with initial values if set before mount', () => {
+      componentRef.setInput('theme', 'vs');
+      componentRef.setInput('readOnly', true);
+      fixture.detectChanges();
+
+      expect(mockCreate).toHaveBeenCalled();
+      const createArgs = mockCreate.mock.calls[0];
+      expect(createArgs[1]).toEqual(
+        expect.objectContaining({
+          theme: 'vs',
+          readOnly: true,
+        })
+      );
+    });
+
     it('should call updateOptions when theme input changes after mount', () => {
       fixture.detectChanges(); // triggers ngAfterViewInit — editor is created, effect may fire once here
-      vi.clearAllMocks(); // clear any initial effect calls so the assertion is isolated to the input change below
+      mockUpdateOptions.mockClear(); // clear any initial effect calls so the assertion is isolated to the input change below
 
       componentRef.setInput('theme', 'vs');
       TestBed.flushEffects();
@@ -187,7 +202,7 @@ describe('BadlEditorComponent', () => {
 
     it('should call updateOptions when readOnly input changes after mount', () => {
       fixture.detectChanges(); // same pattern — editor created, then clear mocks before the isolated assertion
-      vi.clearAllMocks();
+      mockUpdateOptions.mockClear();
 
       componentRef.setInput('readOnly', true);
       TestBed.flushEffects();
