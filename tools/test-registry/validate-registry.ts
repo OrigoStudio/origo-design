@@ -14,7 +14,9 @@ const VALID_PACKAGES = new Set([
   '@origo/core',
   '@origo/design-tokens',
   '@origo/angular-renderer',
+  '@origo/playground',
   'origo-e2e',
+  'tools',
 ]);
 
 interface TestCase {

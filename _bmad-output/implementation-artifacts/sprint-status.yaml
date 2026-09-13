@@ -127,6 +127,7 @@ development_status:
   retro-6-negative-testing: review
   retro-6-central-test-registry: review
   retro-7-state-persistence: done
+  retro-7-test-registry-backfill: review
 
 action_items:
   - id: retro-1-cleanup

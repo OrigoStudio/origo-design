@@ -3,7 +3,7 @@ baseline_commit: 587d5f0c25c573b11a33302f376fb4eb98387db9
 ---
 # Story: retro-7-test-registry-backfill
 Epic: retro-7
-Status: ready-for-dev
+Status: review
 
 ## Story
 
@@ -22,22 +22,22 @@ So that the registry remains the single source of truth for repository test cove
 
 ## Tasks / Subtasks
 
-- [ ] **Task 1: Update `VALID_PACKAGES` in validate-registry.ts FIRST**
-  - [ ] Open `tools/test-registry/validate-registry.ts`
-  - [ ] Add `'@origo/playground'` and `'tools'` to the `VALID_PACKAGES` Set (lines 12-18)
-  - [ ] Save file — do this BEFORE touching `test-registry.yaml` or validation will immediately fail
+- [x] **Task 1: Update `VALID_PACKAGES` in validate-registry.ts FIRST**
+  - [x] Open `tools/test-registry/validate-registry.ts`
+  - [x] Add `'@origo/playground'` and `'tools'` to the `VALID_PACKAGES` Set (lines 12-18)
+  - [x] Save file — do this BEFORE touching `test-registry.yaml` or validation will immediately fail
 
-- [ ] **Task 2: Append playground unit test entries to test-registry.yaml**
-  - [ ] Append the 7 playground unit entries from the YAML block in Dev Notes below
-  - [ ] Run `npm run validate:registry` — fix any errors before continuing
+- [x] **Task 2: Append playground unit test entries to test-registry.yaml**
+  - [x] Append the 7 playground unit entries from the YAML block in Dev Notes below
+  - [x] Run `npm run validate:registry` — fix any errors before continuing
 
-- [ ] **Task 3: Append playground e2e test entries**
-  - [ ] Append the 2 playground e2e entries from the YAML block in Dev Notes below
-  - [ ] Run `npm run validate:registry` — confirm pass
+- [x] **Task 3: Append playground e2e test entries**
+  - [x] Append the 2 playground e2e entries from the YAML block in Dev Notes below
+  - [x] Run `npm run validate:registry` — confirm pass
 
-- [ ] **Task 4: Append benchmark test entries**
-  - [ ] Append the 2 benchmark entries from the YAML block in Dev Notes below
-  - [ ] Run `npm run validate:registry` — confirm final pass with 39 total entries
+- [x] **Task 4: Append benchmark test entries**
+  - [x] Append the 2 benchmark entries from the YAML block in Dev Notes below
+  - [x] Run `npm run validate:registry` — confirm final pass with 39 total entries
 
 ## Dev Notes
 
@@ -223,10 +223,16 @@ From `retro-6-central-test-registry` (direct precedent):
 ## Dev Agent Record
 
 ### Agent Model Used
+Gemini 3.1 Pro (High)
 
 ### Debug Log References
 
 ### Completion Notes List
+- ✅ Added `@origo/playground` and `tools` to `VALID_PACKAGES` in `validate-registry.ts`
+- ✅ Backfilled 7 unit specs for playground
+- ✅ Backfilled 2 e2e specs for playground
+- ✅ Backfilled 2 perf specs for tools/benchmarks
+- ✅ Confirmed `npm run validate:registry` exits with 0 and passes 39 test cases
 
 ### File List
 
