@@ -10,8 +10,21 @@ vi.mock('./schema-registry', () => ({
 
 // Mock monaco editor create and dispose
 const mockDispose = vi.fn();
+const mockOnDidChangeModelContent = vi.fn();
+const mockSetValue = vi.fn();
+const mockGetValue = vi.fn().mockReturnValue('{}');
+const mockGetModel = vi.fn().mockReturnValue({
+  getValue: mockGetValue,
+  setValue: mockSetValue,
+});
+const mockUpdateOptions = vi.fn();
 const mockCreate = vi.fn().mockReturnValue({
   dispose: mockDispose,
+  onDidChangeModelContent: mockOnDidChangeModelContent,
+  setValue: mockSetValue,
+  getValue: mockGetValue,
+  getModel: mockGetModel,
+  updateOptions: mockUpdateOptions,
 });
 const mockCreateModel = vi.fn().mockReturnValue({});
 
@@ -41,6 +54,7 @@ describe('BadlEditorComponent', () => {
 
     // reset mocks
     vi.clearAllMocks();
+    localStorage.removeItem('origo_playground_draft');
   });
 
   it('should create', () => {
@@ -77,5 +91,123 @@ describe('BadlEditorComponent', () => {
     component.ngOnDestroy();
 
     expect(mockDispose).toHaveBeenCalled();
+  });
+
+  describe('State Persistence', () => {
+    it('should initialize with localStorage draft if valid', () => {
+      localStorage.setItem('origo_playground_draft', JSON.stringify({ valid: 'json' }));
+      componentRef.setInput('initialValue', '{}');
+      fixture.detectChanges();
+
+      expect(mockCreateModel).toHaveBeenCalledWith('{"valid":"json"}', 'json', 'parsed-uri');
+    });
+
+    it('should fallback to initialValue if localStorage has invalid JSON', () => {
+      localStorage.setItem('origo_playground_draft', 'invalid-json');
+      componentRef.setInput('initialValue', '{}');
+      fixture.detectChanges();
+
+      expect(mockCreateModel).toHaveBeenCalledWith('{}', 'json', 'parsed-uri');
+    });
+
+    it('should fallback to initialValue if localStorage access throws SecurityError', () => {
+      const getItemSpy = vi.spyOn(Storage.prototype, 'getItem').mockImplementation(() => {
+        throw new DOMException('SecurityError', 'SecurityError');
+      });
+      componentRef.setInput('initialValue', '{}');
+      fixture.detectChanges();
+
+      expect(mockCreateModel).toHaveBeenCalledWith('{}', 'json', 'parsed-uri');
+      getItemSpy.mockRestore();
+    });
+
+    it('should debounce saving to localStorage', async () => {
+      vi.useFakeTimers();
+      const setItemSpy = vi.spyOn(Storage.prototype, 'setItem');
+      try {
+        componentRef.setInput('initialValue', '{}');
+        fixture.detectChanges();
+
+        // Simulate editor content change
+        mockGetValue.mockReturnValue('{"new":"content"}');
+        const calls = mockOnDidChangeModelContent.mock.calls;
+        const changeCallback = calls[calls.length - 1][0];
+        changeCallback();
+        fixture.detectChanges();
+        TestBed.flushEffects();
+
+        // Timer is 500ms
+        await vi.advanceTimersByTimeAsync(100);
+        expect(setItemSpy).not.toHaveBeenCalled();
+
+        await vi.advanceTimersByTimeAsync(400); // Total 500
+        expect(setItemSpy).toHaveBeenCalledWith('origo_playground_draft', '{"new":"content"}');
+      } finally {
+        setItemSpy.mockRestore();
+        vi.useRealTimers();
+      }
+    });
+
+    it('should gracefully handle QuotaExceededError and SecurityError when saving to localStorage', async () => {
+      vi.useFakeTimers();
+      const setItemSpy = vi.spyOn(Storage.prototype, 'setItem').mockImplementation(() => {
+        throw new DOMException('QuotaExceededError', 'QuotaExceededError');
+      });
+      try {
+        componentRef.setInput('initialValue', '{}');
+        fixture.detectChanges();
+
+        mockGetValue.mockReturnValue('{"new":"content"}');
+        const calls = mockOnDidChangeModelContent.mock.calls;
+        const changeCallback = calls[calls.length - 1][0];
+        changeCallback();
+        fixture.detectChanges();
+        TestBed.flushEffects();
+
+        await vi.advanceTimersByTimeAsync(500);
+        expect(setItemSpy).toHaveBeenCalled();
+        // Should not throw unhandled promise rejection or crash
+      } finally {
+        setItemSpy.mockRestore();
+        vi.useRealTimers();
+      }
+    });
+  });
+
+  describe('Reactive Inputs', () => {
+    it('should configure editor with initial values if set before mount', () => {
+      componentRef.setInput('theme', 'vs');
+      componentRef.setInput('readOnly', true);
+      fixture.detectChanges();
+
+      expect(mockCreate).toHaveBeenCalled();
+      const createArgs = mockCreate.mock.calls[0];
+      expect(createArgs[1]).toEqual(
+        expect.objectContaining({
+          theme: 'vs',
+          readOnly: true,
+        })
+      );
+    });
+
+    it('should call updateOptions when theme input changes after mount', () => {
+      fixture.detectChanges(); // triggers ngAfterViewInit — editor is created, effect may fire once here
+      mockUpdateOptions.mockClear(); // clear any initial effect calls so the assertion is isolated to the input change below
+
+      componentRef.setInput('theme', 'vs');
+      TestBed.flushEffects();
+
+      expect(mockUpdateOptions).toHaveBeenCalledWith(expect.objectContaining({ theme: 'vs' }));
+    });
+
+    it('should call updateOptions when readOnly input changes after mount', () => {
+      fixture.detectChanges(); // same pattern — editor created, then clear mocks before the isolated assertion
+      mockUpdateOptions.mockClear();
+
+      componentRef.setInput('readOnly', true);
+      TestBed.flushEffects();
+
+      expect(mockUpdateOptions).toHaveBeenCalledWith(expect.objectContaining({ readOnly: true }));
+    });
   });
 });

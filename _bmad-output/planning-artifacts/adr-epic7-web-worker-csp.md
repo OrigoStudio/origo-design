@@ -20,3 +20,7 @@
 1. **No CDN Loaders:** Do NOT use `@monaco-editor/loader`'s default CDN approach as it requires external scripts and blobs.
 2. **Explicit Bundled Workers:** Instantiate Monaco workers explicitly in the `@origo/playground` entry point using standard Vite/Rollup native module worker syntax.
 3. **Zero Core Polyfills:** `validateAST` and `BADLValidator` from `@origo/core` can be imported directly and run in Web Worker context (`self`) without polyfills.
+
+#### Verification — Epic 7 Retro
+
+2026-09-11: Verified that running `nx build playground --configuration=production` correctly emits physical worker `.js` files in `dist/packages/playground/browser/` (e.g., `worker-DK2HODYL.js`, `worker-HDML6OSX.js`, `worker-BNB3ESSQ.js`). The builder alignment using `@angular/build:application` successfully satisfies the `worker-src 'self'` CSP requirement without generating `blob:` URLs.

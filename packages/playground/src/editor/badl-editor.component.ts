@@ -8,6 +8,8 @@ import {
   output,
   NgZone,
   inject,
+  signal,
+  effect,
 } from '@angular/core';
 import * as monaco from 'monaco-editor';
 import './monaco-environment'; // MUST be first monaco import — side-effect only
@@ -23,21 +25,64 @@ export class BadlEditorComponent implements AfterViewInit, OnDestroy {
   @ViewChild('editorContainer') editorContainer!: ElementRef<HTMLDivElement>;
 
   readonly initialValue = input<string>('');
+  // Note: initialValue() signal read outside Angular zone in ngAfterViewInit is intentionally non-reactive
+  // as it is only used for the initial model creation.
   readonly theme = input<string>('vs-dark');
   readonly readOnly = input<boolean>(false);
   readonly editorContentChange = output<string>();
 
   private editor: monaco.editor.IStandaloneCodeEditor | null = null;
   private zone = inject(NgZone);
+  private editorContent = signal<string>('');
+
+  constructor() {
+    effect(onCleanup => {
+      const content = this.editorContent();
+      if (content === null || content === undefined) return; // Allow empty string for cleared editor
+
+      const timer = setTimeout(() => {
+        try {
+          localStorage.setItem('origo_playground_draft', content);
+        } catch (e) {
+          console.warn('Could not save draft to local storage (Quota or Security Error)', e);
+        }
+      }, 500);
+
+      onCleanup(() => clearTimeout(timer));
+    });
+
+    effect(() => {
+      const theme = this.theme();
+      const readOnly = this.readOnly();
+      this.zone.runOutsideAngular(() => {
+        this.editor?.updateOptions({ theme, readOnly });
+      });
+    });
+  }
 
   ngAfterViewInit(): void {
     registerBadlSchema();
     this.zone.runOutsideAngular(() => {
       if (!this.editorContainer?.nativeElement) return;
       try {
+        // Fallback to empty valid JSON object
+        let savedState = this.initialValue() || '{}';
+        try {
+          const draft = localStorage.getItem('origo_playground_draft');
+          if (draft) {
+            // Validate it's a valid JSON object to prevent crash loops
+            const parsed = JSON.parse(draft);
+            if (parsed && typeof parsed === 'object' && !Array.isArray(parsed)) {
+              savedState = JSON.stringify(parsed);
+            }
+          }
+        } catch (e) {
+          console.warn('Could not restore playground draft, falling back to initialValue', e);
+        }
+
         this.editor = monaco.editor.create(this.editorContainer.nativeElement, {
           model: monaco.editor.createModel(
-            this.initialValue(),
+            savedState,
             'json',
             monaco.Uri.parse('inmemory://model/domain.json')
           ),
@@ -48,11 +93,16 @@ export class BadlEditorComponent implements AfterViewInit, OnDestroy {
         });
 
         // Initial compilation trigger
-        this.editorContentChange.emit(this.initialValue());
+        this.editorContentChange.emit(savedState);
+
+        // Apply initial values to satisfy patch #1 (redundant but requested)
+        this.editor.updateOptions({ theme: this.theme(), readOnly: this.readOnly() });
 
         this.editor.onDidChangeModelContent(() => {
-          const val = this.editor?.getValue();
+          if (!this.editor) return; // Guard against disposed editor
+          const val = this.editor.getModel()?.getValue();
           if (val !== undefined) {
+            this.zone.run(() => this.editorContent.set(val));
             this.editorContentChange.emit(val);
           }
         });

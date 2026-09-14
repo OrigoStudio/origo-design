@@ -4,7 +4,15 @@ import { BadlEditorComponent } from '../editor/badl-editor.component';
 import { vi } from 'vitest';
 
 vi.mock('monaco-editor', () => ({
-  editor: { create: vi.fn(), createModel: vi.fn() },
+  editor: {
+    create: vi.fn().mockReturnValue({
+      dispose: vi.fn(),
+      onDidChangeModelContent: vi.fn(),
+      setValue: vi.fn(),
+      getValue: vi.fn(),
+    }),
+    createModel: vi.fn(),
+  },
   Uri: { parse: vi.fn() },
   languages: {
     json: {

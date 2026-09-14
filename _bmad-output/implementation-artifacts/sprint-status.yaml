@@ -41,7 +41,7 @@
 # - Retrospective appends its action items to action_items; sprint-status surfaces open ones
 
 generated: 2026-07-29T21:46:02.464968
-last_updated: 2026-09-08T21:58:00+05:30
+last_updated: 2026-09-14T17:45:00+05:30
 project: origo-design
 project_key: NOKEY
 tracking_system: file-system
@@ -105,7 +105,7 @@ development_status:
   7-1-web-based-editor-component: done
   7-2-live-compilation-rendering-pipeline: done
   7-3-live-preview-latency-optimization: done
-  epic-7-retrospective: optional
+  epic-7-retrospective: done
   epic-8: backlog
   8-1-diagnostics-api-runtime-hooks: backlog
   8-2-devtools-inspector-ui: backlog
@@ -123,9 +123,12 @@ development_status:
   10-4-benchmark-validation-execution: backlog
   epic-10-retrospective: optional
   retro-6-e2e-npm-verification: done
-  retro-6-security-remediation: review
-  retro-6-negative-testing: review
-  retro-6-central-test-registry: review
+  retro-6-security-remediation: done
+  retro-6-negative-testing: done
+  retro-6-central-test-registry: done
+  retro-7-state-persistence: done
+  retro-7-test-registry-backfill: done
+  retro-7-dod-update: done
 
 action_items:
   - id: retro-1-cleanup
@@ -193,4 +196,16 @@ action_items:
     status: done
   - id: retro-6-central-test-registry
     description: "Central Test Case Registry Strategy: Create and manage a centralized test case ledger containing test scenarios, mapped affected stories, and release-by-release test results tracking to prevent regressions. (Owner: Dana/Amelia)"
-    status: review
+    status: done
+  - id: retro-7-state-persistence
+    description: "Fix State Persistence: Implement local storage or URL-based sync for the Monaco editor value to survive hot reloads before starting Epic 8. (Owner: Charlie)"
+    status: done
+  - id: retro-7-resolve-debt
+    description: "Resolve Tech Debt: Address deferred reactive signal updates and builder alignment issues from Epic 7. (Owner: Amelia)"
+    status: done
+  - id: retro-7-test-registry-backfill
+    description: "Test Registry Backfill: Document all test registries from initial implementation up through Epic 7 into the Central Test Registry. (Owner: Dana)"
+    status: done
+  - id: retro-7-dod-update
+    description: "Update Definition of Done: Mandate that test registries must be updated at the time a story implementation concludes, and require explicit reference logging (ADRs/spikes) in story acceptance criteria. (Owner: Alice)"
+    status: done
