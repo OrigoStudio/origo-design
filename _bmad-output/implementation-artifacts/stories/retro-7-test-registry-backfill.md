@@ -3,7 +3,7 @@ baseline_commit: 587d5f0c25c573b11a33302f376fb4eb98387db9
 ---
 # Story: retro-7-test-registry-backfill
 Epic: retro-7
-Status: review
+Status: done
 
 ## Story
 
