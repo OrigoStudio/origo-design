@@ -1,5 +1,9 @@
 # origo-design
 
+## Development and Contributing
+
+Before submitting any code changes, please review our [Definition of Done](docs/definition-of-done.md) to ensure all requirements are met.
+
 ## Semantic Versioning and Commits
 
 This repository enforces **Conventional Commits** for all changes. Our CI pipeline relies on these commit messages to automatically determine semantic version bumps for packages (like `@origo/core`) using `nx release`.

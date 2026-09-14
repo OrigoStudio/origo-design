@@ -305,3 +305,8 @@
 ## Deferred from: code review (retro-7-resolve-debt)
 - [ ] ADR verification lacks reproducibility — The Epic 7 Retro entry in adr-epic7-web-worker-csp.md lacks a commit SHA and toolchain versions.
 
+## Deferred from: code review of retro-7-dod-update.md (2026-09-14)
+
+- DoD has no versioning, date, or change history [docs/definition-of-done.md]
+- Checklist boxes are not enforced by CI [.github/pull_request_template.md]
+
