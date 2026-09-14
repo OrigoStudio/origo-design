@@ -1,3 +1,19 @@
+## 0.0.28 (2026-09-14)
+
+### 🚀 Features
+
+- implement BadlEditor component and add compiler worker unit tests to resolve technical debt ([287c980](https://github.com/OrigoStudio/origo-design/commit/287c980))
+- implement debounced localStorage state persistence for the editor component ([a156e26](https://github.com/OrigoStudio/origo-design/commit/a156e26))
+- implement state persistence for the playground web editor and add supporting unit tests ([5e08ad9](https://github.com/OrigoStudio/origo-design/commit/5e08ad9))
+
+### 🩹 Fixes
+
+- resolve reactive theme and readOnly updates in badl-editor component ([587d5f0](https://github.com/OrigoStudio/origo-design/commit/587d5f0))
+
+### ❤️ Thank You
+
+- Hardik Patel @hardikpatelse
+
 ## 0.0.27 (2026-09-09)
 
 ### 🚀 Features
