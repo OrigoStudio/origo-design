@@ -1,0 +1,124 @@
+---
+title: Diagnostics API
+description: Reference documentation for the Origo Diagnostics API
+---
+
+# Diagnostics API
+
+The Origo Diagnostics API provides runtime hooks for inspecting the application state during development. It serves as the foundation for Origo DevTools and is exposed globally via the `window.__ORIGO_DEVTOOLS__` object.
+
+## Lifecycle and Environments
+
+The Diagnostics API is **only available in development mode**.
+It is strictly guarded by Angular's `isDevMode()` and is entirely tree-shaken and disabled in production builds. In production, `window.__ORIGO_DEVTOOLS__` will be `undefined`.
+
+## Accessing the API
+
+In development, you can access the API from your browser's console or via an external tool (like a Chrome Extension):
+
+```typescript
+// Check if the API is available
+if (window.__ORIGO_DEVTOOLS__) {
+  const api = window.__ORIGO_DEVTOOLS__;
+  const state = api.getActiveState();
+  console.log(state);
+}
+```
+
+## API Reference
+
+The `OrigoDevToolsAPI` interface defines the following methods:
+
+### `getActiveState()`
+
+Returns the complete internal AST state and active entities of the rendering engine.
+
+- **Returns**: `any` - The application state, with sensitive fields redacted.
+- **Example**:
+  ```typescript
+  const state = window.__ORIGO_DEVTOOLS__.getActiveState();
+  ```
+
+### `getRenderingPath(elementId: string)`
+
+Retrieves the semantic rendering path for a given DOM element ID.
+
+- **Parameters**:
+  - `elementId` (string): The ID of the component element.
+- **Returns**: `RenderingPath | null` - The semantic path object or null if not found.
+- **Note**: The returned path follows BADL semantic path conventions (FR-OBS-003) rather than DOM selectors.
+- **Example**:
+  ```typescript
+  const path = window.__ORIGO_DEVTOOLS__.getRenderingPath('header-nav');
+  console.log(path.path); // e.g. "root.components.header-nav"
+  ```
+
+### `getErrorTelemetry()`
+
+Retrieves detailed error boundary telemetry, including recent errors and their context.
+
+- **Returns**: `ErrorContext[]` - A list of recent errors.
+- **Example**:
+  ```typescript
+  const errors = window.__ORIGO_DEVTOOLS__.getErrorTelemetry();
+  ```
+
+## Data Structures
+
+### `RenderingPath`
+
+```typescript
+interface RenderingPath {
+  path: string; // BADL semantic path
+}
+```
+
+### `ErrorContext`
+
+```typescript
+interface ErrorContext {
+  message: string;
+  stack: string;
+  badlPath: string;
+}
+```
+
+### `MetadataSource`
+
+```typescript
+interface MetadataSource {
+  file: string;
+  line: number;
+}
+```
+
+### `ResolutionChain`
+
+```typescript
+interface ResolutionChain {
+  steps: string[];
+}
+```
+
+## Security and Redaction
+
+To prevent accidental leakage of sensitive information during development, the Diagnostics API automatically redacts specific fields before returning state payload.
+
+The following keys (case-insensitive) are automatically replaced with `"[REDACTED]"`:
+
+- `password`
+- `ssn`
+- `apiKey`
+- `token`
+- `secret`
+
+Any key containing the word `password` is also redacted.
+
+**Example Redaction:**
+
+```javascript
+{
+  username: "admin",
+  apiKey: "[REDACTED]"
+}
+```
