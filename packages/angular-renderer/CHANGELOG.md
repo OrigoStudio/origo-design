@@ -1,3 +1,14 @@
+## 0.0.30 (2026-09-15)
+
+### 🚀 Features
+
+- add diagnostics API runtime hooks and devtools bridge ([cb49ce7](https://github.com/OrigoStudio/origo-design/commit/cb49ce7))
+- implement diagnostics API runtime hooks and devtools bridge ([5cceec9](https://github.com/OrigoStudio/origo-design/commit/5cceec9))
+
+### ❤️ Thank You
+
+- Hardik Patel @hardikpatelse
+
 ## 0.0.29 (2026-09-14)
 
 This was a version bump only for angular-renderer to align it with other projects, there were no code changes.
