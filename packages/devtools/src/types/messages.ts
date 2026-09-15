@@ -14,12 +14,16 @@ export type DevToolsMessageType =
   | 'RENDERING_PATH_RESPONSE'
   | 'GET_ERROR_TELEMETRY'
   | 'ERROR_TELEMETRY_RESPONSE'
+  | 'GET_ACTIVE_STATE'
+  | 'ACTIVE_STATE_RESPONSE'
   | 'PING'
-  | 'PONG';
+  | 'PONG'
+  | 'NOT_AVAILABLE'
+  | 'CONNECTION_LOST';
 
 export interface BaseMessage {
   type: DevToolsMessageType;
-  payload?: unknown;
+  payload?: any;
 }
 
 export interface GetMetadataSourceMessage extends BaseMessage {
@@ -61,6 +65,15 @@ export interface ErrorTelemetryResponseMessage extends BaseMessage {
   payload: ErrorContext[] | null;
 }
 
+export interface GetActiveStateMessage extends BaseMessage {
+  type: 'GET_ACTIVE_STATE';
+}
+
+export interface ActiveStateResponseMessage extends BaseMessage {
+  type: 'ACTIVE_STATE_RESPONSE';
+  payload: unknown;
+}
+
 export interface PingMessage extends BaseMessage {
   type: 'PING';
 }
@@ -78,5 +91,9 @@ export type DevToolsMessage =
   | RenderingPathResponseMessage
   | GetErrorTelemetryMessage
   | ErrorTelemetryResponseMessage
+  | GetActiveStateMessage
+  | ActiveStateResponseMessage
   | PingMessage
-  | PongMessage;
+  | PongMessage
+  | { type: 'NOT_AVAILABLE' }
+  | { type: 'CONNECTION_LOST' };

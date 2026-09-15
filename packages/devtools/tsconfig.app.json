@@ -4,11 +4,7 @@
     "outDir": "../../dist/out-tsc",
     "types": ["chrome"]
   },
-  "files": [
-    "src/devtools-panel/main.ts",
-    "src/background/background.ts",
-    "src/content-script/content-script.ts"
-  ],
-  "include": ["src/**/*.d.ts", "src/**/*.ts"],
+  "files": ["src/devtools-panel/main.ts"],
+  "include": ["src/devtools-panel/**/*.d.ts", "src/devtools-panel/**/*.ts", "src/types/**/*.ts"],
   "exclude": ["src/**/*.spec.ts", "src/test-setup.ts"]
 }

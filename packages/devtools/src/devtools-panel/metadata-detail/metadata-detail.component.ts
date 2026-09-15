@@ -1,5 +1,6 @@
-import { Component, Input, OnChanges } from '@angular/core';
+import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import type { MetadataSource, ResolutionChain } from '@origo/angular-renderer';
 
 @Component({
   selector: 'origo-devtools-metadata-detail',
@@ -15,16 +16,36 @@ import { CommonModule } from '@angular/common';
 
       <div *ngIf="metadataSource" class="section">
         <h4>Source Definition</h4>
-        <div class="json-viewer">
-          <pre>{{ formattedMetadata }}</pre>
+        <div class="data-table-container">
+          <table class="data-table">
+            <tbody>
+              <tr *ngFor="let row of flatMetadata">
+                <td class="key-col">{{ row.path }}</td>
+                <td class="val-col">{{ row.value }}</td>
+              </tr>
+            </tbody>
+          </table>
         </div>
       </div>
 
       <div *ngIf="resolutionChain" class="section">
         <h4>Resolution Chain</h4>
-        <div class="json-viewer">
-          <pre>{{ formattedResolution }}</pre>
+        <div class="data-table-container">
+          <table class="data-table">
+            <tbody>
+              <tr *ngFor="let row of flatResolution">
+                <td class="key-col">{{ row.path }}</td>
+                <td class="val-col">{{ row.value }}</td>
+              </tr>
+            </tbody>
+          </table>
         </div>
+      </div>
+
+      <!-- Adding placeholder for theme token resolutions -->
+      <div class="section">
+        <h4>Theme Token Resolutions</h4>
+        <div class="empty-state">No theme tokens mapped to this element.</div>
       </div>
     </div>
   `,
@@ -50,54 +71,90 @@ import { CommonModule } from '@angular/common';
       .section {
         margin-bottom: 24px;
       }
-      .json-viewer {
+      .data-table-container {
         background: var(--origo-color-bg-subtle, #f5f5f5);
         border: 1px solid var(--origo-color-border, #e0e0e0);
         border-radius: 4px;
-        padding: 12px;
         overflow-x: auto;
       }
-      pre {
-        margin: 0;
-        font-size: 12px;
-        font-family: monospace;
+      .data-table {
+        width: 100%;
+        border-collapse: collapse;
+        font-family: var(--origo-font-mono, monospace);
+        font-size: var(--origo-font-size-sm, 12px);
+      }
+      .data-table td {
+        padding: 4px 8px;
+        border-bottom: 1px solid var(--origo-color-border-subtle, #eee);
+      }
+      .data-table tr:last-child td {
+        border-bottom: none;
+      }
+      .key-col {
+        font-weight: 600;
+        color: var(--origo-color-text-muted, #666);
+        white-space: nowrap;
+      }
+      .val-col {
+        color: var(--origo-color-text-base, #333);
+        word-break: break-all;
       }
     `,
   ],
 })
 export class MetadataDetailComponent implements OnChanges {
-  @Input() metadataSource: unknown;
-  @Input() resolutionChain: unknown;
+  @Input() metadataSource: MetadataSource | null = null;
+  @Input() resolutionChain: ResolutionChain | null = null;
 
-  formattedMetadata = '';
-  formattedResolution = '';
+  flatMetadata: { path: string; value: string }[] = [];
+  flatResolution: { path: string; value: string }[] = [];
 
-  ngOnChanges() {
-    this.formattedMetadata = this.safeStringify(this.metadataSource);
-    this.formattedResolution = this.safeStringify(this.resolutionChain);
+  ngOnChanges(changes: SimpleChanges) {
+    if (changes['metadataSource']) {
+      this.flatMetadata = this.flattenObject(this.metadataSource);
+    }
+    if (changes['resolutionChain']) {
+      this.flatResolution = this.flattenObject(this.resolutionChain);
+    }
   }
 
-  // Safe stringify with cycle detection for defense against cyclic graph bug (8-1 intel)
-  private safeStringify(obj: unknown): string {
-    if (!obj) return 'null';
-
-    const cache = new Set();
-    try {
-      return JSON.stringify(
-        obj,
-        (key, value) => {
-          if (typeof value === 'object' && value !== null) {
-            if (cache.has(value)) {
-              return '[Circular]';
-            }
-            cache.add(value);
-          }
-          return value;
-        },
-        2
-      );
-    } catch {
-      return '[Error parsing metadata]';
+  // Flattens an object to an array of paths and values to avoid recursive templates and cycle bugs
+  private flattenObject(
+    obj: unknown,
+    prefix = '',
+    seen = new Set(),
+    result: { path: string; value: string }[] = []
+  ): { path: string; value: string }[] {
+    if (obj === null || obj === undefined) {
+      if (prefix) result.push({ path: prefix, value: String(obj) });
+      return result;
     }
+
+    if (typeof obj !== 'object') {
+      result.push({ path: prefix, value: String(obj) });
+      return result;
+    }
+
+    if (seen.has(obj)) {
+      result.push({ path: prefix, value: '[Circular]' });
+      return result;
+    }
+    seen.add(obj);
+
+    const isArray = Array.isArray(obj);
+    const keys = Object.keys(obj as any);
+
+    if (keys.length === 0) {
+      result.push({ path: prefix, value: isArray ? '[]' : '{}' });
+    } else {
+      for (const key of keys) {
+        const val = (obj as any)[key];
+        const newPrefix = prefix ? (isArray ? `${prefix}[${key}]` : `${prefix}.${key}`) : key;
+        this.flattenObject(val, newPrefix, seen, result);
+      }
+    }
+
+    seen.delete(obj);
+    return result;
   }
 }

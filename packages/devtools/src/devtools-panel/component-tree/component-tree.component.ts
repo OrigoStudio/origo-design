@@ -1,5 +1,12 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { Component, Input, Output, EventEmitter, OnChanges, SimpleChanges } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import type { RenderingPath } from '@origo/angular-renderer';
+
+interface FlatNode {
+  name: string;
+  badlPath: string;
+  depth: number;
+}
 
 @Component({
   selector: 'origo-devtools-tree',
@@ -11,33 +18,15 @@ import { CommonModule } from '@angular/common';
       <div *ngIf="!renderingPath" class="empty-state">No rendering path data available.</div>
 
       <div *ngIf="renderingPath" class="tree-content">
-        <!-- In a real implementation this would use a virtualized tree like cdk-tree -->
-        <!-- For Phase 1 we display a simple nested list with depth limits -->
-        <ng-container
-          *ngTemplateOutlet="treeNode; context: { $implicit: renderingPath, depth: 0 }"
-        ></ng-container>
+        <!-- Flattened list is virtualized-ready -->
+        <div class="node" *ngFor="let node of flatTree" [style.padding-left.px]="node.depth * 16">
+          <div class="node-header" (click)="selectNode(node.badlPath)">
+            <span class="node-name">{{ node.name }}</span>
+            <span class="node-path">{{ node.badlPath }}</span>
+          </div>
+        </div>
       </div>
     </div>
-
-    <ng-template #treeNode let-node let-depth="depth">
-      <div class="node" [style.padding-left.px]="depth * 16">
-        <div class="node-header" (click)="selectNode(node.badlPath)">
-          <span class="node-name">{{ node.name || 'Unknown' }}</span>
-          <span class="node-path">{{ node.badlPath }}</span>
-        </div>
-
-        <div class="node-children" *ngIf="node.children && depth < maxDepth">
-          <ng-container *ngFor="let child of node.children">
-            <ng-container
-              *ngTemplateOutlet="treeNode; context: { $implicit: child, depth: depth + 1 }"
-            ></ng-container>
-          </ng-container>
-        </div>
-        <div class="node-depth-limit" *ngIf="node.children && depth >= maxDepth">
-          [Max depth reached]
-        </div>
-      </div>
-    </ng-template>
   `,
   styles: [
     `
@@ -60,7 +49,7 @@ import { CommonModule } from '@angular/common';
         border-radius: 4px;
       }
       .node-header:hover {
-        background-color: var(--origo-color-bg-hover, #eee);
+        background-color: var(--origo-color-bg-hover, #f0f0f0);
       }
       .node-name {
         font-weight: 600;
@@ -79,12 +68,37 @@ import { CommonModule } from '@angular/common';
     `,
   ],
 })
-export class ComponentTreeComponent {
-  @Input() renderingPath: unknown;
+export class ComponentTreeComponent implements OnChanges {
+  @Input() renderingPath: RenderingPath | null = null;
   @Output() nodeSelected = new EventEmitter<string>();
 
-  // Defend against cyclic graphs / deep nesting as required by 8-1 intel
-  maxDepth = 50;
+  flatTree: FlatNode[] = [];
+
+  ngOnChanges(changes: SimpleChanges) {
+    if (changes['renderingPath'] && this.renderingPath) {
+      this.flatTree = this.flatten(this.renderingPath);
+    } else if (!this.renderingPath) {
+      this.flatTree = [];
+    }
+  }
+
+  flatten(node: RenderingPath, depth = 0, seen = new Set<RenderingPath>()): FlatNode[] {
+    if (!node || seen.has(node) || typeof node !== 'object') return [];
+    seen.add(node);
+
+    // Guard against missing properties or empty string
+    if (node.badlPath === undefined || node.badlPath === null || node.badlPath === '') return [];
+
+    const flatNode: FlatNode = { name: node.name || 'Unknown', badlPath: node.badlPath, depth };
+    const result = [flatNode];
+
+    if (Array.isArray(node.children)) {
+      for (const child of node.children) {
+        result.push(...this.flatten(child, depth + 1, seen));
+      }
+    }
+    return result;
+  }
 
   selectNode(badlPath: string) {
     if (badlPath) {

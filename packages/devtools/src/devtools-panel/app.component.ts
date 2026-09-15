@@ -3,6 +3,12 @@ import { CommonModule } from '@angular/common';
 import type { DevToolsMessage, ErrorTelemetryResponseMessage } from '../types/messages';
 import { ComponentTreeComponent } from './component-tree/component-tree.component';
 import { MetadataDetailComponent } from './metadata-detail/metadata-detail.component';
+import type {
+  RenderingPath,
+  MetadataSource,
+  ResolutionChain,
+  ErrorContext,
+} from '@origo/angular-renderer';
 
 export type ConnectionState = 'INITIALIZING' | 'CONNECTED' | 'NOT_AVAILABLE' | 'CONNECTION_LOST';
 
@@ -38,6 +44,17 @@ export type ConnectionState = 'INITIALIZING' | 'CONNECTED' | 'NOT_AVAILABLE' | '
               >
               </origo-devtools-metadata-detail>
             </div>
+          </div>
+
+          <div *ngIf="errorTelemetry().length > 0" class="error-telemetry-pane">
+            <h3>Error Telemetry</h3>
+            <ul>
+              <li *ngFor="let err of errorTelemetry()">
+                <strong>{{ err.message }}</strong
+                ><br />
+                <small>{{ err.badlPath }}</small>
+              </li>
+            </ul>
           </div>
         </ng-container>
 
@@ -110,19 +127,20 @@ export type ConnectionState = 'INITIALIZING' | 'CONNECTED' | 'NOT_AVAILABLE' | '
         font-size: 11px;
         padding: 2px 6px;
         border-radius: 4px;
-        background: #ccc;
+        background: var(--origo-color-bg-muted, #ccc);
+        color: var(--origo-color-text-base, #333);
       }
       .status-badge.connected {
-        background: #4caf50;
-        color: white;
+        background: var(--origo-color-success-bg, #4caf50);
+        color: var(--origo-color-success-text, white);
       }
       .status-badge.not_available {
-        background: #f44336;
-        color: white;
+        background: var(--origo-color-error-bg, #f44336);
+        color: var(--origo-color-error-text, white);
       }
       .status-badge.connection_lost {
-        background: #ff9800;
-        color: white;
+        background: var(--origo-color-warning-bg, #ff9800);
+        color: var(--origo-color-warning-text, white);
       }
       .main-content {
         flex: 1;
@@ -159,18 +177,20 @@ export type ConnectionState = 'INITIALIZING' | 'CONNECTED' | 'NOT_AVAILABLE' | '
 export class AppComponent implements OnInit {
   connectionState = signal<ConnectionState>('INITIALIZING');
 
-  renderingPath = signal<unknown>(null);
-  metadataSource = signal<unknown>(null);
-  resolutionChain = signal<unknown>(null);
-  errorTelemetry = signal<unknown[]>([]);
+  renderingPath = signal<RenderingPath | null>(null);
+  metadataSource = signal<MetadataSource | null>(null);
+  resolutionChain = signal<ResolutionChain | null>(null);
+  errorTelemetry = signal<ErrorContext[]>([]);
 
   private backgroundPageConnection!: chrome.runtime.Port;
+  private reconnectTimeoutId: any;
 
   ngOnInit() {
     this.connectToBackground();
   }
 
   reconnect() {
+    if (this.connectionState() === 'INITIALIZING') return;
     this.connectionState.set('INITIALIZING');
     if (this.backgroundPageConnection) {
       try {
@@ -179,14 +199,26 @@ export class AppComponent implements OnInit {
         console.warn('Error disconnecting from background page:', e);
       }
     }
+    if (this.reconnectTimeoutId) {
+      clearTimeout(this.reconnectTimeoutId);
+    }
     // Small delay to ensure cleanup before reconnecting
-    setTimeout(() => {
+    this.reconnectTimeoutId = setTimeout(() => {
       this.connectToBackground();
     }, 100);
   }
 
   private connectToBackground() {
-    if (typeof chrome === 'undefined' || !chrome.runtime) {
+    if (
+      typeof chrome === 'undefined' ||
+      !chrome.runtime ||
+      typeof chrome.runtime.connect !== 'function'
+    ) {
+      this.connectionState.set('NOT_AVAILABLE');
+      return;
+    }
+
+    if (!chrome.devtools?.inspectedWindow) {
       this.connectionState.set('NOT_AVAILABLE');
       return;
     }
@@ -195,10 +227,15 @@ export class AppComponent implements OnInit {
       name: 'origo-devtools-panel',
     });
 
-    this.backgroundPageConnection.postMessage({
-      name: 'init',
-      tabId: chrome.devtools.inspectedWindow.tabId,
-    });
+    try {
+      this.backgroundPageConnection.postMessage({
+        name: 'init',
+        tabId: chrome.devtools.inspectedWindow.tabId,
+      });
+    } catch (e) {
+      this.connectionState.set('NOT_AVAILABLE');
+      return;
+    }
 
     this.backgroundPageConnection.onMessage.addListener((msg: any) => {
       if (msg.source === 'origo-devtools-injected') {
@@ -215,17 +252,22 @@ export class AppComponent implements OnInit {
   }
 
   private sendMessage(message: unknown) {
-    if (this.backgroundPageConnection) {
-      this.backgroundPageConnection.postMessage({
-        tabId: chrome.devtools.inspectedWindow.tabId,
-        data: message,
-      });
+    if (this.connectionState() === 'CONNECTION_LOST') return;
+    if (this.backgroundPageConnection && chrome.devtools?.inspectedWindow) {
+      try {
+        this.backgroundPageConnection.postMessage({
+          tabId: chrome.devtools.inspectedWindow.tabId,
+          data: message,
+        });
+      } catch (e) {
+        console.warn('Failed to send message to background page', e);
+      }
     }
   }
 
   private handleMessage(message: DevToolsMessage) {
     switch (message.type) {
-      case 'NOT_AVAILABLE' as unknown:
+      case 'NOT_AVAILABLE':
         this.connectionState.set('NOT_AVAILABLE');
         break;
       case 'PONG':
@@ -246,6 +288,9 @@ export class AppComponent implements OnInit {
         break;
       case 'RESOLUTION_CHAIN_RESPONSE':
         this.resolutionChain.set(message.payload);
+        break;
+      default:
+        console.warn('Unhandled devtools message type:', message.type);
         break;
     }
   }

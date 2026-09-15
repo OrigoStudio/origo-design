@@ -5,7 +5,7 @@
   "projectType": "application",
   "tags": ["type:app", "scope:devtools"],
   "targets": {
-    "build": {
+    "build-app": {
       "executor": "@angular-devkit/build-angular:application",
       "outputs": ["{options.outputPath}"],
       "options": {
@@ -38,7 +38,7 @@
               "maximumError": "4kb"
             }
           ],
-          "outputHashing": "all"
+          "outputHashing": "none"
         },
         "development": {
           "optimization": false,
@@ -57,6 +57,13 @@
           "npx esbuild packages/devtools/src/content-script/injected.ts --bundle --outfile=dist/packages/devtools/browser/injected.js"
         ],
         "parallel": true
+      }
+    },
+    "build": {
+      "executor": "nx:run-commands",
+      "options": {
+        "commands": ["nx build-app devtools", "nx build-scripts devtools"],
+        "parallel": false
       }
     },
     "lint": {
