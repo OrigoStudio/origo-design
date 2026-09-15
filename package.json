@@ -68,6 +68,7 @@
     "@playwright/test": "^1.36.0",
     "@schematics/angular": "22.0.9",
     "@swc/helpers": "~0.5.18",
+    "@types/chrome": "^0.2.9",
     "@types/jest": "30.0.0",
     "@types/json-source-map": "^0.6.0",
     "@types/node": "^22.12.0",

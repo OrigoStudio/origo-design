@@ -10,7 +10,9 @@ export interface ResolutionChain {
 }
 
 export interface RenderingPath {
-  path: string; // BADL semantic path
+  name: string;
+  badlPath: string;
+  children?: RenderingPath[];
 }
 
 export interface ErrorContext {
@@ -95,11 +97,48 @@ export function getDevToolsAPI(): OrigoDevToolsAPI | null {
   return {
     getActiveState: () => redactSensitiveData(_internalState),
     getRenderingPath: (path: string) => {
-      // Mock BADL semantic path
-      return { path: `root.components.${path}` };
+      // Build a tree from _internalState
+      const state: any = _internalState;
+
+      if (state && state.id === 'dom-identity') {
+        // Map the provided JSON to a tree
+        const root: RenderingPath = {
+          name: state.name || 'Root',
+          badlPath: `/${state.domain || 'core'}/${state.id}`,
+          children: (state.entities || []).map((ent: any) => ({
+            name: ent.name,
+            badlPath: `/${state.domain || 'core'}/${state.id}/${ent.id}`,
+            children: (ent.fields || []).map((fld: any) => ({
+              name: fld.name,
+              badlPath: fld.metadata_path || `/${ent.id}/${fld.id}`,
+            })),
+          })),
+        };
+        return root;
+      }
+
+      // Default fallback
+      return {
+        name: 'Root Application',
+        badlPath: '/',
+        children: [],
+      };
     },
     getMetadataSource: (path: string) => {
-      return null;
+      // Find the object in _internalState that matches the path
+      const state: any = _internalState;
+      if (state && state.id === 'dom-identity') {
+        // Return the whole state for root, or specific parts based on path
+        if (path === `/${state.domain || 'core'}/${state.id}`) return state as any;
+
+        for (const ent of state.entities || []) {
+          if (path === `/${state.domain || 'core'}/${state.id}/${ent.id}`) return ent;
+          for (const fld of ent.fields || []) {
+            if (path === (fld.metadata_path || `/${ent.id}/${fld.id}`)) return fld;
+          }
+        }
+      }
+      return { file: 'mock.json', line: 1 } as any;
     },
     getResolutionChain: (path: string) => {
       return null;

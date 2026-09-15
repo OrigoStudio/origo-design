@@ -5,3 +5,4 @@ export * from './adapters/web/adapter';
 export * from './components/primitives/vbox/vbox.component';
 export * from './components/primitives/text-input/text-input.component';
 export * from './components/primitives/button/button.component';
+export * from './devtools';

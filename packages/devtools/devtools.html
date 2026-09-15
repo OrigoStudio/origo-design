@@ -1,0 +1,18 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Origo DevTools</title>
+    <base href="/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+  </head>
+  <body>
+    <!-- 
+      We cannot run inline scripts in MV3 extension pages. 
+      The actual devtools panel registration happens here if needed, 
+      or in main.ts. Actually, devtools.html is the devtools_page in manifest,
+      which is invisible. It just creates the panel.
+    -->
+    <script src="devtools.js"></script>
+  </body>
+</html>

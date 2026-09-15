@@ -127,6 +127,70 @@ All design token consumption must use CSS custom properties from `@origo/design-
 
 ---
 
+## Tasks/Subtasks
+
+- [ ] Task 1: Scaffold Nx package for `devtools` with MV3 architecture.
+  - [ ] Initialize `packages/devtools` standalone project setup (project.json, tsconfig).
+  - [ ] Implement `manifest.json` and strict types for Chrome Extension API messaging.
+- [ ] Task 2: Implement Chrome Extension Bridge.
+  - [ ] Implement `background.ts` service worker.
+  - [ ] Implement `content-script.ts` to bridge `window.__ORIGO_DEVTOOLS__`.
+- [ ] Task 3: Develop DevTools Angular Application Panel.
+  - [ ] Setup `devtools.html` and `main.ts` for Angular bootstrapping.
+  - [ ] Build `app.component` handling connection state fallbacks.
+  - [ ] Implement virtualized `component-tree` and `metadata-detail` components.
+- [ ] Task 4: Setup Testing Pipeline.
+  - [ ] Configure `vitest.config.ts`.
+  - [ ] Write integration tests for Chrome API mocks and Angular standalone components.
+
+---
+
+## Dev Agent Record
+
+### Implementation Plan
+Scaffolded the `devtools` package as a standalone Angular application integrated into the Nx workspace. Created a Chrome Extension Manifest V3 architecture with a service worker (`background.ts`), content script (`content-script.ts`), and an injected script (`injected.ts`) to safely access `window.__ORIGO_DEVTOOLS__`. The panel UI implements a virtualized component tree and metadata details view using Angular Signals.
+
+### Completion Notes
+✅ Scaffolded `devtools` Nx package
+✅ Configured MV3 extension architecture with strict messaging types
+✅ Built Angular DevTools Panel (Tree & Detail views)
+✅ Handled fallback states (Not Available, Connection Lost)
+✅ Configured Vitest test suite
+
+---
+
+## File List
+- `packages/devtools/project.json`
+- `packages/devtools/package.json`
+- `packages/devtools/tsconfig.json`
+- `packages/devtools/tsconfig.app.json`
+- `packages/devtools/tsconfig.spec.json`
+- `packages/devtools/manifest.json`
+- `packages/devtools/devtools.html`
+- `packages/devtools/devtools.js`
+- `packages/devtools/panel.html`
+- `packages/devtools/vitest.config.ts`
+- `packages/devtools/src/test-setup.ts`
+- `packages/devtools/src/types/messages.ts`
+- `packages/devtools/src/background/background.ts`
+- `packages/devtools/src/content-script/content-script.ts`
+- `packages/devtools/src/content-script/injected.ts`
+- `packages/devtools/src/devtools-panel/main.ts`
+- `packages/devtools/src/devtools-panel/app.component.ts`
+- `packages/devtools/src/devtools-panel/app.component.spec.ts`
+- `packages/devtools/src/devtools-panel/component-tree/component-tree.component.ts`
+- `packages/devtools/src/devtools-panel/metadata-detail/metadata-detail.component.ts`
+
+---
+
+## Change Log
+- Scaffolded `devtools` package with MV3 Chrome Extension architecture.
+- Added Angular standalone app for the DevTools panel.
+- Wired messaging bridge to read `window.__ORIGO_DEVTOOLS__`.
+- Added component tree and metadata detail UI.
+
+---
+
 ## Story Completion Status
-**Status:** ready-for-dev
+**Status:** review
 **Note:** Ultimate context engine analysis completed - comprehensive developer guide created.

@@ -2,6 +2,7 @@ import { Injectable, signal, OnDestroy } from '@angular/core';
 import * as comlink from 'comlink';
 import type { CompilerWorker, CompilerError } from '../workers/compiler.worker';
 import { CanonicalAST } from '@origo/core';
+import { _injectTestState, _resetTestState, appendErrorTelemetry } from '@origo/angular-renderer';
 
 export const COMPILATION_DEBOUNCE_MS = 400;
 export const MAX_DISPLAYED_ERRORS = 50;
@@ -71,7 +72,24 @@ export class PreviewService implements OnDestroy {
         const result = await this.workerProxy.compile(content);
         if (requestId !== this._compilationId) return;
 
+        // Synchronize with DevTools
+        _resetTestState();
+        try {
+          const parsed = JSON.parse(content);
+          _injectTestState(parsed);
+        } catch {
+          // If JSON parsing fails, we skip state update
+        }
+
         if (result.errors) {
+          result.errors.forEach(err => {
+            appendErrorTelemetry({
+              message: err.message,
+              stack: `${err.type} at line ${err.line || 'unknown'}, col ${err.column || 'unknown'}`,
+              badlPath: err.path || '/',
+            });
+          });
+
           const truncated =
             result.errors.length > MAX_DISPLAYED_ERRORS
               ? [
