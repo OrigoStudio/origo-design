@@ -108,7 +108,7 @@ development_status:
   epic-7-retrospective: done
   epic-8: in-progress
   8-1-diagnostics-api-runtime-hooks: done
-  8-2-devtools-inspector-ui: review
+  8-2-devtools-inspector-ui: done
   epic-8-retrospective: optional
   epic-9: backlog
   9-1-form-layout-primitives-batch-1: backlog
