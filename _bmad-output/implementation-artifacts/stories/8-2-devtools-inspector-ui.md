@@ -17,6 +17,7 @@ So that I can visually inspect the metadata powering any rendered component on t
 - **Then** I can view the active component tree
 - **And** I can trace any rendered element back to its exact BADL source entity, including its specific runtime execution context (e.g. iteration indices)
 - **And** the Inspector UI is strictly read-only for Phase 1 to prevent scope creep (FR-DX-002).
+- **And** the implementation complies with Angular standalone components (P1-AD-1), Manifest V3 architecture (P1-AD-9), and Nx boundary constraints (AD-2).
 
 **Business Context:**
 Provides a visual interface for the Diagnostics API (built in 8-1), allowing developers to directly inspect BADL metadata linked to rendered UI elements. Essential for the Origo developer experience (DX).
