@@ -1,5 +1,13 @@
 import { isDevMode } from '@angular/core';
-import { initDevToolsBridge, getDevToolsAPI, RenderingPath, ErrorContext } from './devtools-bridge';
+import {
+  initDevToolsBridge,
+  getDevToolsAPI,
+  RenderingPath,
+  ErrorContext,
+  _injectTestState,
+  _resetTestState,
+  appendErrorTelemetry,
+} from './devtools-bridge';
 
 // Mock Angular's isDevMode
 jest.mock('@angular/core', () => ({
@@ -13,6 +21,7 @@ describe('DevTools Bridge', () => {
     // Clear the global hook before each test
     delete window.__ORIGO_DEVTOOLS__;
     devModeMock = isDevMode as jest.Mock;
+    _resetTestState();
   });
 
   describe('Initialization (Production Guard)', () => {
@@ -36,7 +45,7 @@ describe('DevTools Bridge', () => {
     });
 
     it('should expose getActiveState() returning current AST state', () => {
-      const api = getDevToolsAPI();
+      const api = getDevToolsAPI()!;
       const state = api.getActiveState() as any;
 
       expect(state).toBeDefined();
@@ -44,7 +53,7 @@ describe('DevTools Bridge', () => {
     });
 
     it('should use BADL semantic paths for telemetry identifiers', () => {
-      const api = getDevToolsAPI();
+      const api = getDevToolsAPI()!;
       const path: RenderingPath | null = api.getRenderingPath('mock-element-id');
 
       // Should return a BADL semantic path format, not a DOM selector
@@ -53,11 +62,19 @@ describe('DevTools Bridge', () => {
     });
 
     it('should return valid ErrorContext shape', () => {
-      const api = getDevToolsAPI();
+      const api = getDevToolsAPI()!;
+      appendErrorTelemetry({ message: 'test', stack: 'stack', badlPath: 'test' });
       const errorCtx: ErrorContext[] = api.getErrorTelemetry();
 
       expect(errorCtx).toBeDefined();
       expect(Array.isArray(errorCtx)).toBe(true);
+      expect(errorCtx.length).toBe(1);
+    });
+
+    it('should return null for getMetadataSource and getResolutionChain', () => {
+      const api = getDevToolsAPI()!;
+      expect(api.getMetadataSource('any')).toBeNull();
+      expect(api.getResolutionChain('any')).toBeNull();
     });
   });
 
@@ -67,16 +84,21 @@ describe('DevTools Bridge', () => {
       initDevToolsBridge();
     });
 
-    it('should redact sensitive fields (passwords, PII) from state', () => {
-      const api = getDevToolsAPI();
+    it('should redact sensitive fields (passwords, PII, tokens) from state', () => {
+      const api = getDevToolsAPI()!;
 
-      // Assuming we have a way to inject mock state into the bridge for testing
-      api.__injectTestState({
+      _injectTestState({
         user: {
           name: 'John Doe',
           password: 'supersecret',
           ssn: '123-45-6789',
           apiKey: 'xyz123',
+          token: 'jwt-123',
+          secret: 'shh',
+          nested: {
+            appPassword: 'pwd',
+          },
+          nullField: null,
         },
       });
 
@@ -86,6 +108,39 @@ describe('DevTools Bridge', () => {
       expect(state.user.password).toBe('[REDACTED]');
       expect(state.user.ssn).toBe('[REDACTED]');
       expect(state.user.apiKey).toBe('[REDACTED]');
+      expect(state.user.token).toBe('[REDACTED]');
+      expect(state.user.secret).toBe('[REDACTED]');
+      expect(state.user.nested.appPassword).toBe('[REDACTED]');
+      expect(state.user.nullField).toBeNull();
+    });
+
+    it('should handle circular references without stack overflow', () => {
+      const api = getDevToolsAPI()!;
+
+      const circularState: any = { root: true };
+      circularState.self = circularState;
+
+      _injectTestState(circularState);
+
+      const state = api.getActiveState() as any;
+      expect(state.root).toBe(true);
+      expect(state.self).toBe('[CIRCULAR]');
+    });
+
+    it('should not mark identical sibling references as circular', () => {
+      const api = getDevToolsAPI()!;
+      const sharedObj = { val: 42 };
+
+      _injectTestState({
+        a: sharedObj,
+        b: sharedObj,
+      });
+
+      const state = api.getActiveState() as any;
+      expect(state.a.val).toBe(42);
+      expect(state.b.val).toBe(42);
+      expect(state.a).not.toBe('[CIRCULAR]');
+      expect(state.b).not.toBe('[CIRCULAR]');
     });
   });
 });

@@ -21,9 +21,10 @@ export interface ErrorContext {
 
 export interface OrigoDevToolsAPI {
   getActiveState: () => unknown;
-  getRenderingPath: (elementId: string) => RenderingPath | null;
+  getRenderingPath: (path: string) => RenderingPath | null;
+  getMetadataSource: (path: string) => MetadataSource | null;
+  getResolutionChain: (path: string) => ResolutionChain | null;
   getErrorTelemetry: () => ErrorContext[];
-  __injectTestState: (state: unknown) => void;
 }
 
 declare global {
@@ -35,26 +36,35 @@ declare global {
 // Sensitive keys to redact
 const SENSITIVE_KEYS = new Set(['password', 'ssn', 'apikey', 'token', 'secret']);
 
-function redactSensitiveData(obj: unknown): unknown {
-  if (!obj || typeof obj !== 'object') {
+function redactSensitiveData(obj: unknown, seen = new WeakSet()): unknown {
+  if (obj === null || typeof obj !== 'object') {
     return obj;
   }
 
+  if (seen.has(obj)) {
+    return '[CIRCULAR]';
+  }
+  seen.add(obj);
+
+  let result: unknown;
   if (Array.isArray(obj)) {
-    return obj.map(item => redactSensitiveData(item));
+    result = obj.map(item => redactSensitiveData(item, seen));
+  } else {
+    const redacted: Record<string, unknown> = {};
+    for (const [key, value] of Object.entries(obj as Record<string, unknown>)) {
+      if (SENSITIVE_KEYS.has(key.toLowerCase()) || key.toLowerCase().includes('password')) {
+        redacted[key] = '[REDACTED]';
+      } else if (value !== null && typeof value === 'object') {
+        redacted[key] = redactSensitiveData(value, seen);
+      } else {
+        redacted[key] = value;
+      }
+    }
+    result = redacted;
   }
 
-  const redacted: Record<string, unknown> = {};
-  for (const [key, value] of Object.entries(obj as Record<string, unknown>)) {
-    if (SENSITIVE_KEYS.has(key.toLowerCase()) || key.toLowerCase().includes('password')) {
-      redacted[key] = '[REDACTED]';
-    } else if (typeof value === 'object') {
-      redacted[key] = redactSensitiveData(value);
-    } else {
-      redacted[key] = value;
-    }
-  }
-  return redacted;
+  seen.delete(obj);
+  return result;
 }
 
 // In-memory mock state for dev tools (to be replaced by actual AST bindings in future epics)
@@ -62,19 +72,39 @@ let _internalState: unknown = {
   entities: [],
 };
 
-const _errorTelemetry: ErrorContext[] = [];
+let _errorTelemetry: ErrorContext[] = [];
 
-export function getDevToolsAPI(): OrigoDevToolsAPI {
+export function _injectTestState(state: unknown): void {
+  _internalState = state;
+}
+
+export function _resetTestState(): void {
+  _internalState = { entities: [] };
+  _errorTelemetry = [];
+}
+
+export function appendErrorTelemetry(error: ErrorContext): void {
+  _errorTelemetry.push(error);
+}
+
+export function getDevToolsAPI(): OrigoDevToolsAPI | null {
+  if (!isDevMode()) {
+    return null;
+  }
+
   return {
     getActiveState: () => redactSensitiveData(_internalState),
-    getRenderingPath: (elementId: string) => {
+    getRenderingPath: (path: string) => {
       // Mock BADL semantic path
-      return { path: `root.components.${elementId}` };
+      return { path: `root.components.${path}` };
+    },
+    getMetadataSource: (path: string) => {
+      return null;
+    },
+    getResolutionChain: (path: string) => {
+      return null;
     },
     getErrorTelemetry: () => _errorTelemetry,
-    __injectTestState: (state: unknown) => {
-      _internalState = state;
-    },
   };
 }
 
@@ -83,7 +113,8 @@ export function initDevToolsBridge(): void {
     return;
   }
 
-  if (typeof window !== 'undefined') {
-    window.__ORIGO_DEVTOOLS__ = getDevToolsAPI();
+  const api = getDevToolsAPI();
+  if (api && typeof window !== 'undefined') {
+    window.__ORIGO_DEVTOOLS__ = api;
   }
 }

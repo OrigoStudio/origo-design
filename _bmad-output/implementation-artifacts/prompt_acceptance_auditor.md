@@ -1,751 +1,261 @@
-You are an Acceptance Auditor. Review the provided diff against `g:\OrigoStudio\Repositories\Origo-Design\origo-design\_bmad-output\implementation-artifacts\5-3-core-primitive-implementation.md` and any loaded context docs. Check for: violations of acceptance criteria, deviations from spec intent, missing implementation of specified behavior, contradictions between spec constraints and actual code. Output findings as a Markdown list. Each finding: one-line title, which AC/constraint it violates, and evidence from the diff.
-
+You are an Acceptance Auditor. Review the provided diff against `_bmad-output/implementation-artifacts/stories/8-1-diagnostics-api-runtime-hooks.md` and any loaded context docs. Check for: violations of acceptance criteria, deviations from spec intent, missing implementation of specified behavior, contradictions between spec constraints and actual code. Output findings as a Markdown list. Each finding: one-line title, which AC/constraint it violates, and evidence from the diff.
+     
 Diff:
-diff --git a/_bmad-output/implementation-artifacts/5-3-core-primitive-implementation.md b/_bmad-output/implementation-artifacts/5-3-core-primitive-implementation.md
-new file mode 100644
-index 0000000..b05d5a7
---- /dev/null
-+++ b/_bmad-output/implementation-artifacts/5-3-core-primitive-implementation.md
-@@ -0,0 +1,72 @@
-+---
-+baseline_commit: bd2fdf25e06c0c8eb01b10ab14a2ea5e67e4f2a7
-+---
-+# Story 5.3: Core Primitive Implementation
-+
-+## Status
-+ready-for-dev
-+
-+## Story Foundation
-+**User Story:**
-+As a UI Developer,
-+I want a vertical slice of core primitives (Layout, Input, Action),
-+So that I can test the full end-to-end rendering flow against real UI elements.
-+
-+**Acceptance Criteria:**
-+- **Given** the complex target page fixture from Epic 3
-+- **When** the renderer processes it
-+- **Then** it successfully renders at least one Layout container (e.g., `VBox`), one Input (e.g., `TextInput`), and one Action (e.g., `Button`) (FR-Rend-002).
-+
-+## Tasks/Subtasks
-+- [x] Task 1: Fix `coerceContractProps` in `adapter.ts` to properly handle properties, schema associations, unmapped attributes, and data coercion (boolean, numeric, array) based on Story 5.2 review findings.
-+- [x] Task 2: Implement Layout Primitive (`VBox`) inside `packages/angular-renderer/src/components/primitives/vbox/`. Includes component, HTML, SCSS, and Spec.
-+- [x] Task 3: Implement Input Primitive (`TextInput`) inside `packages/angular-renderer/src/components/primitives/text-input/`. Includes component, HTML, SCSS, and Spec.
-+- [x] Task 4: Implement Action Primitive (`Button`) inside `packages/angular-renderer/src/components/primitives/button/`. Includes component, HTML, SCSS, and Spec.
-+- [x] Task 5: Export all primitives in `packages/angular-renderer/src/index.ts`.
-+- [x] Task 6: Add Playwright component tests for axe-core accessibility checks for each primitive.
-+
-+## Developer Context & Guardrails
-+
-+### Technical Requirements
-+- Implement 3 primitive Angular components: Layout (`VBox`), Input (`TextInput`), Action (`Button`).
-+- These primitives must implement the `OrigoAdapter` interface from `packages/angular-renderer/src/adapters/web/adapter.ts`.
-+- Ensure strict runtime type coercion and validation are applied at the adapter boundary before props are passed down, fixing edge cases identified in Story 5.2.
-+- The primitives must dynamically receive the AST nodes using the previously established Signal patterns.
-+
-+### Architecture Compliance
-+- **P1-AD-1 (Angular 18 Standalone + Signals):** Primitives MUST be standalone Angular components (`standalone: true`). Component-local state must use Signals (`signal()`, `computed()`, `effect()`). Zoneless-compatible.
-+- **P1-AD-5 (Composition over Inheritance):** Primitives MUST NOT extend a base class. Extension uses Angular `@ContentChild/ng-content` slots or hostDirectives.
-+- **P1-AD-6 (Accessibility Enforcement in CI):** Every component MUST have a Playwright component test that runs axe-core against its rendered output.
-+- **Consistency Conventions:** 
-+  - Angular component selector prefix: `origo-` (e.g., `origo-vbox`, `origo-text-input`, `origo-button`).
-+  - Co-locate `.component.ts`, `.html`, `.scss`, and `.spec.ts` in the same directory.
-+  - Component Input grouping: `[appearance]`, `[behavior]`, `[validation]`, `[events]`, `[security]`, `[accessibility]`, `[animation]`, `[responsive]`, `[theme]`, `[data]`.
-+
-+### File Structure Requirements
-+- Place new components in `packages/angular-renderer/src/components/primitives/`.
-+- Ensure all primitives are properly exported from the package's public API in `packages/angular-renderer/src/index.ts`.
-+
-+### Testing Requirements
-+- Unit tests (`.spec.ts`) must be provided alongside each component implementation, achieving 100% test coverage for the validation logic.
-+- Playwright component tests for axe-core accessibility checks.
-+
-+### Previous Story Intelligence (From Story 5.2)
-+- **Review Findings to Address:**
-+  - `coerceContractProps` expects a property schema dictionary, but there is no mechanism to associate node types with their expected property schemas. Implement this.
-+  - Aggressive and lossy property stripping in `coerceContractProps` discards unmapped attributes (like `aria-*` tags, dynamic attributes) which breaks accessibility and passthrough behavior. Address this.
-+  - Fix silent data corruption in numeric coercion and inconsistent boolean coercion.
-+  - Improve inadequate non-primitive and array handling.
-+  - Ensure component inputs are not directly mutated.
-+  - Add missing `children` to the translated `InteractionContract`.
-+
-+### Git Intelligence Summary
-+- **Recent Work:** Angular renderer foundations (Signals patterns, test utilities) were laid down in recent commits.
-+- **Actionable Insight:** Ensure components leverage these test utilities and the signal patterns (e.g., `componentRef.setInput(...)` with Signals).
-+
-+## Project Context Reference
-+- Ensure all JSON imports follow the standard ESM/TypeScript standard to avoid TypeScript compiler OOMs.
-+- Do not bypass the `CorePermission` constraints.
-+- Follow the established `origo-` component prefix convention.
-+
-+---
-+**Completion Note:** Ultimate context engine analysis completed - comprehensive developer guide created.
-diff --git a/_bmad-output/implementation-artifacts/sprint-status.yaml b/_bmad-output/implementation-artifacts/sprint-status.yaml
-index 575c0a6..041b8a1 100644
---- a/_bmad-output/implementation-artifacts/sprint-status.yaml
-+++ b/_bmad-output/implementation-artifacts/sprint-status.yaml
-@@ -41,7 +41,7 @@
- # - Retrospective appends its action items to action_items; sprint-status surfaces open ones
+
+```diff
+diff --git a/apps/docs/src/content/docs/reference/diagnostics-api.mdx b/apps/docs/src/content/docs/reference/diagnostics-api.mdx
+index b1112d7..4ad7cd7 100644
+--- a/apps/docs/src/content/docs/reference/diagnostics-api.mdx
++++ b/apps/docs/src/content/docs/reference/diagnostics-api.mdx
+@@ -21,12 +21,12 @@ const api = window.__ORIGO_DEVTOOLS__;
  
- generated: 2026-07-29T21:46:02.464968
--last_updated: 2026-08-14T17:21:00Z
-+last_updated: 2026-08-18T18:54:42Z
- project: origo-design
- project_key: NOKEY
- tracking_system: file-system
-@@ -85,7 +85,7 @@ development_status:
-   epic-5: in-progress
-   5-1-ast-traversal-and-dynamic-instantiation: done
-   5-2-experience-adapter-interface: done
--  5-3-core-primitive-implementation: backlog
-+  5-3-core-primitive-implementation: done
-   5-4-design-token-consumption: backlog
-   5-5-reactive-state-event-binding: backlog
-   epic-5-retrospective: optional
-diff --git a/packages/angular-renderer/src/adapters/web/adapter.spec.ts b/packages/angular-renderer/src/adapters/web/adapter.spec.ts
-index 1c7a16d..096fc53 100644
---- a/packages/angular-renderer/src/adapters/web/adapter.spec.ts
-+++ b/packages/angular-renderer/src/adapters/web/adapter.spec.ts
-@@ -84,6 +84,54 @@ describe('Web Adapter Utilities', () => {
-       expect(result).toEqual({ present: 'test' });
-       expect(Object.keys(result)).not.toContain('missing');
-     });
+ Retrieves the current evaluated AST state of the renderer, simulating the payload Origo Studio would receive.
+ 
+-- **Returns**: `Object` - The full canonical state object.
++- **Returns**: `unknown` - The full canonical state object, with sensitive fields redacted.
+ - **Security Note**: This method applies automatic redaction. Fields matching standard sensitive patterns (e.g., `password`, `ssn`, `apiKey`, `token`, `secret`) will be replaced with `"[REDACTED]"`.
+ 
+ ### `getRenderingPath(elementId: string)`
+ 
+-Resolves a DOM element ID back to its semantic rendering path within the Origo BADL AST.
++Resolves a DOM element ID back to its semantic rendering path within the Origo BADL AST. Note: this accepts a BADL semantic path, not a literal DOM ID.
+ 
+ - **Parameters**:
+   - `elementId` (string): The ID of the DOM element.
+@@ -37,6 +37,30 @@ Resolves a DOM element ID back to its semantic rendering path within the Origo B
+   const path = window.__ORIGO_DEVTOOLS__.getRenderingPath('user-profile-card');
+   ```
+ 
++### `getMetadataSource(path: string)`
 +
-+    it('should preserve aria-* and data-* attributes even in strict mode', () => {
-+      const input = { valid: 'test', 'aria-label': 'close', 'data-id': '123', invalid: 'drop' };
-+      const schema: Record<string, any> = { valid: 'string' };
++Retrieves the source file and line number mapping for a given BADL path.
 +
-+      const result = coerceContractProps<any>(input, schema, true);
++- **Parameters**:
++  - `path` (string): The BADL semantic path.
++- **Returns**: `MetadataSource | null` - The metadata source object or null if not found.
++- **Example**:
++  ```typescript
++  const source = window.__ORIGO_DEVTOOLS__.getMetadataSource('root.components.header-nav');
++  ```
 +
-+      expect(result).toEqual({ valid: 'test', 'aria-label': 'close', 'data-id': '123' });
-+      expect(result.invalid).toBeUndefined();
-+    });
++### `getResolutionChain(path: string)`
 +
-+    it('should throw error on invalid number in strict mode', () => {
-+      const input = { value: 'abc' };
-+      const schema: Record<string, any> = { value: 'number' };
++Retrieves the resolution steps (e.g., for properties or themes) for a given BADL path.
 +
-+      expect(() => coerceContractProps<any>(input, schema, true)).toThrow();
-+    });
++- **Parameters**:
++  - `path` (string): The BADL semantic path.
++- **Returns**: `ResolutionChain | null` - The resolution chain object or null if not found.
++- **Example**:
++  ```typescript
++  const chain = window.__ORIGO_DEVTOOLS__.getResolutionChain('root.components.header-nav');
++  ```
 +
-+    it('should not coerce empty string or boolean to number 0', () => {
-+      const schema: Record<string, any> = { v1: 'number', v2: 'number' };
-+
-+      const r1 = coerceContractProps<any>({ v1: '' }, schema, false);
-+      expect(r1.v1).toBeUndefined();
-+
-+      const r2 = coerceContractProps<any>({ v2: false }, schema, false);
-+      expect(r2.v2).toBeUndefined();
-+    });
-+
-+    it('should handle boolean true for empty strings (HTML attribute presence)', () => {
-+      const schema: Record<string, any> = { disabled: 'boolean' };
-+      const input = { disabled: '' };
-+
-+      const result = coerceContractProps<any>(input, schema);
-+
-+      expect(result.disabled).toBe(true);
-+    });
-+
-+    it('should deeply clone objects and arrays to prevent input mutation', () => {
-+      const input = { obj: { a: 1 }, arr: [1, 2] };
-+      const schema: Record<string, any> = { obj: 'object', arr: 'array' };
-+
-+      const result = coerceContractProps<any>(input, schema);
-+
-+      expect(result.obj).not.toBe(input.obj);
-+      expect(result.obj).toEqual(input.obj);
-+      expect(result.arr).not.toBe(input.arr);
-+      expect(result.arr).toEqual(input.arr);
-+    });
+ ### `getErrorTelemetry()`
+ 
+ Retrieves detailed error boundary telemetry, including recent errors and their context.
+diff --git a/packages/angular-renderer/src/devtools/devtools-bridge.spec.ts b/packages/angular-renderer/src/devtools/devtools-bridge.spec.ts
+index 58f041b..4066e53 100644
+--- a/packages/angular-renderer/src/devtools/devtools-bridge.spec.ts
++++ b/packages/angular-renderer/src/devtools/devtools-bridge.spec.ts
+@@ -1,5 +1,5 @@
+ import { isDevMode } from '@angular/core';
+-import { initDevToolsBridge, getDevToolsAPI, RenderingPath, ErrorContext } from './devtools-bridge';
++import { initDevToolsBridge, getDevToolsAPI, RenderingPath, ErrorContext, _injectTestState, _resetTestState, appendErrorTelemetry } from './devtools-bridge';
+ 
+ // Mock Angular's isDevMode
+ jest.mock('@angular/core', () => ({
+@@ -13,6 +13,7 @@ describe('DevTools Bridge', () => {
+     // Clear the global hook before each test
+     delete window.__ORIGO_DEVTOOLS__;
+     devModeMock = isDevMode as jest.Mock;
++    _resetTestState();
    });
  
-   describe('AdapterPipelineService', () => {
-diff --git a/packages/angular-renderer/src/adapters/web/adapter.ts b/packages/angular-renderer/src/adapters/web/adapter.ts
-index 39e3b41..e425d44 100644
---- a/packages/angular-renderer/src/adapters/web/adapter.ts
-+++ b/packages/angular-renderer/src/adapters/web/adapter.ts
-@@ -13,6 +13,22 @@ export interface OrigoAdapter<TProps = Record<string, unknown>> {
-   contract: InputSignal<InteractionContract<TProps>>;
+   describe('Initialization (Production Guard)', () => {
+@@ -36,7 +37,7 @@ describe('DevTools Bridge', () => {
+     });
+ 
+     it('should expose getActiveState() returning current AST state', () => {
+-      const api = getDevToolsAPI();
++      const api = getDevToolsAPI()!;
+       const state = api.getActiveState() as any;
+ 
+       expect(state).toBeDefined();
+@@ -44,7 +45,7 @@ describe('DevTools Bridge', () => {
+     });
+ 
+     it('should use BADL semantic paths for telemetry identifiers', () => {
+-      const api = getDevToolsAPI();
++      const api = getDevToolsAPI()!;
+       const path: RenderingPath | null = api.getRenderingPath('mock-element-id');
+ 
+       // Should return a BADL semantic path format, not a DOM selector
+@@ -53,11 +54,13 @@ describe('DevTools Bridge', () => {
+     });
+ 
+     it('should return valid ErrorContext shape', () => {
+-      const api = getDevToolsAPI();
++      const api = getDevToolsAPI()!;
++      appendErrorTelemetry({ message: 'test', stack: 'stack', badlPath: 'test' });
+       const errorCtx: ErrorContext[] = api.getErrorTelemetry();
+ 
+       expect(errorCtx).toBeDefined();
+       expect(Array.isArray(errorCtx)).toBe(true);
++      expect(errorCtx.length).toBe(1);
+     });
+   });
+ 
+@@ -67,16 +70,21 @@ describe('DevTools Bridge', () => {
+       initDevToolsBridge();
+     });
+ 
+-    it('should redact sensitive fields (passwords, PII) from state', () => {
+-      const api = getDevToolsAPI();
++    it('should redact sensitive fields (passwords, PII, tokens) from state', () => {
++      const api = getDevToolsAPI()!;
+ 
+-      // Assuming we have a way to inject mock state into the bridge for testing
+-      api.__injectTestState({
++      _injectTestState({
+         user: {
+           name: 'John Doe',
+           password: 'supersecret',
+           ssn: '123-45-6789',
+           apiKey: 'xyz123',
++          token: 'jwt-123',
++          secret: 'shh',
++          nested: {
++            appPassword: 'pwd'
++          },
++          nullField: null
+         },
+       });
+ 
+@@ -86,6 +94,23 @@ describe('DevTools Bridge', () => {
+       expect(state.user.password).toBe('[REDACTED]');
+       expect(state.user.ssn).toBe('[REDACTED]');
+       expect(state.user.apiKey).toBe('[REDACTED]');
++      expect(state.user.token).toBe('[REDACTED]');
++      expect(state.user.secret).toBe('[REDACTED]');
++      expect(state.user.nested.appPassword).toBe('[REDACTED]');
++      expect(state.user.nullField).toBeNull();
++    });
++
++    it('should handle circular references without stack overflow', () => {
++      const api = getDevToolsAPI()!;
++      
++      const circularState: any = { root: true };
++      circularState.self = circularState;
++      
++      _injectTestState(circularState);
++      
++      const state = api.getActiveState() as any;
++      expect(state.root).toBe(true);
++      expect(state.self).toBe('[CIRCULAR]');
+     });
+   });
+ });
+diff --git a/packages/angular-renderer/src/devtools/devtools-bridge.ts b/packages/angular-renderer/src/devtools/devtools-bridge.ts
+index fedfeb2..6208c16 100644
+--- a/packages/angular-renderer/src/devtools/devtools-bridge.ts
++++ b/packages/angular-renderer/src/devtools/devtools-bridge.ts
+@@ -22,8 +22,9 @@ export interface ErrorContext {
+ export interface OrigoDevToolsAPI {
+   getActiveState: () => unknown;
+   getRenderingPath: (elementId: string) => RenderingPath | null;
++  getMetadataSource: (path: string) => MetadataSource | null;
++  getResolutionChain: (path: string) => ResolutionChain | null;
+   getErrorTelemetry: () => ErrorContext[];
+-  __injectTestState: (state: unknown) => void;
  }
  
-+function deepClone(obj: any): any {
+ declare global {
+@@ -35,21 +36,26 @@ declare global {
+ // Sensitive keys to redact
+ const SENSITIVE_KEYS = new Set(['password', 'ssn', 'apikey', 'token', 'secret']);
+ 
+-function redactSensitiveData(obj: unknown): unknown {
+-  if (!obj || typeof obj !== 'object') {
++function redactSensitiveData(obj: unknown, seen = new WeakSet()): unknown {
 +  if (obj === null || typeof obj !== 'object') {
-+    return obj;
-+  }
-+  if (Array.isArray(obj)) {
-+    return obj.map(deepClone);
-+  }
-+  const cloned: any = {};
-+  for (const key in obj) {
-+    if (Object.prototype.hasOwnProperty.call(obj, key)) {
-+      cloned[key] = deepClone(obj[key]);
-+    }
-+  }
-+  return cloned;
-+}
-+
- /**
-  * Validates and coerces runtime properties against a basic schema to ensure
-  * primitive components do not crash when given malformed BADL ast properties.
-@@ -29,19 +45,29 @@ export function coerceContractProps<T>(
-   const result: Record<string, unknown> = {};
-   const inputProps = props as Record<string, unknown>;
- 
--  // If no schema, just passthrough (or if we want, we can return empty if strict)
-   if (!schema) {
--    return strict ? ({} as T) : ({ ...inputProps } as T);
-+    for (const [key, val] of Object.entries(inputProps)) {
-+      if (!strict || key.startsWith('aria-') || key.startsWith('data-')) {
-+        result[key] = deepClone(val);
-+      }
-+    }
-+    return result as T;
+     return obj;
    }
  
--  // If not strict, copy all props first, then override with coerced ones
--  if (!strict) {
--    Object.assign(result, inputProps);
--  }
-+  for (const [key, value] of Object.entries(inputProps)) {
-+    if (key.startsWith('aria-') || key.startsWith('data-')) {
-+      result[key] = deepClone(value);
-+      continue;
-+    }
++  if (seen.has(obj)) {
++    return '[CIRCULAR]';
++  }
++  seen.add(obj);
++
+   if (Array.isArray(obj)) {
+-    return obj.map(item => redactSensitiveData(item));
++    return obj.map(item => redactSensitiveData(item, seen));
+   }
  
--  for (const [key, expectedType] of Object.entries(schema)) {
--    const value = inputProps[key];
-+    if (!schema[key]) {
-+      if (!strict) {
-+        result[key] = deepClone(value);
-+      }
-+      continue;
-+    }
- 
-+    const expectedType = schema[key];
-     if (value === undefined || value === null) {
-       continue;
-     }
-@@ -49,26 +75,34 @@ export function coerceContractProps<T>(
-     if (expectedType === 'string') {
-       result[key] = String(value);
-     } else if (expectedType === 'number') {
-+      if (value === '' || typeof value === 'boolean') {
-+        if (strict) throw new Error(`Invalid number for prop '${key}'`);
-+        continue;
-+      }
-       const num = Number(value);
-       if (isNaN(num)) {
-+        if (strict) throw new Error(`Invalid number for prop '${key}': ${value}`);
-         console.warn(`Invalid number for prop '${key}': ${value}`);
--        result[key] = undefined;
-       } else {
-         result[key] = num;
-       }
-     } else if (expectedType === 'boolean') {
--      if (typeof value === 'string') {
-+      if (value === '') {
-+        result[key] = true;
-+      } else if (typeof value === 'string') {
-         const lower = value.toLowerCase();
-         result[key] = !(lower === 'false' || lower === '0' || lower === 'off');
-       } else {
-         result[key] = Boolean(value);
-       }
-     } else if (expectedType === 'array') {
--      result[key] = Array.isArray(value) ? value : [value];
-+      const arr = Array.isArray(value) ? value : [value];
-+      result[key] = deepClone(arr);
-     } else if (expectedType === 'object') {
--      result[key] = typeof value === 'object' && !Array.isArray(value) ? value : {};
-+      const obj = typeof value === 'object' && !Array.isArray(value) ? value : {};
-+      result[key] = deepClone(obj);
+   const redacted: Record<string, unknown> = {};
+   for (const [key, value] of Object.entries(obj as Record<string, unknown>)) {
+     if (SENSITIVE_KEYS.has(key.toLowerCase()) || key.toLowerCase().includes('password')) {
+       redacted[key] = '[REDACTED]';
+-    } else if (typeof value === 'object') {
+-      redacted[key] = redactSensitiveData(value);
++    } else if (value !== null && typeof value === 'object') {
++      redacted[key] = redactSensitiveData(value, seen);
      } else {
--      result[key] = value;
-+      result[key] = deepClone(value);
+       redacted[key] = value;
      }
+@@ -62,19 +68,39 @@ let _internalState: unknown = {
+   entities: [],
+ };
+ 
+-const _errorTelemetry: ErrorContext[] = [];
++let _errorTelemetry: ErrorContext[] = [];
++
++export function _injectTestState(state: unknown): void {
++  _internalState = state;
++}
++
++export function _resetTestState(): void {
++  _internalState = { entities: [] };
++  _errorTelemetry = [];
++}
++
++export function appendErrorTelemetry(error: ErrorContext): void {
++  _errorTelemetry.push(error);
++}
++
++export function getDevToolsAPI(): OrigoDevToolsAPI | null {
++  if (!isDevMode()) {
++    return null;
++  }
+ 
+-export function getDevToolsAPI(): OrigoDevToolsAPI {
+   return {
+     getActiveState: () => redactSensitiveData(_internalState),
+     getRenderingPath: (elementId: string) => {
+       // Mock BADL semantic path
+       return { path: `root.components.${elementId}` };
+     },
+-    getErrorTelemetry: () => _errorTelemetry,
+-    __injectTestState: (state: unknown) => {
+-      _internalState = state;
++    getMetadataSource: (path: string) => {
++      return { file: 'mock.ts', line: 1 };
++    },
++    getResolutionChain: (path: string) => {
++      return { steps: ['mock_step'] };
+     },
++    getErrorTelemetry: () => _errorTelemetry,
+   };
+ }
+ 
+@@ -83,7 +109,8 @@ export function initDevToolsBridge(): void {
+     return;
    }
  
-diff --git a/packages/angular-renderer/src/components/primitives/button/button.component.html b/packages/angular-renderer/src/components/primitives/button/button.component.html
-new file mode 100644
-index 0000000..02ae1df
---- /dev/null
-+++ b/packages/angular-renderer/src/components/primitives/button/button.component.html
-@@ -0,0 +1,3 @@
-+<button [type]="computedType()" [disabled]="computedDisabled()">
-+  {{ computedLabel() }}
-+</button>
-diff --git a/packages/angular-renderer/src/components/primitives/button/button.component.pw.ts b/packages/angular-renderer/src/components/primitives/button/button.component.pw.ts
-new file mode 100644
-index 0000000..339239c
---- /dev/null
-+++ b/packages/angular-renderer/src/components/primitives/button/button.component.pw.ts
-@@ -0,0 +1,19 @@
-+import { test, expect } from '@playwright/experimental-ct-angular';
-+import { ButtonComponent } from './button.component';
-+import AxeBuilder from '@axe-core/playwright';
-+
-+test.describe('ButtonComponent Accessibility', () => {
-+  test('should not have any automatically detectable accessibility issues', async ({
-+    mount,
-+    page,
-+  }) => {
-+    await mount(ButtonComponent, {
-+      props: {
-+        contract: { id: '3', type: 'button', props: { label: 'Submit' } } as any,
-+      },
-+    });
-+
-+    const accessibilityScanResults = await new AxeBuilder({ page }).analyze();
-+    expect(accessibilityScanResults.violations).toEqual([]);
-+  });
-+});
-diff --git a/packages/angular-renderer/src/components/primitives/button/button.component.scss b/packages/angular-renderer/src/components/primitives/button/button.component.scss
-new file mode 100644
-index 0000000..d8ac1d9
---- /dev/null
-+++ b/packages/angular-renderer/src/components/primitives/button/button.component.scss
-@@ -0,0 +1,9 @@
-+:host {
-+  display: inline-block;
-+}
-+button {
-+  cursor: pointer;
-+}
-+button:disabled {
-+  cursor: not-allowed;
-+}
-diff --git a/packages/angular-renderer/src/components/primitives/button/button.component.spec.ts b/packages/angular-renderer/src/components/primitives/button/button.component.spec.ts
-new file mode 100644
-index 0000000..d21915b
---- /dev/null
-+++ b/packages/angular-renderer/src/components/primitives/button/button.component.spec.ts
-@@ -0,0 +1,39 @@
-+import { ComponentFixture, TestBed } from '@angular/core/testing';
-+import { ButtonComponent } from './button.component';
-+import { ComponentRef } from '@angular/core';
-+
-+describe('ButtonComponent', () => {
-+  let component: ButtonComponent;
-+  let fixture: ComponentFixture<ButtonComponent>;
-+  let componentRef: ComponentRef<ButtonComponent>;
-+
-+  beforeEach(async () => {
-+    await TestBed.configureTestingModule({
-+      imports: [ButtonComponent],
-+    }).compileComponents();
-+
-+    fixture = TestBed.createComponent(ButtonComponent);
-+    component = fixture.componentInstance;
-+    componentRef = fixture.componentRef;
-+  });
-+
-+  it('should create', () => {
-+    componentRef.setInput('contract', { id: '1', type: 'button', props: {} });
-+    fixture.detectChanges();
-+    expect(component).toBeTruthy();
-+  });
-+
-+  it('should render label and attributes', () => {
-+    componentRef.setInput('contract', {
-+      id: '1',
-+      type: 'button',
-+      props: { label: 'Click Me', disabled: true, type: 'submit' },
-+    });
-+    fixture.detectChanges();
-+
-+    const buttonElement = fixture.nativeElement.querySelector('button') as HTMLButtonElement;
-+    expect(buttonElement.textContent?.trim()).toBe('Click Me');
-+    expect(buttonElement.disabled).toBe(true);
-+    expect(buttonElement.type).toBe('submit');
-+  });
-+});
-diff --git a/packages/angular-renderer/src/components/primitives/button/button.component.ts b/packages/angular-renderer/src/components/primitives/button/button.component.ts
-new file mode 100644
-index 0000000..9f4adc6
---- /dev/null
-+++ b/packages/angular-renderer/src/components/primitives/button/button.component.ts
-@@ -0,0 +1,34 @@
-+import { Component, input, ChangeDetectionStrategy, computed } from '@angular/core';
-+import { InteractionContract } from '@origo/core';
-+import { OrigoAdapter } from '../../../adapters/web/adapter';
-+
-+export interface ButtonProps {
-+  label?: string;
-+  disabled?: boolean;
-+  type?: 'button' | 'submit' | 'reset';
-+}
-+
-+@Component({
-+  selector: 'origo-button',
-+  standalone: true,
-+  templateUrl: './button.component.html',
-+  styleUrls: ['./button.component.scss'],
-+  changeDetection: ChangeDetectionStrategy.OnPush,
-+  host: {
-+    '[class.origo-button]': 'true',
-+  },
-+})
-+export class ButtonComponent implements OrigoAdapter<ButtonProps> {
-+  static readonly contractSchema = {
-+    label: 'string',
-+    disabled: 'boolean',
-+    type: 'string',
-+  };
-+  static readonly strictContract = false;
-+
-+  contract = input.required<InteractionContract<ButtonProps>>();
-+
-+  computedLabel = computed(() => this.contract().props?.label ?? 'Button');
-+  computedDisabled = computed(() => !!this.contract().props?.disabled);
-+  computedType = computed(() => this.contract().props?.type ?? 'button');
-+}
-diff --git a/packages/angular-renderer/src/components/primitives/text-input/text-input.component.html b/packages/angular-renderer/src/components/primitives/text-input/text-input.component.html
-new file mode 100644
-index 0000000..95dae69
---- /dev/null
-+++ b/packages/angular-renderer/src/components/primitives/text-input/text-input.component.html
-@@ -0,0 +1,7 @@
-+<input
-+  type="text"
-+  [value]="computedValue()"
-+  [placeholder]="computedPlaceholder()"
-+  [disabled]="computedDisabled()"
-+  [readonly]="computedReadonly()"
-+/>
-diff --git a/packages/angular-renderer/src/components/primitives/text-input/text-input.component.pw.ts b/packages/angular-renderer/src/components/primitives/text-input/text-input.component.pw.ts
-new file mode 100644
-index 0000000..bf96b69
---- /dev/null
-+++ b/packages/angular-renderer/src/components/primitives/text-input/text-input.component.pw.ts
-@@ -0,0 +1,23 @@
-+import { test, expect } from '@playwright/experimental-ct-angular';
-+import { TextInputComponent } from './text-input.component';
-+import AxeBuilder from '@axe-core/playwright';
-+
-+test.describe('TextInputComponent Accessibility', () => {
-+  test('should not have any automatically detectable accessibility issues', async ({
-+    mount,
-+    page,
-+  }) => {
-+    await mount(TextInputComponent, {
-+      props: {
-+        contract: {
-+          id: '2',
-+          type: 'textInput',
-+          props: { placeholder: 'Enter name', value: 'Jane' },
-+        } as any,
-+      },
-+    });
-+
-+    const accessibilityScanResults = await new AxeBuilder({ page }).analyze();
-+    expect(accessibilityScanResults.violations).toEqual([]);
-+  });
-+});
-diff --git a/packages/angular-renderer/src/components/primitives/text-input/text-input.component.scss b/packages/angular-renderer/src/components/primitives/text-input/text-input.component.scss
-new file mode 100644
-index 0000000..b9a0654
---- /dev/null
-+++ b/packages/angular-renderer/src/components/primitives/text-input/text-input.component.scss
-@@ -0,0 +1,7 @@
-+:host {
-+  display: inline-block;
-+}
-+input {
-+  box-sizing: border-box;
-+  width: 100%;
-+}
-diff --git a/packages/angular-renderer/src/components/primitives/text-input/text-input.component.spec.ts b/packages/angular-renderer/src/components/primitives/text-input/text-input.component.spec.ts
-new file mode 100644
-index 0000000..60333a7
---- /dev/null
-+++ b/packages/angular-renderer/src/components/primitives/text-input/text-input.component.spec.ts
-@@ -0,0 +1,40 @@
-+import { ComponentFixture, TestBed } from '@angular/core/testing';
-+import { TextInputComponent } from './text-input.component';
-+import { ComponentRef } from '@angular/core';
-+
-+describe('TextInputComponent', () => {
-+  let component: TextInputComponent;
-+  let fixture: ComponentFixture<TextInputComponent>;
-+  let componentRef: ComponentRef<TextInputComponent>;
-+
-+  beforeEach(async () => {
-+    await TestBed.configureTestingModule({
-+      imports: [TextInputComponent],
-+    }).compileComponents();
-+
-+    fixture = TestBed.createComponent(TextInputComponent);
-+    component = fixture.componentInstance;
-+    componentRef = fixture.componentRef;
-+  });
-+
-+  it('should create', () => {
-+    componentRef.setInput('contract', { id: '1', type: 'textInput', props: {} });
-+    fixture.detectChanges();
-+    expect(component).toBeTruthy();
-+  });
-+
-+  it('should bind properties to input element', () => {
-+    componentRef.setInput('contract', {
-+      id: '1',
-+      type: 'textInput',
-+      props: { value: 'Hello', placeholder: 'Enter text', disabled: true, readonly: true },
-+    });
-+    fixture.detectChanges();
-+
-+    const inputElement = fixture.nativeElement.querySelector('input') as HTMLInputElement;
-+    expect(inputElement.value).toBe('Hello');
-+    expect(inputElement.placeholder).toBe('Enter text');
-+    expect(inputElement.disabled).toBe(true);
-+    expect(inputElement.readOnly).toBe(true);
-+  });
-+});
-diff --git a/packages/angular-renderer/src/components/primitives/text-input/text-input.component.ts b/packages/angular-renderer/src/components/primitives/text-input/text-input.component.ts
-new file mode 100644
-index 0000000..5b2a9b7
---- /dev/null
-+++ b/packages/angular-renderer/src/components/primitives/text-input/text-input.component.ts
-@@ -0,0 +1,37 @@
-+import { Component, input, ChangeDetectionStrategy, computed } from '@angular/core';
-+import { InteractionContract } from '@origo/core';
-+import { OrigoAdapter } from '../../../adapters/web/adapter';
-+
-+export interface TextInputProps {
-+  value?: string;
-+  placeholder?: string;
-+  disabled?: boolean;
-+  readonly?: boolean;
-+}
-+
-+@Component({
-+  selector: 'origo-text-input',
-+  standalone: true,
-+  templateUrl: './text-input.component.html',
-+  styleUrls: ['./text-input.component.scss'],
-+  changeDetection: ChangeDetectionStrategy.OnPush,
-+  host: {
-+    '[class.origo-text-input]': 'true',
-+  },
-+})
-+export class TextInputComponent implements OrigoAdapter<TextInputProps> {
-+  static readonly contractSchema = {
-+    value: 'string',
-+    placeholder: 'string',
-+    disabled: 'boolean',
-+    readonly: 'boolean',
-+  };
-+  static readonly strictContract = false;
-+
-+  contract = input.required<InteractionContract<TextInputProps>>();
-+
-+  computedValue = computed(() => this.contract().props?.value ?? '');
-+  computedPlaceholder = computed(() => this.contract().props?.placeholder ?? '');
-+  computedDisabled = computed(() => !!this.contract().props?.disabled);
-+  computedReadonly = computed(() => !!this.contract().props?.readonly);
-+}
-diff --git a/packages/angular-renderer/src/components/primitives/vbox/vbox.component.html b/packages/angular-renderer/src/components/primitives/vbox/vbox.component.html
-new file mode 100644
-index 0000000..af84d23
---- /dev/null
-+++ b/packages/angular-renderer/src/components/primitives/vbox/vbox.component.html
-@@ -0,0 +1 @@
-+<ng-container #vc></ng-container>
-diff --git a/packages/angular-renderer/src/components/primitives/vbox/vbox.component.pw.ts b/packages/angular-renderer/src/components/primitives/vbox/vbox.component.pw.ts
-new file mode 100644
-index 0000000..285e6e9
---- /dev/null
-+++ b/packages/angular-renderer/src/components/primitives/vbox/vbox.component.pw.ts
-@@ -0,0 +1,19 @@
-+import { test, expect } from '@playwright/experimental-ct-angular';
-+import { VBoxComponent } from './vbox.component';
-+import AxeBuilder from '@axe-core/playwright';
-+
-+test.describe('VBoxComponent Accessibility', () => {
-+  test('should not have any automatically detectable accessibility issues', async ({
-+    mount,
-+    page,
-+  }) => {
-+    await mount(VBoxComponent, {
-+      props: {
-+        contract: { id: '1', type: 'vbox', props: { gap: '10px' } } as any,
-+      },
-+    });
-+
-+    const accessibilityScanResults = await new AxeBuilder({ page }).analyze();
-+    expect(accessibilityScanResults.violations).toEqual([]);
-+  });
-+});
-diff --git a/packages/angular-renderer/src/components/primitives/vbox/vbox.component.scss b/packages/angular-renderer/src/components/primitives/vbox/vbox.component.scss
-new file mode 100644
-index 0000000..133eca2
---- /dev/null
-+++ b/packages/angular-renderer/src/components/primitives/vbox/vbox.component.scss
-@@ -0,0 +1,5 @@
-+:host {
-+  display: flex;
-+  flex-direction: column;
-+  box-sizing: border-box;
-+}
-diff --git a/packages/angular-renderer/src/components/primitives/vbox/vbox.component.spec.ts b/packages/angular-renderer/src/components/primitives/vbox/vbox.component.spec.ts
-new file mode 100644
-index 0000000..fa0506a
---- /dev/null
-+++ b/packages/angular-renderer/src/components/primitives/vbox/vbox.component.spec.ts
-@@ -0,0 +1,46 @@
-+import { ComponentFixture, TestBed } from '@angular/core/testing';
-+import { VBoxComponent } from './vbox.component';
-+import { ComponentRef } from '@angular/core';
-+
-+describe('VBoxComponent', () => {
-+  let component: VBoxComponent;
-+  let fixture: ComponentFixture<VBoxComponent>;
-+  let componentRef: ComponentRef<VBoxComponent>;
-+
-+  beforeEach(async () => {
-+    await TestBed.configureTestingModule({
-+      imports: [VBoxComponent],
-+    }).compileComponents();
-+
-+    fixture = TestBed.createComponent(VBoxComponent);
-+    component = fixture.componentInstance;
-+    componentRef = fixture.componentRef;
-+  });
-+
-+  it('should create', () => {
-+    componentRef.setInput('contract', { id: '1', type: 'vbox', props: {} });
-+    fixture.detectChanges();
-+    expect(component).toBeTruthy();
-+  });
-+
-+  it('should apply padding style correctly', () => {
-+    componentRef.setInput('contract', { id: '1', type: 'vbox', props: { padding: 16 } });
-+    fixture.detectChanges();
-+    const element = fixture.nativeElement as HTMLElement;
-+    expect(element.style.padding).toBe('16px');
-+  });
-+
-+  it('should apply alignment flex-end', () => {
-+    componentRef.setInput('contract', { id: '1', type: 'vbox', props: { alignment: 'end' } });
-+    fixture.detectChanges();
-+    const element = fixture.nativeElement as HTMLElement;
-+    expect(element.style.alignItems).toBe('flex-end');
-+  });
-+
-+  it('should apply string gap correctly', () => {
-+    componentRef.setInput('contract', { id: '1', type: 'vbox', props: { gap: '1rem' } });
-+    fixture.detectChanges();
-+    const element = fixture.nativeElement as HTMLElement;
-+    expect(element.style.gap).toBe('1rem');
-+  });
-+});
-diff --git a/packages/angular-renderer/src/components/primitives/vbox/vbox.component.ts b/packages/angular-renderer/src/components/primitives/vbox/vbox.component.ts
-new file mode 100644
-index 0000000..22e7c4a
---- /dev/null
-+++ b/packages/angular-renderer/src/components/primitives/vbox/vbox.component.ts
-@@ -0,0 +1,68 @@
-+import {
-+  Component,
-+  input,
-+  viewChild,
-+  ViewContainerRef,
-+  ChangeDetectionStrategy,
-+  computed,
-+} from '@angular/core';
-+import { InteractionContract } from '@origo/core';
-+import { OrigoAdapter, ContainerComponent } from '../../../adapters/web/adapter';
-+
-+export interface VBoxProps {
-+  gap?: number | string;
-+  alignment?: 'start' | 'center' | 'end' | 'stretch';
-+  padding?: number | string;
-+}
-+
-+@Component({
-+  selector: 'origo-vbox',
-+  standalone: true,
-+  templateUrl: './vbox.component.html',
-+  styleUrls: ['./vbox.component.scss'],
-+  changeDetection: ChangeDetectionStrategy.OnPush,
-+  host: {
-+    '[class.origo-vbox]': 'true',
-+    '[style.gap]': 'computedGap()',
-+    '[style.align-items]': 'computedAlignment()',
-+    '[style.padding]': 'computedPadding()',
-+  },
-+})
-+export class VBoxComponent implements OrigoAdapter<VBoxProps>, ContainerComponent {
-+  static readonly contractSchema = {
-+    gap: 'string',
-+    alignment: 'string',
-+    padding: 'string',
-+  };
-+  static readonly strictContract = false;
-+
-+  contract = input.required<InteractionContract<VBoxProps>>();
-+
-+  vc = viewChild.required('vc', { read: ViewContainerRef });
-+
-+  computedGap = computed(() => {
-+    const gap = this.contract().props?.gap;
-+    return typeof gap === 'number' ? `${gap}px` : gap || undefined;
-+  });
-+
-+  computedAlignment = computed(() => {
-+    const align = this.contract().props?.alignment;
-+    switch (align) {
-+      case 'start':
-+        return 'flex-start';
-+      case 'end':
-+        return 'flex-end';
-+      case 'center':
-+        return 'center';
-+      case 'stretch':
-+        return 'stretch';
-+      default:
-+        return 'stretch';
-+    }
-+  });
-+
-+  computedPadding = computed(() => {
-+    const padding = this.contract().props?.padding;
-+    return typeof padding === 'number' ? `${padding}px` : padding || undefined;
-+  });
-+}
-diff --git a/packages/angular-renderer/src/index.ts b/packages/angular-renderer/src/index.ts
-index b067027..ae0ef7a 100644
---- a/packages/angular-renderer/src/index.ts
-+++ b/packages/angular-renderer/src/index.ts
-@@ -2,3 +2,6 @@ export * from './lib/theme.provider';
- export * from './lib/renderer.component';
- export * from './lib/renderer.tokens';
- export * from './adapters/web/adapter';
-+export * from './components/primitives/vbox/vbox.component';
-+export * from './components/primitives/text-input/text-input.component';
-+export * from './components/primitives/button/button.component';
-diff --git a/packages/angular-renderer/src/lib/renderer.component.spec.ts b/packages/angular-renderer/src/lib/renderer.component.spec.ts
-index 20ef78a..215ef35 100644
---- a/packages/angular-renderer/src/lib/renderer.component.spec.ts
-+++ b/packages/angular-renderer/src/lib/renderer.component.spec.ts
-@@ -121,7 +121,7 @@ describe('OrigoRendererComponent', () => {
-     // Now all should be rendered
-     const finalSpans = compiled.querySelectorAll('span').length;
-     expect(finalSpans).toBe(2000);
--  });
-+  }, 10000);
- 
-   it('should ignore circular child references to prevent infinite loops', () => {
-     const nodeA: ASTNode = { id: 'A', type: 'Container', children: [] };
-diff --git a/packages/angular-renderer/tsconfig.lib.json b/packages/angular-renderer/tsconfig.lib.json
-index 0bcb6b5..a54e9e0 100644
---- a/packages/angular-renderer/tsconfig.lib.json
-+++ b/packages/angular-renderer/tsconfig.lib.json
-@@ -11,6 +11,7 @@
-     "jest.config.cts",
-     "src/**/*.spec.ts",
-     "src/**/*.test.ts",
-+    "src/**/*.pw.ts",
-     "src/test-setup.ts",
-     "src/lib/test-utils.ts"
-   ]
-
+-  if (typeof window !== 'undefined') {
+-    window.__ORIGO_DEVTOOLS__ = getDevToolsAPI();
++  const api = getDevToolsAPI();
++  if (api && typeof window !== 'undefined') {
++    window.__ORIGO_DEVTOOLS__ = api;
+   }
+ }
+```

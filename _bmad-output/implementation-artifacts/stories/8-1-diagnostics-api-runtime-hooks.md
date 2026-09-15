@@ -71,18 +71,6 @@ Follow `@origo/core` guidelines and AST validation standards defined in previous
 
 ---
 
-## Tasks/Subtasks
-
-- [x] Task 1: Create `OrigoDevToolsAPI` interface and Data Structures
-  - [x] Define `MetadataSource`, `ResolutionChain`, `RenderingPath`, and `ErrorContext` types.
-  - [x] Define `OrigoDevToolsAPI` interface.
-  - [x] Augment the global `Window` interface with `__ORIGO_DEVTOOLS__: OrigoDevToolsAPI`.
-- [x] Task 2: Implement the DevTools Bridge
-  - [x] Create `@origo/angular-renderer/src/devtools/devtools-bridge.ts`.
-  - [x] Implement state getters and AST queries (lightweight/memoized).
-  - [x] Ensure telemetry identifiers use BADL semantic paths.
-- [x] Task 3: Implement Data Redaction
-  - [x] Add logic to filter sensitive keys (e.g., passwords, PII) before exposing state.
 - [x] Task 4: Production Tree-Shaking Guard
   - [x] Guard bridge initialization strictly with Angular's `isDevMode()`.
 - [x] Task 5: Export DevTools Bridge
@@ -96,6 +84,22 @@ Follow `@origo/core` guidelines and AST validation standards defined in previous
   - [x] Create `apps/docs/src/content/docs/reference/diagnostics-api.mdx`.
   - [x] Document lifecycle, API reference, data structures, BADL semantics, redaction rules, and practical examples.
   - [x] Verify documentation builds cleanly.
+
+### Review Findings
+
+- [x] [Review][Decision] Missing AST and Error wiring — `_internalState` and `_errorTelemetry` are static mocks; `MetadataSource` and `ResolutionChain` methods are missing entirely. (Are these deferred to future epics, or should they be implemented now?)
+- [x] [Review][Patch] `__injectTestState` and `getDevToolsAPI` bypass production guards — they are exported publicly, allowing external access and state corruption. [packages/angular-renderer/src/devtools/devtools-bridge.ts]
+- [x] [Review][Patch] `typeof window !== 'undefined'` bug — using `window !== 'undefined'` throws ReferenceError in SSR/Node. [packages/angular-renderer/src/devtools/devtools-bridge.ts:462]
+- [x] [Review][Patch] Data redaction logic fails on `null` and causes stack overflow on circular references. [packages/angular-renderer/src/devtools/devtools-bridge.ts:414-433]
+- [x] [Review][Patch] Test state mutates globally — `_internalState` and `_errorTelemetry` leak across tests without reset. [packages/angular-renderer/src/devtools/devtools-bridge.spec.ts]
+- [x] [Review][Patch] Documentation discrepancies — missing `token`/`secret` redaction docs, incorrect `any` return type, and DOM ID confusion. [apps/docs/src/content/docs/reference/diagnostics-api.mdx]
+- [x] [Review][Defer] Spec path typo — `packages/origo-angular-renderer` vs `packages/angular-renderer`. [packages/angular-renderer/src/devtools/devtools-bridge.ts] — deferred, pre-existing
+- [x] [Review][Patch] False positive cycle detection in `redactSensitiveData` [packages/angular-renderer/src/devtools/devtools-bridge.ts]
+- [x] [Review][Patch] Missing interfaces for `MetadataSource` and `ResolutionChain` [packages/angular-renderer/src/devtools/devtools-bridge.ts]
+- [x] [Review][Patch] `getMetadataSource` and `getResolutionChain` violate null contract [packages/angular-renderer/src/devtools/devtools-bridge.ts]
+- [x] [Review][Patch] `getRenderingPath` parameter is named `elementId` but expects BADL path [packages/angular-renderer/src/devtools/devtools-bridge.ts]
+- [x] [Review][Patch] Missing unit tests for `getMetadataSource` and `getResolutionChain` [packages/angular-renderer/src/devtools/devtools-bridge.spec.ts]
+- [x] [Review][Defer] Unmemoized State Getter Causes Performance Overhead in Dev Mode [packages/angular-renderer/src/devtools/devtools-bridge.ts] — deferred, pre-existing
 
 ---
 
@@ -133,5 +137,5 @@ Follow `@origo/core` guidelines and AST validation standards defined in previous
 ---
 
 ## Story Completion Status
-**Status:** review
+**Status:** done
 **Note:** Ultimate context engine analysis completed - comprehensive developer guide created.

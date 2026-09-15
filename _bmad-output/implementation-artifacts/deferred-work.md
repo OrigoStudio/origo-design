@@ -310,3 +310,7 @@
 - DoD has no versioning, date, or change history [docs/definition-of-done.md]
 - Checklist boxes are not enforced by CI [.github/pull_request_template.md]
 
+
+## Deferred from: code review of 8-1-diagnostics-api-runtime-hooks (2026-09-15)
+- [x] [Review][Defer] Spec path typo — `packages/origo-angular-renderer` vs `packages/angular-renderer`. [packages/angular-renderer/src/devtools/devtools-bridge.ts] — deferred, pre-existing
+- Unmemoized State Getter Causes Performance Overhead in Dev Mode [packages/angular-renderer/src/devtools/devtools-bridge.ts] — deferred, pre-existing
