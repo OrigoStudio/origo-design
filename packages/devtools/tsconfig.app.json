@@ -1,0 +1,10 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "outDir": "../../dist/out-tsc",
+    "types": ["chrome"]
+  },
+  "files": ["src/devtools-panel/main.ts"],
+  "include": ["src/devtools-panel/**/*.d.ts", "src/devtools-panel/**/*.ts", "src/types/**/*.ts"],
+  "exclude": ["src/**/*.spec.ts", "src/test-setup.ts"]
+}

@@ -1,0 +1,85 @@
+{
+  "name": "devtools",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "packages/devtools/src",
+  "projectType": "application",
+  "tags": ["type:app", "scope:devtools"],
+  "targets": {
+    "build-app": {
+      "executor": "@angular-devkit/build-angular:application",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/packages/devtools",
+        "index": {
+          "input": "packages/devtools/panel.html",
+          "output": "panel.html"
+        },
+        "browser": "packages/devtools/src/devtools-panel/main.ts",
+        "tsConfig": "packages/devtools/tsconfig.app.json",
+        "assets": [
+          "packages/devtools/manifest.json",
+          "packages/devtools/devtools.html",
+          "packages/devtools/devtools.js"
+        ],
+        "styles": [],
+        "scripts": []
+      },
+      "configurations": {
+        "production": {
+          "budgets": [
+            {
+              "type": "initial",
+              "maximumWarning": "500kb",
+              "maximumError": "1mb"
+            },
+            {
+              "type": "anyComponentStyle",
+              "maximumWarning": "2kb",
+              "maximumError": "4kb"
+            }
+          ],
+          "outputHashing": "none"
+        },
+        "development": {
+          "optimization": false,
+          "extractLicenses": false,
+          "sourceMap": true
+        }
+      },
+      "defaultConfiguration": "production"
+    },
+    "build-scripts": {
+      "executor": "nx:run-commands",
+      "options": {
+        "commands": [
+          "npx esbuild packages/devtools/src/background/background.ts --bundle --outfile=dist/packages/devtools/browser/background.js",
+          "npx esbuild packages/devtools/src/content-script/content-script.ts --bundle --outfile=dist/packages/devtools/browser/content-script.js",
+          "npx esbuild packages/devtools/src/content-script/injected.ts --bundle --outfile=dist/packages/devtools/browser/injected.js"
+        ],
+        "parallel": true
+      }
+    },
+    "build": {
+      "executor": "nx:run-commands",
+      "options": {
+        "commands": ["nx build-app devtools", "nx build-scripts devtools"],
+        "parallel": false
+      }
+    },
+    "lint": {
+      "executor": "@nx/eslint:lint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["packages/devtools/**/*.ts", "packages/devtools/**/*.html"]
+      }
+    },
+    "test": {
+      "executor": "nx:run-commands",
+      "outputs": ["{workspaceRoot}/coverage/packages/devtools"],
+      "options": {
+        "command": "vitest run --passWithNoTests",
+        "cwd": "packages/devtools"
+      }
+    }
+  }
+}

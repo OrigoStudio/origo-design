@@ -385,3 +385,12 @@ test_cases:
       - 8-1-diagnostics-api-runtime-hooks
     last_result: unknown
     results: {}
+  - id: devtools-app-component
+    description: 'Verifies DevTools panel bootstrap, Chrome Extension API messaging, and UI data flow'
+    package: '@origo/devtools'
+    spec_file: packages/devtools/src/devtools-panel/app.component.spec.ts
+    type: unit
+    affected_stories:
+      - 8-2-devtools-inspector-ui
+    last_result: unknown
+    results: {}
