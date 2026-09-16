@@ -1,6 +1,3 @@
-Invoke the `bmad-review-edge-case-hunter` skill on this diff:
-
-```diff
 diff --git a/packages/devtools/manifest.json b/packages/devtools/manifest.json
 new file mode 100644
 index 0000000..806a3a4
@@ -400,4 +397,3 @@ index 0000000..243eff0
 +  | ErrorTelemetryResponseMessage
 +  | PingMessage
 +  | PongMessage;
-```

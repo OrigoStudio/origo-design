@@ -1,0 +1,24 @@
+{
+  "manifest_version": 3,
+  "name": "Origo DevTools",
+  "version": "0.0.1",
+  "description": "Origo DevTools Inspector UI",
+  "devtools_page": "devtools.html",
+  "background": {
+    "service_worker": "background.js",
+    "type": "module"
+  },
+  "content_scripts": [
+    {
+      "matches": ["http://localhost/*", "http://127.0.0.1/*"],
+      "js": ["content-script.js"]
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": ["injected.js"],
+      "matches": ["http://localhost/*", "http://127.0.0.1/*"]
+    }
+  ],
+  "permissions": ["tabs"]
+}

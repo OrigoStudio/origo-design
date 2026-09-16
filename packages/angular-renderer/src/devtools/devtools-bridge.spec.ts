@@ -54,11 +54,16 @@ describe('DevTools Bridge', () => {
 
     it('should use BADL semantic paths for telemetry identifiers', () => {
       const api = getDevToolsAPI()!;
+      _injectTestState({
+        id: 'dom-identity',
+        domain: 'core',
+        entities: [{ id: 'element1', name: 'Element 1' }],
+      });
       const path: RenderingPath | null = api.getRenderingPath('mock-element-id');
 
       // Should return a BADL semantic path format, not a DOM selector
       expect(path).toBeDefined();
-      expect(path?.path).toMatch(/^[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)*$/); // Basic BADL path validation
+      expect(path?.badlPath).toMatch(/^\/[a-zA-Z0-9_-]+(\/[a-zA-Z0-9_-]+)*$/); // Basic BADL path validation
     });
 
     it('should return valid ErrorContext shape', () => {
@@ -71,9 +76,9 @@ describe('DevTools Bridge', () => {
       expect(errorCtx.length).toBe(1);
     });
 
-    it('should return null for getMetadataSource and getResolutionChain', () => {
+    it('should return mock.json for getMetadataSource and null for getResolutionChain', () => {
       const api = getDevToolsAPI()!;
-      expect(api.getMetadataSource('any')).toBeNull();
+      expect(api.getMetadataSource('any')).toEqual({ file: 'mock.json', line: 1 });
       expect(api.getResolutionChain('any')).toBeNull();
     });
   });

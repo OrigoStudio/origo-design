@@ -1,0 +1,1052 @@
+{
+  "graph": {
+    "nodes": {
+      "angular-renderer": {
+        "name": "angular-renderer",
+        "type": "lib",
+        "data": {
+          "root": "packages/angular-renderer",
+          "targets": {
+            "lint": {
+              "cache": true,
+              "inputs": [
+                "default",
+                "^default",
+                "{workspaceRoot}/eslint.config.js",
+                "{workspaceRoot}/packages/angular-renderer/eslint.config.cjs",
+                "{workspaceRoot}/tools/eslint-rules/**/*",
+                {
+                  "externalDependencies": ["eslint"]
+                }
+              ],
+              "outputs": ["{options.outputFile}"],
+              "metadata": {
+                "technologies": ["eslint"],
+                "description": "Runs ESLint on project",
+                "help": {
+                  "command": "npx eslint --help",
+                  "example": {
+                    "options": {
+                      "max-warnings": 0
+                    }
+                  }
+                }
+              },
+              "executor": "nx:run-commands",
+              "options": {
+                "cwd": "packages/angular-renderer",
+                "command": "eslint ."
+              },
+              "configurations": {},
+              "parallelism": true
+            },
+            "test": {
+              "metadata": {
+                "technologies": ["jest"],
+                "description": "Run Jest Tests",
+                "help": {
+                  "command": "npx jest --help",
+                  "example": {
+                    "options": {
+                      "coverage": true
+                    }
+                  }
+                }
+              },
+              "cache": true,
+              "inputs": [
+                "default",
+                "^production",
+                "{workspaceRoot}/jest.preset.js",
+                "{projectRoot}/src/test-setup.ts",
+                {
+                  "externalDependencies": ["jest", "@nx/jest", "ts-jest", "jest-preset-angular"]
+                },
+                {
+                  "dependentTasksOutputFiles": "**/*.d.ts",
+                  "transitive": true
+                }
+              ],
+              "outputs": ["{workspaceRoot}\\coverage\\packages\\angular-renderer"],
+              "executor": "nx:run-commands",
+              "options": {
+                "cwd": "packages/angular-renderer",
+                "env": {
+                  "TS_NODE_COMPILER_OPTIONS": "{\"moduleResolution\":\"node10\",\"module\":\"commonjs\",\"customConditions\":null}"
+                },
+                "command": "jest"
+              },
+              "configurations": {},
+              "parallelism": true
+            },
+            "build": {
+              "cache": true,
+              "dependsOn": ["^build"],
+              "inputs": ["production", "^production"],
+              "executor": "@nx/js:tsc",
+              "outputs": ["{options.outputPath}"],
+              "options": {
+                "outputPath": "dist/packages/angular-renderer",
+                "main": "packages/angular-renderer/src/index.ts",
+                "tsConfig": "packages/angular-renderer/tsconfig.lib.json",
+                "assets": ["packages/angular-renderer/*.md"]
+              },
+              "configurations": {},
+              "parallelism": true
+            }
+          },
+          "name": "angular-renderer",
+          "projectType": "library",
+          "$schema": "../../node_modules/nx/schemas/project-schema.json",
+          "sourceRoot": "packages/angular-renderer/src",
+          "tags": ["npm:private", "scope:angular-renderer", "type:ui"],
+          "metadata": {
+            "targetGroups": {},
+            "js": {
+              "packageName": "angular-renderer",
+              "packageVersion": "0.0.30",
+              "packageMain": "./dist/index.js",
+              "isInPackageManagerWorkspaces": false
+            }
+          },
+          "implicitDependencies": []
+        }
+      },
+      "design-tokens": {
+        "name": "design-tokens",
+        "type": "lib",
+        "data": {
+          "root": "packages/design-tokens",
+          "targets": {
+            "lint": {
+              "cache": true,
+              "inputs": [
+                "default",
+                "^default",
+                "{workspaceRoot}/.eslintrc.json",
+                "{workspaceRoot}/.eslintignore",
+                "{workspaceRoot}/eslint.config.js",
+                "{workspaceRoot}/tools/eslint-rules/**/*"
+              ],
+              "executor": "@nx/eslint:lint",
+              "outputs": ["{options.outputFile}"],
+              "options": {},
+              "configurations": {},
+              "parallelism": true
+            },
+            "test": {
+              "cache": true,
+              "inputs": ["default", "^production", "{workspaceRoot}/jest.preset.js"],
+              "executor": "@nx/jest:jest",
+              "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
+              "options": {
+                "passWithNoTests": true,
+                "jestConfig": "packages/design-tokens/jest.config.cts"
+              },
+              "configurations": {
+                "ci": {
+                  "ci": true,
+                  "codeCoverage": true
+                }
+              },
+              "parallelism": true
+            },
+            "tsc": {
+              "cache": true,
+              "dependsOn": ["^build"],
+              "inputs": ["production", "^production"],
+              "executor": "@nx/js:tsc",
+              "outputs": ["{options.outputPath}"],
+              "options": {
+                "outputPath": "dist/packages/design-tokens",
+                "main": "packages/design-tokens/src/index.ts",
+                "tsConfig": "packages/design-tokens/tsconfig.lib.json",
+                "assets": [
+                  "packages/design-tokens/*.md",
+                  "packages/design-tokens/package.json",
+                  "packages/design-tokens/.npmignore",
+                  "packages/design-tokens/src/schemas/**/*.json",
+                  "packages/design-tokens/src/tokens/**/*.json"
+                ]
+              },
+              "configurations": {},
+              "parallelism": true
+            },
+            "nx-release-publish": {
+              "executor": "@nx/js:release-publish",
+              "dependsOn": ["^nx-release-publish"],
+              "options": {},
+              "configurations": {},
+              "parallelism": true
+            },
+            "compile-css": {
+              "executor": "nx:run-commands",
+              "dependsOn": ["tsc"],
+              "options": {
+                "command": "node dist/packages/design-tokens/src/compile.js"
+              },
+              "configurations": {},
+              "parallelism": true
+            },
+            "build": {
+              "executor": "nx:run-commands",
+              "dependsOn": ["compile-css"],
+              "options": {
+                "command": "echo 'Build complete'"
+              },
+              "configurations": {},
+              "parallelism": true
+            }
+          },
+          "name": "design-tokens",
+          "projectType": "library",
+          "$schema": "../../node_modules/nx/schemas/project-schema.json",
+          "sourceRoot": "packages/design-tokens/src",
+          "tags": ["npm:public", "scope:design-tokens", "type:util", "type:tokens"],
+          "metadata": {
+            "targetGroups": {},
+            "js": {
+              "packageName": "@origo/design-tokens",
+              "packageVersion": "0.0.30",
+              "packageExports": {
+                ".": {
+                  "types": "./src/index.d.ts",
+                  "default": "./src/index.js"
+                },
+                "./runtime": {
+                  "types": "./src/runtime/index.d.ts",
+                  "default": "./src/runtime/index.js"
+                },
+                "./tokens.css": "./tokens.css",
+                "./tokens.json": "./tokens.json",
+                "./tokens.js": "./tokens.js"
+              },
+              "packageMain": "./src/index.js",
+              "isInPackageManagerWorkspaces": false
+            }
+          },
+          "implicitDependencies": []
+        }
+      },
+      "playground": {
+        "name": "playground",
+        "type": "app",
+        "data": {
+          "root": "packages/playground",
+          "targets": {
+            "lint": {
+              "cache": true,
+              "inputs": [
+                "default",
+                "^default",
+                "{workspaceRoot}/.eslintrc.json",
+                "{workspaceRoot}/.eslintignore",
+                "{workspaceRoot}/eslint.config.js",
+                "{workspaceRoot}/tools/eslint-rules/**/*"
+              ],
+              "executor": "@nx/eslint:lint",
+              "options": {},
+              "configurations": {},
+              "parallelism": true
+            },
+            "build": {
+              "cache": true,
+              "dependsOn": ["^build"],
+              "inputs": ["production", "^production"],
+              "executor": "@angular/build:application",
+              "outputs": ["{options.outputPath}"],
+              "defaultConfiguration": "production",
+              "options": {
+                "outputPath": "dist/packages/playground",
+                "browser": "packages/playground/src/main.ts",
+                "tsConfig": "packages/playground/tsconfig.app.json",
+                "inlineStyleLanguage": "scss",
+                "assets": [
+                  {
+                    "glob": "**/*",
+                    "input": "packages/playground/public"
+                  }
+                ],
+                "styles": ["packages/playground/src/styles.scss"],
+                "loader": {
+                  ".ttf": "file"
+                }
+              },
+              "configurations": {
+                "production": {
+                  "budgets": [
+                    {
+                      "type": "initial",
+                      "maximumWarning": "5mb",
+                      "maximumError": "10mb"
+                    },
+                    {
+                      "type": "anyComponentStyle",
+                      "maximumWarning": "10kb",
+                      "maximumError": "20kb"
+                    }
+                  ],
+                  "outputHashing": "all"
+                },
+                "development": {
+                  "optimization": false,
+                  "extractLicenses": false,
+                  "sourceMap": true
+                }
+              },
+              "parallelism": true
+            },
+            "serve": {
+              "continuous": true,
+              "executor": "@angular/build:dev-server",
+              "defaultConfiguration": "development",
+              "configurations": {
+                "production": {
+                  "buildTarget": "playground:build:production"
+                },
+                "development": {
+                  "buildTarget": "playground:build:development"
+                }
+              },
+              "options": {},
+              "parallelism": true
+            },
+            "test": {
+              "executor": "nx:run-commands",
+              "outputs": ["{workspaceRoot}/coverage/packages/playground"],
+              "options": {
+                "command": "vitest run",
+                "cwd": "packages/playground"
+              },
+              "configurations": {},
+              "parallelism": true
+            },
+            "serve-static": {
+              "continuous": true,
+              "executor": "@nx/web:file-server",
+              "options": {
+                "buildTarget": "playground:build",
+                "port": 4200,
+                "staticFilePath": "dist/packages/playground/browser",
+                "spa": true
+              },
+              "configurations": {},
+              "parallelism": true
+            }
+          },
+          "name": "playground",
+          "projectType": "application",
+          "$schema": "../../node_modules/nx/schemas/project-schema.json",
+          "prefix": "app",
+          "sourceRoot": "packages/playground/src",
+          "tags": ["npm:private", "scope:playground", "type:app"],
+          "metadata": {
+            "targetGroups": {},
+            "js": {
+              "packageName": "@origo/playground",
+              "packageVersion": "0.0.30",
+              "isInPackageManagerWorkspaces": false
+            }
+          },
+          "implicitDependencies": []
+        }
+      },
+      "devtools": {
+        "name": "devtools",
+        "type": "app",
+        "data": {
+          "root": "packages/devtools",
+          "targets": {
+            "lint": {
+              "cache": true,
+              "inputs": [
+                "default",
+                "^default",
+                "{workspaceRoot}/.eslintrc.json",
+                "{workspaceRoot}/.eslintignore",
+                "{workspaceRoot}/eslint.config.js",
+                "{workspaceRoot}/tools/eslint-rules/**/*"
+              ],
+              "executor": "@nx/eslint:lint",
+              "outputs": ["{options.outputFile}"],
+              "options": {
+                "lintFilePatterns": ["packages/devtools/**/*.ts", "packages/devtools/**/*.html"]
+              },
+              "configurations": {},
+              "parallelism": true
+            },
+            "build-app": {
+              "cache": true,
+              "dependsOn": ["^build"],
+              "inputs": ["production", "^production"],
+              "executor": "@angular-devkit/build-angular:application",
+              "outputs": ["{options.outputPath}"],
+              "defaultConfiguration": "production",
+              "options": {
+                "outputPath": "dist/packages/devtools",
+                "index": {
+                  "input": "packages/devtools/panel.html",
+                  "output": "panel.html"
+                },
+                "browser": "packages/devtools/src/devtools-panel/main.ts",
+                "tsConfig": "packages/devtools/tsconfig.app.json",
+                "assets": [
+                  "packages/devtools/manifest.json",
+                  "packages/devtools/devtools.html",
+                  "packages/devtools/devtools.js"
+                ],
+                "styles": [],
+                "scripts": []
+              },
+              "configurations": {
+                "production": {
+                  "budgets": [
+                    {
+                      "type": "initial",
+                      "maximumWarning": "500kb",
+                      "maximumError": "1mb"
+                    },
+                    {
+                      "type": "anyComponentStyle",
+                      "maximumWarning": "2kb",
+                      "maximumError": "4kb"
+                    }
+                  ],
+                  "outputHashing": "none"
+                },
+                "development": {
+                  "optimization": false,
+                  "extractLicenses": false,
+                  "sourceMap": true
+                }
+              },
+              "parallelism": true
+            },
+            "nx-release-publish": {
+              "executor": "@nx/js:release-publish",
+              "dependsOn": ["^nx-release-publish"],
+              "options": {},
+              "configurations": {},
+              "parallelism": true
+            },
+            "build-scripts": {
+              "executor": "nx:run-commands",
+              "options": {
+                "commands": [
+                  "npx esbuild packages/devtools/src/background/background.ts --bundle --outfile=dist/packages/devtools/browser/background.js",
+                  "npx esbuild packages/devtools/src/content-script/content-script.ts --bundle --outfile=dist/packages/devtools/browser/content-script.js",
+                  "npx esbuild packages/devtools/src/content-script/injected.ts --bundle --outfile=dist/packages/devtools/browser/injected.js"
+                ],
+                "parallel": true
+              },
+              "configurations": {},
+              "parallelism": true
+            },
+            "build": {
+              "executor": "nx:run-commands",
+              "options": {
+                "commands": ["npx nx build-app devtools", "npx nx build-scripts devtools"],
+                "parallel": false
+              },
+              "configurations": {},
+              "parallelism": true
+            },
+            "test": {
+              "executor": "nx:run-commands",
+              "outputs": ["{workspaceRoot}/coverage/packages/devtools"],
+              "options": {
+                "command": "vitest run --passWithNoTests",
+                "cwd": "packages/devtools"
+              },
+              "configurations": {},
+              "parallelism": true
+            }
+          },
+          "name": "devtools",
+          "projectType": "application",
+          "$schema": "../../node_modules/nx/schemas/project-schema.json",
+          "sourceRoot": "packages/devtools/src",
+          "tags": ["npm:public", "type:app", "scope:devtools"],
+          "metadata": {
+            "targetGroups": {},
+            "js": {
+              "packageName": "@origo/devtools",
+              "packageVersion": "0.0.1",
+              "isInPackageManagerWorkspaces": false
+            }
+          },
+          "implicitDependencies": []
+        }
+      },
+      "origo-e2e": {
+        "name": "origo-e2e",
+        "type": "e2e",
+        "data": {
+          "root": "apps/origo-e2e",
+          "targets": {
+            "lint": {
+              "cache": true,
+              "inputs": [
+                "default",
+                "^default",
+                "{workspaceRoot}/.eslintrc.json",
+                "{workspaceRoot}/.eslintignore",
+                "{workspaceRoot}/eslint.config.js",
+                "{workspaceRoot}/tools/eslint-rules/**/*"
+              ],
+              "executor": "@nx/eslint:lint",
+              "outputs": ["{options.outputFile}"],
+              "options": {},
+              "configurations": {},
+              "parallelism": true
+            },
+            "e2e": {
+              "executor": "@nx/playwright:playwright",
+              "outputs": ["{workspaceRoot}/dist/.playwright/apps/origo-e2e"],
+              "options": {
+                "config": "apps/origo-e2e/playwright.config.ts"
+              },
+              "configurations": {},
+              "parallelism": true
+            },
+            "e2e-ci": {
+              "executor": "nx:noop",
+              "cache": true,
+              "inputs": [
+                "default",
+                "^production",
+                "^{projectRoot}/tsconfig*.json",
+                {
+                  "json": "{workspaceRoot}/tsconfig.json",
+                  "fields": ["compilerOptions", "extends", "files", "include"]
+                },
+                {
+                  "externalDependencies": ["@playwright/test"]
+                }
+              ],
+              "outputs": ["{projectRoot}/test-results", "{projectRoot}/playwright-report"],
+              "dependsOn": [],
+              "metadata": {
+                "technologies": ["playwright"],
+                "description": "Runs Playwright Tests in CI",
+                "nonAtomizedTarget": "e2e",
+                "help": {
+                  "command": "npx playwright test --help",
+                  "example": {
+                    "options": {
+                      "workers": 1
+                    }
+                  }
+                }
+              },
+              "parallelism": false,
+              "configurations": {},
+              "options": {}
+            },
+            "e2e-ci--merge-reports": {
+              "executor": "@nx/playwright:merge-reports",
+              "continuous": false,
+              "cache": true,
+              "inputs": [
+                "default",
+                "^production",
+                "^{projectRoot}/tsconfig*.json",
+                {
+                  "json": "{workspaceRoot}/tsconfig.json",
+                  "fields": ["compilerOptions", "extends", "files", "include"]
+                },
+                {
+                  "externalDependencies": ["@playwright/test"]
+                }
+              ],
+              "outputs": ["{projectRoot}/playwright-report"],
+              "metadata": {
+                "technologies": ["playwright"],
+                "description": "Merges Playwright blob reports from atomized tasks to produce unified reports for the configured reporters."
+              },
+              "options": {
+                "config": "playwright.config.ts",
+                "expectedSuites": 0
+              },
+              "configurations": {},
+              "parallelism": true
+            }
+          },
+          "metadata": {
+            "targetGroups": {
+              "E2E (CI)": ["e2e-ci", "e2e-ci--merge-reports"]
+            }
+          },
+          "name": "origo-e2e",
+          "$schema": "../../node_modules/nx/schemas/project-schema.json",
+          "projectType": "application",
+          "sourceRoot": "apps/origo-e2e/src",
+          "implicitDependencies": [],
+          "tags": []
+        }
+      },
+      "core": {
+        "name": "core",
+        "type": "lib",
+        "data": {
+          "root": "packages/core",
+          "targets": {
+            "lint": {
+              "cache": true,
+              "inputs": [
+                "default",
+                "^default",
+                "{workspaceRoot}/eslint.config.js",
+                "{workspaceRoot}/packages/core/eslint.config.cjs",
+                "{workspaceRoot}/tools/eslint-rules/**/*",
+                {
+                  "externalDependencies": ["eslint"]
+                }
+              ],
+              "outputs": ["{options.outputFile}"],
+              "metadata": {
+                "technologies": ["eslint"],
+                "description": "Runs ESLint on project",
+                "help": {
+                  "command": "npx eslint --help",
+                  "example": {
+                    "options": {
+                      "max-warnings": 0
+                    }
+                  }
+                }
+              },
+              "executor": "nx:run-commands",
+              "options": {
+                "cwd": "packages/core",
+                "command": "eslint ."
+              },
+              "configurations": {},
+              "parallelism": true
+            },
+            "test": {
+              "metadata": {
+                "technologies": ["jest"],
+                "description": "Run Jest Tests",
+                "help": {
+                  "command": "npx jest --help",
+                  "example": {
+                    "options": {
+                      "coverage": true
+                    }
+                  }
+                }
+              },
+              "cache": true,
+              "inputs": [
+                "default",
+                "^production",
+                "{workspaceRoot}/jest.preset.js",
+                {
+                  "externalDependencies": ["jest", "@nx/jest", "ts-jest"]
+                },
+                {
+                  "dependentTasksOutputFiles": "**/*.d.ts",
+                  "transitive": true
+                }
+              ],
+              "outputs": ["{workspaceRoot}\\coverage\\packages\\core"],
+              "executor": "nx:run-commands",
+              "options": {
+                "cwd": "packages/core",
+                "env": {
+                  "TS_NODE_COMPILER_OPTIONS": "{\"moduleResolution\":\"node10\",\"module\":\"commonjs\",\"customConditions\":null}"
+                },
+                "command": "jest"
+              },
+              "configurations": {},
+              "parallelism": true
+            },
+            "build": {
+              "cache": true,
+              "dependsOn": ["^build"],
+              "inputs": ["production", "^production"],
+              "executor": "@nx/js:tsc",
+              "outputs": ["{options.outputPath}"],
+              "options": {
+                "outputPath": "dist/packages/core",
+                "main": "packages/core/src/index.ts",
+                "tsConfig": "packages/core/tsconfig.lib.json",
+                "assets": ["packages/core/*.md"]
+              },
+              "configurations": {},
+              "parallelism": true
+            },
+            "generate-types": {
+              "executor": "nx:run-commands",
+              "inputs": ["{projectRoot}/src/schemas/**/*.json", "{projectRoot}/scripts/**/*.ts"],
+              "outputs": ["{projectRoot}/src/types/generated.ts"],
+              "options": {
+                "command": "ts-node packages/core/scripts/generate-types.ts"
+              },
+              "configurations": {},
+              "parallelism": true
+            }
+          },
+          "name": "core",
+          "projectType": "library",
+          "$schema": "../../node_modules/nx/schemas/project-schema.json",
+          "sourceRoot": "packages/core/src",
+          "tags": ["npm:private", "type:util"],
+          "metadata": {
+            "targetGroups": {},
+            "js": {
+              "packageName": "@origo/core",
+              "packageVersion": "0.0.30",
+              "packageMain": "./src/index.js",
+              "isInPackageManagerWorkspaces": false
+            }
+          },
+          "implicitDependencies": []
+        }
+      },
+      "cli": {
+        "name": "cli",
+        "type": "lib",
+        "data": {
+          "root": "packages/cli",
+          "targets": {
+            "lint": {
+              "cache": true,
+              "inputs": [
+                "default",
+                "^default",
+                "{workspaceRoot}/eslint.config.js",
+                "{workspaceRoot}/packages/cli/eslint.config.cjs",
+                "{workspaceRoot}/tools/eslint-rules/**/*",
+                {
+                  "externalDependencies": ["eslint"]
+                }
+              ],
+              "outputs": ["{options.outputFile}"],
+              "metadata": {
+                "technologies": ["eslint"],
+                "description": "Runs ESLint on project",
+                "help": {
+                  "command": "npx eslint --help",
+                  "example": {
+                    "options": {
+                      "max-warnings": 0
+                    }
+                  }
+                }
+              },
+              "executor": "nx:run-commands",
+              "options": {
+                "cwd": "packages/cli",
+                "command": "eslint ."
+              },
+              "configurations": {},
+              "parallelism": true
+            },
+            "test": {
+              "metadata": {
+                "technologies": ["jest"],
+                "description": "Run Jest Tests",
+                "help": {
+                  "command": "npx jest --help",
+                  "example": {
+                    "options": {
+                      "coverage": true
+                    }
+                  }
+                }
+              },
+              "cache": true,
+              "inputs": [
+                "default",
+                "^production",
+                "{workspaceRoot}/jest.preset.js",
+                {
+                  "externalDependencies": ["jest", "@nx/jest", "ts-jest"]
+                },
+                {
+                  "dependentTasksOutputFiles": "**/*.d.ts",
+                  "transitive": true
+                }
+              ],
+              "outputs": ["{workspaceRoot}\\coverage\\packages\\cli"],
+              "executor": "nx:run-commands",
+              "options": {
+                "cwd": "packages/cli",
+                "env": {
+                  "TS_NODE_COMPILER_OPTIONS": "{\"moduleResolution\":\"node10\",\"module\":\"commonjs\",\"customConditions\":null}"
+                },
+                "command": "jest"
+              },
+              "configurations": {},
+              "parallelism": true
+            },
+            "build": {
+              "cache": true,
+              "dependsOn": ["^build"],
+              "inputs": ["production", "^production"],
+              "executor": "@nx/js:tsc",
+              "outputs": ["{options.outputPath}"],
+              "options": {
+                "outputPath": "dist/packages/cli",
+                "main": "packages/cli/src/index.ts",
+                "tsConfig": "packages/cli/tsconfig.lib.json",
+                "assets": [
+                  "packages/cli/*.md",
+                  "packages/cli/src/templates/entity.json",
+                  "packages/cli/src/templates/extension.json",
+                  "packages/cli/src/templates/origo.json"
+                ]
+              },
+              "configurations": {},
+              "parallelism": true
+            },
+            "nx-release-publish": {
+              "executor": "@nx/js:release-publish",
+              "dependsOn": ["^nx-release-publish"],
+              "options": {},
+              "configurations": {},
+              "parallelism": true
+            }
+          },
+          "name": "cli",
+          "projectType": "library",
+          "$schema": "../../node_modules/nx/schemas/project-schema.json",
+          "sourceRoot": "packages/cli/src",
+          "tags": ["npm:public", "scope:cli", "type:lib"],
+          "metadata": {
+            "targetGroups": {},
+            "js": {
+              "packageName": "@origostudio/cli",
+              "packageVersion": "0.0.30",
+              "packageMain": "./src/index.js",
+              "isInPackageManagerWorkspaces": false
+            }
+          },
+          "implicitDependencies": []
+        }
+      },
+      "docs": {
+        "name": "docs",
+        "type": "app",
+        "data": {
+          "root": "docs",
+          "targets": {
+            "lint": {
+              "cache": true,
+              "inputs": [
+                "default",
+                "^default",
+                "{workspaceRoot}/eslint.config.js",
+                "{workspaceRoot}/tools/eslint-rules/**/*",
+                {
+                  "externalDependencies": ["eslint"]
+                }
+              ],
+              "outputs": ["{options.outputFile}"],
+              "metadata": {
+                "technologies": ["eslint"],
+                "description": "Runs ESLint on project",
+                "help": {
+                  "command": "npx eslint --help",
+                  "example": {
+                    "options": {
+                      "max-warnings": 0
+                    }
+                  }
+                }
+              },
+              "executor": "nx:run-commands",
+              "options": {
+                "cwd": "docs",
+                "command": "eslint ."
+              },
+              "configurations": {},
+              "parallelism": true
+            },
+            "dev": {
+              "executor": "nx:run-script",
+              "metadata": {
+                "scriptContent": "astro dev",
+                "runCommand": "npm run dev"
+              },
+              "options": {
+                "script": "dev"
+              },
+              "configurations": {},
+              "parallelism": true
+            },
+            "start": {
+              "executor": "nx:run-script",
+              "metadata": {
+                "scriptContent": "astro dev",
+                "runCommand": "npm run start"
+              },
+              "options": {
+                "script": "start"
+              },
+              "configurations": {},
+              "parallelism": true
+            },
+            "astro": {
+              "executor": "nx:run-script",
+              "metadata": {
+                "scriptContent": "astro",
+                "runCommand": "npm run astro"
+              },
+              "options": {
+                "script": "astro"
+              },
+              "configurations": {},
+              "parallelism": true
+            },
+            "nx-release-publish": {
+              "executor": "@nx/js:release-publish",
+              "dependsOn": ["^nx-release-publish"],
+              "options": {},
+              "configurations": {},
+              "parallelism": true
+            },
+            "build": {
+              "executor": "nx:run-commands",
+              "options": {
+                "command": "npx astro build",
+                "cwd": "docs"
+              },
+              "configurations": {},
+              "parallelism": true
+            },
+            "serve": {
+              "executor": "nx:run-commands",
+              "options": {
+                "command": "npx astro dev",
+                "cwd": "docs"
+              },
+              "configurations": {},
+              "parallelism": true
+            },
+            "preview": {
+              "executor": "nx:run-commands",
+              "options": {
+                "command": "npx astro preview",
+                "cwd": "docs"
+              },
+              "configurations": {},
+              "parallelism": true
+            },
+            "check": {
+              "executor": "nx:run-commands",
+              "options": {
+                "command": "npx astro check",
+                "cwd": "docs"
+              },
+              "configurations": {},
+              "parallelism": true
+            }
+          },
+          "name": "docs",
+          "$schema": "../../node_modules/nx/schemas/project-schema.json",
+          "projectType": "application",
+          "sourceRoot": "docs/src",
+          "tags": ["npm:public"],
+          "metadata": {
+            "targetGroups": {
+              "NPM Scripts": ["dev", "start", "astro"]
+            },
+            "js": {
+              "packageName": "apps-docs",
+              "packageVersion": "0.0.1",
+              "isInPackageManagerWorkspaces": false
+            }
+          },
+          "implicitDependencies": []
+        }
+      },
+      "@origostudio/origo-design": {
+        "name": "@origostudio/origo-design",
+        "type": "app",
+        "data": {
+          "root": ".",
+          "name": "@origostudio/origo-design",
+          "includedScripts": [],
+          "tags": ["npm:public"],
+          "metadata": {
+            "targetGroups": {},
+            "js": {
+              "packageName": "@origostudio/origo-design",
+              "packageVersion": "0.0.30",
+              "isInPackageManagerWorkspaces": true
+            }
+          },
+          "targets": {
+            "nx-release-publish": {
+              "executor": "@nx/js:release-publish",
+              "dependsOn": ["^nx-release-publish"],
+              "options": {},
+              "configurations": {},
+              "parallelism": true
+            }
+          },
+          "implicitDependencies": []
+        }
+      }
+    },
+    "dependencies": {
+      "angular-renderer": [
+        {
+          "source": "angular-renderer",
+          "target": "core",
+          "type": "static"
+        },
+        {
+          "source": "angular-renderer",
+          "target": "design-tokens",
+          "type": "static"
+        }
+      ],
+      "design-tokens": [],
+      "playground": [
+        {
+          "source": "playground",
+          "target": "core",
+          "type": "static"
+        },
+        {
+          "source": "playground",
+          "target": "angular-renderer",
+          "type": "static"
+        }
+      ],
+      "devtools": [
+        {
+          "source": "devtools",
+          "target": "angular-renderer",
+          "type": "static"
+        }
+      ],
+      "origo-e2e": [],
+      "core": [],
+      "cli": [
+        {
+          "source": "cli",
+          "target": "core",
+          "type": "static"
+        }
+      ],
+      "docs": [],
+      "@origostudio/origo-design": [
+        {
+          "source": "@origostudio/origo-design",
+          "target": "core",
+          "type": "dynamic"
+        },
+        {
+          "source": "@origostudio/origo-design",
+          "target": "core",
+          "type": "static"
+        }
+      ]
+    }
+  }
+}
