@@ -62,7 +62,7 @@
     "build": {
       "executor": "nx:run-commands",
       "options": {
-        "commands": ["nx build-app devtools", "nx build-scripts devtools"],
+        "commands": ["npx nx build-app devtools", "npx nx build-scripts devtools"],
         "parallel": false
       }
     },
