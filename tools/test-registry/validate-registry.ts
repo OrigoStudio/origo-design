@@ -15,6 +15,7 @@ const VALID_PACKAGES = new Set([
   '@origo/design-tokens',
   '@origo/angular-renderer',
   '@origo/playground',
+  '@origo/devtools',
   'origo-e2e',
   'tools',
 ]);

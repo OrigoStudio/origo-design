@@ -5,7 +5,7 @@
 # FIELD DEFINITIONS:
 #   id:               Unique kebab-case identifier
 #   description:      One-line human description of what the test suite verifies
-#   package:          Nx package / app name (@origo/cli, @origo/core, @origo/design-tokens, @origo/angular-renderer, origo-e2e)
+#   package:          Nx package / app name (@origo/cli, @origo/core, @origo/design-tokens, @origo/angular-renderer, @origo/playground, @origo/devtools, origo-e2e, tools)
 #   spec_file:        Repo-root-relative path using POSIX forward slashes
 #   type:             unit | e2e | integration | perf
 #   affected_stories: Non-empty list of story keys that introduced or modified this spec
