@@ -60,11 +60,8 @@
       }
     },
     "build": {
-      "executor": "nx:run-commands",
-      "options": {
-        "commands": ["npx nx build-app devtools", "npx nx build-scripts devtools"],
-        "parallel": false
-      }
+      "executor": "nx:noop",
+      "dependsOn": ["build-app", "build-scripts"]
     },
     "lint": {
       "executor": "@nx/eslint:lint",
