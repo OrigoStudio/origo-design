@@ -1,3 +1,14 @@
+## 0.0.32 (2026-09-19)
+
+### 🚀 Features
+
+- add devtools and playground packages with retro-8 versioning artifacts ([ff1aedc](https://github.com/OrigoStudio/origo-design/commit/ff1aedc))
+- implement strict test isolation guards, structured cloning, and update test setup configurations and registry artifacts ([a5e79e2](https://github.com/OrigoStudio/origo-design/commit/a5e79e2))
+
+### ❤️ Thank You
+
+- Hardik Patel @hardikpatelse
+
 ## 0.0.31 (2026-09-16)
 
 ### 🚀 Features

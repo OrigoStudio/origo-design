@@ -1,3 +1,7 @@
+## 0.0.32 (2026-09-19)
+
+This was a version bump only for cli to align it with other projects, there were no code changes.
+
 ## 0.0.31 (2026-09-16)
 
 This was a version bump only for cli to align it with other projects, there were no code changes.
