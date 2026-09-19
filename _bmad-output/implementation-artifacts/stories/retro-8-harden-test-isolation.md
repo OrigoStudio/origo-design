@@ -4,7 +4,7 @@ baseline_commit: 65f8804e268b516fd9f4e9d39d1d8ea0be249693
 
 # Story retro-8: harden-test-isolation
 
-Status: review
+Status: done
 
 ## Story
 
@@ -39,6 +39,9 @@ so that global state leaks across tests are prevented and our test suites are er
 - [x] **4. Stabilize Suite:** Execute test suite locally (`--runInBand` and parallel) to confirm elimination of flakiness.
 - [x] **5. Update Documentation:** Document new isolation patterns in `tools/test-registry` or central test documentation.
 - [x] **6. Update Test Registry:** Update the Central Test Registry (`tools/test-registry/test-registry.yaml`) with the affected tests.
+
+### Review Findings
+- [x] [Review][Patch] structuredClone failure falls back to mutable reference [packages/angular-renderer/src/devtools/devtools-bridge.ts:145]
 
 ## Dev Agent Record
 
