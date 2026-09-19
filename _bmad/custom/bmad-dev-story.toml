@@ -1,0 +1,4 @@
+[workflow]
+persistent_facts = [
+  "CRITICAL RULE: As part of completing development for a story, you MUST update the Central Test Registry (`tools/test-registry/test-registry.yaml`) with all affected tests (unless documentation-only). This satisfies the 'Definition of Done' requirement."
+]

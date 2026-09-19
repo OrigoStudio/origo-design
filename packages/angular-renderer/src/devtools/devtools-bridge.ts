@@ -76,8 +76,31 @@ let _internalState: unknown = {
 
 let _errorTelemetry: ErrorContext[] = [];
 
+function deepCloneState(obj: unknown, seen = new WeakMap()): unknown {
+  if (obj === null || typeof obj !== 'object') {
+    return obj;
+  }
+  if (seen.has(obj)) {
+    return seen.get(obj);
+  }
+  const clone: any = Array.isArray(obj) ? [] : {};
+  seen.set(obj, clone);
+  for (const key in obj) {
+    if (Object.prototype.hasOwnProperty.call(obj, key)) {
+      clone[key] = deepCloneState((obj as Record<string, unknown>)[key], seen);
+    }
+  }
+  return clone;
+}
+
 export function _injectTestState(state: unknown): void {
-  _internalState = state;
+  try {
+    _internalState =
+      typeof structuredClone === 'function' ? structuredClone(state) : deepCloneState(state);
+  } catch (e) {
+    // Fallback if structuredClone fails (e.g. contains functions or unsupported types)
+    _internalState = deepCloneState(state);
+  }
 }
 
 export function _resetTestState(): void {

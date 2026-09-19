@@ -1,0 +1,268 @@
+diff --git a/_bmad-output/implementation-artifacts/sprint-status.yaml b/_bmad-output/implementation-artifacts/sprint-status.yaml
+index c403fd0..b76399a 100644
+--- a/_bmad-output/implementation-artifacts/sprint-status.yaml
++++ b/_bmad-output/implementation-artifacts/sprint-status.yaml
+@@ -1,5 +1,5 @@
+ # generated: 2026-07-29T21:46:02.464968
+-# last_updated: 2026-09-19T10:39:34+05:30
++# last_updated: 2026-09-19T12:36:00+05:30
+ # project: origo-design
+ # project_key: NOKEY
+ # tracking_system: file-system
+@@ -41,7 +41,7 @@
+ # - Retrospective appends its action items to action_items; sprint-status surfaces open ones
+ 
+ generated: 2026-07-29T21:46:02.464968
+-last_updated: 2026-09-15T17:35:24+05:30
++last_updated: 2026-09-19T12:36:00+05:30
+ project: origo-design
+ project_key: NOKEY
+ tracking_system: file-system
+@@ -129,6 +129,7 @@ development_status:
+   retro-7-state-persistence: done
+   retro-7-test-registry-backfill: done
+   retro-7-dod-update: done
++  retro-8-harden-test-isolation: review
+ 
+ action_items:
+   - id: retro-1-cleanup
+diff --git a/_bmad-output/implementation-artifacts/stories/retro-8-harden-test-isolation.md b/_bmad-output/implementation-artifacts/stories/retro-8-harden-test-isolation.md
+new file mode 100644
+index 0000000..35fdb6a
+--- /dev/null
++++ b/_bmad-output/implementation-artifacts/stories/retro-8-harden-test-isolation.md
+@@ -0,0 +1,70 @@
++---
++baseline_commit: 65f8804e268b516fd9f4e9d39d1d8ea0be249693
++---
++
++# Story retro-8: harden-test-isolation
++
++Status: review
++
++## Story
++
++As a developer,
++I want to implement strict isolation guards in our test infrastructure,
++so that global state leaks across tests are prevented and our test suites are error-proof.
++
++## Acceptance Criteria
++
++1. **[ADR/Spike Reference]:** Implementation must follow the isolation strategies outlined in the Epic 8 Technical Spike (addressing Story 8-1 global test state mutations).
++2. Identify and document existing test state leaks globally (especially in tests from Epic 8).
++3. Implement strict isolation guards (`beforeEach` / `afterEach` hooks to clear mocks, reset globals, and clean DOM state).
++4. Ensure deep object graphs with cyclic references do not cause state pollution across boundaries via deep cloning or immutability checks.
++5. Verify all flaky tests are stabilized (`--runInBand` and parallel).
++6. Create documentation or patterns for writing isolated tests for future epics.
++
++## Developer Context
++
++- **Previous Story Learnings (Story 8-1):** In Epic 8, test state mutated globally across tests, causing flaky test runs. Deep object graphs with cyclic references caused stack overflows during data redaction. We must bake strict isolation guards into the test infrastructure.
++
++## Technical Requirements & Architecture Compliance
++
++- **Target Files:** Modifications must be scoped primarily to global test setup files (e.g., `jest.setup.js`, workspace root test configurations) and the specific flaky tests in Epic 8.
++- **State Management:** Use structured immutability checks or `structuredClone` for passing state to tests to prevent cyclic object mutation.
++- **DoD Compliance:** The Central Test Registry must be updated upon completion.
++
++## Tasks
++
++- [x] **1. Audit Test Leaks:** Scan existing tests (focus on Story 8-1) for un-cleared mocks or global object mutations.
++- [x] **2. Implement Isolation Guards:** Update `jest.setup.js` (or equivalent) to reset module registries and clear mocks using `beforeEach`/`afterEach`.
++- [x] **3. Handle Cyclic Graphs:** Enforce deep cloning/immutability checks on states passed to tests to prevent pollution.
++- [x] **4. Stabilize Suite:** Execute test suite locally (`--runInBand` and parallel) to confirm elimination of flakiness.
++- [x] **5. Update Documentation:** Document new isolation patterns in `tools/test-registry` or central test documentation.
++- [x] **6. Update Test Registry:** Update the Central Test Registry (`tools/test-registry/test-registry.yaml`) with the affected tests.
++
++## Dev Agent Record
++
++### Debug Log
++- Audited test leaks and found `global.chrome` leaks in devtools tests and uncleaned mocks in angular-renderer tests.
++- Implemented `jest.clearAllMocks` and `jest.restoreAllMocks` along with DOM resets in angular-renderer test setup.
++- Moved `global.chrome` initialization into `beforeEach` and cleaned up in `afterEach` for devtools test setup.
++- Handled cyclic graphs by using `structuredClone` (with fallback to passing state reference for objects containing functions) in `devtools-bridge.ts`.
++- Verified test isolation manually using `vitest run` and `nx test` which proved stability.
++- Documented test isolation patterns inside `tools/test-registry/test-registry.yaml`.
++
++### Completion Notes
++✅ Fully implemented strict isolation guards in both `devtools` and `angular-renderer` test configurations.
++✅ Resolved the cyclic graph issue by leveraging `structuredClone` when pushing test state across boundaries.
++✅ Updated central test registry documentation and linked the `retro-8` story in `affected_stories` of testing targets.
++All unit tests execute successfully.
++
++## File List
++
++### [MODIFY] packages/angular-renderer/src/devtools/devtools-bridge.ts
++### [MODIFY] packages/angular-renderer/src/test-setup.ts
++### [MODIFY] packages/devtools/src/test-setup.ts
++### [MODIFY] tools/test-registry/test-registry.yaml
++
++## Change Log
++- Scoped global mock for `chrome` to `beforeEach` to fix test leakage.
++- Added strict teardown steps to test setups (restore/clear mocks, DOM reset).
++- Replaced direct reference assignment of test state with `structuredClone` to avoid stack overflows from cyclic graphs.
++- Appended TEST ISOLATION PATTERNS to `test-registry.yaml` and marked modified tests with `retro-8-harden-test-isolation` tag.
+diff --git a/_bmad/custom/bmad-code-review.toml b/_bmad/custom/bmad-code-review.toml
+new file mode 100644
+index 0000000..0c62fa3
+--- /dev/null
++++ b/_bmad/custom/bmad-code-review.toml
+@@ -0,0 +1,4 @@
++[workflow]
++persistent_facts = [
++  "CRITICAL RULE: During the code review process, you MUST verify and ensure that the Central Test Registry (`tools/test-registry/test-registry.yaml`) has been updated with all affected tests (unless documentation-only). If missing, you must either update it or reject the review with this instruction."
++]
+diff --git a/_bmad/custom/bmad-create-story.toml b/_bmad/custom/bmad-create-story.toml
+new file mode 100644
+index 0000000..6f0474e
+--- /dev/null
++++ b/_bmad/custom/bmad-create-story.toml
+@@ -0,0 +1,4 @@
++[workflow]
++persistent_facts = [
++  "CRITICAL RULE: When creating a story file, you MUST explicitly include references to any relevant ADRs or technical spikes in the story's Acceptance Criteria. This validates the 'Definition of Done' requirement."
++]
+diff --git a/_bmad/custom/bmad-dev-story.toml b/_bmad/custom/bmad-dev-story.toml
+new file mode 100644
+index 0000000..f60a36d
+--- /dev/null
++++ b/_bmad/custom/bmad-dev-story.toml
+@@ -0,0 +1,4 @@
++[workflow]
++persistent_facts = [
++  "CRITICAL RULE: As part of completing development for a story, you MUST update the Central Test Registry (`tools/test-registry/test-registry.yaml`) with all affected tests (unless documentation-only). This satisfies the 'Definition of Done' requirement."
++]
+diff --git a/packages/angular-renderer/src/devtools/devtools-bridge.ts b/packages/angular-renderer/src/devtools/devtools-bridge.ts
+index 3380daf..b84fa9a 100644
+--- a/packages/angular-renderer/src/devtools/devtools-bridge.ts
++++ b/packages/angular-renderer/src/devtools/devtools-bridge.ts
+@@ -77,7 +77,12 @@ let _internalState: unknown = {
+ let _errorTelemetry: ErrorContext[] = [];
+ 
+ export function _injectTestState(state: unknown): void {
+-  _internalState = state;
++  try {
++    _internalState = typeof structuredClone === 'function' ? structuredClone(state) : state;
++  } catch (e) {
++    // Fallback if structuredClone fails (e.g. contains functions)
++    _internalState = state;
++  }
+ }
+ 
+ export function _resetTestState(): void {
+diff --git a/packages/angular-renderer/src/test-setup.ts b/packages/angular-renderer/src/test-setup.ts
+index 544680c..1ffdb65 100644
+--- a/packages/angular-renderer/src/test-setup.ts
++++ b/packages/angular-renderer/src/test-setup.ts
+@@ -6,3 +6,12 @@ import {
+ } from '@angular/platform-browser-dynamic/testing';
+ 
+ getTestBed().initTestEnvironment(BrowserDynamicTestingModule, platformBrowserDynamicTesting());
++
++afterEach(() => {
++  getTestBed().resetTestingModule();
++  jest.clearAllMocks();
++  jest.restoreAllMocks();
++  if (typeof document !== 'undefined') {
++    document.body.innerHTML = '';
++  }
++});
+diff --git a/packages/devtools/src/test-setup.ts b/packages/devtools/src/test-setup.ts
+index 98994fb..2bae39d 100644
+--- a/packages/devtools/src/test-setup.ts
++++ b/packages/devtools/src/test-setup.ts
+@@ -14,32 +14,36 @@ try {
+   }
+ }
+ 
+-afterEach(() => {
+-  getTestBed().resetTestingModule();
+-});
+-
+-// Mock chrome API for tests
+-global.chrome = {
+-  runtime: {
+-    connect: vi.fn(),
+-    sendMessage: vi.fn(),
+-    onConnect: {
+-      addListener: vi.fn(),
+-    },
+-    onMessage: {
+-      addListener: vi.fn(),
++beforeEach(() => {
++  // Mock chrome API for tests
++  global.chrome = {
++    runtime: {
++      connect: vi.fn(),
++      sendMessage: vi.fn(),
++      onConnect: {
++        addListener: vi.fn(),
++      },
++      onMessage: {
++        addListener: vi.fn(),
++      },
++      getURL: vi.fn(),
+     },
+-    getURL: vi.fn(),
+-  },
+-  tabs: {
+-    sendMessage: vi.fn(),
+-  },
+-  devtools: {
+-    panels: {
+-      create: vi.fn(),
++    tabs: {
++      sendMessage: vi.fn(),
+     },
+-    inspectedWindow: {
+-      tabId: 123,
++    devtools: {
++      panels: {
++        create: vi.fn(),
++      },
++      inspectedWindow: {
++        tabId: 123,
++      },
+     },
+-  },
+-} as unknown;
++  } as unknown;
++});
++
++afterEach(() => {
++  getTestBed().resetTestingModule();
++  vi.restoreAllMocks();
++  delete (global as any).chrome;
++});
+diff --git a/tools/test-registry/test-registry.yaml b/tools/test-registry/test-registry.yaml
+index 7d2f5e8..31d86b4 100644
+--- a/tools/test-registry/test-registry.yaml
++++ b/tools/test-registry/test-registry.yaml
+@@ -12,6 +12,12 @@
+ #   last_result:      pass | fail | skipped | unknown (baseline: unknown)
+ #   results:          Map of release tag -> pass | fail | skipped
+ # ==========================================
++# TEST ISOLATION PATTERNS (Enforced per Epic 8):
++#   - Global mocks (e.g. global.chrome) must be scoped inside beforeEach().
++#   - Cleanup (e.g. vi.restoreAllMocks, jest.restoreAllMocks) must run in afterEach().
++#   - Simulated DOM states (document.body.innerHTML) must be reset in afterEach().
++#   - Test states passed via bridges must be cloned (via structuredClone) to prevent cyclic pollution.
++# ==========================================
+ 
+ schema_version: '1.0'
+ generated: '2026-09-02'
+@@ -383,6 +389,7 @@ test_cases:
+     type: unit
+     affected_stories:
+       - 8-1-diagnostics-api-runtime-hooks
++      - retro-8-harden-test-isolation
+     last_result: unknown
+     results: {}
+   - id: devtools-app-component
+@@ -392,5 +399,6 @@ test_cases:
+     type: unit
+     affected_stories:
+       - 8-2-devtools-inspector-ui
++      - retro-8-harden-test-isolation
+     last_result: unknown
+     results: {}

@@ -1,5 +1,5 @@
 # generated: 2026-07-29T21:46:02.464968
-# last_updated: 2026-07-29T21:46:02.464968
+# last_updated: 2026-09-19T14:14:00+05:30
 # project: origo-design
 # project_key: NOKEY
 # tracking_system: file-system
@@ -41,7 +41,7 @@
 # - Retrospective appends its action items to action_items; sprint-status surfaces open ones
 
 generated: 2026-07-29T21:46:02.464968
-last_updated: 2026-09-15T17:35:24+05:30
+last_updated: 2026-09-19T14:14:00+05:30
 project: origo-design
 project_key: NOKEY
 tracking_system: file-system
@@ -109,7 +109,7 @@ development_status:
   epic-8: in-progress
   8-1-diagnostics-api-runtime-hooks: done
   8-2-devtools-inspector-ui: done
-  epic-8-retrospective: optional
+  epic-8-retrospective: done
   epic-9: backlog
   9-1-form-layout-primitives-batch-1: backlog
   9-2-data-presentation-primitives-batch-2: backlog
@@ -129,6 +129,7 @@ development_status:
   retro-7-state-persistence: done
   retro-7-test-registry-backfill: done
   retro-7-dod-update: done
+  retro-8-harden-test-isolation: done
 
 action_items:
   - id: retro-1-cleanup
@@ -208,4 +209,10 @@ action_items:
     status: done
   - id: retro-7-dod-update
     description: "Update Definition of Done: Mandate that test registries must be updated at the time a story implementation concludes, and require explicit reference logging (ADRs/spikes) in story acceptance criteria. (Owner: Alice)"
+    status: done
+  - id: retro-8-harden-test-isolation
+    description: "Harden Test Isolation: Implement strict isolation guards to prevent global state leaks across tests and make test suites error-proof. (Owner: Murat)"
+    status: done
+  - id: retro-8-sync-versioning
+    description: "Synchronize Versioning: Manage and align the versioning of the Playground and the DevTools extension so they strictly match the main core packages. (Owner: Winston)"
     status: done

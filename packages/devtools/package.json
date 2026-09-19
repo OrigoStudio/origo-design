@@ -3,6 +3,8 @@
   "version": "0.0.31",
   "type": "module",
   "dependencies": {
+    "@origo/core": "0.0.30",
+    "@origostudio/cli": "0.0.30",
     "@angular/core": "18.1.0",
     "@angular/common": "18.1.0"
   },
