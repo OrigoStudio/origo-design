@@ -1,0 +1,12 @@
+<textarea
+  [id]="contract().id"
+  [disabled]="computedDisabled()"
+  [readonly]="computedReadonly()"
+  [required]="computedRequired()"
+  [attr.placeholder]="computedPlaceholder()"
+  [attr.rows]="computedRows()"
+  [attr.aria-label]="computedAriaLabel()"
+  [attr.aria-describedby]="computedAriaDescribedBy()"
+  (input)="onInput($event)"
+  [value]="value()"
+></textarea>

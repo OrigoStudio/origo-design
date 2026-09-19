@@ -1,0 +1,36 @@
+:host {
+  display: block;
+}
+
+label {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--origo-spacing-container-padding, 8px);
+  cursor: pointer;
+  font-family: var(--origo-typography-input-font-family, inherit);
+  font-size: var(--origo-typography-input-font-size, 1rem);
+  color: var(--origo-color-text-primary, #333);
+
+  &.disabled {
+    opacity: var(--origo-opacity-disabled, 0.5);
+    cursor: not-allowed;
+  }
+}
+
+input[type='checkbox'] {
+  margin: 0;
+  accent-color: var(--origo-color-focus, #005fcc);
+
+  &:focus-visible {
+    outline: 2px solid var(--origo-color-focus, #005fcc);
+    outline-offset: 2px;
+  }
+
+  &:disabled {
+    cursor: not-allowed;
+  }
+}
+
+.required-indicator {
+  color: var(--origo-color-error, #d32f2f);
+}

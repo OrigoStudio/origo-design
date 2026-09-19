@@ -1,0 +1,54 @@
+:host {
+  display: block;
+}
+
+fieldset {
+  border: none;
+  padding: 0;
+  margin: 0;
+
+  &:disabled {
+    opacity: var(--origo-opacity-disabled, 0.5);
+
+    .radio-label {
+      cursor: not-allowed;
+    }
+  }
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  border: 0;
+}
+
+.radio-options {
+  display: flex;
+  flex-direction: column;
+  gap: var(--origo-spacing-container-padding, 8px);
+}
+
+.radio-label {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--origo-spacing-container-padding, 8px);
+  cursor: pointer;
+  font-family: var(--origo-typography-input-font-family, inherit);
+  font-size: var(--origo-typography-input-font-size, 1rem);
+  color: var(--origo-color-text-primary, #333);
+}
+
+input[type='radio'] {
+  margin: 0;
+  accent-color: var(--origo-color-focus, #005fcc);
+
+  &:focus-visible {
+    outline: 2px solid var(--origo-color-focus, #005fcc);
+    outline-offset: 2px;
+  }
+}
