@@ -12,6 +12,12 @@
 #   last_result:      pass | fail | skipped | unknown (baseline: unknown)
 #   results:          Map of release tag -> pass | fail | skipped
 # ==========================================
+# TEST ISOLATION PATTERNS (Enforced per Epic 8):
+#   - Global mocks (e.g. global.chrome) must be scoped inside beforeEach().
+#   - Cleanup (e.g. vi.restoreAllMocks, jest.restoreAllMocks) must run in afterEach().
+#   - Simulated DOM states (document.body.innerHTML) must be reset in afterEach().
+#   - Test states passed via bridges must be cloned (via structuredClone) to prevent cyclic pollution.
+# ==========================================
 
 schema_version: '1.0'
 generated: '2026-09-02'
@@ -383,6 +389,7 @@ test_cases:
     type: unit
     affected_stories:
       - 8-1-diagnostics-api-runtime-hooks
+      - retro-8-harden-test-isolation
     last_result: unknown
     results: {}
   - id: devtools-app-component
@@ -392,5 +399,6 @@ test_cases:
     type: unit
     affected_stories:
       - 8-2-devtools-inspector-ui
+      - retro-8-harden-test-isolation
     last_result: unknown
     results: {}

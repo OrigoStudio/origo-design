@@ -14,32 +14,36 @@ try {
   }
 }
 
-afterEach(() => {
-  getTestBed().resetTestingModule();
+beforeEach(() => {
+  // Mock chrome API for tests
+  global.chrome = {
+    runtime: {
+      connect: vi.fn(),
+      sendMessage: vi.fn(),
+      onConnect: {
+        addListener: vi.fn(),
+      },
+      onMessage: {
+        addListener: vi.fn(),
+      },
+      getURL: vi.fn(),
+    },
+    tabs: {
+      sendMessage: vi.fn(),
+    },
+    devtools: {
+      panels: {
+        create: vi.fn(),
+      },
+      inspectedWindow: {
+        tabId: 123,
+      },
+    },
+  } as unknown;
 });
 
-// Mock chrome API for tests
-global.chrome = {
-  runtime: {
-    connect: vi.fn(),
-    sendMessage: vi.fn(),
-    onConnect: {
-      addListener: vi.fn(),
-    },
-    onMessage: {
-      addListener: vi.fn(),
-    },
-    getURL: vi.fn(),
-  },
-  tabs: {
-    sendMessage: vi.fn(),
-  },
-  devtools: {
-    panels: {
-      create: vi.fn(),
-    },
-    inspectedWindow: {
-      tabId: 123,
-    },
-  },
-} as unknown;
+afterEach(() => {
+  getTestBed().resetTestingModule();
+  vi.restoreAllMocks();
+  delete (global as any).chrome;
+});

@@ -77,7 +77,12 @@ let _internalState: unknown = {
 let _errorTelemetry: ErrorContext[] = [];
 
 export function _injectTestState(state: unknown): void {
-  _internalState = state;
+  try {
+    _internalState = typeof structuredClone === 'function' ? structuredClone(state) : state;
+  } catch (e) {
+    // Fallback if structuredClone fails (e.g. contains functions)
+    _internalState = state;
+  }
 }
 
 export function _resetTestState(): void {

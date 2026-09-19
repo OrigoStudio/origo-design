@@ -1,0 +1,4 @@
+[workflow]
+persistent_facts = [
+  "CRITICAL RULE: During the code review process, you MUST verify and ensure that the Central Test Registry (`tools/test-registry/test-registry.yaml`) has been updated with all affected tests (unless documentation-only). If missing, you must either update it or reject the review with this instruction."
+]

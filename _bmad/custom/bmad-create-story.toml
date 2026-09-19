@@ -1,0 +1,4 @@
+[workflow]
+persistent_facts = [
+  "CRITICAL RULE: When creating a story file, you MUST explicitly include references to any relevant ADRs or technical spikes in the story's Acceptance Criteria. This validates the 'Definition of Done' requirement."
+]
