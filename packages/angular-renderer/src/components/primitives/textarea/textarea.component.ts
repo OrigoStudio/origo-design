@@ -86,11 +86,11 @@ export class TextareaComponent implements OrigoAdapter<TextareaProps> {
 
   onInput(event: Event) {
     const target = event.target as HTMLTextAreaElement | null;
-    if (!target) return;
+    if (!target || this.computedDisabled() || this.computedReadonly()) return;
 
     const rawValue = target.value;
     const sanitizedValue =
-      this.sanitizer.sanitize(SecurityContext.NONE, rawValue) || rawValue || '';
+      this.sanitizer.sanitize(SecurityContext.HTML, rawValue) || rawValue || '';
 
     if (target.value !== sanitizedValue) {
       target.value = sanitizedValue;

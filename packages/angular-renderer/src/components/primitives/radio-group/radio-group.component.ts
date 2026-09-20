@@ -75,10 +75,11 @@ export class RadioGroupComponent implements OrigoAdapter<RadioGroupProps> {
 
   onChange(event: Event) {
     const target = event.target as HTMLInputElement | null;
-    if (!target || !target.checked) return;
+    if (!target || !target.checked || this.computedDisabled()) return;
 
     const rawValue = target.value;
-    const sanitizedValue = String(rawValue);
+    const sanitizedValue =
+      this.sanitizer.sanitize(SecurityContext.HTML, rawValue) || rawValue || '';
 
     this.value.set(sanitizedValue);
     this.experienceAdapter.updateState(this.contract().id, 'value', sanitizedValue);

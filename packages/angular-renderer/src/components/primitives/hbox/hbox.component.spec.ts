@@ -16,23 +16,35 @@ describe('HBoxComponent', () => {
     component = fixture.componentInstance;
   });
 
-  it('should render correctly and apply styles', () => {
+  it('should apply computed styles for gap, alignment and padding', () => {
     fixture.componentRef.setInput('contract', {
       id: 'hbox-1',
       type: 'HBox',
       props: {
-        gap: 10,
+        gap: '10',
         alignment: 'center',
-        padding: '16px',
+        padding: '16',
       },
     });
     fixture.detectChanges();
 
-    const host = fixture.nativeElement;
-    expect(host.style.gap).toBe('10px');
-    expect(host.style.alignItems).toBe('center');
-    expect(host.style.paddingInline).toBe('16px');
-    expect(host.style.paddingBlock).toBe('16px');
+    expect(fixture.nativeElement.style.getPropertyValue('gap')).toBe('10px');
+    expect(fixture.nativeElement.style.getPropertyValue('align-items')).toBe('center');
+    expect(fixture.nativeElement.style.getPropertyValue('padding-inline')).toBe('16px');
+    expect(fixture.nativeElement.style.getPropertyValue('padding-block')).toBe('16px');
+  });
+
+  it('should handle null props and empty children gracefully', () => {
+    fixture.componentRef.setInput('contract', {
+      id: 'hbox-2',
+      type: 'HBox',
+      props: null,
+      children: [],
+    } as any);
+    fixture.detectChanges();
+
+    expect(component.vc()).toBeTruthy();
+    expect(fixture.nativeElement.style.getPropertyValue('gap')).toBe('');
   });
 
   it('should handle missing props', () => {

@@ -48,9 +48,7 @@ export class HBoxComponent implements OrigoAdapter<HBoxProps>, ContainerComponen
     const gap = this.contract().props?.gap;
     if (gap === undefined || gap === null || gap === '') return undefined;
     const num = Number(gap);
-    if (!isNaN(num)) return `${num}px`;
-    const str = String(gap);
-    return /^[0-9.]+(px|em|rem|%|vh|vw)$/.test(str) || str.startsWith('var(') ? str : undefined;
+    return !isNaN(num) ? `${num}px` : String(gap);
   });
 
   computedAlignment = computed(() => {
@@ -73,8 +71,6 @@ export class HBoxComponent implements OrigoAdapter<HBoxProps>, ContainerComponen
     const padding = this.contract().props?.padding;
     if (padding === undefined || padding === null || padding === '') return undefined;
     const num = Number(padding);
-    if (!isNaN(num)) return `${num}px`;
-    const str = String(padding);
-    return /^[0-9.]+(px|em|rem|%|vh|vw)$/.test(str) || str.startsWith('var(') ? str : undefined;
+    return !isNaN(num) ? `${num}px` : String(padding);
   });
 }

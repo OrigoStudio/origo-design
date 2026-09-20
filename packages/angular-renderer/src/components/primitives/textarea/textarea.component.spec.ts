@@ -90,12 +90,12 @@ describe('TextareaComponent', () => {
     textareaEl!.value = '<script>alert("xss")</script>clean text';
     textareaEl!.dispatchEvent(new Event('input'));
 
-    expect(component.value()).toBe('<script>alert("xss")</script>clean text');
-    expect(textareaEl!.value).toBe('<script>alert("xss")</script>clean text');
+    expect(component.value()).toBe('clean text');
+    expect(textareaEl!.value).toBe('clean text');
     expect(mockExperienceAdapter.updateState).toHaveBeenCalledWith(
       'textarea-5',
       'value',
-      '<script>alert("xss")</script>clean text'
+      'clean text'
     );
   });
 });

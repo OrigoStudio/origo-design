@@ -52,7 +52,9 @@ export class SelectComponent implements OrigoAdapter<SelectProps> {
 
   computedOptions = computed(() => {
     const opts = this.contract().props?.options;
-    return Array.isArray(opts) ? opts.filter(o => o != null && o.value != null) : [];
+    return Array.isArray(opts)
+      ? opts.filter(o => o != null && o.value != null && o.label != null)
+      : [];
   });
   computedPlaceholder = computed(() => this.contract().props?.placeholder ?? '');
   computedDisabled = computed(() => !!this.contract().props?.disabled);
@@ -83,10 +85,11 @@ export class SelectComponent implements OrigoAdapter<SelectProps> {
 
   onChange(event: Event) {
     const target = event.target as HTMLSelectElement | null;
-    if (!target) return;
+    if (!target || this.computedDisabled()) return;
 
     const rawValue = target.value;
-    const sanitizedValue = String(rawValue);
+    const sanitizedValue =
+      this.sanitizer.sanitize(SecurityContext.HTML, rawValue) || rawValue || '';
 
     if (target.value !== sanitizedValue) {
       target.value = sanitizedValue;

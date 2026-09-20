@@ -68,4 +68,18 @@ describe('FormFieldComponent', () => {
 
     expect(component.vc()).toBeTruthy();
   });
+
+  it('should handle null props and empty children gracefully', () => {
+    fixture.componentRef.setInput('contract', {
+      id: 'ff-4',
+      type: 'FormField',
+      props: null,
+      children: [],
+    } as any);
+    fixture.detectChanges();
+
+    expect(component.vc()).toBeTruthy();
+    const label = fixture.nativeElement.shadowRoot!.querySelector('origo-label');
+    expect(label).toBeNull();
+  });
 });

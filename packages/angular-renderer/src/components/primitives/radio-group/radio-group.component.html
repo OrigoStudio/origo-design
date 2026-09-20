@@ -1,5 +1,5 @@
 <fieldset [disabled]="computedDisabled()" [attr.aria-label]="computedAriaLabel()">
-  <legend class="visually-hidden">{{ computedAriaLabel() || 'Radio Group' }}</legend>
+  <legend class="visually-hidden">{{ computedAriaLabel() ?? 'Radio Group' }}</legend>
 
   <div class="radio-options">
     @for (option of computedOptions(); track option.value; let i = $index) {

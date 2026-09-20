@@ -67,7 +67,7 @@ export class CheckboxComponent implements OrigoAdapter<CheckboxProps> {
 
   onChange(event: Event) {
     const target = event.target as HTMLInputElement | null;
-    if (!target) return;
+    if (!target || this.computedDisabled()) return;
 
     const isChecked = target.checked;
     this.checked.set(isChecked);
