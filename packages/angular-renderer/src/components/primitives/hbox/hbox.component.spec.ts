@@ -31,7 +31,8 @@ describe('HBoxComponent', () => {
     const host = fixture.nativeElement;
     expect(host.style.gap).toBe('10px');
     expect(host.style.alignItems).toBe('center');
-    expect(host.style.padding).toBe('16px');
+    expect(host.style.paddingInline).toBe('16px');
+    expect(host.style.paddingBlock).toBe('16px');
   });
 
   it('should handle missing props', () => {
@@ -43,9 +44,9 @@ describe('HBoxComponent', () => {
     fixture.detectChanges();
 
     const host = fixture.nativeElement;
-    expect(host.style.gap).toBe('');
+    expect(host.style.gap).toBeFalsy();
     expect(host.style.alignItems).toBe('stretch');
-    expect(host.style.padding).toBe('');
+    expect(host.style.paddingInline).toBeFalsy();
   });
 
   it('should expose ViewContainerRef', () => {

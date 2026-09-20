@@ -29,6 +29,7 @@ export interface FormFieldProps {
   host: {
     '[class.origo-form-field]': 'true',
     '[class.has-error]': '!!computedError()',
+    '[attr.data-testid]': 'contract().id',
   },
 })
 export class FormFieldComponent implements OrigoAdapter<FormFieldProps>, ContainerComponent {
@@ -51,12 +52,14 @@ export class FormFieldComponent implements OrigoAdapter<FormFieldProps>, Contain
 
   labelContract = computed<InteractionContract<LabelProps>>(() => {
     const parentId = this.contract().id;
+    const childId = this.contract().children?.[0]?.id;
     return {
       id: `${parentId}-label`,
       type: 'Label',
       props: {
         text: this.computedLabel(),
         required: this.computedRequired(),
+        for: childId,
       },
     };
   });

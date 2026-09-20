@@ -57,8 +57,11 @@ export class CheckboxComponent implements OrigoAdapter<CheckboxProps> {
 
   constructor() {
     effect(() => {
-      const contractVal = this.contract().props?.checked;
-      untracked(() => this.checked.set(!!contractVal));
+      const contractVal = !!this.contract().props?.checked;
+      untracked(() => {
+        if (contractVal === this.checked()) return;
+        this.checked.set(contractVal);
+      });
     });
   }
 

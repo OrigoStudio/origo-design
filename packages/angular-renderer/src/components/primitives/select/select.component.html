@@ -5,12 +5,11 @@
   [attr.aria-label]="computedAriaLabel()"
   [attr.aria-describedby]="computedAriaDescribedBy()"
   (change)="onChange($event)"
-  [value]="value()"
 >
   @if (computedPlaceholder()) {
     <option value="" disabled selected hidden>{{ computedPlaceholder() }}</option>
   }
   @for (option of computedOptions(); track option.value) {
-    <option [value]="option.value">{{ option.label }}</option>
+    <option [value]="option.value" [selected]="value() === option.value">{{ option.label }}</option>
   }
 </select>

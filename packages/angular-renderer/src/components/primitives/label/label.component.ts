@@ -24,6 +24,7 @@ export interface LabelProps {
   encapsulation: ViewEncapsulation.ShadowDom,
   host: {
     '[class.origo-label]': 'true',
+    '[attr.data-testid]': 'contract().id',
   },
 })
 export class LabelComponent implements OrigoAdapter<LabelProps> {

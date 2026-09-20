@@ -55,7 +55,7 @@ export class TextareaComponent implements OrigoAdapter<TextareaProps> {
   computedPlaceholder = computed(() => this.contract().props?.placeholder ?? '');
   computedRows = computed(() => {
     const rows = this.contract().props?.rows;
-    return typeof rows === 'number' && rows > 0 ? rows : 3;
+    return typeof rows === 'number' && rows > 0 ? Math.max(1, Math.round(rows)) : 3;
   });
   computedDisabled = computed(() => !!this.contract().props?.disabled);
   computedReadonly = computed(() => !!this.contract().props?.readonly);
@@ -75,9 +75,12 @@ export class TextareaComponent implements OrigoAdapter<TextareaProps> {
   constructor() {
     effect(() => {
       const contractVal = this.contract().props?.value;
-      untracked(() =>
-        this.value.set(contractVal !== undefined && contractVal !== null ? String(contractVal) : '')
-      );
+      const parsedVal =
+        contractVal !== undefined && contractVal !== null ? String(contractVal) : '';
+      untracked(() => {
+        if (parsedVal === this.value()) return;
+        this.value.set(parsedVal);
+      });
     });
   }
 
@@ -86,7 +89,8 @@ export class TextareaComponent implements OrigoAdapter<TextareaProps> {
     if (!target) return;
 
     const rawValue = target.value;
-    const sanitizedValue = this.sanitizer.sanitize(SecurityContext.HTML, rawValue) || '';
+    const sanitizedValue =
+      this.sanitizer.sanitize(SecurityContext.NONE, rawValue) || rawValue || '';
 
     if (target.value !== sanitizedValue) {
       target.value = sanitizedValue;

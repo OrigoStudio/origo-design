@@ -26,6 +26,6 @@ textarea {
   }
 
   &[readonly] {
-    background-color: var(--origo-color-surface-background, #f5f5f5);
+    background-color: var(--origo-color-surface-readonly, #f9f9f9);
   }
 }

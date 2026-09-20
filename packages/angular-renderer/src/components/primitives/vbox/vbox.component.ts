@@ -25,9 +25,11 @@ export interface VBoxProps {
   encapsulation: ViewEncapsulation.ShadowDom,
   host: {
     '[class.origo-vbox]': 'true',
+    '[attr.data-testid]': 'contract().id',
     '[style.gap]': 'computedGap()',
     '[style.align-items]': 'computedAlignment()',
-    '[style.padding]': 'computedPadding()',
+    '[style.padding-inline]': 'computedPadding()',
+    '[style.padding-block]': 'computedPadding()',
   },
 })
 export class VBoxComponent implements OrigoAdapter<VBoxProps>, ContainerComponent {
@@ -46,7 +48,9 @@ export class VBoxComponent implements OrigoAdapter<VBoxProps>, ContainerComponen
     const gap = this.contract().props?.gap;
     if (gap === undefined || gap === null || gap === '') return undefined;
     const num = Number(gap);
-    return !isNaN(num) ? `${num}px` : String(gap);
+    if (!isNaN(num)) return `${num}px`;
+    const str = String(gap);
+    return /^[0-9.]+(px|em|rem|%|vh|vw)$/.test(str) || str.startsWith('var(') ? str : undefined;
   });
 
   computedAlignment = computed(() => {
@@ -69,6 +73,8 @@ export class VBoxComponent implements OrigoAdapter<VBoxProps>, ContainerComponen
     const padding = this.contract().props?.padding;
     if (padding === undefined || padding === null || padding === '') return undefined;
     const num = Number(padding);
-    return !isNaN(num) ? `${num}px` : String(padding);
+    if (!isNaN(num)) return `${num}px`;
+    const str = String(padding);
+    return /^[0-9.]+(px|em|rem|%|vh|vw)$/.test(str) || str.startsWith('var(') ? str : undefined;
   });
 }

@@ -13,3 +13,4 @@ export * from './components/primitives/textarea/textarea.component';
 export * from './components/primitives/hbox/hbox.component';
 export * from './components/primitives/label/label.component';
 export * from './components/primitives/form-field/form-field.component';
+export * from './lib/primitives.provider';

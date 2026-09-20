@@ -7,7 +7,7 @@
 </div>
 
 @if (computedError()) {
-  <div class="form-field-error" aria-live="polite">{{ computedError() }}</div>
+  <div class="form-field-error" role="alert">{{ computedError() }}</div>
 } @else if (computedHint()) {
   <div class="form-field-hint">{{ computedHint() }}</div>
 }

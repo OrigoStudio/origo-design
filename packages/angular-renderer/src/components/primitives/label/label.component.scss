@@ -5,7 +5,7 @@
 label {
   display: inline-flex;
   align-items: center;
-  gap: 4px;
+  gap: var(--origo-spacing-xs, 4px);
   font-family: var(--origo-typography-input-font-family, inherit);
   font-size: var(--origo-typography-input-font-size, 1rem);
   color: var(--origo-color-text-primary, #333);

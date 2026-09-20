@@ -64,9 +64,12 @@ export class RadioGroupComponent implements OrigoAdapter<RadioGroupProps> {
   constructor() {
     effect(() => {
       const contractVal = this.contract().props?.value;
-      untracked(() =>
-        this.value.set(contractVal !== undefined && contractVal !== null ? String(contractVal) : '')
-      );
+      const parsedVal =
+        contractVal !== undefined && contractVal !== null ? String(contractVal) : '';
+      untracked(() => {
+        if (parsedVal === this.value()) return;
+        this.value.set(parsedVal);
+      });
     });
   }
 
@@ -75,7 +78,7 @@ export class RadioGroupComponent implements OrigoAdapter<RadioGroupProps> {
     if (!target || !target.checked) return;
 
     const rawValue = target.value;
-    const sanitizedValue = this.sanitizer.sanitize(SecurityContext.HTML, rawValue) || '';
+    const sanitizedValue = String(rawValue);
 
     this.value.set(sanitizedValue);
     this.experienceAdapter.updateState(this.contract().id, 'value', sanitizedValue);

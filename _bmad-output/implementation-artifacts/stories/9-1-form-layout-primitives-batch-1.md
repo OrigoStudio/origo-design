@@ -311,6 +311,7 @@ export * from './components/primitives/form-field/form-field.component';
 - Updated `index.ts` to export new components.
 - Added Jest unit tests and axe-core Playwright accessibility tests for all new components.
 - Verified test, lint, and build.
+- **Note**: Story implementation complies with ADR-EPIC7-WEB-WORKER-CSP.md. Batch 1 primitives do not host iframes or sandboxed content (N/A).
 
 ## Dev Agent Record
 - Note: Used `provideZonelessChangeDetection` instead of `provideExperimentalZonelessChangeDetection` since the latter has been removed or renamed in this version of `@angular/core`.
@@ -347,3 +348,23 @@ export * from './components/primitives/form-field/form-field.component';
 - `packages/angular-renderer/src/components/primitives/primitives.a11y.pw.ts`
 - `packages/angular-renderer/src/lib/renderer.tokens.ts`
 - `packages/angular-renderer/src/index.ts`
+
+### Review Findings
+- [x] [Review][Patch] Missing `provideOrigo9Primitives()` batch provider function and export [packages/angular-renderer/src/lib/renderer.tokens.ts]
+- [x] [Review][Patch] `FormFieldComponent` uses `aria-live="polite"` instead of required `role="alert"` [packages/angular-renderer/src/components/primitives/form-field/form-field.component.html]
+- [x] [Review][Patch] `RadioGroupComponent` conditionally renders `<legend>` based on `aria-label` [packages/angular-renderer/src/components/primitives/radio-group/radio-group.component.html]
+- [x] [Review][Patch] `HBoxComponent` uses physical padding styles instead of logical CSS properties [packages/angular-renderer/src/components/primitives/hbox/hbox.component.ts]
+- [x] [Review][Patch] Missing host `[attr.data-testid]` on `HBoxComponent`, `LabelComponent`, and `FormFieldComponent`
+- [x] [Review][Patch] Overzealous HTML sanitization on discrete string values (`Select`, `RadioGroup`, `Textarea`)
+- [x] [Review][Patch] Dual write path in `CheckboxComponent` and `RadioGroupComponent` via effect and onChange handler
+- [x] [Review][Patch] `FormFieldComponent` label `for` attribute not bound to child input `id` [packages/angular-renderer/src/components/primitives/form-field/form-field.component.ts]
+- [x] [Review][Patch] Playwright tests use raw HTML fixtures that bypass Shadow DOM [packages/angular-renderer/src/components/primitives/primitives.a11y.pw.ts]
+- [x] [Review][Patch] `HBoxComponent` tests assert on empty style property behavior unreliably, and allows invalid CSS string inputs [packages/angular-renderer/src/components/primitives/hbox/hbox.component.ts]
+- [x] [Review][Patch] Broken fallback for `readonly` background token [packages/angular-renderer/src/components/primitives/textarea/textarea.component.scss]
+- [x] [Review][Patch] `[value]` binding on `<select>` without FormsModule does not pre-select options [packages/angular-renderer/src/components/primitives/select/select.component.html]
+- [x] [Review][Patch] `SelectComponent.ts` options array may contain undefined/null items [packages/angular-renderer/src/components/primitives/select/select.component.ts]
+- [x] [Review][Patch] `TextareaComponent` allows float `rows` values instead of integer [packages/angular-renderer/src/components/primitives/textarea/textarea.component.ts]
+- [x] [Review][Patch] `RadioGroupComponent` child `<input type="radio">` elements lack `id` attributes [packages/angular-renderer/src/components/primitives/radio-group/radio-group.component.html]
+- [x] [Review][Patch] Missing Playwright accessibility tests for `HBoxComponent` and `LabelComponent` [packages/angular-renderer/src/components/primitives/primitives.a11y.pw.ts]
+- [x] [Review][Patch] Hardcoded visual values in `label.component.scss` and `form-field.component.scss`
+- [x] [Review][Patch] Missing explicit acknowledgment of `ADR-EPIC7-WEB-WORKER-CSP.md` in story completion record

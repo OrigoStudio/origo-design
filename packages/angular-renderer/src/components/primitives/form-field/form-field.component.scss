@@ -13,8 +13,8 @@
 .form-field-error,
 .form-field-hint {
   font-family: var(--origo-typography-input-font-family, inherit);
-  font-size: 0.875rem;
-  margin-top: 4px;
+  font-size: var(--origo-typography-input-helper-font-size, 0.875rem);
+  margin-top: var(--origo-spacing-xs, 4px);
 }
 
 .form-field-error {
