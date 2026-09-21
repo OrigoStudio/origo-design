@@ -271,6 +271,69 @@ test_cases:
       - 5-3-core-primitive-implementation
     last_result: unknown
     results: {}
+  - id: renderer-primitive-select
+    description: 'Verifies Select primitive rendering'
+    package: '@origo/angular-renderer'
+    spec_file: packages/angular-renderer/src/components/primitives/select/select.component.spec.ts
+    type: unit
+    affected_stories:
+      - 9-1-form-layout-primitives-batch-1
+    last_result: unknown
+    results: {}
+  - id: renderer-primitive-checkbox
+    description: 'Verifies Checkbox primitive rendering'
+    package: '@origo/angular-renderer'
+    spec_file: packages/angular-renderer/src/components/primitives/checkbox/checkbox.component.spec.ts
+    type: unit
+    affected_stories:
+      - 9-1-form-layout-primitives-batch-1
+    last_result: unknown
+    results: {}
+  - id: renderer-primitive-radio-group
+    description: 'Verifies RadioGroup primitive rendering'
+    package: '@origo/angular-renderer'
+    spec_file: packages/angular-renderer/src/components/primitives/radio-group/radio-group.component.spec.ts
+    type: unit
+    affected_stories:
+      - 9-1-form-layout-primitives-batch-1
+    last_result: unknown
+    results: {}
+  - id: renderer-primitive-textarea
+    description: 'Verifies Textarea primitive rendering'
+    package: '@origo/angular-renderer'
+    spec_file: packages/angular-renderer/src/components/primitives/textarea/textarea.component.spec.ts
+    type: unit
+    affected_stories:
+      - 9-1-form-layout-primitives-batch-1
+    last_result: unknown
+    results: {}
+  - id: renderer-primitive-hbox
+    description: 'Verifies HBox layout primitive'
+    package: '@origo/angular-renderer'
+    spec_file: packages/angular-renderer/src/components/primitives/hbox/hbox.component.spec.ts
+    type: unit
+    affected_stories:
+      - 9-1-form-layout-primitives-batch-1
+    last_result: unknown
+    results: {}
+  - id: renderer-primitive-label
+    description: 'Verifies Label primitive rendering'
+    package: '@origo/angular-renderer'
+    spec_file: packages/angular-renderer/src/components/primitives/label/label.component.spec.ts
+    type: unit
+    affected_stories:
+      - 9-1-form-layout-primitives-batch-1
+    last_result: unknown
+    results: {}
+  - id: renderer-primitive-form-field
+    description: 'Verifies FormField container primitive'
+    package: '@origo/angular-renderer'
+    spec_file: packages/angular-renderer/src/components/primitives/form-field/form-field.component.spec.ts
+    type: unit
+    affected_stories:
+      - 9-1-form-layout-primitives-batch-1
+    last_result: unknown
+    results: {}
   - id: e2e-quickstart-workflow
     description: 'End-to-End CLI to Playground Workflow'
     package: 'origo-e2e'

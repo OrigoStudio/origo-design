@@ -314,3 +314,9 @@
 ## Deferred from: code review of 8-1-diagnostics-api-runtime-hooks (2026-09-15)
 - [x] [Review][Defer] Spec path typo — `packages/origo-angular-renderer` vs `packages/angular-renderer`. [packages/angular-renderer/src/devtools/devtools-bridge.ts] — deferred, pre-existing
 - Unmemoized State Getter Causes Performance Overhead in Dev Mode [packages/angular-renderer/src/devtools/devtools-bridge.ts] — deferred, pre-existing
+
+## Deferred from: code review of 9-1-form-layout-primitives-batch-1.md (2026-09-20)
+
+- Playwright accessibility tests mock raw HTML rather than rendering actual Angular components [packages/angular-renderer/src/components/primitives/primitives.a11y.pw.ts] — Playwright component harness not set up yet.
+- `primitives.provider.ts` named `provideOrigo9Primitives` might conflict in future batches [packages/angular-renderer/src/lib/primitives.provider.ts] — acceptable for now.
+- `FormFieldComponent.spec.ts` asserts on shadow DOM custom elements in JSDOM [packages/angular-renderer/src/components/primitives/form-field/form-field.component.spec.ts] — acceptable for now.

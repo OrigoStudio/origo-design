@@ -1,0 +1,26 @@
+:host {
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+  margin-bottom: var(--origo-spacing-container-padding, 16px);
+}
+
+.form-field-control {
+  display: flex;
+  flex-direction: column;
+}
+
+.form-field-error,
+.form-field-hint {
+  font-family: var(--origo-typography-input-font-family, inherit);
+  font-size: var(--origo-typography-input-helper-font-size, 0.875rem);
+  margin-top: var(--origo-spacing-xs, 4px);
+}
+
+.form-field-error {
+  color: var(--origo-color-error, #d32f2f);
+}
+
+.form-field-hint {
+  color: var(--origo-color-text-secondary, #666);
+}

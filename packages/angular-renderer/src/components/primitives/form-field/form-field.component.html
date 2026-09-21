@@ -1,0 +1,13 @@
+@if (computedLabel()) {
+  <origo-label [contract]="labelContract()"></origo-label>
+}
+
+<div class="form-field-control">
+  <ng-container #vc></ng-container>
+</div>
+
+@if (computedError()) {
+  <div class="form-field-error" role="alert">{{ computedError() }}</div>
+} @else if (computedHint()) {
+  <div class="form-field-hint">{{ computedHint() }}</div>
+}

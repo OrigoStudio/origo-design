@@ -27,7 +27,8 @@ describe('VBoxComponent', () => {
     componentRef.setInput('contract', { id: '1', type: 'vbox', props: { padding: 16 } });
     fixture.detectChanges();
     const element = fixture.nativeElement as HTMLElement;
-    expect(element.style.padding).toBe('16px');
+    expect(element.style.paddingInline).toBe('16px');
+    expect(element.style.paddingBlock).toBe('16px');
   });
 
   it('should apply alignment flex-end', () => {

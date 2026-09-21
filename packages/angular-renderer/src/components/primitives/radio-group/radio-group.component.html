@@ -1,0 +1,20 @@
+<fieldset [disabled]="computedDisabled()" [attr.aria-label]="computedAriaLabel()">
+  <legend class="visually-hidden">{{ computedAriaLabel() ?? 'Radio Group' }}</legend>
+
+  <div class="radio-options">
+    @for (option of computedOptions(); track option.value; let i = $index) {
+      <label class="radio-label">
+        <input
+          type="radio"
+          [id]="contract().id + '-' + i"
+          [name]="'rg-' + contract().id"
+          [value]="option.value"
+          [checked]="value() === option.value"
+          [required]="computedRequired()"
+          (change)="onChange($event)"
+        />
+        <span>{{ option.label }}</span>
+      </label>
+    }
+  </div>
+</fieldset>

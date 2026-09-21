@@ -10,21 +10,21 @@ import {
 import { InteractionContract } from '@origo/core';
 import { OrigoAdapter, ContainerComponent } from '../../../adapters/web/adapter';
 
-export interface VBoxProps {
+export interface HBoxProps {
   gap?: number | string;
   alignment?: 'start' | 'center' | 'end' | 'stretch';
   padding?: number | string;
 }
 
 @Component({
-  selector: 'origo-vbox',
+  selector: 'origo-hbox',
   standalone: true,
-  templateUrl: './vbox.component.html',
-  styleUrls: ['./vbox.component.scss'],
+  templateUrl: './hbox.component.html',
+  styleUrls: ['./hbox.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.ShadowDom,
   host: {
-    '[class.origo-vbox]': 'true',
+    '[class.origo-hbox]': 'true',
     '[attr.data-testid]': 'contract().id',
     '[style.gap]': 'computedGap()',
     '[style.align-items]': 'computedAlignment()',
@@ -32,7 +32,7 @@ export interface VBoxProps {
     '[style.padding-block]': 'computedPadding()',
   },
 })
-export class VBoxComponent implements OrigoAdapter<VBoxProps>, ContainerComponent {
+export class HBoxComponent implements OrigoAdapter<HBoxProps>, ContainerComponent {
   static readonly contractSchema = {
     gap: 'string',
     alignment: 'string',
@@ -40,7 +40,7 @@ export class VBoxComponent implements OrigoAdapter<VBoxProps>, ContainerComponen
   };
   static readonly strictContract = false;
 
-  contract = input.required<InteractionContract<VBoxProps>>();
+  contract = input.required<InteractionContract<HBoxProps>>();
 
   vc = viewChild.required('vc', { read: ViewContainerRef });
 

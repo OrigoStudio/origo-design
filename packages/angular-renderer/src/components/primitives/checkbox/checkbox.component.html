@@ -1,0 +1,15 @@
+<label [for]="contract().id" [class.disabled]="computedDisabled()">
+  <input
+    type="checkbox"
+    [id]="contract().id"
+    [disabled]="computedDisabled()"
+    [required]="computedRequired()"
+    [attr.aria-label]="computedAriaLabel()"
+    (change)="onChange($event)"
+    [checked]="checked()"
+  />
+  <span class="label-text">{{ computedLabel() }}</span>
+  @if (computedRequired()) {
+    <span class="required-indicator" aria-hidden="true">*</span>
+  }
+</label>

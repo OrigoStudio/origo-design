@@ -1,0 +1,26 @@
+:host {
+  display: block;
+}
+
+select {
+  display: block;
+  width: 100%;
+  font-family: var(--origo-typography-input-font-family, inherit);
+  font-size: var(--origo-typography-input-font-size, 1rem);
+  color: var(--origo-color-text-primary, #333);
+  background-color: var(--origo-color-surface-background, #fff);
+  border: 1px solid var(--origo-color-border-default, #ccc);
+  border-radius: var(--origo-radius-sm, 4px);
+  padding: var(--origo-spacing-container-padding, 8px);
+  box-sizing: border-box;
+
+  &:focus {
+    outline: 2px solid var(--origo-color-focus, #005fcc);
+    outline-offset: 2px;
+  }
+
+  &:disabled {
+    opacity: var(--origo-opacity-disabled, 0.5);
+    cursor: not-allowed;
+  }
+}
