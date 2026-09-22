@@ -7,6 +7,9 @@ import { TextareaComponent } from '../components/primitives/textarea/textarea.co
 import { HBoxComponent } from '../components/primitives/hbox/hbox.component';
 import { LabelComponent } from '../components/primitives/label/label.component';
 import { FormFieldComponent } from '../components/primitives/form-field/form-field.component';
+import { DataGridComponent } from '../components/primitives/data-grid/data-grid.component';
+import { ListComponent } from '../components/primitives/list/list.component';
+import { CardComponent } from '../components/primitives/card/card.component';
 
 export function provideOrigo9Primitives(): EnvironmentProviders {
   return makeEnvironmentProviders([
@@ -20,6 +23,9 @@ export function provideOrigo9Primitives(): EnvironmentProviders {
         m.set('HBox', HBoxComponent);
         m.set('Label', LabelComponent);
         m.set('FormField', FormFieldComponent);
+        m.set('DataGrid', DataGridComponent);
+        m.set('List', ListComponent);
+        m.set('Card', CardComponent);
         return m;
       },
       deps: [RENDERER_REGISTRY],

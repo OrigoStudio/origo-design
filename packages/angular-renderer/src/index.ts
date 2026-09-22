@@ -14,3 +14,6 @@ export * from './components/primitives/hbox/hbox.component';
 export * from './components/primitives/label/label.component';
 export * from './components/primitives/form-field/form-field.component';
 export * from './lib/primitives.provider';
+export * from './components/primitives/data-grid/data-grid.component';
+export * from './components/primitives/list/list.component';
+export * from './components/primitives/card/card.component';

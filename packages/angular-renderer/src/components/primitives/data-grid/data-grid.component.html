@@ -1,0 +1,68 @@
+<div
+  class="origo-data-grid-container"
+  [class.disabled]="computedDisabled()"
+  [attr.aria-describedby]="computedAriaDescribedBy()"
+>
+  <table>
+    <thead>
+      <tr>
+        @for (col of computedColumns(); track col.key) {
+          <th
+            [attr.aria-sort]="
+              col.sortable && currentSortKey() === col.key
+                ? sortDir() === 'asc'
+                  ? 'ascending'
+                  : 'descending'
+                : null
+            "
+            (click)="col.sortable ? onSort(col.key) : null"
+            (keydown.enter)="col.sortable ? onSort(col.key) : null"
+            (keydown.space)="col.sortable ? onSort(col.key) : null"
+            [class.sortable]="col.sortable"
+            [attr.tabindex]="col.sortable ? 0 : null"
+            [attr.role]="col.sortable ? 'button' : null"
+          >
+            {{ col.label }}
+          </th>
+        }
+      </tr>
+    </thead>
+    <tbody>
+      @for (row of computedRows(); track row['id'] ?? $index) {
+        <tr
+          tabindex="0"
+          role="button"
+          (click)="onRowSelect(row['id'] ?? row['key'] ?? row['_id'] ?? $index)"
+          (keydown.enter)="onRowSelect(row['id'] ?? row['key'] ?? row['_id'] ?? $index)"
+          (keydown.space)="onRowSelect(row['id'] ?? row['key'] ?? row['_id'] ?? $index)"
+        >
+          @for (col of computedColumns(); track col.key) {
+            <td>{{ isObject(row[col.key]) ? (row[col.key] | json) : row[col.key] }}</td>
+          }
+        </tr>
+      }
+    </tbody>
+  </table>
+
+  @if (computedTotalRows() > 0) {
+    <div class="origo-data-grid-pagination">
+      <button
+        (click)="onPageChange(computedCurrentPage() - 1)"
+        [disabled]="computedCurrentPage() <= 1 || computedDisabled()"
+        aria-label="Previous Page"
+      >
+        Previous
+      </button>
+      <span class="page-info">
+        Page {{ computedCurrentPage() }} of {{ computedTotalPages() }}
+      </span>
+      <button
+        (click)="onPageChange(computedCurrentPage() + 1)"
+        [disabled]="computedCurrentPage() >= computedTotalPages() || computedDisabled()"
+        aria-label="Next Page"
+      >
+        Next
+      </button>
+    </div>
+  }
+</div>

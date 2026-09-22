@@ -1,0 +1,18 @@
+<div class="origo-card-container">
+  @if (computedImageUrl()) {
+    <div class="origo-card-image">
+      <img [src]="computedImageUrl()" [attr.alt]="computedImageAlt()" />
+    </div>
+  }
+
+  @if (computedTitle() !== undefined || computedSubtitle() !== undefined) {
+    <div class="origo-card-content">
+      @if (computedTitle() !== undefined && computedTitle() !== '') {
+        <div class="origo-card-title" role="heading" aria-level="3">{{ computedTitle() }}</div>
+      }
+      @if (computedSubtitle() !== undefined && computedSubtitle() !== '') {
+        <div class="origo-card-subtitle">{{ computedSubtitle() }}</div>
+      }
+    </div>
+  }
+</div>

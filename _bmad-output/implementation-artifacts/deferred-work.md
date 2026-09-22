@@ -320,3 +320,6 @@
 - Playwright accessibility tests mock raw HTML rather than rendering actual Angular components [packages/angular-renderer/src/components/primitives/primitives.a11y.pw.ts] — Playwright component harness not set up yet.
 - `primitives.provider.ts` named `provideOrigo9Primitives` might conflict in future batches [packages/angular-renderer/src/lib/primitives.provider.ts] — acceptable for now.
 - `FormFieldComponent.spec.ts` asserts on shadow DOM custom elements in JSDOM [packages/angular-renderer/src/components/primitives/form-field/form-field.component.spec.ts] — acceptable for now.
+
+## Deferred from: code review (2026-09-21)
+- Playwright accessibility tests use raw HTML fixtures that bypass Shadow DOM [packages/angular-renderer/src/components/primitives/primitives.a11y.pw.ts:161] — pre-existing acceptable pattern per spec notes.
