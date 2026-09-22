@@ -1,3 +1,13 @@
+## 0.0.35 (2026-09-22)
+
+### 🚀 Features
+
+- add breadcrumbs, sidebar, and tabs primitive components with accessibility tests to angular-renderer ([a801763](https://github.com/OrigoStudio/origo-design/commit/a801763))
+
+### ❤️ Thank You
+
+- Hardik Patel @hardikpatelse
+
 ## 0.0.34 (2026-09-22)
 
 ### 🚀 Features
