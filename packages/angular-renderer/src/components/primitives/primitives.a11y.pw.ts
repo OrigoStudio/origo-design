@@ -158,4 +158,55 @@ test.describe('Primitives Accessibility', () => {
     const accessibilityScanResults = await new AxeBuilder({ page }).analyze();
     expect(accessibilityScanResults.violations).toEqual([]);
   });
+
+  test('DataGrid should not have any automatically detectable accessibility issues', async ({
+    page,
+  }) => {
+    await page.setContent(`
+      <main>
+        <div id="host"></div>
+        <script>
+          const host = document.getElementById('host');
+          const shadow = host.attachShadow({mode: 'open'});
+          shadow.innerHTML = '<div class="origo-data-grid-container"><table aria-label="Data Grid"><thead><tr><th aria-sort="ascending">Col 1</th></tr></thead><tbody><tr><td>Val 1</td></tr></tbody></table></div>';
+        </script>
+      </main>
+    `);
+    const accessibilityScanResults = await new AxeBuilder({ page }).analyze();
+    expect(accessibilityScanResults.violations).toEqual([]);
+  });
+
+  test('List should not have any automatically detectable accessibility issues', async ({
+    page,
+  }) => {
+    await page.setContent(`
+      <main>
+        <div id="host"></div>
+        <script>
+          const host = document.getElementById('host');
+          const shadow = host.attachShadow({mode: 'open'});
+          shadow.innerHTML = '<div class="origo-list-container" role="list" aria-label="List items"><div class="origo-list-item" role="listitem">Item</div></div>';
+        </script>
+      </main>
+    `);
+    const accessibilityScanResults = await new AxeBuilder({ page }).analyze();
+    expect(accessibilityScanResults.violations).toEqual([]);
+  });
+
+  test('Card should not have any automatically detectable accessibility issues', async ({
+    page,
+  }) => {
+    await page.setContent(`
+      <main>
+        <div id="host"></div>
+        <script>
+          const host = document.getElementById('host');
+          const shadow = host.attachShadow({mode: 'open'});
+          shadow.innerHTML = '<div class="origo-card-container"><div class="origo-card-image"><img src="test.png" alt="Test image"/></div><div class="origo-card-content"><div class="origo-card-title">Card</div></div></div>';
+        </script>
+      </main>
+    `);
+    const accessibilityScanResults = await new AxeBuilder({ page }).analyze();
+    expect(accessibilityScanResults.violations).toEqual([]);
+  });
 });

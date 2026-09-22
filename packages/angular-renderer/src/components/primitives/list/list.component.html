@@ -1,0 +1,23 @@
+<div class="origo-list-container" [class.disabled]="computedDisabled()">
+  @for (item of computedItems(); track item['id'] ?? item['key'] ?? item['_id'] ?? $index) {
+    <div
+      class="origo-list-item"
+      role="listitem"
+      tabindex="0"
+      (click)="onItemSelect(item['id'] ?? item['key'] ?? item['_id'])"
+      (keydown.enter)="onItemSelect(item['id'] ?? item['key'] ?? item['_id'])"
+      (keydown.space)="onItemSelect(item['id'] ?? item['key'] ?? item['_id'])"
+    >
+      <div class="origo-list-item-content">
+        @if (item['title'] !== undefined && item['title'] !== null && item['title'] !== '') {
+          <div class="title">{{ item['title'] }}</div>
+        }
+        @if (
+          item['subtitle'] !== undefined && item['subtitle'] !== null && item['subtitle'] !== ''
+        ) {
+          <div class="subtitle">{{ item['subtitle'] }}</div>
+        }
+      </div>
+    </div>
+  }
+</div>

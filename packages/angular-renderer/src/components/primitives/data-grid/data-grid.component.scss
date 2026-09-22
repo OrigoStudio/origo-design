@@ -1,0 +1,53 @@
+:host {
+  display: block;
+  width: 100%;
+}
+
+.origo-data-grid-container {
+  width: 100%;
+  overflow-x: auto;
+  border-radius: var(--origo-radius-sm, 4px);
+  border: 1px solid var(--origo-color-border-default, #ccc);
+  background-color: var(--origo-color-surface-background, #fff);
+
+  &.disabled {
+    opacity: var(--origo-opacity-disabled, 0.5);
+    pointer-events: none;
+  }
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: start;
+}
+
+th,
+td {
+  padding-inline-start: var(--origo-spacing-container-padding, 16px);
+  padding-inline-end: var(--origo-spacing-container-padding, 16px);
+  padding-block: 12px;
+  border-bottom: 1px solid var(--origo-color-border-default, #ccc);
+  color: var(--origo-color-text-primary, #333);
+}
+
+th {
+  font-family: var(--origo-typography-input-font-family, inherit);
+  font-size: var(--origo-typography-input-font-size, 14px);
+  font-weight: 600;
+  text-align: start;
+
+  &.sortable {
+    cursor: pointer;
+    &:hover {
+      color: var(--origo-color-focus, #0056b3);
+    }
+  }
+}
+
+tr {
+  cursor: pointer;
+  &:hover {
+    background-color: rgba(0, 0, 0, 0.04);
+  }
+}

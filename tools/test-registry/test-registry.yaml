@@ -465,3 +465,40 @@ test_cases:
       - retro-8-harden-test-isolation
     last_result: unknown
     results: {}
+  - id: renderer-primitive-data-grid
+    description: 'Verifies DataGrid primitive rendering and logic'
+    package: '@origo/angular-renderer'
+    spec_file: packages/angular-renderer/src/components/primitives/data-grid/data-grid.component.spec.ts
+    type: unit
+    affected_stories:
+      - 9-2-data-presentation-primitives-batch-2
+    last_result: unknown
+    results: {}
+  - id: renderer-primitive-list
+    description: 'Verifies List primitive rendering and logic'
+    package: '@origo/angular-renderer'
+    spec_file: packages/angular-renderer/src/components/primitives/list/list.component.spec.ts
+    type: unit
+    affected_stories:
+      - 9-2-data-presentation-primitives-batch-2
+    last_result: unknown
+    results: {}
+  - id: renderer-primitive-card
+    description: 'Verifies Card primitive rendering'
+    package: '@origo/angular-renderer'
+    spec_file: packages/angular-renderer/src/components/primitives/card/card.component.spec.ts
+    type: unit
+    affected_stories:
+      - 9-2-data-presentation-primitives-batch-2
+    last_result: unknown
+    results: {}
+  - id: renderer-primitives-a11y
+    description: 'Verifies accessibility of all primitives via axe'
+    package: '@origo/angular-renderer'
+    spec_file: packages/angular-renderer/src/components/primitives/primitives.a11y.pw.ts
+    type: e2e
+    affected_stories:
+      - 9-1-form-layout-primitives-batch-1
+      - 9-2-data-presentation-primitives-batch-2
+    last_result: unknown
+    results: {}

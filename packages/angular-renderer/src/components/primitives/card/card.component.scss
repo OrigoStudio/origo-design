@@ -1,0 +1,47 @@
+:host {
+  display: block;
+  width: 100%;
+}
+
+.origo-card-container {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  border-radius: var(--origo-radius-sm, 4px);
+  border: 1px solid var(--origo-color-border-default, #ccc);
+  background-color: var(--origo-color-surface-background, #fff);
+  overflow: hidden;
+}
+
+.origo-card-image {
+  width: 100%;
+
+  img {
+    width: 100%;
+    height: auto;
+    display: block;
+    object-fit: cover;
+  }
+}
+
+.origo-card-content {
+  display: flex;
+  flex-direction: column;
+  padding-inline-start: var(--origo-spacing-container-padding, 16px);
+  padding-inline-end: var(--origo-spacing-container-padding, 16px);
+  padding-block: var(--origo-spacing-container-padding, 16px);
+  gap: var(--origo-spacing-element-gap, 8px);
+  text-align: start;
+  color: var(--origo-color-text-primary, #333);
+  font-family: var(--origo-typography-input-font-family, inherit);
+}
+
+.origo-card-title {
+  font-size: calc(var(--origo-typography-input-font-size, 14px) * 1.25);
+  font-weight: 600;
+}
+
+.origo-card-subtitle {
+  font-size: var(--origo-typography-input-font-size, 14px);
+  opacity: 0.8;
+}
