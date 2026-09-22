@@ -1,3 +1,13 @@
+## 0.0.34 (2026-09-22)
+
+### 🚀 Features
+
+- implement DataGrid, List, and Card data presentation primitives ([b057d31](https://github.com/OrigoStudio/origo-design/commit/b057d31))
+
+### ❤️ Thank You
+
+- Hardik Patel @hardikpatelse
+
 ## 0.0.33 (2026-09-21)
 
 ### 🚀 Features
