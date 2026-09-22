@@ -1,5 +1,5 @@
 # generated: 2026-07-29T21:46:02.464968
-# last_updated: 2026-09-19T17:43:00+05:30
+# last_updated: 2026-09-22T20:07:00+05:30
 # project: origo-design
 # project_key: NOKEY
 # tracking_system: file-system
@@ -113,7 +113,7 @@ development_status:
   epic-9: in-progress
   9-1-form-layout-primitives-batch-1: done
   9-2-data-presentation-primitives-batch-2: done
-  9-3-navigation-shell-primitives-batch-3: backlog
+  9-3-navigation-shell-primitives-batch-3: done
   9-4-accessibility-localization-enforcement: backlog
   9-5-advanced-form-primitives-batch-4: backlog
   epic-9-retrospective: optional

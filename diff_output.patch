@@ -1,7 +1,3 @@
-You are an Acceptance Auditor. Review the provided diff against `_bmad-output/implementation-artifacts/9-3-navigation-shell-primitives-batch-3.md` and any loaded context docs. Check for: violations of acceptance criteria, deviations from spec intent, missing implementation of specified behavior, contradictions between spec constraints and actual code. Output findings as a Markdown list. Each finding: one-line title, which AC/constraint it violates, and evidence from the diff.
-
-Diff:
-```diff
 diff --git a/_bmad-output/implementation-artifacts/9-3-navigation-shell-primitives-batch-3.md b/_bmad-output/implementation-artifacts/9-3-navigation-shell-primitives-batch-3.md
 new file mode 100644
 index 0000000..1b6cb64
@@ -1171,5 +1167,3 @@ index 076e8a4..dd1e534 100644
      last_result: unknown
      results: {}
 +
-
-```

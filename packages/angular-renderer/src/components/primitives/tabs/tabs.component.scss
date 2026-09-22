@@ -1,0 +1,49 @@
+:host {
+  display: block;
+  width: 100%;
+}
+
+.origo-tabs__list {
+  display: flex;
+  border-block-end: 1px solid var(--color-border, #e0e0e0);
+  margin: 0;
+  padding: 0;
+  gap: var(--spacing-sm, 8px);
+}
+
+.origo-tabs__tab {
+  background: none;
+  border: none;
+  border-block-end: 2px solid transparent;
+  padding-inline: var(--spacing-md, 16px);
+  padding-block: var(--spacing-sm, 12px);
+  font-family: inherit;
+  font-size: 14px;
+  color: var(--color-text-secondary, #666666);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+  outline: none;
+
+  &:hover:not(:disabled) {
+    color: var(--color-text, #333333);
+    background-color: var(--color-surface-hover, #f5f5f5);
+  }
+
+  &:focus-visible {
+    background-color: var(--color-surface-hover, #f5f5f5);
+    border-radius: 4px 4px 0 0;
+    box-shadow: inset 0 0 0 2px var(--color-primary, #1976d2);
+  }
+
+  &.origo-tabs__tab--active {
+    color: var(--color-primary, #1976d2);
+    border-block-end-color: var(--color-primary, #1976d2);
+    font-weight: 500;
+  }
+
+  &:disabled {
+    cursor: not-allowed;
+    opacity: 0.5;
+  }
+}

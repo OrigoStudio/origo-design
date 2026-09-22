@@ -1,0 +1,24 @@
+<ol class="origo-breadcrumbs__list">
+  @for (item of computedItems(); track $index; let last = $last) {
+    <li class="origo-breadcrumbs__item">
+      @if (!last && item.outcomeRef) {
+        <a
+          class="origo-breadcrumbs__link"
+          href="javascript:void(0)"
+          (click)="onItemClick($event, item, last)"
+        >
+          <span>{{ item.label }}</span>
+        </a>
+      } @else {
+        <span
+          [class.origo-breadcrumbs__current]="last"
+          [attr.aria-current]="last ? 'page' : null"
+          >{{ item.label }}</span
+        >
+      }
+      @if (!last) {
+        <span class="origo-breadcrumbs__separator" aria-hidden="true">/</span>
+      }
+    </li>
+  }
+</ol>

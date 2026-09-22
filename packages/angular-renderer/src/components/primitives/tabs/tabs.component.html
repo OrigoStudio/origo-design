@@ -1,0 +1,27 @@
+<div
+  class="origo-tabs__list"
+  role="tablist"
+  [attr.aria-label]="computedAriaLabel()"
+  [attr.aria-describedby]="computedAriaDescribedBy()"
+>
+  @for (tab of computedTabs(); track tab.key; let i = $index) {
+    <button
+      #tabButton
+      type="button"
+      role="tab"
+      class="origo-tabs__tab"
+      [class.origo-tabs__tab--active]="computedActiveTab() === tab.key"
+      [attr.aria-selected]="computedActiveTab() === tab.key"
+      [attr.aria-controls]="'tabpanel-' + tab.key"
+      [attr.id]="'tab-' + tab.key"
+      [attr.tabindex]="
+        computedActiveTab() === tab.key || (computedActiveTab() == null && i === 0) ? 0 : -1
+      "
+      [disabled]="tab.disabled"
+      (click)="onTabClick(tab)"
+      (keydown)="onKeyDown($event, i)"
+    >
+      <span class="origo-tabs__label" [innerHTML]="tab.label"></span>
+    </button>
+  }
+</div>

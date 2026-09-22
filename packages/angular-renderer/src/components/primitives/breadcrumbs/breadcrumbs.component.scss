@@ -1,0 +1,41 @@
+:host {
+  display: block;
+}
+
+.origo-breadcrumbs__list {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  gap: var(--spacing-sm, 8px);
+}
+
+.origo-breadcrumbs__item {
+  display: flex;
+  align-items: center;
+  font-size: 14px;
+}
+
+.origo-breadcrumbs__link {
+  color: var(--color-primary, #1976d2);
+  text-decoration: none;
+
+  &:hover,
+  &:focus-visible {
+    text-decoration: underline;
+    outline-offset: 2px;
+  }
+}
+
+.origo-breadcrumbs__current {
+  color: var(--color-text-secondary, #666666);
+  font-weight: 500;
+}
+
+.origo-breadcrumbs__separator {
+  color: var(--color-text-hint, #999999);
+  margin-inline-start: var(--spacing-sm, 8px);
+  user-select: none;
+}

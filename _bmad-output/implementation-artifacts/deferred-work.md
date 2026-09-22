@@ -323,3 +323,7 @@
 
 ## Deferred from: code review (2026-09-21)
 - Playwright accessibility tests use raw HTML fixtures that bypass Shadow DOM [packages/angular-renderer/src/components/primitives/primitives.a11y.pw.ts:161] — pre-existing acceptable pattern per spec notes.
+
+## Deferred from: code review of 9-3-navigation-shell-primitives-batch-3 (2026-09-22)
+
+- [x] [Review][Defer] `outerHTML` navigation ARIA structure duplicated across two elements [sidebar.component.ts:686] — Architectural issue with Angular Shadow DOM + ARIA; pre-existing from previous components.

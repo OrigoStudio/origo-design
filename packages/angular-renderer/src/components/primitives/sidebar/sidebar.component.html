@@ -1,0 +1,23 @@
+<ul class="origo-sidebar__list">
+  @for (item of computedItems(); track item.key; let idx = $index) {
+    <li class="origo-sidebar__item">
+      <a
+        class="origo-sidebar__link"
+        href="javascript:void(0)"
+        [attr.aria-current]="computedActiveOutcome() === item.outcomeRef ? 'page' : null"
+        [class.origo-sidebar__link--active]="computedActiveOutcome() === item.outcomeRef"
+        [attr.aria-label]="computedCollapsed() ? item.label : null"
+        [attr.title]="computedCollapsed() ? item.label : null"
+        (click)="onItemClick(item)"
+        (keydown)="onKeyDown($event, item, idx)"
+      >
+        @if (item.icon) {
+          <span class="origo-sidebar__icon" [innerHTML]="item.icon"></span>
+        }
+        @if (!computedCollapsed()) {
+          <span class="origo-sidebar__label">{{ item.label }}</span>
+        }
+      </a>
+    </li>
+  }
+</ul>

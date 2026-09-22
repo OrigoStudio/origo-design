@@ -10,6 +10,9 @@ import { FormFieldComponent } from '../components/primitives/form-field/form-fie
 import { DataGridComponent } from '../components/primitives/data-grid/data-grid.component';
 import { ListComponent } from '../components/primitives/list/list.component';
 import { CardComponent } from '../components/primitives/card/card.component';
+import { SidebarComponent } from '../components/primitives/sidebar/sidebar.component';
+import { TabsComponent } from '../components/primitives/tabs/tabs.component';
+import { BreadcrumbsComponent } from '../components/primitives/breadcrumbs/breadcrumbs.component';
 
 export function provideOrigo9Primitives(): EnvironmentProviders {
   return makeEnvironmentProviders([
@@ -26,6 +29,10 @@ export function provideOrigo9Primitives(): EnvironmentProviders {
         m.set('DataGrid', DataGridComponent);
         m.set('List', ListComponent);
         m.set('Card', CardComponent);
+        m.set('Sidebar', SidebarComponent);
+        m.set('Tabs', TabsComponent);
+        m.set('Breadcrumbs', BreadcrumbsComponent);
+        m.set('Navigation', SidebarComponent);
         return m;
       },
       deps: [RENDERER_REGISTRY],

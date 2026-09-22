@@ -492,6 +492,33 @@ test_cases:
       - 9-2-data-presentation-primitives-batch-2
     last_result: unknown
     results: {}
+  - id: renderer-primitive-sidebar
+    description: 'Verifies Sidebar primitive rendering and logic'
+    package: '@origo/angular-renderer'
+    spec_file: packages/angular-renderer/src/components/primitives/sidebar/sidebar.component.spec.ts
+    type: unit
+    affected_stories:
+      - 9-3-navigation-shell-primitives-batch-3
+    last_result: unknown
+    results: {}
+  - id: renderer-primitive-tabs
+    description: 'Verifies Tabs primitive rendering and logic'
+    package: '@origo/angular-renderer'
+    spec_file: packages/angular-renderer/src/components/primitives/tabs/tabs.component.spec.ts
+    type: unit
+    affected_stories:
+      - 9-3-navigation-shell-primitives-batch-3
+    last_result: unknown
+    results: {}
+  - id: renderer-primitive-breadcrumbs
+    description: 'Verifies Breadcrumbs primitive rendering and logic'
+    package: '@origo/angular-renderer'
+    spec_file: packages/angular-renderer/src/components/primitives/breadcrumbs/breadcrumbs.component.spec.ts
+    type: unit
+    affected_stories:
+      - 9-3-navigation-shell-primitives-batch-3
+    last_result: unknown
+    results: {}
   - id: renderer-primitives-a11y
     description: 'Verifies accessibility of all primitives via axe'
     package: '@origo/angular-renderer'
@@ -500,5 +527,6 @@ test_cases:
     affected_stories:
       - 9-1-form-layout-primitives-batch-1
       - 9-2-data-presentation-primitives-batch-2
+      - 9-3-navigation-shell-primitives-batch-3
     last_result: unknown
     results: {}
