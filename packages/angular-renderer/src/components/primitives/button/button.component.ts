@@ -28,6 +28,7 @@ export interface ButtonProps {
   encapsulation: ViewEncapsulation.ShadowDom,
   host: {
     '[class.origo-button]': 'true',
+    '[attr.data-testid]': 'contract().id ?? ""',
   },
 })
 export class ButtonComponent implements OrigoAdapter<ButtonProps> {
@@ -46,10 +47,18 @@ export class ButtonComponent implements OrigoAdapter<ButtonProps> {
     const type = this.contract().props?.type;
     return type === 'button' || type === 'submit' || type === 'reset' ? type : 'button';
   });
-  computedAriaLabel = computed(() => this.contract().props?.['aria-label'] as string | undefined);
-  computedAriaDescribedBy = computed(
-    () => this.contract().props?.['aria-describedby'] as string | undefined
-  );
+  computedAriaLabel = computed(() => {
+    const label = this.contract().props?.['aria-label'];
+    return label !== undefined && label !== null && String(label).trim() !== ''
+      ? String(label)
+      : undefined;
+  });
+  computedAriaDescribedBy = computed(() => {
+    const desc = this.contract().props?.['aria-describedby'];
+    return desc !== undefined && desc !== null && String(desc).trim() !== ''
+      ? String(desc)
+      : undefined;
+  });
 
   action = output<void>();
 

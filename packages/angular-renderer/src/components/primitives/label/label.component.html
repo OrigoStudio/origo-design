@@ -1,4 +1,8 @@
-<label [attr.for]="computedFor()" [attr.aria-label]="computedAriaLabel()">
+<label
+  [attr.for]="computedFor()"
+  [attr.aria-label]="computedAriaLabel()"
+  [attr.aria-describedby]="computedAriaDescribedBy()"
+>
   {{ computedText() }}
   @if (computedRequired()) {
     <span class="required-indicator" aria-hidden="true">*</span>

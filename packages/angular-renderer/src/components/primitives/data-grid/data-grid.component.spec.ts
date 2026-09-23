@@ -148,4 +148,17 @@ describe('DataGridComponent', () => {
     // Actually `selectedRow` is typically an ID.
     // Task 2: "Sanitize string values before dispatch."
   });
+
+  it('should support RTL layouts by avoiding physical CSS properties', () => {
+    fixture.componentRef.setInput('contract', { id: 'rtl-test', type: 'test', props: {} });
+    fixture.detectChanges();
+    const root = fixture.nativeElement.shadowRoot ?? fixture.nativeElement;
+    const element = root.firstElementChild as HTMLElement;
+    if (element && element.style) {
+      expect(element.style.paddingLeft).toBeFalsy();
+      expect(element.style.paddingRight).toBeFalsy();
+      expect(element.style.marginLeft).toBeFalsy();
+      expect(element.style.marginRight).toBeFalsy();
+    }
+  });
 });

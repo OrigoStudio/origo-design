@@ -14,6 +14,8 @@ export interface VBoxProps {
   gap?: number | string;
   alignment?: 'start' | 'center' | 'end' | 'stretch';
   padding?: number | string;
+  'aria-label'?: string;
+  'aria-describedby'?: string;
 }
 
 @Component({
@@ -25,11 +27,13 @@ export interface VBoxProps {
   encapsulation: ViewEncapsulation.ShadowDom,
   host: {
     '[class.origo-vbox]': 'true',
-    '[attr.data-testid]': 'contract().id',
+    '[attr.data-testid]': 'contract().id ?? ""',
     '[style.gap]': 'computedGap()',
     '[style.align-items]': 'computedAlignment()',
     '[style.padding-inline]': 'computedPadding()',
     '[style.padding-block]': 'computedPadding()',
+    '[attr.aria-label]': 'computedAriaLabel()',
+    '[attr.aria-describedby]': 'computedAriaDescribedBy()',
   },
 })
 export class VBoxComponent implements OrigoAdapter<VBoxProps>, ContainerComponent {
@@ -72,5 +76,18 @@ export class VBoxComponent implements OrigoAdapter<VBoxProps>, ContainerComponen
     if (padding === undefined || padding === null || padding === '') return undefined;
     const num = Number(padding);
     return !isNaN(num) ? `${num}px` : String(padding);
+  });
+
+  computedAriaLabel = computed(() => {
+    const label = this.contract().props?.['aria-label'];
+    return label !== undefined && label !== null && String(label).trim() !== ''
+      ? String(label)
+      : undefined;
+  });
+  computedAriaDescribedBy = computed(() => {
+    const desc = this.contract().props?.['aria-describedby'];
+    return desc !== undefined && desc !== null && String(desc).trim() !== ''
+      ? String(desc)
+      : undefined;
   });
 }

@@ -13,7 +13,7 @@ test.describe('Primitives Accessibility', () => {
         <script>
           const host = document.getElementById('host');
           const shadow = host.attachShadow({mode: 'open'});
-          shadow.innerHTML = '<button class="origo-button" aria-label="Accessible Button">Click Me</button>';
+          shadow.innerHTML = '<button class="origo-button" aria-label="Accessible Button">Click Me</button><button class="origo-button" aria-label="Disabled Button" disabled>Disabled</button>';
         </script>
       </main>
     `);
@@ -31,7 +31,7 @@ test.describe('Primitives Accessibility', () => {
         <script>
           const host = document.getElementById('host');
           const shadow = host.attachShadow({mode: 'open'});
-          shadow.innerHTML = '<label for="test-input">Test Input</label><input id="test-input" type="text" class="origo-text-input" placeholder="Enter text" />';
+          shadow.innerHTML = '<label for="test-input">Test Input</label><input id="test-input" type="text" class="origo-text-input" placeholder="Enter text" /><label for="test-input-disabled">Test Input Disabled</label><input id="test-input-disabled" type="text" class="origo-text-input" placeholder="Disabled text" disabled />';
         </script>
       </main>
     `);
@@ -49,7 +49,7 @@ test.describe('Primitives Accessibility', () => {
         <script>
           const host = document.getElementById('host');
           const shadow = host.attachShadow({mode: 'open'});
-          shadow.innerHTML = '<label for="test-select">Test Select</label><select id="test-select" class="origo-select"><option value="1">One</option></select>';
+          shadow.innerHTML = '<label for="test-select">Test Select</label><select id="test-select" class="origo-select"><option value="1">One</option></select><label for="test-select-disabled">Test Select Disabled</label><select id="test-select-disabled" class="origo-select" disabled><option value="1">One</option></select>';
         </script>
       </main>
     `);
@@ -66,7 +66,7 @@ test.describe('Primitives Accessibility', () => {
         <script>
           const host = document.getElementById('host');
           const shadow = host.attachShadow({mode: 'open'});
-          shadow.innerHTML = '<input type="checkbox" id="test-check" class="origo-checkbox" /><label for="test-check">Test Checkbox</label>';
+          shadow.innerHTML = '<input type="checkbox" id="test-check" class="origo-checkbox" /><label for="test-check">Test Checkbox</label><input type="checkbox" id="test-check-disabled" class="origo-checkbox" disabled /><label for="test-check-disabled">Disabled Checkbox</label>';
         </script>
       </main>
     `);
@@ -83,7 +83,7 @@ test.describe('Primitives Accessibility', () => {
         <script>
           const host = document.getElementById('host');
           const shadow = host.attachShadow({mode: 'open'});
-          shadow.innerHTML = '<fieldset class="origo-radio-group"><legend>Radio Group</legend><input type="radio" id="radio-1" name="rg" value="1" /><label for="radio-1">One</label></fieldset>';
+          shadow.innerHTML = '<fieldset class="origo-radio-group"><legend>Radio Group</legend><input type="radio" id="radio-1" name="rg" value="1" /><label for="radio-1">One</label></fieldset><fieldset class="origo-radio-group" disabled><legend>Disabled Radio Group</legend><input type="radio" id="radio-2" name="rg2" value="2" disabled /><label for="radio-2">Two</label></fieldset>';
         </script>
       </main>
     `);
@@ -100,7 +100,7 @@ test.describe('Primitives Accessibility', () => {
         <script>
           const host = document.getElementById('host');
           const shadow = host.attachShadow({mode: 'open'});
-          shadow.innerHTML = '<label for="test-textarea">Test Textarea</label><textarea id="test-textarea" class="origo-textarea"></textarea>';
+          shadow.innerHTML = '<label for="test-textarea">Test Textarea</label><textarea id="test-textarea" class="origo-textarea"></textarea><label for="test-textarea-disabled">Disabled Textarea</label><textarea id="test-textarea-disabled" class="origo-textarea" disabled></textarea>';
         </script>
       </main>
     `);
@@ -254,6 +254,22 @@ test.describe('Primitives Accessibility', () => {
           const host = document.getElementById('host');
           const shadow = host.attachShadow({mode: 'open'});
           shadow.innerHTML = '<nav class="origo-breadcrumbs" aria-label="Breadcrumb"><ol><li class="origo-breadcrumbs__item"><a href="#">Home</a></li><li class="origo-breadcrumbs__item"><span aria-current="page">Current</span></li></ol></nav>';
+        </script>
+      </main>
+    `);
+    const accessibilityScanResults = await new AxeBuilder({ page }).analyze();
+    expect(accessibilityScanResults.violations).toEqual([]);
+  });
+  test('VBox should not have any automatically detectable accessibility issues', async ({
+    page,
+  }) => {
+    await page.setContent(`
+      <main>
+        <div id="host"></div>
+        <script>
+          const host = document.getElementById('host');
+          const shadow = host.attachShadow({mode: 'open'});
+          shadow.innerHTML = '<div class="origo-vbox" style="display: flex; flex-direction: column; gap: 10px;"><div>Item 1</div></div>';
         </script>
       </main>
     `);

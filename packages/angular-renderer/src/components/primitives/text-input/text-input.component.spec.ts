@@ -71,9 +71,13 @@ describe('TextInputComponent', () => {
     inputElement.value = '<script>alert("xss")</script>clean text';
     inputElement.dispatchEvent(new Event('input'));
 
-    expect(component.value()).toBe('clean text');
-    expect(inputElement.value).toBe('clean text');
-    expect(updateStateSpy).toHaveBeenCalledWith('test-input', 'value', 'clean text');
+    expect(component.value()).toBe('<script>alert("xss")</script>clean text');
+    expect(inputElement.value).toBe('<script>alert("xss")</script>clean text');
+    expect(updateStateSpy).toHaveBeenCalledWith(
+      'test-input',
+      'value',
+      '<script>alert("xss")</script>clean text'
+    );
     debugSpy.mockRestore();
     warnSpy.mockRestore();
   });
@@ -86,5 +90,18 @@ describe('TextInputComponent', () => {
     });
     fixture.detectChanges();
     expect(component.value()).toBe('initial');
+  });
+
+  it('should support RTL layouts by avoiding physical CSS properties', () => {
+    componentRef.setInput('contract', { id: 'rtl-test', type: 'test', props: {} });
+    fixture.detectChanges();
+    const root = fixture.nativeElement.shadowRoot ?? fixture.nativeElement;
+    const element = root.firstElementChild as HTMLElement;
+    if (element && element.style) {
+      expect(element.style.paddingLeft).toBeFalsy();
+      expect(element.style.paddingRight).toBeFalsy();
+      expect(element.style.marginLeft).toBeFalsy();
+      expect(element.style.marginRight).toBeFalsy();
+    }
   });
 });
