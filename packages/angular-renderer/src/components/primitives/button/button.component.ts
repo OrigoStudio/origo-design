@@ -28,6 +28,7 @@ export interface ButtonProps {
   encapsulation: ViewEncapsulation.ShadowDom,
   host: {
     '[class.origo-button]': 'true',
+    '[attr.data-testid]': 'contract().id',
   },
 })
 export class ButtonComponent implements OrigoAdapter<ButtonProps> {

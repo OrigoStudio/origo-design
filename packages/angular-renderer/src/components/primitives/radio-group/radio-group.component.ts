@@ -20,6 +20,7 @@ export interface RadioGroupProps {
   value?: string;
   disabled?: boolean;
   'aria-label'?: string;
+  'aria-describedby'?: string;
   required?: boolean;
 }
 
@@ -56,6 +57,10 @@ export class RadioGroupComponent implements OrigoAdapter<RadioGroupProps> {
   computedAriaLabel = computed(() => {
     const label = this.contract().props?.['aria-label'];
     return label !== undefined && label !== null ? String(label) : undefined;
+  });
+  computedAriaDescribedBy = computed(() => {
+    const desc = this.contract().props?.['aria-describedby'];
+    return desc !== undefined && desc !== null ? String(desc) : undefined;
   });
 
   private experienceAdapter = inject(WebExperienceAdapterService);

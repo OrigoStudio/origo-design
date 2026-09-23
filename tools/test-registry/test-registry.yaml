@@ -528,5 +528,6 @@ test_cases:
       - 9-1-form-layout-primitives-batch-1
       - 9-2-data-presentation-primitives-batch-2
       - 9-3-navigation-shell-primitives-batch-3
+      - 9-4-accessibility-localization-enforcement
     last_result: unknown
     results: {}

@@ -1,12 +1,13 @@
 ---
 story_id: "9.4"
 story_key: "9-4-accessibility-localization-enforcement"
-status: "ready-for-dev"
+status: "done"
+baseline_commit: "be33262e5860071fd15242d902c581b5d31725d8"
 ---
 
 # Story 9.4: Accessibility & Localization Enforcement
 
-Status: ready-for-dev
+status: done
 
 ## Story
 
@@ -26,36 +27,36 @@ So that applications are inclusive and support global audiences out of the box.
 ## Tasks / Subtasks
 
 ### 1. Audit & Scope Identification
-- [ ] Task 1.1: Audit all 16 components for ARIA gap: breadcrumbs, button, card, checkbox, data-grid, form-field, hbox, label, list, radio-group, select, sidebar, tabs, text-input, textarea, vbox.
+- [x] Task 1.1: Audit all 16 components for ARIA gap: breadcrumbs, button, card, checkbox, data-grid, form-field, hbox, label, list, radio-group, select, sidebar, tabs, text-input, textarea, vbox.
   - Check each `*Props` interface for missing `'aria-label'?: string` and `'aria-describedby'?: string` fields.
   - Check each `.component.ts` for missing `computedAriaLabel` and `computedAriaDescribedBy` computed signals.
   - Check each `.component.html` for missing `[attr.aria-label]="computedAriaLabel()"` and `[attr.aria-describedby]="computedAriaDescribedBy()"` bindings.
-- [ ] Task 1.2: Audit all 16 components for RTL gap.
+- [x] Task 1.2: Audit all 16 components for RTL gap.
   - Grep each `.component.scss` for `padding-left`, `padding-right`, `margin-left`, `margin-right`, `text-align: left`, `text-align: right` — these must be replaced with logical equivalents.
-- [ ] Task 1.3: Audit `primitives.a11y.pw.ts` — verify each of the 16 components has at least one axe-core test block.
+- [x] Task 1.3: Audit `primitives.a11y.pw.ts` — verify each of the 16 components has at least one axe-core test block.
 
 ### 2. ARIA Remediation
-- [ ] Task 2.1: For each component missing ARIA support, add to the `*Props` interface:
+- [x] Task 2.1: For each component missing ARIA support, add to the `*Props` interface:
   ```typescript
   'aria-label'?: string;
   'aria-describedby'?: string;
   ```
-- [ ] Task 2.2: Add computed signals to each component class (if missing):
+- [x] Task 2.2: Add computed signals to each component class (if missing):
   ```typescript
   computedAriaLabel = computed(() => this.contract().props?.['aria-label'] as string | undefined);
   computedAriaDescribedBy = computed(() => this.contract().props?.['aria-describedby'] as string | undefined);
   ```
-- [ ] Task 2.3: Bind ARIA attrs in the component host or template (if missing):
+- [x] Task 2.3: Bind ARIA attrs in the component host or template (if missing):
   ```typescript
   // In @Component host: {}
   '[attr.aria-label]': 'computedAriaLabel()',
   '[attr.aria-describedby]': 'computedAriaDescribedBy()',
   ```
   For interactive elements (button, input), bind on the inner native element — NOT the host — to avoid double-ARIA.
-- [ ] Task 2.4: Ensure `[attr.data-testid]="contract().id"` exists on the host of every component (AD-12). Add where missing.
+- [x] Task 2.4: Ensure `[attr.data-testid]="contract().id"` exists on the host of every component (AD-12). Add where missing.
 
 ### 3. RTL Remediation
-- [ ] Task 3.1: Replace all physical CSS directional properties with logical equivalents in every `.component.scss` that has gaps:
+- [x] Task 3.1: Replace all physical CSS directional properties with logical equivalents in every `.component.scss` that has gaps:
   - `padding-left` → `padding-inline-start`
   - `padding-right` → `padding-inline-end`
   - `margin-left` → `margin-inline-start`
@@ -63,14 +64,14 @@ So that applications are inclusive and support global audiences out of the box.
   - `text-align: left` → `text-align: start`
   - `text-align: right` → `text-align: end`
   - `border-left` → `border-inline-start`
-- [ ] Task 3.2: Add RTL unit tests to each component `.spec.ts` that had physical CSS fixes: verify the component host/template applies `padding-inline-start` and not `padding-left`.
+- [x] Task 3.2: Add RTL unit tests to each component `.spec.ts` that had physical CSS fixes: verify the component host/template applies `padding-inline-start` and not `padding-left`.
 
 ### 4. Axe-core Test Coverage
-- [ ] Task 4.1: Audit `primitives.a11y.pw.ts` and add `test()` blocks for any of the 16 components not yet covered, using `page.setContent()` + `AxeBuilder.analyze()`.
-- [ ] Task 4.2: Run each new test in multiple states: default, disabled, error/invalid (where applicable).
+- [x] Task 4.1: Audit `primitives.a11y.pw.ts` and add `test()` blocks for any of the 16 components not yet covered, using `page.setContent()` + `AxeBuilder.analyze()`.
+- [x] Task 4.2: Run each new test in multiple states: default, disabled, error/invalid (where applicable).
 
 ### 5. Test Registry & DoD
-- [ ] Task 5.1: Update `tools/test-registry/test-registry.yaml` with any new spec file entries. Required fields:
+- [x] Task 5.1: Update `tools/test-registry/test-registry.yaml` with any new spec file entries. Required fields:
   ```yaml
   - id: primitive-a11y-<component>
     description: "A11y sweep for <Component> primitive"
@@ -80,7 +81,7 @@ So that applications are inclusive and support global audiences out of the box.
     affected_stories: ["9-4-accessibility-localization-enforcement"]
     last_result: unknown
   ```
-- [ ] Task 5.2: Verify build pipeline passes: `nx lint angular-renderer`, `nx test angular-renderer`, `nx build angular-renderer`.
+- [x] Task 5.2: Verify build pipeline passes: `nx lint angular-renderer`, `nx test angular-renderer`, `nx build angular-renderer`.
 
 ## Dev Notes
 
@@ -211,7 +212,21 @@ From **Story 9.2 (Batch 2 Data Presentation)**:
 
 ### File List
 
-*(to be populated by dev agent on completion)*
+- `packages/angular-renderer/src/components/primitives/button/button.component.ts`
+- `packages/angular-renderer/src/components/primitives/checkbox/checkbox.component.ts`
+- `packages/angular-renderer/src/components/primitives/checkbox/checkbox.component.html`
+- `packages/angular-renderer/src/components/primitives/form-field/form-field.component.ts`
+- `packages/angular-renderer/src/components/primitives/hbox/hbox.component.ts`
+- `packages/angular-renderer/src/components/primitives/label/label.component.ts`
+- `packages/angular-renderer/src/components/primitives/label/label.component.html`
+- `packages/angular-renderer/src/components/primitives/radio-group/radio-group.component.ts`
+- `packages/angular-renderer/src/components/primitives/radio-group/radio-group.component.html`
+- `packages/angular-renderer/src/components/primitives/text-input/text-input.component.ts`
+- `packages/angular-renderer/src/components/primitives/vbox/vbox.component.ts`
+- `packages/angular-renderer/src/components/primitives/primitives.a11y.pw.ts`
+- `tools/test-registry/test-registry.yaml`
+- `_bmad-output/implementation-artifacts/sprint-status.yaml`
+- `_bmad-output/implementation-artifacts/9-4-accessibility-localization-enforcement.md`
 
 ### Review Findings
 

@@ -260,4 +260,20 @@ test.describe('Primitives Accessibility', () => {
     const accessibilityScanResults = await new AxeBuilder({ page }).analyze();
     expect(accessibilityScanResults.violations).toEqual([]);
   });
+  test('VBox should not have any automatically detectable accessibility issues', async ({
+    page,
+  }) => {
+    await page.setContent(`
+      <main>
+        <div id="host"></div>
+        <script>
+          const host = document.getElementById('host');
+          const shadow = host.attachShadow({mode: 'open'});
+          shadow.innerHTML = '<div class="origo-vbox" style="display: flex; flex-direction: column; gap: 10px;"><div>Item 1</div></div>';
+        </script>
+      </main>
+    `);
+    const accessibilityScanResults = await new AxeBuilder({ page }).analyze();
+    expect(accessibilityScanResults.violations).toEqual([]);
+  });
 });

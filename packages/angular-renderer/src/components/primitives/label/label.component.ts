@@ -13,6 +13,7 @@ export interface LabelProps {
   for?: string;
   required?: boolean;
   'aria-label'?: string;
+  'aria-describedby'?: string;
 }
 
 @Component({
@@ -46,5 +47,9 @@ export class LabelComponent implements OrigoAdapter<LabelProps> {
   computedAriaLabel = computed(() => {
     const label = this.contract().props?.['aria-label'];
     return label !== undefined && label !== null ? String(label) : undefined;
+  });
+  computedAriaDescribedBy = computed(() => {
+    const desc = this.contract().props?.['aria-describedby'];
+    return desc !== undefined && desc !== null ? String(desc) : undefined;
   });
 }

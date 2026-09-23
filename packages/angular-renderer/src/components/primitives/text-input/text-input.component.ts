@@ -33,6 +33,7 @@ export interface TextInputProps {
   encapsulation: ViewEncapsulation.ShadowDom,
   host: {
     '[class.origo-text-input]': 'true',
+    '[attr.data-testid]': 'contract().id',
   },
 })
 export class TextInputComponent implements OrigoAdapter<TextInputProps> {

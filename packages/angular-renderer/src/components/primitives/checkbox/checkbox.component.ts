@@ -18,6 +18,7 @@ export interface CheckboxProps {
   label?: string;
   disabled?: boolean;
   'aria-label'?: string;
+  'aria-describedby'?: string;
   required?: boolean;
 }
 
@@ -51,6 +52,10 @@ export class CheckboxComponent implements OrigoAdapter<CheckboxProps> {
   computedAriaLabel = computed(() => {
     const label = this.contract().props?.['aria-label'];
     return label !== undefined && label !== null ? String(label) : undefined;
+  });
+  computedAriaDescribedBy = computed(() => {
+    const desc = this.contract().props?.['aria-describedby'];
+    return desc !== undefined && desc !== null ? String(desc) : undefined;
   });
 
   private experienceAdapter = inject(WebExperienceAdapterService);
