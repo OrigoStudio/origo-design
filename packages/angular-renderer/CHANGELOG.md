@@ -1,3 +1,14 @@
+## 0.0.36 (2026-09-23)
+
+### 🚀 Features
+
+- **angular-renderer:** add primitive UI components and their unit tests ([e2418b1](https://github.com/OrigoStudio/origo-design/commit/e2418b1))
+- implement primitive UI components and accessibility tests for angular-renderer ([c584dad](https://github.com/OrigoStudio/origo-design/commit/c584dad))
+
+### ❤️ Thank You
+
+- Hardik Patel @hardikpatelse
+
 ## 0.0.35 (2026-09-22)
 
 ### 🚀 Features
