@@ -25,7 +25,7 @@ export interface LabelProps {
   encapsulation: ViewEncapsulation.ShadowDom,
   host: {
     '[class.origo-label]': 'true',
-    '[attr.data-testid]': 'contract().id',
+    '[attr.data-testid]': 'contract().id ?? ""',
   },
 })
 export class LabelComponent implements OrigoAdapter<LabelProps> {
@@ -46,10 +46,14 @@ export class LabelComponent implements OrigoAdapter<LabelProps> {
   computedRequired = computed(() => !!this.contract().props?.required);
   computedAriaLabel = computed(() => {
     const label = this.contract().props?.['aria-label'];
-    return label !== undefined && label !== null ? String(label) : undefined;
+    return label !== undefined && label !== null && String(label).trim() !== ''
+      ? String(label)
+      : undefined;
   });
   computedAriaDescribedBy = computed(() => {
     const desc = this.contract().props?.['aria-describedby'];
-    return desc !== undefined && desc !== null ? String(desc) : undefined;
+    return desc !== undefined && desc !== null && String(desc).trim() !== ''
+      ? String(desc)
+      : undefined;
   });
 }

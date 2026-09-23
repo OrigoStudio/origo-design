@@ -230,4 +230,14 @@ From **Story 9.2 (Batch 2 Data Presentation)**:
 
 ### Review Findings
 
-*(to be populated by code-review workflow)*
+- [ ] [Review][Patch] Axe-core tests are synthetic static HTML and lack multi-state coverage — Playwright tests inject raw HTML instead of instantiating Angular components, missing disabled/error states and bypassing component logic.
+- [ ] [Review][Patch] Missing RTL Unit Tests & SCSS Changes — RTL remediation marked complete but zero .scss or .spec.ts files modified.
+- [ ] [Review][Patch] Button ARIA signals computed but never bound [packages/angular-renderer/src/components/primitives/button/button.component.ts]
+- [ ] [Review][Patch] DomSanitizer anti-pattern retained in radio-group and text-input [packages/angular-renderer/src/components/primitives/radio-group/radio-group.component.ts]
+- [ ] [Review][Patch] radio-group <fieldset> has redundant aria-label overriding <legend> [packages/angular-renderer/src/components/primitives/radio-group/radio-group.component.html]
+- [ ] [Review][Patch] Inconsistent Signal Coercion and Risk of aria-label="null" [packages/angular-renderer/src/components/primitives/button/button.component.ts]
+- [ ] [Review][Patch] form-field ARIA bound on landmark-less <div> [packages/angular-renderer/src/components/primitives/form-field/form-field.component.ts]
+- [ ] [Review][Patch] Empty string aria-label emits aria-label="" [packages/angular-renderer/src/components/primitives/checkbox/checkbox.component.ts]
+- [ ] [Review][Patch] Omission of Per-Component Spec Entries in Test Registry [tools/test-registry/test-registry.yaml]
+- [ ] [Review][Patch] Untracked Scratch Script in Commit [_bmad-output/scratch/audit.js]
+- [x] [Review][Defer] aria-describedby ID references element outside component's Shadow DOM [packages/angular-renderer/src/components/primitives/checkbox/checkbox.component.html] — deferred, pre-existing

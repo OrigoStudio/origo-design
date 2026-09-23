@@ -1,8 +1,4 @@
-<fieldset
-  [disabled]="computedDisabled()"
-  [attr.aria-label]="computedAriaLabel()"
-  [attr.aria-describedby]="computedAriaDescribedBy()"
->
+<fieldset [disabled]="computedDisabled()" [attr.aria-describedby]="computedAriaDescribedBy()">
   <legend class="visually-hidden">{{ computedAriaLabel() ?? 'Radio Group' }}</legend>
 
   <div class="radio-options">

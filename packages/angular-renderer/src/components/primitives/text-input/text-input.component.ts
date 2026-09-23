@@ -8,9 +8,7 @@ import {
   inject,
   effect,
   untracked,
-  SecurityContext,
 } from '@angular/core';
-import { DomSanitizer } from '@angular/platform-browser';
 import { InteractionContract } from '@origo/core';
 import { OrigoAdapter } from '../../../adapters/web/adapter';
 import { WebExperienceAdapterService } from '../../../adapters/web/experience-adapter.service';
@@ -33,7 +31,7 @@ export interface TextInputProps {
   encapsulation: ViewEncapsulation.ShadowDom,
   host: {
     '[class.origo-text-input]': 'true',
-    '[attr.data-testid]': 'contract().id',
+    '[attr.data-testid]': 'contract().id ?? ""',
   },
 })
 export class TextInputComponent implements OrigoAdapter<TextInputProps> {
@@ -51,13 +49,20 @@ export class TextInputComponent implements OrigoAdapter<TextInputProps> {
   computedPlaceholder = computed(() => this.contract().props?.placeholder ?? '');
   computedDisabled = computed(() => !!this.contract().props?.disabled);
   computedReadonly = computed(() => !!this.contract().props?.readonly);
-  computedAriaLabel = computed(() => this.contract().props?.['aria-label'] as string | undefined);
-  computedAriaDescribedBy = computed(
-    () => this.contract().props?.['aria-describedby'] as string | undefined
-  );
+  computedAriaLabel = computed(() => {
+    const label = this.contract().props?.['aria-label'];
+    return label !== undefined && label !== null && String(label).trim() !== ''
+      ? String(label)
+      : undefined;
+  });
+  computedAriaDescribedBy = computed(() => {
+    const desc = this.contract().props?.['aria-describedby'];
+    return desc !== undefined && desc !== null && String(desc).trim() !== ''
+      ? String(desc)
+      : undefined;
+  });
 
   private experienceAdapter = inject(WebExperienceAdapterService);
-  private sanitizer = inject(DomSanitizer);
 
   constructor() {
     effect(() => {
@@ -73,7 +78,7 @@ export class TextInputComponent implements OrigoAdapter<TextInputProps> {
     if (!target) return;
 
     const rawValue = target.value;
-    const sanitizedValue = this.sanitizer.sanitize(SecurityContext.HTML, rawValue) || '';
+    const sanitizedValue = String(rawValue);
 
     if (target.value !== sanitizedValue) {
       target.value = sanitizedValue;

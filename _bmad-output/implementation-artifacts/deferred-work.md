@@ -327,3 +327,6 @@
 ## Deferred from: code review of 9-3-navigation-shell-primitives-batch-3 (2026-09-22)
 
 - [x] [Review][Defer] `outerHTML` navigation ARIA structure duplicated across two elements [sidebar.component.ts:686] — Architectural issue with Angular Shadow DOM + ARIA; pre-existing from previous components.
+
+## Deferred from: code review of 9-4-accessibility-localization-enforcement.md (2026-09-23)
+- aria-describedby ID references element outside component's Shadow DOM — deferred, pre-existing

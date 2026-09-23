@@ -250,6 +250,7 @@ test_cases:
     spec_file: packages/angular-renderer/src/components/primitives/button/button.component.spec.ts
     type: unit
     affected_stories:
+      - 9-4-accessibility-localization-enforcement
       - 5-3-core-primitive-implementation
     last_result: unknown
     results: {}
@@ -259,6 +260,7 @@ test_cases:
     spec_file: packages/angular-renderer/src/components/primitives/text-input/text-input.component.spec.ts
     type: unit
     affected_stories:
+      - 9-4-accessibility-localization-enforcement
       - 5-3-core-primitive-implementation
     last_result: unknown
     results: {}
@@ -268,6 +270,7 @@ test_cases:
     spec_file: packages/angular-renderer/src/components/primitives/vbox/vbox.component.spec.ts
     type: unit
     affected_stories:
+      - 9-4-accessibility-localization-enforcement
       - 5-3-core-primitive-implementation
     last_result: unknown
     results: {}
@@ -277,6 +280,7 @@ test_cases:
     spec_file: packages/angular-renderer/src/components/primitives/select/select.component.spec.ts
     type: unit
     affected_stories:
+      - 9-4-accessibility-localization-enforcement
       - 9-1-form-layout-primitives-batch-1
     last_result: unknown
     results: {}
@@ -286,6 +290,7 @@ test_cases:
     spec_file: packages/angular-renderer/src/components/primitives/checkbox/checkbox.component.spec.ts
     type: unit
     affected_stories:
+      - 9-4-accessibility-localization-enforcement
       - 9-1-form-layout-primitives-batch-1
     last_result: unknown
     results: {}
@@ -295,6 +300,7 @@ test_cases:
     spec_file: packages/angular-renderer/src/components/primitives/radio-group/radio-group.component.spec.ts
     type: unit
     affected_stories:
+      - 9-4-accessibility-localization-enforcement
       - 9-1-form-layout-primitives-batch-1
     last_result: unknown
     results: {}
@@ -304,6 +310,7 @@ test_cases:
     spec_file: packages/angular-renderer/src/components/primitives/textarea/textarea.component.spec.ts
     type: unit
     affected_stories:
+      - 9-4-accessibility-localization-enforcement
       - 9-1-form-layout-primitives-batch-1
     last_result: unknown
     results: {}
@@ -313,6 +320,7 @@ test_cases:
     spec_file: packages/angular-renderer/src/components/primitives/hbox/hbox.component.spec.ts
     type: unit
     affected_stories:
+      - 9-4-accessibility-localization-enforcement
       - 9-1-form-layout-primitives-batch-1
     last_result: unknown
     results: {}
@@ -322,6 +330,7 @@ test_cases:
     spec_file: packages/angular-renderer/src/components/primitives/label/label.component.spec.ts
     type: unit
     affected_stories:
+      - 9-4-accessibility-localization-enforcement
       - 9-1-form-layout-primitives-batch-1
     last_result: unknown
     results: {}
@@ -331,6 +340,7 @@ test_cases:
     spec_file: packages/angular-renderer/src/components/primitives/form-field/form-field.component.spec.ts
     type: unit
     affected_stories:
+      - 9-4-accessibility-localization-enforcement
       - 9-1-form-layout-primitives-batch-1
     last_result: unknown
     results: {}
@@ -471,6 +481,7 @@ test_cases:
     spec_file: packages/angular-renderer/src/components/primitives/data-grid/data-grid.component.spec.ts
     type: unit
     affected_stories:
+      - 9-4-accessibility-localization-enforcement
       - 9-2-data-presentation-primitives-batch-2
     last_result: unknown
     results: {}
@@ -480,6 +491,7 @@ test_cases:
     spec_file: packages/angular-renderer/src/components/primitives/list/list.component.spec.ts
     type: unit
     affected_stories:
+      - 9-4-accessibility-localization-enforcement
       - 9-2-data-presentation-primitives-batch-2
     last_result: unknown
     results: {}
@@ -489,6 +501,7 @@ test_cases:
     spec_file: packages/angular-renderer/src/components/primitives/card/card.component.spec.ts
     type: unit
     affected_stories:
+      - 9-4-accessibility-localization-enforcement
       - 9-2-data-presentation-primitives-batch-2
     last_result: unknown
     results: {}
@@ -498,6 +511,7 @@ test_cases:
     spec_file: packages/angular-renderer/src/components/primitives/sidebar/sidebar.component.spec.ts
     type: unit
     affected_stories:
+      - 9-4-accessibility-localization-enforcement
       - 9-3-navigation-shell-primitives-batch-3
     last_result: unknown
     results: {}
@@ -507,6 +521,7 @@ test_cases:
     spec_file: packages/angular-renderer/src/components/primitives/tabs/tabs.component.spec.ts
     type: unit
     affected_stories:
+      - 9-4-accessibility-localization-enforcement
       - 9-3-navigation-shell-primitives-batch-3
     last_result: unknown
     results: {}
@@ -516,6 +531,7 @@ test_cases:
     spec_file: packages/angular-renderer/src/components/primitives/breadcrumbs/breadcrumbs.component.spec.ts
     type: unit
     affected_stories:
+      - 9-4-accessibility-localization-enforcement
       - 9-3-navigation-shell-primitives-batch-3
     last_result: unknown
     results: {}

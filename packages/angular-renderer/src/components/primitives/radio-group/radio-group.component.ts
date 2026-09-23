@@ -8,9 +8,7 @@ import {
   inject,
   effect,
   untracked,
-  SecurityContext,
 } from '@angular/core';
-import { DomSanitizer } from '@angular/platform-browser';
 import { InteractionContract } from '@origo/core';
 import { OrigoAdapter } from '../../../adapters/web/adapter';
 import { WebExperienceAdapterService } from '../../../adapters/web/experience-adapter.service';
@@ -33,7 +31,7 @@ export interface RadioGroupProps {
   encapsulation: ViewEncapsulation.ShadowDom,
   host: {
     '[class.origo-radio-group]': 'true',
-    '[attr.data-testid]': 'contract().id',
+    '[attr.data-testid]': 'contract().id ?? ""',
   },
 })
 export class RadioGroupComponent implements OrigoAdapter<RadioGroupProps> {
@@ -56,15 +54,18 @@ export class RadioGroupComponent implements OrigoAdapter<RadioGroupProps> {
   computedRequired = computed(() => !!this.contract().props?.required);
   computedAriaLabel = computed(() => {
     const label = this.contract().props?.['aria-label'];
-    return label !== undefined && label !== null ? String(label) : undefined;
+    return label !== undefined && label !== null && String(label).trim() !== ''
+      ? String(label)
+      : undefined;
   });
   computedAriaDescribedBy = computed(() => {
     const desc = this.contract().props?.['aria-describedby'];
-    return desc !== undefined && desc !== null ? String(desc) : undefined;
+    return desc !== undefined && desc !== null && String(desc).trim() !== ''
+      ? String(desc)
+      : undefined;
   });
 
   private experienceAdapter = inject(WebExperienceAdapterService);
-  private sanitizer = inject(DomSanitizer);
 
   constructor() {
     effect(() => {
@@ -83,8 +84,7 @@ export class RadioGroupComponent implements OrigoAdapter<RadioGroupProps> {
     if (!target || !target.checked || this.computedDisabled()) return;
 
     const rawValue = target.value;
-    const sanitizedValue =
-      this.sanitizer.sanitize(SecurityContext.HTML, rawValue) || rawValue || '';
+    const sanitizedValue = String(rawValue);
 
     this.value.set(sanitizedValue);
     this.experienceAdapter.updateState(this.contract().id, 'value', sanitizedValue);

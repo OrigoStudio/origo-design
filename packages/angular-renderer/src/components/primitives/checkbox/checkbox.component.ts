@@ -31,7 +31,7 @@ export interface CheckboxProps {
   encapsulation: ViewEncapsulation.ShadowDom,
   host: {
     '[class.origo-checkbox]': 'true',
-    '[attr.data-testid]': 'contract().id',
+    '[attr.data-testid]': 'contract().id ?? ""',
   },
 })
 export class CheckboxComponent implements OrigoAdapter<CheckboxProps> {
@@ -51,11 +51,15 @@ export class CheckboxComponent implements OrigoAdapter<CheckboxProps> {
   computedRequired = computed(() => !!this.contract().props?.required);
   computedAriaLabel = computed(() => {
     const label = this.contract().props?.['aria-label'];
-    return label !== undefined && label !== null ? String(label) : undefined;
+    return label !== undefined && label !== null && String(label).trim() !== ''
+      ? String(label)
+      : undefined;
   });
   computedAriaDescribedBy = computed(() => {
     const desc = this.contract().props?.['aria-describedby'];
-    return desc !== undefined && desc !== null ? String(desc) : undefined;
+    return desc !== undefined && desc !== null && String(desc).trim() !== ''
+      ? String(desc)
+      : undefined;
   });
 
   private experienceAdapter = inject(WebExperienceAdapterService);
