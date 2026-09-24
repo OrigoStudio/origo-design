@@ -1,3 +1,13 @@
+## 0.0.37 (2026-09-24)
+
+### 🚀 Features
+
+- implement switch and chip form primitives in angular-renderer ([2067756](https://github.com/OrigoStudio/origo-design/commit/2067756))
+
+### ❤️ Thank You
+
+- Hardik Patel @hardikpatelse
+
 ## 0.0.36 (2026-09-23)
 
 ### 🚀 Features
