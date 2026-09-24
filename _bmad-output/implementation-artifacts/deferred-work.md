@@ -330,3 +330,15 @@
 
 ## Deferred from: code review of 9-4-accessibility-localization-enforcement.md (2026-09-23)
 - aria-describedby ID references element outside component's Shadow DOM — deferred, pre-existing
+
+## Deferred from: code review (2026-09-24) (9-5-advanced-form-primitives-batch-4.md)
+
+- DataGrid `sortDir` is private [DataGridComponent] — deferred, pre-existing
+- DataGrid `aria-sort` values [DataGridComponent] — deferred, pre-existing
+- DataGrid simultaneous `aria-sort` [DataGridComponent] — deferred, pre-existing
+- DataGrid missing `data-testid ?? ''` [DataGridComponent] — deferred, pre-existing
+- `onRowSelect` HTML sanitization [DataGridComponent] — deferred, pre-existing
+- `ListComponent.onItemSelect` HTML sanitization [ListComponent] — deferred, pre-existing
+- `ListComponent` a11y fixture [ListComponent] — deferred, pre-existing
+- DataGrid row tracking [DataGridComponent] — deferred, pre-existing
+- CardComponent image URL test [CardComponent] — deferred, pre-existing

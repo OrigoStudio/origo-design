@@ -545,5 +545,24 @@ test_cases:
       - 9-2-data-presentation-primitives-batch-2
       - 9-3-navigation-shell-primitives-batch-3
       - 9-4-accessibility-localization-enforcement
+      - 9-5-advanced-form-primitives-batch-4
+    last_result: unknown
+    results: {}
+  - id: renderer-primitive-switch
+    description: 'Verifies Switch primitive rendering and logic'
+    package: '@origo/angular-renderer'
+    spec_file: packages/angular-renderer/src/components/primitives/switch/switch.component.spec.ts
+    type: unit
+    affected_stories:
+      - 9-5-advanced-form-primitives-batch-4
+    last_result: unknown
+    results: {}
+  - id: renderer-primitive-chip
+    description: 'Verifies Chip primitive rendering and logic'
+    package: '@origo/angular-renderer'
+    spec_file: packages/angular-renderer/src/components/primitives/chip/chip.component.spec.ts
+    type: unit
+    affected_stories:
+      - 9-5-advanced-form-primitives-batch-4
     last_result: unknown
     results: {}

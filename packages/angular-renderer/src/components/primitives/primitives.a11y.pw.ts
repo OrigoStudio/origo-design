@@ -276,4 +276,107 @@ test.describe('Primitives Accessibility', () => {
     const accessibilityScanResults = await new AxeBuilder({ page }).analyze();
     expect(accessibilityScanResults.violations).toEqual([]);
   });
+  // Story 9.5 — Switch primitive
+  test('Switch should not have any automatically detectable accessibility issues (default)', async ({
+    page,
+  }) => {
+    await page.setContent(`
+      <main>
+        <div id="host"></div>
+        <script>
+          const host = document.getElementById('host');
+          const shadow = host.attachShadow({mode: 'open'});
+          shadow.innerHTML = '<label><input type="checkbox" role="switch" aria-checked="false" /> Notifications</label>';
+        </script>
+      </main>
+    `);
+    const accessibilityScanResults = await new AxeBuilder({ page }).include('#host').analyze();
+    expect(accessibilityScanResults.violations).toEqual([]);
+  });
+
+  test('Switch should not have any automatically detectable accessibility issues (checked)', async ({
+    page,
+  }) => {
+    await page.setContent(`
+      <main>
+        <div id="host"></div>
+        <script>
+          const host = document.getElementById('host');
+          const shadow = host.attachShadow({mode: 'open'});
+          shadow.innerHTML = '<label><input type="checkbox" role="switch" aria-checked="true" checked /> Notifications</label>';
+        </script>
+      </main>
+    `);
+    const accessibilityScanResults = await new AxeBuilder({ page }).include('#host').analyze();
+    expect(accessibilityScanResults.violations).toEqual([]);
+  });
+
+  test('Switch should not have any automatically detectable accessibility issues (disabled)', async ({
+    page,
+  }) => {
+    await page.setContent(`
+      <main>
+        <div id="host"></div>
+        <script>
+          const host = document.getElementById('host');
+          const shadow = host.attachShadow({mode: 'open'});
+          shadow.innerHTML = '<label><input type="checkbox" role="switch" aria-checked="false" disabled /> Notifications</label>';
+        </script>
+      </main>
+    `);
+    const accessibilityScanResults = await new AxeBuilder({ page }).include('#host').analyze();
+    expect(accessibilityScanResults.violations).toEqual([]);
+  });
+
+  // Story 9.5 — Chip primitive
+  test('Chip should not have any automatically detectable accessibility issues (default)', async ({
+    page,
+  }) => {
+    await page.setContent(`
+      <main>
+        <div id="host"></div>
+        <script>
+          const host = document.getElementById('host');
+          const shadow = host.attachShadow({mode: 'open'});
+          shadow.innerHTML = '<button type="button" class="origo-chip" aria-pressed="false">Angular</button>';
+        </script>
+      </main>
+    `);
+    const accessibilityScanResults = await new AxeBuilder({ page }).include('#host').analyze();
+    expect(accessibilityScanResults.violations).toEqual([]);
+  });
+
+  test('Chip should not have any automatically detectable accessibility issues (selected)', async ({
+    page,
+  }) => {
+    await page.setContent(`
+      <main>
+        <div id="host"></div>
+        <script>
+          const host = document.getElementById('host');
+          const shadow = host.attachShadow({mode: 'open'});
+          shadow.innerHTML = '<button type="button" class="origo-chip origo-chip--selected" aria-pressed="true">Angular</button>';
+        </script>
+      </main>
+    `);
+    const accessibilityScanResults = await new AxeBuilder({ page }).include('#host').analyze();
+    expect(accessibilityScanResults.violations).toEqual([]);
+  });
+
+  test('Chip should not have any automatically detectable accessibility issues (disabled)', async ({
+    page,
+  }) => {
+    await page.setContent(`
+      <main>
+        <div id="host"></div>
+        <script>
+          const host = document.getElementById('host');
+          const shadow = host.attachShadow({mode: 'open'});
+          shadow.innerHTML = '<button type="button" class="origo-chip" aria-pressed="false" disabled>Angular</button>';
+        </script>
+      </main>
+    `);
+    const accessibilityScanResults = await new AxeBuilder({ page }).include('#host').analyze();
+    expect(accessibilityScanResults.violations).toEqual([]);
+  });
 });

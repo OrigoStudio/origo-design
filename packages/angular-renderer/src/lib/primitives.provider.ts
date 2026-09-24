@@ -13,7 +13,8 @@ import { CardComponent } from '../components/primitives/card/card.component';
 import { SidebarComponent } from '../components/primitives/sidebar/sidebar.component';
 import { TabsComponent } from '../components/primitives/tabs/tabs.component';
 import { BreadcrumbsComponent } from '../components/primitives/breadcrumbs/breadcrumbs.component';
-
+import { SwitchComponent } from '../components/primitives/switch/switch.component';
+import { ChipComponent } from '../components/primitives/chip/chip.component';
 export function provideOrigo9Primitives(): EnvironmentProviders {
   return makeEnvironmentProviders([
     {
@@ -33,6 +34,8 @@ export function provideOrigo9Primitives(): EnvironmentProviders {
         m.set('Tabs', TabsComponent);
         m.set('Breadcrumbs', BreadcrumbsComponent);
         m.set('Navigation', SidebarComponent);
+        m.set('Switch', SwitchComponent);
+        m.set('Chip', ChipComponent);
         return m;
       },
       deps: [RENDERER_REGISTRY],
