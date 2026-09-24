@@ -1,0 +1,12 @@
+<button
+  type="button"
+  [id]="contract().id"
+  [disabled]="computedDisabled()"
+  [class.origo-chip--selected]="selected()"
+  [attr.aria-pressed]="selected().toString()"
+  [attr.aria-label]="computedAriaLabel() ?? undefined"
+  [attr.aria-describedby]="computedAriaDescribedBy() ?? undefined"
+  (click)="onClick()"
+>
+  <span class="chip-label">{{ computedLabel() }}</span>
+</button>

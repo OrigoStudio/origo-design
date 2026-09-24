@@ -1,0 +1,40 @@
+:host {
+  display: inline-block;
+}
+
+button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding-inline: var(--origo-spacing-container-padding, 12px);
+  padding-block: var(--origo-spacing-container-padding-block, 6px);
+  border-radius: var(--origo-radius-chip, 16px);
+  border: var(--origo-border-width, 1px) solid var(--origo-color-border, #cccccc);
+  background-color: var(--origo-color-surface-variant, #f5f5f5);
+  color: var(--origo-color-text-primary, #333333);
+  font-family: var(--origo-typography-button-font-family, inherit);
+  font-size: var(--origo-typography-button-font-size, 0.875rem);
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+
+  &:hover:not(:disabled) {
+    background-color: var(--origo-color-surface-variant-hover, #ebebeb);
+  }
+
+  &.origo-chip--selected {
+    background-color: var(--origo-color-accent, #005fcc);
+    color: var(--origo-color-on-accent, #ffffff);
+    border-color: var(--origo-color-accent, #005fcc);
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--origo-color-focus, #005fcc);
+    outline-offset: 2px;
+  }
+
+  &:disabled {
+    cursor: not-allowed;
+    opacity: var(--origo-opacity-disabled, 0.5);
+  }
+}
