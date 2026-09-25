@@ -41,7 +41,7 @@
 # - Retrospective appends its action items to action_items; sprint-status surfaces open ones
 
 generated: 2026-07-29T21:46:02.464968
-last_updated: 2026-09-24T14:47:00+05:30
+last_updated: 2026-09-25T19:49:03+05:30
 project: origo-design
 project_key: NOKEY
 tracking_system: file-system
@@ -116,7 +116,7 @@ development_status:
   9-3-navigation-shell-primitives-batch-3: done
   9-4-accessibility-localization-enforcement: done
   9-5-advanced-form-primitives-batch-4: done
-  epic-9-retrospective: optional
+  epic-9-retrospective: done
   epic-10: backlog
   10-1-10-minute-quickstart-guide: backlog
   10-2-legacy-migration-strategy-guide: backlog
@@ -217,3 +217,15 @@ action_items:
   - id: retro-8-sync-versioning
     description: "Synchronize Versioning: Manage and align the versioning of the Playground and the DevTools extension so they strictly match the main core packages. (Owner: Winston)"
     status: done
+  - epic: 9
+    action: "Playground Integration: Register provideOrigo9Primitives() in the Playground app and create a showcase BADL JSON fixture that demonstrates the Epic 9 primitives."
+    owner: "Charlie"
+    status: open
+  - epic: 9
+    action: "Playwright Component Testing: Upgrade the Playwright testing harness to mount actual Angular components instead of raw HTML fixtures to ensure Shadow DOM accessibility."
+    owner: "Dana"
+    status: open
+  - epic: 9
+    action: "A11y & RTL Knowledge Transfer: Conduct a brief knowledge sharing session or write documentation on ARIA semantics and CSS Logical properties to prevent recurring PR feedback."
+    owner: "Amelia"
+    status: open

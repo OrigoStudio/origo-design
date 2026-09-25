@@ -1,4 +1,4 @@
-import { EnvironmentProviders, makeEnvironmentProviders, Type } from '@angular/core';
+import { EnvironmentProviders, makeEnvironmentProviders } from '@angular/core';
 import { RENDERER_REGISTRY } from './renderer.tokens';
 import { SelectComponent } from '../components/primitives/select/select.component';
 import { CheckboxComponent } from '../components/primitives/checkbox/checkbox.component';
@@ -15,30 +15,38 @@ import { TabsComponent } from '../components/primitives/tabs/tabs.component';
 import { BreadcrumbsComponent } from '../components/primitives/breadcrumbs/breadcrumbs.component';
 import { SwitchComponent } from '../components/primitives/switch/switch.component';
 import { ChipComponent } from '../components/primitives/chip/chip.component';
+import { TextInputComponent } from '../components/primitives/text-input/text-input.component';
+import { ButtonComponent } from '../components/primitives/button/button.component';
+import { VBoxComponent } from '../components/primitives/vbox/vbox.component';
+
 export function provideOrigo9Primitives(): EnvironmentProviders {
+  const registryMap = new Map<string, any>([
+    ['Select', SelectComponent],
+    ['Checkbox', CheckboxComponent],
+    ['RadioGroup', RadioGroupComponent],
+    ['Textarea', TextareaComponent],
+    ['HBox', HBoxComponent],
+    ['Label', LabelComponent],
+    ['FormField', FormFieldComponent],
+    ['DataGrid', DataGridComponent],
+    ['List', ListComponent],
+    ['Card', CardComponent],
+    ['Sidebar', SidebarComponent],
+    ['Tabs', TabsComponent],
+    ['Breadcrumbs', BreadcrumbsComponent],
+    ['Navigation', SidebarComponent],
+    ['Switch', SwitchComponent],
+    ['Chip', ChipComponent],
+    ['TextInput', TextInputComponent],
+    ['Button', ButtonComponent],
+    ['VBox', VBoxComponent],
+    ['vbox', VBoxComponent], // For backward compatibility with 'vbox' in preview-root
+  ]);
+
   return makeEnvironmentProviders([
     {
       provide: RENDERER_REGISTRY,
-      useFactory: (m: Map<string, Type<unknown>>) => {
-        m.set('Select', SelectComponent);
-        m.set('Checkbox', CheckboxComponent);
-        m.set('RadioGroup', RadioGroupComponent);
-        m.set('Textarea', TextareaComponent);
-        m.set('HBox', HBoxComponent);
-        m.set('Label', LabelComponent);
-        m.set('FormField', FormFieldComponent);
-        m.set('DataGrid', DataGridComponent);
-        m.set('List', ListComponent);
-        m.set('Card', CardComponent);
-        m.set('Sidebar', SidebarComponent);
-        m.set('Tabs', TabsComponent);
-        m.set('Breadcrumbs', BreadcrumbsComponent);
-        m.set('Navigation', SidebarComponent);
-        m.set('Switch', SwitchComponent);
-        m.set('Chip', ChipComponent);
-        return m;
-      },
-      deps: [RENDERER_REGISTRY],
+      useValue: registryMap,
     },
   ]);
 }

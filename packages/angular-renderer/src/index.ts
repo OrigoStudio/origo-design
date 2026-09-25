@@ -20,3 +20,4 @@ export * from './components/primitives/card/card.component';
 export * from './components/primitives/sidebar/sidebar.component';
 export * from './components/primitives/tabs/tabs.component';
 export * from './components/primitives/breadcrumbs/breadcrumbs.component';
+export * from './adapters/web/experience-adapter.service';
