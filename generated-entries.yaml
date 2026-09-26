@@ -1,0 +1,162 @@
+- id: renderer-primitive-breadcrumbs-ct
+  description: 'Verifies breadcrumbs primitive accessibility via Playwright CT'
+  package: '@origo/angular-renderer'
+  spec_file: packages/angular-renderer/src/components/primitives/breadcrumbs/breadcrumbs.component.pw.ts
+  type: e2e
+  affected_stories:
+    - retro-9-playwright-component-testing
+  last_result: unknown
+  results: {}
+- id: renderer-primitive-button-ct
+  description: 'Verifies button primitive accessibility via Playwright CT'
+  package: '@origo/angular-renderer'
+  spec_file: packages/angular-renderer/src/components/primitives/button/button.component.pw.ts
+  type: e2e
+  affected_stories:
+    - retro-9-playwright-component-testing
+  last_result: unknown
+  results: {}
+- id: renderer-primitive-card-ct
+  description: 'Verifies card primitive accessibility via Playwright CT'
+  package: '@origo/angular-renderer'
+  spec_file: packages/angular-renderer/src/components/primitives/card/card.component.pw.ts
+  type: e2e
+  affected_stories:
+    - retro-9-playwright-component-testing
+  last_result: unknown
+  results: {}
+- id: renderer-primitive-checkbox-ct
+  description: 'Verifies checkbox primitive accessibility via Playwright CT'
+  package: '@origo/angular-renderer'
+  spec_file: packages/angular-renderer/src/components/primitives/checkbox/checkbox.component.pw.ts
+  type: e2e
+  affected_stories:
+    - retro-9-playwright-component-testing
+  last_result: unknown
+  results: {}
+- id: renderer-primitive-chip-ct
+  description: 'Verifies chip primitive accessibility via Playwright CT'
+  package: '@origo/angular-renderer'
+  spec_file: packages/angular-renderer/src/components/primitives/chip/chip.component.pw.ts
+  type: e2e
+  affected_stories:
+    - retro-9-playwright-component-testing
+  last_result: unknown
+  results: {}
+- id: renderer-primitive-data-grid-ct
+  description: 'Verifies data-grid primitive accessibility via Playwright CT'
+  package: '@origo/angular-renderer'
+  spec_file: packages/angular-renderer/src/components/primitives/data-grid/data-grid.component.pw.ts
+  type: e2e
+  affected_stories:
+    - retro-9-playwright-component-testing
+  last_result: unknown
+  results: {}
+- id: renderer-primitive-form-field-ct
+  description: 'Verifies form-field primitive accessibility via Playwright CT'
+  package: '@origo/angular-renderer'
+  spec_file: packages/angular-renderer/src/components/primitives/form-field/form-field.component.pw.ts
+  type: e2e
+  affected_stories:
+    - retro-9-playwright-component-testing
+  last_result: unknown
+  results: {}
+- id: renderer-primitive-hbox-ct
+  description: 'Verifies hbox primitive accessibility via Playwright CT'
+  package: '@origo/angular-renderer'
+  spec_file: packages/angular-renderer/src/components/primitives/hbox/hbox.component.pw.ts
+  type: e2e
+  affected_stories:
+    - retro-9-playwright-component-testing
+  last_result: unknown
+  results: {}
+- id: renderer-primitive-label-ct
+  description: 'Verifies label primitive accessibility via Playwright CT'
+  package: '@origo/angular-renderer'
+  spec_file: packages/angular-renderer/src/components/primitives/label/label.component.pw.ts
+  type: e2e
+  affected_stories:
+    - retro-9-playwright-component-testing
+  last_result: unknown
+  results: {}
+- id: renderer-primitive-list-ct
+  description: 'Verifies list primitive accessibility via Playwright CT'
+  package: '@origo/angular-renderer'
+  spec_file: packages/angular-renderer/src/components/primitives/list/list.component.pw.ts
+  type: e2e
+  affected_stories:
+    - retro-9-playwright-component-testing
+  last_result: unknown
+  results: {}
+- id: renderer-primitive-radio-group-ct
+  description: 'Verifies radio-group primitive accessibility via Playwright CT'
+  package: '@origo/angular-renderer'
+  spec_file: packages/angular-renderer/src/components/primitives/radio-group/radio-group.component.pw.ts
+  type: e2e
+  affected_stories:
+    - retro-9-playwright-component-testing
+  last_result: unknown
+  results: {}
+- id: renderer-primitive-select-ct
+  description: 'Verifies select primitive accessibility via Playwright CT'
+  package: '@origo/angular-renderer'
+  spec_file: packages/angular-renderer/src/components/primitives/select/select.component.pw.ts
+  type: e2e
+  affected_stories:
+    - retro-9-playwright-component-testing
+  last_result: unknown
+  results: {}
+- id: renderer-primitive-sidebar-ct
+  description: 'Verifies sidebar primitive accessibility via Playwright CT'
+  package: '@origo/angular-renderer'
+  spec_file: packages/angular-renderer/src/components/primitives/sidebar/sidebar.component.pw.ts
+  type: e2e
+  affected_stories:
+    - retro-9-playwright-component-testing
+  last_result: unknown
+  results: {}
+- id: renderer-primitive-switch-ct
+  description: 'Verifies switch primitive accessibility via Playwright CT'
+  package: '@origo/angular-renderer'
+  spec_file: packages/angular-renderer/src/components/primitives/switch/switch.component.pw.ts
+  type: e2e
+  affected_stories:
+    - retro-9-playwright-component-testing
+  last_result: unknown
+  results: {}
+- id: renderer-primitive-tabs-ct
+  description: 'Verifies tabs primitive accessibility via Playwright CT'
+  package: '@origo/angular-renderer'
+  spec_file: packages/angular-renderer/src/components/primitives/tabs/tabs.component.pw.ts
+  type: e2e
+  affected_stories:
+    - retro-9-playwright-component-testing
+  last_result: unknown
+  results: {}
+- id: renderer-primitive-text-input-ct
+  description: 'Verifies text-input primitive accessibility via Playwright CT'
+  package: '@origo/angular-renderer'
+  spec_file: packages/angular-renderer/src/components/primitives/text-input/text-input.component.pw.ts
+  type: e2e
+  affected_stories:
+    - retro-9-playwright-component-testing
+  last_result: unknown
+  results: {}
+- id: renderer-primitive-textarea-ct
+  description: 'Verifies textarea primitive accessibility via Playwright CT'
+  package: '@origo/angular-renderer'
+  spec_file: packages/angular-renderer/src/components/primitives/textarea/textarea.component.pw.ts
+  type: e2e
+  affected_stories:
+    - retro-9-playwright-component-testing
+  last_result: unknown
+  results: {}
+- id: renderer-primitive-vbox-ct
+  description: 'Verifies vbox primitive accessibility via Playwright CT'
+  package: '@origo/angular-renderer'
+  spec_file: packages/angular-renderer/src/components/primitives/vbox/vbox.component.pw.ts
+  type: e2e
+  affected_stories:
+    - retro-9-playwright-component-testing
+  last_result: unknown
+  results: {}

@@ -1,20 +1,20 @@
 import { test, expect } from '@playwright/experimental-ct-angular';
-import { VBoxComponent, VBoxProps } from './vbox.component';
+import { TabsComponent, TabsProps } from './tabs.component';
 import { InteractionContract } from '@origo/core';
 import AxeBuilder from '@axe-core/playwright';
 
-test.describe('VBoxComponent Accessibility', () => {
+test.describe('TabsComponent Accessibility', () => {
   test('should not have any automatically detectable accessibility issues', async ({
     mount,
     page,
   }) => {
-    await mount(VBoxComponent, {
+    await mount(TabsComponent, {
       props: {
         contract: {
           id: 'test-id',
-          type: 'vbox',
+          type: 'tabs',
           props: {},
-        } as InteractionContract<VBoxProps>,
+        } as InteractionContract<TabsProps>,
       },
     });
 

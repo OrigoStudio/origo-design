@@ -1,20 +1,20 @@
 import { test, expect } from '@playwright/experimental-ct-angular';
-import { VBoxComponent, VBoxProps } from './vbox.component';
+import { RadioGroupComponent, RadioGroupProps } from './radio-group.component';
 import { InteractionContract } from '@origo/core';
 import AxeBuilder from '@axe-core/playwright';
 
-test.describe('VBoxComponent Accessibility', () => {
+test.describe('RadioGroupComponent Accessibility', () => {
   test('should not have any automatically detectable accessibility issues', async ({
     mount,
     page,
   }) => {
-    await mount(VBoxComponent, {
+    await mount(RadioGroupComponent, {
       props: {
         contract: {
           id: 'test-id',
-          type: 'vbox',
+          type: 'radioGroup',
           props: {},
-        } as InteractionContract<VBoxProps>,
+        } as InteractionContract<RadioGroupProps>,
       },
     });
 

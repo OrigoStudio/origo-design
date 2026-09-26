@@ -14,6 +14,13 @@
         "tsConfig": "packages/angular-renderer/tsconfig.lib.json",
         "assets": ["packages/angular-renderer/*.md"]
       }
+    },
+    "playwright-ct": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "npx playwright test --config=packages/angular-renderer/playwright-ct.config.ts",
+        "cwd": "{workspaceRoot}"
+      }
     }
   }
 }

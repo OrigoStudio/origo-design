@@ -1,20 +1,20 @@
 import { test, expect } from '@playwright/experimental-ct-angular';
-import { VBoxComponent, VBoxProps } from './vbox.component';
+import { SelectComponent, SelectProps } from './select.component';
 import { InteractionContract } from '@origo/core';
 import AxeBuilder from '@axe-core/playwright';
 
-test.describe('VBoxComponent Accessibility', () => {
+test.describe('SelectComponent Accessibility', () => {
   test('should not have any automatically detectable accessibility issues', async ({
     mount,
     page,
   }) => {
-    await mount(VBoxComponent, {
+    await mount(SelectComponent, {
       props: {
         contract: {
           id: 'test-id',
-          type: 'vbox',
-          props: {},
-        } as InteractionContract<VBoxProps>,
+          type: 'select',
+          props: { options: [{ label: 'Opt 1', value: '1' }] },
+        } as InteractionContract<SelectProps>,
       },
     });
 

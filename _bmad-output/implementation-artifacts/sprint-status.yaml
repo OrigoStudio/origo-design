@@ -220,11 +220,11 @@ action_items:
   - epic: 9
     action: "Playground Integration: Register provideOrigo9Primitives() in the Playground app and create a showcase BADL JSON fixture that demonstrates the Epic 9 primitives."
     owner: "Charlie"
-    status: open
+    status: done
   - epic: 9
     action: "Playwright Component Testing: Upgrade the Playwright testing harness to mount actual Angular components instead of raw HTML fixtures to ensure Shadow DOM accessibility."
     owner: "Dana"
-    status: open
+    status: in-progress
   - epic: 9
     action: "A11y & RTL Knowledge Transfer: Conduct a brief knowledge sharing session or write documentation on ARIA semantics and CSS Logical properties to prevent recurring PR feedback."
     owner: "Amelia"

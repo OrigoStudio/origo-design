@@ -65,6 +65,7 @@
     "@nx/vite": "23.1.0",
     "@nx/web": "23.1.0",
     "@nx/workspace": "23.1.0",
+    "@playwright/experimental-ct-angular": "npm:@sand4rt/experimental-ct-angular@^1.61.1",
     "@playwright/test": "^1.36.0",
     "@schematics/angular": "22.0.9",
     "@swc/helpers": "~0.5.18",
