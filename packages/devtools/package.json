@@ -1,6 +1,6 @@
 {
   "name": "@origo/devtools",
-  "version": "0.0.36",
+  "version": "0.0.37",
   "type": "module",
   "dependencies": {
     "@origo/core": "0.0.30",
