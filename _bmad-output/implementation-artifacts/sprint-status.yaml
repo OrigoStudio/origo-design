@@ -41,7 +41,7 @@
 # - Retrospective appends its action items to action_items; sprint-status surfaces open ones
 
 generated: 2026-07-29T21:46:02.464968
-last_updated: 2026-09-27T13:41:00+05:30
+last_updated: 2026-09-27T14:10:56+05:30
 project: origo-design
 project_key: NOKEY
 tracking_system: file-system
@@ -131,7 +131,7 @@ development_status:
   retro-7-test-registry-backfill: done
   retro-7-dod-update: done
   retro-8-harden-test-isolation: done
-  retro-9-a11y-rtl-knowledge-transfer: ready-for-dev
+  retro-9-a11y-rtl-knowledge-transfer: review
 
 action_items:
   - id: retro-1-cleanup
@@ -229,4 +229,4 @@ action_items:
   - epic: 9
     action: "A11y & RTL Knowledge Transfer: Conduct a brief knowledge sharing session or write documentation on ARIA semantics and CSS Logical properties to prevent recurring PR feedback."
     owner: "Amelia"
-    status: open
+    status: in-progress

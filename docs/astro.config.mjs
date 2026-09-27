@@ -23,6 +23,7 @@ export default defineConfig({
             { label: 'Design Tokens', link: '/guides/design-tokens/' },
             { label: 'Publishing & Versioning', link: '/guides/publishing/' },
             { label: 'AST JSON Validation', link: '/guides/ast-validator/' },
+            { label: 'Accessibility & RTL Guide', link: '/guides/accessibility-and-rtl/' },
           ],
         },
         {
