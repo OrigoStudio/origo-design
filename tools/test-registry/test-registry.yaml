@@ -559,6 +559,11 @@ test_cases:
     spec_file: packages/angular-renderer/src/components/primitives/breadcrumbs/breadcrumbs.component.pw.ts
     type: e2e
     affected_stories:
+      - 9-1-form-layout-primitives-batch-1
+      - 9-2-data-presentation-primitives-batch-2
+      - 9-3-navigation-shell-primitives-batch-3
+      - 9-4-accessibility-localization-enforcement
+      - 9-5-advanced-form-primitives-batch-4
       - retro-9-playwright-component-testing
     last_result: unknown
     results: {}
@@ -568,6 +573,11 @@ test_cases:
     spec_file: packages/angular-renderer/src/components/primitives/button/button.component.pw.ts
     type: e2e
     affected_stories:
+      - 9-1-form-layout-primitives-batch-1
+      - 9-2-data-presentation-primitives-batch-2
+      - 9-3-navigation-shell-primitives-batch-3
+      - 9-4-accessibility-localization-enforcement
+      - 9-5-advanced-form-primitives-batch-4
       - retro-9-playwright-component-testing
     last_result: unknown
     results: {}
@@ -577,6 +587,11 @@ test_cases:
     spec_file: packages/angular-renderer/src/components/primitives/card/card.component.pw.ts
     type: e2e
     affected_stories:
+      - 9-1-form-layout-primitives-batch-1
+      - 9-2-data-presentation-primitives-batch-2
+      - 9-3-navigation-shell-primitives-batch-3
+      - 9-4-accessibility-localization-enforcement
+      - 9-5-advanced-form-primitives-batch-4
       - retro-9-playwright-component-testing
     last_result: unknown
     results: {}
@@ -586,6 +601,11 @@ test_cases:
     spec_file: packages/angular-renderer/src/components/primitives/checkbox/checkbox.component.pw.ts
     type: e2e
     affected_stories:
+      - 9-1-form-layout-primitives-batch-1
+      - 9-2-data-presentation-primitives-batch-2
+      - 9-3-navigation-shell-primitives-batch-3
+      - 9-4-accessibility-localization-enforcement
+      - 9-5-advanced-form-primitives-batch-4
       - retro-9-playwright-component-testing
     last_result: unknown
     results: {}
@@ -595,6 +615,11 @@ test_cases:
     spec_file: packages/angular-renderer/src/components/primitives/chip/chip.component.pw.ts
     type: e2e
     affected_stories:
+      - 9-1-form-layout-primitives-batch-1
+      - 9-2-data-presentation-primitives-batch-2
+      - 9-3-navigation-shell-primitives-batch-3
+      - 9-4-accessibility-localization-enforcement
+      - 9-5-advanced-form-primitives-batch-4
       - retro-9-playwright-component-testing
     last_result: unknown
     results: {}
@@ -604,6 +629,11 @@ test_cases:
     spec_file: packages/angular-renderer/src/components/primitives/data-grid/data-grid.component.pw.ts
     type: e2e
     affected_stories:
+      - 9-1-form-layout-primitives-batch-1
+      - 9-2-data-presentation-primitives-batch-2
+      - 9-3-navigation-shell-primitives-batch-3
+      - 9-4-accessibility-localization-enforcement
+      - 9-5-advanced-form-primitives-batch-4
       - retro-9-playwright-component-testing
     last_result: unknown
     results: {}
@@ -613,6 +643,11 @@ test_cases:
     spec_file: packages/angular-renderer/src/components/primitives/form-field/form-field.component.pw.ts
     type: e2e
     affected_stories:
+      - 9-1-form-layout-primitives-batch-1
+      - 9-2-data-presentation-primitives-batch-2
+      - 9-3-navigation-shell-primitives-batch-3
+      - 9-4-accessibility-localization-enforcement
+      - 9-5-advanced-form-primitives-batch-4
       - retro-9-playwright-component-testing
     last_result: unknown
     results: {}
@@ -622,6 +657,11 @@ test_cases:
     spec_file: packages/angular-renderer/src/components/primitives/hbox/hbox.component.pw.ts
     type: e2e
     affected_stories:
+      - 9-1-form-layout-primitives-batch-1
+      - 9-2-data-presentation-primitives-batch-2
+      - 9-3-navigation-shell-primitives-batch-3
+      - 9-4-accessibility-localization-enforcement
+      - 9-5-advanced-form-primitives-batch-4
       - retro-9-playwright-component-testing
     last_result: unknown
     results: {}
@@ -631,6 +671,11 @@ test_cases:
     spec_file: packages/angular-renderer/src/components/primitives/label/label.component.pw.ts
     type: e2e
     affected_stories:
+      - 9-1-form-layout-primitives-batch-1
+      - 9-2-data-presentation-primitives-batch-2
+      - 9-3-navigation-shell-primitives-batch-3
+      - 9-4-accessibility-localization-enforcement
+      - 9-5-advanced-form-primitives-batch-4
       - retro-9-playwright-component-testing
     last_result: unknown
     results: {}
@@ -640,6 +685,11 @@ test_cases:
     spec_file: packages/angular-renderer/src/components/primitives/list/list.component.pw.ts
     type: e2e
     affected_stories:
+      - 9-1-form-layout-primitives-batch-1
+      - 9-2-data-presentation-primitives-batch-2
+      - 9-3-navigation-shell-primitives-batch-3
+      - 9-4-accessibility-localization-enforcement
+      - 9-5-advanced-form-primitives-batch-4
       - retro-9-playwright-component-testing
     last_result: unknown
     results: {}
@@ -649,6 +699,11 @@ test_cases:
     spec_file: packages/angular-renderer/src/components/primitives/radio-group/radio-group.component.pw.ts
     type: e2e
     affected_stories:
+      - 9-1-form-layout-primitives-batch-1
+      - 9-2-data-presentation-primitives-batch-2
+      - 9-3-navigation-shell-primitives-batch-3
+      - 9-4-accessibility-localization-enforcement
+      - 9-5-advanced-form-primitives-batch-4
       - retro-9-playwright-component-testing
     last_result: unknown
     results: {}
@@ -658,6 +713,11 @@ test_cases:
     spec_file: packages/angular-renderer/src/components/primitives/select/select.component.pw.ts
     type: e2e
     affected_stories:
+      - 9-1-form-layout-primitives-batch-1
+      - 9-2-data-presentation-primitives-batch-2
+      - 9-3-navigation-shell-primitives-batch-3
+      - 9-4-accessibility-localization-enforcement
+      - 9-5-advanced-form-primitives-batch-4
       - retro-9-playwright-component-testing
     last_result: unknown
     results: {}
@@ -667,6 +727,11 @@ test_cases:
     spec_file: packages/angular-renderer/src/components/primitives/sidebar/sidebar.component.pw.ts
     type: e2e
     affected_stories:
+      - 9-1-form-layout-primitives-batch-1
+      - 9-2-data-presentation-primitives-batch-2
+      - 9-3-navigation-shell-primitives-batch-3
+      - 9-4-accessibility-localization-enforcement
+      - 9-5-advanced-form-primitives-batch-4
       - retro-9-playwright-component-testing
     last_result: unknown
     results: {}
@@ -676,6 +741,11 @@ test_cases:
     spec_file: packages/angular-renderer/src/components/primitives/switch/switch.component.pw.ts
     type: e2e
     affected_stories:
+      - 9-1-form-layout-primitives-batch-1
+      - 9-2-data-presentation-primitives-batch-2
+      - 9-3-navigation-shell-primitives-batch-3
+      - 9-4-accessibility-localization-enforcement
+      - 9-5-advanced-form-primitives-batch-4
       - retro-9-playwright-component-testing
     last_result: unknown
     results: {}
@@ -685,6 +755,11 @@ test_cases:
     spec_file: packages/angular-renderer/src/components/primitives/tabs/tabs.component.pw.ts
     type: e2e
     affected_stories:
+      - 9-1-form-layout-primitives-batch-1
+      - 9-2-data-presentation-primitives-batch-2
+      - 9-3-navigation-shell-primitives-batch-3
+      - 9-4-accessibility-localization-enforcement
+      - 9-5-advanced-form-primitives-batch-4
       - retro-9-playwright-component-testing
     last_result: unknown
     results: {}
@@ -694,6 +769,11 @@ test_cases:
     spec_file: packages/angular-renderer/src/components/primitives/text-input/text-input.component.pw.ts
     type: e2e
     affected_stories:
+      - 9-1-form-layout-primitives-batch-1
+      - 9-2-data-presentation-primitives-batch-2
+      - 9-3-navigation-shell-primitives-batch-3
+      - 9-4-accessibility-localization-enforcement
+      - 9-5-advanced-form-primitives-batch-4
       - retro-9-playwright-component-testing
     last_result: unknown
     results: {}
@@ -703,6 +783,11 @@ test_cases:
     spec_file: packages/angular-renderer/src/components/primitives/textarea/textarea.component.pw.ts
     type: e2e
     affected_stories:
+      - 9-1-form-layout-primitives-batch-1
+      - 9-2-data-presentation-primitives-batch-2
+      - 9-3-navigation-shell-primitives-batch-3
+      - 9-4-accessibility-localization-enforcement
+      - 9-5-advanced-form-primitives-batch-4
       - retro-9-playwright-component-testing
     last_result: unknown
     results: {}
@@ -712,6 +797,11 @@ test_cases:
     spec_file: packages/angular-renderer/src/components/primitives/vbox/vbox.component.pw.ts
     type: e2e
     affected_stories:
+      - 9-1-form-layout-primitives-batch-1
+      - 9-2-data-presentation-primitives-batch-2
+      - 9-3-navigation-shell-primitives-batch-3
+      - 9-4-accessibility-localization-enforcement
+      - 9-5-advanced-form-primitives-batch-4
       - retro-9-playwright-component-testing
     last_result: unknown
     results: {}

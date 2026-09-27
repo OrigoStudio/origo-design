@@ -20,6 +20,11 @@
       "options": {
         "command": "npx playwright test --config=packages/angular-renderer/playwright-ct.config.ts",
         "cwd": "{workspaceRoot}"
+      },
+      "configurations": {
+        "headed": {
+          "command": "npx playwright test --config=packages/angular-renderer/playwright-ct.config.ts --headed"
+        }
       }
     }
   }

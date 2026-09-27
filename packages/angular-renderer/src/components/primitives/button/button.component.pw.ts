@@ -25,9 +25,6 @@ test.describe('ButtonComponent Accessibility', () => {
         'landmark-one-main',
         'page-has-heading-one',
         'region',
-        'label',
-        'button-name',
-        'select-name',
       ])
       .analyze();
     expect(accessibilityScanResults.violations).toEqual([]);

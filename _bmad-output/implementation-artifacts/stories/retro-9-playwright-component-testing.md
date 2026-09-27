@@ -3,7 +3,7 @@ baseline_commit: 9775c0b6f6f218eb7354c487c08cb2e459488d79
 ---
 # Story retro-9: playwright-component-testing
 
-Status: in-progress
+Status: done
 
 ## Story
 
@@ -121,12 +121,12 @@ Each component accepts a `contract` input typed as `InteractionContract<TProps>`
 
 ## Tasks
 
-- [ ] **1. Install package:** `npm install --save-dev @playwright/experimental-ct-angular` — verify compatible version with `@playwright/test@1.62.1`.
-- [ ] **2. Add Nx target:** Add `playwright-ct` target to `packages/angular-renderer/project.json`.
-- [ ] **3. Create missing `*.component.pw.ts` files** for the 15 components listed above. Use `button.component.pw.ts` as the reference template.
-- [ ] **4. Delete `primitives.a11y.pw.ts`** — remove `packages/angular-renderer/src/components/primitives/primitives.a11y.pw.ts` entirely.
-- [ ] **5. Run suite:** `nx run angular-renderer:playwright-ct` — all 18 component tests must pass. Fix any violations.
-- [ ] **6. Update Central Test Registry:** Add a `retro-9-playwright-component-testing` entry to `tools/test-registry/test-registry.yaml`.
+- [x] **1. Install package:** `npm install --save-dev @playwright/experimental-ct-angular` — verify compatible version with `@playwright/test@1.62.1`.
+- [x] **2. Add Nx target:** Add `playwright-ct` target to `packages/angular-renderer/project.json`.
+- [x] **3. Create missing `*.component.pw.ts` files** for the 15 components listed above. Use `button.component.pw.ts` as the reference template.
+- [x] **4. Delete `primitives.a11y.pw.ts`** — remove `packages/angular-renderer/src/components/primitives/primitives.a11y.pw.ts` entirely.
+- [x] **5. Run suite:** `nx run angular-renderer:playwright-ct` — all 18 component tests must pass. Fix any violations.
+- [x] **6. Update Central Test Registry:** Add a `retro-9-playwright-component-testing` entry to `tools/test-registry/test-registry.yaml`.
 
 ## Anti-Patterns to Avoid
 
@@ -135,3 +135,23 @@ Each component accepts a `contract` input typed as `InteractionContract<TProps>`
 - ❌ Do NOT create a single monolithic test file — one `*.component.pw.ts` per component, co-located.
 - ❌ Do NOT guess component props shapes — read each component's `.component.ts` file first.
 - ❌ Do NOT skip the Nx target — tests must be runnable via `nx run angular-renderer:playwright-ct`.
+
+### Review Findings
+
+- [x] [Review][Patch] `zone.js` imported globally in `playwright/index.ts` — Imported unconditionally, which could conflict if the Angular app uses zoneless change detection.
+- [x] [Review][Patch] Blanket `.disableRules()` silences genuine a11y failures [packages/angular-renderer/src/components/primitives/button/button.component.pw.ts]
+- [x] [Review][Patch] Components mounted with empty props lead to vacuous accessibility scans [packages/angular-renderer/src/components/primitives/text-input/text-input.component.pw.ts]
+- [x] [Review][Patch] Missing variant and disabled state accessibility coverage [packages/angular-renderer/src/components/primitives/switch/switch.component.pw.ts]
+- [x] [Review][Patch] Third-party alias `@playwright/experimental-ct-angular` placed in production dependencies [packages/angular-renderer/package.json]
+- [x] [Review][Patch] Version mismatch: `@playwright/test` vs alias package [package.json]
+- [x] [Review][Patch] Backup file `vbox.component.pw.ts.bak` committed to source control [packages/angular-renderer/src/components/primitives/vbox/vbox.component.pw.ts.bak]
+- [x] [Review][Patch] `test-results/.last-run.json` committed to source control [packages/angular-renderer/test-results/.last-run.json]
+- [x] [Review][Patch] Scaffold script and generated output committed to repo [generate-registry.js]
+- [x] [Review][Patch] Nx target missing `configurations` for `--headed` [packages/angular-renderer/project.json]
+- [x] [Review][Patch] `tsconfig.pw.json` sets `"module": "esnext"` without `moduleResolution` [packages/angular-renderer/tsconfig.pw.json]
+- [x] [Review][Patch] `include: ['src/**/*.ts']` incorrectly covers spec files [packages/angular-renderer/tsconfig.pw.json]
+- [x] [Review][Patch] Removing `renderer-primitives-a11y` breaks traceability for stories 9.1–9.5 [tools/test-registry/test-registry.yaml]
+- [x] [Review][Patch] Unrelated `commitlint.config.js` changes [commitlint.config.js]
+- [x] [Review][Patch] Contradictory `fullyParallel: true` and `workers: 1` in CI [packages/angular-renderer/playwright-ct.config.ts]
+- [x] [Review][Patch] `tsconfig.pw.json` path resolution silently fails Vite plugin [packages/angular-renderer/playwright-ct.config.ts]
+- [x] [Review][Patch] Story tasks and sprint status not updated to reflect completion [_bmad-output/implementation-artifacts/stories/retro-9-playwright-component-testing.md]

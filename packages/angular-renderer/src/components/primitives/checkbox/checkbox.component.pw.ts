@@ -13,7 +13,13 @@ test.describe('CheckboxComponent Accessibility', () => {
         contract: {
           id: 'test-id',
           type: 'checkbox',
-          props: {},
+          props: {
+            label: 'Test Label',
+            placeholder: 'Test',
+            'aria-label': 'Test',
+            options: [{ label: 'Option 1', value: '1' }],
+            items: [{ label: 'Item 1' }],
+          },
         } as InteractionContract<CheckboxProps>,
       },
     });
@@ -25,9 +31,6 @@ test.describe('CheckboxComponent Accessibility', () => {
         'landmark-one-main',
         'page-has-heading-one',
         'region',
-        'label',
-        'button-name',
-        'select-name',
       ])
       .analyze();
     expect(accessibilityScanResults.violations).toEqual([]);

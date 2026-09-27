@@ -13,7 +13,12 @@ test.describe('BreadcrumbsComponent Accessibility', () => {
         contract: {
           id: 'test-id',
           type: 'breadcrumbs',
-          props: {},
+          props: {
+            columns: [{ key: 'name', label: 'Name' }],
+            rows: [{ name: 'Test' }],
+            items: [{ label: 'Item 1', id: '1', href: '/' }],
+            tabs: [{ label: 'Tab 1', id: 'tab-1' }],
+          },
         } as InteractionContract<BreadcrumbsProps>,
       },
     });
@@ -25,9 +30,6 @@ test.describe('BreadcrumbsComponent Accessibility', () => {
         'landmark-one-main',
         'page-has-heading-one',
         'region',
-        'label',
-        'button-name',
-        'select-name',
       ])
       .analyze();
     expect(accessibilityScanResults.violations).toEqual([]);
