@@ -1,4 +1,4 @@
-import { test, expect } from '@playwright/experimental-ct-angular';
+import { test, expect } from '@jscutlery/playwright-ct-angular';
 import { BreadcrumbsComponent, BreadcrumbsProps } from './breadcrumbs.component';
 import { InteractionContract } from '@origo/core';
 import AxeBuilder from '@axe-core/playwright';

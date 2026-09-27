@@ -1,6 +1,6 @@
 import { resolve } from 'path';
 import angular from '@analogjs/vite-plugin-angular';
-import { defineConfig, devices } from '@playwright/experimental-ct-angular';
+import { defineConfig, devices } from '@jscutlery/playwright-ct-angular';
 
 const tsconfigPath = resolve(__dirname, 'tsconfig.pw.json');
 if (!require('fs').existsSync(tsconfigPath)) {

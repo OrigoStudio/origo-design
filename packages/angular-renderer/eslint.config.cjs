@@ -9,7 +9,7 @@ module.exports = [
         'error',
         {
           ignoredFiles: ['{projectRoot}/eslint.config.{js,cjs,mjs,ts,cts,mts}'],
-          ignoredDependencies: ['@playwright/experimental-ct-angular'],
+          ignoredDependencies: ['@jscutlery/playwright-ct-angular'],
         },
       ],
     },
