@@ -3,7 +3,7 @@ baseline_commit: HEAD
 ---
 # Story retro-9: a11y-rtl-knowledge-transfer
 
-Status: review
+Status: done
 
 ## Story
 
