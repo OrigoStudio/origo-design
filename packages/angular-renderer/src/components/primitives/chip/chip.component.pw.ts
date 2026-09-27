@@ -31,7 +31,11 @@ test.describe('ChipComponent Accessibility', () => {
 test('Chip selected state accessibility', async ({ mount, page }) => {
   await mount(ChipComponent, {
     props: {
-      contract: { id: 'test-id', type: 'chip', props: { selected: true, label: 'Test' } } as any,
+      contract: {
+        id: 'test-id',
+        type: 'chip',
+        props: { selected: true, label: 'Test' },
+      } as InteractionContract<ChipProps>,
     },
   });
   const accessibilityScanResults = await new AxeBuilder({ page }).analyze();
@@ -40,7 +44,11 @@ test('Chip selected state accessibility', async ({ mount, page }) => {
 test('Chip disabled state accessibility', async ({ mount, page }) => {
   await mount(ChipComponent, {
     props: {
-      contract: { id: 'test-id', type: 'chip', props: { disabled: true, label: 'Test' } } as any,
+      contract: {
+        id: 'test-id',
+        type: 'chip',
+        props: { disabled: true, label: 'Test' },
+      } as InteractionContract<ChipProps>,
     },
   });
   const accessibilityScanResults = await new AxeBuilder({ page }).analyze();

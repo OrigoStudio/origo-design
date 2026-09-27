@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-non-null-assertion */
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { TextareaComponent } from './textarea.component';
 import { WebExperienceAdapterService } from '../../../adapters/web/experience-adapter.service';

@@ -24,7 +24,7 @@ module.exports = [
         'error',
         {
           enforceBuildableLibDependency: true,
-          allow: [],
+          allow: ['@sand4rt/experimental-ct-angular'],
           depConstraints: [
             {
               sourceTag: 'type:app',

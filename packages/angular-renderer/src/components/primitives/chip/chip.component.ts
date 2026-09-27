@@ -64,7 +64,7 @@ export class ChipComponent implements OrigoAdapter<ChipProps> {
     effect(() => {
       const props = this.contract().props;
       const coerced = props
-        ? coerceContractProps<Record<string, any>>(props, ChipComponent.contractSchema)
+        ? coerceContractProps<Record<string, unknown>>(props, ChipComponent.contractSchema)
         : {};
       const contractVal =
         coerced['selected'] !== undefined ? !!coerced['selected'] : this.selected();

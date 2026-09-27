@@ -20,7 +20,7 @@ import { ButtonComponent } from '../components/primitives/button/button.componen
 import { VBoxComponent } from '../components/primitives/vbox/vbox.component';
 
 export function provideOrigo9Primitives(): EnvironmentProviders {
-  const registryMap = new Map<string, any>([
+  const registryMap = new Map<string, unknown>([
     ['Select', SelectComponent],
     ['Checkbox', CheckboxComponent],
     ['RadioGroup', RadioGroupComponent],

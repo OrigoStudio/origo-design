@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-non-null-assertion */
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { SwitchComponent } from './switch.component';
 import { WebExperienceAdapterService } from '../../../adapters/web/experience-adapter.service';

@@ -37,7 +37,11 @@ test.describe('SwitchComponent Accessibility', () => {
 test('Switch checked state accessibility', async ({ mount, page }) => {
   await mount(SwitchComponent, {
     props: {
-      contract: { id: 'test-id', type: 'switch', props: { checked: true, label: 'Test' } } as any,
+      contract: {
+        id: 'test-id',
+        type: 'switch',
+        props: { checked: true, label: 'Test' },
+      } as InteractionContract<SwitchProps>,
     },
   });
   const accessibilityScanResults = await new AxeBuilder({ page }).analyze();
@@ -46,7 +50,11 @@ test('Switch checked state accessibility', async ({ mount, page }) => {
 test('Switch disabled state accessibility', async ({ mount, page }) => {
   await mount(SwitchComponent, {
     props: {
-      contract: { id: 'test-id', type: 'switch', props: { disabled: true, label: 'Test' } } as any,
+      contract: {
+        id: 'test-id',
+        type: 'switch',
+        props: { disabled: true, label: 'Test' },
+      } as InteractionContract<SwitchProps>,
     },
   });
   const accessibilityScanResults = await new AxeBuilder({ page }).analyze();
