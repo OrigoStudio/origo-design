@@ -5,7 +5,6 @@ import {
   computed,
   ViewEncapsulation,
   inject,
-  SecurityContext,
 } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 import { InteractionContract } from '@origo/core';

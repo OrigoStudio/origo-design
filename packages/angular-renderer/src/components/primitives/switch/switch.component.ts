@@ -64,7 +64,7 @@ export class SwitchComponent implements OrigoAdapter<SwitchProps> {
     effect(() => {
       const props = this.contract().props;
       const coerced = props
-        ? coerceContractProps<Record<string, any>>(props, SwitchComponent.contractSchema)
+        ? coerceContractProps<Record<string, unknown>>(props, SwitchComponent.contractSchema)
         : {};
       const contractVal = coerced['checked'] !== undefined ? !!coerced['checked'] : this.checked();
       untracked(() => {

@@ -1,4 +1,4 @@
-import { test, expect } from '@playwright/experimental-ct-angular';
+import { test, expect } from '@sand4rt/experimental-ct-angular';
 import { VBoxComponent } from './vbox.component';
 import AxeBuilder from '@axe-core/playwright';
 

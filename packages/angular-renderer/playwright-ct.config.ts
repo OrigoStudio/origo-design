@@ -1,4 +1,4 @@
-import { defineConfig, devices } from '@playwright/experimental-ct-angular';
+import { defineConfig, devices } from '@sand4rt/experimental-ct-angular';
 
 export default defineConfig({
   testDir: './src',

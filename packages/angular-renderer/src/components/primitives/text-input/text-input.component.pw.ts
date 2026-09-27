@@ -1,4 +1,4 @@
-import { test, expect } from '@playwright/experimental-ct-angular';
+import { test, expect } from '@sand4rt/experimental-ct-angular';
 import { TextInputComponent, TextInputProps } from './text-input.component';
 import { InteractionContract } from '@origo/core';
 import AxeBuilder from '@axe-core/playwright';
