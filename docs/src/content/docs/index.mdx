@@ -1,39 +1,38 @@
 ---
-title: Welcome to Starlight
-description: Get started building your docs site with Starlight.
-template: splash # Remove or comment out this line to display the site sidebar on this page.
+title: Welcome to Origo
+description: The definitive guide to the Origo platform, BADL, and its ecosystem.
+template: splash
 hero:
-  tagline: Congrats on setting up a new Starlight project!
-  image:
-    file: ../../assets/houston.webp
+  title: Welcome to Origo
+  tagline: Build enterprise-grade user interfaces dynamically with Business Application Domain Language (BADL).
   actions:
-    - text: Example Guide
-      link: /guides/example/
+    - text: Quickstart Guide
+      link: /getting-started/quickstart/
       icon: right-arrow
-    - text: Read the Starlight docs
-      link: https://starlight.astro.build
-      icon: external
-      variant: minimal
+      variant: primary
 ---
 
 import { Card, CardGrid } from '@astrojs/starlight/components';
 
-## Next steps
+## Explore the Origo Platform
 
 <CardGrid stagger>
-  <Card title="Update content" icon="pencil">
-    Edit `src/content/docs/index.mdx` to see this page change.
+  <Card title="Quickstart & Workflows" icon="rocket">
+    Get up and running in under 10 minutes. Learn how to scaffold your first Origo project, define entities in BADL, and preview them live.
+    
+    [Go to Quickstart](/getting-started/quickstart/)
   </Card>
-  <Card title="Change page layout" icon="document">
-    Delete `template: splash` in `src/content/docs/index.mdx` to display a sidebar on this page.
+  <Card title="Design Tokens & Theming" icon="palette">
+    Customize the visual appearance and layout of your generated UIs with zero-code theme overrides and token resolution.
+    
+    [Read the Design Tokens Guide](/guides/design-tokens/)
   </Card>
-  <Card title="Add new content" icon="add-document">
-    Add Markdown or MDX files to `src/content/docs` to create new pages.
+  <Card title="Core Engine & AST Validation" icon="puzzle">
+    Dive into how BADL compiles into a canonical Abstract Syntax Tree (AST), powering dynamic UI generation across the platform.
+    
+    [Learn about AST Validation](/guides/ast-validator/)
   </Card>
-  <Card title="Configure your site" icon="setting">
-    Edit your `sidebar` and other config in `astro.config.mjs`.
-  </Card>
-  <Card title="Read the docs" icon="open-book">
-    Learn more in [the Starlight Docs](https://starlight.astro.build/).
+  <Card title="Accessibility & RTL Support" icon="accessibility">
+    Discover how Origo ensures your generated applications meet strict accessibility (a11y) standards and Right-to-Left (RTL) requirements automatically.
   </Card>
 </CardGrid>
