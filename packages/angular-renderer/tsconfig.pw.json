@@ -1,0 +1,10 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "outDir": "../../dist/out-tsc",
+    "module": "esnext",
+    "moduleResolution": "node",
+    "types": ["node"]
+  },
+  "include": ["src/**/*.pw.ts", "playwright/**/*.ts"]
+}

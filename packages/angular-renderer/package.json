@@ -9,9 +9,9 @@
     "@origo/core": "0.0.37",
     "@origo/design-tokens": "0.0.37",
     "tslib": "^2.3.0",
-    "@axe-core/playwright": "^4.13.0",
-    "@playwright/test": "^1.36.0",
-    "@sand4rt/experimental-ct-angular": "1.61.1"
+    "@analogjs/vite-plugin-angular": "^2.7.1",
+    "zone.js": "^0.16.3",
+    "@axe-core/playwright": "^4.13.0"
   },
   "peerDependencies": {
     "@angular/common": ">=18.0.0",

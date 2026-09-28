@@ -1,0 +1,146 @@
+Total files with issues:  19
+G:\OrigoStudio\Repositories\Origo-Design\origo-design\packages\angular-renderer\package.json (1 errors, 0 warnings)
+  @nx/dependency-checks: 14
+G:\OrigoStudio\Repositories\Origo-Design\origo-design\packages\angular-renderer\src\components\primitives\breadcrumbs\breadcrumbs.component.ts (0 errors, 1 warnings)
+  @typescript-eslint/no-unused-vars: 8
+G:\OrigoStudio\Repositories\Origo-Design\origo-design\packages\angular-renderer\src\components\primitives\card\card.component.spec.ts (0 errors, 2 warnings)
+  @typescript-eslint/no-non-null-assertion: 39
+  @typescript-eslint/no-non-null-assertion: 69
+G:\OrigoStudio\Repositories\Origo-Design\origo-design\packages\angular-renderer\src\components\primitives\checkbox\checkbox.component.spec.ts (0 errors, 14 warnings)
+  @typescript-eslint/no-unused-vars: 7
+  @typescript-eslint/no-non-null-assertion: 40
+  @typescript-eslint/no-non-null-assertion: 42
+  @typescript-eslint/no-non-null-assertion: 43
+  @typescript-eslint/no-non-null-assertion: 45
+  @typescript-eslint/no-non-null-assertion: 46
+  @typescript-eslint/no-non-null-assertion: 57
+  @typescript-eslint/no-non-null-assertion: 69
+  @typescript-eslint/no-non-null-assertion: 70
+  @typescript-eslint/no-non-null-assertion: 81
+  @typescript-eslint/no-non-null-assertion: 82
+  @typescript-eslint/no-non-null-assertion: 93
+  @typescript-eslint/no-non-null-assertion: 94
+  @typescript-eslint/no-non-null-assertion: 95
+G:\OrigoStudio\Repositories\Origo-Design\origo-design\packages\angular-renderer\src\components\primitives\chip\chip.component.spec.ts (0 errors, 7 warnings)
+  @typescript-eslint/no-non-null-assertion: 37
+  @typescript-eslint/no-non-null-assertion: 39
+  @typescript-eslint/no-non-null-assertion: 40
+  @typescript-eslint/no-non-null-assertion: 51
+  @typescript-eslint/no-non-null-assertion: 52
+  @typescript-eslint/no-non-null-assertion: 65
+  @typescript-eslint/no-non-null-assertion: 66
+G:\OrigoStudio\Repositories\Origo-Design\origo-design\packages\angular-renderer\src\components\primitives\chip\chip.component.ts (0 errors, 1 warnings)
+  @typescript-eslint/no-explicit-any: 67
+G:\OrigoStudio\Repositories\Origo-Design\origo-design\packages\angular-renderer\src\components\primitives\data-grid\data-grid.component.spec.ts (0 errors, 2 warnings)
+  @typescript-eslint/no-non-null-assertion: 51
+  @typescript-eslint/no-non-null-assertion: 72
+G:\OrigoStudio\Repositories\Origo-Design\origo-design\packages\angular-renderer\src\components\primitives\form-field\form-field.component.spec.ts (0 errors, 9 warnings)
+  @typescript-eslint/no-non-null-assertion: 32
+  @typescript-eslint/no-non-null-assertion: 35
+  @typescript-eslint/no-non-null-assertion: 37
+  @typescript-eslint/no-non-null-assertion: 40
+  @typescript-eslint/no-non-null-assertion: 57
+  @typescript-eslint/no-non-null-assertion: 59
+  @typescript-eslint/no-non-null-assertion: 61
+  @typescript-eslint/no-explicit-any: 78
+  @typescript-eslint/no-non-null-assertion: 82
+G:\OrigoStudio\Repositories\Origo-Design\origo-design\packages\angular-renderer\src\components\primitives\hbox\hbox.component.spec.ts (0 errors, 1 warnings)
+  @typescript-eslint/no-explicit-any: 43
+G:\OrigoStudio\Repositories\Origo-Design\origo-design\packages\angular-renderer\src\components\primitives\label\label.component.spec.ts (0 errors, 8 warnings)
+  @typescript-eslint/no-unused-vars: 6
+  @typescript-eslint/no-non-null-assertion: 31
+  @typescript-eslint/no-non-null-assertion: 33
+  @typescript-eslint/no-non-null-assertion: 34
+  @typescript-eslint/no-non-null-assertion: 37
+  @typescript-eslint/no-non-null-assertion: 39
+  @typescript-eslint/no-non-null-assertion: 53
+  @typescript-eslint/no-non-null-assertion: 65
+G:\OrigoStudio\Repositories\Origo-Design\origo-design\packages\angular-renderer\src\components\primitives\list\list.component.spec.ts (0 errors, 3 warnings)
+  @typescript-eslint/no-non-null-assertion: 48
+  @typescript-eslint/no-non-null-assertion: 70
+  @typescript-eslint/no-non-null-assertion: 84
+G:\OrigoStudio\Repositories\Origo-Design\origo-design\packages\angular-renderer\src\components\primitives\radio-group\radio-group.component.spec.ts (0 errors, 10 warnings)
+  @typescript-eslint/no-unused-vars: 7
+  @typescript-eslint/no-non-null-assertion: 43
+  @typescript-eslint/no-non-null-assertion: 63
+  @typescript-eslint/no-non-null-assertion: 75
+  @typescript-eslint/no-non-null-assertion: 76
+  @typescript-eslint/no-non-null-assertion: 87
+  @typescript-eslint/no-non-null-assertion: 88
+  @typescript-eslint/no-non-null-assertion: 99
+  @typescript-eslint/no-non-null-assertion: 100
+  @typescript-eslint/no-non-null-assertion: 101
+G:\OrigoStudio\Repositories\Origo-Design\origo-design\packages\angular-renderer\src\components\primitives\select\select.component.spec.ts (0 errors, 13 warnings)
+  @typescript-eslint/no-unused-vars: 7
+  @typescript-eslint/no-non-null-assertion: 41
+  @typescript-eslint/no-non-null-assertion: 43
+  @typescript-eslint/no-non-null-assertion: 45
+  @typescript-eslint/no-non-null-assertion: 60
+  @typescript-eslint/no-non-null-assertion: 72
+  @typescript-eslint/no-non-null-assertion: 73
+  @typescript-eslint/no-non-null-assertion: 84
+  @typescript-eslint/no-non-null-assertion: 85
+  @typescript-eslint/no-non-null-assertion: 86
+  @typescript-eslint/no-non-null-assertion: 97
+  @typescript-eslint/no-non-null-assertion: 98
+  @typescript-eslint/no-non-null-assertion: 99
+G:\OrigoStudio\Repositories\Origo-Design\origo-design\packages\angular-renderer\src\components\primitives\switch\switch.component.spec.ts (0 errors, 13 warnings)
+  @typescript-eslint/no-unused-vars: 7
+  @typescript-eslint/no-non-null-assertion: 37
+  @typescript-eslint/no-non-null-assertion: 39
+  @typescript-eslint/no-non-null-assertion: 40
+  @typescript-eslint/no-non-null-assertion: 42
+  @typescript-eslint/no-non-null-assertion: 43
+  @typescript-eslint/no-non-null-assertion: 54
+  @typescript-eslint/no-non-null-assertion: 56
+  @typescript-eslint/no-non-null-assertion: 67
+  @typescript-eslint/no-non-null-assertion: 68
+  @typescript-eslint/no-non-null-assertion: 79
+  @typescript-eslint/no-non-null-assertion: 80
+  @typescript-eslint/no-non-null-assertion: 81
+G:\OrigoStudio\Repositories\Origo-Design\origo-design\packages\angular-renderer\src\components\primitives\switch\switch.component.ts (0 errors, 1 warnings)
+  @typescript-eslint/no-explicit-any: 67
+G:\OrigoStudio\Repositories\Origo-Design\origo-design\packages\angular-renderer\src\components\primitives\textarea\textarea.component.spec.ts (0 errors, 17 warnings)
+  @typescript-eslint/no-non-null-assertion: 44
+  @typescript-eslint/no-non-null-assertion: 46
+  @typescript-eslint/no-non-null-assertion: 47
+  @typescript-eslint/no-non-null-assertion: 48
+  @typescript-eslint/no-non-null-assertion: 49
+  @typescript-eslint/no-non-null-assertion: 50
+  @typescript-eslint/no-non-null-assertion: 51
+  @typescript-eslint/no-non-null-assertion: 52
+  @typescript-eslint/no-non-null-assertion: 63
+  @typescript-eslint/no-non-null-assertion: 65
+  @typescript-eslint/no-non-null-assertion: 76
+  @typescript-eslint/no-non-null-assertion: 77
+  @typescript-eslint/no-non-null-assertion: 78
+  @typescript-eslint/no-non-null-assertion: 89
+  @typescript-eslint/no-non-null-assertion: 90
+  @typescript-eslint/no-non-null-assertion: 91
+  @typescript-eslint/no-non-null-assertion: 94
+G:\OrigoStudio\Repositories\Origo-Design\origo-design\packages\angular-renderer\src\devtools\devtools-bridge.spec.ts (0 errors, 12 warnings)
+  @typescript-eslint/no-non-null-assertion: 48
+  @typescript-eslint/no-explicit-any: 49
+  @typescript-eslint/no-non-null-assertion: 56
+  @typescript-eslint/no-non-null-assertion: 70
+  @typescript-eslint/no-non-null-assertion: 80
+  @typescript-eslint/no-non-null-assertion: 93
+  @typescript-eslint/no-explicit-any: 110
+  @typescript-eslint/no-non-null-assertion: 123
+  @typescript-eslint/no-explicit-any: 125
+  @typescript-eslint/no-explicit-any: 130
+  @typescript-eslint/no-non-null-assertion: 136
+  @typescript-eslint/no-explicit-any: 144
+G:\OrigoStudio\Repositories\Origo-Design\origo-design\packages\angular-renderer\src\devtools\devtools-bridge.ts (0 errors, 10 warnings)
+  @typescript-eslint/no-explicit-any: 86
+  @typescript-eslint/no-unused-vars: 100
+  @typescript-eslint/no-unused-vars: 122
+  @typescript-eslint/no-explicit-any: 124
+  @typescript-eslint/no-explicit-any: 131
+  @typescript-eslint/no-explicit-any: 134
+  @typescript-eslint/no-explicit-any: 152
+  @typescript-eslint/no-explicit-any: 155
+  @typescript-eslint/no-explicit-any: 164
+  @typescript-eslint/no-unused-vars: 166
+G:\OrigoStudio\Repositories\Origo-Design\origo-design\packages\angular-renderer\src\lib\primitives.provider.ts (0 errors, 1 warnings)
+  @typescript-eslint/no-explicit-any: 23
