@@ -1,5 +1,3 @@
-import os
-
 diff_path = '_bmad-output/implementation-artifacts/filtered-diff.patch'
 with open(diff_path, 'r', encoding='utf-8') as f:
     diff_output = f.read()
