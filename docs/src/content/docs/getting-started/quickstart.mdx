@@ -20,6 +20,20 @@ The Origo CLI is the primary way to interact with the platform. You can use it g
 The CLI package is not yet available on npm. Use local workspace build: `npm install` from monorepo root.
 :::
 
+## 0. Environment Verification
+
+Before scaffolding your project, verify your environment meets all requirements using the `origo doctor` command.
+
+```bash
+origo doctor
+```
+
+This command outputs a checklist of pass/fail items, verifying your Node.js version (≥22), checking that `npm` or `yarn` is available, and confirming your workspace integrity.
+
+:::caution
+The `origo doctor` command is currently under development and will be available in a forthcoming release. Ensure your environment meets the prerequisites listed above manually until then.
+:::
+
 ## 1. Scaffold a New Project
 
 The easiest way to start is by using the Origo CLI to scaffold a new workspace.
@@ -78,7 +92,7 @@ Do not modify the generated AST (`schema.json`) manually. Any changes should be 
 
 Finally, let's view the rendered UI. The Web Adapter interprets the AST and dynamically renders the corresponding interfaces.
 
-Start the local playground server (refer to [Playground Documentation](/playground) for setup). Navigate to `http://localhost:3000` to see your `User` entity rendered automatically as a functional user interface. You will see forms (e.g. `form[data-origo-metadata-path="User"]`), data tables (`table[data-origo-metadata-path="User"]`), and navigation elements derived directly from the properties and annotations you defined in BADL.
+Navigate to the [Playground](/playground) section on this documentation site to see your `User` entity rendered automatically as a functional user interface. The Playground is embedded directly within the documentation as an iframe island—no local server setup is required. Everything runs in-browser! You will see forms (e.g. `form[data-origo-metadata-path="User"]`), data tables (`table[data-origo-metadata-path="User"]`), and navigation elements derived directly from the properties and annotations you defined in BADL.
 
 ## Next Steps
 

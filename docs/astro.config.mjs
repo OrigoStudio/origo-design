@@ -16,10 +16,17 @@ export default defineConfig({
       },
       sidebar: [
         {
+          label: 'Getting Started',
+          items: [
+            { label: 'Quickstart', link: '/getting-started/quickstart/' },
+            { label: 'Testing Protocols', link: '/getting-started/testing-protocols/' },
+          ],
+        },
+        {
           label: 'Guides',
           items: [
             // Each item here is one entry in the navigation menu.
-            { label: 'Example Guide', link: '/guides/example/' },
+
             { label: 'Design Tokens', link: '/guides/design-tokens/' },
             { label: 'Publishing & Versioning', link: '/guides/publishing/' },
             { label: 'AST JSON Validation', link: '/guides/ast-validator/' },

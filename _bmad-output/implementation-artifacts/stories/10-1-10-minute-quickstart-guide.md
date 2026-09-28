@@ -1,6 +1,9 @@
+---
+baseline_commit: e485a4ed5b16c3aa83fd8fd015f7bd75c4e229e7
+---
 # Story 10.1: 10-Minute Quickstart Guide
 
-Status: ready-for-dev
+Status: review
 
 <!-- Note: Validation is optional. Run validate-create-story for quality check before dev-story. -->
 
@@ -19,18 +22,18 @@ so that I can successfully create a "Hello World" BADL page from scratch in unde
 
 ## Tasks / Subtasks
 
-- [ ] Task 1: Update Existing Quickstart Guide Document (AC: 1, 2, 3, 4)
-  - [ ] **DO NOT create a new file** — update the existing `apps/docs/src/content/docs/getting-started/quickstart.mdx` (MDX format, not MD)
-  - [ ] Add Step 0: Environment Verification — document the `origo doctor` command (belongs in `packages/cli/src/commands/`; check if `doctor.ts` already exists from Epic 6 work, or document as a forthcoming step with a `:::caution` note if not yet implemented)
-  - [ ] Update Step 4 (Preview): Replace the current "Start the local playground server" instruction with the correct description — the Playground is embedded as an iframe island at the docs URL; no `localhost` server setup is required by the reader
-  - [ ] Ensure all callouts use Starlight MDX Aside components (`:::note`, `:::tip`, `:::caution`) — do not use plain Markdown `>` blockquotes
-  - [ ] Verify Astro/Starlight frontmatter is present and correct (`title` and `description` fields)
-- [ ] Task 2: Validate Starlight Navigation Integration (AC: 1)
-  - [ ] Confirm `quickstart.mdx` is wired into the Starlight sidebar configuration (check `apps/docs/astro.config.mjs` or equivalent sidebar config)
-  - [ ] The page must be reachable via the docs site nav — a file not registered in the sidebar is unreachable to users
-- [ ] Task 3: Validate against Architectural constraints (AC: 4)
-  - [ ] Confirm the Playground section references the embedded iframe path at the docs URL — not `localhost:3000`
-  - [ ] The iframe embed component lives at `apps/docs/src/components/PlaygroundEmbed.astro` — reference or link to it in the guide if appropriate
+- [x] Task 1: Update Existing Quickstart Guide Document (AC: 1, 2, 3, 4)
+  - [x] **DO NOT create a new file** — update the existing `apps/docs/src/content/docs/getting-started/quickstart.mdx` (MDX format, not MD)
+  - [x] Add Step 0: Environment Verification — document the `origo doctor` command (belongs in `packages/cli/src/commands/`; check if `doctor.ts` already exists from Epic 6 work, or document as a forthcoming step with a `:::caution` note if not yet implemented)
+  - [x] Update Step 4 (Preview): Replace the current "Start the local playground server" instruction with the correct description — the Playground is embedded as an iframe island at the docs URL; no `localhost` server setup is required by the reader
+  - [x] Ensure all callouts use Starlight MDX Aside components (`:::note`, `:::tip`, `:::caution`) — do not use plain Markdown `>` blockquotes
+  - [x] Verify Astro/Starlight frontmatter is present and correct (`title` and `description` fields)
+- [x] Task 2: Validate Starlight Navigation Integration (AC: 1)
+  - [x] Confirm `quickstart.mdx` is wired into the Starlight sidebar configuration (check `apps/docs/astro.config.mjs` or equivalent sidebar config)
+  - [x] The page must be reachable via the docs site nav — a file not registered in the sidebar is unreachable to users
+- [x] Task 3: Validate against Architectural constraints (AC: 4)
+  - [x] Confirm the Playground section references the embedded iframe path at the docs URL — not `localhost:3000`
+  - [x] The iframe embed component lives at `apps/docs/src/components/PlaygroundEmbed.astro` — reference or link to it in the guide if appropriate
 
 ## Dev Notes
 
@@ -118,6 +121,9 @@ N/A
 ### Completion Notes List
 
 Ultimate context engine analysis completed - comprehensive developer guide created.
+✅ Updated `quickstart.mdx` with Step 0 for environment verification (`origo doctor`) and Step 4 to point to the embedded playground iframe.
+✅ Added `Getting Started` group with `Quickstart` to `docs/astro.config.mjs` sidebar.
 
 ### File List
-- `apps/docs/src/content/docs/getting-started/quickstart.mdx`
+- `docs/src/content/docs/getting-started/quickstart.mdx`
+- `docs/astro.config.mjs`

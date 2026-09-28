@@ -1,0 +1,6 @@
+[build]
+  command = "npx nx build playground"
+  publish = "../../dist/packages/playground/browser"
+
+[build.environment]
+  NODE_VERSION = "20"
