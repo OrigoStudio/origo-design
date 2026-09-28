@@ -49,6 +49,9 @@ jobs:
       - name: Verify CLI npm pack
         run: bash tools/scripts/verify-npm-pack.sh
 
+      - name: Verify Core npm pack
+        run: bash tools/scripts/verify-npm-pack.sh
+
       - name: Publish root to npm
         run: npm publish --provenance --access public
         env:
@@ -57,5 +60,11 @@ jobs:
       - name: Publish CLI to npm
         run: npm publish --provenance --access public
         working-directory: dist/packages/cli
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+      - name: Publish Core to npm
+        run: npm publish --provenance --access public
+        working-directory: dist/packages/core
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}

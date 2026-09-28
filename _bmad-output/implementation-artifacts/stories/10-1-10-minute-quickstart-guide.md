@@ -1,6 +1,9 @@
 ---
 baseline_commit: e485a4ed5b16c3aa83fd8fd015f7bd75c4e229e7
 ---
+---
+baseline_commit: e485a4ed5b16c3aa83fd8fd015f7bd75c4e229e7
+---
 # Story 10.1: 10-Minute Quickstart Guide
 
 Status: done
@@ -131,7 +134,8 @@ Ultimate context engine analysis completed - comprehensive developer guide creat
 ### Review Findings
 - [x] [Review][Patch] Broken Links & 404s in Documentation — Remove the missing links entirely from the content for now.
 - [x] [Review][Patch] Out of Scope Changes & Directory Relocation — The diff moves pps/docs to docs, adds 
-etlify.toml, and modifies elease.yml. This violates the spec ("DO NOT create a new file - update the existing"). These should be reverted and quickstart changes applied to the original path.
+etlify.toml, and modifies 
+elease.yml. This violates the spec ("DO NOT create a new file - update the existing"). These should be reverted and quickstart changes applied to the original path.
 - [x] [Review][Patch] Unintended Deletion of diagnostics-api.mdx — File was deleted instead of retained, stripping the API reference.
 - [x] [Review][Patch] Inaccurate CLI Claims in Quickstart — Guide claims generate entity creates .badl files (it creates .json) and claims the iframe reads local files directly.
 - [x] [Review][Patch] cli-templates.md orphaned from sidebar — Omitted from stro.config.mjs sidebar configuration.

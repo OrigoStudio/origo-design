@@ -24,6 +24,13 @@ export default defineConfig({
           ],
         },
         {
+          label: 'Getting Started',
+          items: [
+            { label: 'Quickstart', link: '/getting-started/quickstart/' },
+            { label: 'Testing Protocols', link: '/getting-started/testing-protocols/' },
+          ],
+        },
+        {
           label: 'Guides',
           items: [
             // Each item here is one entry in the navigation menu.

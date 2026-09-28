@@ -9,7 +9,10 @@ hero:
     - text: Quickstart Guide
       link: /getting-started/quickstart/
       icon: right-arrow
-      variant: primary
+    - text: Read the Starlight docs
+      link: https://starlight.astro.build
+      icon: external
+      variant: minimal
 ---
 
 import { Card, CardGrid } from '@astrojs/starlight/components';
@@ -32,7 +35,10 @@ import { Card, CardGrid } from '@astrojs/starlight/components';
     
     [Learn about AST Validation](/guides/ast-validator/)
   </Card>
-  <Card title="Accessibility & RTL Support" icon="accessibility">
-    Discover how Origo ensures your generated applications meet strict accessibility (a11y) standards and Right-to-Left (RTL) requirements automatically.
+  <Card title="Configure your site" icon="setting">
+    Edit your `sidebar` and other config in `astro.config.mjs`.
+  </Card>
+  <Card title="Read the docs" icon="open-book">
+    Learn more in [the Starlight Docs](https://starlight.astro.build/).
   </Card>
 </CardGrid>
