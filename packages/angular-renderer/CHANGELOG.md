@@ -1,3 +1,14 @@
+## 0.0.38 (2026-09-28)
+
+### 🚀 Features
+
+- playwright component testing ([909c8de](https://github.com/OrigoStudio/origo-design/commit/909c8de))
+- integrate Epic 9 primitives into playground application config and preview root component ([9775c0b](https://github.com/OrigoStudio/origo-design/commit/9775c0b))
+
+### ❤️ Thank You
+
+- Hardik Patel @hardikpatelse
+
 ## 0.0.37 (2026-09-24)
 
 ### 🚀 Features
