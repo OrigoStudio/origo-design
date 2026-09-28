@@ -20,6 +20,20 @@ The Origo CLI is the primary way to interact with the platform. You can use it g
 The CLI package is not yet available on npm. Use local workspace build: `npm install` from monorepo root.
 :::
 
+## 0. Environment Verification
+
+Before scaffolding your project, verify your environment meets all requirements using the `origo doctor` command.
+
+```bash
+origo doctor
+```
+
+This command outputs a checklist of pass/fail items, verifying your Node.js version (≥22), checking that `npm` or `yarn` is available, and confirming your workspace integrity.
+
+:::caution
+The `origo doctor` command is currently under development and will be available in a forthcoming release. Ensure your environment meets the prerequisites listed above manually (e.g. `node --version`, `npm --version`) until then.
+:::
+
 ## 1. Scaffold a New Project
 
 The easiest way to start is by using the Origo CLI to scaffold a new workspace.
@@ -39,7 +53,7 @@ Origo uses Business Application Domain Language (BADL) to define entities. Let's
 origo generate entity User
 ```
 
-This will create a new file `schemas/User.badl`. Open the file and you'll see a basic structure. You can customize the entity by defining its properties, relationships, and validation rules in BADL format.
+This will create a new file `schemas/user.json`. Open the file and you'll see a basic structure. You can customize the entity by defining its properties, relationships, and validation rules.
 
 If a file with this name already exists, the command will error. Use a unique entity name.
 
@@ -55,23 +69,23 @@ If a file with this name already exists, the command will error. Use a unique en
 ```
 
 :::tip
-BADL is designed to be highly readable while remaining strongly typed. Explore the [BADL Documentation](/badl-reference) for advanced entity relationships.
+BADL is designed to be highly readable while remaining strongly typed.
 :::
 
 ## 3. Compile the Schema
 
 Once you have defined your entity, you must compile it into Origo's canonical Abstract Syntax Tree (AST). The Core Engine uses this AST to drive the rest of the application lifecycle.
 
-Ensure at least one .badl file exists in `/schemas` before running validate.
+Ensure at least one schema file exists in `/schemas` before running validate.
 
 ```bash
 origo validate
 ```
 
-If your BADL syntax is correct, this command will output the compiled AST to `./dist/schema.json` (configurable in `origo.json`). If there are errors (like missing required annotations or invalid types), the CLI will provide descriptive error messages pointing you to the exact line in your BADL file.
+If your syntax is correct, this command will output the compiled AST to `./dist/schema.json` (configurable in `origo.json`). If there are errors (like missing required annotations or invalid types), the CLI will provide descriptive error messages.
 
 :::caution
-Do not modify the generated AST (`schema.json`) manually. Any changes should be made directly to your BADL files and re-compiled.
+Do not modify the generated AST (`schema.json`) manually. Any changes should be made directly to your entity definitions and re-compiled.
 :::
 
 ## 4. Preview the UI
@@ -86,6 +100,4 @@ Congratulations! You've successfully completed the Origo end-to-end workflow.
 
 To explore further:
 
-- Learn how to customize the visual design using [Design Tokens](/design-tokens).
-- Understand how to add [Behavior and Logic](/behavior-validation) to your entities.
-- Read the [Architecture Overview](/architecture) to see how the Core Engine, Web Adapter, and extensions interact.
+- Learn how to customize the visual design using the Design Tokens guide.

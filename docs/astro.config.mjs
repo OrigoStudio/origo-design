@@ -10,16 +10,31 @@ export default defineConfig({
   },
   integrations: [
     starlight({
-      title: 'My Docs',
+      title: 'Origo Design Documents',
+      favicon: 'origo-studio.ico',
       social: {
-        github: 'https://github.com/withastro/starlight',
+        github: 'https://github.com/OrigoStudio/origo-design',
       },
       sidebar: [
+        {
+          label: 'Getting Started',
+          items: [
+            { label: 'Quickstart', link: '/getting-started/quickstart/' },
+            { label: 'Testing Protocols', link: '/getting-started/testing-protocols/' },
+          ],
+        },
+        {
+          label: 'Getting Started',
+          items: [
+            { label: 'Quickstart', link: '/getting-started/quickstart/' },
+            { label: 'Testing Protocols', link: '/getting-started/testing-protocols/' },
+          ],
+        },
         {
           label: 'Guides',
           items: [
             // Each item here is one entry in the navigation menu.
-            { label: 'Example Guide', link: '/guides/example/' },
+            { label: 'CLI Templates', link: '/guides/cli-templates/' },
             { label: 'Design Tokens', link: '/guides/design-tokens/' },
             { label: 'Publishing & Versioning', link: '/guides/publishing/' },
             { label: 'AST JSON Validation', link: '/guides/ast-validator/' },
