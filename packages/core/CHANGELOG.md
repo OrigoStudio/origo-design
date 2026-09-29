@@ -1,3 +1,13 @@
+## 0.0.39 (2026-09-29)
+
+### 🚀 Features
+
+- add GitHub Actions release workflow and package configurations for core and angular-renderer ([d80abc7](https://github.com/OrigoStudio/origo-design/commit/d80abc7))
+
+### ❤️ Thank You
+
+- Hardik Patel @hardikpatelse
+
 ## 0.0.38 (2026-09-28)
 
 This was a version bump only for core to align it with other projects, there were no code changes.
