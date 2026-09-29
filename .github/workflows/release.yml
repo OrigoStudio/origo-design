@@ -44,16 +44,25 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Build Packages
-        run: npx nx run-many -t build -p core cli
+        run: npx nx run-many -t build -p core cli design-tokens angular-renderer
 
-      - name: Verify CLI npm pack
-        run: bash tools/scripts/verify-npm-pack.sh
-
-      - name: Verify Core npm pack
+      - name: Verify npm packs
         run: bash tools/scripts/verify-npm-pack.sh
 
       - name: Publish root to npm
         run: npm publish --provenance --access public
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+      - name: Publish Core to npm
+        run: npm publish --provenance --access public
+        working-directory: dist/packages/core
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+      - name: Publish Design Tokens to npm
+        run: npm publish --provenance --access public
+        working-directory: dist/packages/design-tokens
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
@@ -63,8 +72,8 @@ jobs:
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
-      - name: Publish Core to npm
+      - name: Publish UI Components to npm
         run: npm publish --provenance --access public
-        working-directory: dist/packages/core
+        working-directory: dist/packages/angular-renderer
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
