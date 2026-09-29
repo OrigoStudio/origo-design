@@ -1,6 +1,9 @@
+---
+baseline_commit: ccae505701726c619f07dbfc6f9263e010bfb07d
+---
 # Story 10.2: Legacy Migration Strategy Guide
 
-Status: ready-for-dev
+Status: done
 
 <!-- Note: Validation is optional. Run validate-create-story for quality check before dev-story. -->
 
@@ -21,20 +24,20 @@ so that I can plan our team's transition effectively.
 
 ## Tasks / Subtasks
 
-- [ ] Task 1: Create the Migration Strategy Guide document (AC: 1, 2, 3, 4)
-  - [ ] Create a new file: ``docs/src/content/docs/getting-started/migration-guide.mdx`` (MDX format, not ``.md``)
-  - [ ] Add a conceptual mapping section: standard handwritten Angular HTML/TS → declarative BADL schema concepts — cover entities, fields, capabilities, interaction contracts
-  - [ ] Add a coexistence section: explain that Origo pages can be adopted one-at-a-time and coexist with existing Angular pages in the same router/app shell (NFR-ADOPT-001)
-  - [ ] Add an escape-hatches section: custom adapters, extensions, and the upcoming ``origo migrate from-code`` CLI command (see Dev Notes for command spec and required ``:::caution`` wording)
-  - [ ] Use Starlight''s built-in Aside syntax (``:::note``, ``:::tip``, ``:::caution``) — never plain Markdown ``>`` blockquotes
-  - [ ] Verify Astro/Starlight frontmatter is present: ``title`` and ``description`` fields required
-- [ ] Task 2: Wire into Starlight sidebar (``docs/astro.config.mjs``) (AC: 1)
-  - [ ] **FIRST: deduplicate the two identical ``Getting Started`` groups** (lines 20–31 in current file — both groups are identical, this is a regression from Story 10.1)
-  - [ ] After deduplication, add ``{ label: ''Migration Guide'', link: ''/getting-started/migration-guide/'' }`` to the single ``Getting Started`` items array
-  - [ ] Confirm the page is reachable via docs site nav after change
-- [ ] Task 3: DoD compliance — Central Test Registry
-  - [ ] Open ``tools/test-registry/test-registry.yaml`` and confirm whether any new test scenarios apply to this story
-  - [ ] For a documentation-only story there may be no new test cases; if so, add a comment entry to the registry acknowledging Story 10.2 was reviewed and has no automated test scenarios
+- [x] Task 1: Create the Migration Strategy Guide document (AC: 1, 2, 3, 4)
+  - [x] Create a new file: ``docs/src/content/docs/getting-started/migration-guide.mdx`` (MDX format, not ``.md``)
+  - [x] Add a conceptual mapping section: standard handwritten Angular HTML/TS → declarative BADL schema concepts — cover entities, fields, capabilities, interaction contracts
+  - [x] Add a coexistence section: explain that Origo pages can be adopted one-at-a-time and coexist with existing Angular pages in the same router/app shell (NFR-ADOPT-001)
+  - [x] Add an escape-hatches section: custom adapters, extensions, and the upcoming ``origo migrate from-code`` CLI command (see Dev Notes for command spec and required ``:::caution`` wording)
+  - [x] Use Starlight''s built-in Aside syntax (``:::note``, ``:::tip``, ``:::caution``) — never plain Markdown ``>`` blockquotes
+  - [x] Verify Astro/Starlight frontmatter is present: ``title`` and ``description`` fields required
+- [x] Task 2: Wire into Starlight sidebar (``docs/astro.config.mjs``) (AC: 1)
+  - [x] **FIRST: deduplicate the two identical ``Getting Started`` groups** (lines 20–31 in current file — both groups are identical, this is a regression from Story 10.1)
+  - [x] After deduplication, add ``{ label: ''Migration Guide'', link: ''/getting-started/migration-guide/'' }`` to the single ``Getting Started`` items array
+  - [x] Confirm the page is reachable via docs site nav after change
+- [x] Task 3: DoD compliance — Central Test Registry
+  - [x] Open ``tools/test-registry/test-registry.yaml`` and confirm whether any new test scenarios apply to this story
+  - [x] For a documentation-only story there may be no new test cases; if so, add a comment entry to the registry acknowledging Story 10.2 was reviewed and has no automated test scenarios
 
 ## Dev Notes
 
@@ -126,9 +129,22 @@ N/A
 
 Ultimate context engine analysis completed - comprehensive developer guide created.
 ✅ Story 10.2 validated and improved: NFR-ADOPT-001 AC added, origo migrate from-code CLI context (P3-AD-4), sidebar deduplication instruction, quickstart Step 4 bug dependency warning, cross-story context, ADR-002 and P3-AD-4 references, DoD test registry task, original AC#3 meta-rule replaced with substantive user-facing criteria.
+✅ Implemented the Migration Guide at `docs/src/content/docs/getting-started/migration-guide.mdx` meeting all formatting requirements and content structure (conceptual mapping, coexistence strategy, escape hatches).
+✅ Deduplicated the `Getting Started` group in `docs/astro.config.mjs` and successfully wired the Migration Guide into the Starlight sidebar.
+✅ Reviewed `tools/test-registry/test-registry.yaml` and appended a registry acknowledgment entry confirming Story 10.2 has no automated test scenarios (documentation only).
 
 ### File List
 
 - ``docs/src/content/docs/getting-started/migration-guide.mdx`` — NEW: the migration guide document
 - ``docs/astro.config.mjs`` — UPDATE: deduplicate duplicate Getting Started groups; add migration-guide entry
 - ``tools/test-registry/test-registry.yaml`` — UPDATE: add Story 10.2 registry acknowledgment entry
+
+### Review Findings
+- [x] [Review][Patch] :::caution block omits approximate-output disclaimer [docs/src/content/docs/getting-started/migration-guide.mdx:39-41]
+- [x] [Review][Patch] Non-standard Aside Syntax for Advisory Note [docs/src/content/docs/getting-started/migration-guide.mdx:52]
+- [x] [Review][Patch] Omission of ADR-002 and FR-EXT references in Escape Hatches [docs/src/content/docs/getting-started/migration-guide.mdx:31-35]
+- [x] [Review][Patch] Unstructured Comment in Central Test Registry [tools/test-registry/test-registry.yaml:808]
+- [x] [Review][Patch] Coexistence section lacks technical mechanics [docs/src/content/docs/getting-started/migration-guide.mdx:18-22]
+- [x] [Review][Patch] Escape hatch for custom adapters has no actionable path [docs/src/content/docs/getting-started/migration-guide.mdx:28-29]
+- [x] [Review][Patch] Conceptual Mapping uses bullet points instead of a table [docs/src/content/docs/getting-started/migration-guide.mdx:9-15]
+- [x] [Review][Patch] Inconsistent last_updated timestamp in sprint status [_bmad-output/implementation-artifacts/sprint-status.yaml]

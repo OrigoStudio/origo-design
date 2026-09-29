@@ -21,13 +21,7 @@ export default defineConfig({
           items: [
             { label: 'Quickstart', link: '/getting-started/quickstart/' },
             { label: 'Testing Protocols', link: '/getting-started/testing-protocols/' },
-          ],
-        },
-        {
-          label: 'Getting Started',
-          items: [
-            { label: 'Quickstart', link: '/getting-started/quickstart/' },
-            { label: 'Testing Protocols', link: '/getting-started/testing-protocols/' },
+            { label: 'Migration Guide', link: '/getting-started/migration-guide/' },
           ],
         },
         {

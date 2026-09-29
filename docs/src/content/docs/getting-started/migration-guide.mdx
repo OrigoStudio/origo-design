@@ -1,0 +1,61 @@
+---
+title: Migration Guide
+description: Learn how to migrate legacy Angular pages to Origo, including conceptual mappings, coexistence strategies, and escape hatches.
+---
+
+Welcome to the Origo Migration Guide. This guide will help your team transition legacy Angular pages to Origo's declarative BADL (Business Application Description Language) schema by providing a clear conceptual mapping, coexistence strategies, and documentation of escape hatches.
+
+## Conceptual Mapping
+
+When moving from handwritten Angular HTML/TypeScript to Origo, you transition from imperative component composition to declarative schema definition. Here is how core concepts map:
+
+| Angular Concept                      | Origo BADL Concept        | Description                                                                                                                                                                                                                                                                             |
+| :----------------------------------- | :------------------------ | :-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Components & Templates (HTML/TS)** | **Entities**              | Instead of writing custom component structures, you declare high-level business **Entities** in your BADL schema. Origo automatically determines the best rendering strategy based on the entity definition.                                                                            |
+| **Component Inputs/Outputs**         | **Fields**                | The data flowing into and out of your components maps to **Fields**. Fields in BADL automatically handle data binding and validation without requiring manual template wiring.                                                                                                          |
+| **Services & UI Logic**              | **Capabilities**          | Business logic, data fetching, and specialized UI behaviors that typically live in Angular services or component classes are abstracted into **Capabilities**. You attach capabilities to entities to imbue them with behavior.                                                         |
+| **Event Handlers & Routing**         | **Interaction Contracts** | Instead of manual `(click)` handlers and `Router` navigation calls, you define declarative **Interaction Contracts**. These contracts specify intents (e.g., "submit form", "navigate to detail") which the underlying Experience Adapters translate into medium-specific interactions. |
+
+## Coexistence Strategy
+
+You do not need to migrate your entire application at once. Origo is designed for incremental adoption:
+
+- **One Page at a Time:** Origo pages can be adopted on a page-by-page basis.
+- **Seamless Coexistence:** Origo-rendered pages coexist with existing non-Origo Angular pages within the same application router and app shell without conflict. Ensure Origo page routes are registered before or after legacy routes to avoid Angular Router conflicts. This allows you to gradually rewrite targeted flows while leaving the rest of the application unchanged.
+
+## Escape Hatches
+
+We understand that standard BADL primitives might not cover every complex, highly customized legacy component. For these cases, Origo provides several escape hatches:
+
+### Custom Adapters
+
+Experience Adapters translate Interaction Contracts to medium-specific interactions. Teams can write a custom Experience Adapter to handle legacy component patterns that are not covered by the standard BADL primitives.
+
+### CLI Template Eject
+
+If you need to deeply customize the generated boilerplate, you can use the template eject pattern. Running `origo generate --eject` copies internal templates to `.origo/templates/` for your team to modify. See [ADR-002](../architecture-decisions/002-cli-template-generation-strategy.md) for architectural details.
+
+### Extension Points
+
+For legacy components with behaviors outside the standard capability model, you can declare custom capabilities via the Extension Manifest (FR-EXT-001–FR-EXT-014). This allows your custom logic to be integrated securely within the BADL lifecycle.
+
+### Code-to-BADL Migration CLI (Coming Soon)
+
+:::caution
+The `origo migrate from-code` command is planned for a future release and is not yet available.
+The output of this tool will be approximate and requires developer review.
+:::
+
+When released, the `origo migrate from-code <path>` command will help jumpstart migrations. It will use the TypeScript Compiler API to parse existing Angular, React, or Vue component source code and output a baseline BADL entity JSON.
+
+**Important details about the future migration tool:**
+
+- Every field will be annotated with `"_generated": true`.
+- Output files will be annotated with `"// APPROXIMATE — developer review required"`.
+- The tool serves as a **starting point, not a lossless migration**. Developer review and manual refinement will always be required.
+
+---
+
+:::tip
+For testing and exploring standard BADL schemas, try using the embedded Playground on the documentation site.
+:::
