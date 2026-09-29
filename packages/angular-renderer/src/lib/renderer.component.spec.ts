@@ -1,7 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { Component, input, viewChild, ViewContainerRef } from '@angular/core';
 import { OrigoRendererComponent } from './renderer.component';
-import { ASTNode, InteractionContract } from '@origo/core';
+import { ASTNode, InteractionContract } from '@origostudio/core';
 import { RENDERER_REGISTRY } from './renderer.tokens';
 import { OrigoAdapter } from '../adapters/web/adapter';
 

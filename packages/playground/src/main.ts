@@ -2,7 +2,7 @@ import { bootstrapApplication } from '@angular/platform-browser';
 import { appConfig } from './app/app.config';
 import { AppComponent } from './app/app.component';
 import { PreviewRootComponent } from './preview/preview-root.component';
-import { initDevToolsBridge, _injectTestState } from '@origo/angular-renderer';
+import { initDevToolsBridge, _injectTestState } from '@origostudio/angular-renderer';
 
 const mockDomainJson = {
   id: 'dom-identity',

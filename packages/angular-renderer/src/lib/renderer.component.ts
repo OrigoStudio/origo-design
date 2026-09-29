@@ -7,7 +7,7 @@ import {
   viewChild,
   DestroyRef,
 } from '@angular/core';
-import { ASTNode } from '@origo/core';
+import { ASTNode } from '@origostudio/core';
 import { RENDERER_REGISTRY } from './renderer.tokens';
 import { AdapterPipelineService, ContainerComponent } from '../adapters/web/adapter';
 

@@ -18,11 +18,11 @@
     "esModuleInterop": true,
     "baseUrl": ".",
     "paths": {
-      "@origo/design-tokens": ["./packages/design-tokens/src/index.ts"],
-      "@origo/design-tokens/runtime": ["./packages/design-tokens/src/runtime/index.ts"],
-      "@origo/angular-renderer": ["./packages/angular-renderer/src/index.ts"],
-      "@origo/core": ["./packages/core/src/index.ts"],
-      "cli": ["./packages/cli/src/index.ts"]
+      "@origostudio/design-tokens": ["./packages/design-tokens/src/index.ts"],
+      "@origostudio/design-tokens/runtime": ["./packages/design-tokens/src/runtime/index.ts"],
+      "@origostudio/angular-renderer": ["./packages/angular-renderer/src/index.ts"],
+      "@origostudio/core": ["./packages/core/src/index.ts"],
+      "@origostudio/cli": ["./packages/cli/src/index.ts"]
     },
     "ignoreDeprecations": "6.0"
   },

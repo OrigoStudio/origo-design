@@ -2,9 +2,9 @@ import '@angular/compiler';
 import { provideOrigoTheme, themeInitializerFactory, OrigoThemeOptions } from './theme.provider';
 import { APP_INITIALIZER, FactoryProvider } from '@angular/core';
 
-import * as runtime from '@origo/design-tokens/runtime';
+import * as runtime from '@origostudio/design-tokens/runtime';
 
-jest.mock('@origo/design-tokens/runtime', () => ({
+jest.mock('@origostudio/design-tokens/runtime', () => ({
   // eslint-disable-next-line @typescript-eslint/no-empty-function
   loadAndInjectTheme: jest.fn().mockResolvedValue(() => {}),
   injectTheme: jest.fn(),

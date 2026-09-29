@@ -3,7 +3,7 @@ import type {
   ResolutionChain,
   RenderingPath,
   ErrorContext,
-} from '@origo/angular-renderer';
+} from '@origostudio/angular-renderer';
 
 export type DevToolsMessageType =
   | 'GET_METADATA_SOURCE'

@@ -1,6 +1,6 @@
 import * as fs from 'fs';
 import { validateDirectory } from './validation';
-import { BADLValidator, validateAST } from '@origo/core';
+import { BADLValidator, validateAST } from '@origostudio/core';
 import { CliError } from '../utils/errors';
 
 jest.mock('fs', () => ({
@@ -11,7 +11,7 @@ jest.mock('fs', () => ({
   },
 }));
 
-jest.mock('@origo/core', () => {
+jest.mock('@origostudio/core', () => {
   return {
     BADLValidator: jest.fn().mockImplementation(() => {
       let domainErrors: Array<{ code: string; message: string }> | null = null;

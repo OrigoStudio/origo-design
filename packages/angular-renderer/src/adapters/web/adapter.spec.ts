@@ -1,5 +1,5 @@
 import { coerceContractProps, AdapterPipelineService } from './adapter';
-import { ASTNode } from '@origo/core';
+import { ASTNode } from '@origostudio/core';
 
 describe('Web Adapter Utilities', () => {
   describe('coerceContractProps', () => {

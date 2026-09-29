@@ -1,8 +1,12 @@
 import { Injectable, signal, OnDestroy } from '@angular/core';
 import * as comlink from 'comlink';
 import type { CompilerWorker, CompilerError } from '../workers/compiler.worker';
-import { CanonicalAST } from '@origo/core';
-import { _injectTestState, _resetTestState, appendErrorTelemetry } from '@origo/angular-renderer';
+import { CanonicalAST } from '@origostudio/core';
+import {
+  _injectTestState,
+  _resetTestState,
+  appendErrorTelemetry,
+} from '@origostudio/angular-renderer';
 
 export const COMPILATION_DEBOUNCE_MS = 400;
 export const MAX_DISPLAYED_ERRORS = 50;

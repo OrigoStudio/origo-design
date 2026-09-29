@@ -8,7 +8,7 @@ import type {
   MetadataSource,
   ResolutionChain,
   ErrorContext,
-} from '@origo/angular-renderer';
+} from '@origostudio/angular-renderer';
 
 export type ConnectionState = 'INITIALIZING' | 'CONNECTED' | 'NOT_AVAILABLE' | 'CONNECTION_LOST';
 

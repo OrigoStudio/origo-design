@@ -2,7 +2,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { PreviewPaneComponent } from './preview-pane.component';
 import { PreviewService } from './preview.service';
 import { signal } from '@angular/core';
-import { CanonicalAST } from '@origo/core';
+import { CanonicalAST } from '@origostudio/core';
 import { Component } from '@angular/core';
 import { ErrorDisplayComponent } from './error-display.component';
 

@@ -1,7 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { PreviewRootComponent } from './preview-root.component';
 import { Component, Input } from '@angular/core';
-import { OrigoRendererComponent } from '@origo/angular-renderer';
+import { OrigoRendererComponent } from '@origostudio/angular-renderer';
 
 // Mock OrigoRendererComponent to avoid needing to provide all its dependencies
 @Component({

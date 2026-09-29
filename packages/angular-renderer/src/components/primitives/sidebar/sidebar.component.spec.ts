@@ -2,7 +2,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { SidebarComponent, SidebarProps } from './sidebar.component';
 import { provideZonelessChangeDetection } from '@angular/core';
 import { WebExperienceAdapterService } from '../../../adapters/web/experience-adapter.service';
-import { InteractionContract } from '@origo/core';
+import { InteractionContract } from '@origostudio/core';
 import { By } from '@angular/platform-browser';
 
 describe('SidebarComponent', () => {

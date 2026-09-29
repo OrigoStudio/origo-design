@@ -1,6 +1,6 @@
 import { Component, Input, Output, EventEmitter, OnChanges, SimpleChanges } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import type { RenderingPath } from '@origo/angular-renderer';
+import type { RenderingPath } from '@origostudio/angular-renderer';
 
 interface FlatNode {
   name: string;
