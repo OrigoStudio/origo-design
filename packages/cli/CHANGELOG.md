@@ -1,3 +1,13 @@
+## 0.0.40 (2026-09-29)
+
+### 🚀 Features
+
+- initialize packages, documentation site, and release workflow ([e0f7371](https://github.com/OrigoStudio/origo-design/commit/e0f7371))
+
+### ❤️ Thank You
+
+- Hardik Patel @hardikpatelse
+
 ## 0.0.39 (2026-09-29)
 
 This was a version bump only for cli to align it with other projects, there were no code changes.
