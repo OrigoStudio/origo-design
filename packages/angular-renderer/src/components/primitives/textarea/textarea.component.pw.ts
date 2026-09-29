@@ -1,6 +1,6 @@
 import { test, expect } from '@jscutlery/playwright-ct-angular';
 import { TextareaComponent, TextareaProps } from './textarea.component';
-import { InteractionContract } from '@origo/core';
+import { InteractionContract } from '@origostudio/core';
 import AxeBuilder from '@axe-core/playwright';
 
 test.describe('TextareaComponent Accessibility', () => {

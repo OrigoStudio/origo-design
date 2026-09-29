@@ -1,6 +1,6 @@
 import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import type { MetadataSource, ResolutionChain } from '@origo/angular-renderer';
+import type { MetadataSource, ResolutionChain } from '@origostudio/angular-renderer';
 
 @Component({
   selector: 'origo-devtools-metadata-detail',

@@ -1,7 +1,7 @@
 import { Component, HostListener, signal, computed, inject } from '@angular/core';
-import { CanonicalAST, ASTNode } from '@origo/core';
+import { CanonicalAST, ASTNode } from '@origostudio/core';
 import { CommonModule } from '@angular/common';
-import { OrigoRendererComponent, WebExperienceAdapterService } from '@origo/angular-renderer';
+import { OrigoRendererComponent, WebExperienceAdapterService } from '@origostudio/angular-renderer';
 
 @Component({
   selector: 'origo-root',

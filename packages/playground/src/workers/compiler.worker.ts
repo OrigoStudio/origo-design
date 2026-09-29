@@ -1,5 +1,5 @@
 import * as comlink from 'comlink';
-import { BADLValidator, validateAST, CanonicalAST } from '@origo/core';
+import { BADLValidator, validateAST, CanonicalAST } from '@origostudio/core';
 
 export interface CompilerError {
   type: string;

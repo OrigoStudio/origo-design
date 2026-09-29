@@ -1,5 +1,5 @@
 import { Injectable, ViewContainerRef, Signal, InputSignal } from '@angular/core';
-import { ASTNode, InteractionContract } from '@origo/core';
+import { ASTNode, InteractionContract } from '@origostudio/core';
 
 export interface ContainerComponent {
   viewContainerRef?: ViewContainerRef | Signal<ViewContainerRef>;

@@ -1,13 +1,13 @@
 {
-  "name": "angular-renderer",
+  "name": "@origostudio/angular-renderer",
   "version": "0.0.39",
   "private": false,
   "type": "commonjs",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
   "dependencies": {
-    "@origo/core": "0.0.39",
-    "@origo/design-tokens": "0.0.39",
+    "@origostudio/core": "0.0.39",
+    "@origostudio/design-tokens": "0.0.39",
     "tslib": "^2.3.0",
     "@analogjs/vite-plugin-angular": "^2.7.1",
     "zone.js": "^0.16.3",

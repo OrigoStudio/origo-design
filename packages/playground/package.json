@@ -1,9 +1,9 @@
 {
-  "name": "@origo/playground",
+  "name": "@origostudio/playground",
   "version": "0.0.39",
   "private": true,
   "dependencies": {
-    "@origo/core": "0.0.39",
+    "@origostudio/core": "0.0.39",
     "@origostudio/cli": "0.0.39"
   },
   "peerDependencies": {

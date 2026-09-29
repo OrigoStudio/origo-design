@@ -7,7 +7,7 @@ import {
   ViewEncapsulation,
   inject,
 } from '@angular/core';
-import { InteractionContract } from '@origo/core';
+import { InteractionContract } from '@origostudio/core';
 import { OrigoAdapter } from '../../../adapters/web/adapter';
 import { WebExperienceAdapterService } from '../../../adapters/web/experience-adapter.service';
 

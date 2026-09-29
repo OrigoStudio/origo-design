@@ -1,6 +1,6 @@
 import * as fs from 'fs';
 import * as path from 'path';
-import { BADLValidator, validateAST } from '@origo/core';
+import { BADLValidator, validateAST } from '@origostudio/core';
 import { CliError } from '../utils/errors';
 
 export interface ValidationOptions {

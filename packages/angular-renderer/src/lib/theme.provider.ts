@@ -1,7 +1,7 @@
 import { APP_INITIALIZER, Provider, PLATFORM_ID, Optional } from '@angular/core';
 import { isPlatformBrowser, DOCUMENT } from '@angular/common';
 
-import { loadAndInjectTheme, injectTheme } from '@origo/design-tokens/runtime';
+import { loadAndInjectTheme, injectTheme } from '@origostudio/design-tokens/runtime';
 
 export interface OrigoThemeOptions {
   url?: string;

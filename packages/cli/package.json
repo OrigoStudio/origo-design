@@ -9,7 +9,7 @@
     "origo": "./src/main.js"
   },
   "dependencies": {
-    "@origo/core": "0.0.39",
+    "@origostudio/core": "0.0.39",
     "commander": "^15.0.0",
     "tslib": "^2.3.0"
   },

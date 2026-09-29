@@ -1,5 +1,5 @@
 import type { DevToolsMessage } from '../types/messages';
-import type { OrigoDevToolsAPI } from '@origo/angular-renderer';
+import type { OrigoDevToolsAPI } from '@origostudio/angular-renderer';
 
 // Declare the window variable based on the API type
 declare global {

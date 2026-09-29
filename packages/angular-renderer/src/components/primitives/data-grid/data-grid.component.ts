@@ -10,7 +10,7 @@ import {
 } from '@angular/core';
 import { JsonPipe } from '@angular/common';
 import { DomSanitizer } from '@angular/platform-browser';
-import { InteractionContract } from '@origo/core';
+import { InteractionContract } from '@origostudio/core';
 import { OrigoAdapter } from '../../../adapters/web/adapter';
 import { WebExperienceAdapterService } from '../../../adapters/web/experience-adapter.service';
 

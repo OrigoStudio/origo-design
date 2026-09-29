@@ -1,10 +1,10 @@
 {
-  "name": "@origo/devtools",
+  "name": "@origostudio/devtools",
   "version": "0.0.39",
   "type": "module",
   "dependencies": {
-    "@origo/core": "0.0.30",
-    "@origostudio/cli": "0.0.30",
+    "@origostudio/core": "0.0.39",
+    "@origostudio/cli": "0.0.39",
     "@angular/core": "18.1.0",
     "@angular/common": "18.1.0"
   },

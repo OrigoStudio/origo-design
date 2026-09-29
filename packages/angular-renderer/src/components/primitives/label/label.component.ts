@@ -5,7 +5,7 @@ import {
   computed,
   ViewEncapsulation,
 } from '@angular/core';
-import { InteractionContract } from '@origo/core';
+import { InteractionContract } from '@origostudio/core';
 import { OrigoAdapter } from '../../../adapters/web/adapter';
 
 export interface LabelProps {

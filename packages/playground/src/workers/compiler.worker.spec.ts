@@ -73,7 +73,7 @@ describe('CompilerWorker', () => {
   });
 
   it('should handle mass errors from validateAST without throwing', async () => {
-    // We cannot easily mock @origo/core validateAST inside this test without vi.mock at the top,
+    // We cannot easily mock @origostudio/core validateAST inside this test without vi.mock at the top,
     // which would break other tests. Instead we'll simulate a mass syntax error using bad JSON
     // or we can just mock it properly if needed.
     // The story states: "mock validateAST to return 10,000 error objects"

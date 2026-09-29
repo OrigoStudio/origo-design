@@ -3,7 +3,7 @@ import {
   provideBrowserGlobalErrorListeners,
   provideZonelessChangeDetection,
 } from '@angular/core';
-import { provideOrigo9Primitives } from '@origo/angular-renderer';
+import { provideOrigo9Primitives } from '@origostudio/angular-renderer';
 
 export const appConfig: ApplicationConfig = {
   providers: [
