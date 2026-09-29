@@ -1,5 +1,5 @@
 # generated: 2026-07-29T21:46:02.464968
-# last_updated: 2026-09-28T22:41:43+05:30
+# last_updated: 2026-09-29T23:03:00+05:30
 # project: origo-design
 # project_key: NOKEY
 # tracking_system: file-system
@@ -41,7 +41,7 @@
 # - Retrospective appends its action items to action_items; sprint-status surfaces open ones
 
 generated: 2026-07-29T21:46:02.464968
-last_updated: 2026-09-28T22:41:43+05:30
+last_updated: 2026-09-29T23:03:00+05:30
 project: origo-design
 project_key: NOKEY
 tracking_system: file-system
@@ -119,7 +119,7 @@ development_status:
   epic-9-retrospective: done
   epic-10: in-progress
   10-1-10-minute-quickstart-guide: done
-  10-2-legacy-migration-strategy-guide: backlog
+  10-2-legacy-migration-strategy-guide: done
   10-3-developer-snippets-boilerplates: backlog
   10-4-benchmark-validation-execution: backlog
   epic-10-retrospective: optional
