@@ -85,6 +85,7 @@ test_cases:
     type: unit
     affected_stories:
       - 6-3-entity-generator-boilerplate
+      - 10-3-developer-snippets-boilerplates
     last_result: unknown
     results: {}
   - id: cli-lib-scaffolding
@@ -115,6 +116,7 @@ test_cases:
     type: unit
     affected_stories:
       - 6-1-cli-initialization-and-scaffolding
+      - 10-3-developer-snippets-boilerplates
     last_result: unknown
     results: {}
   - id: cli-utils-errors
@@ -803,5 +805,14 @@ test_cases:
       - 9-4-accessibility-localization-enforcement
       - 9-5-advanced-form-primitives-batch-4
       - retro-9-playwright-component-testing
+    last_result: unknown
+    results: {}
+  - id: cli-commands-generate-page
+    description: 'Verifies page generation command'
+    package: '@origo/cli'
+    spec_file: packages/cli/src/commands/generate/page.spec.ts
+    type: unit
+    affected_stories:
+      - 10-3-developer-snippets-boilerplates
     last_result: unknown
     results: {}

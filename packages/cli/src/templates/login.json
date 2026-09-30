@@ -1,0 +1,15 @@
+{
+  "_secure_by_default": true,
+  "id": "default-login",
+  "name": "DefaultLogin",
+  "fields": [
+    {
+      "name": "username",
+      "type": "String"
+    },
+    {
+      "name": "password",
+      "type": "String"
+    }
+  ]
+}

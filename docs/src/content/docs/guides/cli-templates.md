@@ -5,7 +5,7 @@ description: 'How to use and customize code generation templates in the Origo CL
 
 # CLI Templates Guide
 
-The `@origo/cli` provides scaffolding commands like `origo generate entity` to rapidly build out your application. These commands use built-in templates to ensure the code generated adheres to the strict architectural and structural rules of the Origo platform.
+The `@origo/cli` provides scaffolding commands like `origo generate entity` to rapidly build out your application. These commands use built-in templates to ensure the code generated adheres to the strict architectural and structural rules of the Origo platform (see [ADR-002](/architecture/adr-002) for the template system design rationale).
 
 ## Zero-Config by Default
 
@@ -41,3 +41,36 @@ While ejecting gives you ultimate flexibility, it also shifts the maintenance re
 
 - **Architectural Drift**: If the Origo BADL schema introduces breaking changes in a future major version, you may need to manually update your ejected templates to remain compliant.
 - **Validation**: The core compiler will still validate your generated output. If your custom template produces invalid schema, the AST validator will catch it and throw a compilation error.
+
+## Page Templates
+
+In addition to base entities, the CLI provides boilerplate templates for common application pages. This accelerates development by generating fully wired structures.
+
+You can generate a page using the `--template` flag:
+
+```bash
+origo generate page --template list-detail Users
+origo generate page --template login Auth
+```
+
+:::note
+When you run `origo generate --eject`, these page templates (`list-detail.json`, `login.json`) are automatically included alongside standard templates.
+:::
+
+:::caution
+The `login` template is designed to be secure-by-default. It contains zero hardcoded secrets or permissive defaults. Always conduct a security audit before deploying authentication flows to production.
+:::
+
+## VS Code Snippets
+
+For inline developer assistance, the Origo project includes a `.vscode/origo-badl.code-snippets` file containing standard VS Code snippets.
+
+Available prefixes:
+
+- `origo-entity`: Expands to a standard Entity schema.
+- `origo-list-detail`: Expands to a List-Detail page schema.
+- `origo-login`: Expands to a secure Login page schema.
+
+:::tip
+Typing any of these prefixes in a `.json` file within VS Code will provide tab-completion and placeholder navigation to quickly build out BADL schemas.
+:::
