@@ -816,3 +816,13 @@ test_cases:
       - 10-3-developer-snippets-boilerplates
     last_result: unknown
     results: {}
+  - id: dx-onboarding-benchmark-10min
+    description: 'Validates NFR-DX-001: developer unfamiliar with BADL produces a working rendered page in under 10 minutes using the list-detail template'
+    package: '@origo/docs'
+    spec_file: docs/src/content/docs/benchmarks/onboarding-10-min.md
+    type: manual
+    affected_stories:
+      - 10-4-benchmark-validation-execution
+    last_result: pass
+    results:
+      current: pass

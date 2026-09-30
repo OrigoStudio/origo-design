@@ -36,6 +36,10 @@ export default defineConfig({
           ],
         },
         {
+          label: 'Benchmarks',
+          items: [{ label: 'Onboarding Benchmark', link: '/benchmarks/onboarding-10-min/' }],
+        },
+        {
           label: 'Reference',
           autogenerate: { directory: 'reference' },
         },
