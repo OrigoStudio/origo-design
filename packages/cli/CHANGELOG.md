@@ -1,3 +1,13 @@
+## 0.0.41 (2026-09-30)
+
+### 🚀 Features
+
+- initialize workspace packages and implement CLI generator commands with templates ([b227117](https://github.com/OrigoStudio/origo-design/commit/b227117))
+
+### ❤️ Thank You
+
+- Hardik Patel @hardikpatelse
+
 ## 0.0.40 (2026-09-29)
 
 ### 🚀 Features
