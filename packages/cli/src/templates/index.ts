@@ -1,6 +1,8 @@
 import origoTemplate from './origo.json';
 import entityTemplate from './entity.json';
 import extensionTemplate from './extension.json';
+import listDetailTemplate from './list-detail.json';
+import loginTemplate from './login.json';
 
 export interface EntityOptions {
   id?: string;
@@ -91,4 +93,18 @@ export function generateOrigoConfig(options: OrigoConfigOptions = {}): string {
       `Failed to serialize origo config: ${e instanceof Error ? e.message : String(e)}`
     );
   }
+}
+
+export function generateListDetailTemplate(options: EntityOptions = {}): string {
+  const id = options.id || 'default-list-detail';
+  const name = options.name || 'DefaultListDetail';
+  validateIdentifier(id);
+  return JSON.stringify({ ...listDetailTemplate, id, name }, null, 2) + '\n';
+}
+
+export function generateLoginTemplate(options: EntityOptions = {}): string {
+  const id = options.id || 'default-login';
+  const name = options.name || 'DefaultLogin';
+  validateIdentifier(id);
+  return JSON.stringify({ ...loginTemplate, id, name }, null, 2) + '\n';
 }

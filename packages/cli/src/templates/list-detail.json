@@ -1,0 +1,14 @@
+{
+  "id": "default-list-detail",
+  "name": "DefaultListDetail",
+  "views": [
+    {
+      "name": "List",
+      "type": "list"
+    },
+    {
+      "name": "Detail",
+      "type": "detail"
+    }
+  ]
+}

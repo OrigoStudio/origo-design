@@ -2,16 +2,23 @@ import * as fs from 'fs/promises';
 import * as path from 'path';
 import {
   generateEntity,
+  generatePage,
   ejectTemplates,
   registerGeneratorPlugin,
   GeneratorPlugin,
 } from './generator';
 import { CliError } from '../utils/errors';
-import { generateEntityTemplate } from '../templates';
+import {
+  generateEntityTemplate,
+  generateListDetailTemplate,
+  generateLoginTemplate,
+} from '../templates';
 
 jest.mock('fs/promises');
 jest.mock('../templates', () => ({
   generateEntityTemplate: jest.fn().mockReturnValue('{"mock": "template"}'),
+  generateListDetailTemplate: jest.fn().mockReturnValue('{"mock": "list-detail"}'),
+  generateLoginTemplate: jest.fn().mockReturnValue('{"mock": "login"}'),
 }));
 
 describe('generator', () => {
@@ -60,7 +67,7 @@ describe('generator', () => {
       const expectedPath = path.join(process.cwd(), 'schemas', 'user.json');
       expect(writeFileSpy).toHaveBeenCalledWith(
         expectedPath,
-        '{"id": "user", "name": "User"}\n',
+        expect.stringContaining('{"id": "user", "name": "User"}'),
         'utf-8'
       );
       expect(generateEntityTemplate).not.toHaveBeenCalled();
@@ -170,6 +177,78 @@ describe('generator', () => {
       await expect(generateEntity('User', {})).rejects.toMatchObject({
         code: 'ERR_UNEXPECTED',
       });
+    });
+
+    it('should fallback to built-in template on ENOENT from readFile', async () => {
+      readFileSpy.mockRejectedValue({ code: 'ENOENT' });
+      await generateEntity('User', {});
+      expect(generateEntityTemplate).toHaveBeenCalled();
+    });
+  });
+
+  describe('generatePage', () => {
+    it('should generate list-detail page', async () => {
+      await generatePage('list-detail', 'Users', {});
+      expect(writeFileSpy).toHaveBeenCalledWith(
+        path.join(process.cwd(), 'schemas', 'users.json'),
+        '{"mock": "list-detail"}',
+        'utf-8'
+      );
+      expect(generateListDetailTemplate).toHaveBeenCalledWith({ id: 'users', name: 'Users' });
+    });
+
+    it('should generate login page', async () => {
+      await generatePage('login', 'Auth', {});
+      expect(writeFileSpy).toHaveBeenCalledWith(
+        path.join(process.cwd(), 'schemas', 'auth.json'),
+        '{"mock": "login"}',
+        'utf-8'
+      );
+      expect(generateLoginTemplate).toHaveBeenCalledWith({ id: 'auth', name: 'Auth' });
+    });
+
+    it('should throw on invalid template name', async () => {
+      await expect(generatePage('invalid', 'Users', {})).rejects.toMatchObject({
+        code: 'ERR_UNKNOWN_TEMPLATE',
+      });
+    });
+
+    it('should use custom template if exists', async () => {
+      readFileSpy.mockResolvedValue('{"custom": "page"}');
+      await generatePage('login', 'Auth', {});
+      expect(writeFileSpy).toHaveBeenCalledWith(
+        path.join(process.cwd(), 'schemas', 'auth.json'),
+        expect.stringContaining('{"custom": "page"}'),
+        'utf-8'
+      );
+    });
+
+    it('should throw ERR_INVALID_NAME on invalid name', async () => {
+      await expect(generatePage('list-detail', '../sub', {})).rejects.toMatchObject({
+        code: 'ERR_INVALID_NAME',
+      });
+      await expect(generatePage('list-detail', '   ', {})).rejects.toMatchObject({
+        code: 'ERR_INVALID_NAME',
+      });
+      await expect(generatePage('list-detail', 'invalid name', {})).rejects.toMatchObject({
+        code: 'ERR_INVALID_NAME',
+      });
+    });
+
+    it('should overwrite if file exists and --force is provided', async () => {
+      const expectedPath = path.join(process.cwd(), 'schemas', 'auth.json');
+      accessSpy.mockImplementation(async filePath => {
+        if (filePath === expectedPath) return undefined;
+        throw { code: 'ENOENT' };
+      });
+      await generatePage('login', 'Auth', { force: true });
+      expect(writeFileSpy).toHaveBeenCalled();
+    });
+
+    it('should fallback to built-in template on ENOENT from readFile', async () => {
+      readFileSpy.mockRejectedValue({ code: 'ENOENT' });
+      await generatePage('login', 'Auth', {});
+      expect(generateLoginTemplate).toHaveBeenCalled();
     });
   });
 

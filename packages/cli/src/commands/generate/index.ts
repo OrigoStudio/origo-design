@@ -1,5 +1,6 @@
 import { Command } from 'commander';
 import { entityCommand } from './entity';
+import { pageCommand } from './page';
 import { ejectTemplates } from '../../lib/generator';
 import { handleError } from '../../utils/errors';
 
@@ -7,6 +8,7 @@ export function generateCommand(): Command {
   const cmd = new Command('generate').description('Generate Origo artifacts');
 
   cmd.addCommand(entityCommand());
+  cmd.addCommand(pageCommand());
 
   cmd
     .option('--eject', 'Copy internal templates to .origo/templates/ for customization')
