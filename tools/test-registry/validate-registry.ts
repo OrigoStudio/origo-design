@@ -7,7 +7,7 @@ const REPO_ROOT = path.resolve(__dirname, '../..');
 const REGISTRY_PATH = path.join(__dirname, 'test-registry.yaml');
 const STORY_KEY_PATTERN = /^(\d+(\.\d+)?(-\d+)*-[\w-]+|retro-[\w.-]+)$/;
 const ID_PATTERN = /^[a-z0-9]+(-[a-z0-9]+)*$/;
-const VALID_TYPES = new Set(['unit', 'e2e', 'integration', 'perf']);
+const VALID_TYPES = new Set(['unit', 'e2e', 'integration', 'perf', 'manual']);
 const VALID_RESULTS = new Set(['pass', 'fail', 'skipped', 'unknown']);
 const VALID_PACKAGES = new Set([
   '@origo/cli',
@@ -18,6 +18,7 @@ const VALID_PACKAGES = new Set([
   '@origo/devtools',
   'origo-e2e',
   'tools',
+  '@origo/docs',
 ]);
 
 interface TestCase {
