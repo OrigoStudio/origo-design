@@ -232,7 +232,7 @@ action_items:
     status: done
   - id: retro-10-iframe-scroll
     description: "Fix CSS overflow on the Playground iframe container to ensure vertical scrolling works correctly at all zoom levels. (Owner: Charlie)"
-    status: open
+    status: in-progress
   - id: retro-10-renderer-ux
     description: "Audit the rendering pipeline to ensure that defining entities correctly instantiates functional Data Grids and Forms, rather than just displaying schema metadata. Fix the broken routing on generated navigation tabs. (Owner: Amelia)"
     status: open
