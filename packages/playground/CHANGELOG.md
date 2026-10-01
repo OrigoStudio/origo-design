@@ -1,3 +1,15 @@
+## 0.0.43 (2026-10-01)
+
+### 🚀 Features
+
+- add favicon for playground ([6a21ce7](https://github.com/OrigoStudio/origo-design/commit/6a21ce7))
+- add styles for badl-editor component ([ea48c23](https://github.com/OrigoStudio/origo-design/commit/ea48c23))
+- add playground preview styles, test registry, and sprint retrospective documentation ([456cf11](https://github.com/OrigoStudio/origo-design/commit/456cf11))
+
+### ❤️ Thank You
+
+- Hardik Patel @hardikpatelse
+
 ## 0.0.42 (2026-09-30)
 
 This was a version bump only for playground to align it with other projects, there were no code changes.
