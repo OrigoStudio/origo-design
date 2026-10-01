@@ -826,3 +826,12 @@ test_cases:
     last_result: pass
     results:
       current: pass
+  - id: playground-iframe-scrolling
+    description: 'Verifies the Playground iframe container correctly handles CSS overflow and vertical scrolling at all zoom levels without double scrollbars'
+    package: '@origo/playground'
+    spec_file: packages/playground/src/preview/preview-pane.component.scss
+    type: manual
+    affected_stories:
+      - retro-10-iframe-scroll
+    last_result: unknown
+    results: {}
