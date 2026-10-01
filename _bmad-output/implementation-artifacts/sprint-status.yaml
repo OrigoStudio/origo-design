@@ -122,7 +122,7 @@ development_status:
   10-2-legacy-migration-strategy-guide: done
   10-3-developer-snippets-boilerplates: done
   10-4-benchmark-validation-execution: done
-  epic-10-retrospective: optional
+  epic-10-retrospective: done
   retro-6-e2e-npm-verification: done
   retro-6-security-remediation: done
   retro-6-negative-testing: done
@@ -230,4 +230,15 @@ action_items:
     action: "A11y & RTL Knowledge Transfer: Conduct a brief knowledge sharing session or write documentation on ARIA semantics and CSS Logical properties to prevent recurring PR feedback."
     owner: "Amelia"
     status: done
-
+  - id: retro-10-iframe-scroll
+    description: "Fix CSS overflow on the Playground iframe container to ensure vertical scrolling works correctly at all zoom levels. (Owner: Charlie)"
+    status: open
+  - id: retro-10-renderer-ux
+    description: "Audit the rendering pipeline to ensure that defining entities correctly instantiates functional Data Grids and Forms, rather than just displaying schema metadata. Fix the broken routing on generated navigation tabs. (Owner: Amelia)"
+    status: open
+  - id: retro-10-badl-defaults
+    description: "Update Quickstart and Boilerplates to include 'capabilities' in sample JSON. Ensure every schema property is fully documented in different sections of the docs matching the Playground Schemas approach. (Owner: Alice). Also include `When to use?`, `How to use?` parts for each properties in the docs to guide developers on using the primitives effectively."
+    status: open
+  - id: retro-10-playground-help-links
+    description: "Add a help section to the Playground redirecting to docs. Configure root URLs (docs/playground) centrally (e.g., via environment variables or a single config) to allow updates without widespread code changes. (Owner: Winston/Charlie)"
+    status: open
