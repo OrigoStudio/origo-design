@@ -400,6 +400,7 @@ test_cases:
     type: unit
     affected_stories:
       - 7-2-live-compilation-rendering-pipeline
+      - retro-10-renderer-ux
     last_result: unknown
     results: {}
   - id: playground-preview-service

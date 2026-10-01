@@ -3,7 +3,7 @@ baseline_commit: HEAD
 ---
 # Story retro-10: renderer-ux
 
-Status: ready-for-dev
+Status: done
 
 <!-- Note: Validation is optional. Run validate-create-story for quality check before dev-story. -->
 
@@ -25,24 +25,22 @@ So that I see entity-specific data grids and forms for the active outcome rather
 4. **And** this story explicitly acknowledges `_bmad-output/planning-artifacts/adr-epic7-web-worker-csp.md` per the Definition of Done — changes to `preview-root.component.ts` do not affect iframe sandbox or Web Worker CSP constraints; note as N/A in completion notes.
 5. **And** a test scenario for this fix is appended to `tools/test-registry/test-registry.yaml`.
 
-## Tasks / Subtasks
-
-- [ ] Task 1: Study existing code before changing anything.
-  - [ ] Read `packages/playground/src/preview/preview-root.component.ts` (all 209 lines) — understand the existing `uiNode` computed signal and `activeOutcome` state flow.
-  - [ ] Read `packages/playground/src/app/app.config.ts` — confirm no Angular Router is provided (no `provideRouter`). Do NOT add one.
-  - [ ] Read `packages/angular-renderer/src/lib/primitives.provider.ts` — confirm `RENDERER_REGISTRY` is already fully correct. Do NOT modify this file.
-- [ ] Task 2: Fix `uiNode` in `preview-root.component.ts` to render dynamic content per outcome.
-  - [ ] At line 25, refactor the `uiNode = computed<ASTNode | null>()` to branch the returned content children based on `activeOutcome`:
+## Tasks / Subta- [x] Task 1: Study existing code before changing anything.
+  - [x] Read `packages/playground/src/preview/preview-root.component.ts` (all 209 lines) — understand the existing `uiNode` computed signal and `activeOutcome` state flow.
+  - [x] Read `packages/playground/src/app/app.config.ts` — confirm no Angular Router is provided (no `provideRouter`). Do NOT add one.
+  - [x] Read `packages/angular-renderer/src/lib/primitives.provider.ts` — confirm `RENDERER_REGISTRY` is already fully correct. Do NOT modify this file.
+- [x] Task 2: Fix `uiNode` in `preview-root.component.ts` to render dynamic content per outcome.
+  - [x] At line 25, refactor the `uiNode = computed<ASTNode | null>()` to branch the returned content children based on `activeOutcome`:
     - `'home'` outcome → show overview Card + form section (current behavior preserved).
     - `'entities'` outcome → show a DataGrid with rows mapped from ALL entities in the domain (not just `entities[0]?.fields`). Columns: `[{key: 'name', label: 'Entity Name'}, {key: 'fieldCount', label: 'Fields'}]`. Rows: `domain.entities.map(e => ({ name: e.name, fieldCount: e.fields?.length ?? 0 }))`.
     - `'capabilities'` outcome → show a DataGrid or List from `domain.capabilities || []`. If no capabilities exist, render a Card with placeholder text (do not crash on empty array).
-  - [ ] Retain the existing Sidebar, Breadcrumbs, and Tabs nodes unchanged — only the content children after Tabs change per outcome.
-  - [ ] Guard all array accesses: `domain.entities || []`, `domain.capabilities || []` — never let a missing field crash the computed signal.
-- [ ] Task 3: Verify Tabs still work after the refactor.
-  - [ ] Confirm `activeTab` from `WebExperienceAdapterService.getState('tabs', 'activeTab')` is still read and passed into the Tabs node.
-  - [ ] Tabs do not control page-level routing — they are a visual component receiving `activeTab` prop only.
-- [ ] Task 4: DoD compliance — Central Test Registry.
-  - [ ] Open `tools/test-registry/test-registry.yaml` and append entries using this exact YAML structure:
+  - [x] Retain the existing Sidebar, Breadcrumbs, and Tabs nodes unchanged — only the content children after Tabs change per outcome.
+  - [x] Guard all array accesses: `domain.entities || []`, `domain.capabilities || []` — never let a missing field crash the computed signal.
+- [x] Task 3: Verify Tabs still work after the refactor.
+  - [x] Confirm `activeTab` from `WebExperienceAdapterService.getState('tabs', 'activeTab')` is still read and passed into the Tabs node.
+  - [x] Tabs do not control page-level routing — they are a visual component receiving `activeTab` prop only.
+- [x] Task 4: DoD compliance — Central Test Registry.
+  - [x] Open `tools/test-registry/test-registry.yaml` and append entries using this exact YAML structure:
     ```yaml
     - id: playground-outcome-navigation
       description: "Playground preview renders distinct content per sidebar outcome (Home, Entities, Capabilities)"
@@ -52,16 +50,16 @@ So that I see entity-specific data grids and forms for the active outcome rather
       affected_stories: ["retro-10-renderer-ux"]
       last_result: unknown
     ```
-- [ ] Task 5: Add/update unit tests in `packages/playground/src/preview/preview-root.component.spec.ts`.
-  - [ ] Test: When `activeOutcome = 'entities'`, `uiNode()` contains a DataGrid node with rows from all entities.
-  - [ ] Test: When `activeOutcome = 'capabilities'`, `uiNode()` contains a DataGrid/List or fallback Card.
-  - [ ] Test: When `domain.capabilities` is undefined/empty, `uiNode()` does not throw.
-  - [ ] Use `provideZonelessChangeDetection()` in TestBed (NOT `provideExperimentalZonelessChangeDetection` — removed).
-  - [ ] Mock `WebExperienceAdapterService.getState` as `jest.fn()`.
-- [ ] Task 6: Verify build pipeline.
-  - [ ] `nx lint playground`
-  - [ ] `nx test playground`
-  - [ ] `nx build playground`
+- [x] Task 5: Add/update unit tests in `packages/playground/src/preview/preview-root.component.spec.ts`.
+  - [x] Test: When `activeOutcome = 'entities'`, `uiNode()` contains a DataGrid node with rows from all entities.
+  - [x] Test: When `activeOutcome = 'capabilities'`, `uiNode()` contains a DataGrid/List or fallback Card.
+  - [x] Test: When `domain.capabilities` is undefined/empty, `uiNode()` does not throw.
+  - [x] Use `provideZonelessChangeDetection()` in TestBed (NOT `provideExperimentalZonelessChangeDetection` — removed).
+  - [x] Mock `WebExperienceAdapterService.getState` as `jest.fn()`.
+- [x] Task 6: Verify build pipeline.
+  - [x] `nx lint playground`
+  - [x] `nx test playground`
+  - [x] `nx build playground`
 
 ## Dev Notes
 
@@ -153,6 +151,36 @@ The previous retro story (`retro-10-iframe-scroll`) confirmed the playground str
 ## Dev Agent Record
 
 ### Implementation Plan
+1. Refactored `uiNode` signal logic in `preview-root.component.ts` to branch dynamically based on the current `activeOutcome` state.
+2. Updated tests in `preview-root.component.spec.ts` to include unit tests verifying `uiNode` branching logic using `vitest` mocking.
+3. Added the `playground-outcome-navigation` test to `test-registry.yaml`.
+4. Verified build pipeline.
+
 ### Completion Notes
+- The dynamic view rendering for Home, Entities, and Capabilities outcomes has been successfully implemented utilizing the `WebExperienceAdapterService` without any usage of `Angular Router`.
+- Acknowledged `adr-epic7-web-worker-csp.md` — Changes are limited to `preview-root.component.ts` template/logic. No iframe CSP attributes are modified (N/A).
+
 ## File List
+- `packages/playground/src/preview/preview-root.component.ts`
+- `packages/playground/src/preview/preview-root.component.spec.ts`
+- `tools/test-registry/test-registry.yaml`
+
 ## Change Log
+- Refactored `uiNode` in `preview-root.component.ts` to return distinct content views (DataGrid, Card, list elements) for different `activeOutcome` branches.
+- Added comprehensive unit testing for `activeOutcome` branch scenarios.
+- Updated central test registry with `playground-outcome-navigation`.
+
+### Review Findings
+
+- [x] [Review][Decision] Unknown `activeOutcome` falls through to home — `else` branch handles any unknown string by rendering the home configuration form.
+- [x] [Review][Decision] Asymmetric Empty-State Handling — Entities renders empty grid; capabilities renders Card.
+- [x] [Review][Patch] Missing test coverage for `home` branch [packages/playground/src/preview/preview-root.component.spec.ts]
+- [x] [Review][Patch] Missing `results: {}` in test registry [tools/test-registry/test-registry.yaml:838]
+- [x] [Review][Patch] Missing guard for undefined capabilities elements [packages/playground/src/preview/preview-root.component.ts:145]
+- [x] [Review][Patch] Tests bypass type checking (`as any`) [packages/playground/src/preview/preview-root.component.spec.ts]
+- [x] [Review][Patch] Assertion inside `.not.toThrow()` [packages/playground/src/preview/preview-root.component.spec.ts]
+- [x] [Review][Patch] Incomplete assertions for entities DataGrid [packages/playground/src/preview/preview-root.component.spec.ts]
+- [x] [Review][Patch] `contentChildren` uninitialized [packages/playground/src/preview/preview-root.component.ts:38]
+- [x] [Review][Patch] DataGrid row `entity.name` not guarded [packages/playground/src/preview/preview-root.component.ts:138]
+- [x] [Review][Defer] `domain.version` referenced but missing from type [packages/playground/src/preview/preview-root.component.ts:200] — deferred, pre-existing
+- [x] [Review][Defer] Performance cliff with array spread [packages/playground/src/preview/preview-root.component.ts] — deferred, pre-existing

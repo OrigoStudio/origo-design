@@ -351,3 +351,7 @@
 ## Deferred from: code review of 10-4-benchmark-validation-execution.md (2026-09-30)
 - Sprint Status ordering (10-3 still in review): 10-3 is in review while 10-4 advances to review, but 10-4 depends on 10-3's template.
 - Benchmark Result Qualitative Rating: Marked as PASS despite encountering a blocking bug (wrong port) that delayed execution.
+
+## Deferred from: code review of retro-10-renderer-ux (2026-10-01)
+- domain.version referenced but missing from type [packages/playground/src/preview/preview-root.component.ts:200]
+- Performance cliff with array spread [packages/playground/src/preview/preview-root.component.ts]

@@ -235,7 +235,7 @@ action_items:
     status: done
   - id: retro-10-renderer-ux
     description: "Audit the rendering pipeline to ensure that defining entities correctly instantiates functional Data Grids and Forms, rather than just displaying schema metadata. Fix the broken routing on generated navigation tabs. (Owner: Amelia)"
-    status: ready-for-dev
+    status: done
   - id: retro-10-badl-defaults
     description: "Update Quickstart and Boilerplates to include 'capabilities' in sample JSON. Ensure every schema property is fully documented in different sections of the docs matching the Playground Schemas approach. (Owner: Alice). Also include `When to use?`, `How to use?` parts for each properties in the docs to guide developers on using the primitives effectively."
     status: open
