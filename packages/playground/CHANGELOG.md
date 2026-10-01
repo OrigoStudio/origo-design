@@ -1,3 +1,13 @@
+## 0.0.44 (2026-10-01)
+
+### 🚀 Features
+
+- implement entity and capability UI rendering in playground preview component ([9e59133](https://github.com/OrigoStudio/origo-design/commit/9e59133))
+
+### ❤️ Thank You
+
+- Hardik Patel @hardikpatelse
+
 ## 0.0.43 (2026-10-01)
 
 ### 🚀 Features
