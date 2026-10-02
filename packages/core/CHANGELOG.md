@@ -1,3 +1,13 @@
+## 0.0.45 (2026-10-02)
+
+### 🚀 Features
+
+- add CLI templates, schemas, documentation, and workflow artifacts ([1eaa300](https://github.com/OrigoStudio/origo-design/commit/1eaa300))
+
+### ❤️ Thank You
+
+- Hardik Patel @hardikpatelse
+
 ## 0.0.44 (2026-10-01)
 
 This was a version bump only for core to align it with other projects, there were no code changes.
