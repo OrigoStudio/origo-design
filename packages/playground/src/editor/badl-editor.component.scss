@@ -6,7 +6,7 @@
 }
 
 .editor-header {
-  padding: 12px 24px;
+  padding: 5px 24px;
   background: var(--origo-color-surface, #1e1e1e);
   border-bottom: 1px solid var(--origo-color-border-subtle, rgba(255, 255, 255, 0.1));
   display: flex;
@@ -15,7 +15,7 @@
 
   .editor-title {
     color: var(--origo-color-text-secondary, #cccccc);
-    font-size: 0.9rem;
+    font-size: 0.75rem;
     font-weight: 600;
     letter-spacing: 0.05em;
     text-transform: uppercase;

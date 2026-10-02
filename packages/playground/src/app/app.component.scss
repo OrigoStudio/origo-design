@@ -8,13 +8,13 @@
 .playground-layout {
   display: grid;
   grid-template-columns: 1fr;
-  grid-template-rows: 1fr 1fr;
+  grid-template-rows: auto 1fr 1fr;
   height: 100%;
   width: 100%;
 
   @media (min-width: 768px) {
     grid-template-columns: 1fr 1fr;
-    grid-template-rows: 1fr;
+    grid-template-rows: auto 1fr;
   }
 }
 
@@ -26,4 +26,59 @@
 .preview-pane {
   min-width: 0;
   height: 100%;
+}
+
+.playground-header {
+  grid-column: 1 / -1;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 1rem;
+  height: 3rem;
+  background: var(--origo-color-surface, #ffffff);
+  border-bottom: 1px solid var(--origo-color-border, #e0e0e0);
+
+  .branding {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+
+    .origo-icon {
+      width: 32px;
+      height: 32px;
+      object-fit: contain;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: 1.125rem;
+      font-weight: 600;
+      color: var(--origo-color-text, #333333);
+    }
+  }
+
+  a.help-link {
+    font-size: 0.875rem;
+    color: var(--origo-color-on-primary, #ffffff);
+    background-color: var(--origo-color-primary, #389bff);
+    padding: 0.375rem 0.75rem;
+    border-radius: 4px;
+    text-decoration: none;
+    font-weight: 500;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.2s ease;
+    border: 1px solid transparent;
+
+    &:hover {
+      background-color: var(--origo-color-primary-dark, #0c86ff);
+      text-decoration: none;
+    }
+
+    &:focus-visible {
+      outline: 2px solid var(--origo-color-primary, #0066cc);
+      outline-offset: 2px;
+    }
+  }
 }

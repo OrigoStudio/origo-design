@@ -16,6 +16,7 @@ const mockGetValue = vi.fn().mockReturnValue('{}');
 const mockGetModel = vi.fn().mockReturnValue({
   getValue: mockGetValue,
   setValue: mockSetValue,
+  dispose: vi.fn(),
 });
 const mockUpdateOptions = vi.fn();
 const mockCreate = vi.fn().mockReturnValue({
@@ -28,10 +29,13 @@ const mockCreate = vi.fn().mockReturnValue({
 });
 const mockCreateModel = vi.fn().mockReturnValue({});
 
+const mockMonacoEditorGetModel = vi.fn().mockReturnValue(null);
+
 vi.mock('monaco-editor', () => ({
   editor: {
     create: (...args: unknown[]) => mockCreate(...args),
     createModel: (...args: unknown[]) => mockCreateModel(...args),
+    getModel: (...args: unknown[]) => mockMonacoEditorGetModel(...args),
   },
   Uri: {
     parse: vi.fn().mockReturnValue('parsed-uri'),

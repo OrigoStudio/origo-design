@@ -360,3 +360,5 @@
 
 - Relative $ref in entity.schema.json [packages/playground/src/schemas/entity.schema.json] — deferred, pre-existing. Relative $ref 'capability.schema.json' might be unresolvable in strict parsers without a base URI.
 - Missing uniqueItems for capabilities [packages/playground/src/schemas/entity.schema.json] — deferred, pre-existing. entity.schema.json does not enforce uniqueItems for the capabilities array, allowing duplicate capability IDs.
+
+

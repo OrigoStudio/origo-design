@@ -80,12 +80,16 @@ export class BadlEditorComponent implements AfterViewInit, OnDestroy {
           console.warn('Could not restore playground draft, falling back to initialValue', e);
         }
 
+        const modelUri = monaco.Uri.parse('inmemory://model/domain.json');
+        let model = monaco.editor.getModel(modelUri);
+        if (model) {
+          model.setValue(savedState);
+        } else {
+          model = monaco.editor.createModel(savedState, 'json', modelUri);
+        }
+
         this.editor = monaco.editor.create(this.editorContainer.nativeElement, {
-          model: monaco.editor.createModel(
-            savedState,
-            'json',
-            monaco.Uri.parse('inmemory://model/domain.json')
-          ),
+          model: model,
           theme: this.theme(),
           readOnly: this.readOnly(),
           automaticLayout: true, // Required for split-pane resize in Story 7.2
@@ -191,6 +195,48 @@ export class BadlEditorComponent implements AfterViewInit, OnDestroy {
             ],
           },
         ],
+        capabilities: [
+          {
+            id: 'cap-create-user',
+            name: 'Create',
+            description: 'Create a new user in the system',
+            type: 'Command',
+            entityId: 'ent-user',
+            outcome_ref: [],
+            preconditions: ['User does not already exist'],
+            postconditions: ['User is saved to database'],
+            permissions: [
+              {
+                role: 'admin',
+                access: 'grant',
+              },
+            ],
+            risk_level: 'medium',
+            async: false,
+          },
+          {
+            id: 'cap-read-user',
+            name: 'Read',
+            description: 'Read user details by ID',
+            type: 'Query',
+            entityId: 'ent-user',
+            outcome_ref: [],
+            preconditions: [],
+            postconditions: [],
+            permissions: [
+              {
+                role: 'admin',
+                access: 'grant',
+              },
+              {
+                role: 'user',
+                access: 'grant',
+              },
+            ],
+            risk_level: 'low',
+            async: false,
+          },
+        ],
       };
 
       const formatted = JSON.stringify(sample, null, 2);
@@ -200,7 +246,10 @@ export class BadlEditorComponent implements AfterViewInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.editor?.dispose(); // CRITICAL — prevents Monaco timer memory leak
-    this.editor = null;
+    if (this.editor) {
+      this.editor.getModel()?.dispose();
+      this.editor.dispose(); // CRITICAL — prevents Monaco timer memory leak
+      this.editor = null;
+    }
   }
 }

@@ -41,7 +41,7 @@
 # - Retrospective appends its action items to action_items; sprint-status surfaces open ones
 
 generated: 2026-07-29T21:46:02.464968
-last_updated: 2026-10-02T15:32:00+05:30
+last_updated: 2026-10-02T15:53:00+05:30
 project: origo-design
 project_key: NOKEY
 tracking_system: file-system
@@ -133,7 +133,7 @@ development_status:
   retro-8-harden-test-isolation: done
   retro-9-a11y-rtl-knowledge-transfer: done
   retro-10-badl-defaults: done
-  retro-10-playground-help-links: ready-for-dev
+  retro-10-playground-help-links: done
 
 action_items:
   - id: retro-1-cleanup
@@ -243,4 +243,4 @@ action_items:
     status: done
   - id: retro-10-playground-help-links
     description: "Add a help section to the Playground redirecting to docs. Configure root URLs (docs/playground) centrally (e.g., via environment variables or a single config) to allow updates without widespread code changes. (Owner: Winston/Charlie)"
-    status: in-progress
+    status: done
