@@ -1,0 +1,17 @@
+{
+  "workflow": {
+    "activation_steps_prepend": [],
+    "activation_steps_append": [],
+    "persistent_facts": ["file:{project-root}/**/project-context.md"],
+    "on_complete": "",
+    "prd_template": "assets/prd-template.md",
+    "validation_checklist_template": "assets/prd-validation-checklist.md",
+    "validation_report_template": "assets/validation-report-template.html",
+    "prd_output_path": "{planning_artifacts}/prds",
+    "run_folder_pattern": "prd-{project_name}-{date}",
+    "doc_standards": ["skill:bmad-editorial-review-structure", "skill:bmad-editorial-review-prose"],
+    "external_sources": [],
+    "external_handoffs": [],
+    "finalize_reviewers": []
+  }
+}

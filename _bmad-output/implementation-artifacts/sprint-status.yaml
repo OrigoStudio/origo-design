@@ -144,7 +144,7 @@ action_items:
     status: done
   - id: retro-2-versioning
     description: "Establish Versioning Management: Manage versioning strategy for the product and its packages. (Owner: Patel)"
-    status: open
+    status: done
   - id: retro-2-use-cases
     description: "Use Case Documentation: Create documentation detailing how and by whom the @origo/design-tokens package should be used. (Owner: Alice/Amelia)"
     status: done
@@ -171,10 +171,10 @@ action_items:
     status: done
   - id: retro-5-usability-docs
     description: "Document Usability Steps & Quickstarts for components detailing end-to-end user workflows. (Owner: Elena)"
-    status: open
+    status: done
   - id: retro-5-e2e-testing
     description: "Establish End-to-End User Testing Protocols for new components based on usability documentation. (Owner: Dana)"
-    status: open
+    status: done
   - id: retro-5-schema-resolution
     description: "Fix 'Recursive Schema Resolution' tech debt to stop aggressive property stripping during AST coercion. (Owner: Charlie)"
     status: done
