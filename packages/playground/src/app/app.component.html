@@ -1,4 +1,11 @@
 <div class="playground-layout">
+  <header class="playground-header">
+    <div class="branding">
+      <img class="origo-icon" src="/logo.png" alt="Origo Logo" />
+      <h1>Origo Design Playground</h1>
+    </div>
+    <a class="help-link" [href]="docsUrl" target="_blank" rel="noopener noreferrer">📖 Docs</a>
+  </header>
   <div class="editor-pane">
     <origo-badl-editor
       [initialValue]="'{}'"

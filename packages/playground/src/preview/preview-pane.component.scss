@@ -14,26 +14,27 @@
 }
 
 .preview-header {
-  padding: var(--origo-spacing-m, 16px) 24px;
+  padding: 13px 24px;
   background: rgba(255, 255, 255, 0.8);
   backdrop-filter: blur(8px);
   border-bottom: 1px solid var(--origo-color-border, #eaeaea);
   display: flex;
   align-items: center;
 
-  h2 {
-    margin: 0;
-    font-size: 1.1rem;
+  .preview-title {
+    color: var(--origo-color-text-primary, #323232);
+    font-size: 0.75rem;
     font-weight: 600;
-    letter-spacing: -0.01em;
-    color: var(--origo-color-text, #111827);
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
   }
 }
 
 .iframe-wrapper {
   flex: 1;
   position: relative;
-  min-height: 0; /* Important for flex child to not overflow */
+  min-height: 0;
+  /* Important for flex child to not overflow */
   overflow: hidden;
 
   iframe {

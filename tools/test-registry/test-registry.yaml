@@ -845,3 +845,12 @@ test_cases:
       - retro-10-badl-defaults
     last_result: unknown
     results: {}
+  - id: retro-10-playground-help-links
+    description: 'Verifies Playground header shows a help/docs link opening in a new tab and that the docs URL is provided via ORIGO_DOCS_URL injection token in app.config.ts'
+    package: '@origo/playground'
+    spec_file: packages/playground/src/app/app.component.html
+    type: manual
+    affected_stories:
+      - retro-10-playground-help-links
+    last_result: unknown
+    results: {}
