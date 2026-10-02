@@ -1,10 +1,10 @@
 {
   "name": "@origostudio/playground",
-  "version": "0.0.45",
+  "version": "0.0.46",
   "private": true,
   "dependencies": {
-    "@origostudio/core": "0.0.45",
-    "@origostudio/cli": "0.0.45"
+    "@origostudio/core": "0.0.46",
+    "@origostudio/cli": "0.0.46"
   },
   "peerDependencies": {
     "@angular/common": "^18.0.0",

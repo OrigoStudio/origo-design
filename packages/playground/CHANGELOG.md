@@ -1,3 +1,13 @@
+## 0.0.46 (2026-10-02)
+
+### 🚀 Features
+
+- add playground application with editor, preview pane, and help links ([7113c55](https://github.com/OrigoStudio/origo-design/commit/7113c55))
+
+### ❤️ Thank You
+
+- Hardik Patel @hardikpatelse
+
 ## 0.0.45 (2026-10-02)
 
 ### 🚀 Features
