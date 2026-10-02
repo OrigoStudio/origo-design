@@ -355,3 +355,8 @@
 ## Deferred from: code review of retro-10-renderer-ux (2026-10-01)
 - domain.version referenced but missing from type [packages/playground/src/preview/preview-root.component.ts:200]
 - Performance cliff with array spread [packages/playground/src/preview/preview-root.component.ts]
+
+## Deferred from: code review of retro-10-badl-defaults.md (2026-10-02)
+
+- Relative $ref in entity.schema.json [packages/playground/src/schemas/entity.schema.json] — deferred, pre-existing. Relative $ref 'capability.schema.json' might be unresolvable in strict parsers without a base URI.
+- Missing uniqueItems for capabilities [packages/playground/src/schemas/entity.schema.json] — deferred, pre-existing. entity.schema.json does not enforce uniqueItems for the capabilities array, allowing duplicate capability IDs.

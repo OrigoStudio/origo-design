@@ -2,5 +2,6 @@
   "id": "{{id}}",
   "name": "{{name}}",
   "implements": [],
-  "fields": []
+  "fields": [],
+  "capabilities": []
 }

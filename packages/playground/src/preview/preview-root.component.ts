@@ -74,7 +74,7 @@ export class PreviewRootComponent {
               props: {
                 'aria-label': 'Capabilities',
                 columns: [{ key: 'name', label: 'Capability Name' }],
-                rows: capabilities.map(c => ({ name: c?.name || '-' })),
+                rows: capabilities.map((c: any) => ({ name: c?.name || '-' })),
               },
             },
           ]

@@ -836,3 +836,12 @@ test_cases:
       - retro-10-iframe-scroll
     last_result: unknown
     results: {}
+  - id: retro-10-badl-defaults
+    description: 'Verifies BADL quickstart JSON, CLI entity boilerplate, and schema reference docs include capabilities with When to use / How to use guidance'
+    package: '@origo/docs'
+    spec_file: docs/src/content/docs/reference/schemas.md
+    type: manual
+    affected_stories:
+      - retro-10-badl-defaults
+    last_result: unknown
+    results: {}

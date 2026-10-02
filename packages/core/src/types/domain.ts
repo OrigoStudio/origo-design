@@ -21,14 +21,21 @@ export interface Domain {
   version: string;
   domain: string;
   entities: Entity[];
-  capabilities?: Capability[];
+  capabilities?: Capability1[];
   contracts?: Contract[];
   extensions?: Extension[];
 }
 /**
  * BADL Entity Definition
  */
-export interface EntityField {
+export interface Entity {
+  id: string;
+  name: string;
+  implements?: string[];
+  fields: Field[];
+  capabilities?: Capability[];
+}
+export interface Field {
   id: string;
   name: string;
   type: 'string' | 'boolean' | 'date' | 'number' | 'array' | 'object';
@@ -37,14 +44,7 @@ export interface EntityField {
   references?: string;
   validation: string[];
   metadata_path: string;
-  fields?: EntityField[];
-}
-
-export interface Entity {
-  id: string;
-  name: string;
-  implements?: string[];
-  fields: EntityField[];
+  fields?: Field[];
 }
 export interface Capability2 {
   id: string;
@@ -91,7 +91,6 @@ export interface Contract {
     type: 'Command' | 'Query';
   }[];
 }
-
 /**
  * BADL Extension Definition
  */
@@ -100,6 +99,9 @@ export interface Extension {
   name: string;
   version: string;
   extension_type: string;
-  implements: string[];
+  /**
+   * @minItems 1
+   */
+  implements: [string, ...string[]];
   plugin_version_range: string;
 }
