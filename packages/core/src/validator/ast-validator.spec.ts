@@ -995,8 +995,9 @@ describe('AST Validation Engine', () => {
       };
       const errors = validateAST(ast);
       expect(errors).toHaveLength(0);
-      expect(ast.domains[0].capabilities![0].permissions[0].role).toBe('admin');
-      expect(ast.domains[0].capabilities![0].permissions[0].access).toBe('grant');
+      const cap = ast.domains[0].capabilities![0] as import('../types/domain').Capability;
+      expect(cap.permissions[0].role).toBe('admin');
+      expect(cap.permissions[0].access).toBe('grant');
     });
   });
 

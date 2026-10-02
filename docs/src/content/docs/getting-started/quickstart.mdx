@@ -59,11 +59,41 @@ If a file with this name already exists, the command will error. Use a unique en
 
 ```json
 {
-  "entity": "User",
+  "id": "user",
+  "name": "User",
+  "implements": [],
   "fields": [
-    { "name": "id", "type": "String", "annotations": ["@id"] },
-    { "name": "name", "type": "String", "annotations": ["@required"] },
-    { "name": "email", "type": "String", "annotations": ["@required", "@email"] }
+    {
+      "id": "userId",
+      "name": "userId",
+      "type": "string",
+      "label": "User ID",
+      "validation": ["required"],
+      "metadata_path": "user.userId"
+    },
+    {
+      "id": "email",
+      "name": "email",
+      "type": "string",
+      "label": "Email",
+      "validation": ["required", "email"],
+      "metadata_path": "user.email"
+    }
+  ],
+  "capabilities": [
+    {
+      "id": "cap-user-create",
+      "name": "Create",
+      "description": "Creates a new user record.",
+      "type": "Command",
+      "entityId": "user",
+      "outcome_ref": [],
+      "preconditions": [],
+      "postconditions": ["user-active"],
+      "permissions": [{ "role": "admin", "access": "grant" }],
+      "risk_level": "low",
+      "async": false
+    }
   ]
 }
 ```

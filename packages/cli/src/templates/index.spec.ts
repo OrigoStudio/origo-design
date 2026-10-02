@@ -19,6 +19,7 @@ describe('Boilerplate Templates', () => {
       expect(parsed.name).toBe('User');
       expect(parsed.fields).toEqual([]);
       expect(parsed.implements).toEqual([]);
+      expect(parsed.capabilities).toEqual([]);
 
       // Should NOT have type or permissions (violates schema additionalProperties: false)
       expect(parsed.type).toBeUndefined();

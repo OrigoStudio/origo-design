@@ -50,7 +50,7 @@ export function validateAST(
 
     const capabilities = Array.isArray(domain.capabilities) ? domain.capabilities : [];
     for (let cIndex = 0; cIndex < capabilities.length; cIndex++) {
-      const capability = capabilities[cIndex];
+      const capability = capabilities[cIndex] as Capability;
       if (!capability || !capability.id) {
         errors.push({
           type: 'INVALID_FORMAT',
@@ -239,7 +239,7 @@ export function validateAST(
 
     const capabilities = Array.isArray(domain.capabilities) ? domain.capabilities : [];
     for (let cIndex = 0; cIndex < capabilities.length; cIndex++) {
-      const capability = capabilities[cIndex];
+      const capability = capabilities[cIndex] as Capability;
       if (!capability || !capability.id) continue;
 
       const capPath = `/domains/${dIndex}/capabilities/${cIndex}`;

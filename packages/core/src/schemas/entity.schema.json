@@ -65,6 +65,12 @@
       "items": {
         "$ref": "#/$defs/field"
       }
+    },
+    "capabilities": {
+      "type": "array",
+      "items": {
+        "$ref": "capability.schema.json"
+      }
     }
   },
   "required": ["id", "name", "fields"],

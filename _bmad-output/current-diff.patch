@@ -1,0 +1,683 @@
+diff --git a/_bmad-output/implementation-artifacts/sprint-status.yaml b/_bmad-output/implementation-artifacts/sprint-status.yaml
+index 87f749c..92807e7 100644
+--- a/_bmad-output/implementation-artifacts/sprint-status.yaml
++++ b/_bmad-output/implementation-artifacts/sprint-status.yaml
+@@ -41,7 +41,7 @@
+ # - Retrospective appends its action items to action_items; sprint-status surfaces open ones
+ 
+ generated: 2026-07-29T21:46:02.464968
+-last_updated: 2026-09-30T19:47:00+05:30
++last_updated: 2026-10-02T11:03:00+05:30
+ project: origo-design
+ project_key: NOKEY
+ tracking_system: file-system
+@@ -132,6 +132,7 @@ development_status:
+   retro-7-dod-update: done
+   retro-8-harden-test-isolation: done
+   retro-9-a11y-rtl-knowledge-transfer: done
++  retro-10-badl-defaults: done
+ 
+ action_items:
+   - id: retro-1-cleanup
+@@ -238,7 +239,7 @@ action_items:
+     status: done
+   - id: retro-10-badl-defaults
+     description: "Update Quickstart and Boilerplates to include 'capabilities' in sample JSON. Ensure every schema property is fully documented in different sections of the docs matching the Playground Schemas approach. (Owner: Alice). Also include `When to use?`, `How to use?` parts for each properties in the docs to guide developers on using the primitives effectively."
+-    status: open
++    status: done
+   - id: retro-10-playground-help-links
+     description: "Add a help section to the Playground redirecting to docs. Configure root URLs (docs/playground) centrally (e.g., via environment variables or a single config) to allow updates without widespread code changes. (Owner: Winston/Charlie)"
+     status: open
+diff --git a/_bmad-output/implementation-artifacts/stories/retro-10-badl-defaults.md b/_bmad-output/implementation-artifacts/stories/retro-10-badl-defaults.md
+new file mode 100644
+index 0000000..c71416f
+--- /dev/null
++++ b/_bmad-output/implementation-artifacts/stories/retro-10-badl-defaults.md
+@@ -0,0 +1,165 @@
++---
++baseline_commit: HEAD
++---
++# Story retro-10: badl-defaults
++
++Status: done
++
++## Story
++
++As a documentation owner and CLI maintainer,
++I want to update the Quickstart guide, developer boilerplates, and all schema property docs to include `capabilities` and comprehensive usage guidelines (`When to use?`, `How to use?`),
++so that developers are properly guided on using the primitives effectively following the Playground Schemas approach.
++
++## Acceptance Criteria
++
++1. **Quickstart Guide:** The sample JSON in `docs/src/content/docs/getting-started/quickstart.mdx` is updated to include the `capabilities` array with a valid stub capability matching the BADL schema (see Technical Requirements §1 for the correct shape).
++2. **Boilerplates:** The CLI entity template (`packages/cli/src/templates/entity.json`) is updated to include a `capabilities: []` array. The `generateEntityTemplate` function and the `index.spec.ts` unit tests are updated to match.
++3. **Schema Documentation:** `docs/src/content/docs/reference/schemas.md` is audited and any missing properties are added. Every property of every schema (Domain, Entity, Capability, Contract, Extension, Permission) MUST be fully documented with `When to use?`, `How to use?`, and an example snippet — matching the pattern already in place in that file.
++4. **Test Registry:** `tools/test-registry/test-registry.yaml` is updated with a `retro-10-badl-defaults` entry (see Technical Requirements §4 for exact format).
++
++## Technical Requirements & Architecture Compliance
++
++### §1 — Quickstart Sample JSON (CRITICAL — current sample is wrong)
++
++The existing sample JSON at `quickstart.mdx:60-69` uses `"entity"`, `"annotations"` — **fields that do not exist in the BADL entity schema** (`additionalProperties: false`). Replace the entire sample block with a schema-compliant entity that also demonstrates `capabilities`:
++
++```json
++{
++  "id": "user",
++  "name": "User",
++  "implements": [],
++  "fields": [
++    { "id": "userId", "name": "userId", "type": "string", "label": "User ID", "validation": ["required"] },
++    { "id": "email",  "name": "email",  "type": "string", "label": "Email",   "validation": ["required", "email"] }
++  ],
++  "capabilities": [
++    {
++      "id": "cap-user-create",
++      "name": "Create",
++      "description": "Creates a new user record.",
++      "type": "Command",
++      "entityId": "user",
++      "outcome_ref": [],
++      "preconditions": [],
++      "postconditions": ["user-active"],
++      "permissions": [{ "role": "admin", "access": "grant" }],
++      "risk_level": "low",
++      "async": false
++    }
++  ]
++}
++```
++
++> **Schema authority:** `packages/playground/src/schemas/entity.schema.json` and `capability.schema.json` (both have `additionalProperties: false`). The capability `name` field is a strict enum: `Create | Read | Update | Delete | List`. `type` is auto-inferred (`Command` for Create/Update/Delete, `Query` for Read/List).
++
++### §2 — CLI Boilerplate Changes (CRITICAL — correct file paths)
++
++**The story originally referenced `packages/cli/src/generators` — that directory does NOT exist.**
++
++The actual template system:
++
++| File | Role | Change needed |
++|------|------|---------------|
++| `packages/cli/src/templates/entity.json` | Raw JSON stub written by `origo generate entity` | Add `"capabilities": []` |
++| `packages/cli/src/templates/index.ts` | `generateEntityTemplate()` function | Spreads `entity.json` — no logic change needed, picks up new field automatically |
++| `packages/cli/src/templates/index.spec.ts` | Unit tests for template output | **Must be updated** — line 81 currently asserts `capabilities` is `undefined` |
++| `packages/cli/src/lib/generator.ts:82` | Calls `generateEntityTemplate()` to write entity files | No change needed |
++
++**Current `entity.json`:**
++```json
++{
++  "id": "{{id}}",
++  "name": "{{name}}",
++  "implements": [],
++  "fields": []
++}
++```
++
++**Target `entity.json`:**
++```json
++{
++  "id": "{{id}}",
++  "name": "{{name}}",
++  "implements": [],
++  "fields": [],
++  "capabilities": []
++}
++```
++
++**`index.spec.ts` — update the assertion at lines 80-82:**
++```ts
++// BEFORE (current — will fail after template change):
++// Should NOT have capabilities or permissions
++expect(parsed.capabilities).toBeUndefined();
++
++// AFTER (correct):
++expect(parsed.capabilities).toEqual([]);
++```
++
++> **DO NOT add `capabilities` to `extension.json`, `login.json`, `list-detail.json`, or `origo.json`** — these do not represent BADL entities/domains. The test at lines 80-82 of `index.spec.ts` for the extension template already guards this correctly; preserve it unchanged.
++
++### §3 — Schema Documentation Audit
++
++`docs/src/content/docs/reference/schemas.md` **already exists** (360 lines, all 6 schemas covered). **Do NOT rewrite it from scratch.** Audit it for:
++
++- Any properties present in `packages/playground/src/schemas/*.schema.json` that are not yet documented
++- The `Entity > fields` section documents sub-properties via sub-bullets rather than full `When to use?` / `How to use?` headers — this is acceptable as long as `When to use?` / `How to use?` guidance is present in each bullet
++
++Playground schema files to cross-check (source of truth):
++- `packages/playground/src/schemas/domain.schema.json`
++- `packages/playground/src/schemas/entity.schema.json`
++- `packages/playground/src/schemas/capability.schema.json`
++- `packages/playground/src/schemas/contract.schema.json`
++- `packages/playground/src/schemas/extension.schema.json`
++- `packages/playground/src/schemas/permission.schema.json`
++
++### §4 — Test Registry Entry Format
++
++Append to `tools/test-registry/test-registry.yaml` at the end of `test_cases:`. Match the `manual` type pattern of the `playground-iframe-scrolling` entry (the most recent manual entry in the file):
++
++```yaml
++  - id: retro-10-badl-defaults
++    description: 'Verifies BADL quickstart JSON, CLI entity boilerplate, and schema reference docs include capabilities with When to use / How to use guidance'
++    package: '@origo/docs'
++    spec_file: docs/src/content/docs/reference/schemas.md
++    type: manual
++    affected_stories:
++      - retro-10-badl-defaults
++    last_result: unknown
++    results: {}
++```
++
++### Documentation Guidelines
++
++- **Content Root:** All docs live at `docs/src/content/docs/**`
++- **Property Documentation Structure:** Description → **When to use?** → **How to use?** → code block example
++- **Capability namespace convention:** capability `id` must use `cap-` prefix (e.g., `cap-user-create`); entity `id` must be kebab-case
++
++## Tasks
++
++- [x] **1. Fix Quickstart** — Replace the broken sample JSON in `docs/src/content/docs/getting-started/quickstart.mdx` (lines 60-69) with the schema-compliant entity + capability example from §1 above.
++- [x] **2. Update entity.json template** — Add `"capabilities": []` to `packages/cli/src/templates/entity.json`.
++- [x] **3. Update index.spec.ts** — Change the assertion at line 81 of `packages/cli/src/templates/index.spec.ts` from `toBeUndefined()` to `toEqual([])` for the entity template's `capabilities` field.
++- [x] **4. Audit and patch schemas.md** — Cross-check every property in all 6 playground schema JSON files against `docs/src/content/docs/reference/schemas.md`. Add any missing properties with `When to use?` / `How to use?` sections.
++- [x] **5. Update Test Registry** — Append the `retro-10-badl-defaults` entry from §4 to `tools/test-registry/test-registry.yaml`.
++
++## File List
++
++- `docs/src/content/docs/getting-started/quickstart.mdx` (Modified — lines 60-69, replace broken sample JSON)
++- `packages/cli/src/templates/entity.json` (Modified — add `"capabilities": []`)
++- `packages/cli/src/templates/index.spec.ts` (Modified — update capabilities assertion at line 81)
++- `docs/src/content/docs/reference/schemas.md` (Modified — audit and patch any missing properties)
++- `tools/test-registry/test-registry.yaml` (Modified — append registry entry)
++- `packages/playground/src/schemas/entity.schema.json` (Modified — add capabilities field)
++
++## Dev Agent Record
++
++### Completion Notes
++
++- Fixed Quickstart sample JSON to demonstrate schema-compliant entity with capabilities.
++- Added `capabilities` property to `packages/playground/src/schemas/entity.schema.json` so validation passes.
++- Updated `entity.json` CLI template to scaffold `capabilities: []`.
++- Updated unit test assertions in `packages/cli/src/templates/index.spec.ts`.
++- Audited `schemas.md` against playground schemas and documented `capabilities` under `Entity`.
++- Appended `retro-10-badl-defaults` entry to `test-registry.yaml`.
+\ No newline at end of file
+diff --git a/docs/src/content/docs/getting-started/quickstart.mdx b/docs/src/content/docs/getting-started/quickstart.mdx
+index a7e55f1..18b178d 100644
+--- a/docs/src/content/docs/getting-started/quickstart.mdx
++++ b/docs/src/content/docs/getting-started/quickstart.mdx
+@@ -59,11 +59,27 @@ If a file with this name already exists, the command will error. Use a unique en
+ 
+ ```json
+ {
+-  "entity": "User",
++  "id": "user",
++  "name": "User",
++  "implements": [],
+   "fields": [
+-    { "name": "id", "type": "String", "annotations": ["@id"] },
+-    { "name": "name", "type": "String", "annotations": ["@required"] },
+-    { "name": "email", "type": "String", "annotations": ["@required", "@email"] }
++    { "id": "userId", "name": "userId", "type": "string", "label": "User ID", "validation": ["required"] },
++    { "id": "email",  "name": "email",  "type": "string", "label": "Email",   "validation": ["required", "email"] }
++  ],
++  "capabilities": [
++    {
++      "id": "cap-user-create",
++      "name": "Create",
++      "description": "Creates a new user record.",
++      "type": "Command",
++      "entityId": "user",
++      "outcome_ref": [],
++      "preconditions": [],
++      "postconditions": ["user-active"],
++      "permissions": [{ "role": "admin", "access": "grant" }],
++      "risk_level": "low",
++      "async": false
++    }
+   ]
+ }
+ ```
+diff --git a/docs/src/content/docs/reference/schemas.md b/docs/src/content/docs/reference/schemas.md
+new file mode 100644
+index 0000000..3177623
+--- /dev/null
++++ b/docs/src/content/docs/reference/schemas.md
+@@ -0,0 +1,381 @@
++---
++title: BADL Schemas Reference
++description: Complete reference for BADL schemas including Domain, Entity, Capability, Contract, Extension, and Permission.
++---
++
++This guide outlines all BADL primitive schemas, their properties, and effective usage patterns as defined by the Playground Schemas approach.
++
++## Domain
++
++The Domain schema defines the highest level of organization within BADL, grouping entities, capabilities, contracts, and extensions under a unified versioned namespace.
++
++### `id`
++Unique identifier for the domain instance.
++- **When to use?** Always. It serves as the primary key for the domain registry.
++- **How to use?** Use a unique string, often a UUID or a domain-specific slug.
++```json
++"id": "dom-auth-v1"
++```
++
++### `name`
++Human-readable name of the domain.
++- **When to use?** To provide a descriptive title for the domain in UIs and logs.
++- **How to use?** Use clear, concise names without technical jargon.
++```json
++"name": "Authentication Domain"
++```
++
++### `version`
++The version of the domain implementation.
++- **When to use?** To track API or schema evolution.
++- **How to use?** Follow semantic versioning (`MAJOR.MINOR.PATCH`).
++```json
++"version": "1.0.0"
++```
++
++### `domain`
++The logical domain boundary or namespace identifier.
++- **When to use?** To associate this domain with a broader bounded context.
++- **How to use?** Use a reverse-DNS style or hierarchical namespace (e.g., `com.origo.auth`).
++```json
++"domain": "com.origo.auth"
++```
++
++### `entities`
++Array of Entities associated with this domain.
++- **When to use?** To define the core data models and business objects for this domain.
++- **How to use?** Pass an array of valid BADL Entity objects.
++```json
++"entities": [ { "id": "ent-user", "name": "User", "fields": [] } ]
++```
++
++### `capabilities`
++Array of Capabilities provided by this domain.
++- **When to use?** To expose actions and behaviors that this domain can perform.
++- **How to use?** Pass an array of valid BADL Capability objects.
++```json
++"capabilities": [
++  {
++    "id": "cap-login",
++    "name": "Create",
++    "description": "Log a user in",
++    "type": "Command",
++    "entityId": "ent-user",
++    "outcome_ref": [],
++    "preconditions": [],
++    "postconditions": [],
++    "permissions": [],
++    "risk_level": "low",
++    "async": false
++  }
++]
++```
++
++### `contracts`
++Array of Contracts defining required behaviors and data structures.
++- **When to use?** To enforce specific integration or interface requirements on implementations.
++- **How to use?** Pass an array of valid BADL Contract objects.
++```json
++"contracts": []
++```
++
++### `extensions`
++Array of Extensions modifying or augmenting this domain.
++- **When to use?** When integrating third-party plugins or extending domain behavior without modifying the core.
++- **How to use?** Pass an array of valid BADL Extension objects.
++```json
++"extensions": []
++```
++
++## Entity
++
++The Entity schema represents a data model or business object, its fields, and the contracts it implements.
++
++### `id`
++Unique identifier for the entity.
++- **When to use?** Always. Used by capabilities and cross-references.
++- **How to use?** Use a unique string, often prefixed (e.g., `ent-user`).
++```json
++"id": "ent-user"
++```
++
++### `name`
++Human-readable name for the entity.
++- **When to use?** For display in generic administrative UIs or generators.
++- **How to use?** Use title case (e.g., "User Profile").
++```json
++"name": "User Profile"
++```
++
++### `implements`
++Array of contract IDs that this entity fulfills.
++- **When to use?** When the entity must guarantee specific fields or capabilities exist as dictated by a Contract.
++- **How to use?** List the string IDs of the target Contracts.
++```json
++"implements": ["contract-auditable"]
++```
++
++### `fields`
++Array of Field definitions defining the shape of the entity.
++- **When to use?** To specify the exact properties, data types, and validation rules of the entity.
++- **How to use?** Provide a list of BADL Field objects.
++
++#### Field Properties
++
++- **`id`**: 
++  - **When to use?** To uniquely identify the field programmatically.
++  - **How to use?** Use a strict camelCase string (e.g., `emailAddress`).
++- **`name`**:
++  - **When to use?** To name the field.
++  - **How to use?** Use camelCase or snake_case matching the underlying data store.
++- **`type`**: 
++  - **When to use?** To define the primitive data type (`string`, `boolean`, `date`, `number`, `array`, `object`).
++  - **How to use?** Choose exactly one of the allowed enums.
++- **`itemType`**: 
++  - **When to use?** When `type` is `array`.
++  - **How to use?** Specify the primitive type of the array items.
++- **`label`**:
++  - **When to use?** To define how the field is labeled in generated UIs.
++  - **How to use?** Use a short, descriptive human-readable label.
++- **`references`**:
++  - **When to use?** When the field is a foreign key pointing to another Entity.
++  - **How to use?** Provide the exact `id` of the referenced Entity.
++- **`validation`**:
++  - **When to use?** To enforce business rules on the data.
++  - **How to use?** Provide an array of validation rule strings (e.g., `["required", "email"]`).
++- **`metadata_path`**:
++  - **When to use?** When the field maps to a specific JSONPath or graph path in external storage.
++  - **How to use?** Provide a valid path string.
++- **`fields`**:
++  - **When to use?** When the field `type` is `object` and contains nested properties.
++  - **How to use?** Provide a nested array of Field objects.
++
++### `capabilities`
++Array of Capability definitions associated with this entity.
++- **When to use?** To define domain-specific actions that operate on this entity.
++- **How to use?** Provide an array of valid BADL Capability objects.
++```json
++"capabilities": [
++  {
++    "id": "cap-user-create",
++    "name": "Create",
++    "description": "Creates a new user",
++    "type": "Command",
++    "entityId": "ent-user",
++    "outcome_ref": [],
++    "preconditions": [],
++    "postconditions": [],
++    "permissions": [],
++    "risk_level": "low",
++    "async": false
++  }
++]
++```
++
++## Capability
++
++The Capability schema defines a discrete action, operation, or behavior associated with an entity.
++
++### `id`
++Unique identifier for the capability.
++- **When to use?** Always. Used for logging, auditing, and triggering the capability.
++- **How to use?** Use a unique string (e.g., `cap-user-create`).
++```json
++"id": "cap-user-create"
++```
++
++### `name`
++The core verb of the capability (`Create`, `Read`, `Update`, `Delete`, `List`).
++- **When to use?** To map the capability to standard CRUDL operations.
++- **How to use?** Choose exactly one of the strictly enforced verbs.
++```json
++"name": "Create"
++```
++
++### `description`
++A summary of what the capability does.
++- **When to use?** Always, to document the behavior for other developers.
++- **How to use?** Write a clear, concise sentence.
++```json
++"description": "Creates a new user profile."
++```
++
++### `type`
++The CQRS operational classification (`Command` or `Query`).
++- **When to use?** To enforce read/write segregation. Automatically inferred in some contexts based on `name`.
++- **How to use?** Use `Command` for `Create`/`Update`/`Delete` and `Query` for `Read`/`List`.
++```json
++"type": "Command"
++```
++
++### `entityId`
++The target entity this capability operates on.
++- **When to use?** To bind the behavior to a specific data model.
++- **How to use?** Provide the exact `id` of an existing Entity.
++```json
++"entityId": "ent-user"
++```
++
++### `outcome_ref`
++Array of references describing the outputs.
++- **When to use?** To document or link to schemas detailing what this capability returns.
++- **How to use?** Provide string references to outcome types or event schemas.
++```json
++"outcome_ref": ["evt-user-created"]
++```
++
++### `preconditions`
++Rules that must be true before the capability executes.
++- **When to use?** To enforce business logic gates.
++- **How to use?** Provide an array of rule strings.
++```json
++"preconditions": ["is-unverified-email"]
++```
++
++### `postconditions`
++Rules that are guaranteed true after execution.
++- **When to use?** To document side-effects or state changes.
++- **How to use?** Provide an array of state assertion strings.
++```json
++"postconditions": ["user-state-active"]
++```
++
++### `permissions`
++Array of required role-based permissions to execute this capability.
++- **When to use?** To enforce authorization on the action.
++- **How to use?** Provide an array of BADL Permission objects.
++```json
++"permissions": [ { "role": "admin", "access": "grant" } ]
++```
++
++### `risk_level`
++Classification of the capability's operational risk (`low`, `medium`, `high`, `critical`).
++- **When to use?** To trigger appropriate approval flows, auditing, or alert thresholds.
++- **How to use?** Select the enum that matches the impact of the action.
++```json
++"risk_level": "medium"
++```
++
++### `interaction_contract_ref`
++Reference to an Interaction Contract defining detailed UX/UI or API flow.
++- **When to use?** When the capability integrates into a complex orchestrator.
++- **How to use?** Provide the string ID of the interaction contract.
++```json
++"interaction_contract_ref": "ic-user-onboarding"
++```
++
++### `async`
++Whether the capability is processed asynchronously.
++- **When to use?** For long-running or background tasks.
++- **How to use?** Use a boolean (`true` or `false`).
++```json
++"async": false
++```
++
++## Contract
++
++The Contract schema defines required fields and capabilities that an entity must implement to satisfy a specific interface or behavior standard (like a protocol or interface in OOP).
++
++### `id`
++Unique identifier for the contract.
++- **When to use?** Always. Used by entities in the `implements` array.
++- **How to use?** Use a unique string (e.g., `contract-auditable`).
++```json
++"id": "contract-auditable"
++```
++
++### `name`
++Human-readable name of the contract.
++- **When to use?** For display in development tooling.
++- **How to use?** Use title case.
++```json
++"name": "Auditable Entity"
++```
++
++### `requiredFields`
++Array of field definitions that an implementing entity MUST possess.
++- **When to use?** To ensure structural compliance across multiple entities.
++- **How to use?** Provide an array of objects specifying `name` and `type`.
++```json
++"requiredFields": [ { "name": "createdAt", "type": "date" } ]
++```
++
++### `requiredCapabilities`
++Array of capability requirements that an implementing entity MUST possess.
++- **When to use?** To ensure behavioral compliance.
++- **How to use?** Provide an array of objects specifying `name` (the CRUDL verb) and `type` (Command/Query).
++```json
++"requiredCapabilities": [ { "name": "Read", "type": "Query" } ]
++```
++
++## Extension
++
++The Extension schema represents a third-party or optional module that augments BADL with new features.
++
++### `id`
++Unique identifier for the extension.
++- **When to use?** Always. Used by the domain to mount the extension.
++- **How to use?** Must match the regex `^[a-zA-Z0-9_-]+$`.
++```json
++"id": "ext-audit-logger"
++```
++
++### `name`
++Human-readable name of the extension.
++- **When to use?** For display in extension marketplaces or admin UIs.
++- **How to use?** Use a descriptive title.
++```json
++"name": "Audit Logger"
++```
++
++### `version`
++The version of this specific extension configuration.
++- **When to use?** To track updates to how the extension is utilized.
++- **How to use?** Use semantic versioning.
++```json
++"version": "1.0.0"
++```
++
++### `extension_type`
++The category or architectural hook point of the extension.
++- **When to use?** To tell the BADL parser how to wire the extension into the runtime.
++- **How to use?** Provide a string identifier corresponding to known extension slots (e.g., `middleware`, `ui-plugin`).
++```json
++"extension_type": "middleware"
++```
++
++### `implements`
++Array of interfaces or contracts this extension fulfills.
++- **When to use?** To guarantee the extension provides required APIs.
++- **How to use?** Provide at least one string interface identifier.
++```json
++"implements": ["IEventLogger"]
++```
++
++### `plugin_version_range`
++The acceptable semantic version range of the underlying plugin engine.
++- **When to use?** To prevent running extensions on incompatible core versions.
++- **How to use?** Use npm-style semver ranges (e.g., `^1.2.0`).
++```json
++"plugin_version_range": "^2.0.0"
++```
++
++## Permission
++
++The Permission schema defines a role-based access control rule, usually embedded inside a Capability.
++
++### `role`
++The specific user role this rule applies to.
++- **When to use?** Always. To bind an action to an actor category.
++- **How to use?** Provide a non-empty string representing the role (e.g., `admin`, `user`, `anonymous`).
++```json
++"role": "admin"
++```
++
++### `access`
++Whether the specified role is granted or denied execution rights.
++- **When to use?** To explicitly allow or explicitly block access.
++- **How to use?** Use exactly `grant` or `deny`. Defaults to `grant`.
++```json
++"access": "grant"
++```
+diff --git a/packages/cli/src/templates/entity.json b/packages/cli/src/templates/entity.json
+index d93cf02..e60d33b 100644
+--- a/packages/cli/src/templates/entity.json
++++ b/packages/cli/src/templates/entity.json
+@@ -2,5 +2,6 @@
+   "id": "{{id}}",
+   "name": "{{name}}",
+   "implements": [],
+-  "fields": []
++  "fields": [],
++  "capabilities": []
+ }
+diff --git a/packages/cli/src/templates/index.spec.ts b/packages/cli/src/templates/index.spec.ts
+index 0a1295a..4871ede 100644
+--- a/packages/cli/src/templates/index.spec.ts
++++ b/packages/cli/src/templates/index.spec.ts
+@@ -19,6 +19,7 @@ describe('Boilerplate Templates', () => {
+       expect(parsed.name).toBe('User');
+       expect(parsed.fields).toEqual([]);
+       expect(parsed.implements).toEqual([]);
++      expect(parsed.capabilities).toEqual([]);
+ 
+       // Should NOT have type or permissions (violates schema additionalProperties: false)
+       expect(parsed.type).toBeUndefined();
+diff --git a/packages/playground/src/schemas/entity.schema.json b/packages/playground/src/schemas/entity.schema.json
+index f986094..9ea21f9 100644
+--- a/packages/playground/src/schemas/entity.schema.json
++++ b/packages/playground/src/schemas/entity.schema.json
+@@ -65,6 +65,12 @@
+       "items": {
+         "$ref": "#/$defs/field"
+       }
++    },
++    "capabilities": {
++      "type": "array",
++      "items": {
++        "$ref": "capability.schema.json"
++      }
+     }
+   },
+   "required": ["id", "name", "fields"],
+diff --git a/tools/test-registry/test-registry.yaml b/tools/test-registry/test-registry.yaml
+index 8f4db92..9a3ed56 100644
+--- a/tools/test-registry/test-registry.yaml
++++ b/tools/test-registry/test-registry.yaml
+@@ -836,3 +836,12 @@ test_cases:
+       - retro-10-iframe-scroll
+     last_result: unknown
+     results: {}
++  - id: retro-10-badl-defaults
++    description: 'Verifies BADL quickstart JSON, CLI entity boilerplate, and schema reference docs include capabilities with When to use / How to use guidance'
++    package: '@origo/docs'
++    spec_file: docs/src/content/docs/reference/schemas.md
++    type: manual
++    affected_stories:
++      - retro-10-badl-defaults
++    last_result: unknown
++    results: {}
