@@ -1,3 +1,14 @@
+## 0.0.48 (2026-10-07)
+
+### 🚀 Features
+
+- add core primitives, buttons, and review artifacts for Angular renderer ([f0cbc46](https://github.com/OrigoStudio/origo-design/commit/f0cbc46))
+- add core button and action primitive components to angular-renderer ([2f7d926](https://github.com/OrigoStudio/origo-design/commit/2f7d926))
+
+### ❤️ Thank You
+
+- Hardik Patel @hardikpatelse
+
 ## 0.0.47 (2026-10-07)
 
 This was a version bump only for angular-renderer to align it with other projects, there were no code changes.
