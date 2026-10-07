@@ -1,5 +1,5 @@
-# generated: 2026-07-29T21:46:02.464968
-# last_updated: 2026-09-30T19:11:22+05:30
+# generated: 2026-10-07T19:00:21+05:30
+# last_updated: 2026-10-07T19:00:21+05:30
 # project: origo-design
 # project_key: NOKEY
 # tracking_system: file-system
@@ -40,207 +40,57 @@
 # - Dev moves story to 'review', then runs code-review (fresh context, different LLM recommended)
 # - Retrospective appends its action items to action_items; sprint-status surfaces open ones
 
-generated: 2026-07-29T21:46:02.464968
-last_updated: 2026-10-02T15:53:00+05:30
+generated: 2026-10-07T19:00:21+05:30
+last_updated: 2026-10-07T19:00:21+05:30
 project: origo-design
 project_key: NOKEY
 tracking_system: file-system
 story_location: '{project-root}/_bmad-output/implementation-artifacts/stories'
 
 development_status:
-  epic-1: done
-  1-1-nx-workspace-bootstrap: done
-  1-2-ci-pipeline-git-hooks-nfr-git-001: done
-  1-3-performance-benchmark-harness-nfr-perf-002: done
-  1-4-documentation-site-starlight: done
-  epic-1-retrospective: done
-  epic-2: done
-  2-1-design-token-schema-foundation: done
-  2-2-token-compilation-pipeline: done
-  2-3-zero-code-theme-overrides: done
-  2-4-token-resolution-consumption-contract: done
-  epic-2-retrospective: done
-  epic-2-5: done
-  2-5-1-versioning-management-strategy: done
-  2-5-2-design-tokens-use-case-documentation: done
-  2-5-3-theme-provider-composite-token-tech-debt: done
-  epic-3: in-progress
-  3-1-target-page-json-fixture: done
-  3-2-domain-entity-schema-parser: done
-  3-3-canonical-ast-serialization: done
-  3-4-ast-validation-engine: done
-  epic-3-retrospective: done
-  3-5-1-establish-semantic-versioning: done
-  3-5-2-define-monorepo-wide-json-import-standard: done
-  3-5-3-defensive-ast-traversal: done
-  epic-4: done
-  4-1-capabilities-schema-parsing: done
-  4-2-contracts-and-implementations: done
-  4-3-security-and-permissions-engine: done
-  4-4-extensibility-and-plugin-schema: done
-  4-5-behavior-validation-suite: done
-  4-6-formal-extension-manifest-lifecycle-fr-ext-008-to-013: done
-  4-7-extension-security-sandboxing-fr-ext-014: done
-  epic-4-retrospective: done
-  epic-5: done
-  5-1-ast-traversal-and-dynamic-instantiation: done
-  5-2-experience-adapter-interface: done
-  5-3-core-primitive-implementation: done
-  5-4-design-token-consumption: done
-  5-5-reactive-state-event-binding: done
-  epic-5-retrospective: done
-  epic-5.5: done
-  5.5-1-create-usability-quickstart-guide: done
-  5.5-2-establish-end-to-end-qa-protocols: done
-  5.5-3-resolve-recursive-schema-resolution-tech-debt: done
-  5.5-4-verify-core-compiler-source-map-preservation: done
-  5.5-5-define-secure-by-default-boilerplate-templates: done
-  epic-5.5-retrospective: done
-  epic-6: done
-  6-1-cli-initialization-and-scaffolding: done
-  6-2-local-schema-validation: done
-  6-3-entity-generator-boilerplate: done
-  epic-6-retrospective: done
-  epic-7: done
-  7-1-web-based-editor-component: done
-  7-2-live-compilation-rendering-pipeline: done
-  7-3-live-preview-latency-optimization: done
-  epic-7-retrospective: done
-  epic-8: done
-  8-1-diagnostics-api-runtime-hooks: done
-  8-2-devtools-inspector-ui: done
-  epic-8-retrospective: done
-  epic-9: done
-  9-1-form-layout-primitives-batch-1: done
-  9-2-data-presentation-primitives-batch-2: done
-  9-3-navigation-shell-primitives-batch-3: done
-  9-4-accessibility-localization-enforcement: done
-  9-5-advanced-form-primitives-batch-4: done
-  epic-9-retrospective: done
-  epic-10: in-progress
-  10-1-10-minute-quickstart-guide: done
-  10-2-legacy-migration-strategy-guide: done
-  10-3-developer-snippets-boilerplates: done
-  10-4-benchmark-validation-execution: done
-  epic-10-retrospective: done
-  retro-6-e2e-npm-verification: done
-  retro-6-security-remediation: done
-  retro-6-negative-testing: done
-  retro-6-central-test-registry: done
-  retro-7-state-persistence: done
-  retro-7-test-registry-backfill: done
-  retro-7-dod-update: done
-  retro-8-harden-test-isolation: done
-  retro-9-a11y-rtl-knowledge-transfer: done
-  retro-10-badl-defaults: done
-  retro-10-playground-help-links: done
+  epic-1: backlog
+  1-1-core-buttons-and-actions: backlog
+  1-2-core-input-controls: backlog
+  1-3-core-selection-controls: backlog
+  1-4-date-and-time-controls: backlog
+  1-5-application-layout-primitives: backlog
+  1-6-file-input-and-rich-text-editor: backlog
+  epic-1-retrospective: optional
+  epic-2: backlog
+  2-1-navigation-components: backlog
+  2-2-modal-and-overlay-components: backlog
+  2-3-messaging-and-notification-components: backlog
+  2-4-status-and-loading-indicators: backlog
+  2-5-utility-and-interaction-behaviors: backlog
+  epic-2-retrospective: optional
+  epic-3: backlog
+  3-1-media-and-asset-viewers: backlog
+  3-2-standard-charts-and-dashboards: backlog
+  3-3-hierarchical-and-timeline-visualizations: backlog
+  3-4-specialized-interactive-tools: backlog
+  epic-3-retrospective: optional
+  epic-4: backlog
+  4-1-datagrid-core-substrate: backlog
+  4-2-datagrid-interactive-features: backlog
+  4-3-datagrid-advanced-operations: backlog
+  epic-4-retrospective: optional
+  epic-5: backlog
+  5-1-alternative-data-views: backlog
+  5-2-complex-list-operations: backlog
+  5-3-view-toggles-and-advanced-filters: backlog
+  epic-5-retrospective: optional
+  epic-6: backlog
+  6-1-component-level-authorization: backlog
+  6-2-governance-and-audit-components: backlog
+  epic-6-retrospective: optional
+  epic-7: backlog
+  7-1-metadata-driven-forms: backlog
+  7-2-metadata-driven-grids-and-pages: backlog
+  epic-7-retrospective: optional
+  epic-8: backlog
+  8-1-ui-documentation-architecture: backlog
+  8-2-component-api-and-usage-examples: backlog
+  epic-8-retrospective: optional
 
 action_items:
-  - id: retro-1-cleanup
-    description: "Monorepo Structure Cleanup: Clean up remaining temporary files, audit apps/docs, and enforce strict separation of code and documentation paths. (Owner: Amelia)"
-    status: done
-  - id: retro-1-scaffold
-    description: "Design Token Library Scaffold: Generate the @origo/design-tokens package in the correct Nx workspace boundary. (Owner: Winston)"
-    status: done
-  - id: retro-2-versioning
-    description: "Establish Versioning Management: Manage versioning strategy for the product and its packages. (Owner: Patel)"
-    status: done
-  - id: retro-2-use-cases
-    description: "Use Case Documentation: Create documentation detailing how and by whom the @origo/design-tokens package should be used. (Owner: Alice/Amelia)"
-    status: done
-  - id: retro-2-tech-debt
-    description: "Technical Debt Cleanup: Address Epic 2 deferred items (Theme Provider API, composite token validation) before starting Epic 3 parsers. (Owner: Charlie)"
-    status: done
-  - id: retro-3-systemic-ts-imports
-    description: "Standardize JSON imports, capture in ADR, and add CI check to prevent ESM/TS module resolution errors. (Owner: Charlie)"
-    status: done
-  - id: retro-3-edge-case-debt
-    description: "Address deferred AST validation edge cases (deeply nested chain stack overflow) before Epic 4 extension parsing. (Owner: Amelia)"
-    status: done
-  - id: retro-3-versioning
-    description: "Establish semantic versioning strategy for packages (Nx release/Changesets) before downstream consumption starts. (Owner: Patel)"
-    status: done
-  - id: retro-4-architectural-cleanup
-    description: "Architectural Cleanup: Address Epic 4 deferred items (capability namespaces, untyped magic strings, and security boundary leaks) before wiring up the Angular renderer. (Owner: Charlie)"
-    status: done
-  - id: retro-4-testing-infrastructure
-    description: "Testing Infrastructure: Scaffold the testing infrastructure for Angular UI primitives. (Owner: Dana)"
-    status: done
-  - id: retro-4-knowledge-transfer
-    description: "Knowledge Transfer: Conduct knowledge sharing or write documentation on the new Angular Signals reactive state patterns for the team. (Owner: Elena/Amelia)"
-    status: done
-  - id: retro-5-usability-docs
-    description: "Document Usability Steps & Quickstarts for components detailing end-to-end user workflows. (Owner: Elena)"
-    status: done
-  - id: retro-5-e2e-testing
-    description: "Establish End-to-End User Testing Protocols for new components based on usability documentation. (Owner: Dana)"
-    status: done
-  - id: retro-5-schema-resolution
-    description: "Fix 'Recursive Schema Resolution' tech debt to stop aggressive property stripping during AST coercion. (Owner: Charlie)"
-    status: done
-  - id: retro-5-prep-cli-maps
-    description: "Verify core compiler preserves source maps and line number offsets for CLI error reporting. (Owner: Charlie)"
-    status: done
-  - id: retro-5-prep-cli-templates
-    description: "Define secure-by-default boilerplate templates for CLI generators. (Owner: Amelia)"
-    status: done
-  - id: retro-5.5-winston-sync
-    description: "Architectural Alignment Sync: Discuss CLI template architecture and physical file generation with Winston to prevent architecture drift in Epic 6. (Owner: Charlie/Patel)"
-    status: done
-  - id: retro-6-epic-7-discovery
-    description: "Epic 7 Discovery & Research Phase: Technical spike on running AST compilation/validation in a web worker under strict CSP constraints. (Owner: Charlie)"
-    status: done
-  - id: retro-6-e2e-npm-verification
-    description: "E2E NPM Package Verification: Add a CI step that runs npm pack and executes scaffolding/validation commands against the built tarball before releases. (Owner: Dana)"
-    status: done
-  - id: retro-6-security-remediation
-    description: "Security & Path Traversal Remediation: Fix path traversal vulnerabilities, remove process.exit(), and stop error swallowing in the @origo/cli library layer. (Owner: Amelia)"
-    status: done
-  - id: retro-6-negative-testing
-    description: "Negative Testing & Mock Cleanup: Update CLI unit tests to explicitly test negative scenarios (malformed inputs, traversals) and remove deceptive mocks. (Owner: Elena)"
-    status: done
-  - id: retro-6-central-test-registry
-    description: "Central Test Case Registry Strategy: Create and manage a centralized test case ledger containing test scenarios, mapped affected stories, and release-by-release test results tracking to prevent regressions. (Owner: Dana/Amelia)"
-    status: done
-  - id: retro-7-state-persistence
-    description: "Fix State Persistence: Implement local storage or URL-based sync for the Monaco editor value to survive hot reloads before starting Epic 8. (Owner: Charlie)"
-    status: done
-  - id: retro-7-resolve-debt
-    description: "Resolve Tech Debt: Address deferred reactive signal updates and builder alignment issues from Epic 7. (Owner: Amelia)"
-    status: done
-  - id: retro-7-test-registry-backfill
-    description: "Test Registry Backfill: Document all test registries from initial implementation up through Epic 7 into the Central Test Registry. (Owner: Dana)"
-    status: done
-  - id: retro-7-dod-update
-    description: "Update Definition of Done: Mandate that test registries must be updated at the time a story implementation concludes, and require explicit reference logging (ADRs/spikes) in story acceptance criteria. (Owner: Alice)"
-    status: done
-  - id: retro-8-harden-test-isolation
-    description: "Harden Test Isolation: Implement strict isolation guards to prevent global state leaks across tests and make test suites error-proof. (Owner: Murat)"
-    status: done
-  - id: retro-8-sync-versioning
-    description: "Synchronize Versioning: Manage and align the versioning of the Playground and the DevTools extension so they strictly match the main core packages. (Owner: Winston)"
-    status: done
-  - epic: 9
-    action: "Playground Integration: Register provideOrigo9Primitives() in the Playground app and create a showcase BADL JSON fixture that demonstrates the Epic 9 primitives."
-    owner: "Charlie"
-    status: done
-  - epic: 9
-    action: "Playwright Component Testing: Upgrade the Playwright testing harness to mount actual Angular components instead of raw HTML fixtures to ensure Shadow DOM accessibility."
-    owner: "Dana"
-    status: done
-  - epic: 9
-    action: "A11y & RTL Knowledge Transfer: Conduct a brief knowledge sharing session or write documentation on ARIA semantics and CSS Logical properties to prevent recurring PR feedback."
-    owner: "Amelia"
-    status: done
-  - id: retro-10-iframe-scroll
-    description: "Fix CSS overflow on the Playground iframe container to ensure vertical scrolling works correctly at all zoom levels. (Owner: Charlie)"
-    status: done
-  - id: retro-10-renderer-ux
-    description: "Audit the rendering pipeline to ensure that defining entities correctly instantiates functional Data Grids and Forms, rather than just displaying schema metadata. Fix the broken routing on generated navigation tabs. (Owner: Amelia)"
-    status: done
-  - id: retro-10-badl-defaults
-    description: "Update Quickstart and Boilerplates to include 'capabilities' in sample JSON. Ensure every schema property is fully documented in different sections of the docs matching the Playground Schemas approach. (Owner: Alice). Also include `When to use?`, `How to use?` parts for each properties in the docs to guide developers on using the primitives effectively."
-    status: done
-  - id: retro-10-playground-help-links
-    description: "Add a help section to the Playground redirecting to docs. Configure root URLs (docs/playground) centrally (e.g., via environment variables or a single config) to allow updates without widespread code changes. (Owner: Winston/Charlie)"
-    status: done
+  
