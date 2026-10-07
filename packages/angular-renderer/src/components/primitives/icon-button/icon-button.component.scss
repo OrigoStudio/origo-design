@@ -1,0 +1,34 @@
+:host {
+  display: inline-flex;
+}
+button {
+  cursor: pointer;
+  background-color: var(--origo-color-surface-primary);
+  color: var(--origo-color-text-inverse);
+  padding: var(--origo-spacing-container-padding);
+  border: none;
+  border-radius: var(--origo-radius-sm);
+  box-shadow: var(--origo-shadow-sm, none);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: var(--origo-transition-all);
+}
+button:hover:not(:disabled) {
+  background-color: var(--origo-color-surface-primary-hover);
+}
+button:active:not(:disabled) {
+  background-color: var(--origo-color-surface-primary-active);
+}
+button:focus-visible {
+  outline: var(--origo-outline-width, 2px) solid var(--origo-color-focus);
+  outline-offset: var(--origo-outline-width, 2px);
+}
+button:disabled {
+  cursor: not-allowed;
+  opacity: var(--origo-opacity-disabled);
+}
+:host(.origo-rounded) button {
+  border-radius: var(--origo-radius-round, 50%);
+  aspect-ratio: 1;
+}

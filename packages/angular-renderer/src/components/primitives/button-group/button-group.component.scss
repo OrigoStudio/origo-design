@@ -1,0 +1,18 @@
+:host {
+  display: inline-flex;
+}
+.origo-button-group-content {
+  display: flex;
+  flex-direction: row;
+  gap: var(--origo-spacing-container-padding);
+}
+:host(.origo-orientation-column) .origo-button-group-content {
+  flex-direction: column;
+}
+:host(.origo-attached) .origo-button-group-content {
+  gap: 0;
+}
+/* Note: attached styling across shadow DOM requires passing CSS custom properties to children, which relies on children consuming them. */
+:host(.origo-attached) {
+  --origo-button-radius: 0;
+}

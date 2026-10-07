@@ -1,0 +1,47 @@
+:host {
+  display: inline-flex;
+  position: fixed;
+  z-index: 1000;
+}
+:host(.origo-position-bottom-right) {
+  bottom: var(--origo-spacing-container-padding);
+  right: var(--origo-spacing-container-padding);
+}
+:host(.origo-position-bottom-left) {
+  bottom: var(--origo-spacing-container-padding);
+  left: var(--origo-spacing-container-padding);
+}
+button {
+  cursor: pointer;
+  background-color: var(--origo-color-surface-primary);
+  color: var(--origo-color-text-inverse);
+  border: none;
+  border-radius: var(--origo-radius-xl);
+  box-shadow: var(--origo-shadow-md);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--origo-spacing-sm, 8px);
+  min-width: 48px;
+  min-height: 48px;
+  padding: 0 var(--origo-spacing-container-padding);
+  transition: var(--origo-transition-all);
+}
+button:empty {
+  padding: 0;
+}
+button:hover:not(:disabled) {
+  background-color: var(--origo-color-surface-primary-hover);
+  box-shadow: var(--origo-shadow-lg);
+}
+button:active:not(:disabled) {
+  background-color: var(--origo-color-surface-primary-active);
+}
+button:focus-visible {
+  outline: var(--origo-outline-width, 2px) solid var(--origo-color-focus);
+  outline-offset: var(--origo-outline-width, 2px);
+}
+button:disabled {
+  cursor: not-allowed;
+  opacity: var(--origo-opacity-disabled);
+}

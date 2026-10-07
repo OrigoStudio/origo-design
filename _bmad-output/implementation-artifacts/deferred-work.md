@@ -362,3 +362,7 @@
 - Missing uniqueItems for capabilities [packages/playground/src/schemas/entity.schema.json] — deferred, pre-existing. entity.schema.json does not enforce uniqueItems for the capabilities array, allowing duplicate capability IDs.
 
 
+
+
+## Deferred from: code review (2026-10-07)
+- [x] [Review][Defer] Zero automated axe-core accessibility assertions in test specifications — deferred, pre-existing
