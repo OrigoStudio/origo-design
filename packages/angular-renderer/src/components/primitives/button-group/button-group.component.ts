@@ -12,6 +12,8 @@ export interface ButtonGroupProps {
   orientation?: 'row' | 'column';
   attached?: boolean;
   size?: 'small' | 'medium' | 'large';
+  'aria-label'?: string;
+  'aria-describedby'?: string;
 }
 
 @Component({
@@ -31,15 +33,19 @@ export class ButtonGroupComponent implements OrigoAdapter<ButtonGroupProps> {
     orientation: 'string',
     attached: 'boolean',
     size: 'string',
+    'aria-label': 'string',
+    'aria-describedby': 'string',
   };
   static readonly strictContract = false;
 
   contract = input.required<InteractionContract<ButtonGroupProps>>();
 
   computedHostClasses = computed(() => {
-    const o = this.contract().props?.orientation ?? 'row';
+    const rawO = this.contract().props?.orientation;
+    const o = rawO === 'column' ? 'column' : 'row';
     const attached = this.contract().props?.attached;
-    const size = this.contract().props?.size;
+    const rawSize = this.contract().props?.size;
+    const size = ['small', 'medium', 'large'].includes(rawSize as string) ? rawSize : undefined;
     return [
       'origo-button-group',
       `origo-orientation-${o}`,
@@ -48,5 +54,18 @@ export class ButtonGroupComponent implements OrigoAdapter<ButtonGroupProps> {
     ]
       .filter(Boolean)
       .join(' ');
+  });
+
+  computedAriaLabel = computed(() => {
+    const label = this.contract().props?.['aria-label'];
+    return label !== undefined && label !== null && String(label).trim() !== ''
+      ? String(label)
+      : undefined;
+  });
+  computedAriaDescribedBy = computed(() => {
+    const desc = this.contract().props?.['aria-describedby'];
+    return desc !== undefined && desc !== null && String(desc).trim() !== ''
+      ? String(desc)
+      : undefined;
   });
 }

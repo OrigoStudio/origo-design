@@ -4,7 +4,7 @@
 .origo-button-group-content {
   display: flex;
   flex-direction: row;
-  gap: var(--origo-spacing-container-padding, 8px);
+  gap: var(--origo-spacing-container-padding);
 }
 :host(.origo-orientation-column) .origo-button-group-content {
   flex-direction: column;
@@ -12,25 +12,7 @@
 :host(.origo-attached) .origo-button-group-content {
   gap: 0;
 }
-:host(.origo-attached.origo-orientation-row) ::slotted(*) {
-  border-radius: 0;
-}
-:host(.origo-attached.origo-orientation-row) ::slotted(:first-child) {
-  border-top-left-radius: var(--origo-radius-sm, 4px);
-  border-bottom-left-radius: var(--origo-radius-sm, 4px);
-}
-:host(.origo-attached.origo-orientation-row) ::slotted(:last-child) {
-  border-top-right-radius: var(--origo-radius-sm, 4px);
-  border-bottom-right-radius: var(--origo-radius-sm, 4px);
-}
-:host(.origo-attached.origo-orientation-column) ::slotted(*) {
-  border-radius: 0;
-}
-:host(.origo-attached.origo-orientation-column) ::slotted(:first-child) {
-  border-top-left-radius: var(--origo-radius-sm, 4px);
-  border-top-right-radius: var(--origo-radius-sm, 4px);
-}
-:host(.origo-attached.origo-orientation-column) ::slotted(:last-child) {
-  border-bottom-left-radius: var(--origo-radius-sm, 4px);
-  border-bottom-right-radius: var(--origo-radius-sm, 4px);
+/* Note: attached styling across shadow DOM requires passing CSS custom properties to children, which relies on children consuming them. */
+:host(.origo-attached) {
+  --origo-button-radius: 0;
 }

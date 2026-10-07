@@ -24,6 +24,9 @@ export interface ButtonProps {
   iconPosition?: string;
   badge?: string;
   badgeSeverity?: string;
+  permissions?: any;
+  rules?: any;
+  metadata?: any;
 }
 
 @Component({
@@ -50,6 +53,9 @@ export class ButtonComponent implements OrigoAdapter<ButtonProps> {
     iconPosition: 'string',
     badge: 'string',
     badgeSeverity: 'string',
+    permissions: 'object',
+    rules: 'object',
+    metadata: 'object',
   };
   static readonly strictContract = false;
 
@@ -57,7 +63,16 @@ export class ButtonComponent implements OrigoAdapter<ButtonProps> {
 
   computedLabel = computed(() => this.contract().props?.label ?? 'Button');
   computedLoading = computed(() => !!this.contract().props?.loading);
-  computedDisabled = computed(() => !!this.contract().props?.disabled || this.computedLoading());
+  computedDisabled = computed(() => {
+    const props = this.contract().props;
+    const rulesDisable = props?.rules?.disable === true || props?.permissions?.allow === false;
+    return !!props?.disabled || this.computedLoading() || rulesDisable;
+  });
+
+  computedIcon = computed(() => this.contract().props?.icon);
+  computedIconPosition = computed(() => this.contract().props?.iconPosition ?? 'left');
+  computedBadge = computed(() => this.contract().props?.badge);
+  computedBadgeSeverity = computed(() => this.contract().props?.badgeSeverity ?? 'info');
 
   computedHostClasses = computed(() => {
     const s = this.contract().props?.severity;

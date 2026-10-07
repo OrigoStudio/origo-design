@@ -7,12 +7,12 @@ button {
   color: var(--origo-color-text-inverse);
   padding: var(--origo-spacing-container-padding);
   border: none;
-  border-radius: var(--origo-radius-sm, 4px);
+  border-radius: var(--origo-radius-sm);
   box-shadow: var(--origo-shadow-sm, none);
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: all 0.2s ease-in-out;
+  transition: var(--origo-transition-all);
 }
 button:hover:not(:disabled) {
   background-color: var(--origo-color-surface-primary-hover);
@@ -21,14 +21,14 @@ button:active:not(:disabled) {
   background-color: var(--origo-color-surface-primary-active);
 }
 button:focus-visible {
-  outline: 2px solid var(--origo-color-focus, #005fcc);
-  outline-offset: 2px;
+  outline: var(--origo-outline-width, 2px) solid var(--origo-color-focus);
+  outline-offset: var(--origo-outline-width, 2px);
 }
 button:disabled {
   cursor: not-allowed;
-  opacity: var(--origo-opacity-disabled, 0.5);
+  opacity: var(--origo-opacity-disabled);
 }
 :host(.origo-rounded) button {
-  border-radius: 50%;
+  border-radius: var(--origo-radius-round, 50%);
   aspect-ratio: 1;
 }

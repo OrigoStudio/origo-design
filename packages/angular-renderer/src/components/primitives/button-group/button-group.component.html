@@ -1,3 +1,8 @@
-<div class="origo-button-group-content">
+<div
+  class="origo-button-group-content"
+  role="group"
+  [attr.aria-label]="computedAriaLabel()"
+  [attr.aria-describedby]="computedAriaDescribedBy()"
+>
   <ng-content></ng-content>
 </div>

@@ -3,10 +3,22 @@
   [disabled]="computedDisabled()"
   [attr.aria-label]="computedAriaLabel()"
   [attr.aria-describedby]="computedAriaDescribedBy()"
+  [attr.aria-busy]="computedLoading() ? 'true' : null"
   (click)="onClick()"
 >
   @if (computedLoading()) {
     <span class="origo-spinner"></span>
   }
-  {{ computedLabel() }}
+  @if (computedIcon() && computedIconPosition() !== 'right') {
+    <span [class]="'origo-icon origo-icon-' + computedIcon()"></span>
+  }
+  <span class="origo-button-label">{{ computedLabel() }}</span>
+  @if (computedBadge()) {
+    <span [class]="'origo-badge origo-badge-' + computedBadgeSeverity()">{{
+      computedBadge()
+    }}</span>
+  }
+  @if (computedIcon() && computedIconPosition() === 'right') {
+    <span [class]="'origo-icon origo-icon-' + computedIcon()"></span>
+  }
 </button>

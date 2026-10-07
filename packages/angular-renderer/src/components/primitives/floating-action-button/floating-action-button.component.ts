@@ -19,6 +19,9 @@ export interface FabProps {
   position?: 'bottom-right' | 'bottom-left';
   'aria-label'?: string;
   'aria-describedby'?: string;
+  permissions?: any;
+  rules?: any;
+  metadata?: any;
 }
 
 @Component({
@@ -41,6 +44,11 @@ export class FloatingActionButtonComponent implements OrigoAdapter<FabProps> {
     loading: 'boolean',
     disabled: 'boolean',
     position: 'string',
+    'aria-label': 'string',
+    'aria-describedby': 'string',
+    permissions: 'object',
+    rules: 'object',
+    metadata: 'object',
   };
   static readonly strictContract = false;
 
@@ -49,10 +57,15 @@ export class FloatingActionButtonComponent implements OrigoAdapter<FabProps> {
   computedIcon = computed(() => this.contract().props?.icon ?? '');
   computedLabel = computed(() => this.contract().props?.label ?? '');
   computedLoading = computed(() => !!this.contract().props?.loading);
-  computedDisabled = computed(() => !!this.contract().props?.disabled || this.computedLoading());
+  computedDisabled = computed(() => {
+    const props = this.contract().props;
+    const rulesDisable = props?.rules?.disable === true || props?.permissions?.allow === false;
+    return !!props?.disabled || this.computedLoading() || rulesDisable;
+  });
 
   computedAriaLabel = computed(() => {
-    const v = this.contract().props?.['aria-label'];
+    const p = this.contract().props;
+    const v = p?.['aria-label'] || p?.label;
     return v ? String(v) : undefined;
   });
 
@@ -63,7 +76,8 @@ export class FloatingActionButtonComponent implements OrigoAdapter<FabProps> {
 
   computedHostClasses = computed(() => {
     const s = this.contract().props?.severity;
-    const p = this.contract().props?.position ?? 'bottom-right';
+    const rawP = this.contract().props?.position;
+    const p = ['bottom-left', 'bottom-right'].includes(rawP as string) ? rawP : 'bottom-right';
     return ['origo-fab', s ? `origo-severity-${s}` : '', `origo-position-${p}`]
       .filter(Boolean)
       .join(' ');

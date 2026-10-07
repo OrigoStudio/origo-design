@@ -3,7 +3,7 @@ baseline_commit: dc3fb5f4957cf5013aa30b99b85021bd20df2c84
 ---
 # Story 1.1: Core Buttons and Actions
 
-Status: review
+Status: done
 
 ## Story
 
@@ -290,3 +290,24 @@ Claude Sonnet 4.6 (Thinking)
 * `packages/angular-renderer/src/index.ts`
 * `packages/angular-renderer/src/lib/primitives.provider.ts`
 * `tools/test-registry/test-registry.yaml`
+
+
+### Review Findings
+
+- [x] [Review][Patch] ButtonGroup missing WAI-ARIA role="group" and aria-label [button-group.component.html]
+- [x] [Review][Patch] Hardcoded CSS literal values violating AD-6 (FAB, IconButton, ButtonGroup) [*.component.scss]
+- [x] [Review][Patch] ButtonGroup attached styling broken across child Shadow DOM encapsulation boundaries [button-group.component.scss]
+- [x] [Review][Patch] String interpolation inside class attribute (`origo-icon-{{ computedIcon() }}`) [icon-button.component.html, floating-action-button.component.html]
+- [x] [Review][Patch] IconButton contractSchema missing 'aria-label' and 'aria-describedby' [icon-button.component.ts]
+- [x] [Review][Patch] ButtonComponent test missing positive dispatch path verification [button.component.spec.ts]
+- [x] [Review][Patch] ButtonGroupComponent test missing WebExperienceAdapterService provider [button-group.component.spec.ts]
+- [x] [Review][Patch] ButtonComponent spec instantiates contract with lowercase type 'button' instead of 'Button' [button.component.spec.ts]
+- [x] [Review][Patch] Missing aria-label fallback to label property for icon-only buttons [icon-button.component.ts, floating-action-button.component.ts]
+- [x] [Review][Patch] ButtonComponent declares icon, badge, etc. properties but missing HTML template and computed signals [button.component.ts, button.component.html]
+- [x] [Review][Patch] Missing explicit type="button" on native buttons defaulting to submit [icon-button.component.html, floating-action-button.component.html]
+- [x] [Review][Patch] IconButton renders empty 0-dimension button if no icon/loading specified [icon-button.component.html]
+- [x] [Review][Patch] FAB and ButtonGroup missing empty-string fallback for host class bindings [floating-action-button.component.ts, button-group.component.ts]
+- [x] [Review][Patch] Button loading state does not expose aria-busy attribute [button.component.html]
+- [x] [Review][Patch] Button host class binding replaced static [class.origo-button] preservation [button.component.ts]
+- [x] [Review][Patch] Missing implementation of metadata-driven permissions, rules, and dynamic adaptation [button.component.ts, icon-button.component.ts, etc.]
+- [x] [Review][Defer] Zero automated axe-core accessibility assertions in test specifications — deferred, pre-existing

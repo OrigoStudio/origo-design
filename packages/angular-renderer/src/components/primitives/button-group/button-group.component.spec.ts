@@ -1,6 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ComponentRef } from '@angular/core';
 import { ButtonGroupComponent } from './button-group.component';
+import { WebExperienceAdapterService } from '../../../adapters/web/experience-adapter.service';
 
 describe('ButtonGroupComponent', () => {
   let fixture: ComponentFixture<ButtonGroupComponent>;
@@ -9,6 +10,7 @@ describe('ButtonGroupComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [ButtonGroupComponent],
+      providers: [WebExperienceAdapterService],
     }).compileComponents();
     fixture = TestBed.createComponent(ButtonGroupComponent);
     componentRef = fixture.componentRef;

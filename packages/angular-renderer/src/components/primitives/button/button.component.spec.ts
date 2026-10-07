@@ -22,7 +22,7 @@ describe('ButtonComponent', () => {
   });
 
   it('should create', () => {
-    componentRef.setInput('contract', { id: '1', type: 'button', props: {} });
+    componentRef.setInput('contract', { id: '1', type: 'Button', props: {} });
     fixture.detectChanges();
     expect(component).toBeTruthy();
   });
@@ -30,7 +30,7 @@ describe('ButtonComponent', () => {
   it('should render label and attributes', () => {
     componentRef.setInput('contract', {
       id: '1',
-      type: 'button',
+      type: 'Button',
       props: { label: 'Click Me', disabled: true, type: 'submit' },
     });
     fixture.detectChanges();
@@ -43,7 +43,7 @@ describe('ButtonComponent', () => {
   });
 
   it('should apply correct design tokens to the button', () => {
-    componentRef.setInput('contract', { id: '1', type: 'button', props: {} });
+    componentRef.setInput('contract', { id: '1', type: 'Button', props: {} });
     fixture.detectChanges();
 
     const root = fixture.nativeElement.shadowRoot ?? fixture.nativeElement;
@@ -59,10 +59,11 @@ describe('ButtonComponent', () => {
     expect(root).toBeTruthy();
   });
 
-  it('should dispatch capability on click', () => {
+  it('should dispatch capability on click and emit action', () => {
     const debugSpy = jest.spyOn(console, 'debug').mockImplementation(jest.fn());
     const dispatchSpy = jest.spyOn(experienceAdapter, 'dispatchCapability');
-    componentRef.setInput('contract', { id: 'test-btn-1', type: 'button', props: {} });
+    const emitSpy = jest.spyOn(component.action, 'emit');
+    componentRef.setInput('contract', { id: 'test-btn-1', type: 'Button', props: {} });
     fixture.detectChanges();
 
     const root = fixture.nativeElement.shadowRoot ?? fixture.nativeElement;
@@ -70,6 +71,7 @@ describe('ButtonComponent', () => {
     buttonElement.click();
 
     expect(dispatchSpy).toHaveBeenCalledWith('test-btn-1', 'click');
+    expect(emitSpy).toHaveBeenCalled();
     debugSpy.mockRestore();
   });
 
@@ -89,7 +91,7 @@ describe('ButtonComponent', () => {
   it('should instantiate from a pure JSON contract with loading, severity, and variant', () => {
     componentRef.setInput('contract', {
       id: 'btn-test',
-      type: 'button',
+      type: 'Button',
       props: { loading: true, severity: 'danger', variant: 'outlined' },
     });
     fixture.detectChanges();
@@ -111,7 +113,7 @@ describe('ButtonComponent', () => {
     const dispatchSpy = jest.spyOn(experienceAdapter, 'dispatchCapability');
     componentRef.setInput('contract', {
       id: 'btn-loading',
-      type: 'button',
+      type: 'Button',
       props: { loading: true },
     });
     fixture.detectChanges();

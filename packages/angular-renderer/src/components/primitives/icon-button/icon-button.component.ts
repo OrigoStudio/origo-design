@@ -21,6 +21,9 @@ export interface IconButtonProps {
   disabled?: boolean;
   'aria-label'?: string;
   'aria-describedby'?: string;
+  permissions?: any;
+  rules?: any;
+  metadata?: any;
 }
 
 @Component({
@@ -45,6 +48,11 @@ export class IconButtonComponent implements OrigoAdapter<IconButtonProps> {
     rounded: 'boolean',
     loading: 'boolean',
     disabled: 'boolean',
+    'aria-label': 'string',
+    'aria-describedby': 'string',
+    permissions: 'object',
+    rules: 'object',
+    metadata: 'object',
   };
   static readonly strictContract = false;
 
@@ -52,10 +60,15 @@ export class IconButtonComponent implements OrigoAdapter<IconButtonProps> {
 
   computedIcon = computed(() => this.contract().props?.icon ?? '');
   computedLoading = computed(() => !!this.contract().props?.loading);
-  computedDisabled = computed(() => !!this.contract().props?.disabled || this.computedLoading());
+  computedDisabled = computed(() => {
+    const props = this.contract().props;
+    const rulesDisable = props?.rules?.disable === true || props?.permissions?.allow === false;
+    return !!props?.disabled || this.computedLoading() || rulesDisable;
+  });
 
   computedAriaLabel = computed(() => {
-    const v = this.contract().props?.['aria-label'];
+    const p = this.contract().props;
+    const v = p?.['aria-label'] || p?.label;
     return v ? String(v) : undefined;
   });
 
