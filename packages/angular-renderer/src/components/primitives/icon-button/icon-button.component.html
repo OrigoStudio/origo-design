@@ -1,12 +1,15 @@
 <button
-  [type]="computedType()"
   [disabled]="computedDisabled()"
   [attr.aria-label]="computedAriaLabel()"
   [attr.aria-describedby]="computedAriaDescribedBy()"
+  [title]="contract().props?.tooltip || null"
   (click)="onClick()"
 >
   @if (computedLoading()) {
     <span class="origo-spinner"></span>
+  } @else {
+    @if (computedIcon()) {
+      <span class="origo-icon origo-icon-{{ computedIcon() }}"></span>
+    }
   }
-  {{ computedLabel() }}
 </button>

@@ -1,5 +1,8 @@
 import { EnvironmentProviders, makeEnvironmentProviders } from '@angular/core';
 import { RENDERER_REGISTRY } from './renderer.tokens';
+import { IconButtonComponent } from '../components/primitives/icon-button/icon-button.component';
+import { ButtonGroupComponent } from '../components/primitives/button-group/button-group.component';
+import { FloatingActionButtonComponent } from '../components/primitives/floating-action-button/floating-action-button.component';
 import { SelectComponent } from '../components/primitives/select/select.component';
 import { CheckboxComponent } from '../components/primitives/checkbox/checkbox.component';
 import { RadioGroupComponent } from '../components/primitives/radio-group/radio-group.component';
@@ -21,6 +24,9 @@ import { VBoxComponent } from '../components/primitives/vbox/vbox.component';
 
 export function provideOrigo9Primitives(): EnvironmentProviders {
   const registryMap = new Map<string, unknown>([
+    ['IconButton', IconButtonComponent],
+    ['ButtonGroup', ButtonGroupComponent],
+    ['FloatingActionButton', FloatingActionButtonComponent],
     ['Select', SelectComponent],
     ['Checkbox', CheckboxComponent],
     ['RadioGroup', RadioGroupComponent],

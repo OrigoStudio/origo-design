@@ -85,4 +85,41 @@ describe('ButtonComponent', () => {
       expect(element.style.marginRight).toBeFalsy();
     }
   });
+
+  it('should instantiate from a pure JSON contract with loading, severity, and variant', () => {
+    componentRef.setInput('contract', {
+      id: 'btn-test',
+      type: 'button',
+      props: { loading: true, severity: 'danger', variant: 'outlined' },
+    });
+    fixture.detectChanges();
+
+    const root = fixture.nativeElement.shadowRoot ?? fixture.nativeElement;
+    const buttonElement = root.querySelector('button') as HTMLButtonElement;
+
+    // Check classes for severity and variant
+    expect(fixture.nativeElement.classList.contains('origo-severity-danger')).toBe(true);
+    expect(fixture.nativeElement.classList.contains('origo-variant-outlined')).toBe(true);
+
+    // Check spinner presence
+    const spinner = root.querySelector('.origo-spinner');
+    expect(spinner).toBeTruthy();
+    expect(buttonElement.disabled).toBe(true);
+  });
+
+  it('should not dispatch when loading is true', () => {
+    const dispatchSpy = jest.spyOn(experienceAdapter, 'dispatchCapability');
+    componentRef.setInput('contract', {
+      id: 'btn-loading',
+      type: 'button',
+      props: { loading: true },
+    });
+    fixture.detectChanges();
+
+    const root = fixture.nativeElement.shadowRoot ?? fixture.nativeElement;
+    const buttonElement = root.querySelector('button') as HTMLButtonElement;
+    buttonElement.click();
+
+    expect(dispatchSpy).not.toHaveBeenCalled();
+  });
 });

@@ -1,6 +1,9 @@
+---
+baseline_commit: dc3fb5f4957cf5013aa30b99b85021bd20df2c84
+---
 # Story 1.1: Core Buttons and Actions
 
-Status: ready-for-dev
+Status: review
 
 ## Story
 
@@ -20,33 +23,33 @@ so that users can trigger application actions with reliable idempotency, full ac
 
 ## Tasks / Subtasks
 
-- [ ] **EXTEND** existing `ButtonComponent` — `packages/angular-renderer/src/components/primitives/button/button.component.ts` (AC: #1, #2, #3, #5)
-  - [ ] Add `loading?: boolean` to `ButtonProps` interface and `contractSchema`
-  - [ ] Add `computedLoading = computed(() => !!this.contract().props?.loading)`
-  - [ ] Guard `onClick()`: return early if `computedLoading()` is true
-  - [ ] Add `severity` and `variant` to `ButtonProps`; wire to host CSS classes
-  - [ ] Update `button.component.html` to conditionally render a spinner when loading
-  - [ ] Verify `button.component.scss` — zero hardcoded values; all `var(--origo-*)` tokens
-- [ ] Create `IconButton` at `packages/angular-renderer/src/components/primitives/icon-button/` (AC: #1–#6)
-  - [ ] Files: `icon-button.component.ts`, `.html`, `.scss`, `.spec.ts`
-  - [ ] `IconButtonProps`: `icon`, `label`, `tooltip`, `severity`, `variant`, `rounded`, `loading`, `disabled`, `aria-label`, `aria-describedby`
-  - [ ] Implement `OrigoAdapter<IconButtonProps>` — use `input.required<InteractionContract<IconButtonProps>>()`
-  - [ ] `ViewEncapsulation.ShadowDom`, `ChangeDetectionStrategy.OnPush`, `standalone: true` (all mandatory)
-  - [ ] Dispatch: `experienceAdapter.dispatchCapability(this.contract().id, 'click')`
-  - [ ] Register in `primitives.provider.ts` as `['IconButton', IconButtonComponent]`
-  - [ ] Export from `packages/angular-renderer/src/index.ts`
-- [ ] Create `ButtonGroup` at `packages/angular-renderer/src/components/primitives/button-group/` (AC: #1–#6)
-  - [ ] `ButtonGroupProps`: `orientation` (`'row' | 'column'`), `attached` (`boolean`), `size` (`'small' | 'medium' | 'large'`)
-  - [ ] Render `<ng-content>` slot; apply `orientation` and `attached` via host class bindings
-  - [ ] Same mandatory flags: `ShadowDom`, `OnPush`, standalone
-  - [ ] Register as `['ButtonGroup', ButtonGroupComponent]`; export from `index.ts`
-- [ ] Create `FloatingActionButton` at `packages/angular-renderer/src/components/primitives/floating-action-button/` (AC: #1–#6)
-  - [ ] `FabProps`: `icon`, `label`, `severity`, `loading`, `disabled`, `position` (`'bottom-right' | 'bottom-left'`), `aria-label`, `aria-describedby`
-  - [ ] Same mandatory flags; register as `['FloatingActionButton', FloatingActionButtonComponent]`; export from `index.ts`
-- [ ] Write/update spec files for all four components (AC: #6)
-  - [ ] Use `fixture.nativeElement.shadowRoot ?? fixture.nativeElement` to pierce ShadowDom
-  - [ ] Use `jest.spyOn` (not Karma matchers); include `WebExperienceAdapterService` in `TestBed.providers`
-  - [ ] Include JSON metadata instantiation test and loading-idempotency test in each spec
+- [x] **EXTEND** existing `ButtonComponent` — `packages/angular-renderer/src/components/primitives/button/button.component.ts` (AC: #1, #2, #3, #5)
+  - [x] Add `loading?: boolean` to `ButtonProps` interface and `contractSchema`
+  - [x] Add `computedLoading = computed(() => !!this.contract().props?.loading)`
+  - [x] Guard `onClick()`: return early if `computedLoading()` is true
+  - [x] Add `severity` and `variant` to `ButtonProps`; wire to host CSS classes
+  - [x] Update `button.component.html` to conditionally render a spinner when loading
+  - [x] Verify `button.component.scss` — zero hardcoded values; all `var(--origo-*)` tokens
+- [x] Create `IconButton` at `packages/angular-renderer/src/components/primitives/icon-button/` (AC: #1–#6)
+  - [x] Files: `icon-button.component.ts`, `.html`, `.scss`, `.spec.ts`
+  - [x] `IconButtonProps`: `icon`, `label`, `tooltip`, `severity`, `variant`, `rounded`, `loading`, `disabled`, `aria-label`, `aria-describedby`
+  - [x] Implement `OrigoAdapter<IconButtonProps>` — use `input.required<InteractionContract<IconButtonProps>>()`
+  - [x] `ViewEncapsulation.ShadowDom`, `ChangeDetectionStrategy.OnPush`, `standalone: true` (all mandatory)
+  - [x] Dispatch: `experienceAdapter.dispatchCapability(this.contract().id, 'click')`
+  - [x] Register in `primitives.provider.ts` as `['IconButton', IconButtonComponent]`
+  - [x] Export from `packages/angular-renderer/src/index.ts`
+- [x] Create `ButtonGroup` at `packages/angular-renderer/src/components/primitives/button-group/` (AC: #1–#6)
+  - [x] `ButtonGroupProps`: `orientation` (`'row' | 'column'`), `attached` (`boolean`), `size` (`'small' | 'medium' | 'large'`)
+  - [x] Render `<ng-content>` slot; apply `orientation` and `attached` via host class bindings
+  - [x] Same mandatory flags: `ShadowDom`, `OnPush`, standalone
+  - [x] Register as `['ButtonGroup', ButtonGroupComponent]`; export from `index.ts`
+- [x] Create `FloatingActionButton` at `packages/angular-renderer/src/components/primitives/floating-action-button/` (AC: #1–#6)
+  - [x] `FabProps`: `icon`, `label`, `severity`, `loading`, `disabled`, `position` (`'bottom-right' | 'bottom-left'`), `aria-label`, `aria-describedby`
+  - [x] Same mandatory flags; register as `['FloatingActionButton', FloatingActionButtonComponent]`; export from `index.ts`
+- [x] Write/update spec files for all four components (AC: #6)
+  - [x] Use `fixture.nativeElement.shadowRoot ?? fixture.nativeElement` to pierce ShadowDom
+  - [x] Use `jest.spyOn` (not Karma matchers); include `WebExperienceAdapterService` in `TestBed.providers`
+  - [x] Include JSON metadata instantiation test and loading-idempotency test in each spec
 
 ## Dev Notes
 
@@ -256,8 +259,34 @@ Claude Sonnet 4.6 (Thinking)
 
 ### Debug Log References
 
-### Completion Notes List
+### Completion Notes
+* Implemented `ButtonComponent` enhancements (loading, severity, variant).
+* Implemented `IconButtonComponent` (AC: #1–#6).
+* Implemented `ButtonGroupComponent` (AC: #1–#6).
+* Implemented `FloatingActionButtonComponent` (AC: #1–#6).
+* Registered all new components in `primitives.provider.ts` and exported in `index.ts`.
+* Written and verified unit tests (`.spec.ts`) for all components, piercing `ShadowDom`, testing metadata instantiation, and verifying dispatch behavior (where applicable) using `jest.spyOn` and `WebExperienceAdapterService`.
+* Ran full regression suite with 0 regressions.
+* Updated `test-registry.yaml` with the new test specs to fulfill Central Test Registry requirements.
 
 ### File List
-
-
+* `_bmad-output/implementation-artifacts/1-1-core-buttons-and-actions.md`
+* `_bmad-output/implementation-artifacts/sprint-status.yaml`
+* `packages/angular-renderer/src/components/primitives/button/button.component.html`
+* `packages/angular-renderer/src/components/primitives/button/button.component.spec.ts`
+* `packages/angular-renderer/src/components/primitives/button/button.component.ts`
+* `packages/angular-renderer/src/components/primitives/button-group/button-group.component.html`
+* `packages/angular-renderer/src/components/primitives/button-group/button-group.component.scss`
+* `packages/angular-renderer/src/components/primitives/button-group/button-group.component.spec.ts`
+* `packages/angular-renderer/src/components/primitives/button-group/button-group.component.ts`
+* `packages/angular-renderer/src/components/primitives/floating-action-button/floating-action-button.component.html`
+* `packages/angular-renderer/src/components/primitives/floating-action-button/floating-action-button.component.scss`
+* `packages/angular-renderer/src/components/primitives/floating-action-button/floating-action-button.component.spec.ts`
+* `packages/angular-renderer/src/components/primitives/floating-action-button/floating-action-button.component.ts`
+* `packages/angular-renderer/src/components/primitives/icon-button/icon-button.component.html`
+* `packages/angular-renderer/src/components/primitives/icon-button/icon-button.component.scss`
+* `packages/angular-renderer/src/components/primitives/icon-button/icon-button.component.spec.ts`
+* `packages/angular-renderer/src/components/primitives/icon-button/icon-button.component.ts`
+* `packages/angular-renderer/src/index.ts`
+* `packages/angular-renderer/src/lib/primitives.provider.ts`
+* `tools/test-registry/test-registry.yaml`

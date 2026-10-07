@@ -252,6 +252,7 @@ test_cases:
     spec_file: packages/angular-renderer/src/components/primitives/button/button.component.spec.ts
     type: unit
     affected_stories:
+      - 1-1-core-buttons-and-actions
       - 9-4-accessibility-localization-enforcement
       - 5-3-core-primitive-implementation
     last_result: unknown
@@ -852,5 +853,32 @@ test_cases:
     type: manual
     affected_stories:
       - retro-10-playground-help-links
+    last_result: unknown
+    results: {}
+  - id: renderer-primitive-icon-button
+    description: 'Verifies IconButton primitive rendering'
+    package: '@origo/angular-renderer'
+    spec_file: packages/angular-renderer/src/components/primitives/icon-button/icon-button.component.spec.ts
+    type: unit
+    affected_stories:
+      - 1-1-core-buttons-and-actions
+    last_result: unknown
+    results: {}
+  - id: renderer-primitive-button-group
+    description: 'Verifies ButtonGroup primitive rendering'
+    package: '@origo/angular-renderer'
+    spec_file: packages/angular-renderer/src/components/primitives/button-group/button-group.component.spec.ts
+    type: unit
+    affected_stories:
+      - 1-1-core-buttons-and-actions
+    last_result: unknown
+    results: {}
+  - id: renderer-primitive-floating-action-button
+    description: 'Verifies FloatingActionButton primitive rendering'
+    package: '@origo/angular-renderer'
+    spec_file: packages/angular-renderer/src/components/primitives/floating-action-button/floating-action-button.component.spec.ts
+    type: unit
+    affected_stories:
+      - 1-1-core-buttons-and-actions
     last_result: unknown
     results: {}
