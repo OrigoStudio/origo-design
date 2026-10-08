@@ -22,6 +22,9 @@ export interface TabItem {
 }
 
 export interface TabsProps {
+  permissions?: Record<string, string>;
+  rules?: Record<string, unknown>;
+  metadata?: Record<string, unknown>;
   tabs?: Array<TabItem>;
   activeTab?: string;
   'aria-label'?: string;
@@ -42,6 +45,9 @@ export interface TabsProps {
 })
 export class TabsComponent implements OrigoAdapter<TabsProps> {
   static readonly contractSchema = {
+    permissions: 'object',
+    rules: 'object',
+    metadata: 'object',
     tabs: 'array',
   };
   static readonly strictContract = false;

@@ -40,7 +40,9 @@ describe('SelectComponent', () => {
     });
     fixture.detectChanges();
 
-    const selectEl = fixture.nativeElement.shadowRoot!.querySelector('select');
+    const selectEl = (fixture.nativeElement.shadowRoot ?? fixture.nativeElement).querySelector(
+      'select'
+    );
     expect(selectEl).toBeTruthy();
     expect(selectEl!.id).toBe('select-1');
 
@@ -59,7 +61,9 @@ describe('SelectComponent', () => {
     });
     fixture.detectChanges();
 
-    const selectEl = fixture.nativeElement.shadowRoot!.querySelector('select');
+    const selectEl = (fixture.nativeElement.shadowRoot ?? fixture.nativeElement).querySelector(
+      'select'
+    );
     expect(selectEl).toBeTruthy();
   });
 
@@ -71,7 +75,9 @@ describe('SelectComponent', () => {
     });
     fixture.detectChanges();
 
-    const selectEl = fixture.nativeElement.shadowRoot!.querySelector('select');
+    const selectEl = (fixture.nativeElement.shadowRoot ?? fixture.nativeElement).querySelector(
+      'select'
+    );
     expect(selectEl!.disabled).toBe(true);
   });
 
@@ -83,7 +89,9 @@ describe('SelectComponent', () => {
     });
     fixture.detectChanges();
 
-    const selectEl = fixture.nativeElement.shadowRoot!.querySelector('select');
+    const selectEl = (fixture.nativeElement.shadowRoot ?? fixture.nativeElement).querySelector(
+      'select'
+    );
     expect(selectEl!.getAttribute('aria-label')).toBe('My Select');
     expect(selectEl!.getAttribute('aria-describedby')).toBe('desc-1');
   });
@@ -96,7 +104,9 @@ describe('SelectComponent', () => {
     });
     fixture.detectChanges();
 
-    const selectEl = fixture.nativeElement.shadowRoot!.querySelector('select');
+    const selectEl = (fixture.nativeElement.shadowRoot ?? fixture.nativeElement).querySelector(
+      'select'
+    );
     selectEl!.value = 'new-val';
     selectEl!.dispatchEvent(new Event('change'));
 

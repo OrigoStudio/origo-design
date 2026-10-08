@@ -14,6 +14,9 @@ import { OrigoAdapter } from '../../../adapters/web/adapter';
 import { WebExperienceAdapterService } from '../../../adapters/web/experience-adapter.service';
 
 export interface TextInputProps {
+  permissions?: Record<string, string>;
+  rules?: Record<string, unknown>;
+  metadata?: Record<string, unknown>;
   value?: string;
   placeholder?: string;
   disabled?: boolean;
@@ -38,7 +41,7 @@ export interface TextInputProps {
   encapsulation: ViewEncapsulation.ShadowDom,
   host: {
     '[class.origo-text-input]': 'true',
-    '[attr.data-testid]': 'contract().id ?? ""',
+    '[attr.data-testid]': 'contract().id',
     '[class.origo-text-input--fluid]': 'computedFluid()',
     '[class.origo-text-input--outlined]': 'computedVariant() === "outlined"',
     '[class.origo-text-input--filled]': 'computedVariant() === "filled"',
@@ -47,6 +50,9 @@ export interface TextInputProps {
 })
 export class TextInputComponent implements OrigoAdapter<TextInputProps> {
   static readonly contractSchema = {
+    permissions: 'object',
+    rules: 'object',
+    metadata: 'object',
     value: 'string',
     placeholder: 'string',
     disabled: 'boolean',
@@ -101,7 +107,7 @@ export class TextInputComponent implements OrigoAdapter<TextInputProps> {
 
   onInput(event: Event) {
     const target = event.target as HTMLInputElement | null;
-    if (!target) return;
+    if (!target || this.computedDisabled() || this.computedReadonly()) return;
 
     const rawValue = target.value;
     const sanitizedValue = String(rawValue);

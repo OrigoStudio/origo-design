@@ -44,7 +44,9 @@ describe('InputNumberComponent', () => {
     });
     fixture.detectChanges();
 
-    const inputEl = fixture.nativeElement.shadowRoot!.querySelector('input');
+    const inputEl = (fixture.nativeElement.shadowRoot ?? fixture.nativeElement).querySelector(
+      'input'
+    );
     expect(inputEl).toBeTruthy();
     expect(inputEl!.id).toBe('input-num-1');
     expect(inputEl!.value).toBe('42');
@@ -65,7 +67,9 @@ describe('InputNumberComponent', () => {
     });
     fixture.detectChanges();
 
-    const inputEl = fixture.nativeElement.shadowRoot!.querySelector('input');
+    const inputEl = (fixture.nativeElement.shadowRoot ?? fixture.nativeElement).querySelector(
+      'input'
+    );
     expect(inputEl).toBeTruthy();
     expect(inputEl!.value).toBe('');
   });
@@ -78,7 +82,9 @@ describe('InputNumberComponent', () => {
     });
     fixture.detectChanges();
 
-    const inputEl = fixture.nativeElement.shadowRoot!.querySelector('input');
+    const inputEl = (fixture.nativeElement.shadowRoot ?? fixture.nativeElement).querySelector(
+      'input'
+    );
     expect(inputEl!.getAttribute('aria-label')).toBe('My Number');
     expect(inputEl!.getAttribute('aria-describedby')).toBe('desc-1');
     expect(inputEl!.getAttribute('aria-invalid')).toBe('true');
@@ -92,7 +98,9 @@ describe('InputNumberComponent', () => {
     });
     fixture.detectChanges();
 
-    const inputEl = fixture.nativeElement.shadowRoot!.querySelector('input');
+    const inputEl = (fixture.nativeElement.shadowRoot ?? fixture.nativeElement).querySelector(
+      'input'
+    );
     inputEl!.value = '25';
     inputEl!.dispatchEvent(new Event('input'));
 

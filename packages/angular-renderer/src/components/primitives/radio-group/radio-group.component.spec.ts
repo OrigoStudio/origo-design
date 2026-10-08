@@ -42,7 +42,9 @@ describe('RadioGroupComponent', () => {
     });
     fixture.detectChanges();
 
-    const inputs = fixture.nativeElement.shadowRoot!.querySelectorAll('input[type="radio"]');
+    const inputs = (fixture.nativeElement.shadowRoot ?? fixture.nativeElement).querySelectorAll(
+      'input[type="radio"]'
+    );
     expect(inputs.length).toBe(2);
 
     // Check names are shared
@@ -62,7 +64,9 @@ describe('RadioGroupComponent', () => {
     });
     fixture.detectChanges();
 
-    const fieldset = fixture.nativeElement.shadowRoot!.querySelector('fieldset');
+    const fieldset = (fixture.nativeElement.shadowRoot ?? fixture.nativeElement).querySelector(
+      'fieldset'
+    );
     expect(fieldset).toBeTruthy();
   });
 
@@ -74,7 +78,9 @@ describe('RadioGroupComponent', () => {
     });
     fixture.detectChanges();
 
-    const fieldset = fixture.nativeElement.shadowRoot!.querySelector('fieldset');
+    const fieldset = (fixture.nativeElement.shadowRoot ?? fixture.nativeElement).querySelector(
+      'fieldset'
+    );
     expect(fieldset!.disabled).toBe(true);
   });
 
@@ -86,7 +92,9 @@ describe('RadioGroupComponent', () => {
     });
     fixture.detectChanges();
 
-    const fieldset = fixture.nativeElement.shadowRoot!.querySelector('fieldset');
+    const fieldset = (fixture.nativeElement.shadowRoot ?? fixture.nativeElement).querySelector(
+      'fieldset'
+    );
     expect(fieldset!.getAttribute('aria-label')).toBeNull();
   });
 
@@ -98,7 +106,9 @@ describe('RadioGroupComponent', () => {
     });
     fixture.detectChanges();
 
-    const input = fixture.nativeElement.shadowRoot!.querySelector('input');
+    const input = (fixture.nativeElement.shadowRoot ?? fixture.nativeElement).querySelector(
+      'input'
+    );
     input!.checked = true;
     input!.dispatchEvent(new Event('change'));
 
@@ -141,7 +151,9 @@ describe('RadioGroupComponent', () => {
       props: { invalid: true },
     });
     fixture.detectChanges();
-    const fieldset = fixture.nativeElement.shadowRoot!.querySelector('fieldset');
+    const fieldset = (fixture.nativeElement.shadowRoot ?? fixture.nativeElement).querySelector(
+      'fieldset'
+    );
     expect(fieldset!.getAttribute('aria-invalid')).toBe('true');
   });
 });

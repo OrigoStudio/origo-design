@@ -14,6 +14,9 @@ import { OrigoAdapter } from '../../../adapters/web/adapter';
 import { WebExperienceAdapterService } from '../../../adapters/web/experience-adapter.service';
 
 export interface RadioGroupProps {
+  permissions?: Record<string, string>;
+  rules?: Record<string, unknown>;
+  metadata?: Record<string, unknown>;
   options: Array<{ value: string; label: string }>;
   value?: string;
   disabled?: boolean;
@@ -39,6 +42,9 @@ export interface RadioGroupProps {
 })
 export class RadioGroupComponent implements OrigoAdapter<RadioGroupProps> {
   static readonly contractSchema = {
+    permissions: 'object',
+    rules: 'object',
+    metadata: 'object',
     options: 'array',
     value: 'string',
     disabled: 'boolean',

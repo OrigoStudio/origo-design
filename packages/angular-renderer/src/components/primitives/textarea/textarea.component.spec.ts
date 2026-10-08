@@ -42,7 +42,9 @@ describe('TextareaComponent', () => {
     });
     fixture.detectChanges();
 
-    const textareaEl = fixture.nativeElement.shadowRoot!.querySelector('textarea');
+    const textareaEl = (fixture.nativeElement.shadowRoot ?? fixture.nativeElement).querySelector(
+      'textarea'
+    );
     expect(textareaEl).toBeTruthy();
     expect(textareaEl!.id).toBe('textarea-1');
     expect(textareaEl!.value).toBe('Hello');
@@ -61,7 +63,9 @@ describe('TextareaComponent', () => {
     });
     fixture.detectChanges();
 
-    const textareaEl = fixture.nativeElement.shadowRoot!.querySelector('textarea');
+    const textareaEl = (fixture.nativeElement.shadowRoot ?? fixture.nativeElement).querySelector(
+      'textarea'
+    );
     expect(textareaEl).toBeTruthy();
     expect(textareaEl!.getAttribute('rows')).toBe('3'); // default
   });
@@ -74,7 +78,9 @@ describe('TextareaComponent', () => {
     });
     fixture.detectChanges();
 
-    const textareaEl = fixture.nativeElement.shadowRoot!.querySelector('textarea');
+    const textareaEl = (fixture.nativeElement.shadowRoot ?? fixture.nativeElement).querySelector(
+      'textarea'
+    );
     expect(textareaEl!.getAttribute('aria-label')).toBe('My Textarea');
     expect(textareaEl!.getAttribute('aria-describedby')).toBe('desc-1');
   });
@@ -87,7 +93,9 @@ describe('TextareaComponent', () => {
     });
     fixture.detectChanges();
 
-    const textareaEl = fixture.nativeElement.shadowRoot!.querySelector('textarea');
+    const textareaEl = (fixture.nativeElement.shadowRoot ?? fixture.nativeElement).querySelector(
+      'textarea'
+    );
     textareaEl!.value = '<script>alert("xss")</script>clean text';
     textareaEl!.dispatchEvent(new Event('input'));
 
@@ -147,14 +155,18 @@ describe('TextareaComponent', () => {
       props: { invalid: true },
     });
     fixture.detectChanges();
-    const textareaEl = fixture.nativeElement.shadowRoot!.querySelector('textarea');
+    const textareaEl = (fixture.nativeElement.shadowRoot ?? fixture.nativeElement).querySelector(
+      'textarea'
+    );
     expect(textareaEl!.getAttribute('aria-invalid')).toBe('true');
   });
 
   it('should strip HTML formatting on paste', () => {
     fixture.componentRef.setInput('contract', { id: '1', type: 'Textarea', props: {} });
     fixture.detectChanges();
-    const textareaEl = fixture.nativeElement.shadowRoot!.querySelector('textarea');
+    const textareaEl = (fixture.nativeElement.shadowRoot ?? fixture.nativeElement).querySelector(
+      'textarea'
+    );
     const dt = {
       getData: (type: string) => (type === 'text/plain' ? 'bold text' : '<b>bold text</b>'),
     } as unknown as DataTransfer;

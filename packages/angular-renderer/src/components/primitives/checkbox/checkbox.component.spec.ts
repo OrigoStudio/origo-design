@@ -39,12 +39,16 @@ describe('CheckboxComponent', () => {
     });
     fixture.detectChanges();
 
-    const inputEl = fixture.nativeElement.shadowRoot!.querySelector('input');
+    const inputEl = (fixture.nativeElement.shadowRoot ?? fixture.nativeElement).querySelector(
+      'input'
+    );
     expect(inputEl).toBeTruthy();
     expect(inputEl!.id).toBe('checkbox-1');
     expect(inputEl!.checked).toBe(true);
 
-    const labelText = fixture.nativeElement.shadowRoot!.querySelector('.label-text');
+    const labelText = (fixture.nativeElement.shadowRoot ?? fixture.nativeElement).querySelector(
+      '.label-text'
+    );
     expect(labelText!.textContent).toBe('Accept Terms');
   });
 
@@ -56,7 +60,9 @@ describe('CheckboxComponent', () => {
     });
     fixture.detectChanges();
 
-    const inputEl = fixture.nativeElement.shadowRoot!.querySelector('input');
+    const inputEl = (fixture.nativeElement.shadowRoot ?? fixture.nativeElement).querySelector(
+      'input'
+    );
     expect(inputEl).toBeTruthy();
   });
 
@@ -68,7 +74,9 @@ describe('CheckboxComponent', () => {
     });
     fixture.detectChanges();
 
-    const inputEl = fixture.nativeElement.shadowRoot!.querySelector('input');
+    const inputEl = (fixture.nativeElement.shadowRoot ?? fixture.nativeElement).querySelector(
+      'input'
+    );
     expect(inputEl!.disabled).toBe(true);
   });
 
@@ -80,7 +88,9 @@ describe('CheckboxComponent', () => {
     });
     fixture.detectChanges();
 
-    const inputEl = fixture.nativeElement.shadowRoot!.querySelector('input');
+    const inputEl = (fixture.nativeElement.shadowRoot ?? fixture.nativeElement).querySelector(
+      'input'
+    );
     expect(inputEl!.getAttribute('aria-label')).toBe('My Checkbox');
   });
 
@@ -92,7 +102,9 @@ describe('CheckboxComponent', () => {
     });
     fixture.detectChanges();
 
-    const inputEl = fixture.nativeElement.shadowRoot!.querySelector('input');
+    const inputEl = (fixture.nativeElement.shadowRoot ?? fixture.nativeElement).querySelector(
+      'input'
+    );
     inputEl!.checked = true;
     inputEl!.dispatchEvent(new Event('change'));
 
@@ -135,7 +147,9 @@ describe('CheckboxComponent', () => {
       props: { invalid: true },
     });
     fixture.detectChanges();
-    const inputEl = fixture.nativeElement.shadowRoot!.querySelector('input');
+    const inputEl = (fixture.nativeElement.shadowRoot ?? fixture.nativeElement).querySelector(
+      'input'
+    );
     expect(inputEl!.getAttribute('aria-invalid')).toBe('true');
   });
 });

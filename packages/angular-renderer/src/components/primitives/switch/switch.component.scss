@@ -41,8 +41,8 @@ input[type='checkbox'][role='switch'] {
   &::after {
     content: '';
     position: absolute;
-    top: 2px;
-    inset-inline-start: 2px;
+    top: var(--origo-border-width-md);
+    inset-inline-start: var(--origo-border-width-md);
     width: var(--origo-switch-thumb-size);
     height: var(--origo-switch-thumb-size);
     background-color: var(--origo-color-on-accent);
@@ -56,7 +56,9 @@ input[type='checkbox'][role='switch'] {
     background-color: var(--origo-color-accent);
 
     &::after {
-      inset-inline-start: calc(100% - var(--origo-switch-thumb-size) - 2px);
+      inset-inline-start: calc(
+        100% - var(--origo-switch-thumb-size) - var(--origo-border-width-md)
+      );
     }
   }
 

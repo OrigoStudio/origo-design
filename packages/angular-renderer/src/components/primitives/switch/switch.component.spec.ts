@@ -36,12 +36,16 @@ describe('SwitchComponent', () => {
     });
     fixture.detectChanges();
 
-    const inputEl = fixture.nativeElement.shadowRoot!.querySelector('input');
+    const inputEl = (fixture.nativeElement.shadowRoot ?? fixture.nativeElement).querySelector(
+      'input'
+    );
     expect(inputEl).toBeTruthy();
     expect(inputEl!.getAttribute('role')).toBe('switch');
     expect(inputEl!.checked).toBe(true);
 
-    const labelText = fixture.nativeElement.shadowRoot!.querySelector('.label-text');
+    const labelText = (fixture.nativeElement.shadowRoot ?? fixture.nativeElement).querySelector(
+      '.label-text'
+    );
     expect(labelText!.textContent).toContain('Airplane Mode');
   });
 
@@ -53,7 +57,9 @@ describe('SwitchComponent', () => {
     });
     fixture.detectChanges();
 
-    const inputEl = fixture.nativeElement.shadowRoot!.querySelector('input');
+    const inputEl = (fixture.nativeElement.shadowRoot ?? fixture.nativeElement).querySelector(
+      'input'
+    );
     expect(inputEl).toBeTruthy();
     expect(inputEl!.checked).toBe(false);
   });
@@ -66,7 +72,9 @@ describe('SwitchComponent', () => {
     });
     fixture.detectChanges();
 
-    const inputEl = fixture.nativeElement.shadowRoot!.querySelector('input');
+    const inputEl = (fixture.nativeElement.shadowRoot ?? fixture.nativeElement).querySelector(
+      'input'
+    );
     expect(inputEl!.disabled).toBe(true);
   });
 
@@ -78,7 +86,9 @@ describe('SwitchComponent', () => {
     });
     fixture.detectChanges();
 
-    const inputEl = fixture.nativeElement.shadowRoot!.querySelector('input');
+    const inputEl = (fixture.nativeElement.shadowRoot ?? fixture.nativeElement).querySelector(
+      'input'
+    );
     inputEl!.checked = true;
     inputEl!.dispatchEvent(new Event('change'));
 
@@ -120,7 +130,9 @@ describe('SwitchComponent', () => {
       props: { invalid: true },
     });
     fixture.detectChanges();
-    const inputEl = fixture.nativeElement.shadowRoot!.querySelector('input');
+    const inputEl = (fixture.nativeElement.shadowRoot ?? fixture.nativeElement).querySelector(
+      'input'
+    );
     expect(inputEl!.getAttribute('aria-invalid')).toBe('true');
   });
 });

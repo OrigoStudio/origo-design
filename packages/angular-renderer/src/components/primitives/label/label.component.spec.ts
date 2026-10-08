@@ -30,13 +30,16 @@ describe('LabelComponent', () => {
     });
     fixture.detectChanges();
 
-    const labelEl = fixture.nativeElement.shadowRoot!.querySelector('label');
+    const labelEl = (fixture.nativeElement.shadowRoot ?? fixture.nativeElement).querySelector(
+      'label'
+    );
     expect(labelEl).toBeTruthy();
     expect(labelEl!.getAttribute('for')).toBe('input-1');
     expect(labelEl!.textContent).toContain('First Name');
 
-    const requiredIndicator =
-      fixture.nativeElement.shadowRoot!.querySelector('.required-indicator');
+    const requiredIndicator = (
+      fixture.nativeElement.shadowRoot ?? fixture.nativeElement
+    ).querySelector('.required-indicator');
     expect(requiredIndicator).toBeTruthy();
     expect(requiredIndicator!.textContent).toBe('*');
   });
@@ -51,8 +54,9 @@ describe('LabelComponent', () => {
     });
     fixture.detectChanges();
 
-    const requiredIndicator =
-      fixture.nativeElement.shadowRoot!.querySelector('.required-indicator');
+    const requiredIndicator = (
+      fixture.nativeElement.shadowRoot ?? fixture.nativeElement
+    ).querySelector('.required-indicator');
     expect(requiredIndicator).toBeNull();
   });
 
@@ -64,7 +68,9 @@ describe('LabelComponent', () => {
     });
     fixture.detectChanges();
 
-    const labelEl = fixture.nativeElement.shadowRoot!.querySelector('label');
+    const labelEl = (fixture.nativeElement.shadowRoot ?? fixture.nativeElement).querySelector(
+      'label'
+    );
     expect(labelEl).toBeTruthy();
   });
 

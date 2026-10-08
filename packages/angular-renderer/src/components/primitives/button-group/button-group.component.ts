@@ -9,6 +9,9 @@ import { InteractionContract } from '@origostudio/core';
 import { OrigoAdapter } from '../../../adapters/web/adapter';
 
 export interface ButtonGroupProps {
+  permissions?: Record<string, string>;
+  rules?: Record<string, unknown>;
+  metadata?: Record<string, unknown>;
   orientation?: 'row' | 'column';
   attached?: boolean;
   size?: 'small' | 'medium' | 'large';
@@ -30,6 +33,9 @@ export interface ButtonGroupProps {
 })
 export class ButtonGroupComponent implements OrigoAdapter<ButtonGroupProps> {
   static readonly contractSchema = {
+    permissions: 'object',
+    rules: 'object',
+    metadata: 'object',
     orientation: 'string',
     attached: 'boolean',
     size: 'string',

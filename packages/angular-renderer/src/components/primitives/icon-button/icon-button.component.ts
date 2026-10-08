@@ -11,6 +11,9 @@ import { OrigoAdapter } from '../../../adapters/web/adapter';
 import { WebExperienceAdapterService } from '../../../adapters/web/experience-adapter.service';
 
 export interface IconButtonProps {
+  permissions?: Record<string, string>;
+  rules?: Record<string, unknown>;
+  metadata?: Record<string, unknown>;
   icon?: string;
   label?: string;
   tooltip?: string;
@@ -21,9 +24,6 @@ export interface IconButtonProps {
   disabled?: boolean;
   'aria-label'?: string;
   'aria-describedby'?: string;
-  permissions?: any;
-  rules?: any;
-  metadata?: any;
 }
 
 @Component({
@@ -40,6 +40,9 @@ export interface IconButtonProps {
 })
 export class IconButtonComponent implements OrigoAdapter<IconButtonProps> {
   static readonly contractSchema = {
+    permissions: 'object',
+    rules: 'object',
+    metadata: 'object',
     icon: 'string',
     label: 'string',
     tooltip: 'string',
@@ -50,9 +53,6 @@ export class IconButtonComponent implements OrigoAdapter<IconButtonProps> {
     disabled: 'boolean',
     'aria-label': 'string',
     'aria-describedby': 'string',
-    permissions: 'object',
-    rules: 'object',
-    metadata: 'object',
   };
   static readonly strictContract = false;
 
@@ -62,7 +62,8 @@ export class IconButtonComponent implements OrigoAdapter<IconButtonProps> {
   computedLoading = computed(() => !!this.contract().props?.loading);
   computedDisabled = computed(() => {
     const props = this.contract().props;
-    const rulesDisable = props?.rules?.disable === true || props?.permissions?.allow === false;
+    const rulesDisable =
+      props?.rules?.['disable'] === true || props?.permissions?.['allow'] === 'false';
     return !!props?.disabled || this.computedLoading() || rulesDisable;
   });
 

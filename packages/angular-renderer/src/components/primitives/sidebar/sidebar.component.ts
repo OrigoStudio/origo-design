@@ -20,6 +20,9 @@ export interface SidebarItem {
 }
 
 export interface SidebarProps {
+  permissions?: Record<string, string>;
+  rules?: Record<string, unknown>;
+  metadata?: Record<string, unknown>;
   items?: Array<SidebarItem>;
   activeOutcome?: string;
   collapsed?: boolean;
@@ -45,6 +48,9 @@ export interface SidebarProps {
 })
 export class SidebarComponent implements OrigoAdapter<SidebarProps> {
   static readonly contractSchema = {
+    permissions: 'object',
+    rules: 'object',
+    metadata: 'object',
     items: 'array',
     collapsed: 'boolean',
   };

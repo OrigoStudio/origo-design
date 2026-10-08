@@ -11,6 +11,9 @@ import { InteractionContract } from '@origostudio/core';
 import { OrigoAdapter, ContainerComponent } from '../../../adapters/web/adapter';
 
 export interface VBoxProps {
+  permissions?: Record<string, string>;
+  rules?: Record<string, unknown>;
+  metadata?: Record<string, unknown>;
   gap?: number | string;
   alignment?: 'start' | 'center' | 'end' | 'stretch';
   padding?: number | string;
@@ -38,6 +41,9 @@ export interface VBoxProps {
 })
 export class VBoxComponent implements OrigoAdapter<VBoxProps>, ContainerComponent {
   static readonly contractSchema = {
+    permissions: 'object',
+    rules: 'object',
+    metadata: 'object',
     gap: 'string',
     alignment: 'string',
     padding: 'string',

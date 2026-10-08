@@ -12,6 +12,9 @@ import { OrigoAdapter } from '../../../adapters/web/adapter';
 import { WebExperienceAdapterService } from '../../../adapters/web/experience-adapter.service';
 
 export interface ButtonProps {
+  permissions?: Record<string, string>;
+  rules?: Record<string, unknown>;
+  metadata?: Record<string, unknown>;
   label?: string;
   disabled?: boolean;
   type?: 'button' | 'submit' | 'reset';
@@ -24,9 +27,6 @@ export interface ButtonProps {
   iconPosition?: string;
   badge?: string;
   badgeSeverity?: string;
-  permissions?: any;
-  rules?: any;
-  metadata?: any;
 }
 
 @Component({
@@ -43,6 +43,9 @@ export interface ButtonProps {
 })
 export class ButtonComponent implements OrigoAdapter<ButtonProps> {
   static readonly contractSchema = {
+    permissions: 'object',
+    rules: 'object',
+    metadata: 'object',
     label: 'string',
     disabled: 'boolean',
     type: 'string',
@@ -53,9 +56,6 @@ export class ButtonComponent implements OrigoAdapter<ButtonProps> {
     iconPosition: 'string',
     badge: 'string',
     badgeSeverity: 'string',
-    permissions: 'object',
-    rules: 'object',
-    metadata: 'object',
   };
   static readonly strictContract = false;
 
@@ -65,7 +65,8 @@ export class ButtonComponent implements OrigoAdapter<ButtonProps> {
   computedLoading = computed(() => !!this.contract().props?.loading);
   computedDisabled = computed(() => {
     const props = this.contract().props;
-    const rulesDisable = props?.rules?.disable === true || props?.permissions?.allow === false;
+    const rulesDisable =
+      props?.rules?.['disable'] === true || props?.permissions?.['allow'] === 'false';
     return !!props?.disabled || this.computedLoading() || rulesDisable;
   });
 

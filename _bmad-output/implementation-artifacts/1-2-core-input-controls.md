@@ -6,7 +6,7 @@ baseline_commit: 450e384f384ac1d239f0ece384e438ee430745f5
 
 # Story 1.2: Core Input Controls
 
-Status: ready-for-dev
+Status: done
 
 ## Story
 
@@ -322,3 +322,28 @@ From Story 1.1 (`1-1-core-buttons-and-actions`) — confirmed review findings to
 ### File List
 
 ### Review Findings
+
+### Review Findings
+
+- [x] [Review][Patch] Remove DomSanitizer from InputNumberComponent (incorrect for type="number") and fix null-fallback vulnerability [input-number.component.ts:onInput]
+- [x] [Review][Patch] Prevent wiping value mid-typing in InputNumberComponent when target.validity?.badInput is true [input-number.component.ts:onInput]
+- [x] [Review][Patch] Clamp InputNumberComponent value to min/max in onInput and onBlur [input-number.component.ts:onInput]
+- [x] [Review][Patch] Implement missing showButtons stepper UI, prefix, suffix, minFractionDigits, maxFractionDigits, useGrouping, locale in InputNumberComponent [input-number.component.ts]
+- [x] [Review][Patch] Apply Intl.NumberFormat on blur for InputNumberComponent [input-number.component.ts]
+- [x] [Review][Patch] Bind native [required] and [attr.aria-required] in InputNumberComponent [input-number.component.html]
+- [x] [Review][Patch] Move @if (computedErrorText()) inside wrapper in InputNumberComponent template [input-number.component.html]
+- [x] [Review][Patch] Add fallback for computedAriaLabel in InputNumberComponent to prevent axe-core failure [input-number.component.ts]
+- [x] [Review][Patch] Implement missing variant, fluid, and readonly (with onChange guard) in SwitchComponent [switch.component.ts]
+- [x] [Review][Patch] Replace literal px offsets with --origo-* tokens in SwitchComponent SCSS [switch.component.scss]
+- [x] [Review][Patch] Implement missing variant, fluid, and indeterminate property binding in CheckboxComponent [checkbox.component.ts]
+- [x] [Review][Patch] Implement missing variant, fluid, orientation (prop/class), and role="radiogroup" in RadioGroupComponent [radio-group.component.ts]
+- [x] [Review][Patch] Implement missing BADL metadata hooks (permissions, rules, metadata) across all six delivered components
+- [x] [Review][Patch] Fix TextInputComponent missing DomSanitizer XSS protection [text-input.component.ts]
+- [x] [Review][Patch] Add disabled/readonly guards in TextInputComponent.onInput [text-input.component.ts]
+- [x] [Review][Patch] Fix TextInputComponent data-testid empty string fallback [text-input.component.ts]
+- [x] [Review][Patch] Fix TextareaComponent onPaste incorrectly applying DomSanitizer to plain-text, which strips valid < or > chars [textarea.component.ts]
+- [x] [Review][Patch] Refactor TextareaComponent.autoResize to adjust rows instead of direct target.style.height mutation [textarea.component.ts]
+- [x] [Review][Patch] Fix textarea.component.scss regression: restore display: block instead of inline-block [textarea.component.scss]
+- [x] [Review][Patch] Remove duplicate PLATFORM_ID import in TextareaComponent [textarea.component.ts]
+- [x] [Review][Patch] Fix tests across all components: use new ClipboardEvent instead of new Event('paste')
+- [x] [Review][Patch] Fix tests across all components: use fixture.nativeElement.shadowRoot ?? fixture.nativeElement instead of unsafe shadowRoot!

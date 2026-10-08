@@ -9,15 +9,19 @@ import {
   effect,
   untracked,
   SecurityContext,
+  PLATFORM_ID,
 } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 import { InteractionContract } from '@origostudio/core';
-import { PLATFORM_ID } from '@angular/core';
+
 import { isPlatformBrowser } from '@angular/common';
 import { OrigoAdapter } from '../../../adapters/web/adapter';
 import { WebExperienceAdapterService } from '../../../adapters/web/experience-adapter.service';
 
 export interface TextareaProps {
+  permissions?: Record<string, string>;
+  rules?: Record<string, unknown>;
+  metadata?: Record<string, unknown>;
   value?: string;
   placeholder?: string;
   rows?: number;
@@ -52,6 +56,9 @@ export interface TextareaProps {
 })
 export class TextareaComponent implements OrigoAdapter<TextareaProps> {
   static readonly contractSchema = {
+    permissions: 'object',
+    rules: 'object',
+    metadata: 'object',
     value: 'string',
     placeholder: 'string',
     rows: 'number',
@@ -141,12 +148,9 @@ export class TextareaComponent implements OrigoAdapter<TextareaProps> {
     const end = target.selectionEnd ?? target.value.length;
     const newValue = target.value.slice(0, start) + plain + target.value.slice(end);
 
-    const sanitizedValue =
-      this.sanitizer.sanitize(SecurityContext.HTML, newValue) || newValue || '';
-
-    target.value = sanitizedValue;
-    this.value.set(sanitizedValue);
-    this.experienceAdapter.updateState(this.contract().id, 'value', sanitizedValue);
+    target.value = newValue;
+    this.value.set(newValue);
+    this.experienceAdapter.updateState(this.contract().id, 'value', newValue);
 
     if (this.computedAutoResize() && isPlatformBrowser(this.platformId)) {
       target.style.height = 'auto';
