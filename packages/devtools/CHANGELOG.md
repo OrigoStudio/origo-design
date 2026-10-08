@@ -1,3 +1,7 @@
+## 0.0.49 (2026-10-08)
+
+This was a version bump only for devtools to align it with other projects, there were no code changes.
+
 ## 0.0.48 (2026-10-07)
 
 This was a version bump only for devtools to align it with other projects, there were no code changes.

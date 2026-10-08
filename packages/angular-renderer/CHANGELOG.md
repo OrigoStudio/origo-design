@@ -1,3 +1,14 @@
+## 0.0.49 (2026-10-08)
+
+### 🚀 Features
+
+- add angular renderer primitives and component implementations ([e751643](https://github.com/OrigoStudio/origo-design/commit/e751643))
+- add primitive components and corresponding test suites for angular-renderer package ([d02c3d1](https://github.com/OrigoStudio/origo-design/commit/d02c3d1))
+
+### ❤️ Thank You
+
+- Hardik Patel @hardikpatelse
+
 ## 0.0.48 (2026-10-07)
 
 ### 🚀 Features
