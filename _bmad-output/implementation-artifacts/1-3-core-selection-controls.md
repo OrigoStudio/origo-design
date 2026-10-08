@@ -6,7 +6,7 @@ baseline_commit: 3f78ec0
 
 # Story 1.3: Core Selection Controls
 
-Status: review
+Status: done
 
 ## Story
 
