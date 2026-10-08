@@ -39,12 +39,16 @@ describe('CheckboxComponent', () => {
     });
     fixture.detectChanges();
 
-    const inputEl = fixture.nativeElement.shadowRoot!.querySelector('input');
+    const inputEl = (fixture.nativeElement.shadowRoot ?? fixture.nativeElement).querySelector(
+      'input'
+    );
     expect(inputEl).toBeTruthy();
     expect(inputEl!.id).toBe('checkbox-1');
     expect(inputEl!.checked).toBe(true);
 
-    const labelText = fixture.nativeElement.shadowRoot!.querySelector('.label-text');
+    const labelText = (fixture.nativeElement.shadowRoot ?? fixture.nativeElement).querySelector(
+      '.label-text'
+    );
     expect(labelText!.textContent).toBe('Accept Terms');
   });
 
@@ -56,7 +60,9 @@ describe('CheckboxComponent', () => {
     });
     fixture.detectChanges();
 
-    const inputEl = fixture.nativeElement.shadowRoot!.querySelector('input');
+    const inputEl = (fixture.nativeElement.shadowRoot ?? fixture.nativeElement).querySelector(
+      'input'
+    );
     expect(inputEl).toBeTruthy();
   });
 
@@ -68,7 +74,9 @@ describe('CheckboxComponent', () => {
     });
     fixture.detectChanges();
 
-    const inputEl = fixture.nativeElement.shadowRoot!.querySelector('input');
+    const inputEl = (fixture.nativeElement.shadowRoot ?? fixture.nativeElement).querySelector(
+      'input'
+    );
     expect(inputEl!.disabled).toBe(true);
   });
 
@@ -80,7 +88,9 @@ describe('CheckboxComponent', () => {
     });
     fixture.detectChanges();
 
-    const inputEl = fixture.nativeElement.shadowRoot!.querySelector('input');
+    const inputEl = (fixture.nativeElement.shadowRoot ?? fixture.nativeElement).querySelector(
+      'input'
+    );
     expect(inputEl!.getAttribute('aria-label')).toBe('My Checkbox');
   });
 
@@ -92,7 +102,9 @@ describe('CheckboxComponent', () => {
     });
     fixture.detectChanges();
 
-    const inputEl = fixture.nativeElement.shadowRoot!.querySelector('input');
+    const inputEl = (fixture.nativeElement.shadowRoot ?? fixture.nativeElement).querySelector(
+      'input'
+    );
     inputEl!.checked = true;
     inputEl!.dispatchEvent(new Event('change'));
 
@@ -110,5 +122,34 @@ describe('CheckboxComponent', () => {
       expect(element.style.marginLeft).toBeFalsy();
       expect(element.style.marginRight).toBeFalsy();
     }
+  });
+
+  it('should render errorText and helpText', () => {
+    fixture.componentRef.setInput('contract', {
+      id: '1',
+      type: 'Checkbox',
+      props: { errorText: 'Error message', helpText: 'Help message' },
+    });
+    fixture.detectChanges();
+    const root = fixture.nativeElement.shadowRoot ?? fixture.nativeElement;
+    const errorEl = root.querySelector('.origo-checkbox__error');
+    const helpEl = root.querySelector('.origo-checkbox__help');
+    expect(errorEl).toBeTruthy();
+    expect(errorEl?.textContent?.trim()).toBe('Error message');
+    expect(helpEl).toBeTruthy();
+    expect(helpEl?.textContent?.trim()).toBe('Help message');
+  });
+
+  it('should bind aria-invalid based on invalid prop', () => {
+    fixture.componentRef.setInput('contract', {
+      id: '1',
+      type: 'Checkbox',
+      props: { invalid: true },
+    });
+    fixture.detectChanges();
+    const inputEl = (fixture.nativeElement.shadowRoot ?? fixture.nativeElement).querySelector(
+      'input'
+    );
+    expect(inputEl!.getAttribute('aria-invalid')).toBe('true');
   });
 });

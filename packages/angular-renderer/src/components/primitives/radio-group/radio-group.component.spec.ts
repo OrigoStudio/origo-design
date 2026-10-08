@@ -42,7 +42,9 @@ describe('RadioGroupComponent', () => {
     });
     fixture.detectChanges();
 
-    const inputs = fixture.nativeElement.shadowRoot!.querySelectorAll('input[type="radio"]');
+    const inputs = (fixture.nativeElement.shadowRoot ?? fixture.nativeElement).querySelectorAll(
+      'input[type="radio"]'
+    );
     expect(inputs.length).toBe(2);
 
     // Check names are shared
@@ -62,7 +64,9 @@ describe('RadioGroupComponent', () => {
     });
     fixture.detectChanges();
 
-    const fieldset = fixture.nativeElement.shadowRoot!.querySelector('fieldset');
+    const fieldset = (fixture.nativeElement.shadowRoot ?? fixture.nativeElement).querySelector(
+      'fieldset'
+    );
     expect(fieldset).toBeTruthy();
   });
 
@@ -74,7 +78,9 @@ describe('RadioGroupComponent', () => {
     });
     fixture.detectChanges();
 
-    const fieldset = fixture.nativeElement.shadowRoot!.querySelector('fieldset');
+    const fieldset = (fixture.nativeElement.shadowRoot ?? fixture.nativeElement).querySelector(
+      'fieldset'
+    );
     expect(fieldset!.disabled).toBe(true);
   });
 
@@ -86,7 +92,9 @@ describe('RadioGroupComponent', () => {
     });
     fixture.detectChanges();
 
-    const fieldset = fixture.nativeElement.shadowRoot!.querySelector('fieldset');
+    const fieldset = (fixture.nativeElement.shadowRoot ?? fixture.nativeElement).querySelector(
+      'fieldset'
+    );
     expect(fieldset!.getAttribute('aria-label')).toBeNull();
   });
 
@@ -98,7 +106,9 @@ describe('RadioGroupComponent', () => {
     });
     fixture.detectChanges();
 
-    const input = fixture.nativeElement.shadowRoot!.querySelector('input');
+    const input = (fixture.nativeElement.shadowRoot ?? fixture.nativeElement).querySelector(
+      'input'
+    );
     input!.checked = true;
     input!.dispatchEvent(new Event('change'));
 
@@ -116,5 +126,34 @@ describe('RadioGroupComponent', () => {
       expect(element.style.marginLeft).toBeFalsy();
       expect(element.style.marginRight).toBeFalsy();
     }
+  });
+
+  it('should render errorText and helpText', () => {
+    fixture.componentRef.setInput('contract', {
+      id: '1',
+      type: 'RadioGroup',
+      props: { errorText: 'Error message', helpText: 'Help message' },
+    });
+    fixture.detectChanges();
+    const root = fixture.nativeElement.shadowRoot ?? fixture.nativeElement;
+    const errorEl = root.querySelector('.origo-radio-group__error');
+    const helpEl = root.querySelector('.origo-radio-group__help');
+    expect(errorEl).toBeTruthy();
+    expect(errorEl?.textContent?.trim()).toBe('Error message');
+    expect(helpEl).toBeTruthy();
+    expect(helpEl?.textContent?.trim()).toBe('Help message');
+  });
+
+  it('should bind aria-invalid based on invalid prop', () => {
+    fixture.componentRef.setInput('contract', {
+      id: '1',
+      type: 'RadioGroup',
+      props: { invalid: true },
+    });
+    fixture.detectChanges();
+    const fieldset = (fixture.nativeElement.shadowRoot ?? fixture.nativeElement).querySelector(
+      'fieldset'
+    );
+    expect(fieldset!.getAttribute('aria-invalid')).toBe('true');
   });
 });

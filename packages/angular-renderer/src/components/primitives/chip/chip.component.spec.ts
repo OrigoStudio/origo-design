@@ -35,7 +35,9 @@ describe('ChipComponent', () => {
     });
     fixture.detectChanges();
 
-    const buttonEl = fixture.nativeElement.shadowRoot!.querySelector('button');
+    const buttonEl = (fixture.nativeElement.shadowRoot ?? fixture.nativeElement).querySelector(
+      'button'
+    );
     expect(buttonEl).toBeTruthy();
     expect(buttonEl!.getAttribute('aria-pressed')).toBe('false');
     expect(buttonEl!.textContent).toContain('Angular');
@@ -49,7 +51,9 @@ describe('ChipComponent', () => {
     });
     fixture.detectChanges();
 
-    const buttonEl = fixture.nativeElement.shadowRoot!.querySelector('button');
+    const buttonEl = (fixture.nativeElement.shadowRoot ?? fixture.nativeElement).querySelector(
+      'button'
+    );
     buttonEl!.click();
 
     expect(mockExperienceAdapter.updateState).toHaveBeenCalledWith('chip-2', 'selected', true);
@@ -63,7 +67,9 @@ describe('ChipComponent', () => {
     });
     fixture.detectChanges();
 
-    const buttonEl = fixture.nativeElement.shadowRoot!.querySelector('button');
+    const buttonEl = (fixture.nativeElement.shadowRoot ?? fixture.nativeElement).querySelector(
+      'button'
+    );
     expect(buttonEl!.disabled).toBe(true);
 
     component.onClick();

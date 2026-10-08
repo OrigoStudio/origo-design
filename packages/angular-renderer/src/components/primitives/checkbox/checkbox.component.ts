@@ -14,12 +14,18 @@ import { OrigoAdapter } from '../../../adapters/web/adapter';
 import { WebExperienceAdapterService } from '../../../adapters/web/experience-adapter.service';
 
 export interface CheckboxProps {
+  permissions?: Record<string, string>;
+  rules?: Record<string, unknown>;
+  metadata?: Record<string, unknown>;
   checked?: boolean;
   label?: string;
   disabled?: boolean;
   'aria-label'?: string;
   'aria-describedby'?: string;
   required?: boolean;
+  invalid?: boolean;
+  errorText?: string;
+  helpText?: string;
 }
 
 @Component({
@@ -36,10 +42,16 @@ export interface CheckboxProps {
 })
 export class CheckboxComponent implements OrigoAdapter<CheckboxProps> {
   static readonly contractSchema = {
+    permissions: 'object',
+    rules: 'object',
+    metadata: 'object',
     checked: 'boolean',
     label: 'string',
     disabled: 'boolean',
     required: 'boolean',
+    invalid: 'boolean',
+    errorText: 'string',
+    helpText: 'string',
   };
   static readonly strictContract = false;
 
@@ -61,6 +73,10 @@ export class CheckboxComponent implements OrigoAdapter<CheckboxProps> {
       ? String(desc)
       : undefined;
   });
+
+  computedInvalid = computed(() => !!this.contract().props?.invalid);
+  computedErrorText = computed(() => this.contract().props?.errorText ?? '');
+  computedHelpText = computed(() => this.contract().props?.helpText ?? '');
 
   private experienceAdapter = inject(WebExperienceAdapterService);
 

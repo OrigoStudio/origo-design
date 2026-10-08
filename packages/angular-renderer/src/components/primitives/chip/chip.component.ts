@@ -14,6 +14,9 @@ import { OrigoAdapter, coerceContractProps } from '../../../adapters/web/adapter
 import { WebExperienceAdapterService } from '../../../adapters/web/experience-adapter.service';
 
 export interface ChipProps {
+  permissions?: Record<string, string>;
+  rules?: Record<string, unknown>;
+  metadata?: Record<string, unknown>;
   selected?: boolean;
   label?: string;
   disabled?: boolean;

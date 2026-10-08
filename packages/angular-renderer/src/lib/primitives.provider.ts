@@ -21,6 +21,7 @@ import { ChipComponent } from '../components/primitives/chip/chip.component';
 import { TextInputComponent } from '../components/primitives/text-input/text-input.component';
 import { ButtonComponent } from '../components/primitives/button/button.component';
 import { VBoxComponent } from '../components/primitives/vbox/vbox.component';
+import { InputNumberComponent } from '../components/primitives/input-number/input-number.component';
 
 export function provideOrigo9Primitives(): EnvironmentProviders {
   const registryMap = new Map<string, unknown>([
@@ -46,6 +47,7 @@ export function provideOrigo9Primitives(): EnvironmentProviders {
     ['TextInput', TextInputComponent],
     ['Button', ButtonComponent],
     ['VBox', VBoxComponent],
+    ['InputNumber', InputNumberComponent],
     ['vbox', VBoxComponent], // For backward compatibility with 'vbox' in preview-root
   ]);
 

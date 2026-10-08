@@ -12,6 +12,9 @@ import { OrigoAdapter, ContainerComponent } from '../../../adapters/web/adapter'
 import { LabelComponent, LabelProps } from '../label/label.component';
 
 export interface FormFieldProps {
+  permissions?: Record<string, string>;
+  rules?: Record<string, unknown>;
+  metadata?: Record<string, unknown>;
   label?: string;
   error?: string;
   hint?: string;
@@ -39,6 +42,9 @@ export interface FormFieldProps {
 })
 export class FormFieldComponent implements OrigoAdapter<FormFieldProps>, ContainerComponent {
   static readonly contractSchema = {
+    permissions: 'object',
+    rules: 'object',
+    metadata: 'object',
     label: 'string',
     error: 'string',
     hint: 'string',

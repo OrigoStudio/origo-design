@@ -17,6 +17,9 @@ export interface BreadcrumbItem {
 }
 
 export interface BreadcrumbsProps {
+  permissions?: Record<string, string>;
+  rules?: Record<string, unknown>;
+  metadata?: Record<string, unknown>;
   items?: Array<BreadcrumbItem>;
   'aria-label'?: string;
   'aria-describedby'?: string;
@@ -39,6 +42,9 @@ export interface BreadcrumbsProps {
 })
 export class BreadcrumbsComponent implements OrigoAdapter<BreadcrumbsProps> {
   static readonly contractSchema = {
+    permissions: 'object',
+    rules: 'object',
+    metadata: 'object',
     items: 'array',
   };
   static readonly strictContract = false;

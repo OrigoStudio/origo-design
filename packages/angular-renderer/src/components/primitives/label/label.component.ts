@@ -9,6 +9,9 @@ import { InteractionContract } from '@origostudio/core';
 import { OrigoAdapter } from '../../../adapters/web/adapter';
 
 export interface LabelProps {
+  permissions?: Record<string, string>;
+  rules?: Record<string, unknown>;
+  metadata?: Record<string, unknown>;
   text?: string;
   for?: string;
   required?: boolean;
@@ -30,6 +33,9 @@ export interface LabelProps {
 })
 export class LabelComponent implements OrigoAdapter<LabelProps> {
   static readonly contractSchema = {
+    permissions: 'object',
+    rules: 'object',
+    metadata: 'object',
     text: 'string',
     for: 'string',
     required: 'boolean',

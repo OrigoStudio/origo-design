@@ -31,15 +31,21 @@ describe('FormFieldComponent', () => {
     });
     fixture.detectChanges();
 
-    const label = fixture.nativeElement.shadowRoot!.querySelector('origo-label');
+    const label = (fixture.nativeElement.shadowRoot ?? fixture.nativeElement).querySelector(
+      'origo-label'
+    );
     expect(label).toBeTruthy();
 
-    const error = fixture.nativeElement.shadowRoot!.querySelector('.form-field-error');
+    const error = (fixture.nativeElement.shadowRoot ?? fixture.nativeElement).querySelector(
+      '.form-field-error'
+    );
     expect(error).toBeTruthy();
     expect(error!.textContent).toBe('Some error');
 
     // Hint is not shown if error is present
-    const hint = fixture.nativeElement.shadowRoot!.querySelector('.form-field-hint');
+    const hint = (fixture.nativeElement.shadowRoot ?? fixture.nativeElement).querySelector(
+      '.form-field-hint'
+    );
     expect(hint).toBeNull();
 
     // has-error class on host
@@ -56,11 +62,15 @@ describe('FormFieldComponent', () => {
     });
     fixture.detectChanges();
 
-    const hint = fixture.nativeElement.shadowRoot!.querySelector('.form-field-hint');
+    const hint = (fixture.nativeElement.shadowRoot ?? fixture.nativeElement).querySelector(
+      '.form-field-hint'
+    );
     expect(hint).toBeTruthy();
     expect(hint!.textContent).toBe('Some hint');
 
-    const error = fixture.nativeElement.shadowRoot!.querySelector('.form-field-error');
+    const error = (fixture.nativeElement.shadowRoot ?? fixture.nativeElement).querySelector(
+      '.form-field-error'
+    );
     expect(error).toBeNull();
   });
 
@@ -81,7 +91,9 @@ describe('FormFieldComponent', () => {
     fixture.detectChanges();
 
     expect(component.vc()).toBeTruthy();
-    const label = fixture.nativeElement.shadowRoot!.querySelector('origo-label');
+    const label = (fixture.nativeElement.shadowRoot ?? fixture.nativeElement).querySelector(
+      'origo-label'
+    );
     expect(label).toBeNull();
   });
 

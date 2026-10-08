@@ -13,6 +13,9 @@ import { OrigoAdapter } from '../../../adapters/web/adapter';
 import { WebExperienceAdapterService } from '../../../adapters/web/experience-adapter.service';
 
 export interface ListProps {
+  permissions?: Record<string, string>;
+  rules?: Record<string, unknown>;
+  metadata?: Record<string, unknown>;
   items?: Array<Record<string, unknown>>;
   maxItems?: number;
   disabled?: boolean;
@@ -37,6 +40,9 @@ export interface ListProps {
 })
 export class ListComponent implements OrigoAdapter<ListProps> {
   static readonly contractSchema = {
+    permissions: 'object',
+    rules: 'object',
+    metadata: 'object',
     items: 'array',
     maxItems: 'number',
     disabled: 'boolean',

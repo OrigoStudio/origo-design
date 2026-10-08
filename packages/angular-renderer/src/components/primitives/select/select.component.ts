@@ -16,6 +16,9 @@ import { OrigoAdapter } from '../../../adapters/web/adapter';
 import { WebExperienceAdapterService } from '../../../adapters/web/experience-adapter.service';
 
 export interface SelectProps {
+  permissions?: Record<string, string>;
+  rules?: Record<string, unknown>;
+  metadata?: Record<string, unknown>;
   options: Array<{ value: string; label: string }>;
   value?: string;
   disabled?: boolean;
@@ -39,6 +42,9 @@ export interface SelectProps {
 })
 export class SelectComponent implements OrigoAdapter<SelectProps> {
   static readonly contractSchema = {
+    permissions: 'object',
+    rules: 'object',
+    metadata: 'object',
     options: 'array',
     value: 'string',
     disabled: 'boolean',

@@ -67,7 +67,7 @@ describe('CardComponent', () => {
     });
     fixture.detectChanges();
 
-    const root = fixture.nativeElement.shadowRoot!;
+    const root = fixture.nativeElement.shadowRoot ?? fixture.nativeElement;
     const imgEl = root.querySelector('img');
     // Angular URL sanitization should prefix unsafe urls with 'unsafe:' or strip them
     const src = imgEl?.getAttribute('src') || '';

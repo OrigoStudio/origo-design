@@ -1,16 +1,25 @@
-<label [for]="contract().id" [class.disabled]="computedDisabled()">
-  <input
-    type="checkbox"
-    [id]="contract().id"
-    [disabled]="computedDisabled()"
-    [required]="computedRequired()"
-    [attr.aria-label]="computedAriaLabel()"
-    [attr.aria-describedby]="computedAriaDescribedBy()"
-    (change)="onChange($event)"
-    [checked]="checked()"
-  />
-  <span class="label-text">{{ computedLabel() }}</span>
-  @if (computedRequired()) {
-    <span class="required-indicator" aria-hidden="true">*</span>
+<div class="origo-checkbox__wrapper">
+  <label [for]="contract().id" [class.disabled]="computedDisabled()">
+    <input
+      type="checkbox"
+      [id]="contract().id"
+      [disabled]="computedDisabled()"
+      [required]="computedRequired()"
+      [attr.aria-label]="computedAriaLabel()"
+      [attr.aria-describedby]="computedAriaDescribedBy()"
+      [attr.aria-invalid]="computedInvalid() ? 'true' : null"
+      (change)="onChange($event)"
+      [checked]="checked()"
+    />
+    <span class="label-text">{{ computedLabel() }}</span>
+    @if (computedRequired()) {
+      <span class="required-indicator" aria-hidden="true">*</span>
+    }
+  </label>
+  @if (computedErrorText()) {
+    <div class="origo-checkbox__error">{{ computedErrorText() }}</div>
   }
-</label>
+  @if (computedHelpText()) {
+    <div class="origo-checkbox__help">{{ computedHelpText() }}</div>
+  }
+</div>

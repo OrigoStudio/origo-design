@@ -42,7 +42,9 @@ describe('TextareaComponent', () => {
     });
     fixture.detectChanges();
 
-    const textareaEl = fixture.nativeElement.shadowRoot!.querySelector('textarea');
+    const textareaEl = (fixture.nativeElement.shadowRoot ?? fixture.nativeElement).querySelector(
+      'textarea'
+    );
     expect(textareaEl).toBeTruthy();
     expect(textareaEl!.id).toBe('textarea-1');
     expect(textareaEl!.value).toBe('Hello');
@@ -61,7 +63,9 @@ describe('TextareaComponent', () => {
     });
     fixture.detectChanges();
 
-    const textareaEl = fixture.nativeElement.shadowRoot!.querySelector('textarea');
+    const textareaEl = (fixture.nativeElement.shadowRoot ?? fixture.nativeElement).querySelector(
+      'textarea'
+    );
     expect(textareaEl).toBeTruthy();
     expect(textareaEl!.getAttribute('rows')).toBe('3'); // default
   });
@@ -74,7 +78,9 @@ describe('TextareaComponent', () => {
     });
     fixture.detectChanges();
 
-    const textareaEl = fixture.nativeElement.shadowRoot!.querySelector('textarea');
+    const textareaEl = (fixture.nativeElement.shadowRoot ?? fixture.nativeElement).querySelector(
+      'textarea'
+    );
     expect(textareaEl!.getAttribute('aria-label')).toBe('My Textarea');
     expect(textareaEl!.getAttribute('aria-describedby')).toBe('desc-1');
   });
@@ -87,7 +93,9 @@ describe('TextareaComponent', () => {
     });
     fixture.detectChanges();
 
-    const textareaEl = fixture.nativeElement.shadowRoot!.querySelector('textarea');
+    const textareaEl = (fixture.nativeElement.shadowRoot ?? fixture.nativeElement).querySelector(
+      'textarea'
+    );
     textareaEl!.value = '<script>alert("xss")</script>clean text';
     textareaEl!.dispatchEvent(new Event('input'));
 
@@ -111,5 +119,60 @@ describe('TextareaComponent', () => {
       expect(element.style.marginLeft).toBeFalsy();
       expect(element.style.marginRight).toBeFalsy();
     }
+  });
+
+  it('should apply variant and fluid classes to host', () => {
+    fixture.componentRef.setInput('contract', {
+      id: '1',
+      type: 'Textarea',
+      props: { variant: 'filled', fluid: true },
+    });
+    fixture.detectChanges();
+    expect(fixture.nativeElement.classList.contains('origo-textarea--filled')).toBe(true);
+    expect(fixture.nativeElement.classList.contains('origo-textarea--fluid')).toBe(true);
+  });
+
+  it('should render errorText and helpText', () => {
+    fixture.componentRef.setInput('contract', {
+      id: '1',
+      type: 'Textarea',
+      props: { errorText: 'Error message', helpText: 'Help message' },
+    });
+    fixture.detectChanges();
+    const root = fixture.nativeElement.shadowRoot ?? fixture.nativeElement;
+    const errorEl = root.querySelector('.origo-textarea__error');
+    const helpEl = root.querySelector('.origo-textarea__help');
+    expect(errorEl).toBeTruthy();
+    expect(errorEl?.textContent?.trim()).toBe('Error message');
+    expect(helpEl).toBeTruthy();
+    expect(helpEl?.textContent?.trim()).toBe('Help message');
+  });
+
+  it('should bind aria-invalid based on invalid prop', () => {
+    fixture.componentRef.setInput('contract', {
+      id: '1',
+      type: 'Textarea',
+      props: { invalid: true },
+    });
+    fixture.detectChanges();
+    const textareaEl = (fixture.nativeElement.shadowRoot ?? fixture.nativeElement).querySelector(
+      'textarea'
+    );
+    expect(textareaEl!.getAttribute('aria-invalid')).toBe('true');
+  });
+
+  it('should strip HTML formatting on paste', () => {
+    fixture.componentRef.setInput('contract', { id: '1', type: 'Textarea', props: {} });
+    fixture.detectChanges();
+    const textareaEl = (fixture.nativeElement.shadowRoot ?? fixture.nativeElement).querySelector(
+      'textarea'
+    );
+    const dt = {
+      getData: (type: string) => (type === 'text/plain' ? 'bold text' : '<b>bold text</b>'),
+    } as unknown as DataTransfer;
+    const pasteEvent = new Event('paste') as any;
+    pasteEvent.clipboardData = dt;
+    textareaEl!.dispatchEvent(pasteEvent);
+    expect(component.value()).toBe('bold text');
   });
 });

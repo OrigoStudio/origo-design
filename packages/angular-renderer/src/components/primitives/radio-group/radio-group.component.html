@@ -1,4 +1,8 @@
-<fieldset [disabled]="computedDisabled()" [attr.aria-describedby]="computedAriaDescribedBy()">
+<fieldset
+  [disabled]="computedDisabled()"
+  [attr.aria-describedby]="computedAriaDescribedBy()"
+  [attr.aria-invalid]="computedInvalid() ? 'true' : null"
+>
   <legend class="visually-hidden">{{ computedAriaLabel() ?? 'Radio Group' }}</legend>
 
   <div class="radio-options">
@@ -18,3 +22,9 @@
     }
   </div>
 </fieldset>
+@if (computedErrorText()) {
+  <div class="origo-radio-group__error">{{ computedErrorText() }}</div>
+}
+@if (computedHelpText()) {
+  <div class="origo-radio-group__help">{{ computedHelpText() }}</div>
+}

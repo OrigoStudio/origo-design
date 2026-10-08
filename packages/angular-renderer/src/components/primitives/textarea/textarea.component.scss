@@ -1,31 +1,69 @@
 :host {
   display: block;
 }
-
-textarea {
+:host(.origo-textarea--fluid) {
   display: block;
   width: 100%;
-  font-family: var(--origo-typography-input-font-family, inherit);
-  font-size: var(--origo-typography-input-font-size, 1rem);
-  color: var(--origo-color-text-primary, #333);
-  background-color: var(--origo-color-surface-background, #fff);
-  border: 1px solid var(--origo-color-border-default, #ccc);
-  border-radius: var(--origo-radius-sm, 4px);
-  padding: var(--origo-spacing-container-padding, 8px);
+}
+.origo-textarea__wrapper {
+  display: flex;
+  flex-direction: column;
+}
+textarea {
   box-sizing: border-box;
+  width: 100%;
   resize: vertical;
-
-  &:focus {
-    outline: 2px solid var(--origo-color-focus, #005fcc);
-    outline-offset: 2px;
-  }
-
-  &:disabled {
-    opacity: var(--origo-opacity-disabled, 0.5);
-    cursor: not-allowed;
-  }
-
-  &[readonly] {
-    background-color: var(--origo-color-surface-readonly, #f9f9f9);
-  }
+  background-color: var(--origo-color-surface-background);
+  color: var(--origo-color-text-primary);
+  padding: var(--origo-spacing-container-padding);
+  border: var(--origo-border-width-default) solid var(--origo-color-border-default);
+  border-radius: var(--origo-radius-sm);
+  box-shadow: var(--origo-shadow-sm);
+  font-family: var(--origo-typography-input-font-family);
+  font-size: var(--origo-typography-input-font-size);
+  font-weight: var(--origo-typography-input-font-weight);
+  line-height: var(--origo-typography-input-line-height);
+  transition: all var(--origo-duration-fast) ease-in-out;
+}
+:host(.origo-textarea--filled) textarea {
+  background-color: var(--origo-color-surface-subtle);
+  border: none;
+}
+:host(.origo-textarea--text) textarea {
+  background-color: transparent;
+  border: none;
+}
+textarea::placeholder {
+  color: var(--origo-color-text-muted);
+}
+textarea:hover:not(:disabled):not([readonly]) {
+  border-color: var(--origo-color-border-hover);
+}
+textarea:active:not(:disabled):not([readonly]) {
+  border-color: var(--origo-color-border-active);
+}
+textarea:focus,
+textarea:focus-visible {
+  outline: var(--origo-border-width-thick) solid var(--origo-color-focus);
+  outline-offset: var(--origo-border-offset-negative);
+  border-color: var(--origo-color-focus);
+}
+textarea:disabled {
+  cursor: not-allowed;
+  opacity: var(--origo-opacity-disabled);
+  background-color: var(--origo-color-surface-disabled);
+  color: var(--origo-color-text-disabled);
+}
+textarea[readonly] {
+  background-color: var(--origo-color-surface-readonly);
+}
+.origo-textarea__error {
+  color: var(--origo-color-text-danger);
+  font-size: var(--origo-typography-caption-font-size);
+  margin-top: var(--origo-spacing-xs);
+}
+.origo-textarea__help {
+  color: var(--origo-color-text-muted);
+  font-size: var(--origo-typography-caption-font-size);
+  margin-top: var(--origo-spacing-xs);
 }

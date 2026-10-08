@@ -1,10 +1,21 @@
-<input
-  type="text"
-  [value]="value()"
-  (input)="onInput($event)"
-  [placeholder]="computedPlaceholder()"
-  [disabled]="computedDisabled()"
-  [readonly]="computedReadonly()"
-  [attr.aria-label]="computedAriaLabel()"
-  [attr.aria-describedby]="computedAriaDescribedBy()"
-/>
+<div class="origo-text-input__wrapper">
+  <input
+    [attr.type]="computedType()"
+    [value]="value()"
+    (input)="onInput($event)"
+    (paste)="onPaste($event)"
+    [placeholder]="computedPlaceholder()"
+    [disabled]="computedDisabled()"
+    [readonly]="computedReadonly()"
+    [attr.aria-label]="computedAriaLabel()"
+    [attr.aria-describedby]="computedAriaDescribedBy()"
+    [attr.aria-invalid]="computedInvalid() ? 'true' : null"
+    [attr.aria-required]="computedRequired() ? 'true' : null"
+  />
+</div>
+@if (computedErrorText()) {
+  <div class="origo-text-input__error">{{ computedErrorText() }}</div>
+}
+@if (computedHelpText()) {
+  <div class="origo-text-input__help">{{ computedHelpText() }}</div>
+}

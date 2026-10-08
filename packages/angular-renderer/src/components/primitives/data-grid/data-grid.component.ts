@@ -15,6 +15,9 @@ import { OrigoAdapter } from '../../../adapters/web/adapter';
 import { WebExperienceAdapterService } from '../../../adapters/web/experience-adapter.service';
 
 export interface DataGridProps {
+  permissions?: Record<string, string>;
+  rules?: Record<string, unknown>;
+  metadata?: Record<string, unknown>;
   columns?: Array<{ key: string; label: string; sortable?: boolean }>;
   rows?: Array<Record<string, unknown>>;
   pageSize?: number;
@@ -42,6 +45,9 @@ export interface DataGridProps {
 })
 export class DataGridComponent implements OrigoAdapter<DataGridProps> {
   static readonly contractSchema = {
+    permissions: 'object',
+    rules: 'object',
+    metadata: 'object',
     columns: 'array',
     rows: 'array',
     pageSize: 'number',

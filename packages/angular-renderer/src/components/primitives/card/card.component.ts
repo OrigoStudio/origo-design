@@ -12,6 +12,9 @@ import { InteractionContract } from '@origostudio/core';
 import { OrigoAdapter } from '../../../adapters/web/adapter';
 
 export interface CardProps {
+  permissions?: Record<string, string>;
+  rules?: Record<string, unknown>;
+  metadata?: Record<string, unknown>;
   title?: string;
   subtitle?: string;
   imageUrl?: string;
@@ -36,6 +39,9 @@ export interface CardProps {
 })
 export class CardComponent implements OrigoAdapter<CardProps> {
   static readonly contractSchema = {
+    permissions: 'object',
+    rules: 'object',
+    metadata: 'object',
     title: 'string',
     subtitle: 'string',
     imageUrl: 'string',

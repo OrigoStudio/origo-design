@@ -36,12 +36,16 @@ describe('SwitchComponent', () => {
     });
     fixture.detectChanges();
 
-    const inputEl = fixture.nativeElement.shadowRoot!.querySelector('input');
+    const inputEl = (fixture.nativeElement.shadowRoot ?? fixture.nativeElement).querySelector(
+      'input'
+    );
     expect(inputEl).toBeTruthy();
     expect(inputEl!.getAttribute('role')).toBe('switch');
     expect(inputEl!.checked).toBe(true);
 
-    const labelText = fixture.nativeElement.shadowRoot!.querySelector('.label-text');
+    const labelText = (fixture.nativeElement.shadowRoot ?? fixture.nativeElement).querySelector(
+      '.label-text'
+    );
     expect(labelText!.textContent).toContain('Airplane Mode');
   });
 
@@ -53,7 +57,9 @@ describe('SwitchComponent', () => {
     });
     fixture.detectChanges();
 
-    const inputEl = fixture.nativeElement.shadowRoot!.querySelector('input');
+    const inputEl = (fixture.nativeElement.shadowRoot ?? fixture.nativeElement).querySelector(
+      'input'
+    );
     expect(inputEl).toBeTruthy();
     expect(inputEl!.checked).toBe(false);
   });
@@ -66,7 +72,9 @@ describe('SwitchComponent', () => {
     });
     fixture.detectChanges();
 
-    const inputEl = fixture.nativeElement.shadowRoot!.querySelector('input');
+    const inputEl = (fixture.nativeElement.shadowRoot ?? fixture.nativeElement).querySelector(
+      'input'
+    );
     expect(inputEl!.disabled).toBe(true);
   });
 
@@ -78,7 +86,9 @@ describe('SwitchComponent', () => {
     });
     fixture.detectChanges();
 
-    const inputEl = fixture.nativeElement.shadowRoot!.querySelector('input');
+    const inputEl = (fixture.nativeElement.shadowRoot ?? fixture.nativeElement).querySelector(
+      'input'
+    );
     inputEl!.checked = true;
     inputEl!.dispatchEvent(new Event('change'));
 
@@ -95,5 +105,34 @@ describe('SwitchComponent', () => {
     const style = window.getComputedStyle(element);
     expect(style.paddingLeft).toBe('');
     expect(style.paddingRight).toBe('');
+  });
+
+  it('should render errorText and helpText', () => {
+    fixture.componentRef.setInput('contract', {
+      id: '1',
+      type: 'Switch',
+      props: { errorText: 'Error message', helpText: 'Help message' },
+    });
+    fixture.detectChanges();
+    const root = fixture.nativeElement.shadowRoot ?? fixture.nativeElement;
+    const errorEl = root.querySelector('.origo-switch__error');
+    const helpEl = root.querySelector('.origo-switch__help');
+    expect(errorEl).toBeTruthy();
+    expect(errorEl?.textContent?.trim()).toBe('Error message');
+    expect(helpEl).toBeTruthy();
+    expect(helpEl?.textContent?.trim()).toBe('Help message');
+  });
+
+  it('should bind aria-invalid based on invalid prop', () => {
+    fixture.componentRef.setInput('contract', {
+      id: '1',
+      type: 'Switch',
+      props: { invalid: true },
+    });
+    fixture.detectChanges();
+    const inputEl = (fixture.nativeElement.shadowRoot ?? fixture.nativeElement).querySelector(
+      'input'
+    );
+    expect(inputEl!.getAttribute('aria-invalid')).toBe('true');
   });
 });

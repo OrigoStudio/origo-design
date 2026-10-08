@@ -14,12 +14,18 @@ import { OrigoAdapter } from '../../../adapters/web/adapter';
 import { WebExperienceAdapterService } from '../../../adapters/web/experience-adapter.service';
 
 export interface RadioGroupProps {
+  permissions?: Record<string, string>;
+  rules?: Record<string, unknown>;
+  metadata?: Record<string, unknown>;
   options: Array<{ value: string; label: string }>;
   value?: string;
   disabled?: boolean;
   'aria-label'?: string;
   'aria-describedby'?: string;
   required?: boolean;
+  invalid?: boolean;
+  errorText?: string;
+  helpText?: string;
 }
 
 @Component({
@@ -36,10 +42,16 @@ export interface RadioGroupProps {
 })
 export class RadioGroupComponent implements OrigoAdapter<RadioGroupProps> {
   static readonly contractSchema = {
+    permissions: 'object',
+    rules: 'object',
+    metadata: 'object',
     options: 'array',
     value: 'string',
     disabled: 'boolean',
     required: 'boolean',
+    invalid: 'boolean',
+    errorText: 'string',
+    helpText: 'string',
   };
   static readonly strictContract = false;
 
@@ -64,6 +76,10 @@ export class RadioGroupComponent implements OrigoAdapter<RadioGroupProps> {
       ? String(desc)
       : undefined;
   });
+
+  computedInvalid = computed(() => !!this.contract().props?.invalid);
+  computedErrorText = computed(() => this.contract().props?.errorText ?? '');
+  computedHelpText = computed(() => this.contract().props?.helpText ?? '');
 
   private experienceAdapter = inject(WebExperienceAdapterService);
 

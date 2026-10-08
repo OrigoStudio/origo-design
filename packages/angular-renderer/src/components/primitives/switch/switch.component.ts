@@ -14,11 +14,17 @@ import { OrigoAdapter, coerceContractProps } from '../../../adapters/web/adapter
 import { WebExperienceAdapterService } from '../../../adapters/web/experience-adapter.service';
 
 export interface SwitchProps {
+  permissions?: Record<string, string>;
+  rules?: Record<string, unknown>;
+  metadata?: Record<string, unknown>;
   checked?: boolean;
   label?: string;
   disabled?: boolean;
   'aria-label'?: string;
   'aria-describedby'?: string;
+  invalid?: boolean;
+  errorText?: string;
+  helpText?: string;
 }
 
 @Component({
@@ -41,6 +47,9 @@ export class SwitchComponent implements OrigoAdapter<SwitchProps> {
     checked: 'boolean',
     label: 'string',
     disabled: 'boolean',
+    invalid: 'boolean',
+    errorText: 'string',
+    helpText: 'string',
   };
   static readonly strictContract = false;
 
@@ -57,6 +66,10 @@ export class SwitchComponent implements OrigoAdapter<SwitchProps> {
     const v = this.contract().props?.['aria-describedby'];
     return v !== undefined && v !== null && String(v).trim() !== '' ? String(v) : undefined;
   });
+
+  computedInvalid = computed(() => !!this.contract().props?.invalid);
+  computedErrorText = computed(() => this.contract().props?.errorText ?? '');
+  computedHelpText = computed(() => this.contract().props?.helpText ?? '');
 
   private experienceAdapter = inject(WebExperienceAdapterService);
 
