@@ -17,29 +17,23 @@ import { isPlatformBrowser } from '@angular/common';
 import { InteractionContract } from '@origostudio/core';
 import { OrigoAdapter } from '../../../adapters/web/adapter';
 import { WebExperienceAdapterService } from '../../../adapters/web/experience-adapter.service';
-import { type NormalizedOption, normalizeOptions, filterOptions } from './selection-utils';
+import { NormalizedOption, normalizeOptions, filterOptions } from '../select/selection-utils';
 
-export type { NormalizedOption };
-
-export interface SelectProps {
+export interface AutocompleteProps {
   id?: string;
   value?: unknown;
-  options: Array<unknown>;
+  suggestions?: Array<unknown>;
+  minQueryLength?: number;
+  delay?: number;
+  multiple?: boolean;
+  forceSelection?: boolean;
   optionLabel?: string;
   optionValue?: string;
-  optionGroupLabel?: string;
-  optionGroupChildren?: string;
-  placeholder?: string;
-  filter?: boolean;
-  filterBy?: string;
-  filterMatchMode?: 'contains' | 'startsWith' | 'endsWith';
-  filterPlaceholder?: string;
-  editable?: boolean;
-  clearable?: boolean;
-  appendTo?: string;
+  completeOnFocus?: boolean;
   virtualScroll?: boolean;
-  itemSize?: number;
   loading?: boolean;
+  placeholder?: string;
+  clearable?: boolean;
   disabled?: boolean;
   readonly?: boolean;
   required?: boolean;
@@ -56,45 +50,41 @@ export interface SelectProps {
 }
 
 @Component({
-  selector: 'origo-select',
+  selector: 'origo-autocomplete',
   standalone: true,
-  templateUrl: './select.component.html',
-  styleUrls: ['./select.component.scss'],
+  templateUrl: './autocomplete.component.html',
+  styleUrls: ['./autocomplete.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.ShadowDom,
   host: {
-    '[class.origo-select]': 'true',
+    '[class.origo-autocomplete]': 'true',
     '[attr.data-testid]': 'contract().id ?? ""',
-    '[class.origo-select--fluid]': 'computedFluid()',
-    '[class.origo-select--outlined]': 'computedVariant() === "outlined"',
-    '[class.origo-select--filled]': 'computedVariant() === "filled"',
-    '[class.origo-select--invalid]': 'computedInvalid()',
-    '[class.origo-select--disabled]': 'computedDisabled()',
-    '[class.origo-select--readonly]': 'computedReadonly()',
+    '[class.origo-autocomplete--fluid]': 'computedFluid()',
+    '[class.origo-autocomplete--outlined]': 'computedVariant() === "outlined"',
+    '[class.origo-autocomplete--filled]': 'computedVariant() === "filled"',
+    '[class.origo-autocomplete--invalid]': 'computedInvalid()',
+    '[class.origo-autocomplete--disabled]': 'computedDisabled()',
+    '[class.origo-autocomplete--readonly]': 'computedReadonly()',
   },
 })
-export class SelectComponent implements OrigoAdapter<SelectProps> {
+export class AutocompleteComponent implements OrigoAdapter<AutocompleteProps> {
   static readonly contractSchema = {
     permissions: 'object',
     rules: 'object',
     metadata: 'object',
-    options: 'array',
+    suggestions: 'array',
     value: 'string',
+    minQueryLength: 'number',
+    delay: 'number',
+    multiple: 'boolean',
+    forceSelection: 'boolean',
     optionLabel: 'string',
     optionValue: 'string',
-    optionGroupLabel: 'string',
-    optionGroupChildren: 'string',
-    placeholder: 'string',
-    filter: 'boolean',
-    filterBy: 'string',
-    filterMatchMode: 'string',
-    filterPlaceholder: 'string',
-    editable: 'boolean',
-    clearable: 'boolean',
-    appendTo: 'string',
+    completeOnFocus: 'boolean',
     virtualScroll: 'boolean',
-    itemSize: 'number',
     loading: 'boolean',
+    placeholder: 'string',
+    clearable: 'boolean',
     disabled: 'boolean',
     readonly: 'boolean',
     required: 'boolean',
@@ -108,57 +98,37 @@ export class SelectComponent implements OrigoAdapter<SelectProps> {
   };
   static readonly strictContract = false;
 
-  contract = input.required<InteractionContract<SelectProps>>();
+  contract = input.required<InteractionContract<AutocompleteProps>>();
   value = model<unknown>('');
 
+  inputValue = signal<string>('');
+  query = signal<string>('');
   isOpen = signal<boolean>(false);
-  filterQuery = signal<string>('');
   activeIndex = signal<number>(-1);
 
-  computedNormalizedOptions = computed(() => {
+  private debounceTimer: ReturnType<typeof setTimeout> | null = null;
+
+  computedNormalizedSuggestions = computed(() => {
     const props = this.contract().props;
-    return normalizeOptions(
-      props?.options,
-      props?.optionLabel,
-      props?.optionValue,
-      props?.optionGroupLabel,
-      props?.optionGroupChildren
-    );
+    return normalizeOptions(props?.suggestions, props?.optionLabel, props?.optionValue);
   });
 
-  computedOptions = this.computedNormalizedOptions;
-
-  filteredOptions = computed(() => {
-    const opts = this.computedNormalizedOptions();
-    if (!this.computedFilter() && !this.filterQuery()) {
-      return opts;
-    }
-    const mode = this.contract().props?.filterMatchMode ?? 'contains';
-    return filterOptions(opts, this.filterQuery(), mode);
-  });
-
-  selectedOption = computed(() => {
-    const val = this.value();
-    return this.computedNormalizedOptions().find(opt => opt.value === val);
-  });
-
-  selectedLabel = computed(() => {
-    const opt = this.selectedOption();
-    if (opt) return opt.label;
-    const val = this.value();
-    return val !== undefined && val !== null && val !== '' ? String(val) : '';
+  filteredSuggestions = computed(() => {
+    const suggestions = this.computedNormalizedSuggestions();
+    const q = this.query();
+    if (!q) return suggestions;
+    return filterOptions(suggestions, q, 'contains');
   });
 
   computedPlaceholder = computed(() => this.contract().props?.placeholder ?? '');
+  computedMinQueryLength = computed(() => this.contract().props?.minQueryLength ?? 1);
+  computedDelay = computed(() => this.contract().props?.delay ?? 300);
+  computedForceSelection = computed(() => !!this.contract().props?.forceSelection);
+  computedClearable = computed(() => !!this.contract().props?.clearable);
   computedDisabled = computed(() => !!this.contract().props?.disabled);
   computedReadonly = computed(() => !!this.contract().props?.readonly);
   computedRequired = computed(() => !!this.contract().props?.required);
   computedInvalid = computed(() => !!this.contract().props?.invalid);
-  computedFilter = computed(() => !!this.contract().props?.filter);
-  computedFilterPlaceholder = computed(
-    () => this.contract().props?.filterPlaceholder ?? 'Search...'
-  );
-  computedClearable = computed(() => !!this.contract().props?.clearable);
   computedVariant = computed(() => this.contract().props?.variant ?? 'outlined');
   computedFluid = computed(() => !!this.contract().props?.fluid);
   computedErrorText = computed(() => this.contract().props?.errorText ?? '');
@@ -169,7 +139,7 @@ export class SelectComponent implements OrigoAdapter<SelectProps> {
     if (label !== undefined && label !== null && String(label).trim() !== '') {
       return String(label);
     }
-    return this.computedPlaceholder() || 'Select';
+    return this.computedPlaceholder() || 'Autocomplete';
   });
 
   computedAriaDescribedBy = computed(() => {
@@ -191,53 +161,113 @@ export class SelectComponent implements OrigoAdapter<SelectProps> {
       untracked(() => {
         if (contractVal !== undefined && contractVal !== this.value()) {
           this.value.set(contractVal);
+          // Sync input display
+          const match = this.computedNormalizedSuggestions().find(s => s.value === contractVal);
+          this.inputValue.set(match ? match.label : String(contractVal ?? ''));
         }
       });
     });
   }
 
-  toggleOpen() {
+  onInput(event: Event) {
     if (this.computedDisabled() || this.computedReadonly()) return;
-    const next = !this.isOpen();
-    this.isOpen.set(next);
-    if (next) {
-      this.filterQuery.set('');
-      const currentVal = this.value();
-      const currentIdx = this.filteredOptions().findIndex(o => o.value === currentVal);
-      this.activeIndex.set(currentIdx >= 0 ? currentIdx : 0);
+    const target = event.target as HTMLInputElement;
+    const text = target.value;
+    this.inputValue.set(text);
+
+    if (this.debounceTimer) {
+      clearTimeout(this.debounceTimer);
+    }
+
+    this.debounceTimer = setTimeout(() => {
+      this.query.set(text);
+      if (text.length >= this.computedMinQueryLength()) {
+        this.isOpen.set(true);
+        this.activeIndex.set(0);
+      } else {
+        this.isOpen.set(false);
+      }
+    }, this.computedDelay());
+  }
+
+  onPaste(event: ClipboardEvent) {
+    if (this.computedDisabled() || this.computedReadonly()) return;
+    event.preventDefault();
+    const plain = event.clipboardData?.getData('text/plain') ?? '';
+    const target = event.target as HTMLInputElement;
+    if (!target) return;
+    const start = target.selectionStart ?? target.value.length;
+    const end = target.selectionEnd ?? target.value.length;
+    const newValue = target.value.slice(0, start) + plain + target.value.slice(end);
+    target.value = newValue;
+    this.inputValue.set(newValue);
+    this.query.set(newValue);
+    if (newValue.length >= this.computedMinQueryLength()) {
+      this.isOpen.set(true);
+      this.activeIndex.set(0);
     }
   }
 
-  selectOption(optionValue: unknown) {
-    if (this.computedDisabled() || this.computedReadonly()) return;
-    this.value.set(optionValue);
+  onFocus() {
+    if (
+      this.contract().props?.completeOnFocus &&
+      !this.computedDisabled() &&
+      !this.computedReadonly()
+    ) {
+      this.isOpen.set(true);
+      this.activeIndex.set(0);
+    }
+  }
+
+  onBlur() {
+    if (this.computedForceSelection()) {
+      const currentText = this.inputValue().trim().toLowerCase();
+      const match = this.computedNormalizedSuggestions().find(
+        s => s.label.toLowerCase() === currentText
+      );
+      if (match) {
+        this.selectSuggestion(match);
+      } else {
+        // Revert to existing value or clear
+        const existing = this.computedNormalizedSuggestions().find(s => s.value === this.value());
+        if (existing) {
+          this.inputValue.set(existing.label);
+        } else {
+          this.value.set('');
+          this.inputValue.set('');
+        }
+      }
+    }
+  }
+
+  selectSuggestion(suggestion: NormalizedOption) {
+    if (this.computedDisabled() || this.computedReadonly() || suggestion.disabled) return;
+    this.value.set(suggestion.value);
+    this.inputValue.set(suggestion.label);
     this.isOpen.set(false);
-    this.experienceAdapter.updateState(this.contract().id, 'value', optionValue);
+    this.experienceAdapter.updateState(this.contract().id, 'value', suggestion.value);
   }
 
   clear(event?: Event) {
     if (this.computedDisabled() || this.computedReadonly()) return;
     event?.stopPropagation();
     this.value.set('');
+    this.inputValue.set('');
+    this.query.set('');
+    this.isOpen.set(false);
     this.experienceAdapter.updateState(this.contract().id, 'value', '');
-  }
-
-  onFilterInput(event: Event) {
-    const target = event.target as HTMLInputElement;
-    this.filterQuery.set(target.value);
-    this.activeIndex.set(0);
   }
 
   onKeydown(event: KeyboardEvent) {
     if (this.computedDisabled() || this.computedReadonly()) return;
 
-    const opts = this.filteredOptions();
-    const count = opts.length;
+    const list = this.filteredSuggestions();
+    const count = list.length;
 
     switch (event.key) {
       case 'ArrowDown': {
         event.preventDefault();
-        if (!this.isOpen()) {
+        if (!this.isOpen() && count > 0) {
           this.isOpen.set(true);
           this.activeIndex.set(0);
         } else if (count > 0) {
@@ -248,7 +278,7 @@ export class SelectComponent implements OrigoAdapter<SelectProps> {
       }
       case 'ArrowUp': {
         event.preventDefault();
-        if (!this.isOpen()) {
+        if (!this.isOpen() && count > 0) {
           this.isOpen.set(true);
           this.activeIndex.set(count - 1);
         } else if (count > 0) {
@@ -257,20 +287,13 @@ export class SelectComponent implements OrigoAdapter<SelectProps> {
         }
         break;
       }
-      case 'Enter':
-      case ' ': {
-        const target = event.target as HTMLElement;
-        if (event.key === ' ' && target && target.tagName === 'INPUT') {
-          return;
-        }
-        event.preventDefault();
+      case 'Enter': {
         if (this.isOpen()) {
+          event.preventDefault();
           const idx = this.activeIndex();
-          if (idx >= 0 && idx < count && !opts[idx].disabled) {
-            this.selectOption(opts[idx].value);
+          if (idx >= 0 && idx < count && !list[idx].disabled) {
+            this.selectSuggestion(list[idx]);
           }
-        } else {
-          this.isOpen.set(true);
         }
         break;
       }

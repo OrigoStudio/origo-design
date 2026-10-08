@@ -4,6 +4,9 @@ import { IconButtonComponent } from '../components/primitives/icon-button/icon-b
 import { ButtonGroupComponent } from '../components/primitives/button-group/button-group.component';
 import { FloatingActionButtonComponent } from '../components/primitives/floating-action-button/floating-action-button.component';
 import { SelectComponent } from '../components/primitives/select/select.component';
+import { MultiSelectComponent } from '../components/primitives/multi-select/multi-select.component';
+import { AutocompleteComponent } from '../components/primitives/autocomplete/autocomplete.component';
+import { ComboboxComponent } from '../components/primitives/combobox/combobox.component';
 import { CheckboxComponent } from '../components/primitives/checkbox/checkbox.component';
 import { RadioGroupComponent } from '../components/primitives/radio-group/radio-group.component';
 import { TextareaComponent } from '../components/primitives/textarea/textarea.component';
@@ -29,6 +32,9 @@ export function provideOrigo9Primitives(): EnvironmentProviders {
     ['ButtonGroup', ButtonGroupComponent],
     ['FloatingActionButton', FloatingActionButtonComponent],
     ['Select', SelectComponent],
+    ['MultiSelect', MultiSelectComponent],
+    ['Autocomplete', AutocompleteComponent],
+    ['Combobox', ComboboxComponent],
     ['Checkbox', CheckboxComponent],
     ['RadioGroup', RadioGroupComponent],
     ['Textarea', TextareaComponent],

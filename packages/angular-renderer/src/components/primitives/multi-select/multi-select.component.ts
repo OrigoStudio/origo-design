@@ -17,26 +17,23 @@ import { isPlatformBrowser } from '@angular/common';
 import { InteractionContract } from '@origostudio/core';
 import { OrigoAdapter } from '../../../adapters/web/adapter';
 import { WebExperienceAdapterService } from '../../../adapters/web/experience-adapter.service';
-import { type NormalizedOption, normalizeOptions, filterOptions } from './selection-utils';
+import { NormalizedOption, normalizeOptions, filterOptions } from '../select/selection-utils';
 
-export type { NormalizedOption };
-
-export interface SelectProps {
+export interface MultiSelectProps {
   id?: string;
-  value?: unknown;
+  value?: Array<unknown>;
   options: Array<unknown>;
   optionLabel?: string;
   optionValue?: string;
-  optionGroupLabel?: string;
-  optionGroupChildren?: string;
   placeholder?: string;
   filter?: boolean;
   filterBy?: string;
-  filterMatchMode?: 'contains' | 'startsWith' | 'endsWith';
   filterPlaceholder?: string;
-  editable?: boolean;
+  showToggleAll?: boolean;
+  maxSelectedLabels?: number;
+  selectedItemsLabel?: string;
+  display?: 'comma' | 'chip';
   clearable?: boolean;
-  appendTo?: string;
   virtualScroll?: boolean;
   itemSize?: number;
   loading?: boolean;
@@ -56,42 +53,41 @@ export interface SelectProps {
 }
 
 @Component({
-  selector: 'origo-select',
+  selector: 'origo-multi-select',
   standalone: true,
-  templateUrl: './select.component.html',
-  styleUrls: ['./select.component.scss'],
+  templateUrl: './multi-select.component.html',
+  styleUrls: ['./multi-select.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.ShadowDom,
   host: {
-    '[class.origo-select]': 'true',
+    '[class.origo-multi-select]': 'true',
     '[attr.data-testid]': 'contract().id ?? ""',
-    '[class.origo-select--fluid]': 'computedFluid()',
-    '[class.origo-select--outlined]': 'computedVariant() === "outlined"',
-    '[class.origo-select--filled]': 'computedVariant() === "filled"',
-    '[class.origo-select--invalid]': 'computedInvalid()',
-    '[class.origo-select--disabled]': 'computedDisabled()',
-    '[class.origo-select--readonly]': 'computedReadonly()',
+    '[class.origo-multi-select--fluid]': 'computedFluid()',
+    '[class.origo-multi-select--outlined]': 'computedVariant() === "outlined"',
+    '[class.origo-multi-select--filled]': 'computedVariant() === "filled"',
+    '[class.origo-multi-select--invalid]': 'computedInvalid()',
+    '[class.origo-multi-select--disabled]': 'computedDisabled()',
+    '[class.origo-multi-select--readonly]': 'computedReadonly()',
   },
 })
-export class SelectComponent implements OrigoAdapter<SelectProps> {
+export class MultiSelectComponent implements OrigoAdapter<MultiSelectProps> {
   static readonly contractSchema = {
     permissions: 'object',
     rules: 'object',
     metadata: 'object',
     options: 'array',
-    value: 'string',
+    value: 'array',
     optionLabel: 'string',
     optionValue: 'string',
-    optionGroupLabel: 'string',
-    optionGroupChildren: 'string',
     placeholder: 'string',
     filter: 'boolean',
     filterBy: 'string',
-    filterMatchMode: 'string',
     filterPlaceholder: 'string',
-    editable: 'boolean',
+    showToggleAll: 'boolean',
+    maxSelectedLabels: 'number',
+    selectedItemsLabel: 'string',
+    display: 'string',
     clearable: 'boolean',
-    appendTo: 'string',
     virtualScroll: 'boolean',
     itemSize: 'number',
     loading: 'boolean',
@@ -108,8 +104,8 @@ export class SelectComponent implements OrigoAdapter<SelectProps> {
   };
   static readonly strictContract = false;
 
-  contract = input.required<InteractionContract<SelectProps>>();
-  value = model<unknown>('');
+  contract = input.required<InteractionContract<MultiSelectProps>>();
+  value = model<Array<unknown>>([]);
 
   isOpen = signal<boolean>(false);
   filterQuery = signal<string>('');
@@ -117,39 +113,23 @@ export class SelectComponent implements OrigoAdapter<SelectProps> {
 
   computedNormalizedOptions = computed(() => {
     const props = this.contract().props;
-    return normalizeOptions(
-      props?.options,
-      props?.optionLabel,
-      props?.optionValue,
-      props?.optionGroupLabel,
-      props?.optionGroupChildren
-    );
+    return normalizeOptions(props?.options, props?.optionLabel, props?.optionValue);
   });
-
-  computedOptions = this.computedNormalizedOptions;
 
   filteredOptions = computed(() => {
     const opts = this.computedNormalizedOptions();
     if (!this.computedFilter() && !this.filterQuery()) {
       return opts;
     }
-    const mode = this.contract().props?.filterMatchMode ?? 'contains';
-    return filterOptions(opts, this.filterQuery(), mode);
+    return filterOptions(opts, this.filterQuery(), 'contains');
   });
 
-  selectedOption = computed(() => {
-    const val = this.value();
-    return this.computedNormalizedOptions().find(opt => opt.value === val);
+  computedSelectedOptions = computed(() => {
+    const current = new Set(this.value());
+    return this.computedNormalizedOptions().filter(opt => current.has(opt.value));
   });
 
-  selectedLabel = computed(() => {
-    const opt = this.selectedOption();
-    if (opt) return opt.label;
-    const val = this.value();
-    return val !== undefined && val !== null && val !== '' ? String(val) : '';
-  });
-
-  computedPlaceholder = computed(() => this.contract().props?.placeholder ?? '');
+  computedPlaceholder = computed(() => this.contract().props?.placeholder ?? 'Select options');
   computedDisabled = computed(() => !!this.contract().props?.disabled);
   computedReadonly = computed(() => !!this.contract().props?.readonly);
   computedRequired = computed(() => !!this.contract().props?.required);
@@ -158,7 +138,13 @@ export class SelectComponent implements OrigoAdapter<SelectProps> {
   computedFilterPlaceholder = computed(
     () => this.contract().props?.filterPlaceholder ?? 'Search...'
   );
+  computedShowToggleAll = computed(() => this.contract().props?.showToggleAll ?? true);
   computedClearable = computed(() => !!this.contract().props?.clearable);
+  computedDisplay = computed(() => this.contract().props?.display ?? 'comma');
+  computedMaxSelectedLabels = computed(() => this.contract().props?.maxSelectedLabels ?? 3);
+  computedSelectedItemsLabel = computed(
+    () => this.contract().props?.selectedItemsLabel ?? '{0} items selected'
+  );
   computedVariant = computed(() => this.contract().props?.variant ?? 'outlined');
   computedFluid = computed(() => !!this.contract().props?.fluid);
   computedErrorText = computed(() => this.contract().props?.errorText ?? '');
@@ -169,7 +155,7 @@ export class SelectComponent implements OrigoAdapter<SelectProps> {
     if (label !== undefined && label !== null && String(label).trim() !== '') {
       return String(label);
     }
-    return this.computedPlaceholder() || 'Select';
+    return this.computedPlaceholder();
   });
 
   computedAriaDescribedBy = computed(() => {
@@ -181,6 +167,25 @@ export class SelectComponent implements OrigoAdapter<SelectProps> {
     return parts.length > 0 ? parts.join(' ') : undefined;
   });
 
+  displaySummary = computed(() => {
+    const selected = this.computedSelectedOptions();
+    const count = selected.length;
+    if (count === 0) return '';
+    const max = this.computedMaxSelectedLabels();
+    if (count <= max) {
+      return selected.map(s => s.label).join(', ');
+    }
+    const template = this.computedSelectedItemsLabel();
+    return template.replace('{0}', String(count));
+  });
+
+  isAllSelected = computed(() => {
+    const filtered = this.filteredOptions().filter(o => !o.disabled);
+    if (filtered.length === 0) return false;
+    const current = new Set(this.value());
+    return filtered.every(o => current.has(o.value));
+  });
+
   private experienceAdapter = inject(WebExperienceAdapterService);
   private platformId = inject(PLATFORM_ID);
   private elementRef = inject(ElementRef);
@@ -189,8 +194,14 @@ export class SelectComponent implements OrigoAdapter<SelectProps> {
     effect(() => {
       const contractVal = this.contract().props?.value;
       untracked(() => {
-        if (contractVal !== undefined && contractVal !== this.value()) {
-          this.value.set(contractVal);
+        if (Array.isArray(contractVal)) {
+          const current = this.value();
+          if (
+            current.length !== contractVal.length ||
+            !current.every((v, i) => v === contractVal[i])
+          ) {
+            this.value.set([...contractVal]);
+          }
         }
       });
     });
@@ -202,24 +213,60 @@ export class SelectComponent implements OrigoAdapter<SelectProps> {
     this.isOpen.set(next);
     if (next) {
       this.filterQuery.set('');
-      const currentVal = this.value();
-      const currentIdx = this.filteredOptions().findIndex(o => o.value === currentVal);
-      this.activeIndex.set(currentIdx >= 0 ? currentIdx : 0);
+      this.activeIndex.set(0);
     }
   }
 
-  selectOption(optionValue: unknown) {
+  isSelected(opt: NormalizedOption): boolean {
+    return this.value().includes(opt.value);
+  }
+
+  toggleOption(optionValue: unknown) {
     if (this.computedDisabled() || this.computedReadonly()) return;
-    this.value.set(optionValue);
-    this.isOpen.set(false);
-    this.experienceAdapter.updateState(this.contract().id, 'value', optionValue);
+    const current = [...this.value()];
+    const idx = current.indexOf(optionValue);
+    if (idx >= 0) {
+      current.splice(idx, 1);
+    } else {
+      current.push(optionValue);
+    }
+    this.value.set(current);
+    this.experienceAdapter.updateState(this.contract().id, 'value', current);
+  }
+
+  toggleAll() {
+    if (this.computedDisabled() || this.computedReadonly()) return;
+    const filtered = this.filteredOptions().filter(o => !o.disabled);
+    let nextValue: Array<unknown>;
+
+    if (this.isAllSelected()) {
+      const filteredSet = new Set(filtered.map(o => o.value));
+      nextValue = this.value().filter(v => !filteredSet.has(v));
+    } else {
+      const set = new Set(this.value());
+      for (const opt of filtered) {
+        set.add(opt.value);
+      }
+      nextValue = Array.from(set);
+    }
+
+    this.value.set(nextValue);
+    this.experienceAdapter.updateState(this.contract().id, 'value', nextValue);
+  }
+
+  removeOption(optionValue: unknown, event?: Event) {
+    event?.stopPropagation();
+    if (this.computedDisabled() || this.computedReadonly()) return;
+    const next = this.value().filter(v => v !== optionValue);
+    this.value.set(next);
+    this.experienceAdapter.updateState(this.contract().id, 'value', next);
   }
 
   clear(event?: Event) {
     if (this.computedDisabled() || this.computedReadonly()) return;
     event?.stopPropagation();
-    this.value.set('');
-    this.experienceAdapter.updateState(this.contract().id, 'value', '');
+    this.value.set([]);
+    this.experienceAdapter.updateState(this.contract().id, 'value', []);
   }
 
   onFilterInput(event: Event) {
@@ -267,7 +314,7 @@ export class SelectComponent implements OrigoAdapter<SelectProps> {
         if (this.isOpen()) {
           const idx = this.activeIndex();
           if (idx >= 0 && idx < count && !opts[idx].disabled) {
-            this.selectOption(opts[idx].value);
+            this.toggleOption(opts[idx].value);
           }
         } else {
           this.isOpen.set(true);
