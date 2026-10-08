@@ -1,0 +1,65 @@
+:host {
+  display: block;
+  position: relative;
+  font-family: var(--origo-typography-body-font-family, sans-serif);
+}
+
+.origo-time-picker__input {
+  width: 100%;
+  padding: 8px 12px;
+  border: 1px solid var(--origo-color-neutral-300, #ccc);
+  border-radius: var(--origo-border-radius-md, 4px);
+  background-color: var(--origo-color-surface-default, #fff);
+  cursor: pointer;
+}
+
+.origo-time-picker__overlay {
+  position: absolute;
+  top: calc(100% + 4px);
+  left: 0;
+  z-index: 1000;
+  background: var(--origo-color-surface-default, #fff);
+  border: 1px solid var(--origo-color-neutral-200, #e0e0e0);
+  border-radius: var(--origo-border-radius-md, 4px);
+  box-shadow: var(--origo-shadow-md, 0 4px 6px rgba(0, 0, 0, 0.1));
+  padding: 8px;
+  display: flex;
+  flex-direction: column;
+}
+
+.origo-time-picker__columns {
+  display: flex;
+  gap: 8px;
+  height: 200px;
+}
+
+.origo-time-picker__column {
+  overflow-y: auto;
+  flex: 1;
+  border-right: 1px solid var(--origo-color-neutral-200, #e0e0e0);
+}
+.origo-time-picker__column:last-child {
+  border-right: none;
+}
+
+.origo-time-picker__option {
+  padding: 8px;
+  text-align: center;
+  cursor: pointer;
+}
+
+.origo-time-picker__option:hover {
+  background-color: var(--origo-color-neutral-100, #f5f5f5);
+}
+
+.origo-time-picker__option--selected {
+  background-color: var(--origo-color-primary-main, #0056b3);
+  color: white;
+}
+
+.origo-time-picker__actions {
+  margin-top: 8px;
+  text-align: right;
+  border-top: 1px solid var(--origo-color-neutral-200, #e0e0e0);
+  padding-top: 8px;
+}

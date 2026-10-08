@@ -1,0 +1,57 @@
+<div class="origo-date-picker-wrapper">
+  <input
+    type="text"
+    class="origo-date-picker__input"
+    readonly
+    inputmode="none"
+    [value]="displayValue()"
+    (click)="toggleCalendar()"
+    (keydown)="onInputKeyDown($event)"
+    [attr.aria-label]="computedAriaLabel()"
+    aria-haspopup="grid"
+    [attr.aria-expanded]="isOpen()"
+  />
+
+  @if (isOpen()) {
+    <div class="origo-date-picker__calendar" role="grid" aria-label="Calendar">
+      <div class="origo-date-picker__header">
+        <button type="button" (click)="prevMonth()" aria-label="Previous Month">&lt;</button>
+        <span aria-live="polite">{{ currentMonthYear() }}</span>
+        <button type="button" (click)="nextMonth()" aria-label="Next Month">&gt;</button>
+      </div>
+
+      <div role="row" class="origo-date-picker__weekdays">
+        @for (day of weekDays; track day) {
+          <div role="columnheader">{{ day }}</div>
+        }
+      </div>
+
+      <div class="origo-date-picker__days">
+        @for (week of calendarGrid(); track $index) {
+          <div role="row">
+            @for (day of week; track day.date.toISOString()) {
+              <div
+                role="gridcell"
+                [class.origo-date-picker__day]="true"
+                [class.origo-date-picker__day--other-month]="!day.isCurrentMonth"
+                [class.origo-date-picker__day--selected]="isSelected(day.date)"
+                [attr.aria-selected]="isSelected(day.date)"
+                [attr.tabindex]="isSelected(day.date) || (!hasSelection() && day.isToday) ? 0 : -1"
+                (click)="
+                  selectDate(
+                    day.date.getUTCFullYear(),
+                    day.date.getUTCMonth(),
+                    day.date.getUTCDate()
+                  )
+                "
+                (keydown)="onDayKeyDown($event, day.date)"
+              >
+                {{ day.date.getUTCDate() }}
+              </div>
+            }
+          </div>
+        }
+      </div>
+    </div>
+  }
+</div>

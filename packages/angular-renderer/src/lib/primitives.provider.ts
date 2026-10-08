@@ -25,6 +25,9 @@ import { TextInputComponent } from '../components/primitives/text-input/text-inp
 import { ButtonComponent } from '../components/primitives/button/button.component';
 import { VBoxComponent } from '../components/primitives/vbox/vbox.component';
 import { InputNumberComponent } from '../components/primitives/input-number/input-number.component';
+import { DatePickerComponent } from '../components/primitives/date-picker/date-picker.component';
+import { TimePickerComponent } from '../components/primitives/time-picker/time-picker.component';
+import { DateRangePickerComponent } from '../components/primitives/date-range-picker/date-range-picker.component';
 
 export function provideOrigo9Primitives(): EnvironmentProviders {
   const registryMap = new Map<string, unknown>([
@@ -54,6 +57,9 @@ export function provideOrigo9Primitives(): EnvironmentProviders {
     ['Button', ButtonComponent],
     ['VBox', VBoxComponent],
     ['InputNumber', InputNumberComponent],
+    ['DatePicker', DatePickerComponent],
+    ['TimePicker', TimePickerComponent],
+    ['DateRangePicker', DateRangePickerComponent],
     ['vbox', VBoxComponent], // For backward compatibility with 'vbox' in preview-root
   ]);
 
