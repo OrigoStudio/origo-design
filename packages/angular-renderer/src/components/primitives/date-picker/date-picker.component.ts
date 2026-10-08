@@ -162,7 +162,6 @@ export class DatePickerComponent implements OrigoAdapter<DatePickerProps> {
     const month = viewDate.getUTCMonth();
 
     const firstDayOfMonth = new Date(Date.UTC(year, month, 1));
-    const lastDayOfMonth = new Date(Date.UTC(year, month + 1, 0));
 
     const startingDayOfWeek = firstDayOfMonth.getUTCDay();
 
