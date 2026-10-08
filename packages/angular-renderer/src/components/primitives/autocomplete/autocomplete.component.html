@@ -1,0 +1,83 @@
+<div class="origo-autocomplete__wrapper">
+  <div class="origo-autocomplete__control">
+    <input
+      type="text"
+      class="origo-autocomplete__input"
+      [id]="contract().id + '-input'"
+      role="combobox"
+      aria-autocomplete="list"
+      [attr.aria-expanded]="isOpen()"
+      [attr.aria-controls]="isOpen() ? contract().id + '-listbox' : null"
+      [attr.aria-activedescendant]="
+        isOpen() && activeIndex() >= 0 ? contract().id + '-option-' + activeIndex() : null
+      "
+      [attr.aria-invalid]="computedInvalid() ? 'true' : null"
+      [attr.aria-required]="computedRequired() ? 'true' : null"
+      [attr.aria-label]="computedAriaLabel()"
+      [attr.aria-describedby]="computedAriaDescribedBy()"
+      [placeholder]="computedPlaceholder()"
+      [disabled]="computedDisabled()"
+      [readonly]="computedReadonly()"
+      [value]="inputValue()"
+      (input)="onInput($event)"
+      (paste)="onPaste($event)"
+      (focus)="onFocus()"
+      (blur)="onBlur()"
+      (keydown)="onKeydown($event)"
+    />
+
+    <span class="origo-autocomplete__icons">
+      @if (computedClearable() && inputValue() && !computedDisabled() && !computedReadonly()) {
+        <span
+          class="origo-autocomplete__clear"
+          role="button"
+          tabindex="0"
+          aria-label="Clear value"
+          (click)="clear($event)"
+          (keydown.enter)="clear($event)"
+          >✕</span
+        >
+      }
+    </span>
+  </div>
+
+  @if (isOpen()) {
+    <div
+      class="origo-autocomplete__dropdown"
+      [id]="contract().id + '-listbox'"
+      role="listbox"
+      [attr.aria-label]="computedAriaLabel()"
+    >
+      <ul class="origo-autocomplete__options">
+        @for (opt of filteredSuggestions(); track opt.value; let idx = $index) {
+          <li
+            class="origo-autocomplete__option"
+            [class.origo-autocomplete__option--selected]="opt.value === value()"
+            [class.origo-autocomplete__option--active]="activeIndex() === idx"
+            [class.origo-autocomplete__option--disabled]="opt.disabled"
+            [id]="contract().id + '-option-' + idx"
+            role="option"
+            [attr.aria-selected]="opt.value === value()"
+            [attr.aria-disabled]="opt.disabled ? 'true' : null"
+            (click)="!opt.disabled && selectSuggestion(opt)"
+          >
+            {{ opt.label }}
+          </li>
+        } @empty {
+          <li class="origo-autocomplete__no-options" role="presentation">No suggestions found</li>
+        }
+      </ul>
+    </div>
+  }
+</div>
+
+@if (computedErrorText()) {
+  <div class="origo-autocomplete__error" [id]="contract().id + '-error'">
+    {{ computedErrorText() }}
+  </div>
+}
+@if (computedHelpText()) {
+  <div class="origo-autocomplete__help" [id]="contract().id + '-help'">
+    {{ computedHelpText() }}
+  </div>
+}

@@ -1,0 +1,90 @@
+<div class="origo-combobox__wrapper">
+  <div class="origo-combobox__control">
+    <input
+      type="text"
+      class="origo-combobox__input"
+      [id]="contract().id + '-input'"
+      role="combobox"
+      aria-autocomplete="list"
+      [attr.aria-expanded]="isOpen()"
+      [attr.aria-controls]="isOpen() ? contract().id + '-listbox' : null"
+      [attr.aria-activedescendant]="
+        isOpen() && activeIndex() >= 0 ? contract().id + '-option-' + activeIndex() : null
+      "
+      [attr.aria-invalid]="computedInvalid() ? 'true' : null"
+      [attr.aria-required]="computedRequired() ? 'true' : null"
+      [attr.aria-label]="computedAriaLabel()"
+      [attr.aria-describedby]="computedAriaDescribedBy()"
+      [placeholder]="computedPlaceholder()"
+      [disabled]="computedDisabled()"
+      [readonly]="computedReadonly()"
+      [value]="inputValue()"
+      (input)="onInput($event)"
+      (paste)="onPaste($event)"
+      (keydown)="onKeydown($event)"
+    />
+
+    <span class="origo-combobox__icons">
+      @if (computedClearable() && inputValue() && !computedDisabled() && !computedReadonly()) {
+        <span
+          class="origo-combobox__clear"
+          role="button"
+          tabindex="0"
+          aria-label="Clear value"
+          (click)="clear($event)"
+          (keydown.enter)="clear($event)"
+          >✕</span
+        >
+      }
+      <button
+        type="button"
+        class="origo-combobox__toggle"
+        tabindex="-1"
+        aria-label="Toggle options"
+        [disabled]="computedDisabled() || computedReadonly()"
+        (click)="toggleOpen()"
+      >
+        <span class="origo-combobox__arrow" aria-hidden="true">▼</span>
+      </button>
+    </span>
+  </div>
+
+  @if (isOpen()) {
+    <div
+      class="origo-combobox__dropdown"
+      [id]="contract().id + '-listbox'"
+      role="listbox"
+      [attr.aria-label]="computedAriaLabel()"
+    >
+      <ul class="origo-combobox__options">
+        @for (opt of filteredOptions(); track opt.value; let idx = $index) {
+          @if (opt.group && (idx === 0 || filteredOptions()[idx - 1].group !== opt.group)) {
+            <li class="origo-combobox__group-label" role="presentation">{{ opt.group }}</li>
+          }
+          <li
+            class="origo-combobox__option"
+            [class.origo-combobox__option--selected]="opt.value === value()"
+            [class.origo-combobox__option--active]="activeIndex() === idx"
+            [class.origo-combobox__option--disabled]="opt.disabled"
+            [id]="contract().id + '-option-' + idx"
+            role="option"
+            [attr.aria-selected]="opt.value === value()"
+            [attr.aria-disabled]="opt.disabled ? 'true' : null"
+            (click)="!opt.disabled && selectOption(opt.value)"
+          >
+            {{ opt.label }}
+          </li>
+        } @empty {
+          <li class="origo-combobox__no-options" role="presentation">No options found</li>
+        }
+      </ul>
+    </div>
+  }
+</div>
+
+@if (computedErrorText()) {
+  <div class="origo-combobox__error" [id]="contract().id + '-error'">{{ computedErrorText() }}</div>
+}
+@if (computedHelpText()) {
+  <div class="origo-combobox__help" [id]="contract().id + '-help'">{{ computedHelpText() }}</div>
+}

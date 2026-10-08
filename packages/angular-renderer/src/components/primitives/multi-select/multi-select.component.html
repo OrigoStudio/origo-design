@@ -1,0 +1,150 @@
+<div class="origo-multi-select__wrapper">
+  <div class="origo-multi-select__control">
+    <button
+      type="button"
+      class="origo-multi-select__trigger"
+      [id]="contract().id + '-trigger'"
+      role="combobox"
+      [attr.aria-expanded]="isOpen()"
+      [attr.aria-haspopup]="'listbox'"
+      [attr.aria-controls]="isOpen() ? contract().id + '-listbox' : null"
+      [attr.aria-activedescendant]="
+        isOpen() && activeIndex() >= 0 ? contract().id + '-option-' + activeIndex() : null
+      "
+      [attr.aria-invalid]="computedInvalid() ? 'true' : null"
+      [attr.aria-required]="computedRequired() ? 'true' : null"
+      [attr.aria-label]="computedAriaLabel()"
+      [attr.aria-describedby]="computedAriaDescribedBy()"
+      [disabled]="computedDisabled()"
+      (click)="toggleOpen()"
+      (keydown)="onKeydown($event)"
+    >
+      <div class="origo-multi-select__display">
+        @if (computedDisplay() === 'chip' && computedSelectedOptions().length > 0) {
+          <div class="origo-multi-select__chips">
+            @for (opt of computedSelectedOptions(); track opt.value) {
+              <span class="origo-multi-select__chip">
+                <span class="origo-multi-select__chip-label">{{ opt.label }}</span>
+                <span
+                  class="origo-multi-select__chip-remove"
+                  role="button"
+                  tabindex="0"
+                  aria-label="Remove item"
+                  (click)="removeOption(opt.value, $event)"
+                  (keydown.enter)="removeOption(opt.value, $event)"
+                  >✕</span
+                >
+              </span>
+            }
+          </div>
+        } @else {
+          <span
+            class="origo-multi-select__label"
+            [class.origo-multi-select__label--placeholder]="!displaySummary()"
+          >
+            {{ displaySummary() || computedPlaceholder() }}
+          </span>
+        }
+      </div>
+
+      <span class="origo-multi-select__icons">
+        @if (
+          computedClearable() && value().length > 0 && !computedDisabled() && !computedReadonly()
+        ) {
+          <span
+            class="origo-multi-select__clear"
+            role="button"
+            tabindex="0"
+            aria-label="Clear selection"
+            (click)="clear($event)"
+            (keydown.enter)="clear($event)"
+            >✕</span
+          >
+        }
+        <span class="origo-multi-select__arrow" aria-hidden="true">▼</span>
+      </span>
+    </button>
+  </div>
+
+  @if (isOpen()) {
+    <div
+      class="origo-multi-select__dropdown"
+      [id]="contract().id + '-listbox'"
+      role="listbox"
+      aria-multiselectable="true"
+      [attr.aria-label]="computedAriaLabel()"
+    >
+      @if (computedFilter()) {
+        <div class="origo-select__filter-container">
+          <input
+            type="text"
+            class="origo-multi-select__filter-input"
+            [placeholder]="computedFilterPlaceholder()"
+            [value]="filterQuery()"
+            (input)="onFilterInput($event)"
+            (keydown)="onKeydown($event)"
+            aria-label="Filter options"
+          />
+        </div>
+      }
+
+      @if (computedShowToggleAll()) {
+        <div
+          class="origo-multi-select__toggle-all"
+          role="button"
+          tabindex="0"
+          (click)="toggleAll()"
+          (keydown.enter)="toggleAll()"
+        >
+          <input
+            type="checkbox"
+            class="origo-multi-select__checkbox"
+            [checked]="isAllSelected()"
+            tabindex="-1"
+            aria-hidden="true"
+          />
+          <span>Toggle All</span>
+        </div>
+      }
+
+      <ul class="origo-multi-select__options">
+        @for (opt of filteredOptions(); track opt.value; let idx = $index) {
+          <li
+            class="origo-multi-select__option"
+            [class.origo-multi-select__option--selected]="isSelected(opt)"
+            [class.origo-multi-select__option--active]="activeIndex() === idx"
+            [class.origo-multi-select__option--disabled]="opt.disabled"
+            [id]="contract().id + '-option-' + idx"
+            role="option"
+            [attr.aria-selected]="isSelected(opt)"
+            [attr.aria-disabled]="opt.disabled ? 'true' : null"
+            (click)="!opt.disabled && toggleOption(opt.value)"
+          >
+            <input
+              type="checkbox"
+              class="origo-multi-select__checkbox"
+              [checked]="isSelected(opt)"
+              [disabled]="opt.disabled"
+              tabindex="-1"
+              aria-hidden="true"
+            />
+            <span>{{ opt.label }}</span>
+          </li>
+        } @empty {
+          <li class="origo-multi-select__no-options" role="presentation">No options found</li>
+        }
+      </ul>
+    </div>
+  }
+</div>
+
+@if (computedErrorText()) {
+  <div class="origo-multi-select__error" [id]="contract().id + '-error'">
+    {{ computedErrorText() }}
+  </div>
+}
+@if (computedHelpText()) {
+  <div class="origo-multi-select__help" [id]="contract().id + '-help'">
+    {{ computedHelpText() }}
+  </div>
+}

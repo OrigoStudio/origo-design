@@ -3,7 +3,7 @@
   [disabled]="computedDisabled()"
   [attr.aria-label]="computedAriaLabel()"
   [attr.aria-describedby]="computedAriaDescribedBy()"
-  [title]="contract().props?.tooltip || null"
+  [title]="contract().props.tooltip || null"
   (click)="onClick()"
 >
   @if (computedLoading()) {

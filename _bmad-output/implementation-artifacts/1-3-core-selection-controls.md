@@ -6,7 +6,7 @@ baseline_commit: 3f78ec0
 
 # Story 1.3: Core Selection Controls
 
-Status: ready-for-dev
+Status: review
 
 ## Story
 
@@ -50,52 +50,52 @@ Creating a second `SelectComponent` will cause duplicate export build failures a
 
 ## Tasks / Subtasks
 
-- [ ] **EXTEND & REMEDIATE `SelectComponent`** (AC: #1, #2, #3, #4, #5, #6, #7, #9)
-  - [ ] Update `select.component.scss`: Eliminate all hardcoded hex/px fallbacks; style host classes (`--fluid`, `--outlined`, `--filled`, `--invalid`) using pure `var(--origo-*)` tokens.
-  - [ ] Update `SelectProps` and `contractSchema` with all missing properties (`optionLabel`, `optionValue`, `optionGroupLabel`, `optionGroupChildren`, `filter`, `filterBy`, `filterMatchMode`, `filterPlaceholder`, `editable`, `clearable`, `appendTo`, `virtualScroll`, `itemSize`, `loading`, `variant`, `fluid`, `invalid`, `errorText`, `helpText`, `readonly`).
-  - [ ] Remove `DomSanitizer` from `onChange` value assignment; treat selection values as intact data payloads.
-  - [ ] Implement option normalization computed signal supporting `string[]`, `Array<Record<string, unknown>>`, and grouped options.
-  - [ ] Implement filtering logic signal with case-insensitive matching (`contains`, `startsWith`, `endsWith`).
-  - [ ] Implement WAI-ARIA combobox/listbox attributes (`role="combobox"`, `aria-expanded`, `aria-haspopup="listbox"`, `aria-controls`, `aria-activedescendant`, `aria-invalid`, `aria-required`).
-  - [ ] Add keyboard navigation listeners (`ArrowDown`, `ArrowUp`, `Enter`, `Escape`, `Tab`, `Home`, `End`).
-  - [ ] Implement outside-click overlay dismissal guarded by `isPlatformBrowser(this.platformId)`.
-  - [ ] Implement `clearable` clear button resetting value and dispatching `updateState(contract().id, 'value', '')`.
-  - [ ] Render `errorText` and `helpText` below control with proper `aria-describedby` linkage.
+- [x] **EXTEND & REMEDIATE `SelectComponent`** (AC: #1, #2, #3, #4, #5, #6, #7, #9)
+  - [x] Update `select.component.scss`: Eliminate all hardcoded hex/px fallbacks; style host classes (`--fluid`, `--outlined`, `--filled`, `--invalid`) using pure `var(--origo-*)` tokens.
+  - [x] Update `SelectProps` and `contractSchema` with all missing properties (`optionLabel`, `optionValue`, `optionGroupLabel`, `optionGroupChildren`, `filter`, `filterBy`, `filterMatchMode`, `filterPlaceholder`, `editable`, `clearable`, `appendTo`, `virtualScroll`, `itemSize`, `loading`, `variant`, `fluid`, `invalid`, `errorText`, `helpText`, `readonly`).
+  - [x] Remove `DomSanitizer` from `onChange` value assignment; treat selection values as intact data payloads.
+  - [x] Implement option normalization computed signal supporting `string[]`, `Array<Record<string, unknown>>`, and grouped options.
+  - [x] Implement filtering logic signal with case-insensitive matching (`contains`, `startsWith`, `endsWith`).
+  - [x] Implement WAI-ARIA combobox/listbox attributes (`role="combobox"`, `aria-expanded`, `aria-haspopup="listbox"`, `aria-controls`, `aria-activedescendant`, `aria-invalid`, `aria-required`).
+  - [x] Add keyboard navigation listeners (`ArrowDown`, `ArrowUp`, `Enter`, `Escape`, `Tab`, `Home`, `End`).
+  - [x] Implement outside-click overlay dismissal guarded by `isPlatformBrowser(this.platformId)`.
+  - [x] Implement `clearable` clear button resetting value and dispatching `updateState(contract().id, 'value', '')`.
+  - [x] Render `errorText` and `helpText` below control with proper `aria-describedby` linkage.
 
-- [ ] **CREATE `MultiSelectComponent`** at `packages/angular-renderer/src/components/primitives/multi-select/` (AC: #1–#9)
-  - [ ] Create all 4 files: `multi-select.component.ts`, `multi-select.component.html`, `multi-select.component.scss`, `multi-select.component.spec.ts`.
-  - [ ] Implement `MultiSelectProps` and `contractSchema` (including `options`, `value` as `unknown[]`, `optionLabel`, `optionValue`, `placeholder`, `filter`, `showToggleAll`, `maxSelectedLabels`, `selectedItemsLabel`, `display` (`'comma' | 'chip'`), `variant`, `fluid`, `invalid`, `errorText`, `helpText`, `readonly`, `disabled`, `required`, `clearable`, `virtualScroll`, `itemSize`).
-  - [ ] Implement selection state logic: toggle individual item, toggle all, clear selection; dispatch `updateState(contract().id, 'value', selectedArray)`.
-  - [ ] Implement label/chip display: render comma-separated summary or removable chips (`display: 'chip'`); apply `maxSelectedLabels` threshold summary text.
-  - [ ] Bind WAI-ARIA `role="combobox"`, `aria-multiselectable="true"` on listbox, and `aria-selected` on options.
-  - [ ] Register `['MultiSelect', MultiSelectComponent]` in `primitives.provider.ts`.
-  - [ ] Export from `packages/angular-renderer/src/index.ts`.
+- [x] **CREATE `MultiSelectComponent`** at `packages/angular-renderer/src/components/primitives/multi-select/` (AC: #1–#9)
+  - [x] Create all 4 files: `multi-select.component.ts`, `multi-select.component.html`, `multi-select.component.scss`, `multi-select.component.spec.ts`.
+  - [x] Implement `MultiSelectProps` and `contractSchema` (including `options`, `value` as `unknown[]`, `optionLabel`, `optionValue`, `placeholder`, `filter`, `showToggleAll`, `maxSelectedLabels`, `selectedItemsLabel`, `display` (`'comma' | 'chip'`), `variant`, `fluid`, `invalid`, `errorText`, `helpText`, `readonly`, `disabled`, `required`, `clearable`, `virtualScroll`, `itemSize`).
+  - [x] Implement selection state logic: toggle individual item, toggle all, clear selection; dispatch `updateState(contract().id, 'value', selectedArray)`.
+  - [x] Implement label/chip display: render comma-separated summary or removable chips (`display: 'chip'`); apply `maxSelectedLabels` threshold summary text.
+  - [x] Bind WAI-ARIA `role="combobox"`, `aria-multiselectable="true"` on listbox, and `aria-selected` on options.
+  - [x] Register `['MultiSelect', MultiSelectComponent]` in `primitives.provider.ts`.
+  - [x] Export from `packages/angular-renderer/src/index.ts`.
 
-- [ ] **CREATE `AutocompleteComponent`** at `packages/angular-renderer/src/components/primitives/autocomplete/` (AC: #1–#9)
-  - [ ] Create all 4 files: `autocomplete.component.ts`, `autocomplete.component.html`, `autocomplete.component.scss`, `autocomplete.component.spec.ts`.
-  - [ ] Implement `AutocompleteProps` and `contractSchema` (including `value`, `suggestions`, `minQueryLength`, `delay`, `multiple`, `forceSelection`, `optionLabel`, `optionValue`, `completeOnFocus`, `loading`, `placeholder`, `variant`, `fluid`, `invalid`, `errorText`, `helpText`, `readonly`, `disabled`, `required`, `clearable`).
-  - [ ] Implement input typing handler with debounce (`delay` default 300ms) and minimum character threshold (`minQueryLength` default 1); emit/update search state.
-  - [ ] Implement `onPaste` clipboard plain-text extraction preventing malicious/bloated formatting.
-  - [ ] Implement suggestion selection, keyboard navigation, and `forceSelection` validation on blur.
-  - [ ] Register `['Autocomplete', AutocompleteComponent]` in `primitives.provider.ts`.
-  - [ ] Export from `packages/angular-renderer/src/index.ts`.
+- [x] **CREATE `AutocompleteComponent`** at `packages/angular-renderer/src/components/primitives/autocomplete/` (AC: #1–#9)
+  - [x] Create all 4 files: `autocomplete.component.ts`, `autocomplete.component.html`, `autocomplete.component.scss`, `autocomplete.component.spec.ts`.
+  - [x] Implement `AutocompleteProps` and `contractSchema` (including `value`, `suggestions`, `minQueryLength`, `delay`, `multiple`, `forceSelection`, `optionLabel`, `optionValue`, `completeOnFocus`, `loading`, `placeholder`, `variant`, `fluid`, `invalid`, `errorText`, `helpText`, `readonly`, `disabled`, `required`, `clearable`).
+  - [x] Implement input typing handler with debounce (`delay` default 300ms) and minimum character threshold (`minQueryLength` default 1); emit/update search state.
+  - [x] Implement `onPaste` clipboard plain-text extraction preventing malicious/bloated formatting.
+  - [x] Implement suggestion selection, keyboard navigation, and `forceSelection` validation on blur.
+  - [x] Register `['Autocomplete', AutocompleteComponent]` in `primitives.provider.ts`.
+  - [x] Export from `packages/angular-renderer/src/index.ts`.
 
-- [ ] **CREATE `ComboboxComponent`** at `packages/angular-renderer/src/components/primitives/combobox/` (AC: #1–#10)
-  - [ ] Create all 4 files: `combobox.component.ts`, `combobox.component.html`, `combobox.component.scss`, `combobox.component.spec.ts`.
-  - [ ] Implement `ComboboxProps` and `contractSchema` (unifying editable input with searchable option list).
-  - [ ] Compose or adapt `SelectComponent` with `editable: true`, allowing free text entry while offering filtered suggestions.
-  - [ ] Implement `onPaste` clipboard sanitization on the editable input.
-  - [ ] Register `['Combobox', ComboboxComponent]` in `primitives.provider.ts`.
-  - [ ] Export from `packages/angular-renderer/src/index.ts`.
+- [x] **CREATE `ComboboxComponent`** at `packages/angular-renderer/src/components/primitives/combobox/` (AC: #1–#10)
+  - [x] Create all 4 files: `combobox.component.ts`, `combobox.component.html`, `combobox.component.scss`, `combobox.component.spec.ts`.
+  - [x] Implement `ComboboxProps` and `contractSchema` (unifying editable input with searchable option list).
+  - [x] Compose or adapt `SelectComponent` with `editable: true`, allowing free text entry while offering filtered suggestions.
+  - [x] Implement `onPaste` clipboard sanitization on the editable input.
+  - [x] Register `['Combobox', ComboboxComponent]` in `primitives.provider.ts`.
+  - [x] Export from `packages/angular-renderer/src/index.ts`.
 
-- [ ] **Write/update spec files for all four components** (AC: #8)
-  - [ ] Pierce Shadow DOM using `fixture.nativeElement.shadowRoot ?? fixture.nativeElement`.
-  - [ ] Provide `WebExperienceAdapterService` in `TestBed.providers`.
-  - [ ] Verify pure JSON `InteractionContract` instantiation for each component.
-  - [ ] Test option selection and `WebExperienceAdapterService.updateState` dispatching.
-  - [ ] Test keyboard navigation (ArrowDown, Enter, Escape).
-  - [ ] Test dynamic filtering logic for options.
-  - [ ] Test `onPaste` plain-text sanitization for editable components (`Autocomplete`, `Combobox`).
+- [x] **Write/update spec files for all four components** (AC: #8)
+  - [x] Pierce Shadow DOM using `fixture.nativeElement.shadowRoot ?? fixture.nativeElement`.
+  - [x] Provide `WebExperienceAdapterService` in `TestBed.providers`.
+  - [x] Verify pure JSON `InteractionContract` instantiation for each component.
+  - [x] Test option selection and `WebExperienceAdapterService.updateState` dispatching.
+  - [x] Test keyboard navigation (ArrowDown, Enter, Escape).
+  - [x] Test dynamic filtering logic for options.
+  - [x] Test `onPaste` plain-text sanitization for editable components (`Autocomplete`, `Combobox`).
 
 ## Dev Notes
 
@@ -499,11 +499,48 @@ describe('SelectComponent', () => {
 ## Dev Agent Record
 
 ### Agent Model Used
+- Gemini 3.8 Flash (High)
 
 ### Debug Log References
+- Jest test suite executions: 32 tests passing across all 4 selection controls (`select`, `multi-select`, `autocomplete`, `combobox`).
+- Angular full test suite execution: 29 suites, 193 tests passing cleanly without regressions.
+- ESLint checks: Clean with 0 errors across `packages/angular-renderer`.
+- Central Test Registry: 85 test cases validated via `tools/test-registry/validate-registry.ts`.
 
 ### Completion Notes
+- **SelectComponent**: Remediated and extended with WAI-ARIA 1.2 compliant combobox and listbox UI, full keyboard navigation (ArrowDown, ArrowUp, Enter, Escape, Home, End), option normalization for primitives, object records with `optionLabel`/`optionValue`, and grouped collections (`optionGroupLabel`/`optionGroupChildren`). Filter signal matching modes (`contains`, `startsWith`, `endsWith`). Removed improper `DomSanitizer` HTML entity mutation on raw selection values. Eliminated all hardcoded hex/px fallbacks in favor of pure `var(--origo-*)` design tokens.
+- **MultiSelectComponent**: Implemented from scratch supporting multiple selections, toggle-all capability, removable chip display (`display: 'chip'`) and comma summary (`display: 'comma'`) with `maxSelectedLabels` threshold formatting, clearable action, and full WAI-ARIA 1.2 `role="combobox"` / `aria-multiselectable="true"` listbox.
+- **AutocompleteComponent**: Implemented search input with debounced query execution (`delay`, `minQueryLength`), plain-text clipboard paste sanitization (`onPaste`), suggestion selection, `forceSelection` blur validation, and complete keyboard navigation.
+- **ComboboxComponent**: Implemented free text entry unified with searchable option dropdown, clipboard plain-text sanitization, clearable button, toggle button, and complete keyboard navigation.
+- **Registry & Exports**: Registered `MultiSelect`, `Autocomplete`, and `Combobox` in `primitives.provider.ts` and exported from `packages/angular-renderer/src/index.ts`.
+- **Test Registry**: Updated `tools/test-registry/test-registry.yaml` with test entries for all selection components and verified schema validation.
 
 ### File List
+- `packages/angular-renderer/src/components/primitives/select/selection-utils.ts` (new)
+- `packages/angular-renderer/src/components/primitives/select/select.component.ts` (modified)
+- `packages/angular-renderer/src/components/primitives/select/select.component.html` (modified)
+- `packages/angular-renderer/src/components/primitives/select/select.component.scss` (modified)
+- `packages/angular-renderer/src/components/primitives/select/select.component.spec.ts` (modified)
+- `packages/angular-renderer/src/components/primitives/multi-select/multi-select.component.ts` (new)
+- `packages/angular-renderer/src/components/primitives/multi-select/multi-select.component.html` (new)
+- `packages/angular-renderer/src/components/primitives/multi-select/multi-select.component.scss` (new)
+- `packages/angular-renderer/src/components/primitives/multi-select/multi-select.component.spec.ts` (new)
+- `packages/angular-renderer/src/components/primitives/autocomplete/autocomplete.component.ts` (new)
+- `packages/angular-renderer/src/components/primitives/autocomplete/autocomplete.component.html` (new)
+- `packages/angular-renderer/src/components/primitives/autocomplete/autocomplete.component.scss` (new)
+- `packages/angular-renderer/src/components/primitives/autocomplete/autocomplete.component.spec.ts` (new)
+- `packages/angular-renderer/src/components/primitives/combobox/combobox.component.ts` (new)
+- `packages/angular-renderer/src/components/primitives/combobox/combobox.component.html` (new)
+- `packages/angular-renderer/src/components/primitives/combobox/combobox.component.scss` (new)
+- `packages/angular-renderer/src/components/primitives/combobox/combobox.component.spec.ts` (new)
+- `packages/angular-renderer/src/lib/primitives.provider.ts` (modified)
+- `packages/angular-renderer/src/index.ts` (modified)
+- `tools/test-registry/test-registry.yaml` (modified)
+- `_bmad-output/implementation-artifacts/sprint-status.yaml` (modified)
+- `_bmad-output/implementation-artifacts/1-3-core-selection-controls.md` (modified)
+
+### Change Log
+- 2026-10-08: Complete implementation of Story 1.3 Core Selection Controls (Select, MultiSelect, Autocomplete, Combobox), comprehensive unit tests, provider registrations, and test registry update.
 
 ### Review Findings
+None. Ready for review.

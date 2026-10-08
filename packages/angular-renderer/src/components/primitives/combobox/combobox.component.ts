@@ -17,63 +17,30 @@ import { isPlatformBrowser } from '@angular/common';
 import { InteractionContract } from '@origostudio/core';
 import { OrigoAdapter } from '../../../adapters/web/adapter';
 import { WebExperienceAdapterService } from '../../../adapters/web/experience-adapter.service';
-import { type NormalizedOption, normalizeOptions, filterOptions } from './selection-utils';
+import { SelectProps } from '../select/select.component';
+import { normalizeOptions, filterOptions } from '../select/selection-utils';
 
-export type { NormalizedOption };
-
-export interface SelectProps {
-  id?: string;
-  value?: unknown;
-  options: Array<unknown>;
-  optionLabel?: string;
-  optionValue?: string;
-  optionGroupLabel?: string;
-  optionGroupChildren?: string;
-  placeholder?: string;
-  filter?: boolean;
-  filterBy?: string;
-  filterMatchMode?: 'contains' | 'startsWith' | 'endsWith';
-  filterPlaceholder?: string;
-  editable?: boolean;
-  clearable?: boolean;
-  appendTo?: string;
-  virtualScroll?: boolean;
-  itemSize?: number;
-  loading?: boolean;
-  disabled?: boolean;
-  readonly?: boolean;
-  required?: boolean;
-  invalid?: boolean;
-  errorText?: string;
-  helpText?: string;
-  variant?: 'outlined' | 'filled';
-  fluid?: boolean;
-  'aria-label'?: string;
-  'aria-describedby'?: string;
-  permissions?: Record<string, string>;
-  rules?: Record<string, unknown>;
-  metadata?: Record<string, unknown>;
-}
+export type ComboboxProps = SelectProps;
 
 @Component({
-  selector: 'origo-select',
+  selector: 'origo-combobox',
   standalone: true,
-  templateUrl: './select.component.html',
-  styleUrls: ['./select.component.scss'],
+  templateUrl: './combobox.component.html',
+  styleUrls: ['./combobox.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.ShadowDom,
   host: {
-    '[class.origo-select]': 'true',
+    '[class.origo-combobox]': 'true',
     '[attr.data-testid]': 'contract().id ?? ""',
-    '[class.origo-select--fluid]': 'computedFluid()',
-    '[class.origo-select--outlined]': 'computedVariant() === "outlined"',
-    '[class.origo-select--filled]': 'computedVariant() === "filled"',
-    '[class.origo-select--invalid]': 'computedInvalid()',
-    '[class.origo-select--disabled]': 'computedDisabled()',
-    '[class.origo-select--readonly]': 'computedReadonly()',
+    '[class.origo-combobox--fluid]': 'computedFluid()',
+    '[class.origo-combobox--outlined]': 'computedVariant() === "outlined"',
+    '[class.origo-combobox--filled]': 'computedVariant() === "filled"',
+    '[class.origo-combobox--invalid]': 'computedInvalid()',
+    '[class.origo-combobox--disabled]': 'computedDisabled()',
+    '[class.origo-combobox--readonly]': 'computedReadonly()',
   },
 })
-export class SelectComponent implements OrigoAdapter<SelectProps> {
+export class ComboboxComponent implements OrigoAdapter<ComboboxProps> {
   static readonly contractSchema = {
     permissions: 'object',
     rules: 'object',
@@ -108,11 +75,11 @@ export class SelectComponent implements OrigoAdapter<SelectProps> {
   };
   static readonly strictContract = false;
 
-  contract = input.required<InteractionContract<SelectProps>>();
+  contract = input.required<InteractionContract<ComboboxProps>>();
   value = model<unknown>('');
 
+  inputValue = signal<string>('');
   isOpen = signal<boolean>(false);
-  filterQuery = signal<string>('');
   activeIndex = signal<number>(-1);
 
   computedNormalizedOptions = computed(() => {
@@ -126,27 +93,12 @@ export class SelectComponent implements OrigoAdapter<SelectProps> {
     );
   });
 
-  computedOptions = this.computedNormalizedOptions;
-
   filteredOptions = computed(() => {
     const opts = this.computedNormalizedOptions();
-    if (!this.computedFilter() && !this.filterQuery()) {
-      return opts;
-    }
+    const query = this.inputValue();
+    if (!query) return opts;
     const mode = this.contract().props?.filterMatchMode ?? 'contains';
-    return filterOptions(opts, this.filterQuery(), mode);
-  });
-
-  selectedOption = computed(() => {
-    const val = this.value();
-    return this.computedNormalizedOptions().find(opt => opt.value === val);
-  });
-
-  selectedLabel = computed(() => {
-    const opt = this.selectedOption();
-    if (opt) return opt.label;
-    const val = this.value();
-    return val !== undefined && val !== null && val !== '' ? String(val) : '';
+    return filterOptions(opts, query, mode);
   });
 
   computedPlaceholder = computed(() => this.contract().props?.placeholder ?? '');
@@ -154,10 +106,6 @@ export class SelectComponent implements OrigoAdapter<SelectProps> {
   computedReadonly = computed(() => !!this.contract().props?.readonly);
   computedRequired = computed(() => !!this.contract().props?.required);
   computedInvalid = computed(() => !!this.contract().props?.invalid);
-  computedFilter = computed(() => !!this.contract().props?.filter);
-  computedFilterPlaceholder = computed(
-    () => this.contract().props?.filterPlaceholder ?? 'Search...'
-  );
   computedClearable = computed(() => !!this.contract().props?.clearable);
   computedVariant = computed(() => this.contract().props?.variant ?? 'outlined');
   computedFluid = computed(() => !!this.contract().props?.fluid);
@@ -169,7 +117,7 @@ export class SelectComponent implements OrigoAdapter<SelectProps> {
     if (label !== undefined && label !== null && String(label).trim() !== '') {
       return String(label);
     }
-    return this.computedPlaceholder() || 'Select';
+    return this.computedPlaceholder() || 'Combobox';
   });
 
   computedAriaDescribedBy = computed(() => {
@@ -191,9 +139,39 @@ export class SelectComponent implements OrigoAdapter<SelectProps> {
       untracked(() => {
         if (contractVal !== undefined && contractVal !== this.value()) {
           this.value.set(contractVal);
+          const match = this.computedNormalizedOptions().find(o => o.value === contractVal);
+          this.inputValue.set(match ? match.label : String(contractVal ?? ''));
         }
       });
     });
+  }
+
+  onInput(event: Event) {
+    if (this.computedDisabled() || this.computedReadonly()) return;
+    const target = event.target as HTMLInputElement;
+    const text = target.value;
+    this.inputValue.set(text);
+    this.value.set(text);
+    this.isOpen.set(true);
+    this.activeIndex.set(0);
+    this.experienceAdapter.updateState(this.contract().id, 'value', text);
+  }
+
+  onPaste(event: ClipboardEvent) {
+    if (this.computedDisabled() || this.computedReadonly()) return;
+    event.preventDefault();
+    const plain = event.clipboardData?.getData('text/plain') ?? '';
+    const target = event.target as HTMLInputElement;
+    if (!target) return;
+    const start = target.selectionStart ?? target.value.length;
+    const end = target.selectionEnd ?? target.value.length;
+    const newValue = target.value.slice(0, start) + plain + target.value.slice(end);
+    target.value = newValue;
+    this.inputValue.set(newValue);
+    this.value.set(newValue);
+    this.isOpen.set(true);
+    this.activeIndex.set(0);
+    this.experienceAdapter.updateState(this.contract().id, 'value', newValue);
   }
 
   toggleOpen() {
@@ -201,16 +179,15 @@ export class SelectComponent implements OrigoAdapter<SelectProps> {
     const next = !this.isOpen();
     this.isOpen.set(next);
     if (next) {
-      this.filterQuery.set('');
-      const currentVal = this.value();
-      const currentIdx = this.filteredOptions().findIndex(o => o.value === currentVal);
-      this.activeIndex.set(currentIdx >= 0 ? currentIdx : 0);
+      this.activeIndex.set(0);
     }
   }
 
   selectOption(optionValue: unknown) {
     if (this.computedDisabled() || this.computedReadonly()) return;
+    const match = this.computedNormalizedOptions().find(o => o.value === optionValue);
     this.value.set(optionValue);
+    this.inputValue.set(match ? match.label : String(optionValue ?? ''));
     this.isOpen.set(false);
     this.experienceAdapter.updateState(this.contract().id, 'value', optionValue);
   }
@@ -219,13 +196,9 @@ export class SelectComponent implements OrigoAdapter<SelectProps> {
     if (this.computedDisabled() || this.computedReadonly()) return;
     event?.stopPropagation();
     this.value.set('');
+    this.inputValue.set('');
+    this.isOpen.set(false);
     this.experienceAdapter.updateState(this.contract().id, 'value', '');
-  }
-
-  onFilterInput(event: Event) {
-    const target = event.target as HTMLInputElement;
-    this.filterQuery.set(target.value);
-    this.activeIndex.set(0);
   }
 
   onKeydown(event: KeyboardEvent) {
@@ -237,7 +210,7 @@ export class SelectComponent implements OrigoAdapter<SelectProps> {
     switch (event.key) {
       case 'ArrowDown': {
         event.preventDefault();
-        if (!this.isOpen()) {
+        if (!this.isOpen() && count > 0) {
           this.isOpen.set(true);
           this.activeIndex.set(0);
         } else if (count > 0) {
@@ -248,7 +221,7 @@ export class SelectComponent implements OrigoAdapter<SelectProps> {
       }
       case 'ArrowUp': {
         event.preventDefault();
-        if (!this.isOpen()) {
+        if (!this.isOpen() && count > 0) {
           this.isOpen.set(true);
           this.activeIndex.set(count - 1);
         } else if (count > 0) {
@@ -257,20 +230,13 @@ export class SelectComponent implements OrigoAdapter<SelectProps> {
         }
         break;
       }
-      case 'Enter':
-      case ' ': {
-        const target = event.target as HTMLElement;
-        if (event.key === ' ' && target && target.tagName === 'INPUT') {
-          return;
-        }
-        event.preventDefault();
+      case 'Enter': {
         if (this.isOpen()) {
+          event.preventDefault();
           const idx = this.activeIndex();
           if (idx >= 0 && idx < count && !opts[idx].disabled) {
             this.selectOption(opts[idx].value);
           }
-        } else {
-          this.isOpen.set(true);
         }
         break;
       }

@@ -283,6 +283,7 @@ test_cases:
     spec_file: packages/angular-renderer/src/components/primitives/select/select.component.spec.ts
     type: unit
     affected_stories:
+      - 1-3-core-selection-controls
       - 9-4-accessibility-localization-enforcement
       - 9-1-form-layout-primitives-batch-1
     last_result: unknown
@@ -880,5 +881,32 @@ test_cases:
     type: unit
     affected_stories:
       - 1-1-core-buttons-and-actions
+    last_result: unknown
+    results: {}
+  - id: renderer-primitive-multi-select
+    description: 'Verifies MultiSelect primitive rendering and logic'
+    package: '@origo/angular-renderer'
+    spec_file: packages/angular-renderer/src/components/primitives/multi-select/multi-select.component.spec.ts
+    type: unit
+    affected_stories:
+      - 1-3-core-selection-controls
+    last_result: unknown
+    results: {}
+  - id: renderer-primitive-autocomplete
+    description: 'Verifies Autocomplete primitive rendering and logic'
+    package: '@origo/angular-renderer'
+    spec_file: packages/angular-renderer/src/components/primitives/autocomplete/autocomplete.component.spec.ts
+    type: unit
+    affected_stories:
+      - 1-3-core-selection-controls
+    last_result: unknown
+    results: {}
+  - id: renderer-primitive-combobox
+    description: 'Verifies Combobox primitive rendering and logic'
+    package: '@origo/angular-renderer'
+    spec_file: packages/angular-renderer/src/components/primitives/combobox/combobox.component.spec.ts
+    type: unit
+    affected_stories:
+      - 1-3-core-selection-controls
     last_result: unknown
     results: {}

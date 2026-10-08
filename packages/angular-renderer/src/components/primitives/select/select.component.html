@@ -1,15 +1,93 @@
-<select
-  [id]="contract().id"
-  [disabled]="computedDisabled()"
-  [required]="computedRequired()"
-  [attr.aria-label]="computedAriaLabel()"
-  [attr.aria-describedby]="computedAriaDescribedBy()"
-  (change)="onChange($event)"
->
-  @if (computedPlaceholder()) {
-    <option value="" disabled selected hidden>{{ computedPlaceholder() }}</option>
+<div class="origo-select__wrapper">
+  <div class="origo-select__control">
+    <button
+      type="button"
+      class="origo-select__trigger"
+      [id]="contract().id + '-trigger'"
+      role="combobox"
+      [attr.aria-expanded]="isOpen()"
+      [attr.aria-haspopup]="'listbox'"
+      [attr.aria-controls]="isOpen() ? contract().id + '-listbox' : null"
+      [attr.aria-activedescendant]="
+        isOpen() && activeIndex() >= 0 ? contract().id + '-option-' + activeIndex() : null
+      "
+      [attr.aria-invalid]="computedInvalid() ? 'true' : null"
+      [attr.aria-required]="computedRequired() ? 'true' : null"
+      [attr.aria-label]="computedAriaLabel()"
+      [attr.aria-describedby]="computedAriaDescribedBy()"
+      [disabled]="computedDisabled()"
+      (click)="toggleOpen()"
+      (keydown)="onKeydown($event)"
+    >
+      <span class="origo-select__label" [class.origo-select__label--placeholder]="!selectedLabel()">
+        {{ selectedLabel() || computedPlaceholder() }}
+      </span>
+      <span class="origo-select__icons">
+        @if (computedClearable() && value() && !computedDisabled() && !computedReadonly()) {
+          <span
+            class="origo-select__clear"
+            role="button"
+            tabindex="0"
+            aria-label="Clear selection"
+            (click)="clear($event)"
+            (keydown.enter)="clear($event)"
+            >✕</span
+          >
+        }
+        <span class="origo-select__arrow" aria-hidden="true">▼</span>
+      </span>
+    </button>
+  </div>
+
+  @if (isOpen()) {
+    <div
+      class="origo-select__dropdown"
+      [id]="contract().id + '-listbox'"
+      role="listbox"
+      [attr.aria-label]="computedAriaLabel()"
+    >
+      @if (computedFilter()) {
+        <div class="origo-select__filter-container">
+          <input
+            type="text"
+            class="origo-select__filter-input"
+            [placeholder]="computedFilterPlaceholder()"
+            [value]="filterQuery()"
+            (input)="onFilterInput($event)"
+            (keydown)="onKeydown($event)"
+            aria-label="Filter options"
+          />
+        </div>
+      }
+      <ul class="origo-select__options">
+        @for (opt of filteredOptions(); track opt.value; let idx = $index) {
+          @if (opt.group && (idx === 0 || filteredOptions()[idx - 1].group !== opt.group)) {
+            <li class="origo-select__group-label" role="presentation">{{ opt.group }}</li>
+          }
+          <li
+            class="origo-select__option"
+            [class.origo-select__option--selected]="opt.value === value()"
+            [class.origo-select__option--active]="activeIndex() === idx"
+            [class.origo-select__option--disabled]="opt.disabled"
+            [id]="contract().id + '-option-' + idx"
+            role="option"
+            [attr.aria-selected]="opt.value === value()"
+            [attr.aria-disabled]="opt.disabled ? 'true' : null"
+            (click)="!opt.disabled && selectOption(opt.value)"
+          >
+            {{ opt.label }}
+          </li>
+        } @empty {
+          <li class="origo-select__no-options" role="presentation">No options found</li>
+        }
+      </ul>
+    </div>
   }
-  @for (option of computedOptions(); track option.value) {
-    <option [value]="option.value" [selected]="value() === option.value">{{ option.label }}</option>
-  }
-</select>
+</div>
+
+@if (computedErrorText()) {
+  <div class="origo-select__error" [id]="contract().id + '-error'">{{ computedErrorText() }}</div>
+}
+@if (computedHelpText()) {
+  <div class="origo-select__help" [id]="contract().id + '-help'">{{ computedHelpText() }}</div>
+}
