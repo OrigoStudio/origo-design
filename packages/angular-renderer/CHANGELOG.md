@@ -1,3 +1,15 @@
+## 0.0.51 (2026-10-08)
+
+### 🚀 Features
+
+- add DatePickerComponent primitive for Angular renderer ([6746c8e](https://github.com/OrigoStudio/origo-design/commit/6746c8e))
+- add date-picker, time-picker, and date-range-picker primitive components ([25530e1](https://github.com/OrigoStudio/origo-design/commit/25530e1))
+- add date-picker, date-range-picker, and time-picker primitive components to angular renderer ([649dadc](https://github.com/OrigoStudio/origo-design/commit/649dadc))
+
+### ❤️ Thank You
+
+- Hardik Patel @hardikpatelse
+
 ## 0.0.50 (2026-10-08)
 
 ### 🚀 Features
