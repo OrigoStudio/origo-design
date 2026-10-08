@@ -20,6 +20,9 @@ export interface CheckboxProps {
   'aria-label'?: string;
   'aria-describedby'?: string;
   required?: boolean;
+  invalid?: boolean;
+  errorText?: string;
+  helpText?: string;
 }
 
 @Component({
@@ -40,6 +43,9 @@ export class CheckboxComponent implements OrigoAdapter<CheckboxProps> {
     label: 'string',
     disabled: 'boolean',
     required: 'boolean',
+    invalid: 'boolean',
+    errorText: 'string',
+    helpText: 'string',
   };
   static readonly strictContract = false;
 
@@ -61,6 +67,10 @@ export class CheckboxComponent implements OrigoAdapter<CheckboxProps> {
       ? String(desc)
       : undefined;
   });
+
+  computedInvalid = computed(() => !!this.contract().props?.invalid);
+  computedErrorText = computed(() => this.contract().props?.errorText ?? '');
+  computedHelpText = computed(() => this.contract().props?.helpText ?? '');
 
   private experienceAdapter = inject(WebExperienceAdapterService);
 

@@ -1,22 +1,24 @@
-<div class="origo-textarea__wrapper">
-  <textarea
+<div class="origo-input-number__wrapper">
+  <input
+    type="number"
     [id]="contract().id"
     [disabled]="computedDisabled()"
     [readonly]="computedReadonly()"
     [required]="computedRequired()"
+    [attr.min]="computedMin()"
+    [attr.max]="computedMax()"
+    [attr.step]="computedStep()"
     [attr.placeholder]="computedPlaceholder()"
-    [attr.rows]="computedRows()"
     [attr.aria-label]="computedAriaLabel()"
     [attr.aria-describedby]="computedAriaDescribedBy()"
     [attr.aria-invalid]="computedInvalid() ? 'true' : null"
     (input)="onInput($event)"
-    (paste)="onPaste($event)"
-    [value]="value()"
-  ></textarea>
+    [value]="value() ?? ''"
+  />
 </div>
 @if (computedErrorText()) {
-  <div class="origo-textarea__error">{{ computedErrorText() }}</div>
+  <div class="origo-input-number__error">{{ computedErrorText() }}</div>
 }
 @if (computedHelpText()) {
-  <div class="origo-textarea__help">{{ computedHelpText() }}</div>
+  <div class="origo-input-number__help">{{ computedHelpText() }}</div>
 }

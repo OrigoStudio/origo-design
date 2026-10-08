@@ -104,4 +104,70 @@ describe('TextInputComponent', () => {
       expect(element.style.marginRight).toBeFalsy();
     }
   });
+
+  it('should apply variant and fluid classes to host', () => {
+    componentRef.setInput('contract', {
+      id: '1',
+      type: 'TextInput',
+      props: { variant: 'filled', fluid: true },
+    });
+    fixture.detectChanges();
+    expect(fixture.nativeElement.classList.contains('origo-text-input--filled')).toBe(true);
+    expect(fixture.nativeElement.classList.contains('origo-text-input--fluid')).toBe(true);
+  });
+
+  it('should render errorText and helpText', () => {
+    componentRef.setInput('contract', {
+      id: '1',
+      type: 'TextInput',
+      props: { errorText: 'Error occurred', helpText: 'Some help' },
+    });
+    fixture.detectChanges();
+    const root = fixture.nativeElement.shadowRoot ?? fixture.nativeElement;
+    const errorEl = root.querySelector('.origo-text-input__error');
+    const helpEl = root.querySelector('.origo-text-input__help');
+    expect(errorEl).toBeTruthy();
+    expect(errorEl?.textContent?.trim()).toBe('Error occurred');
+    expect(helpEl).toBeTruthy();
+    expect(helpEl?.textContent?.trim()).toBe('Some help');
+  });
+
+  it('should bind aria-invalid and aria-required based on invalid and required props', () => {
+    componentRef.setInput('contract', {
+      id: '1',
+      type: 'TextInput',
+      props: { invalid: true, required: true },
+    });
+    fixture.detectChanges();
+    const root = fixture.nativeElement.shadowRoot ?? fixture.nativeElement;
+    const input = root.querySelector('input') as HTMLInputElement;
+    expect(input.getAttribute('aria-invalid')).toBe('true');
+    expect(input.getAttribute('aria-required')).toBe('true');
+  });
+
+  it('should bind type attribute correctly', () => {
+    componentRef.setInput('contract', {
+      id: '1',
+      type: 'TextInput',
+      props: { type: 'password' },
+    });
+    fixture.detectChanges();
+    const root = fixture.nativeElement.shadowRoot ?? fixture.nativeElement;
+    const input = root.querySelector('input') as HTMLInputElement;
+    expect(input.getAttribute('type')).toBe('password');
+  });
+
+  it('should strip HTML formatting on paste', () => {
+    componentRef.setInput('contract', { id: '1', type: 'TextInput', props: {} });
+    fixture.detectChanges();
+    const root = fixture.nativeElement.shadowRoot ?? fixture.nativeElement;
+    const input = root.querySelector('input') as HTMLInputElement;
+    const dt = {
+      getData: (type: string) => (type === 'text/plain' ? 'bold text' : '<b>bold text</b>'),
+    } as unknown as DataTransfer;
+    const pasteEvent = new Event('paste') as any;
+    pasteEvent.clipboardData = dt;
+    input.dispatchEvent(pasteEvent);
+    expect(component.value()).toBe('bold text');
+  });
 });

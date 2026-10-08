@@ -1,6 +1,7 @@
 ---
 story_id: "1.2"
 story_key: 1-2-core-input-controls
+baseline_commit: 450e384f384ac1d239f0ece384e438ee430745f5
 ---
 
 # Story 1.2: Core Input Controls

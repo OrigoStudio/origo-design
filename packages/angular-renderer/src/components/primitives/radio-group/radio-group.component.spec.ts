@@ -117,4 +117,31 @@ describe('RadioGroupComponent', () => {
       expect(element.style.marginRight).toBeFalsy();
     }
   });
+
+  it('should render errorText and helpText', () => {
+    fixture.componentRef.setInput('contract', {
+      id: '1',
+      type: 'RadioGroup',
+      props: { errorText: 'Error message', helpText: 'Help message' },
+    });
+    fixture.detectChanges();
+    const root = fixture.nativeElement.shadowRoot ?? fixture.nativeElement;
+    const errorEl = root.querySelector('.origo-radio-group__error');
+    const helpEl = root.querySelector('.origo-radio-group__help');
+    expect(errorEl).toBeTruthy();
+    expect(errorEl?.textContent?.trim()).toBe('Error message');
+    expect(helpEl).toBeTruthy();
+    expect(helpEl?.textContent?.trim()).toBe('Help message');
+  });
+
+  it('should bind aria-invalid based on invalid prop', () => {
+    fixture.componentRef.setInput('contract', {
+      id: '1',
+      type: 'RadioGroup',
+      props: { invalid: true },
+    });
+    fixture.detectChanges();
+    const fieldset = fixture.nativeElement.shadowRoot!.querySelector('fieldset');
+    expect(fieldset!.getAttribute('aria-invalid')).toBe('true');
+  });
 });

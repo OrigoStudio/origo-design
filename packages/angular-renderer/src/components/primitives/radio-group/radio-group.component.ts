@@ -20,6 +20,9 @@ export interface RadioGroupProps {
   'aria-label'?: string;
   'aria-describedby'?: string;
   required?: boolean;
+  invalid?: boolean;
+  errorText?: string;
+  helpText?: string;
 }
 
 @Component({
@@ -40,6 +43,9 @@ export class RadioGroupComponent implements OrigoAdapter<RadioGroupProps> {
     value: 'string',
     disabled: 'boolean',
     required: 'boolean',
+    invalid: 'boolean',
+    errorText: 'string',
+    helpText: 'string',
   };
   static readonly strictContract = false;
 
@@ -64,6 +70,10 @@ export class RadioGroupComponent implements OrigoAdapter<RadioGroupProps> {
       ? String(desc)
       : undefined;
   });
+
+  computedInvalid = computed(() => !!this.contract().props?.invalid);
+  computedErrorText = computed(() => this.contract().props?.errorText ?? '');
+  computedHelpText = computed(() => this.contract().props?.helpText ?? '');
 
   private experienceAdapter = inject(WebExperienceAdapterService);
 

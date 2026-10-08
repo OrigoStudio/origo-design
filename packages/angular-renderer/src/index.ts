@@ -24,3 +24,4 @@ export * from './components/primitives/sidebar/sidebar.component';
 export * from './components/primitives/tabs/tabs.component';
 export * from './components/primitives/breadcrumbs/breadcrumbs.component';
 export * from './adapters/web/experience-adapter.service';
+export * from './components/primitives/input-number/input-number.component';
