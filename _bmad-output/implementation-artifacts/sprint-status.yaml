@@ -52,7 +52,7 @@ development_status:
   1-1-core-buttons-and-actions: done
   1-2-core-input-controls: done
   1-3-core-selection-controls: done
-  1-4-date-and-time-controls: in-progress
+  1-4-date-and-time-controls: done
   1-5-application-layout-primitives: backlog
   1-6-file-input-and-rich-text-editor: backlog
   epic-1-retrospective: optional
