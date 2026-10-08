@@ -1,3 +1,13 @@
+## 0.0.50 (2026-10-08)
+
+### 🚀 Features
+
+- add core selection control primitives including select, multi-select, combobox, and autocomplete components ([3866703](https://github.com/OrigoStudio/origo-design/commit/3866703))
+
+### ❤️ Thank You
+
+- Hardik Patel @hardikpatelse
+
 ## 0.0.49 (2026-10-08)
 
 This was a version bump only for devtools to align it with other projects, there were no code changes.
