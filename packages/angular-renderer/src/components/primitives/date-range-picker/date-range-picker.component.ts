@@ -9,6 +9,8 @@ import {
   inject,
   effect,
   untracked,
+  HostListener,
+  ElementRef,
 } from '@angular/core';
 import { InteractionContract } from '@origostudio/core';
 import { OrigoAdapter } from '../../../adapters/web/adapter';
@@ -22,12 +24,14 @@ export interface DateRangePickerProps {
   timezone?: string;
   startDate?: string; // ISO 8601 UTC
   endDate?: string; // ISO 8601 UTC
+  'aria-label'?: string;
 }
 
 interface CalendarDay {
   date: Date;
   isCurrentMonth: boolean;
   isToday: boolean;
+  disabled: boolean;
 }
 
 @Component({
@@ -47,11 +51,17 @@ export class DateRangePickerComponent implements OrigoAdapter<DateRangePickerPro
     timezone: 'string',
     startDate: 'string',
     endDate: 'string',
+    'aria-label': 'string',
+    permissions: 'array',
+    rules: 'array',
+    metadata: 'object',
   };
   static readonly strictContract = false;
 
   contract = input.required<InteractionContract<DateRangePickerProps>>();
-  value = model<any>(''); // Unused directly for binding, but required by adapter base if needed. We use startDate/endDate via experienceAdapter.
+
+  // DateRangePicker doesn't use a single value model in the same way, but keeping it for adapter compat if needed
+  value = model<any>(null);
 
   startDate = signal<string | null>(null);
   endDate = signal<string | null>(null);
@@ -63,21 +73,25 @@ export class DateRangePickerComponent implements OrigoAdapter<DateRangePickerPro
   selectionPhase = signal<'start' | 'end'>('start');
 
   private experienceAdapter = inject(WebExperienceAdapterService);
+  private elementRef = inject(ElementRef);
 
   weekDays = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+  computedAriaLabel = computed(() => this.contract().props?.['aria-label'] || 'Date Range Picker');
 
   displayStartValue = computed(() => this.formatDateStr(this.startDate()));
   displayEndValue = computed(() => this.formatDateStr(this.endDate()));
 
+  private parseSafeUTC(isoString: string | null | undefined): Date | null {
+    if (!isoString || isoString === 'null' || isoString === 'undefined') return null;
+    const d = new Date(isoString);
+    if (isNaN(d.getTime())) return null;
+    return d;
+  }
+
   private formatDateStr(val: string | null): string {
-    if (!val) return '';
-    try {
-      const d = new Date(val);
-      if (isNaN(d.getTime())) return '';
-      return `${d.getUTCFullYear()}-${String(d.getUTCMonth() + 1).padStart(2, '0')}-${String(d.getUTCDate()).padStart(2, '0')}`;
-    } catch {
-      return '';
-    }
+    const d = this.parseSafeUTC(val);
+    if (!d) return '';
+    return `${d.getUTCFullYear()}-${String(d.getUTCMonth() + 1).padStart(2, '0')}-${String(d.getUTCDate()).padStart(2, '0')}`;
   }
 
   constructor() {
@@ -85,21 +99,47 @@ export class DateRangePickerComponent implements OrigoAdapter<DateRangePickerPro
       const s = this.contract().props?.startDate;
       const e = this.contract().props?.endDate;
       untracked(() => {
-        if (s) this.startDate.set(String(s));
-        if (e) this.endDate.set(String(e));
+        this.startDate.set(s === undefined || s === null ? null : String(s));
+        this.endDate.set(e === undefined || e === null ? null : String(e));
 
-        const dateToView = s ? new Date(String(s)) : new Date();
-        if (!isNaN(dateToView.getTime())) {
-          this.currentViewDate.set(
-            new Date(Date.UTC(dateToView.getUTCFullYear(), dateToView.getUTCMonth(), 1))
-          );
-        }
+        const dateToView = this.parseSafeUTC(this.startDate()) || new Date();
+        this.currentViewDate.set(
+          new Date(Date.UTC(dateToView.getUTCFullYear(), dateToView.getUTCMonth(), 1))
+        );
       });
     });
   }
 
+  @HostListener('document:mousedown', ['$event'])
+  onClickOutside(event: MouseEvent) {
+    if (this.isOpen() && !this.elementRef.nativeElement.contains(event.target)) {
+      this.cancelSelection();
+    }
+  }
+
+  @HostListener('document:keydown.escape')
+  onEscape() {
+    if (this.isOpen()) {
+      this.cancelSelection();
+    }
+  }
+
+  private cancelSelection() {
+    // If we're mid-selection, revert to the contract state
+    if (this.selectionPhase() === 'end') {
+      const s = this.contract().props?.startDate;
+      this.startDate.set(s === undefined || s === null ? null : String(s));
+      this.selectionPhase.set('start');
+    }
+    this.isOpen.set(false);
+  }
+
   toggleCalendar() {
-    this.isOpen.update(v => !v);
+    if (this.isOpen()) {
+      this.cancelSelection();
+    } else {
+      this.isOpen.set(true);
+    }
   }
 
   currentMonthYear = computed(() => {
@@ -121,13 +161,27 @@ export class DateRangePickerComponent implements OrigoAdapter<DateRangePickerPro
     return `${months[d.getUTCMonth()]} ${d.getUTCFullYear()}`;
   });
 
+  private isDateDisabled(date: Date): boolean {
+    const minDateStr = this.contract().props?.minDate;
+    const maxDateStr = this.contract().props?.maxDate;
+
+    if (minDateStr) {
+      const minD = this.parseSafeUTC(minDateStr);
+      if (minD && date < minD) return true;
+    }
+    if (maxDateStr) {
+      const maxD = this.parseSafeUTC(maxDateStr);
+      if (maxD && date > maxD) return true;
+    }
+    return false;
+  }
+
   calendarGrid = computed(() => {
     const viewDate = this.currentViewDate();
     const year = viewDate.getUTCFullYear();
     const month = viewDate.getUTCMonth();
 
     const firstDayOfMonth = new Date(Date.UTC(year, month, 1));
-    const lastDayOfMonth = new Date(Date.UTC(year, month + 1, 0));
 
     const startingDayOfWeek = firstDayOfMonth.getUTCDay();
 
@@ -139,7 +193,7 @@ export class DateRangePickerComponent implements OrigoAdapter<DateRangePickerPro
 
     const today = new Date();
 
-    while (currentDay <= lastDayOfMonth || weeks.length < 6) {
+    while (weeks.length < 6) {
       if (currentDay.getUTCDay() === 0) {
         weeks.push([]);
       }
@@ -151,6 +205,7 @@ export class DateRangePickerComponent implements OrigoAdapter<DateRangePickerPro
           currentDay.getUTCFullYear() === today.getUTCFullYear() &&
           currentDay.getUTCMonth() === today.getUTCMonth() &&
           currentDay.getUTCDate() === today.getUTCDate(),
+        disabled: this.isDateDisabled(currentDay),
       });
 
       currentDay.setUTCDate(currentDay.getUTCDate() + 1);
@@ -160,9 +215,8 @@ export class DateRangePickerComponent implements OrigoAdapter<DateRangePickerPro
   });
 
   isSameDate(d1Str: string | null, d2: Date): boolean {
-    if (!d1Str) return false;
-    const d1 = new Date(d1Str);
-    if (isNaN(d1.getTime())) return false;
+    const d1 = this.parseSafeUTC(d1Str);
+    if (!d1) return false;
     return (
       d1.getUTCFullYear() === d2.getUTCFullYear() &&
       d1.getUTCMonth() === d2.getUTCMonth() &&
@@ -175,12 +229,9 @@ export class DateRangePickerComponent implements OrigoAdapter<DateRangePickerPro
   }
 
   isInRange(date: Date): boolean {
-    const s = this.startDate();
-    const e = this.endDate();
-    if (!s || !e) return false;
-    const sDate = new Date(s);
-    const eDate = new Date(e);
-    if (isNaN(sDate.getTime()) || isNaN(eDate.getTime())) return false;
+    const sDate = this.parseSafeUTC(this.startDate());
+    const eDate = this.parseSafeUTC(this.endDate());
+    if (!sDate || !eDate) return false;
 
     // Normalize to start of UTC day for comparison
     const normDate = Date.UTC(date.getUTCFullYear(), date.getUTCMonth(), date.getUTCDate());
@@ -191,18 +242,20 @@ export class DateRangePickerComponent implements OrigoAdapter<DateRangePickerPro
   }
 
   onDayClick(date: Date) {
+    if (this.isDateDisabled(date)) return;
+
     if (this.selectionPhase() === 'start') {
       const iso = date.toISOString();
       this.startDate.set(iso);
       this.endDate.set(null);
-      this.experienceAdapter.updateState(this.contract().id, 'startDate', iso);
-      this.experienceAdapter.updateState(this.contract().id, 'endDate', null);
       this.selectionPhase.set('end');
     } else {
-      let startD = new Date(this.startDate()!);
+      let startD = this.parseSafeUTC(this.startDate());
+      if (!startD) {
+        startD = date;
+      }
       let endD = date;
 
-      // Auto-swap if end is before start
       if (endD.getTime() < startD.getTime()) {
         const temp = startD;
         startD = endD;
@@ -216,7 +269,6 @@ export class DateRangePickerComponent implements OrigoAdapter<DateRangePickerPro
   }
 
   selectRange(start: Date, end: Date) {
-    // Force UTC boundaries
     const s = new Date(
       Date.UTC(start.getUTCFullYear(), start.getUTCMonth(), start.getUTCDate())
     ).toISOString();
@@ -237,6 +289,9 @@ export class DateRangePickerComponent implements OrigoAdapter<DateRangePickerPro
 
     this.experienceAdapter.updateState(this.contract().id, 'startDate', actualStart);
     this.experienceAdapter.updateState(this.contract().id, 'endDate', actualEnd);
+
+    // Also notify if 'value' model binding is used to pass range object
+    this.value.set({ startDate: actualStart, endDate: actualEnd });
   }
 
   prevMonth() {
@@ -247,5 +302,56 @@ export class DateRangePickerComponent implements OrigoAdapter<DateRangePickerPro
   nextMonth() {
     const d = this.currentViewDate();
     this.currentViewDate.set(new Date(Date.UTC(d.getUTCFullYear(), d.getUTCMonth() + 1, 1)));
+  }
+
+  onInputKeyDown(event: KeyboardEvent) {
+    if (event.key === 'Enter' || event.key === ' ' || event.key === 'ArrowDown') {
+      event.preventDefault();
+      this.isOpen.set(true);
+    }
+  }
+
+  onDayKeyDown(event: KeyboardEvent, date: Date) {
+    const d = new Date(date);
+    let handled = false;
+
+    switch (event.key) {
+      case 'Enter':
+      case ' ':
+        this.onDayClick(d);
+        handled = true;
+        break;
+      case 'ArrowRight':
+        d.setUTCDate(d.getUTCDate() + 1);
+        handled = true;
+        break;
+      case 'ArrowLeft':
+        d.setUTCDate(d.getUTCDate() - 1);
+        handled = true;
+        break;
+      case 'ArrowDown':
+        d.setUTCDate(d.getUTCDate() + 7);
+        handled = true;
+        break;
+      case 'ArrowUp':
+        d.setUTCDate(d.getUTCDate() - 7);
+        handled = true;
+        break;
+    }
+
+    if (handled) {
+      event.preventDefault();
+      if (
+        d.getUTCMonth() !== this.currentViewDate().getUTCMonth() ||
+        d.getUTCFullYear() !== this.currentViewDate().getUTCFullYear()
+      ) {
+        this.currentViewDate.set(new Date(Date.UTC(d.getUTCFullYear(), d.getUTCMonth(), 1)));
+      }
+      setTimeout(() => {
+        const id = `day-${d.getUTCFullYear()}-${d.getUTCMonth()}-${d.getUTCDate()}`;
+        const el = this.elementRef.nativeElement.shadowRoot?.getElementById(id);
+        if (el) el.focus();
+      }, 0);
+    }
   }
 }

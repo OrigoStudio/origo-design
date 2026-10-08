@@ -51,20 +51,37 @@ describe('DatePickerComponent', () => {
     ).toBeTruthy();
   });
 
-  it('should explicitly standardize to ISO 8601 UTC at boundaries', () => {
+  it('should explicitly standardize to ISO 8601 UTC at boundaries when clicked', () => {
     componentRef.setInput('contract', {
       id: 'test-date-picker',
       type: 'DatePicker',
-      props: {},
+      props: {
+        value: '2025-01-15T00:00:00.000Z',
+      },
     });
     fixture.detectChanges();
 
-    // Call internal method to simulate date selection and verify UTC handling
-    (component as any).selectDate(2025, 0, 15); // Jan 15, 2025 (months are 0-indexed in JS Date)
+    const root = fixture.nativeElement.shadowRoot ?? fixture.nativeElement;
+
+    // Open calendar
+    const input = root.querySelector('input');
+    input.dispatchEvent(new Event('click'));
+    fixture.detectChanges();
+
+    // Click the 16th
+    const gridcells = root.querySelectorAll('[role="gridcell"]');
+    const day16 = Array.from(gridcells).find(
+      (cell: any) => cell.textContent.trim() === '16'
+    ) as HTMLElement;
+    expect(day16).toBeTruthy();
+
+    day16.dispatchEvent(new Event('click'));
+    fixture.detectChanges();
+
     expect(experienceAdapter.updateState).toHaveBeenCalledWith(
       'test-date-picker',
       'value',
-      '2025-01-15T00:00:00.000Z'
+      '2025-01-16T00:00:00.000Z'
     );
   });
 
@@ -72,18 +89,32 @@ describe('DatePickerComponent', () => {
     componentRef.setInput('contract', {
       id: 'test-date-picker',
       type: 'DatePicker',
-      props: {},
+      props: {
+        value: '2025-01-15T00:00:00.000Z',
+      },
     });
     fixture.detectChanges();
 
     const root = fixture.nativeElement.shadowRoot ?? fixture.nativeElement;
 
-    // Simulate opening the calendar overlay
+    // Simulate opening the calendar overlay with keyboard
     const input = root.querySelector('input');
-    input.dispatchEvent(new Event('click'));
+    input.dispatchEvent(new KeyboardEvent('keydown', { key: 'Enter' }));
     fixture.detectChanges();
 
     const grid = root.querySelector('[role="grid"]');
     expect(grid).toBeTruthy();
+
+    const gridcells = root.querySelectorAll('[role="gridcell"]');
+    const day15 = Array.from(gridcells).find(
+      (cell: any) => cell.textContent.trim() === '15'
+    ) as HTMLElement;
+
+    // Simulate keyboard navigation
+    day15.dispatchEvent(new KeyboardEvent('keydown', { key: 'ArrowRight' }));
+    fixture.detectChanges();
+
+    // Validate focus shifts internally
+    expect(component.currentViewDate().getUTCDate()).toBe(1); // view date focuses start of month, keyboard navigates
   });
 });

@@ -9,6 +9,8 @@ import {
   inject,
   effect,
   untracked,
+  HostListener,
+  ElementRef,
 } from '@angular/core';
 import { InteractionContract } from '@origostudio/core';
 import { OrigoAdapter } from '../../../adapters/web/adapter';
@@ -28,6 +30,7 @@ interface CalendarDay {
   date: Date;
   isCurrentMonth: boolean;
   isToday: boolean;
+  disabled: boolean;
 }
 
 @Component({
@@ -47,11 +50,14 @@ export class DatePickerComponent implements OrigoAdapter<DatePickerProps> {
     timezone: 'string',
     value: 'string',
     'aria-label': 'string',
+    permissions: 'array',
+    rules: 'array',
+    metadata: 'object',
   };
   static readonly strictContract = false;
 
   contract = input.required<InteractionContract<DatePickerProps>>();
-  value = model<string>('');
+  value = model<string | null>(null);
 
   isOpen = signal<boolean>(false);
   currentViewDate = signal<Date>(
@@ -59,6 +65,7 @@ export class DatePickerComponent implements OrigoAdapter<DatePickerProps> {
   );
 
   private experienceAdapter = inject(WebExperienceAdapterService);
+  private elementRef = inject(ElementRef);
 
   weekDays = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 
@@ -67,29 +74,48 @@ export class DatePickerComponent implements OrigoAdapter<DatePickerProps> {
   displayValue = computed(() => {
     const val = this.value();
     if (!val) return '';
-    try {
-      const d = new Date(val);
-      if (isNaN(d.getTime())) return '';
-      // Format as YYYY-MM-DD using UTC methods
-      return `${d.getUTCFullYear()}-${String(d.getUTCMonth() + 1).padStart(2, '0')}-${String(d.getUTCDate()).padStart(2, '0')}`;
-    } catch {
-      return '';
-    }
+    const d = this.parseSafeUTC(val);
+    if (!d) return '';
+    // Format as YYYY-MM-DD using UTC methods
+    return `${d.getUTCFullYear()}-${String(d.getUTCMonth() + 1).padStart(2, '0')}-${String(d.getUTCDate()).padStart(2, '0')}`;
   });
+
+  private parseSafeUTC(isoString: string): Date | null {
+    if (!isoString) return null;
+    const d = new Date(isoString);
+    if (isNaN(d.getTime())) return null;
+    return d;
+  }
 
   constructor() {
     effect(() => {
       const contractVal = this.contract().props?.value;
       untracked(() => {
-        if (contractVal !== undefined && contractVal !== null) {
+        if (contractVal === undefined || contractVal === null) {
+          this.value.set(null);
+        } else {
           this.value.set(String(contractVal));
-          const d = new Date(String(contractVal));
-          if (!isNaN(d.getTime())) {
+          const d = this.parseSafeUTC(String(contractVal));
+          if (d) {
             this.currentViewDate.set(new Date(Date.UTC(d.getUTCFullYear(), d.getUTCMonth(), 1)));
           }
         }
       });
     });
+  }
+
+  @HostListener('document:mousedown', ['$event'])
+  onClickOutside(event: MouseEvent) {
+    if (this.isOpen() && !this.elementRef.nativeElement.contains(event.target)) {
+      this.isOpen.set(false);
+    }
+  }
+
+  @HostListener('document:keydown.escape')
+  onEscape() {
+    if (this.isOpen()) {
+      this.isOpen.set(false);
+    }
   }
 
   toggleCalendar() {
@@ -115,6 +141,21 @@ export class DatePickerComponent implements OrigoAdapter<DatePickerProps> {
     return `${months[d.getUTCMonth()]} ${d.getUTCFullYear()}`;
   });
 
+  private isDateDisabled(date: Date): boolean {
+    const minDateStr = this.contract().props?.minDate;
+    const maxDateStr = this.contract().props?.maxDate;
+
+    if (minDateStr) {
+      const minD = this.parseSafeUTC(minDateStr);
+      if (minD && date < minD) return true;
+    }
+    if (maxDateStr) {
+      const maxD = this.parseSafeUTC(maxDateStr);
+      if (maxD && date > maxD) return true;
+    }
+    return false;
+  }
+
   calendarGrid = computed(() => {
     const viewDate = this.currentViewDate();
     const year = viewDate.getUTCFullYear();
@@ -133,18 +174,21 @@ export class DatePickerComponent implements OrigoAdapter<DatePickerProps> {
 
     const today = new Date();
 
-    while (currentDay <= lastDayOfMonth || weeks.length < 6) {
+    while (weeks.length < 6) {
       if (currentDay.getUTCDay() === 0) {
         weeks.push([]);
       }
 
+      const isCurrentMonth = currentDay.getUTCMonth() === month;
+
       weeks[weeks.length - 1].push({
         date: new Date(currentDay),
-        isCurrentMonth: currentDay.getUTCMonth() === month,
+        isCurrentMonth,
         isToday:
           currentDay.getUTCFullYear() === today.getUTCFullYear() &&
           currentDay.getUTCMonth() === today.getUTCMonth() &&
           currentDay.getUTCDate() === today.getUTCDate(),
+        disabled: this.isDateDisabled(currentDay),
       });
 
       currentDay.setUTCDate(currentDay.getUTCDate() + 1);
@@ -160,9 +204,9 @@ export class DatePickerComponent implements OrigoAdapter<DatePickerProps> {
   isSelected(date: Date): boolean {
     const val = this.value();
     if (!val) return false;
-    const selected = new Date(val);
+    const selected = this.parseSafeUTC(val);
+    if (!selected) return false;
     return (
-      !isNaN(selected.getTime()) &&
       selected.getUTCFullYear() === date.getUTCFullYear() &&
       selected.getUTCMonth() === date.getUTCMonth() &&
       selected.getUTCDate() === date.getUTCDate()
@@ -171,8 +215,9 @@ export class DatePickerComponent implements OrigoAdapter<DatePickerProps> {
 
   selectDate(year: number, month: number, day: number) {
     const selectedDate = new Date(Date.UTC(year, month, day, 0, 0, 0, 0));
-    const isoString = selectedDate.toISOString();
+    if (this.isDateDisabled(selectedDate)) return;
 
+    const isoString = selectedDate.toISOString();
     this.value.set(isoString);
     this.experienceAdapter.updateState(this.contract().id, 'value', isoString);
     this.isOpen.set(false);
@@ -233,13 +278,18 @@ export class DatePickerComponent implements OrigoAdapter<DatePickerProps> {
 
     if (handled) {
       event.preventDefault();
-      // In a real app we'd manage focus dynamically, but changing view date suffices for test coverage
       if (
         d.getUTCMonth() !== this.currentViewDate().getUTCMonth() ||
         d.getUTCFullYear() !== this.currentViewDate().getUTCFullYear()
       ) {
         this.currentViewDate.set(new Date(Date.UTC(d.getUTCFullYear(), d.getUTCMonth(), 1)));
       }
+      // Focus management for a11y: find the element with matching date in the DOM and focus it
+      setTimeout(() => {
+        const id = `day-${d.getUTCFullYear()}-${d.getUTCMonth()}-${d.getUTCDate()}`;
+        const el = this.elementRef.nativeElement.shadowRoot?.getElementById(id);
+        if (el) el.focus();
+      }, 0);
     }
   }
 }

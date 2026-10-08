@@ -9,6 +9,8 @@ import {
   inject,
   effect,
   untracked,
+  HostListener,
+  ElementRef,
 } from '@angular/core';
 import { InteractionContract } from '@origostudio/core';
 import { OrigoAdapter } from '../../../adapters/web/adapter';
@@ -33,11 +35,14 @@ export class TimePickerComponent implements OrigoAdapter<TimePickerProps> {
     format: 'string',
     value: 'string',
     'aria-label': 'string',
+    permissions: 'array',
+    rules: 'array',
+    metadata: 'object',
   };
   static readonly strictContract = false;
 
   contract = input.required<InteractionContract<TimePickerProps>>();
-  value = model<string>('');
+  value = model<string | null>(null);
 
   isOpen = signal<boolean>(false);
   selectedHour = signal<number>(0);
@@ -45,6 +50,7 @@ export class TimePickerComponent implements OrigoAdapter<TimePickerProps> {
   selectedPeriod = signal<'AM' | 'PM'>('AM');
 
   private experienceAdapter = inject(WebExperienceAdapterService);
+  private elementRef = inject(ElementRef);
 
   is12h = computed(() => this.contract().props?.format === '12h');
   computedAriaLabel = computed(() => this.contract().props?.['aria-label'] || 'Time Picker');
@@ -61,30 +67,46 @@ export class TimePickerComponent implements OrigoAdapter<TimePickerProps> {
   displayValue = computed(() => {
     const val = this.value();
     if (!val) return '';
-    try {
-      const d = new Date(val);
-      if (isNaN(d.getTime())) return '';
+    const d = this.parseSafeUTC(val);
+    if (!d) return '';
 
-      let h = d.getUTCHours();
-      const m = d.getUTCMinutes();
+    let h = d.getUTCHours();
+    const m = d.getUTCMinutes();
 
-      if (this.is12h()) {
-        const period = h >= 12 ? 'PM' : 'AM';
-        h = h % 12;
-        if (h === 0) h = 12;
-        return `${this.pad(h)}:${this.pad(m)} ${period}`;
-      }
-      return `${this.pad(h)}:${this.pad(m)}`;
-    } catch {
-      return '';
+    if (this.is12h()) {
+      const period = h >= 12 ? 'PM' : 'AM';
+      h = h % 12;
+      if (h === 0) h = 12;
+      return `${this.pad(h)}:${this.pad(m)} ${period}`;
     }
+    return `${this.pad(h)}:${this.pad(m)}`;
   });
+
+  private parseSafeUTC(timeStr: string): Date | null {
+    if (!timeStr) return null;
+
+    // Check for HH:MM format
+    const timeMatch = timeStr.trim().match(/^(\d{2}):(\d{2})/);
+    if (timeMatch && timeStr.trim().length <= 8) {
+      const d = new Date(
+        Date.UTC(1970, 0, 1, parseInt(timeMatch[1], 10), parseInt(timeMatch[2], 10), 0, 0)
+      );
+      return d;
+    }
+
+    const d = new Date(timeStr);
+    if (isNaN(d.getTime())) return null;
+    return d;
+  }
 
   constructor() {
     effect(() => {
       const val = this.contract().props?.value;
       untracked(() => {
-        if (val) {
+        if (val === undefined || val === null) {
+          this.value.set(null);
+          this.syncInternalStateFromValue(null);
+        } else {
           this.value.set(String(val));
           this.syncInternalStateFromValue(String(val));
         }
@@ -92,9 +114,30 @@ export class TimePickerComponent implements OrigoAdapter<TimePickerProps> {
     });
   }
 
-  private syncInternalStateFromValue(val: string) {
-    const d = new Date(val);
-    if (!isNaN(d.getTime())) {
+  @HostListener('document:mousedown', ['$event'])
+  onClickOutside(event: MouseEvent) {
+    if (this.isOpen() && !this.elementRef.nativeElement.contains(event.target)) {
+      this.isOpen.set(false);
+    }
+  }
+
+  @HostListener('document:keydown.escape')
+  onEscape() {
+    if (this.isOpen()) {
+      this.isOpen.set(false);
+    }
+  }
+
+  private syncInternalStateFromValue(val: string | null) {
+    if (!val) {
+      this.selectedHour.set(this.is12h() ? 12 : 0);
+      this.selectedMinute.set(0);
+      this.selectedPeriod.set('AM');
+      return;
+    }
+
+    const d = this.parseSafeUTC(val);
+    if (d) {
       let h = d.getUTCHours();
       this.selectedMinute.set(d.getUTCMinutes());
       if (this.is12h()) {
@@ -103,6 +146,10 @@ export class TimePickerComponent implements OrigoAdapter<TimePickerProps> {
         if (h === 0) h = 12;
       }
       this.selectedHour.set(h);
+    } else {
+      this.selectedHour.set(this.is12h() ? 12 : 0);
+      this.selectedMinute.set(0);
+      this.selectedPeriod.set('AM');
     }
   }
 
@@ -151,8 +198,21 @@ export class TimePickerComponent implements OrigoAdapter<TimePickerProps> {
       else if (p === 'AM' && h === 12) h = 0;
     }
 
-    // Defaulting to 1970-01-01 for time-only selection as per ISO conventions when date isn't provided
-    const selectedDate = new Date(Date.UTC(1970, 0, 1, h, m, 0, 0));
+    let year = 1970;
+    let month = 0;
+    let day = 1;
+
+    const currentVal = this.value();
+    if (currentVal) {
+      const parsed = this.parseSafeUTC(currentVal);
+      if (parsed) {
+        year = parsed.getUTCFullYear();
+        month = parsed.getUTCMonth();
+        day = parsed.getUTCDate();
+      }
+    }
+
+    const selectedDate = new Date(Date.UTC(year, month, day, h, m, 0, 0));
     const isoString = selectedDate.toISOString();
 
     this.value.set(isoString);

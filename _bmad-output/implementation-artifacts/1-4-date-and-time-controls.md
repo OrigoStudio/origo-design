@@ -83,3 +83,26 @@ No `@Input()` decorators, no NgModules. Use Signals and pure Component patterns.
 | P1-AD-5 | Composition over inheritance — inject `WebExperienceAdapterService`, no base classes |
 | P1-AD-6 | axe-core in CI — bind `aria-label`, `aria-describedby`, `aria-invalid`, `aria-required`, `aria-activedescendant` |
 | P2-AD-2 | Reactive Forms substrate — use `model<T>()` + `updateState()`, NOT `ControlValueAccessor` |
+### Review Findings
+
+- [x] [Review][Patch] Arbitrary Unix Epoch Anchoring for Time Values — TimePickerComponent hardcodes date boundaries to 1970-01-01 in confirmTime(). If the component receives an ISO timestamp containing a real calendar date, selecting a time strips the original date entirely and resets it to the 1970 epoch.
+- [x] [Review][Patch] Pervasive Design Token and Fallback Violations [date-picker.component.scss]
+- [x] [Review][Patch] Widespread Use of Forbidden Naive new Date(string) [date-picker.component.ts]
+- [x] [Review][Patch] Incomplete W3C ARIA Keyboard Navigation and Focus Management [date-picker.component.ts]
+- [x] [Review][Patch] Unimplemented Component Prop Logic [date-picker.component.ts]
+- [x] [Review][Patch] Completely Unenforced minDate and maxDate Bounds [date-picker.component.ts]
+- [x] [Review][Patch] Truncated and Malformed 6th Week Grid Generation [date-picker.component.ts]
+- [x] [Review][Patch] Fragile and Leaky State Machine in DateRangePickerComponent [date-range-picker.component.ts]
+- [x] [Review][Patch] Unchecked Prop Ingestion in DateRangePickerComponent [date-range-picker.component.ts]
+- [x] [Review][Patch] Disconnected Form Engine Model Binding in DateRangePickerComponent [date-range-picker.component.ts]
+- [x] [Review][Patch] Superficial Unit Tests Bypassing Real UI Interactions [date-picker.component.spec.ts]
+- [x] [Review][Patch] Missing Overlay Dismissal and Click-Outside Handlers [date-picker.component.ts]
+- [x] [Review][Patch] Omission of Enterprise BADL Metadata and Standard Accessibility Bindings [date-picker.component.ts]
+- [x] [Review][Patch] Corrupt Initial State in 12-Hour TimePickerComponent [time-picker.component.ts]
+- [x] [Review][Patch] Components retain stale state when contract props are reset [date-picker.component.ts]
+- [x] [Review][Patch] Keyboard focus trapped when navigating to empty month [date-picker.component.ts]
+- [x] [Review][Patch] Null Start Date handling in DateRangePicker [date-range-picker.component.ts]
+- [x] [Review][Patch] DateRangePicker input missing keyboard handlers [date-range-picker.component.ts]
+- [x] [Review][Patch] PM hour conversion rolls into next day [time-picker.component.ts]
+- [x] [Review][Patch] TimePicker fails to parse plain time strings [time-picker.component.ts]
+- [x] [Review][Patch] Missing Central Test Registry Update [tools/test-registry/test-registry.yaml]

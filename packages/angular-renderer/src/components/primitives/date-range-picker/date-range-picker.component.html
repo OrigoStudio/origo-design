@@ -8,6 +8,7 @@
       placeholder="Start Date"
       [value]="displayStartValue()"
       (click)="toggleCalendar()"
+      (keydown)="onInputKeyDown($event)"
       aria-haspopup="grid"
       [attr.aria-expanded]="isOpen()"
     />
@@ -20,6 +21,7 @@
       placeholder="End Date"
       [value]="displayEndValue()"
       (click)="toggleCalendar()"
+      (keydown)="onInputKeyDown($event)"
       aria-haspopup="grid"
       [attr.aria-expanded]="isOpen()"
     />
@@ -45,13 +47,30 @@
             @for (day of week; track day.date.toISOString()) {
               <div
                 role="gridcell"
+                [id]="
+                  'day-' +
+                  day.date.getUTCFullYear() +
+                  '-' +
+                  day.date.getUTCMonth() +
+                  '-' +
+                  day.date.getUTCDate()
+                "
                 class="origo-date-range-picker__day"
                 [class.origo-date-range-picker__day--other-month]="!day.isCurrentMonth"
                 [class.origo-date-range-picker__day--selected]="isSelected(day.date)"
                 [class.origo-date-range-picker__day--in-range]="isInRange(day.date)"
+                [class.origo-date-range-picker__day--disabled]="day.disabled"
                 [attr.aria-selected]="isSelected(day.date)"
-                [attr.tabindex]="isSelected(day.date) || day.isToday ? 0 : -1"
+                [attr.aria-disabled]="day.disabled"
+                [attr.tabindex]="
+                  isSelected(day.date) || day.isToday
+                    ? 0
+                    : day.isCurrentMonth && !day.disabled
+                      ? 0
+                      : -1
+                "
                 (click)="onDayClick(day.date)"
+                (keydown)="onDayKeyDown($event, day.date)"
               >
                 {{ day.date.getUTCDate() }}
               </div>
