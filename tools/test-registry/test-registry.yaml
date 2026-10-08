@@ -910,3 +910,30 @@ test_cases:
       - 1-3-core-selection-controls
     last_result: unknown
     results: {}
+  - id: renderer-primitive-date-picker
+    description: 'Verifies DatePicker primitive rendering and logic'
+    package: '@origo/angular-renderer'
+    spec_file: packages/angular-renderer/src/components/primitives/date-picker/date-picker.component.spec.ts
+    type: unit
+    affected_stories:
+      - 1-4-date-and-time-controls
+    last_result: unknown
+    results: {}
+  - id: renderer-primitive-time-picker
+    description: 'Verifies TimePicker primitive rendering and logic'
+    package: '@origo/angular-renderer'
+    spec_file: packages/angular-renderer/src/components/primitives/time-picker/time-picker.component.spec.ts
+    type: unit
+    affected_stories:
+      - 1-4-date-and-time-controls
+    last_result: unknown
+    results: {}
+  - id: renderer-primitive-date-range-picker
+    description: 'Verifies DateRangePicker primitive rendering and logic'
+    package: '@origo/angular-renderer'
+    spec_file: packages/angular-renderer/src/components/primitives/date-range-picker/date-range-picker.component.spec.ts
+    type: unit
+    affected_stories:
+      - 1-4-date-and-time-controls
+    last_result: unknown
+    results: {}

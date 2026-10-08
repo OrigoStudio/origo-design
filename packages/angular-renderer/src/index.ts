@@ -28,3 +28,6 @@ export * from './components/primitives/tabs/tabs.component';
 export * from './components/primitives/breadcrumbs/breadcrumbs.component';
 export * from './adapters/web/experience-adapter.service';
 export * from './components/primitives/input-number/input-number.component';
+export * from './components/primitives/date-picker/date-picker.component';
+export * from './components/primitives/time-picker/time-picker.component';
+export * from './components/primitives/date-range-picker/date-range-picker.component';

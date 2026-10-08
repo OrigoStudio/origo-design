@@ -1,0 +1,77 @@
+:host {
+  display: block;
+  position: relative;
+  font-family: var(--origo-typography-body-font-family);
+}
+
+.origo-date-picker__input {
+  width: 100%;
+  padding: var(--origo-spacing-sm) var(--origo-spacing-md);
+  border: 1px solid var(--origo-color-neutral-300);
+  border-radius: var(--origo-border-radius-md);
+  background-color: var(--origo-color-surface-default);
+  cursor: pointer;
+}
+
+.origo-date-picker__calendar {
+  position: absolute;
+  top: calc(100% + var(--origo-spacing-xs));
+  left: 0;
+  z-index: 1000;
+  background: var(--origo-color-surface-default);
+  border: 1px solid var(--origo-color-neutral-200);
+  border-radius: var(--origo-border-radius-md);
+  box-shadow: var(--origo-shadow-md);
+  padding: var(--origo-spacing-md);
+  min-width: 280px;
+}
+
+.origo-date-picker__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: var(--origo-spacing-md);
+  font-weight: bold;
+}
+
+.origo-date-picker__weekdays,
+.origo-date-picker__days > div {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  text-align: center;
+  gap: var(--origo-spacing-xs);
+}
+
+.origo-date-picker__weekdays {
+  font-size: 0.85em;
+  color: var(--origo-color-neutral-500);
+  margin-bottom: var(--origo-spacing-sm);
+}
+
+.origo-date-picker__day {
+  padding: var(--origo-spacing-sm) var(--origo-spacing-xs);
+  border-radius: var(--origo-border-radius-sm);
+  cursor: pointer;
+}
+
+.origo-date-picker__day:hover:not(.origo-date-picker__day--disabled) {
+  background-color: var(--origo-color-neutral-100);
+}
+
+.origo-date-picker__day--disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.origo-date-picker__day--other-month {
+  color: var(--origo-color-neutral-400);
+}
+
+.origo-date-picker__day--selected {
+  background-color: var(--origo-color-primary-main);
+  color: var(--origo-color-surface-default);
+}
+
+.origo-date-picker__day--selected:hover:not(.origo-date-picker__day--disabled) {
+  background-color: var(--origo-color-primary-dark);
+}

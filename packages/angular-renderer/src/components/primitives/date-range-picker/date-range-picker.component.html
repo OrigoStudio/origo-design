@@ -1,0 +1,83 @@
+<div class="origo-date-range-picker-wrapper">
+  <div class="origo-date-range-picker__inputs">
+    <input
+      type="text"
+      class="origo-date-range-picker__input"
+      readonly
+      inputmode="none"
+      placeholder="Start Date"
+      [value]="displayStartValue()"
+      (click)="toggleCalendar()"
+      (keydown)="onInputKeyDown($event)"
+      aria-haspopup="grid"
+      [attr.aria-expanded]="isOpen()"
+    />
+    <span class="origo-date-range-picker__separator">to</span>
+    <input
+      type="text"
+      class="origo-date-range-picker__input"
+      readonly
+      inputmode="none"
+      placeholder="End Date"
+      [value]="displayEndValue()"
+      (click)="toggleCalendar()"
+      (keydown)="onInputKeyDown($event)"
+      aria-haspopup="grid"
+      [attr.aria-expanded]="isOpen()"
+    />
+  </div>
+
+  @if (isOpen()) {
+    <div class="origo-date-range-picker__calendar" role="grid" aria-label="Calendar">
+      <div class="origo-date-range-picker__header">
+        <button type="button" (click)="prevMonth()" aria-label="Previous Month">&lt;</button>
+        <span aria-live="polite">{{ currentMonthYear() }}</span>
+        <button type="button" (click)="nextMonth()" aria-label="Next Month">&gt;</button>
+      </div>
+
+      <div role="row" class="origo-date-range-picker__weekdays">
+        @for (day of weekDays; track day) {
+          <div role="columnheader">{{ day }}</div>
+        }
+      </div>
+
+      <div class="origo-date-range-picker__days">
+        @for (week of calendarGrid(); track $index) {
+          <div role="row">
+            @for (day of week; track day.date.toISOString()) {
+              <div
+                role="gridcell"
+                [id]="
+                  'day-' +
+                  day.date.getUTCFullYear() +
+                  '-' +
+                  day.date.getUTCMonth() +
+                  '-' +
+                  day.date.getUTCDate()
+                "
+                class="origo-date-range-picker__day"
+                [class.origo-date-range-picker__day--other-month]="!day.isCurrentMonth"
+                [class.origo-date-range-picker__day--selected]="isSelected(day.date)"
+                [class.origo-date-range-picker__day--in-range]="isInRange(day.date)"
+                [class.origo-date-range-picker__day--disabled]="day.disabled"
+                [attr.aria-selected]="isSelected(day.date)"
+                [attr.aria-disabled]="day.disabled"
+                [attr.tabindex]="
+                  isSelected(day.date) || day.isToday
+                    ? 0
+                    : day.isCurrentMonth && !day.disabled
+                      ? 0
+                      : -1
+                "
+                (click)="onDayClick(day.date)"
+                (keydown)="onDayKeyDown($event, day.date)"
+              >
+                {{ day.date.getUTCDate() }}
+              </div>
+            }
+          </div>
+        }
+      </div>
+    </div>
+  }
+</div>

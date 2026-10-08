@@ -1,0 +1,65 @@
+<div class="origo-time-picker-wrapper">
+  <input
+    type="text"
+    class="origo-time-picker__input"
+    readonly
+    inputmode="none"
+    [value]="displayValue()"
+    (click)="toggleOverlay()"
+    (keydown)="onInputKeyDown($event)"
+    [attr.aria-label]="computedAriaLabel()"
+    aria-haspopup="listbox"
+    [attr.aria-expanded]="isOpen()"
+  />
+
+  @if (isOpen()) {
+    <div class="origo-time-picker__overlay" role="listbox" aria-label="Time Selector">
+      <div class="origo-time-picker__columns">
+        <div class="origo-time-picker__column">
+          @for (hour of hours(); track hour) {
+            <div
+              role="option"
+              class="origo-time-picker__option"
+              [class.origo-time-picker__option--selected]="isSelectedHour(hour)"
+              [attr.aria-selected]="isSelectedHour(hour)"
+              (click)="selectHour(hour)"
+            >
+              {{ pad(hour) }}
+            </div>
+          }
+        </div>
+        <div class="origo-time-picker__column">
+          @for (minute of minutes(); track minute) {
+            <div
+              role="option"
+              class="origo-time-picker__option"
+              [class.origo-time-picker__option--selected]="isSelectedMinute(minute)"
+              [attr.aria-selected]="isSelectedMinute(minute)"
+              (click)="selectMinute(minute)"
+            >
+              {{ pad(minute) }}
+            </div>
+          }
+        </div>
+        @if (is12h()) {
+          <div class="origo-time-picker__column">
+            @for (period of periods(); track period) {
+              <div
+                role="option"
+                class="origo-time-picker__option"
+                [class.origo-time-picker__option--selected]="isSelectedPeriod(period)"
+                [attr.aria-selected]="isSelectedPeriod(period)"
+                (click)="selectPeriod(period)"
+              >
+                {{ period }}
+              </div>
+            }
+          </div>
+        }
+      </div>
+      <div class="origo-time-picker__actions">
+        <button type="button" (click)="confirmTime()">OK</button>
+      </div>
+    </div>
+  }
+</div>
