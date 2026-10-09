@@ -8,12 +8,15 @@ import {
   ViewContainerRef,
   output,
   computed,
-  HostListener,
   signal,
+  inject,
+  ElementRef,
 } from '@angular/core';
 import { InteractionContract } from '@origostudio/core';
-import { OrigoAdapter } from '../../../adapters/web/adapter';
+import { OrigoAdapter, coerceContractProps } from '../../../adapters/web/adapter';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
+import { CommonModule } from '@angular/common';
+import { HttpClient, HttpEventType } from '@angular/common/http';
 
 export interface DropzoneProps {
   permissions?: Record<string, string>;
@@ -23,11 +26,14 @@ export interface DropzoneProps {
   accept?: string;
   maxFileSize?: number;
   uploadUrl?: string;
+  'aria-label'?: string;
+  'aria-describedby'?: string;
 }
 
 @Component({
   selector: 'origo-dropzone',
   standalone: true,
+  imports: [CommonModule],
   templateUrl: './dropzone.component.html',
   styleUrls: ['./dropzone.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -42,7 +48,8 @@ export interface DropzoneProps {
   host: {
     '[class.origo-dropzone]': 'true',
     '[attr.data-testid]': 'contract().id',
-    '[class.origo-dropzone--dragover]': 'isDragOver()',
+    '[attr.aria-label]': 'computedAriaLabel()',
+    '[attr.aria-describedby]': 'computedAriaDescribedBy()',
   },
 })
 export class DropzoneComponent implements OrigoAdapter<DropzoneProps>, ControlValueAccessor {
@@ -54,46 +61,62 @@ export class DropzoneComponent implements OrigoAdapter<DropzoneProps>, ControlVa
     accept: 'string',
     maxFileSize: 'number',
     uploadUrl: 'string',
-  };
+    'aria-label': 'string',
+    'aria-describedby': 'string',
+  } as const;
   static readonly strictContract = false;
 
   contract = input.required<InteractionContract<DropzoneProps>>();
   vc = viewChild.required('vc', { read: ViewContainerRef });
+  inputRef = viewChild<ElementRef<HTMLInputElement>>('inputEl');
 
+  fileDrop = output<File[]>();
   fileSelect = output<File[]>();
   fileRemove = output<File>();
   fileError = output<string>();
   clear = output<void>();
   focus = output<FocusEvent>();
   blur = output<FocusEvent>();
+
   uploadStart = output<void>();
   uploadProgress = output<number>();
   uploadSuccess = output<unknown>();
   uploadError = output<unknown>();
 
-  computedMultiple = computed(() => !!this.contract().props?.multiple);
-  computedAccept = computed(() => this.contract().props?.accept ?? '*/*');
-  computedMaxFileSize = computed(() => this.contract().props?.maxFileSize);
-  computedUploadUrl = computed(() => this.contract().props?.uploadUrl);
+  private http = inject(HttpClient, { optional: true });
+
+  protected props = computed(() => {
+    return coerceContractProps<DropzoneProps>(
+      this.contract().props,
+      DropzoneComponent.contractSchema
+    );
+  });
+
+  computedMultiple = computed(() => !!this.props()?.multiple);
+  computedAccept = computed(() => this.props()?.accept ?? '*/*');
+  computedMaxFileSize = computed(() => this.props()?.maxFileSize);
+  computedUploadUrl = computed(() => this.props()?.uploadUrl);
+  computedAriaLabel = computed(() => this.props()?.['aria-label'] || null);
+  computedAriaDescribedBy = computed(() => this.props()?.['aria-describedby'] || null);
 
   disabled = false;
-  files: File[] = [];
-  isDragOver = signal(false);
+  files = signal<File[]>([]);
+  isDragging = signal<boolean>(false);
 
-  private onChange: (value: File[]) => void = () => {
-    /* empty */
-  };
-  private onTouched: () => void = () => {
-    /* empty */
-  };
+  // eslint-disable-next-line @typescript-eslint/no-empty-function
+  private onChange: (value: File[]) => void = () => {};
+  // eslint-disable-next-line @typescript-eslint/no-empty-function
+  private onTouched: () => void = () => {};
 
   writeValue(obj: unknown): void {
     if (!obj) {
-      this.files = [];
+      this.files.set([]);
+      const inputEl = this.inputRef()?.nativeElement;
+      if (inputEl) inputEl.value = '';
     } else if (Array.isArray(obj)) {
-      this.files = obj;
+      this.files.set(obj);
     } else {
-      this.files = [obj as File];
+      this.files.set([obj as File]);
     }
   }
 
@@ -109,63 +132,102 @@ export class DropzoneComponent implements OrigoAdapter<DropzoneProps>, ControlVa
     this.disabled = isDisabled;
   }
 
-  @HostListener('dragover', ['$event'])
   onDragOver(event: DragEvent) {
-    event.preventDefault();
-    event.stopPropagation();
-    if (!this.disabled) {
-      this.isDragOver.set(true);
-    }
-  }
-
-  @HostListener('dragleave', ['$event'])
-  onDragLeave(event: DragEvent) {
-    event.preventDefault();
-    event.stopPropagation();
-    this.isDragOver.set(false);
-  }
-
-  @HostListener('drop', ['$event'])
-  onDrop(event: DragEvent) {
-    event.preventDefault();
-    event.stopPropagation();
-    this.isDragOver.set(false);
-
     if (this.disabled) return;
+    event.preventDefault();
+    this.isDragging.set(true);
+  }
+
+  onDragLeave(event: DragEvent) {
+    if (this.disabled) return;
+    event.preventDefault();
+
+    // Ignore dragleave if it's just moving into a child element
+    const rect = (event.currentTarget as HTMLElement).getBoundingClientRect();
+    if (
+      event.clientX > rect.left &&
+      event.clientX < rect.right &&
+      event.clientY > rect.top &&
+      event.clientY < rect.bottom
+    ) {
+      return;
+    }
+    this.isDragging.set(false);
+  }
+
+  onDrop(event: DragEvent) {
+    if (this.disabled) return;
+    event.preventDefault();
+    this.isDragging.set(false);
+    this.onTouched();
 
     if (event.dataTransfer?.files) {
-      this.handleFiles(Array.from(event.dataTransfer.files));
+      const droppedFiles = Array.from(event.dataTransfer.files);
+      if (!droppedFiles.length) return;
+      this.processFiles(droppedFiles, 'drop');
     }
   }
 
   onFileChange(event: Event) {
-    const input = event.target as HTMLInputElement;
-    if (input.files) {
-      this.handleFiles(Array.from(input.files));
+    const inputEl = event.target as HTMLInputElement;
+    if (inputEl.files) {
+      const selectedFiles = Array.from(inputEl.files);
+      if (!selectedFiles.length) return;
+      this.processFiles(selectedFiles, 'select');
+      inputEl.value = '';
     }
   }
 
-  private handleFiles(selectedFiles: File[]) {
-    const maxFileSize = this.computedMaxFileSize();
-    if (maxFileSize) {
-      const invalidFiles = selectedFiles.filter(file => file.size > maxFileSize);
-      if (invalidFiles.length > 0) {
-        this.fileError.emit(`File size exceeds maximum allowed size of ${maxFileSize} bytes`);
-        return;
+  private processFiles(incomingFiles: File[], source: 'drop' | 'select') {
+    const accept = this.computedAccept();
+    let validFiles = incomingFiles;
+
+    if (accept !== '*/*') {
+      const acceptedTypes = accept.split(',').map((a: string) => a.trim().toLowerCase());
+      validFiles = incomingFiles.filter(file => {
+        const fileType = file.type.toLowerCase();
+        const fileExt = file.name.substring(file.name.lastIndexOf('.')).toLowerCase();
+        return acceptedTypes.some((type: string) => {
+          if (type.startsWith('.')) return fileExt === type;
+          if (type.endsWith('/*')) return fileType.startsWith(type.substring(0, type.length - 1));
+          return fileType === type;
+        });
+      });
+      if (validFiles.length < incomingFiles.length) {
+        this.fileError.emit(
+          `Some files were rejected because they do not match the accepted types: ${accept}`
+        );
       }
     }
 
-    if (!this.computedMultiple() && selectedFiles.length > 1) {
-      selectedFiles = [selectedFiles[0]];
+    if (!validFiles.length) return;
+
+    const maxFileSize = this.computedMaxFileSize();
+    if (typeof maxFileSize === 'number' && maxFileSize >= 0) {
+      const invalidFiles = validFiles.filter(file => file.size > maxFileSize);
+      if (invalidFiles.length > 0) {
+        this.fileError.emit(`File size exceeds maximum allowed size of ${maxFileSize} bytes`);
+        validFiles = validFiles.filter(file => file.size <= maxFileSize);
+      }
     }
 
-    this.files = this.computedMultiple() ? [...this.files, ...selectedFiles] : [...selectedFiles];
-    this.onChange(this.files);
-    this.fileSelect.emit(selectedFiles);
+    if (!validFiles.length) return;
+
+    const currentFiles = this.computedMultiple()
+      ? [...this.files(), ...validFiles]
+      : [...validFiles];
+    this.files.set(currentFiles);
+    this.onChange(currentFiles);
+
+    if (source === 'drop') {
+      this.fileDrop.emit(validFiles);
+    } else {
+      this.fileSelect.emit(validFiles);
+    }
 
     const uploadUrl = this.computedUploadUrl();
-    if (uploadUrl && selectedFiles.length > 0) {
-      this.uploadFiles(selectedFiles, uploadUrl);
+    if (uploadUrl && validFiles.length > 0) {
+      this.uploadFiles(validFiles, uploadUrl);
     }
   }
 
@@ -178,33 +240,54 @@ export class DropzoneComponent implements OrigoAdapter<DropzoneProps>, ControlVa
     this.blur.emit(event);
   }
 
-  private uploadFiles(files: File[], url: string) {
+  public removeFile(file: File) {
+    const updated = this.files().filter(f => f !== file);
+    this.files.set(updated);
+    this.onChange(updated);
+    this.fileRemove.emit(file);
+  }
+
+  public clearFiles() {
+    this.files.set([]);
+    this.onChange([]);
+    this.clear.emit();
+    const inputEl = this.inputRef()?.nativeElement;
+    if (inputEl) inputEl.value = '';
+  }
+
+  private uploadFiles(filesToUpload: File[], url: string) {
     this.uploadStart.emit();
 
-    const xhr = new XMLHttpRequest();
+    if (!this.http) {
+      this.uploadError.emit('HttpClient is not provided.');
+      return;
+    }
+
     const formData = new FormData();
-    files.forEach(file => formData.append('files[]', file));
+    filesToUpload.forEach(file => formData.append('file', file));
 
-    xhr.upload.addEventListener('progress', event => {
-      if (event.lengthComputable) {
-        const percentComplete = (event.loaded / event.total) * 100;
-        this.uploadProgress.emit(percentComplete);
-      }
-    });
-
-    xhr.addEventListener('load', () => {
-      if (xhr.status >= 200 && xhr.status < 300) {
-        this.uploadSuccess.emit(xhr.responseText);
-      } else {
-        this.uploadError.emit(`Upload failed with status ${xhr.status}`);
-      }
-    });
-
-    xhr.addEventListener('error', () => {
-      this.uploadError.emit('Upload failed due to network error');
-    });
-
-    xhr.open('POST', url);
-    xhr.send(formData);
+    this.http
+      .post(url, formData, {
+        reportProgress: true,
+        observe: 'events',
+        responseType: 'json',
+      })
+      .subscribe({
+        next: event => {
+          if (event.type === HttpEventType.UploadProgress) {
+            if (event.total && event.total > 0) {
+              const percentComplete = (event.loaded / event.total) * 100;
+              this.uploadProgress.emit(percentComplete);
+            } else {
+              this.uploadProgress.emit(100);
+            }
+          } else if (event.type === HttpEventType.Response) {
+            this.uploadSuccess.emit(event.body);
+          }
+        },
+        error: err => {
+          this.uploadError.emit(err.message || 'Upload failed');
+        },
+      });
   }
 }

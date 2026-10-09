@@ -1,7 +1,8 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { DropzoneComponent } from './dropzone.component';
-import { ComponentRef } from '@angular/core';
+import { ComponentRef, provideZonelessChangeDetection } from '@angular/core';
 import { WebExperienceAdapterService } from '../../../adapters/web/experience-adapter.service';
+import { provideHttpClient } from '@angular/common/http';
 
 describe('DropzoneComponent', () => {
   let component: DropzoneComponent;
@@ -11,7 +12,11 @@ describe('DropzoneComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [DropzoneComponent],
-      providers: [WebExperienceAdapterService],
+      providers: [
+        WebExperienceAdapterService,
+        provideZonelessChangeDetection(),
+        provideHttpClient(),
+      ],
     }).compileComponents();
 
     fixture = TestBed.createComponent(DropzoneComponent);
@@ -40,10 +45,10 @@ describe('DropzoneComponent', () => {
     expect(component.vc()).toBeDefined();
   });
 
-  it('should emit fileSelect event when a file is dropped', () => {
+  it('should emit fileDrop event when a file is dropped', () => {
     componentRef.setInput('contract', { id: '1', type: 'Dropzone', props: {} });
     fixture.detectChanges();
-    jest.spyOn(component.fileSelect, 'emit');
+    jest.spyOn(component.fileDrop, 'emit');
 
     const file = new File([''], 'test.txt', { type: 'text/plain' });
 
@@ -53,6 +58,6 @@ describe('DropzoneComponent', () => {
     });
     component.onDrop(dropEvent as DragEvent);
 
-    expect(component.fileSelect.emit).toHaveBeenCalledWith([file]);
+    expect(component.fileDrop.emit).toHaveBeenCalledWith([file]);
   });
 });

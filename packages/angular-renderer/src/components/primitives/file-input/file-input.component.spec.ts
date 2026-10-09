@@ -1,7 +1,8 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FileInputComponent } from './file-input.component';
-import { ComponentRef } from '@angular/core';
+import { ComponentRef, provideZonelessChangeDetection } from '@angular/core';
 import { WebExperienceAdapterService } from '../../../adapters/web/experience-adapter.service';
+import { provideHttpClient } from '@angular/common/http';
 
 describe('FileInputComponent', () => {
   let component: FileInputComponent;
@@ -11,7 +12,11 @@ describe('FileInputComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [FileInputComponent],
-      providers: [WebExperienceAdapterService],
+      providers: [
+        WebExperienceAdapterService,
+        provideZonelessChangeDetection(),
+        provideHttpClient(),
+      ],
     }).compileComponents();
 
     fixture = TestBed.createComponent(FileInputComponent);

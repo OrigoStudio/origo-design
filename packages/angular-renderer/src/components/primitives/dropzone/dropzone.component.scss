@@ -6,26 +6,27 @@
   position: relative;
   border: 2px dashed var(--origo-color-border-default);
   border-radius: var(--origo-shape-border-radius-medium);
-  padding: var(--origo-spacing-large);
+  padding-block: var(--origo-spacing-large);
+  padding-inline: var(--origo-spacing-large);
   text-align: center;
-  transition: all 0.2s ease-in-out;
+  transition:
+    background-color var(--origo-motion-duration-short, 150ms)
+      var(--origo-motion-easing-standard, ease),
+    border-color var(--origo-motion-duration-short, 150ms) var(--origo-motion-easing-standard, ease);
   background-color: var(--origo-color-surface-default);
+  cursor: pointer;
 }
 
-:host(.origo-dropzone--dragover) .origo-dropzone__wrapper {
+.origo-dropzone__wrapper.origo-dropzone--dragging {
   background-color: var(--origo-color-surface-hover);
   border-color: var(--origo-color-border-focus);
 }
 
 .origo-dropzone__input {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
+  width: 0.1px;
+  height: 0.1px;
   opacity: 0;
-  cursor: pointer;
-}
-
-.origo-dropzone__input:disabled {
-  cursor: not-allowed;
+  overflow: hidden;
+  position: absolute;
+  z-index: -1;
 }

@@ -8,10 +8,13 @@ import {
   ViewContainerRef,
   output,
   computed,
+  inject,
+  ElementRef,
 } from '@angular/core';
 import { InteractionContract } from '@origostudio/core';
-import { OrigoAdapter } from '../../../adapters/web/adapter';
+import { OrigoAdapter, coerceContractProps } from '../../../adapters/web/adapter';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
+import { HttpClient, HttpEventType } from '@angular/common/http';
 
 export interface FileInputProps {
   permissions?: Record<string, string>;
@@ -21,6 +24,8 @@ export interface FileInputProps {
   accept?: string;
   maxFileSize?: number;
   uploadUrl?: string;
+  'aria-label'?: string;
+  'aria-describedby'?: string;
 }
 
 @Component({
@@ -40,6 +45,8 @@ export interface FileInputProps {
   host: {
     '[class.origo-file-input]': 'true',
     '[attr.data-testid]': 'contract().id',
+    '[attr.aria-label]': 'computedAriaLabel()',
+    '[attr.aria-describedby]': 'computedAriaDescribedBy()',
   },
 })
 export class FileInputComponent implements OrigoAdapter<FileInputProps>, ControlValueAccessor {
@@ -51,11 +58,14 @@ export class FileInputComponent implements OrigoAdapter<FileInputProps>, Control
     accept: 'string',
     maxFileSize: 'number',
     uploadUrl: 'string',
-  };
+    'aria-label': 'string',
+    'aria-describedby': 'string',
+  } as const;
   static readonly strictContract = false;
 
   contract = input.required<InteractionContract<FileInputProps>>();
   vc = viewChild.required('vc', { read: ViewContainerRef });
+  inputRef = viewChild<ElementRef<HTMLInputElement>>('inputEl');
 
   fileSelect = output<File[]>();
   fileRemove = output<File>();
@@ -68,24 +78,35 @@ export class FileInputComponent implements OrigoAdapter<FileInputProps>, Control
   uploadSuccess = output<unknown>();
   uploadError = output<unknown>();
 
-  computedMultiple = computed(() => !!this.contract().props?.multiple);
-  computedAccept = computed(() => this.contract().props?.accept ?? '*/*');
-  computedMaxFileSize = computed(() => this.contract().props?.maxFileSize);
-  computedUploadUrl = computed(() => this.contract().props?.uploadUrl);
+  private http = inject(HttpClient, { optional: true });
+
+  protected props = computed(() => {
+    return coerceContractProps<FileInputProps>(
+      this.contract().props,
+      FileInputComponent.contractSchema
+    );
+  });
+
+  computedMultiple = computed(() => !!this.props()?.multiple);
+  computedAccept = computed(() => this.props()?.accept ?? '*/*');
+  computedMaxFileSize = computed(() => this.props()?.maxFileSize);
+  computedUploadUrl = computed(() => this.props()?.uploadUrl);
+  computedAriaLabel = computed(() => this.props()?.['aria-label'] || null);
+  computedAriaDescribedBy = computed(() => this.props()?.['aria-describedby'] || null);
 
   disabled = false;
   files: File[] = [];
 
-  private onChange: (value: File[]) => void = () => {
-    /* empty */
-  };
-  private onTouched: () => void = () => {
-    /* empty */
-  };
+  // eslint-disable-next-line @typescript-eslint/no-empty-function
+  private onChange: (value: File[]) => void = () => {};
+  // eslint-disable-next-line @typescript-eslint/no-empty-function
+  private onTouched: () => void = () => {};
 
   writeValue(obj: unknown): void {
     if (!obj) {
       this.files = [];
+      const inputEl = this.inputRef()?.nativeElement;
+      if (inputEl) inputEl.value = '';
     } else if (Array.isArray(obj)) {
       this.files = obj;
     } else {
@@ -106,15 +127,17 @@ export class FileInputComponent implements OrigoAdapter<FileInputProps>, Control
   }
 
   onFileChange(event: Event) {
-    const input = event.target as HTMLInputElement;
-    if (input.files) {
-      const selectedFiles = Array.from(input.files);
+    const inputEl = event.target as HTMLInputElement;
+    if (inputEl.files) {
+      const selectedFiles = Array.from(inputEl.files);
+      if (!selectedFiles.length) return;
 
       const maxFileSize = this.computedMaxFileSize();
-      if (maxFileSize) {
+      if (typeof maxFileSize === 'number' && maxFileSize >= 0) {
         const invalidFiles = selectedFiles.filter(file => file.size > maxFileSize);
         if (invalidFiles.length > 0) {
           this.fileError.emit(`File size exceeds maximum allowed size of ${maxFileSize} bytes`);
+          inputEl.value = '';
           return;
         }
       }
@@ -127,6 +150,8 @@ export class FileInputComponent implements OrigoAdapter<FileInputProps>, Control
       if (uploadUrl && selectedFiles.length > 0) {
         this.uploadFiles(selectedFiles, uploadUrl);
       }
+
+      inputEl.value = '';
     }
   }
 
@@ -139,33 +164,53 @@ export class FileInputComponent implements OrigoAdapter<FileInputProps>, Control
     this.blur.emit(event);
   }
 
+  public removeFile(file: File) {
+    this.files = this.files.filter(f => f !== file);
+    this.onChange(this.files);
+    this.fileRemove.emit(file);
+  }
+
+  public clearFiles() {
+    this.files = [];
+    this.onChange(this.files);
+    this.clear.emit();
+    const inputEl = this.inputRef()?.nativeElement;
+    if (inputEl) inputEl.value = '';
+  }
+
   private uploadFiles(files: File[], url: string) {
     this.uploadStart.emit();
 
-    const xhr = new XMLHttpRequest();
+    if (!this.http) {
+      this.uploadError.emit('HttpClient is not provided.');
+      return;
+    }
+
     const formData = new FormData();
-    files.forEach(file => formData.append('files[]', file));
+    files.forEach(file => formData.append('file', file));
 
-    xhr.upload.addEventListener('progress', event => {
-      if (event.lengthComputable) {
-        const percentComplete = (event.loaded / event.total) * 100;
-        this.uploadProgress.emit(percentComplete);
-      }
-    });
-
-    xhr.addEventListener('load', () => {
-      if (xhr.status >= 200 && xhr.status < 300) {
-        this.uploadSuccess.emit(xhr.responseText);
-      } else {
-        this.uploadError.emit(`Upload failed with status ${xhr.status}`);
-      }
-    });
-
-    xhr.addEventListener('error', () => {
-      this.uploadError.emit('Upload failed due to network error');
-    });
-
-    xhr.open('POST', url);
-    xhr.send(formData);
+    this.http
+      .post(url, formData, {
+        reportProgress: true,
+        observe: 'events',
+        responseType: 'json',
+      })
+      .subscribe({
+        next: event => {
+          if (event.type === HttpEventType.UploadProgress) {
+            if (event.total && event.total > 0) {
+              const percentComplete = (event.loaded / event.total) * 100;
+              this.uploadProgress.emit(percentComplete);
+            } else {
+              this.uploadProgress.emit(100);
+            }
+          } else if (event.type === HttpEventType.Response) {
+            this.uploadSuccess.emit(event.body);
+          }
+        },
+        error: err => {
+          this.uploadError.emit(err.message || 'Upload failed');
+        },
+      });
   }
 }

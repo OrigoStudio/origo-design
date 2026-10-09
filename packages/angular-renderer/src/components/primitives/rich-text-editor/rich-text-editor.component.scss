@@ -14,13 +14,15 @@
   display: flex;
   flex-wrap: wrap;
   gap: var(--origo-spacing-small);
-  padding: var(--origo-spacing-small);
-  border-bottom: 1px solid var(--origo-color-border-default);
+  padding-block: var(--origo-spacing-small);
+  padding-inline: var(--origo-spacing-small);
+  border-block-end: 1px solid var(--origo-color-border-default);
   background-color: var(--origo-color-surface-subtle);
 }
 
 .origo-rich-text-editor__content {
-  padding: var(--origo-spacing-medium);
+  padding-block: var(--origo-spacing-medium);
+  padding-inline: var(--origo-spacing-medium);
   min-height: 120px;
   outline: none;
 }

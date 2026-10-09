@@ -79,3 +79,28 @@ So that users can upload files and format text.
 
 ### References
 - [Source: _bmad-output/planning-artifacts/epics.md#Story 1.6]
+
+### Review Findings
+
+- [x] [Review][Decision] Deprecated document.execCommand in Shadow DOM — document.execCommand fails across Shadow DOM boundaries and is deprecated. How should we replace the rich text formatting logic? (Custom engine vs 3rd party lib)
+- [x] [Review][Patch] XSS Vulnerability via Unsanitized innerHTML in RichTextEditorComponent [packages/angular-renderer/src/components/primitives/rich-text-editor/rich-text-editor.component.html:14]
+- [x] [Review][Patch] Caret Reset and Focus Collapse on Keystroke in RichTextEditorComponent [packages/angular-renderer/src/components/primitives/rich-text-editor/rich-text-editor.component.ts:95]
+- [x] [Review][Patch] Unmanaged XMLHttpRequest bypassing Angular HTTP and Zoneless Change Detection [packages/angular-renderer/src/components/primitives/file-input/file-input.component.ts:141]
+- [x] [Review][Patch] Invisible Input Overlay Blocks Content Projection in DropzoneComponent [packages/angular-renderer/src/components/primitives/dropzone/dropzone.component.scss:18]
+- [x] [Review][Patch] Violent Drag-and-Drop State Flickering on dragleave in DropzoneComponent [packages/angular-renderer/src/components/primitives/dropzone/dropzone.component.ts:121]
+- [x] [Review][Patch] Failure to Reset Native Input Prevents Re-Selection [packages/angular-renderer/src/components/primitives/file-input/file-input.component.ts:86]
+- [x] [Review][Patch] ControlValueAccessor Desynchronization on Form Reset [packages/angular-renderer/src/components/primitives/file-input/file-input.component.ts:86]
+- [x] [Review][Patch] Dead Output Event Declarations (clear and fileRemove) [packages/angular-renderer/src/components/primitives/file-input/file-input.component.ts:65]
+- [x] [Review][Patch] Completely Unstyled FileInputComponent [packages/angular-renderer/src/components/primitives/file-input/file-input.component.scss:1]
+- [x] [Review][Patch] Physical CSS and Hardcoded Motion Literals [packages/angular-renderer/src/components/primitives/dropzone/dropzone.component.scss:11]
+- [x] [Review][Patch] Missing aria-label and aria-describedby Metadata Hooks [packages/angular-renderer/src/components/primitives/file-input/file-input.component.ts:662]
+- [x] [Review][Patch] Dead Contract Metadata and Missing coerceContractProps [packages/angular-renderer/src/components/primitives/file-input/file-input.component.ts]
+- [x] [Review][Patch] Missing File Type/Extension Validation on drop in DropzoneComponent [packages/angular-renderer/src/components/primitives/dropzone/dropzone.component.ts:148]
+- [x] [Review][Patch] Missing provideZonelessChangeDetection and Superficial Unit Tests [packages/angular-renderer/src/components/primitives/file-input/file-input.component.spec.ts:583]
+- [x] [Review][Patch] Empty FileList handling overwrites this.files [packages/angular-renderer/src/components/primitives/file-input/file-input.component.ts:108]
+- [x] [Review][Patch] maxFileSize=0 constraint bypassed [packages/angular-renderer/src/components/primitives/file-input/file-input.component.ts:114]
+- [x] [Review][Patch] Empty file emits NaN progress and Timeout/abort hanging [packages/angular-renderer/src/components/primitives/file-input/file-input.component.ts:151]
+- [x] [Review][Patch] Non-array toolbar prop crash [packages/angular-renderer/src/components/primitives/rich-text-editor/rich-text-editor.component.ts:62]
+- [x] [Review][Patch] Copy-Pasted Descriptions in Test Registry [tools/test-registry/test-registry.yaml:1224]
+- [x] [Review][Defer] Unrelated Scope Creep in Diff [various specs] — deferred, pre-existing
+- [x] [Review][Defer] Negative column breakpoint in GridComponent [packages/angular-renderer/src/components/primitives/grid/grid.component.ts:83] — deferred, pre-existing

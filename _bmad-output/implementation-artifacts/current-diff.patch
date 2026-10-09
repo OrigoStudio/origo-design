@@ -1,6 +1,3 @@
-Invoke the bmad-review-adversarial-general skill on this diff:
-
-```diff
 diff --git a/_bmad-output/implementation-artifacts/1-6-file-input-and-rich-text-editor.md b/_bmad-output/implementation-artifacts/1-6-file-input-and-rich-text-editor.md
 new file mode 100644
 index 0000000..c9921cd
@@ -1247,5 +1244,3 @@ index c3a343b..2ac05a2 100644
 +      - 1-6-file-input-and-rich-text-editor
 +    last_result: unknown
 +    results: {}
-
-```

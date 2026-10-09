@@ -1,5 +1,14 @@
-<div class="origo-dropzone__wrapper">
+<div
+  class="origo-dropzone__wrapper"
+  [class.origo-dropzone--dragging]="isDragging()"
+  [class.origo-dropzone--disabled]="disabled"
+  (dragover)="onDragOver($event)"
+  (dragleave)="onDragLeave($event)"
+  (drop)="onDrop($event)"
+  (click)="inputEl.click()"
+>
   <input
+    #inputEl
     type="file"
     class="origo-dropzone__input"
     [multiple]="computedMultiple()"
@@ -10,7 +19,6 @@
     (blur)="onBlur($event)"
   />
   <div class="origo-dropzone__content">
-    <ng-content></ng-content>
+    <ng-container #vc></ng-container>
   </div>
-  <ng-container #vc></ng-container>
 </div>

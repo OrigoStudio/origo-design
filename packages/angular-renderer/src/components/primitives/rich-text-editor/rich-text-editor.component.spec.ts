@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { RichTextEditorComponent } from './rich-text-editor.component';
-import { ComponentRef } from '@angular/core';
+import { ComponentRef, provideZonelessChangeDetection } from '@angular/core';
 import { WebExperienceAdapterService } from '../../../adapters/web/experience-adapter.service';
 
 describe('RichTextEditorComponent', () => {
@@ -11,7 +11,7 @@ describe('RichTextEditorComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [RichTextEditorComponent],
-      providers: [WebExperienceAdapterService],
+      providers: [WebExperienceAdapterService, provideZonelessChangeDetection()],
     }).compileComponents();
 
     fixture = TestBed.createComponent(RichTextEditorComponent);
@@ -44,18 +44,19 @@ describe('RichTextEditorComponent', () => {
     componentRef.setInput('contract', { id: '1', type: 'RichTextEditor', props: {} });
     fixture.detectChanges();
 
-    // writing value updates the signal
+    const root = fixture.nativeElement.shadowRoot ?? fixture.nativeElement;
+    const contentElement = root.querySelector('.origo-rich-text-editor__content') as HTMLElement;
+
+    // writing value updates the DOM element
     component.writeValue('<p>Hello</p>');
-    expect(component.value()).toBe('<p>Hello</p>');
+    expect(contentElement.innerHTML).toBe('<p>Hello</p>');
 
     // verify it doesn't trigger a recursive change because isUpdating is tracked
     const inputEvent = new Event('input');
-    const root = fixture.nativeElement.shadowRoot ?? fixture.nativeElement;
-    const contentElement = root.querySelector('.origo-rich-text-editor__content') as HTMLElement;
 
     contentElement.innerHTML = '<b>Hello</b>';
     contentElement.dispatchEvent(inputEvent);
 
-    expect(component.value()).toBe('<b>Hello</b>');
+    expect(contentElement.innerHTML).toBe('<b>Hello</b>');
   });
 });
