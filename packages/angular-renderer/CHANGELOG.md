@@ -1,3 +1,13 @@
+## 0.0.53 (2026-10-09)
+
+### 🚀 Features
+
+- implement file-input, dropzone, and rich-text-editor angular primitives ([69cc864](https://github.com/OrigoStudio/origo-design/commit/69cc864))
+
+### ❤️ Thank You
+
+- Hardik Patel @hardikpatelse
+
 ## 0.0.52 (2026-10-09)
 
 ### 🚀 Features
