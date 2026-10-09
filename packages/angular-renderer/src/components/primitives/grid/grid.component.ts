@@ -1,4 +1,12 @@
-import { Component, input, viewChild, ViewContainerRef, computed } from '@angular/core';
+import {
+  Component,
+  input,
+  viewChild,
+  ViewContainerRef,
+  computed,
+  ChangeDetectionStrategy,
+  ViewEncapsulation,
+} from '@angular/core';
 import { NgStyle } from '@angular/common';
 import { InteractionContract } from '@origostudio/core';
 import {
@@ -46,8 +54,12 @@ delete (finalSchema as any).gap;
   imports: [NgStyle],
   templateUrl: './grid.component.html',
   styleUrl: './grid.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  encapsulation: ViewEncapsulation.ShadowDom,
 })
 export class GridComponent implements OrigoAdapter<GridProps>, IContainerComponent {
+  static readonly contractSchema = contractSchema;
+
   contract = input.required<InteractionContract<GridProps>>();
   vc = viewChild.required('vc', { read: ViewContainerRef });
 
@@ -61,16 +73,22 @@ export class GridComponent implements OrigoAdapter<GridProps>, IContainerCompone
 
   protected get gridTemplateColumns(): string {
     const cols = this.props().columns;
-    if (typeof cols === 'number') return `repeat(${cols}, minmax(0, 1fr))`;
-    if (typeof cols === 'string') return cols;
-    // Responsive records are harder to do inline. We'll use CSS custom properties via style bindings.
-    // For now, default to 1 or 12.
-    return 'repeat(12, minmax(0, 1fr))';
+    if (typeof cols === 'number' && cols > 0) return `repeat(${cols}, minmax(0, 1fr))`;
+    if (typeof cols === 'string') {
+      const num = Number(cols);
+      if (!isNaN(num) && num > 0) return `repeat(${num}, minmax(0, 1fr))`;
+      return cols;
+    }
+    if (typeof cols === 'object' && cols !== null) {
+      const base = (cols as any)['xs'] || 1;
+      return `repeat(${base}, minmax(0, 1fr))`;
+    }
+    return 'repeat(1, minmax(0, 1fr))';
   }
 
   protected get gapValue(): string {
     const g = this.props().gap;
-    if (typeof g === 'number') return `${g}px`;
+    if (typeof g === 'number' || /^\d+$/.test(String(g))) return `${g}px`;
     return (g as string) || '';
   }
 

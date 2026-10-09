@@ -49,6 +49,9 @@ export interface CardProps {
     '[class.origo-card--elevation-sm]': 'computedElevation() === "sm"',
     '[class.origo-card--elevation-md]': 'computedElevation() === "md"',
     '[class.origo-card--elevation-lg]': 'computedElevation() === "lg"',
+    '[class.origo-card--variant-solid]': 'computedVariant() === "solid"',
+    '[class.origo-card--variant-outline]': 'computedVariant() === "outline"',
+    '[class.origo-card--variant-ghost]': 'computedVariant() === "ghost"',
     '[class.origo-card--hoverable]': 'isHoverable()',
     '[class.origo-card--clickable]': 'isClickable()',
   },
@@ -70,7 +73,7 @@ export class CardComponent implements OrigoAdapter<CardProps>, ContainerComponen
   static readonly strictContract = false;
 
   contract = input.required<InteractionContract<CardProps>>();
-  vc = viewChild.required('vc', { read: ViewContainerRef });
+  vc = viewChild('vc', { read: ViewContainerRef });
 
   private sanitizer = inject(DomSanitizer);
 
@@ -110,6 +113,16 @@ export class CardComponent implements OrigoAdapter<CardProps>, ContainerComponen
 
   computedElevation = computed(() => this.contract().props?.elevation || 'none');
 
+  computedVariant = computed(() => this.contract().props?.variant || 'solid');
+
+  hasContent = computed(() => {
+    const hasTitle = !!this.computedTitle();
+    const hasSubtitle = !!this.computedSubtitle();
+    const children = this.contract().children;
+    const hasChildren = children ? children.length > 0 : false;
+    return hasTitle || hasSubtitle || hasChildren;
+  });
+
   isClickable = computed(() => {
     const c = this.contract().props?.clickable;
     return c === true || String(c) === 'true';
@@ -121,7 +134,7 @@ export class CardComponent implements OrigoAdapter<CardProps>, ContainerComponen
   });
 
   onKeydown(event: Event) {
-    if (this.isClickable()) {
+    if (this.isClickable() && event.target === event.currentTarget) {
       event.preventDefault();
       (event.target as HTMLElement).click();
     }

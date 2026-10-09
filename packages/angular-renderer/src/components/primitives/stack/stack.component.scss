@@ -4,3 +4,41 @@
   flex-wrap: var(--origo-stack-wrap, nowrap);
   width: 100%;
 }
+@media (min-width: var(--origo-breakpoint-sm)) {
+  .origo-stack {
+    flex-direction: var(--origo-stack-direction-sm, var(--origo-stack-direction, column));
+  }
+}
+@media (min-width: var(--origo-breakpoint-md)) {
+  .origo-stack {
+    flex-direction: var(
+      --origo-stack-direction-md,
+      var(--origo-stack-direction-sm, var(--origo-stack-direction, column))
+    );
+  }
+}
+@media (min-width: var(--origo-breakpoint-lg)) {
+  .origo-stack {
+    flex-direction: var(
+      --origo-stack-direction-lg,
+      var(
+        --origo-stack-direction-md,
+        var(--origo-stack-direction-sm, var(--origo-stack-direction, column))
+      )
+    );
+  }
+}
+@media (min-width: var(--origo-breakpoint-xl)) {
+  .origo-stack {
+    flex-direction: var(
+      --origo-stack-direction-xl,
+      var(
+        --origo-stack-direction-lg,
+        var(
+          --origo-stack-direction-md,
+          var(--origo-stack-direction-sm, var(--origo-stack-direction, column))
+        )
+      )
+    );
+  }
+}

@@ -87,8 +87,12 @@ describe('CardComponent', () => {
     }
   });
 
-  it('should provide viewContainerRef as vc', () => {
-    fixture.componentRef.setInput('contract', { id: 'test', type: 'Card', props: {} });
+  it('should provide viewContainerRef as vc when it has content', () => {
+    fixture.componentRef.setInput('contract', {
+      id: 'test',
+      type: 'Card',
+      props: { title: 'Test Title' },
+    });
     fixture.detectChanges();
     expect(component.vc()).toBeDefined();
   });

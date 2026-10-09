@@ -2,7 +2,8 @@
   class="origo-container"
   [class.origo-container--fluid]="props().fluid"
   [style.max-width]="props().maxWidth || null"
-  [style.padding]="paddingValue || null"
+  [style.padding-inline]="paddingValue || null"
+  [style.padding-block]="paddingValue || null"
   [attr.aria-label]="props()['aria-label'] || null"
   [attr.aria-describedby]="props()['aria-describedby'] || null"
 >

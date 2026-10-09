@@ -40,7 +40,8 @@ describe('ContainerComponent', () => {
     const root = fixture.nativeElement.shadowRoot ?? fixture.nativeElement;
     const containerEl = root.querySelector('.origo-container');
     expect(containerEl).toBeTruthy();
-    expect(containerEl.style.padding).toBe('16px');
+    expect(containerEl.style.paddingInline).toBe('16px');
+    expect(containerEl.style.paddingBlock).toBe('16px');
     expect(containerEl.style.maxWidth).toBe('1200px');
   });
 

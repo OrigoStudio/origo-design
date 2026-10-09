@@ -4,7 +4,7 @@
 
 :host(.origo-divider--horizontal) {
   width: 100%;
-  margin-block: var(--origo-space-md, 16px);
+  margin-block: var(--origo-spacing-md, 16px);
 
   .origo-divider-inner {
     display: flex;
@@ -21,13 +21,9 @@
     }
 
     .origo-divider-content {
-      padding-inline: var(--origo-space-sm, 8px);
+      padding-inline: var(--origo-spacing-sm, 8px);
       color: var(--origo-color-text-secondary);
       font-size: var(--origo-font-size-sm);
-    }
-
-    &:not(:has(.origo-divider-content))::after {
-      display: none;
     }
   }
 }
@@ -35,7 +31,8 @@
 :host(.origo-divider--vertical) {
   height: 100%;
   min-height: 1em;
-  margin-inline: var(--origo-space-md, 16px);
+  align-self: stretch;
+  margin-inline: var(--origo-spacing-md, 16px);
   display: inline-block;
   vertical-align: middle;
 
@@ -49,19 +46,15 @@
     &::after {
       content: '';
       flex: 1;
-      border-left-width: var(--origo-divider-thickness, 1px);
-      border-left-style: var(--origo-divider-variant, solid);
-      border-left-color: var(--origo-color-border-default);
+      border-inline-start-width: var(--origo-divider-thickness, 1px);
+      border-inline-start-style: var(--origo-divider-variant, solid);
+      border-inline-start-color: var(--origo-color-border-default);
     }
 
     .origo-divider-content {
-      padding-block: var(--origo-space-sm, 8px);
+      padding-block: var(--origo-spacing-sm, 8px);
       color: var(--origo-color-text-secondary);
       font-size: var(--origo-font-size-sm);
-    }
-
-    &:not(:has(.origo-divider-content))::after {
-      display: none;
     }
   }
 }

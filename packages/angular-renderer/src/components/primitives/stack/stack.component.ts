@@ -1,4 +1,12 @@
-import { Component, input, viewChild, ViewContainerRef, computed } from '@angular/core';
+import {
+  Component,
+  input,
+  viewChild,
+  ViewContainerRef,
+  computed,
+  ChangeDetectionStrategy,
+  ViewEncapsulation,
+} from '@angular/core';
 import { NgStyle } from '@angular/common';
 import { InteractionContract } from '@origostudio/core';
 import {
@@ -8,7 +16,7 @@ import {
 } from '../../../adapters/web/adapter';
 
 export interface StackProps {
-  direction?: 'row' | 'column';
+  direction?: 'row' | 'column' | Record<string, 'row' | 'column'>;
   gap?: number | string;
   align?: 'start' | 'center' | 'end' | 'stretch';
   justify?: 'start' | 'center' | 'end' | 'space-between' | 'space-around';
@@ -37,6 +45,7 @@ const contractSchema: Record<
 };
 
 const finalSchema = { ...contractSchema };
+delete (finalSchema as any).direction;
 delete (finalSchema as any).gap;
 delete (finalSchema as any).wrap;
 
@@ -46,14 +55,19 @@ delete (finalSchema as any).wrap;
   imports: [NgStyle],
   templateUrl: './stack.component.html',
   styleUrl: './stack.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  encapsulation: ViewEncapsulation.ShadowDom,
 })
 export class StackComponent implements OrigoAdapter<StackProps>, IContainerComponent {
+  static readonly contractSchema = contractSchema;
+
   contract = input.required<InteractionContract<StackProps>>();
   vc = viewChild.required('vc', { read: ViewContainerRef });
 
   protected props = computed(() => {
     const p = coerceContractProps<StackProps>(this.contract().props, finalSchema);
     const original = this.contract().props || {};
+    if ('direction' in original) p.direction = original.direction as any;
     if ('gap' in original) p.gap = original.gap as any;
     if ('wrap' in original) p.wrap = original.wrap as any;
     return p;
@@ -61,22 +75,29 @@ export class StackComponent implements OrigoAdapter<StackProps>, IContainerCompo
 
   protected get gapValue(): string {
     const g = this.props().gap;
-    if (typeof g === 'number') return `${g}px`;
+    if (typeof g === 'number' || /^\d+$/.test(String(g))) return `${g}px`;
     return (g as string) || '';
   }
 
   protected get wrapValue(): string {
     const w = this.props().wrap;
-    if (typeof w === 'boolean') return w ? 'wrap' : 'nowrap';
+    if ((w as unknown) === 'true' || w === true) return 'wrap';
+    if ((w as unknown) === 'false' || w === false) return 'nowrap';
     return (w as string) || 'nowrap';
   }
 
   protected get inlineStyles(): Record<string, string> {
     const p = this.props();
     const styles: Record<string, string> = {
-      '--origo-stack-direction': p.direction || 'column',
       '--origo-stack-wrap': this.wrapValue,
     };
+    if (typeof p.direction === 'object' && p.direction !== null) {
+      for (const [key, val] of Object.entries(p.direction)) {
+        styles[`--origo-stack-direction-${key}`] = val as string;
+      }
+    } else {
+      styles['--origo-stack-direction'] = (p.direction as string) || 'column';
+    }
     if (this.gapValue) styles['gap'] = this.gapValue;
     if (p.align) styles['align-items'] = p.align;
     if (p.justify) styles['justify-content'] = p.justify;

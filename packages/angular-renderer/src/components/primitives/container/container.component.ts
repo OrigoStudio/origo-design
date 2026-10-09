@@ -1,4 +1,12 @@
-import { Component, input, viewChild, ViewContainerRef, computed } from '@angular/core';
+import {
+  Component,
+  input,
+  viewChild,
+  ViewContainerRef,
+  computed,
+  ChangeDetectionStrategy,
+  ViewEncapsulation,
+} from '@angular/core';
 import { InteractionContract } from '@origostudio/core';
 import {
   OrigoAdapter,
@@ -36,8 +44,12 @@ const contractSchema: Record<
   standalone: true,
   templateUrl: './container.component.html',
   styleUrl: './container.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  encapsulation: ViewEncapsulation.ShadowDom,
 })
 export class ContainerComponent implements OrigoAdapter<ContainerProps>, IContainerComponent {
+  static readonly contractSchema = contractSchema;
+
   contract = input.required<InteractionContract<ContainerProps>>();
   vc = viewChild.required('vc', { read: ViewContainerRef });
 
@@ -47,7 +59,7 @@ export class ContainerComponent implements OrigoAdapter<ContainerProps>, IContai
 
   protected get paddingValue(): string {
     const p = this.props().padding;
-    if (typeof p === 'number') return `${p}px`;
+    if (typeof p === 'number' || /^\d+$/.test(String(p))) return `${p}px`;
     return (p as string) || '';
   }
 }
