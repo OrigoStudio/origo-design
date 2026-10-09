@@ -2,7 +2,6 @@ import {
   Component,
   input,
   computed,
-  HostBinding,
   ChangeDetectionStrategy,
   ViewEncapsulation,
 } from '@angular/core';
