@@ -508,6 +508,7 @@ test_cases:
     affected_stories:
       - 9-4-accessibility-localization-enforcement
       - 9-2-data-presentation-primitives-batch-2
+      - 1-5-application-layout-primitives
     last_result: unknown
     results: {}
   - id: renderer-primitive-sidebar
@@ -935,5 +936,41 @@ test_cases:
     type: unit
     affected_stories:
       - 1-4-date-and-time-controls
+    last_result: unknown
+    results: {}
+  - id: renderer-primitive-container
+    description: 'Verifies Container layout primitive rendering and logic'
+    package: '@origo/angular-renderer'
+    spec_file: packages/angular-renderer/src/components/primitives/container/container.component.spec.ts
+    type: unit
+    affected_stories:
+      - 1-5-application-layout-primitives
+    last_result: unknown
+    results: {}
+  - id: renderer-primitive-grid
+    description: 'Verifies Grid layout primitive rendering and logic'
+    package: '@origo/angular-renderer'
+    spec_file: packages/angular-renderer/src/components/primitives/grid/grid.component.spec.ts
+    type: unit
+    affected_stories:
+      - 1-5-application-layout-primitives
+    last_result: unknown
+    results: {}
+  - id: renderer-primitive-stack
+    description: 'Verifies Stack layout primitive rendering and logic'
+    package: '@origo/angular-renderer'
+    spec_file: packages/angular-renderer/src/components/primitives/stack/stack.component.spec.ts
+    type: unit
+    affected_stories:
+      - 1-5-application-layout-primitives
+    last_result: unknown
+    results: {}
+  - id: renderer-primitive-divider
+    description: 'Verifies Divider layout primitive rendering and logic'
+    package: '@origo/angular-renderer'
+    spec_file: packages/angular-renderer/src/components/primitives/divider/divider.component.spec.ts
+    type: unit
+    affected_stories:
+      - 1-5-application-layout-primitives
     last_result: unknown
     results: {}

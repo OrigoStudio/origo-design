@@ -28,6 +28,10 @@ import { InputNumberComponent } from '../components/primitives/input-number/inpu
 import { DatePickerComponent } from '../components/primitives/date-picker/date-picker.component';
 import { TimePickerComponent } from '../components/primitives/time-picker/time-picker.component';
 import { DateRangePickerComponent } from '../components/primitives/date-range-picker/date-range-picker.component';
+import { ContainerComponent } from '../components/primitives/container/container.component';
+import { GridComponent } from '../components/primitives/grid/grid.component';
+import { StackComponent } from '../components/primitives/stack/stack.component';
+import { DividerComponent } from '../components/primitives/divider/divider.component';
 
 export function provideOrigo9Primitives(): EnvironmentProviders {
   const registryMap = new Map<string, unknown>([
@@ -60,6 +64,10 @@ export function provideOrigo9Primitives(): EnvironmentProviders {
     ['DatePicker', DatePickerComponent],
     ['TimePicker', TimePickerComponent],
     ['DateRangePicker', DateRangePickerComponent],
+    ['Container', ContainerComponent],
+    ['Grid', GridComponent],
+    ['Stack', StackComponent],
+    ['Divider', DividerComponent],
     ['vbox', VBoxComponent], // For backward compatibility with 'vbox' in preview-root
   ]);
 

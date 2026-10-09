@@ -1,0 +1,9 @@
+<div
+  class="origo-stack"
+  [ngStyle]="inlineStyles"
+  [attr.aria-label]="props()['aria-label'] || null"
+  [attr.aria-describedby]="props()['aria-describedby'] || null"
+>
+  <ng-container #vc></ng-container>
+  <ng-content></ng-content>
+</div>

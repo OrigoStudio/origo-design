@@ -1,0 +1,51 @@
+.origo-grid {
+  display: grid;
+  width: 100%;
+  grid-template-columns: var(--origo-grid-columns, repeat(12, minmax(0, 1fr)));
+}
+
+// Map standard origo breakpoints. We should use CSS variables mapping to actual tokens.
+// For responsive grid, if a variable --origo-grid-cols-sm is defined, we use it at the sm breakpoint.
+// We expect global breakpoints --origo-breakpoint-sm etc to exist, but CSS media queries can't use vars directly in standard CSS, they require env() or preprocessor.
+// Using standard SCSS or assuming a token-based approach. Since we can't use var() in @media, we assume standard breakpoints.
+@media (min-width: 640px) {
+  .origo-grid {
+    grid-template-columns: var(
+      --origo-grid-cols-sm,
+      var(--origo-grid-columns, repeat(12, minmax(0, 1fr)))
+    );
+  }
+}
+@media (min-width: 768px) {
+  .origo-grid {
+    grid-template-columns: var(
+      --origo-grid-cols-md,
+      var(--origo-grid-cols-sm, var(--origo-grid-columns, repeat(12, minmax(0, 1fr))))
+    );
+  }
+}
+@media (min-width: 1024px) {
+  .origo-grid {
+    grid-template-columns: var(
+      --origo-grid-cols-lg,
+      var(
+        --origo-grid-cols-md,
+        var(--origo-grid-cols-sm, var(--origo-grid-columns, repeat(12, minmax(0, 1fr))))
+      )
+    );
+  }
+}
+@media (min-width: 1280px) {
+  .origo-grid {
+    grid-template-columns: var(
+      --origo-grid-cols-xl,
+      var(
+        --origo-grid-cols-lg,
+        var(
+          --origo-grid-cols-md,
+          var(--origo-grid-cols-sm, var(--origo-grid-columns, repeat(12, minmax(0, 1fr))))
+        )
+      )
+    );
+  }
+}

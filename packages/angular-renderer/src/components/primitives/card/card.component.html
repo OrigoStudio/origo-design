@@ -5,14 +5,14 @@
     </div>
   }
 
-  @if (computedTitle() !== undefined || computedSubtitle() !== undefined) {
-    <div class="origo-card-content">
-      @if (computedTitle() !== undefined && computedTitle() !== '') {
-        <div class="origo-card-title" role="heading" aria-level="3">{{ computedTitle() }}</div>
-      }
-      @if (computedSubtitle() !== undefined && computedSubtitle() !== '') {
-        <div class="origo-card-subtitle">{{ computedSubtitle() }}</div>
-      }
-    </div>
-  }
+  <div class="origo-card-content">
+    @if (computedTitle() !== undefined && computedTitle() !== '') {
+      <div class="origo-card-title" role="heading" aria-level="3">{{ computedTitle() }}</div>
+    }
+    @if (computedSubtitle() !== undefined && computedSubtitle() !== '') {
+      <div class="origo-card-subtitle">{{ computedSubtitle() }}</div>
+    }
+    <ng-container #vc></ng-container>
+    <ng-content></ng-content>
+  </div>
 </div>

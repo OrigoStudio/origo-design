@@ -1,0 +1,6 @@
+.origo-stack {
+  display: flex;
+  flex-direction: var(--origo-stack-direction, column);
+  flex-wrap: var(--origo-stack-wrap, nowrap);
+  width: 100%;
+}
