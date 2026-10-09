@@ -120,7 +120,7 @@ export class CardComponent implements OrigoAdapter<CardProps>, ContainerComponen
     return h === true || String(h) === 'true';
   });
 
-  onKeydown(event: KeyboardEvent) {
+  onKeydown(event: Event) {
     if (this.isClickable()) {
       event.preventDefault();
       (event.target as HTMLElement).click();
