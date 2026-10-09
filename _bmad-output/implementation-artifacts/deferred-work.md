@@ -366,3 +366,6 @@
 
 ## Deferred from: code review (2026-10-07)
 - [x] [Review][Defer] Zero automated axe-core accessibility assertions in test specifications — deferred, pre-existing
+
+## Deferred from: code review (1-5-application-layout-primitives.md 2026-10-09)
+- Dead Enterprise Metadata Hooks Across All Primitives — These hooks are declared but not consumed, usually handled by a base class or service layer in a later epic.

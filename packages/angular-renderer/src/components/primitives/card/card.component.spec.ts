@@ -86,4 +86,44 @@ describe('CardComponent', () => {
       expect(element.style.marginRight).toBeFalsy();
     }
   });
+
+  it('should provide viewContainerRef as vc when it has content', () => {
+    fixture.componentRef.setInput('contract', {
+      id: 'test',
+      type: 'Card',
+      props: { title: 'Test Title' },
+    });
+    fixture.detectChanges();
+    expect(component.vc()).toBeDefined();
+  });
+
+  it('should apply elevation classes', () => {
+    fixture.componentRef.setInput('contract', {
+      id: 'test',
+      type: 'Card',
+      props: { elevation: 'md' },
+    });
+    fixture.detectChanges();
+    expect(fixture.nativeElement.classList.contains('origo-card--elevation-md')).toBe(true);
+  });
+
+  it('should emit click on Enter when clickable', () => {
+    fixture.componentRef.setInput('contract', {
+      id: 'test',
+      type: 'Card',
+      props: { clickable: true },
+    });
+    fixture.detectChanges();
+
+    expect(fixture.nativeElement.getAttribute('tabindex')).toBe('0');
+    expect(fixture.nativeElement.getAttribute('role')).toBe('article');
+
+    let clicked = false;
+    fixture.nativeElement.addEventListener('click', () => (clicked = true));
+
+    const event = new KeyboardEvent('keydown', { key: 'Enter' });
+    fixture.nativeElement.dispatchEvent(event);
+
+    expect(clicked).toBe(true);
+  });
 });

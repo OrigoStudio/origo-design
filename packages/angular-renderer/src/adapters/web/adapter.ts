@@ -2,8 +2,11 @@ import { Injectable, ViewContainerRef, Signal, InputSignal } from '@angular/core
 import { ASTNode, InteractionContract } from '@origostudio/core';
 
 export interface ContainerComponent {
-  viewContainerRef?: ViewContainerRef | Signal<ViewContainerRef>;
-  vc?: ViewContainerRef | Signal<ViewContainerRef>;
+  viewContainerRef?:
+    | ViewContainerRef
+    | Signal<ViewContainerRef>
+    | Signal<ViewContainerRef | undefined>;
+  vc?: ViewContainerRef | Signal<ViewContainerRef> | Signal<ViewContainerRef | undefined>;
 }
 
 export interface OrigoAdapter<TProps = Record<string, unknown>> {

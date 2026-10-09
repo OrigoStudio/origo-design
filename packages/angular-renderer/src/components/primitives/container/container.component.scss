@@ -1,0 +1,9 @@
+.origo-container {
+  box-sizing: border-box;
+  width: 100%;
+  margin-inline: auto; // Centers horizontally if max-width is applied
+}
+
+.origo-container--fluid {
+  max-width: 100% !important;
+}

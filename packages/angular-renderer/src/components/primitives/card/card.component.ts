@@ -6,10 +6,12 @@ import {
   ViewEncapsulation,
   inject,
   SecurityContext,
+  viewChild,
+  ViewContainerRef,
 } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 import { InteractionContract } from '@origostudio/core';
-import { OrigoAdapter } from '../../../adapters/web/adapter';
+import { OrigoAdapter, ContainerComponent } from '../../../adapters/web/adapter';
 
 export interface CardProps {
   permissions?: Record<string, string>;
@@ -21,6 +23,10 @@ export interface CardProps {
   imageAlt?: string;
   'aria-label'?: string;
   'aria-describedby'?: string;
+  elevation?: 'none' | 'sm' | 'md' | 'lg';
+  variant?: string;
+  clickable?: boolean;
+  hoverable?: boolean;
 }
 
 @Component({
@@ -35,9 +41,22 @@ export interface CardProps {
     '[attr.data-testid]': 'contract().id',
     '[attr.aria-label]': 'computedAriaLabel()',
     '[attr.aria-describedby]': 'computedAriaDescribedBy()',
+    '[attr.tabindex]': 'isClickable() ? "0" : null',
+    '[attr.role]': '"article"',
+    '(keydown.enter)': 'onKeydown($event)',
+    '(keydown.space)': 'onKeydown($event)',
+    '[class.origo-card--elevation-none]': 'computedElevation() === "none"',
+    '[class.origo-card--elevation-sm]': 'computedElevation() === "sm"',
+    '[class.origo-card--elevation-md]': 'computedElevation() === "md"',
+    '[class.origo-card--elevation-lg]': 'computedElevation() === "lg"',
+    '[class.origo-card--variant-solid]': 'computedVariant() === "solid"',
+    '[class.origo-card--variant-outline]': 'computedVariant() === "outline"',
+    '[class.origo-card--variant-ghost]': 'computedVariant() === "ghost"',
+    '[class.origo-card--hoverable]': 'isHoverable()',
+    '[class.origo-card--clickable]': 'isClickable()',
   },
 })
-export class CardComponent implements OrigoAdapter<CardProps> {
+export class CardComponent implements OrigoAdapter<CardProps>, ContainerComponent {
   static readonly contractSchema = {
     permissions: 'object',
     rules: 'object',
@@ -46,10 +65,15 @@ export class CardComponent implements OrigoAdapter<CardProps> {
     subtitle: 'string',
     imageUrl: 'string',
     imageAlt: 'string',
+    elevation: 'string',
+    variant: 'string',
+    clickable: 'boolean',
+    hoverable: 'boolean',
   };
   static readonly strictContract = false;
 
   contract = input.required<InteractionContract<CardProps>>();
+  vc = viewChild('vc', { read: ViewContainerRef });
 
   private sanitizer = inject(DomSanitizer);
 
@@ -86,4 +110,33 @@ export class CardComponent implements OrigoAdapter<CardProps> {
     const desc = this.contract().props?.['aria-describedby'];
     return desc !== undefined && desc !== null ? String(desc) : undefined;
   });
+
+  computedElevation = computed(() => this.contract().props?.elevation || 'none');
+
+  computedVariant = computed(() => this.contract().props?.variant || 'solid');
+
+  hasContent = computed(() => {
+    const hasTitle = !!this.computedTitle();
+    const hasSubtitle = !!this.computedSubtitle();
+    const children = this.contract().children;
+    const hasChildren = children ? children.length > 0 : false;
+    return hasTitle || hasSubtitle || hasChildren;
+  });
+
+  isClickable = computed(() => {
+    const c = this.contract().props?.clickable;
+    return c === true || String(c) === 'true';
+  });
+
+  isHoverable = computed(() => {
+    const h = this.contract().props?.hoverable;
+    return h === true || String(h) === 'true';
+  });
+
+  onKeydown(event: Event) {
+    if (this.isClickable() && event.target === event.currentTarget) {
+      event.preventDefault();
+      (event.target as HTMLElement).click();
+    }
+  }
 }

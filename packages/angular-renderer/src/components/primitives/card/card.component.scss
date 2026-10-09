@@ -3,14 +3,44 @@
   width: 100%;
 }
 
+:host(.origo-card--elevation-sm) .origo-card-container {
+  box-shadow: var(--origo-shadow-sm);
+}
+:host(.origo-card--elevation-md) .origo-card-container {
+  box-shadow: var(--origo-shadow-md);
+}
+:host(.origo-card--elevation-lg) .origo-card-container {
+  box-shadow: var(--origo-shadow-lg);
+}
+:host(.origo-card--clickable) .origo-card-container {
+  cursor: pointer;
+}
+:host(.origo-card--hoverable) .origo-card-container:hover {
+  box-shadow: var(--origo-shadow-md);
+}
+
 .origo-card-container {
   display: flex;
   flex-direction: column;
   width: 100%;
-  border-radius: var(--origo-radius-sm, 4px);
-  border: 1px solid var(--origo-color-border-default, #ccc);
-  background-color: var(--origo-color-surface-background, #fff);
+  border-radius: var(--origo-radius-sm);
+  border: 1px solid var(--origo-color-border-default);
+  background-color: var(--origo-color-surface-background);
   overflow: hidden;
+  transition:
+    box-shadow var(--origo-transition-fast, 0.2s ease-in-out),
+    border-color var(--origo-transition-fast, 0.2s ease-in-out),
+    background-color var(--origo-transition-fast, 0.2s ease-in-out);
+}
+
+/* Variant Overrides */
+:host(.origo-card--variant-outline) .origo-card-container {
+  background-color: transparent;
+  border-color: var(--origo-color-border-strong, #ccc);
+}
+:host(.origo-card--variant-ghost) .origo-card-container {
+  background-color: transparent;
+  border-color: transparent;
 }
 
 .origo-card-image {
@@ -27,21 +57,21 @@
 .origo-card-content {
   display: flex;
   flex-direction: column;
-  padding-inline-start: var(--origo-spacing-container-padding, 16px);
-  padding-inline-end: var(--origo-spacing-container-padding, 16px);
-  padding-block: var(--origo-spacing-container-padding, 16px);
-  gap: var(--origo-spacing-element-gap, 8px);
+  padding-inline-start: var(--origo-spacing-container-padding);
+  padding-inline-end: var(--origo-spacing-container-padding);
+  padding-block: var(--origo-spacing-container-padding);
+  gap: var(--origo-spacing-element-gap);
   text-align: start;
-  color: var(--origo-color-text-primary, #333);
+  color: var(--origo-color-text-primary);
   font-family: var(--origo-typography-input-font-family, inherit);
 }
 
 .origo-card-title {
-  font-size: calc(var(--origo-typography-input-font-size, 14px) * 1.25);
+  font-size: calc(var(--origo-typography-input-font-size) * 1.25);
   font-weight: 600;
 }
 
 .origo-card-subtitle {
-  font-size: var(--origo-typography-input-font-size, 14px);
+  font-size: var(--origo-typography-input-font-size);
   opacity: 0.8;
 }
