@@ -61,10 +61,7 @@ describe('DateRangePickerComponent', () => {
     });
     fixture.detectChanges();
 
-    (component as any).selectRange(
-      new Date(Date.UTC(2025, 0, 15)),
-      new Date(Date.UTC(2025, 0, 20))
-    );
+    component.selectRange(new Date(Date.UTC(2025, 0, 15)), new Date(Date.UTC(2025, 0, 20)));
 
     expect(experienceAdapter.updateState).toHaveBeenCalledWith(
       'test-date-range',
@@ -87,10 +84,7 @@ describe('DateRangePickerComponent', () => {
     fixture.detectChanges();
 
     // Select end date before start date
-    (component as any).selectRange(
-      new Date(Date.UTC(2025, 0, 20)),
-      new Date(Date.UTC(2025, 0, 15))
-    );
+    component.selectRange(new Date(Date.UTC(2025, 0, 20)), new Date(Date.UTC(2025, 0, 15)));
 
     // It should either auto-swap or only set start date. Let's say it auto-swaps.
     expect(experienceAdapter.updateState).toHaveBeenCalledWith(

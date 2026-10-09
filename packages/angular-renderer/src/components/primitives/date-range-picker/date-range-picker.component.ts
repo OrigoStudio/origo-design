@@ -61,7 +61,7 @@ export class DateRangePickerComponent implements OrigoAdapter<DateRangePickerPro
   contract = input.required<InteractionContract<DateRangePickerProps>>();
 
   // DateRangePicker doesn't use a single value model in the same way, but keeping it for adapter compat if needed
-  value = model<any>(null);
+  value = model<unknown>(null);
 
   startDate = signal<string | null>(null);
   endDate = signal<string | null>(null);

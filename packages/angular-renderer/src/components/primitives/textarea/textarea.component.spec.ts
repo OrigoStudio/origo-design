@@ -170,7 +170,7 @@ describe('TextareaComponent', () => {
     const dt = {
       getData: (type: string) => (type === 'text/plain' ? 'bold text' : '<b>bold text</b>'),
     } as unknown as DataTransfer;
-    const pasteEvent = new Event('paste') as any;
+    const pasteEvent = new Event('paste') as Event & { clipboardData: DataTransfer };
     pasteEvent.clipboardData = dt;
     textareaEl!.dispatchEvent(pasteEvent);
     expect(component.value()).toBe('bold text');

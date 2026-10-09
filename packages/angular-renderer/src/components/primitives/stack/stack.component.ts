@@ -45,9 +45,9 @@ const contractSchema: Record<
 };
 
 const finalSchema = { ...contractSchema };
-delete (finalSchema as any).direction;
-delete (finalSchema as any).gap;
-delete (finalSchema as any).wrap;
+delete (finalSchema as Record<string, unknown>)['direction'];
+delete (finalSchema as Record<string, unknown>)['gap'];
+delete (finalSchema as Record<string, unknown>)['wrap'];
 
 @Component({
   selector: 'origo-stack',
@@ -67,9 +67,9 @@ export class StackComponent implements OrigoAdapter<StackProps>, IContainerCompo
   protected props = computed(() => {
     const p = coerceContractProps<StackProps>(this.contract().props, finalSchema);
     const original = this.contract().props || {};
-    if ('direction' in original) p.direction = original.direction as any;
-    if ('gap' in original) p.gap = original.gap as any;
-    if ('wrap' in original) p.wrap = original.wrap as any;
+    if ('direction' in original) p.direction = original.direction as StackProps['direction'];
+    if ('gap' in original) p.gap = original.gap as string | number;
+    if ('wrap' in original) p.wrap = original.wrap as boolean | 'wrap' | 'nowrap';
     return p;
   });
 

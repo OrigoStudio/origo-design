@@ -1,0 +1,12 @@
+<div class="origo-file-input__wrapper">
+  <input
+    type="file"
+    [multiple]="computedMultiple()"
+    [accept]="computedAccept()"
+    [disabled]="disabled"
+    (change)="onFileChange($event)"
+    (focus)="onFocus($event)"
+    (blur)="onBlur($event)"
+  />
+  <ng-container #vc></ng-container>
+</div>

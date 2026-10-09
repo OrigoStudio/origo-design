@@ -1,0 +1,31 @@
+:host {
+  display: block;
+}
+
+.origo-rich-text-editor__wrapper {
+  border: 1px solid var(--origo-color-border-default);
+  border-radius: var(--origo-shape-border-radius-medium);
+  background-color: var(--origo-color-surface-default);
+  display: flex;
+  flex-direction: column;
+}
+
+.origo-rich-text-editor__toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--origo-spacing-small);
+  padding: var(--origo-spacing-small);
+  border-bottom: 1px solid var(--origo-color-border-default);
+  background-color: var(--origo-color-surface-subtle);
+}
+
+.origo-rich-text-editor__content {
+  padding: var(--origo-spacing-medium);
+  min-height: 120px;
+  outline: none;
+}
+
+.origo-rich-text-editor--disabled {
+  opacity: 0.6;
+  pointer-events: none;
+}

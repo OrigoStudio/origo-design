@@ -1,0 +1,16 @@
+<div class="origo-dropzone__wrapper">
+  <input
+    type="file"
+    class="origo-dropzone__input"
+    [multiple]="computedMultiple()"
+    [accept]="computedAccept()"
+    [disabled]="disabled"
+    (change)="onFileChange($event)"
+    (focus)="onFocus($event)"
+    (blur)="onBlur($event)"
+  />
+  <div class="origo-dropzone__content">
+    <ng-content></ng-content>
+  </div>
+  <ng-container #vc></ng-container>
+</div>

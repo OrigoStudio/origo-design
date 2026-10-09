@@ -6,7 +6,7 @@ baseline_commit: 5d951a2
 
 # Story 1.6: File Input & Rich Text Editor
 
-Status: ready-for-dev
+Status: done
 
 ## Story
 

@@ -45,8 +45,8 @@ const contractSchema: Record<
 };
 // We will modify the schema slightly to avoid dropping columns/gap
 const finalSchema = { ...contractSchema };
-delete (finalSchema as any).columns;
-delete (finalSchema as any).gap;
+delete (finalSchema as Record<string, unknown>)['columns'];
+delete (finalSchema as Record<string, unknown>)['gap'];
 
 @Component({
   selector: 'origo-grid',
@@ -66,8 +66,9 @@ export class GridComponent implements OrigoAdapter<GridProps>, IContainerCompone
   protected props = computed(() => {
     const p = coerceContractProps<GridProps>(this.contract().props, finalSchema);
     const original = this.contract().props || {};
-    if ('columns' in original) p.columns = original.columns as any;
-    if ('gap' in original) p.gap = original.gap as any;
+    if ('columns' in original)
+      p.columns = original.columns as string | number | Record<string, number>;
+    if ('gap' in original) p.gap = original.gap as string | number;
     return p;
   });
 
@@ -80,7 +81,7 @@ export class GridComponent implements OrigoAdapter<GridProps>, IContainerCompone
       return cols;
     }
     if (typeof cols === 'object' && cols !== null) {
-      const base = (cols as any)['xs'] || 1;
+      const base = (cols as Record<string, number>)['xs'] || 1;
       return `repeat(${base}, minmax(0, 1fr))`;
     }
     return 'repeat(1, minmax(0, 1fr))';

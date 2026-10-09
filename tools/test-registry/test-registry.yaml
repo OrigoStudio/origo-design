@@ -974,3 +974,30 @@ test_cases:
       - 1-5-application-layout-primitives
     last_result: unknown
     results: {}
+  - id: renderer-primitive-file-input
+    description: 'Verifies FileInput layout primitive rendering and logic'
+    package: '@origo/angular-renderer'
+    spec_file: packages/angular-renderer/src/components/primitives/file-input/file-input.component.spec.ts
+    type: unit
+    affected_stories:
+      - 1-6-file-input-and-rich-text-editor
+    last_result: unknown
+    results: {}
+  - id: renderer-primitive-dropzone
+    description: 'Verifies Dropzone layout primitive rendering and logic'
+    package: '@origo/angular-renderer'
+    spec_file: packages/angular-renderer/src/components/primitives/dropzone/dropzone.component.spec.ts
+    type: unit
+    affected_stories:
+      - 1-6-file-input-and-rich-text-editor
+    last_result: unknown
+    results: {}
+  - id: renderer-primitive-rich-text-editor
+    description: 'Verifies RichTextEditor layout primitive rendering and logic'
+    package: '@origo/angular-renderer'
+    spec_file: packages/angular-renderer/src/components/primitives/rich-text-editor/rich-text-editor.component.spec.ts
+    type: unit
+    affected_stories:
+      - 1-6-file-input-and-rich-text-editor
+    last_result: unknown
+    results: {}

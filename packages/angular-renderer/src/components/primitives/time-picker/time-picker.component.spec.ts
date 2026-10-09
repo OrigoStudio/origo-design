@@ -59,7 +59,7 @@ describe('TimePickerComponent', () => {
     });
     fixture.detectChanges();
 
-    (component as any).selectTime(2, 30, 'PM'); // 2:30 PM = 14:30 UTC
+    component.selectTime(2, 30, 'PM'); // 2:30 PM = 14:30 UTC
     expect(experienceAdapter.updateState).toHaveBeenCalledWith(
       'test-time-picker',
       'value',
