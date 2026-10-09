@@ -32,6 +32,9 @@ import { ContainerComponent } from '../components/primitives/container/container
 import { GridComponent } from '../components/primitives/grid/grid.component';
 import { StackComponent } from '../components/primitives/stack/stack.component';
 import { DividerComponent } from '../components/primitives/divider/divider.component';
+import { FileInputComponent } from '../components/primitives/file-input/file-input.component';
+import { DropzoneComponent } from '../components/primitives/dropzone/dropzone.component';
+import { RichTextEditorComponent } from '../components/primitives/rich-text-editor/rich-text-editor.component';
 
 export function provideOrigo9Primitives(): EnvironmentProviders {
   const registryMap = new Map<string, unknown>([
@@ -68,6 +71,9 @@ export function provideOrigo9Primitives(): EnvironmentProviders {
     ['Grid', GridComponent],
     ['Stack', StackComponent],
     ['Divider', DividerComponent],
+    ['FileInput', FileInputComponent],
+    ['Dropzone', DropzoneComponent],
+    ['RichTextEditor', RichTextEditorComponent],
     ['vbox', VBoxComponent], // For backward compatibility with 'vbox' in preview-root
   ]);
 

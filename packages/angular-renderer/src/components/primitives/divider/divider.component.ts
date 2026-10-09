@@ -37,7 +37,7 @@ const contractSchema: Record<
 };
 
 const finalSchema = { ...contractSchema };
-delete (finalSchema as any).thickness;
+delete (finalSchema as Record<string, unknown>)['thickness'];
 
 @Component({
   selector: 'origo-divider',
@@ -64,7 +64,7 @@ export class DividerComponent implements OrigoAdapter<DividerProps> {
   protected props = computed(() => {
     const p = coerceContractProps<DividerProps>(this.contract().props, finalSchema);
     const original = this.contract().props || {};
-    if ('thickness' in original) p.thickness = original.thickness as any;
+    if ('thickness' in original) p.thickness = original.thickness as string | number;
     return p;
   });
 

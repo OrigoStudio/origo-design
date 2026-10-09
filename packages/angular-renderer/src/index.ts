@@ -36,3 +36,6 @@ export * from './components/primitives/container/container.component';
 export * from './components/primitives/grid/grid.component';
 export * from './components/primitives/stack/stack.component';
 export * from './components/primitives/divider/divider.component';
+export * from './components/primitives/file-input/file-input.component';
+export * from './components/primitives/dropzone/dropzone.component';
+export * from './components/primitives/rich-text-editor/rich-text-editor.component';

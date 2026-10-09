@@ -1,0 +1,23 @@
+<div class="origo-rich-text-editor__wrapper" [class.origo-rich-text-editor--disabled]="disabled">
+  <div class="origo-rich-text-editor__toolbar" *ngIf="computedToolbar().length > 0">
+    <button
+      *ngFor="let btn of computedToolbar()"
+      (mousedown)="$event.preventDefault()"
+      (click)="execCommand(btn)"
+      [disabled]="disabled"
+      type="button"
+      class="origo-rich-text-editor__toolbar-btn"
+    >
+      {{ btn }}
+    </button>
+  </div>
+  <div
+    #contentEl
+    class="origo-rich-text-editor__content"
+    [attr.contenteditable]="!disabled"
+    (input)="onInput($event)"
+    (focus)="onFocus($event)"
+    (blur)="onBlur($event)"
+  ></div>
+  <ng-container #vc></ng-container>
+</div>

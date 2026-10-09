@@ -71,7 +71,7 @@ describe('DatePickerComponent', () => {
     // Click the 16th
     const gridcells = root.querySelectorAll('[role="gridcell"]');
     const day16 = Array.from(gridcells).find(
-      (cell: any) => cell.textContent.trim() === '16'
+      (cell: any) => cell.textContent?.trim() === '16'
     ) as HTMLElement;
     expect(day16).toBeTruthy();
 
@@ -107,7 +107,7 @@ describe('DatePickerComponent', () => {
 
     const gridcells = root.querySelectorAll('[role="gridcell"]');
     const day15 = Array.from(gridcells).find(
-      (cell: any) => cell.textContent.trim() === '15'
+      (cell: any) => cell.textContent?.trim() === '15'
     ) as HTMLElement;
 
     // Simulate keyboard navigation

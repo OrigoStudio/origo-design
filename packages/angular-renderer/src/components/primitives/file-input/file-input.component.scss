@@ -1,0 +1,32 @@
+:host {
+  display: block;
+}
+
+.origo-file-input__wrapper {
+  position: relative;
+  border: 1px solid var(--origo-color-border-default);
+  border-radius: var(--origo-shape-border-radius-medium);
+  padding-block: var(--origo-spacing-small);
+  padding-inline: var(--origo-spacing-small);
+  background-color: var(--origo-color-surface-default);
+  transition:
+    border-color 0.15s ease-in-out,
+    box-shadow 0.15s ease-in-out;
+}
+
+.origo-file-input__wrapper:focus-within {
+  border-color: var(--origo-color-border-focus);
+  box-shadow: 0 0 0 2px var(--origo-color-surface-hover);
+}
+
+input[type='file'] {
+  width: 100%;
+  font-family: inherit;
+  font-size: var(--origo-typography-body-size);
+  color: var(--origo-color-text-default);
+}
+
+input[type='file']:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}

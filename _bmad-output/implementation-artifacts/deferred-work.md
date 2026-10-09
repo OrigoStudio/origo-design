@@ -369,3 +369,8 @@
 
 ## Deferred from: code review (1-5-application-layout-primitives.md 2026-10-09)
 - Dead Enterprise Metadata Hooks Across All Primitives — These hooks are declared but not consumed, usually handled by a base class or service layer in a later epic.
+
+## Deferred from: code review of 1-6-file-input-and-rich-text-editor (2026-10-09)
+
+- Unrelated Scope Creep in Diff
+- Negative column breakpoint in GridComponent
