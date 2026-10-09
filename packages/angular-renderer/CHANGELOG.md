@@ -1,3 +1,16 @@
+## 0.0.52 (2026-10-09)
+
+### 🚀 Features
+
+- add divider component for angular renderer ([221ded8](https://github.com/OrigoStudio/origo-design/commit/221ded8))
+- add application layout primitives and update card component implementation ([5153adc](https://github.com/OrigoStudio/origo-design/commit/5153adc))
+- add CardComponent primitive and export it in angular-renderer ([2f62893](https://github.com/OrigoStudio/origo-design/commit/2f62893))
+- **angular-renderer:** add new primitive components including card, container, divider, grid, and stack ([fd14eb4](https://github.com/OrigoStudio/origo-design/commit/fd14eb4))
+
+### ❤️ Thank You
+
+- Hardik Patel @hardikpatelse
+
 ## 0.0.51 (2026-10-08)
 
 ### 🚀 Features

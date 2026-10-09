@@ -1,3 +1,7 @@
+## 0.0.52 (2026-10-09)
+
+This was a version bump only for design-tokens to align it with other projects, there were no code changes.
+
 ## 0.0.51 (2026-10-08)
 
 This was a version bump only for design-tokens to align it with other projects, there were no code changes.
