@@ -100,7 +100,7 @@ action_items:
   - epic: 1
     action: 'Author Component Invariants & ShadowDOM Checklist (docs/guidelines/component-invariants.md)'
     owner: 'Elena'
-    status: open
+    status: done
   - epic: 1
     action: 'Author Test Quality & ShadowDOM Interaction Guide (docs/guidelines/testing-primitives.md)'
     owner: 'Dana'
