@@ -96,7 +96,7 @@ action_items:
   - epic: 1
     action: 'Author Modular SCSS & Design Token Guide (docs/guidelines/scss-and-tokens.md)'
     owner: 'Charlie'
-    status: open
+    status: done
   - epic: 1
     action: 'Author Component Invariants & ShadowDOM Checklist (docs/guidelines/component-invariants.md)'
     owner: 'Elena'
