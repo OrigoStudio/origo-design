@@ -15,6 +15,7 @@
     "perf:benchmark": "ts-node tools/benchmarks/compare-baseline.ts",
     "perf:test": "ts-node tools/benchmarks/run-tests.ts",
     "spike:epic7": "node tools/spikes/epic7-worker-csp/build-spike.js",
+    "spike:overlay": "ts-node --project tsconfig.base.json tools/spikes/overlay-shadowdom/run-spike.ts",
     "prepare": "husky",
     "release": "nx release --skip-publish",
     "validate:registry": "ts-node --project tsconfig.base.json tools/test-registry/validate-registry.ts"
@@ -22,6 +23,7 @@
   "private": false,
   "dependencies": {
     "@angular/animations": "22.0.8",
+    "@angular/cdk": "22.0.7",
     "@angular/common": "22.0.8",
     "@angular/compiler": "22.0.8",
     "@angular/core": "22.0.8",

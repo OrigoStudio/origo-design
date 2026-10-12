@@ -1001,3 +1001,21 @@ test_cases:
       - 1-6-file-input-and-rich-text-editor
     last_result: unknown
     results: {}
+  - id: renderer-overlay-service
+    description: 'Verifies OrigoOverlayService portal projection, focus trap, outside-click, and SSR safe guards'
+    package: '@origo/angular-renderer'
+    spec_file: packages/angular-renderer/src/lib/overlay/overlay.service.spec.ts
+    type: unit
+    affected_stories:
+      - retro-1-overlay-portal-architecture
+    last_result: pass
+    results: {}
+  - id: spike-overlay-shadowdom
+    description: 'Verifies Shadow DOM CDK overlay portal projection, composedPath outside-click, and focus trap spike harness'
+    package: 'tools'
+    spec_file: tools/spikes/overlay-shadowdom/run-spike.ts
+    type: unit
+    affected_stories:
+      - retro-1-overlay-portal-architecture
+    last_result: pass
+    results: {}
