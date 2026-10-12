@@ -3,7 +3,8 @@ title: 'Author Test Quality & ShadowDOM Interaction Guide'
 type: 'chore'
 created: '2026-10-12'
 baseline_revision: 'fee62064d4a6a35eb28ba2e2ad628ed9aae8d3ed'
-status: 'in-review'
+final_revision: 'cab1c33eae5a1663fc9d2a0647d494f784cc0dbd'
+status: 'done'
 review_loop_iteration: 0
 followup_review_recommended: false
 context:
