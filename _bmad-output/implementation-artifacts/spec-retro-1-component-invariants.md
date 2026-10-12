@@ -3,7 +3,8 @@ title: 'Author Component Invariants & ShadowDOM Checklist'
 type: 'chore'
 created: '2026-10-12'
 baseline_revision: 'c52e63f2055d159207198bdeb4bce804484c196f'
-status: 'in-review'
+final_revision: '74977aeb000c86d4c7322a2b4995175db5911f3b'
+status: 'done'
 review_loop_iteration: 0
 followup_review_recommended: false
 context:
