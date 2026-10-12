@@ -104,7 +104,7 @@ action_items:
   - epic: 1
     action: 'Author Test Quality & ShadowDOM Interaction Guide (docs/guidelines/testing-primitives.md)'
     owner: 'Dana'
-    status: open
+    status: done
   - epic: 1
     action: 'Prototype/Standardize Angular Overlay & Portal architecture for ShadowDOM'
     owner: 'Charlie'
