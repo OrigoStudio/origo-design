@@ -1,3 +1,14 @@
+## 0.0.56 (2026-10-13)
+
+### 🚀 Features
+
+- implement modal and overlay primitives including dialog, drawer, popover, and tooltip components ([ca3030d](https://github.com/OrigoStudio/origo-design/commit/ca3030d))
+- implement modal and overlay primitives with shadow DOM support and focus trapping ([0c8b1b8](https://github.com/OrigoStudio/origo-design/commit/0c8b1b8))
+
+### ❤️ Thank You
+
+- Hardik Patel @hardikpatelse
+
 ## 0.0.55 (2026-10-13)
 
 ### 🚀 Features
