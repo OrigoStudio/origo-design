@@ -1,3 +1,14 @@
+## 0.0.54 (2026-10-13)
+
+### 🚀 Features
+
+- implement Angular overlay and portal architecture service for angular-renderer ([fe0c96a](https://github.com/OrigoStudio/origo-design/commit/fe0c96a))
+- implement Angular overlay and portal architecture with Shadow DOM support ([954c255](https://github.com/OrigoStudio/origo-design/commit/954c255))
+
+### ❤️ Thank You
+
+- Hardik Patel @hardikpatelse
+
 ## 0.0.53 (2026-10-09)
 
 ### 🚀 Features
