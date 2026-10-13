@@ -4,6 +4,9 @@ import { ComponentPortal, TemplatePortal } from '@angular/cdk/portal';
 import { Subscription } from 'rxjs';
 import { OrigoOverlayConfig, OrigoOverlayContent, OrigoOverlayRef } from './overlay.models';
 
+export const ORIGO_OVERLAY_FOCUSABLE_SELECTOR =
+  'button:not([disabled]), [href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"]):not([disabled])';
+
 export function getDeepActiveElement(doc: Document | null): Element | null {
   if (!doc) return null;
   let active = doc.activeElement;
@@ -54,6 +57,7 @@ export class OrigoOverlayRefImpl<T = unknown> implements OrigoOverlayRef<T> {
   private documentKeydownListener: ((e: KeyboardEvent) => void) | null = null;
   private backdropSub: Subscription | null = null;
   private resizeObserver: ResizeObserver | null = null;
+  private initialFocusTimeout: ReturnType<typeof setTimeout> | null = null;
 
   constructor(
     id: string,
@@ -102,6 +106,12 @@ export class OrigoOverlayRefImpl<T = unknown> implements OrigoOverlayRef<T> {
   open(content?: OrigoOverlayContent, viewContainerRef?: ViewContainerRef): void {
     if (this._isOpen) return;
 
+    if (!content && !this.cdkOverlayRef.hasAttached()) {
+      throw new Error(
+        '[OrigoOverlayRef] Content is required to open overlay. Provide a TemplateRef or Component Type.'
+      );
+    }
+
     this.previousFocusedElement = getDeepActiveElement(this.document) as HTMLElement | null;
     const effectiveVcr = viewContainerRef ?? this.config.viewContainerRef;
 
@@ -121,6 +131,7 @@ export class OrigoOverlayRefImpl<T = unknown> implements OrigoOverlayRef<T> {
     }
 
     this._isOpen = true;
+    this.syncTriggerAria(true);
     this.setupListeners();
   }
 
@@ -176,7 +187,7 @@ export class OrigoOverlayRefImpl<T = unknown> implements OrigoOverlayRef<T> {
 
         if (this.config.trapFocus && event.key === 'Tab' && overlayPane) {
           const focusables = overlayPane.querySelectorAll<HTMLElement>(
-            'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
+            ORIGO_OVERLAY_FOCUSABLE_SELECTOR
           );
           if (focusables.length === 0) return;
 
@@ -203,9 +214,10 @@ export class OrigoOverlayRefImpl<T = unknown> implements OrigoOverlayRef<T> {
 
     // 4. Initial Focus
     if (this.config.trapFocus && overlayPane) {
-      setTimeout(() => {
+      this.initialFocusTimeout = setTimeout(() => {
+        if (!this._isOpen) return;
         const firstFocusable = overlayPane.querySelector<HTMLElement>(
-          'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
+          ORIGO_OVERLAY_FOCUSABLE_SELECTOR
         );
         if (firstFocusable) {
           firstFocusable.focus();
@@ -215,6 +227,10 @@ export class OrigoOverlayRefImpl<T = unknown> implements OrigoOverlayRef<T> {
   }
 
   private cleanupListeners(): void {
+    if (this.initialFocusTimeout) {
+      clearTimeout(this.initialFocusTimeout);
+      this.initialFocusTimeout = null;
+    }
     if (this.documentClickListener && this.document) {
       this.document.removeEventListener('click', this.documentClickListener, true);
       this.documentClickListener = null;
@@ -229,10 +245,27 @@ export class OrigoOverlayRefImpl<T = unknown> implements OrigoOverlayRef<T> {
     }
   }
 
+  private syncTriggerAria(open: boolean): void {
+    const triggerEl =
+      this.config.position.type === 'connected'
+        ? this.config.position.target instanceof ElementRef
+          ? this.config.position.target.nativeElement
+          : this.config.position.target
+        : null;
+
+    if (triggerEl && typeof triggerEl.setAttribute === 'function') {
+      triggerEl.setAttribute('aria-expanded', open ? 'true' : 'false');
+      if (open && !triggerEl.hasAttribute('aria-controls')) {
+        triggerEl.setAttribute('aria-controls', this.id);
+      }
+    }
+  }
+
   close(result?: T): void {
     if (!this._isOpen) return;
 
     this.cleanupListeners();
+    this.syncTriggerAria(false);
     if (this.cdkOverlayRef.hasAttached()) {
       this.cdkOverlayRef.detach();
     }

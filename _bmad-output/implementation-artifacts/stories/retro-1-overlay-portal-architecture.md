@@ -3,12 +3,12 @@ story_id: "retro-1"
 story_key: "retro-1-overlay-portal-architecture"
 baseline_commit: "147ef03e50728c643f2faa7688bb4c4408f7ddf2"
 epic: 1
-status: "review"
+status: "done"
 ---
 
 # Story retro-1: Prototype/Standardize Angular Overlay & Portal Architecture for Shadow DOM
 
-Status: review
+Status: done
 
 <!-- Note: Validation is complete. Story is ready for dev-story. -->
 
@@ -165,6 +165,18 @@ Any overlay service attaching elements to `document.body` or subscribing to `win
   - [x] Write unit specs covering `OrigoOverlayService`, position strategies, outside-click, focus trap, and SSR no-op.
   - [x] Register new test scenarios in `tools/test-registry/test-registry.yaml` under `@origo/angular-renderer`.
   - [x] Verify `git status` and test suite passes cleanly.
+
+### Review Findings
+
+- [x] [Review][Decision] Export explicit OrigoConnectedPositionStrategy and OrigoGlobalPositionStrategy types/aliases — Resolved: Exported type aliases in overlay.models.ts and index.ts.
+- [x] [Review][Patch] Add scrollStrategy reposition to CdkOverlayConfig for connected overlays [packages/angular-renderer/src/lib/overlay/overlay.service.ts:42] — Resolved: Added scrollStrategy.reposition().
+- [x] [Review][Patch] Filter out disabled elements in focus trap querySelectorAll [packages/angular-renderer/src/lib/overlay/overlay-ref.ts:178] — Resolved: Added :not([disabled]) filter.
+- [x] [Review][Patch] Guard and cancel initial focus setTimeout on immediate close [packages/angular-renderer/src/lib/overlay/overlay-ref.ts:206] — Resolved: Stored timeout reference and cleared on close/cleanup.
+- [x] [Review][Patch] Mirror global position 'start' and 'end' when direction is rtl [packages/angular-renderer/src/lib/overlay/overlay.service.ts:129] — Resolved: Handled direction === 'rtl' in switch.
+- [x] [Review][Patch] Support theme class inheritance from documentElement as well as body [packages/angular-renderer/src/lib/overlay/overlay.service.ts:162] — Resolved: Checked documentElement.classList.
+- [x] [Review][Patch] Synchronize aria-expanded and aria-controls on trigger element [packages/angular-renderer/src/lib/overlay/overlay-ref.ts:123] — Resolved: syncTriggerAria() sets aria-expanded and aria-controls.
+- [x] [Review][Patch] Guard open() against undefined content or throw descriptive error [packages/angular-renderer/src/lib/overlay/overlay-ref.ts:108] — Resolved: Validates content before setting isOpen.
+- [x] [Review][Defer] Angular CDK dependency version 22.0.7 used instead of 22.0.8 [package.json:26] — deferred, @angular/cdk@22.0.8 is unpublished on npm registry (HTTP 404), 22.0.7 is the latest compatible version.
 
 ---
 

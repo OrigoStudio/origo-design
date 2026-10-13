@@ -132,6 +132,10 @@ describe('OrigoOverlayService', () => {
 
     overlayRef.open(hostComponent.panelTemplate);
     expect(overlayRef.isOpen).toBe(true);
+    expect(hostComponent.triggerBtn.nativeElement.getAttribute('aria-expanded')).toBe('true');
+    expect(hostComponent.triggerBtn.nativeElement.getAttribute('aria-controls')).toBe(
+      overlayRef.id
+    );
 
     // Click inside trigger
     const triggerEl = hostComponent.triggerBtn.nativeElement;
@@ -149,6 +153,7 @@ describe('OrigoOverlayService', () => {
     const outsideClick = new MouseEvent('click', { bubbles: true, composed: true });
     document.body.dispatchEvent(outsideClick);
     expect(overlayRef.isOpen).toBe(false);
+    expect(hostComponent.triggerBtn.nativeElement.getAttribute('aria-expanded')).toBe('false');
 
     overlayRef.dispose();
   });

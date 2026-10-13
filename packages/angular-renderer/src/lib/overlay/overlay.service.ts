@@ -35,12 +35,15 @@ export class OrigoOverlayService {
       return new OrigoNoopOverlayRef<T>(id);
     }
 
-    const positionStrategy = this.buildPositionStrategy(config.position);
-    const panelClasses = this.resolvePanelClasses(config);
     const direction = this.resolveDirection(config);
+    const positionStrategy = this.buildPositionStrategy(config.position, direction);
+    const panelClasses = this.resolvePanelClasses(config);
+    const scrollStrategy =
+      config.position.type === 'connected' ? this.overlay.scrollStrategies.reposition() : undefined;
 
     const cdkConfig = new CdkOverlayConfig({
       positionStrategy,
+      scrollStrategy,
       hasBackdrop: config.hasBackdrop ?? false,
       backdropClass: config.backdropClass
         ? ['origo-overlay-backdrop', config.backdropClass]
@@ -62,7 +65,8 @@ export class OrigoOverlayService {
   }
 
   private buildPositionStrategy(
-    positionConfig: OrigoConnectedPositionConfig | OrigoGlobalPositionConfig
+    positionConfig: OrigoConnectedPositionConfig | OrigoGlobalPositionConfig,
+    direction: 'ltr' | 'rtl' = 'ltr'
   ): PositionStrategy {
     if (!this.overlay) {
       throw new Error('CDK Overlay is not available');
@@ -127,10 +131,18 @@ export class OrigoOverlayService {
           global.centerHorizontally().bottom('0');
           break;
         case 'start':
-          global.left('0').centerVertically();
+          if (direction === 'rtl') {
+            global.right('0').centerVertically();
+          } else {
+            global.left('0').centerVertically();
+          }
           break;
         case 'end':
-          global.right('0').centerVertically();
+          if (direction === 'rtl') {
+            global.left('0').centerVertically();
+          } else {
+            global.right('0').centerVertically();
+          }
           break;
         case 'center':
         default:
@@ -159,11 +171,19 @@ export class OrigoOverlayService {
       classes.push(config.themeScope);
     } else if (this.document) {
       // Inherit active theme class from body/documentElement if present
-      if (this.document.body.classList.contains('theme-dark')) {
+      const body = this.document.body;
+      const docEl = this.document.documentElement;
+      if (body?.classList.contains('theme-dark') || docEl?.classList.contains('theme-dark')) {
         classes.push('theme-dark');
-      } else if (this.document.body.classList.contains('theme-light')) {
+      } else if (
+        body?.classList.contains('theme-light') ||
+        docEl?.classList.contains('theme-light')
+      ) {
         classes.push('theme-light');
-      } else if (this.document.body.classList.contains('high-contrast')) {
+      } else if (
+        body?.classList.contains('high-contrast') ||
+        docEl?.classList.contains('high-contrast')
+      ) {
         classes.push('high-contrast');
       }
     }

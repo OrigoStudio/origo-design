@@ -374,3 +374,7 @@
 
 - Unrelated Scope Creep in Diff
 - Negative column breakpoint in GridComponent
+
+## Deferred from: code review of retro-1-overlay-portal-architecture.md (2026-10-13)
+
+- Angular CDK dependency version 22.0.7 used instead of 22.0.8 [package.json:26] — @angular/cdk@22.0.8 is unpublished on npm registry (HTTP 404); 22.0.7 is the latest available compatible release.

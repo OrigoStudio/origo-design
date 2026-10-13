@@ -28,6 +28,10 @@ export interface OrigoGlobalPositionConfig {
 
 export type OrigoOverlayPosition = OrigoConnectedPositionConfig | OrigoGlobalPositionConfig;
 
+export type OrigoConnectedPositionStrategy = OrigoConnectedPositionConfig;
+export type OrigoGlobalPositionStrategy = OrigoGlobalPositionConfig;
+export type OrigoOverlayPositionStrategy = OrigoOverlayPosition;
+
 export type OrigoOverlayContent<C = unknown> = TemplateRef<C> | Type<unknown>;
 
 export interface OrigoOverlayConfig {
