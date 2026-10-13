@@ -1,0 +1,49 @@
+<ng-template #dialogTemplate>
+  <div
+    #dialogElement
+    role="dialog"
+    [attr.aria-modal]="computedModal() ? 'true' : null"
+    class="origo-dialog"
+    [class.origo-dialog--maximized]="isMaximized()"
+    [class.origo-dialog--draggable]="computedDraggable() && !isMaximized()"
+    [class.origo-dialog--resizable]="computedResizable() && !isMaximized()"
+    [style.--origo-dialog-translate-x.px]="dragPosition().x"
+    [style.--origo-dialog-translate-y.px]="dragPosition().y"
+    [attr.aria-labelledby]="computedHeader() ? headerId : null"
+    [attr.aria-label]="!computedHeader() ? computedAriaLabel() || 'Dialog' : null"
+    [attr.aria-describedby]="computedAriaDescribedBy() || contentId"
+    [attr.data-testid]="contract().id"
+  >
+    <div class="origo-dialog__header" (pointerdown)="onHeaderPointerDown($event)">
+      @if (computedHeader()) {
+        <h2 [id]="headerId" class="origo-dialog__title">{{ computedHeader() }}</h2>
+      }
+      <div class="origo-dialog__header-actions">
+        @if (computedMaximizable()) {
+          <button
+            type="button"
+            class="origo-dialog__action origo-dialog__action--maximize"
+            [attr.aria-label]="isMaximized() ? 'Restore dialog' : 'Maximize dialog'"
+            (click)="toggleMaximize()"
+          >
+            <span class="origo-dialog__action-icon">{{ isMaximized() ? '🗗' : '🗖' }}</span>
+          </button>
+        }
+        @if (computedClosable()) {
+          <button
+            type="button"
+            class="origo-dialog__action origo-dialog__action--close"
+            aria-label="Close dialog"
+            (click)="onClose()"
+          >
+            <span class="origo-dialog__action-icon">✕</span>
+          </button>
+        }
+      </div>
+    </div>
+    <div [id]="contentId" class="origo-dialog__content">
+      <ng-container #vc></ng-container>
+      <ng-content></ng-content>
+    </div>
+  </div>
+</ng-template>

@@ -1,0 +1,38 @@
+<ng-template #drawerTemplate>
+  <div
+    role="dialog"
+    [attr.aria-modal]="computedModal() ? 'true' : null"
+    class="origo-drawer"
+    [class.origo-drawer--left]="computedPosition() === 'left'"
+    [class.origo-drawer--right]="computedPosition() === 'right'"
+    [class.origo-drawer--top]="computedPosition() === 'top'"
+    [class.origo-drawer--bottom]="computedPosition() === 'bottom'"
+    [attr.aria-labelledby]="computedHeader() ? headerId : null"
+    [attr.aria-label]="!computedHeader() ? computedAriaLabel() : null"
+    [attr.aria-describedby]="computedAriaDescribedBy()"
+    [attr.data-testid]="contract().id"
+  >
+    <div class="origo-drawer__header">
+      @if (computedHeader()) {
+        <h2 [id]="headerId" class="origo-drawer__title">{{ computedHeader() }}</h2>
+      }
+      @if (computedClosable()) {
+        <button
+          type="button"
+          class="origo-drawer__close"
+          aria-label="Close drawer"
+          (click)="onClose()"
+        >
+          <span class="origo-drawer__close-icon">✕</span>
+        </button>
+      }
+    </div>
+    <div class="origo-drawer__content">
+      <ng-container #vc></ng-container>
+      <ng-content></ng-content>
+    </div>
+    @if (computedFooter()) {
+      <div class="origo-drawer__footer">{{ computedFooter() }}</div>
+    }
+  </div>
+</ng-template>

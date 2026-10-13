@@ -1,0 +1,13 @@
+<origo-dialog
+  [contract]="coercedModalContract()"
+  (visibleChange)="visibleChange.emit($event)"
+  (open)="open.emit()"
+  (close)="close.emit()"
+  (maximize)="maximize.emit($event)"
+  (restore)="restore.emit()"
+  (dragEnd)="dragEnd.emit($event)"
+  (resizeEnd)="resizeEnd.emit($event)"
+>
+  <ng-container #vc></ng-container>
+  <ng-content></ng-content>
+</origo-dialog>

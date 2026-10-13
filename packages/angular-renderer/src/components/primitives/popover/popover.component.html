@@ -1,0 +1,41 @@
+<div
+  #triggerWrapper
+  class="origo-popover__trigger-wrapper"
+  [attr.aria-expanded]="isOpen()"
+  [attr.aria-haspopup]="'dialog'"
+  (click)="toggle()"
+>
+  <ng-content select="[slot=trigger],[trigger]"></ng-content>
+</div>
+
+<ng-template #popoverTemplate>
+  <div
+    role="dialog"
+    class="origo-popover"
+    [attr.data-testid]="contract().id"
+    [attr.aria-label]="computedAriaLabel()"
+    [attr.aria-describedby]="computedAriaDescribedBy()"
+  >
+    @if (computedTitle() || computedShowClose()) {
+      <div class="origo-popover__header">
+        @if (computedTitle()) {
+          <div class="origo-popover__title">{{ computedTitle() }}</div>
+        }
+        @if (computedShowClose()) {
+          <button
+            type="button"
+            class="origo-popover__close"
+            aria-label="Close popover"
+            (click)="closePopover()"
+          >
+            <span class="origo-popover__close-icon">✕</span>
+          </button>
+        }
+      </div>
+    }
+    <div class="origo-popover__content">
+      <ng-container #vc></ng-container>
+      <ng-content></ng-content>
+    </div>
+  </div>
+</ng-template>

@@ -40,6 +40,18 @@ export class OrigoNoopOverlayRef<T = unknown> implements OrigoOverlayRef<T> {
     /* No-op in SSR */
   }
 
+  addPanelClass(): void {
+    /* No-op in SSR */
+  }
+
+  removePanelClass(): void {
+    /* No-op in SSR */
+  }
+
+  updateSize(): void {
+    /* No-op in SSR */
+  }
+
   dispose(): void {
     /* No-op in SSR */
   }
@@ -285,6 +297,25 @@ export class OrigoOverlayRefImpl<T = unknown> implements OrigoOverlayRef<T> {
 
   updatePosition(): void {
     this.cdkOverlayRef.updatePosition();
+  }
+
+  addPanelClass(classes: string | string[]): void {
+    this.cdkOverlayRef.addPanelClass(classes);
+  }
+
+  removePanelClass(classes: string | string[]): void {
+    this.cdkOverlayRef.removePanelClass(classes);
+  }
+
+  updateSize(sizeConfig: {
+    width?: string | number;
+    height?: string | number;
+    minWidth?: string | number;
+    minHeight?: string | number;
+    maxWidth?: string | number;
+    maxHeight?: string | number;
+  }): void {
+    this.cdkOverlayRef.updateSize(sizeConfig);
   }
 
   dispose(): void {

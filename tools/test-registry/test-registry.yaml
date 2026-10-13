@@ -1041,3 +1041,48 @@ test_cases:
       - 2-1-navigation-components
     last_result: pass
     results: {}
+  - id: renderer-primitive-dialog
+    description: 'Verifies Dialog primitive rendering, portal projection, modal backdrops, and actions'
+    package: '@origo/angular-renderer'
+    spec_file: packages/angular-renderer/src/components/primitives/dialog/dialog.component.spec.ts
+    type: unit
+    affected_stories:
+      - 2-2-modal-and-overlay-components
+    last_result: pass
+    results: {}
+  - id: renderer-primitive-modal
+    description: 'Verifies Modal primitive architectural invariant and backdrop lock'
+    package: '@origo/angular-renderer'
+    spec_file: packages/angular-renderer/src/components/primitives/modal/modal.component.spec.ts
+    type: unit
+    affected_stories:
+      - 2-2-modal-and-overlay-components
+    last_result: pass
+    results: {}
+  - id: renderer-primitive-drawer
+    description: 'Verifies Drawer primitive sliding positions, docking, and dismissibility'
+    package: '@origo/angular-renderer'
+    spec_file: packages/angular-renderer/src/components/primitives/drawer/drawer.component.spec.ts
+    type: unit
+    affected_stories:
+      - 2-2-modal-and-overlay-components
+    last_result: pass
+    results: {}
+  - id: renderer-primitive-popover
+    description: 'Verifies Popover primitive connected anchoring, toggling, and outside-click'
+    package: '@origo/angular-renderer'
+    spec_file: packages/angular-renderer/src/components/primitives/popover/popover.component.spec.ts
+    type: unit
+    affected_stories:
+      - 2-2-modal-and-overlay-components
+    last_result: pass
+    results: {}
+  - id: renderer-primitive-tooltip
+    description: 'Verifies Tooltip primitive hover/focus triggers, delays, and accessible descriptions'
+    package: '@origo/angular-renderer'
+    spec_file: packages/angular-renderer/src/components/primitives/tooltip/tooltip.component.spec.ts
+    type: unit
+    affected_stories:
+      - 2-2-modal-and-overlay-components
+    last_result: pass
+    results: {}
