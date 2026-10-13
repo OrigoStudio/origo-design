@@ -1,0 +1,167 @@
+:host {
+  display: block;
+  box-sizing: border-box;
+  inline-size: 100%;
+
+  *,
+  *::before,
+  *::after {
+    box-sizing: inherit;
+  }
+}
+
+:host([hidden]) {
+  display: none !important;
+}
+
+.origo-stepper__container {
+  display: flex;
+  flex-direction: column;
+  inline-size: 100%;
+
+  &.origo-stepper--vertical {
+    .origo-stepper__list {
+      flex-direction: column;
+      align-items: stretch;
+    }
+
+    .origo-stepper__item {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+
+    .origo-stepper__connector {
+      inline-size: var(--origo-border-width-thick);
+      min-block-size: var(--origo-spacing-lg);
+      margin-inline-start: var(--origo-spacing-md);
+      margin-block: var(--origo-spacing-xs);
+    }
+  }
+}
+
+.origo-stepper__list {
+  display: flex;
+  align-items: center;
+  inline-size: 100%;
+  padding: 0;
+  margin: 0;
+  gap: var(--origo-spacing-sm);
+}
+
+.origo-stepper__item {
+  display: flex;
+  align-items: center;
+  flex: 1 1 auto;
+
+  &:last-child {
+    flex: 0 0 auto;
+  }
+}
+
+.origo-stepper__step {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--origo-spacing-sm);
+  background: none;
+  border: none;
+  padding-block: var(--origo-spacing-sm);
+  padding-inline: var(--origo-spacing-sm);
+  cursor: pointer;
+  font-family: inherit;
+  font-size: var(--origo-typography-button-font-size);
+  color: var(--origo-color-text-muted);
+  border-radius: var(--origo-radius-sm);
+  transition: all var(--origo-duration-fast) ease;
+  outline: none;
+
+  &:hover:not(:disabled) {
+    background-color: var(--origo-color-surface-subtle);
+    color: var(--origo-color-text-primary);
+  }
+
+  &:focus-visible {
+    outline: var(--origo-border-width-thick) solid var(--origo-color-focus);
+    outline-offset: 2px;
+  }
+
+  &.origo-stepper__step--active {
+    color: var(--origo-color-surface-primary);
+    font-weight: 600;
+
+    .origo-stepper__indicator {
+      background-color: var(--origo-color-surface-primary);
+      border-color: var(--origo-color-surface-primary);
+      color: var(--origo-color-text-inverse);
+    }
+  }
+
+  &.origo-stepper__step--completed:not(.origo-stepper__step--active) {
+    .origo-stepper__indicator {
+      background-color: var(--origo-color-surface-primary);
+      border-color: var(--origo-color-surface-primary);
+      color: var(--origo-color-text-inverse);
+    }
+  }
+
+  &:disabled,
+  &.origo-stepper__step--disabled {
+    cursor: not-allowed;
+    opacity: var(--origo-opacity-disabled);
+    color: var(--origo-color-text-disabled);
+
+    .origo-stepper__indicator {
+      border-color: var(--origo-color-border-default);
+      color: var(--origo-color-text-disabled);
+    }
+  }
+}
+
+.origo-stepper__indicator {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  inline-size: var(--origo-spacing-xl);
+  block-size: var(--origo-spacing-xl);
+  border-radius: var(--origo-radius-full);
+  border: var(--origo-border-width-default) solid var(--origo-color-border-default);
+  background-color: var(--origo-color-surface-default);
+  color: var(--origo-color-text-muted);
+  font-size: var(--origo-typography-button-font-size);
+  font-weight: 600;
+  flex-shrink: 0;
+  transition: all var(--origo-duration-fast) ease;
+}
+
+.origo-stepper__content {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: flex-start;
+  text-align: start;
+}
+
+.origo-stepper__label {
+  font-size: var(--origo-typography-button-font-size);
+  line-height: var(--origo-typography-button-line-height);
+}
+
+.origo-stepper__description {
+  font-size: var(--origo-typography-caption-font-size);
+  color: var(--origo-color-text-muted);
+}
+
+.origo-stepper__connector {
+  flex: 1 1 auto;
+  block-size: var(--origo-border-width-default);
+  background-color: var(--origo-color-border-default);
+  margin-inline: var(--origo-spacing-sm);
+  transition: background-color var(--origo-duration-fast) ease;
+
+  &.origo-stepper__connector--completed {
+    background-color: var(--origo-color-surface-primary);
+  }
+}
+
+.origo-stepper__panels {
+  display: block;
+  padding-block: var(--origo-spacing-md);
+}

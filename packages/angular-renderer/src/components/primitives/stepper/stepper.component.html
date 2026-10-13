@@ -1,0 +1,64 @@
+<div
+  class="origo-stepper__container"
+  [class.origo-stepper--vertical]="orientation() === 'vertical'"
+  [class.origo-stepper--horizontal]="orientation() === 'horizontal'"
+>
+  <div
+    class="origo-stepper__list"
+    role="tablist"
+    [attr.aria-label]="computedAriaLabel()"
+    [attr.aria-describedby]="computedAriaDescribedBy()"
+    [attr.aria-orientation]="orientation()"
+  >
+    @for (step of computedSteps(); track step.key; let i = $index; let last = $last) {
+      <div class="origo-stepper__item" [class.origo-stepper__item--active]="isStepActive(i)">
+        <button
+          #stepButton
+          type="button"
+          role="tab"
+          class="origo-stepper__step"
+          [class.origo-stepper__step--active]="isStepActive(i)"
+          [class.origo-stepper__step--completed]="isStepCompleted(step)"
+          [class.origo-stepper__step--disabled]="isStepDisabled(step, i)"
+          [disabled]="isStepDisabled(step, i)"
+          [attr.aria-selected]="isStepActive(i)"
+          [attr.aria-controls]="'step-panel-' + step.key"
+          [attr.id]="'step-tab-' + step.key"
+          [attr.tabindex]="isStepActive(i) ? 0 : -1"
+          (click)="onStepClick(step, i)"
+          (keydown)="onKeyDown($event, i)"
+        >
+          <span class="origo-stepper__indicator" aria-hidden="true">
+            @if (isStepCompleted(step)) {
+              <span class="origo-stepper__check">✓</span>
+            } @else if (step.icon) {
+              <span class="origo-stepper__icon">{{ step.icon }}</span>
+            } @else {
+              <span class="origo-stepper__number">{{ i + 1 }}</span>
+            }
+          </span>
+
+          <span class="origo-stepper__content">
+            <span class="origo-stepper__label">{{ step.label }}</span>
+            @if (step.description) {
+              <span class="origo-stepper__description">{{ step.description }}</span>
+            }
+          </span>
+        </button>
+
+        @if (!last) {
+          <div
+            class="origo-stepper__connector"
+            [class.origo-stepper__connector--completed]="isStepCompleted(step)"
+            aria-hidden="true"
+          ></div>
+        }
+      </div>
+    }
+  </div>
+
+  <div class="origo-stepper__panels" role="region">
+    <ng-container #vc></ng-container>
+    <ng-content></ng-content>
+  </div>
+</div>

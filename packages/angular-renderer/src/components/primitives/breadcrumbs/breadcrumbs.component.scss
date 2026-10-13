@@ -1,5 +1,16 @@
 :host {
   display: block;
+  box-sizing: border-box;
+
+  *,
+  *::before,
+  *::after {
+    box-sizing: inherit;
+  }
+}
+
+:host([hidden]) {
+  display: none !important;
 }
 
 .origo-breadcrumbs__list {
@@ -9,33 +20,68 @@
   list-style: none;
   margin: 0;
   padding: 0;
-  gap: var(--spacing-sm, 8px);
+  gap: var(--origo-spacing-sm);
 }
 
 .origo-breadcrumbs__item {
-  display: flex;
+  display: inline-flex;
   align-items: center;
-  font-size: 14px;
+  font-family: var(--origo-typography-body-font-family);
+  font-size: var(--origo-typography-button-font-size);
+  color: var(--origo-color-text-primary);
 }
 
 .origo-breadcrumbs__link {
-  color: var(--color-primary, #1976d2);
+  display: inline-flex;
+  align-items: center;
+  gap: var(--origo-spacing-xs);
+  background: transparent;
+  border: none;
+  padding: 0;
+  margin: 0;
+  cursor: pointer;
+  font-family: inherit;
+  font-size: inherit;
+  color: var(--origo-color-surface-primary);
   text-decoration: none;
+  transition: color var(--origo-duration-fast) ease;
 
-  &:hover,
-  &:focus-visible {
+  &:hover:not(:disabled) {
+    color: var(--origo-color-surface-primary-hover);
     text-decoration: underline;
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--origo-color-focus);
     outline-offset: 2px;
+  }
+
+  &:disabled,
+  &--disabled {
+    cursor: not-allowed;
+    color: var(--origo-color-text-disabled);
+    opacity: var(--origo-opacity-disabled);
+    pointer-events: none;
   }
 }
 
 .origo-breadcrumbs__current {
-  color: var(--color-text-secondary, #666666);
+  display: inline-flex;
+  align-items: center;
+  gap: var(--origo-spacing-xs);
+  color: var(--origo-color-text-muted);
   font-weight: 500;
 }
 
 .origo-breadcrumbs__separator {
-  color: var(--color-text-hint, #999999);
-  margin-inline-start: var(--spacing-sm, 8px);
+  display: inline-flex;
+  align-items: center;
+  color: var(--origo-color-text-muted);
+  margin-inline-start: var(--origo-spacing-sm);
   user-select: none;
+}
+
+.origo-breadcrumbs__icon {
+  display: inline-flex;
+  align-items: center;
 }

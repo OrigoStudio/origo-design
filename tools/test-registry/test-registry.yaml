@@ -529,6 +529,7 @@ test_cases:
     affected_stories:
       - 9-4-accessibility-localization-enforcement
       - 9-3-navigation-shell-primitives-batch-3
+      - 2-1-navigation-components
     last_result: unknown
     results: {}
   - id: renderer-primitive-breadcrumbs
@@ -539,6 +540,7 @@ test_cases:
     affected_stories:
       - 9-4-accessibility-localization-enforcement
       - 9-3-navigation-shell-primitives-batch-3
+      - 2-1-navigation-components
     last_result: unknown
     results: {}
   - id: renderer-primitive-switch
@@ -571,6 +573,7 @@ test_cases:
       - 9-4-accessibility-localization-enforcement
       - 9-5-advanced-form-primitives-batch-4
       - retro-9-playwright-component-testing
+      - 2-1-navigation-components
     last_result: unknown
     results: {}
   - id: renderer-primitive-button-ct
@@ -767,6 +770,7 @@ test_cases:
       - 9-4-accessibility-localization-enforcement
       - 9-5-advanced-form-primitives-batch-4
       - retro-9-playwright-component-testing
+      - 2-1-navigation-components
     last_result: unknown
     results: {}
   - id: renderer-primitive-text-input-ct
@@ -1017,5 +1021,23 @@ test_cases:
     type: unit
     affected_stories:
       - retro-1-overlay-portal-architecture
+    last_result: pass
+    results: {}
+  - id: renderer-primitive-pagination
+    description: 'Verifies Pagination primitive rendering, navigation calculations, and logic'
+    package: '@origo/angular-renderer'
+    spec_file: packages/angular-renderer/src/components/primitives/pagination/pagination.component.spec.ts
+    type: unit
+    affected_stories:
+      - 2-1-navigation-components
+    last_result: pass
+    results: {}
+  - id: renderer-primitive-stepper
+    description: 'Verifies Stepper primitive rendering, linear gating, and logic'
+    package: '@origo/angular-renderer'
+    spec_file: packages/angular-renderer/src/components/primitives/stepper/stepper.component.spec.ts
+    type: unit
+    affected_stories:
+      - 2-1-navigation-components
     last_result: pass
     results: {}
