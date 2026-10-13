@@ -45,23 +45,19 @@
   flex-direction: column;
 
   // Design Token Surface & Elevation bindings
-  background-color: var(--origo-color-surface-overlay, var(--origo-color-surface-primary, #ffffff));
-  color: var(--origo-color-text-primary, #111827);
-  border-radius: var(--origo-radius-md, 8px);
-  box-shadow: var(
-    --origo-shadow-lg,
-    0 10px 15px -3px rgba(0, 0, 0, 0.1),
-    0 4px 6px -2px rgba(0, 0, 0, 0.05)
-  );
-  border: 1px solid var(--origo-color-border-subtle, rgba(0, 0, 0, 0.08));
+  background-color: var(--origo-color-surface-overlay, var(--origo-color-surface-primary));
+  color: var(--origo-color-text-primary);
+  border-radius: var(--origo-radius-md);
+  box-shadow: var(--origo-shadow-lg);
+  border: var(--origo-border-width-default) solid var(--origo-color-border-subtle);
 
   // CSS Logical Properties for spacing
-  padding-inline: var(--origo-space-md, 16px);
-  padding-block: var(--origo-space-md, 16px);
+  padding-inline: var(--origo-space-md);
+  padding-block: var(--origo-space-md);
 
   outline: none;
 
-  // Connected Dropdown modifier
+  // Connected Dropdown / Anchored modifier
   &.origo-overlay-pane--connected {
     padding-inline: 0;
     padding-block: 0;
@@ -71,10 +67,58 @@
   }
 
   // Modal Dialog modifier
-  &.origo-overlay-pane--modal {
+  &.origo-overlay-pane--modal,
+  &.origo-overlay-pane--dialog {
+    padding-inline: 0;
+    padding-block: 0;
+    background: transparent;
+    border: none;
+    box-shadow: none;
+    overflow: visible;
     inline-size: min(90vw, 560px);
-    max-block-size: 85vh;
-    overflow-y: auto;
+    max-block-size: 90vh;
+  }
+
+  // Maximized Dialog modifier
+  &.origo-overlay-pane--maximized {
+    inline-size: 100vw !important;
+    block-size: 100vh !important;
+    max-inline-size: 100vw !important;
+    max-block-size: 100vh !important;
+    inset-block-start: 0 !important;
+    inset-inline-start: 0 !important;
+    border-radius: 0 !important;
+  }
+
+  // Slide-in Drawer modifier
+  &.origo-overlay-pane--drawer {
+    padding-inline: 0;
+    padding-block: 0;
+    background: transparent;
+    border: none;
+    box-shadow: none;
+    overflow: hidden;
+  }
+
+  // Floating Popover modifier
+  &.origo-overlay-pane--popover {
+    padding-inline: 0;
+    padding-block: 0;
+    background: transparent;
+    border: none;
+    box-shadow: none;
+    overflow: visible;
+  }
+
+  // Floating Tooltip modifier
+  &.origo-overlay-pane--tooltip {
+    padding-inline: 0;
+    padding-block: 0;
+    background: transparent;
+    border: none;
+    box-shadow: none;
+    overflow: visible;
+    pointer-events: none;
   }
 }
 
@@ -88,21 +132,21 @@
 
 // Theme Inheritance Scopes
 .origo-overlay-pane.theme-dark {
-  background-color: var(--origo-color-surface-overlay, #1f2937);
-  color: var(--origo-color-text-primary, #f9fafb);
-  border-color: var(--origo-color-border-subtle, rgba(255, 255, 255, 0.12));
+  background-color: var(--origo-color-surface-overlay);
+  color: var(--origo-color-text-primary);
+  border-color: var(--origo-color-border-subtle);
 }
 
 .origo-overlay-pane.theme-light {
-  background-color: var(--origo-color-surface-overlay, #ffffff);
-  color: var(--origo-color-text-primary, #111827);
-  border-color: var(--origo-color-border-subtle, rgba(0, 0, 0, 0.08));
+  background-color: var(--origo-color-surface-overlay);
+  color: var(--origo-color-text-primary);
+  border-color: var(--origo-color-border-subtle);
 }
 
 .origo-overlay-pane.high-contrast {
-  background-color: #000000;
-  color: #ffffff;
-  border: 2px solid #ffffff;
+  background-color: var(--origo-color-surface-inverse);
+  color: var(--origo-color-text-inverse);
+  border: var(--origo-border-width-focus) solid var(--origo-color-text-inverse);
 }
 
 // Prefers Reduced Motion Guardrail

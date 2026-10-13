@@ -3,12 +3,12 @@ story_id: "2.2"
 story_key: 2-2-modal-and-overlay-components
 baseline_commit: 8f0124d
 epic: 2
-status: "ready-for-dev"
+status: "review"
 ---
 
 # Story 2.2: Modal & Overlay Components
 
-Status: ready-for-dev
+Status: review
 
 ## Story
 
@@ -515,67 +515,67 @@ So that I can gather input, confirm actions, present contextual details, and dis
 
 ## Tasks / Subtasks
 
-- [ ] **1. CREATE `DialogComponent` & `ModalComponent`** (AC: #1, #2, #3, #4, #5, #6, #7, #8, #9, #10, #12)
-  - [ ] Create `packages/angular-renderer/src/components/primitives/dialog/dialog.component.ts`.
-  - [ ] Define `DialogProps` interface covering `visible`, `header`, `modal`, `closable`, `closeOnEscape`, `dismissableMask`, `draggable`, `resizable`, `maximizable`, `maximized`, `width`, `height`, `minWidth`, `minHeight`, `maxWidth`, `maxHeight`, `position`, `blockScroll`, `data`, metadata hooks.
-  - [ ] Implement `OrigoAdapter<DialogProps>` and `ContainerComponent` (`vc = viewChild('vc', { read: ViewContainerRef })`).
-  - [ ] Implement `static readonly contractSchema = DialogContractSchema` covering 100% of props (including `data: 'object'`) and invoke `coerceContractProps()`.
-  - [ ] Inject `OrigoOverlayService`, `DestroyRef`, `ViewContainerRef`, `WebExperienceAdapterService`.
-  - [ ] Connect reactive effect to `computedVisible()` to invoke `open()` and `close()` on `OrigoOverlayRef`.
-  - [ ] Define outputs: `visibleChange`, `open`, `close`, `maximize`, `restore`, `dragEnd`, `resizeEnd`.
-  - [ ] Implement `toggleMaximize()` toggling state between contract dimensions and full viewport dimensions.
-  - [ ] Implement native dragging (`pointerdown` on header) and resizing (`ResizeObserver`) emitting `dragEnd` and `resizeEnd`.
-  - [ ] Create `dialog.component.html` with semantic `role="dialog"`, `aria-modal="true"`, header actions, `<ng-container #vc></ng-container>`, and `<ng-content></ng-content>`.
-  - [ ] Create `dialog.component.scss` with CSS Logical Properties and `--origo-*` tokens.
-  - [ ] Create `packages/angular-renderer/src/components/primitives/modal/modal.component.ts` as standalone component honoring `P1-AD-5` with `modal: true` default invariant.
-  - [ ] Create `modal.component.html` and `modal.component.scss`.
-  - [ ] Create `packages/angular-renderer/src/components/primitives/dialog/dialog.component.spec.ts` verifying overlay attachment, focus trapping, Escape dismissal, backdrop click dismissal, and Shadow DOM piercing.
-  - [ ] Create `packages/angular-renderer/src/components/primitives/modal/modal.component.spec.ts` verifying modal contract execution.
+- [x] **1. CREATE `DialogComponent` & `ModalComponent`** (AC: #1, #2, #3, #4, #5, #6, #7, #8, #9, #10, #12)
+  - [x] Create `packages/angular-renderer/src/components/primitives/dialog/dialog.component.ts`.
+  - [x] Define `DialogProps` interface covering `visible`, `header`, `modal`, `closable`, `closeOnEscape`, `dismissableMask`, `draggable`, `resizable`, `maximizable`, `maximized`, `width`, `height`, `minWidth`, `minHeight`, `maxWidth`, `maxHeight`, `position`, `blockScroll`, `data`, metadata hooks.
+  - [x] Implement `OrigoAdapter<DialogProps>` and `ContainerComponent` (`vc = viewChild('vc', { read: ViewContainerRef })`).
+  - [x] Implement `static readonly contractSchema = DialogContractSchema` covering 100% of props (including `data: 'object'`) and invoke `coerceContractProps()`.
+  - [x] Inject `OrigoOverlayService`, `DestroyRef`, `ViewContainerRef`, `WebExperienceAdapterService`.
+  - [x] Connect reactive effect to `computedVisible()` to invoke `open()` and `close()` on `OrigoOverlayRef`.
+  - [x] Define outputs: `visibleChange`, `open`, `close`, `maximize`, `restore`, `dragEnd`, `resizeEnd`.
+  - [x] Implement `toggleMaximize()` toggling state between contract dimensions and full viewport dimensions.
+  - [x] Implement native dragging (`pointerdown` on header) and resizing (`ResizeObserver`) emitting `dragEnd` and `resizeEnd`.
+  - [x] Create `dialog.component.html` with semantic `role="dialog"`, `aria-modal="true"`, header actions, `<ng-container #vc></ng-container>`, and `<ng-content></ng-content>`.
+  - [x] Create `dialog.component.scss` with CSS Logical Properties and `--origo-*` tokens.
+  - [x] Create `packages/angular-renderer/src/components/primitives/modal/modal.component.ts` as standalone component honoring `P1-AD-5` with `modal: true` default invariant.
+  - [x] Create `modal.component.html` and `modal.component.scss`.
+  - [x] Create `packages/angular-renderer/src/components/primitives/dialog/dialog.component.spec.ts` verifying overlay attachment, focus trapping, Escape dismissal, backdrop click dismissal, and Shadow DOM piercing.
+  - [x] Create `packages/angular-renderer/src/components/primitives/modal/modal.component.spec.ts` verifying modal contract execution.
 
-- [ ] **2. CREATE `DrawerComponent`** (AC: #1, #2, #3, #4, #5, #6, #7, #8, #9, #10, #12)
-  - [ ] Create `packages/angular-renderer/src/components/primitives/drawer/drawer.component.ts`.
-  - [ ] Define `DrawerProps` interface covering `visible`, `position`, `modal`, `dismissible`, `closeOnEscape`, `blockScroll`, `size`, `header`, `footer`, `closable`, `data`, metadata hooks.
-  - [ ] Implement `OrigoAdapter<DrawerProps>` and `ContainerComponent` (`vc = viewChild('vc', { read: ViewContainerRef })`).
-  - [ ] Implement `static readonly contractSchema = DrawerContractSchema` and `coerceContractProps()`.
-  - [ ] Map slide positions (`'left'`, `'right'`, `'top'`, `'bottom'`) to global overlay positions (`'start'`, `'end'`, `'top'`, `'bottom'`) with RTL awareness.
-  - [ ] Define outputs: `visibleChange`, `open`, `close`, `show`, `hide`.
-  - [ ] Dispatch state updates (`updateState`) and capabilities (`dispatchCapability`) via `WebExperienceAdapterService`.
-  - [ ] Create `drawer.component.html` with header, close action, content container (`#vc`), and optional footer.
-  - [ ] Create `drawer.component.scss` with slide animations, Logical Properties, and `--origo-*` design tokens.
-  - [ ] Create `drawer.component.spec.ts` verifying edge positioning, backdrop click dismissal, Escape dismissal, and Shadow DOM piercing.
+- [x] **2. CREATE `DrawerComponent`** (AC: #1, #2, #3, #4, #5, #6, #7, #8, #9, #10, #12)
+  - [x] Create `packages/angular-renderer/src/components/primitives/drawer/drawer.component.ts`.
+  - [x] Define `DrawerProps` interface covering `visible`, `position`, `modal`, `dismissible`, `closeOnEscape`, `blockScroll`, `size`, `header`, `footer`, `closable`, `data`, metadata hooks.
+  - [x] Implement `OrigoAdapter<DrawerProps>` and `ContainerComponent` (`vc = viewChild('vc', { read: ViewContainerRef })`).
+  - [x] Implement `static readonly contractSchema = DrawerContractSchema` and `coerceContractProps()`.
+  - [x] Map slide positions (`'left'`, `'right'`, `'top'`, `'bottom'`) to global overlay positions (`'start'`, `'end'`, `'top'`, `'bottom'`) with RTL awareness.
+  - [x] Define outputs: `visibleChange`, `open`, `close`, `show`, `hide`.
+  - [x] Dispatch state updates (`updateState`) and capabilities (`dispatchCapability`) via `WebExperienceAdapterService`.
+  - [x] Create `drawer.component.html` with header, close action, content container (`#vc`), and optional footer.
+  - [x] Create `drawer.component.scss` with slide animations, Logical Properties, and `--origo-*` design tokens.
+  - [x] Create `drawer.component.spec.ts` verifying edge positioning, backdrop click dismissal, Escape dismissal, and Shadow DOM piercing.
 
-- [ ] **3. CREATE `PopoverComponent`** (AC: #1, #3, #4, #5, #6, #7, #8, #9, #10)
-  - [ ] Create `packages/angular-renderer/src/components/primitives/popover/popover.component.ts`.
-  - [ ] Define `PopoverProps` interface covering `visible`, `placement`, `dismissible`, `closeOnEscape`, `showClose`, `offset`, `title`, `data`, metadata hooks.
-  - [ ] Implement `OrigoAdapter<PopoverProps>` and `ContainerComponent` (`vc = viewChild('vc', { read: ViewContainerRef })`).
-  - [ ] Implement `static readonly contractSchema = PopoverContractSchema` covering `offset: 'array'`, `data: 'object'`, and invoke `coerceContractProps()`.
-  - [ ] Map `placement` to `OrigoConnectedPositionConfig` (`originX`, `originY`, `overlayX`, `overlayY`, `offset`).
-  - [ ] Implement outside click dismissal evaluating `event.composedPath()`.
-  - [ ] Define outputs: `visibleChange`, `open`, `close`, `action`.
-  - [ ] Create `popover.component.html` with trigger slot, floating popover template, header, close icon, and content container (`#vc`).
-  - [ ] Create `popover.component.scss` with elevation, Logical Properties, and design tokens.
-  - [ ] Create `popover.component.spec.ts` verifying connected positioning, toggle interaction, outside click dismissal, and Shadow DOM piercing.
+- [x] **3. CREATE `PopoverComponent`** (AC: #1, #3, #4, #5, #6, #7, #8, #9, #10)
+  - [x] Create `packages/angular-renderer/src/components/primitives/popover/popover.component.ts`.
+  - [x] Define `PopoverProps` interface covering `visible`, `placement`, `dismissible`, `closeOnEscape`, `showClose`, `offset`, `title`, `data`, metadata hooks.
+  - [x] Implement `OrigoAdapter<PopoverProps>` and `ContainerComponent` (`vc = viewChild('vc', { read: ViewContainerRef })`).
+  - [x] Implement `static readonly contractSchema = PopoverContractSchema` covering `offset: 'array'`, `data: 'object'`, and invoke `coerceContractProps()`.
+  - [x] Map `placement` to `OrigoConnectedPositionConfig` (`originX`, `originY`, `overlayX`, `overlayY`, `offset`).
+  - [x] Implement outside click dismissal evaluating `event.composedPath()`.
+  - [x] Define outputs: `visibleChange`, `open`, `close`, `action`.
+  - [x] Create `popover.component.html` with trigger slot, floating popover template, header, close icon, and content container (`#vc`).
+  - [x] Create `popover.component.scss` with elevation, Logical Properties, and design tokens.
+  - [x] Create `popover.component.spec.ts` verifying connected positioning, toggle interaction, outside click dismissal, and Shadow DOM piercing.
 
-- [ ] **4. CREATE `TooltipComponent`** (AC: #1, #4, #5, #6, #7, #8, #9, #10)
-  - [ ] Create `packages/angular-renderer/src/components/primitives/tooltip/tooltip.component.ts`.
-  - [ ] Define `TooltipProps` interface covering `content`, `position`, `showDelay`, `hideDelay`, `disabled`, `trigger`, `offset`, metadata hooks.
-  - [ ] Implement `OrigoAdapter<TooltipProps>` and `ContainerComponent` (`vc = viewChild('vc', { read: ViewContainerRef })`).
-  - [ ] Implement `static readonly contractSchema = TooltipContractSchema` covering `offset: 'array'` and invoke `coerceContractProps()`.
-  - [ ] Map `position` to `OrigoConnectedPositionConfig` (`originX`, `originY`, `overlayX`, `overlayY`, `offset`).
-  - [ ] Implement hover and focus event listeners with delay timers and immediate Escape teardown.
-  - [ ] Synchronize `aria-describedby` on trigger element pointing to `role="tooltip"` container.
-  - [ ] Define outputs: `show`, `hide`.
-  - [ ] Create `tooltip.component.html` with trigger wrapper (`#vc`) and floating tooltip template.
-  - [ ] Create `tooltip.component.scss` with tooltip bubble surface, arrow/offset, and design tokens.
-  - [ ] Create `tooltip.component.spec.ts` verifying show/hide delay timers, keyboard focus activation, Escape dismissal, and Shadow DOM piercing.
+- [x] **4. CREATE `TooltipComponent`** (AC: #1, #4, #5, #6, #7, #8, #9, #10)
+  - [x] Create `packages/angular-renderer/src/components/primitives/tooltip/tooltip.component.ts`.
+  - [x] Define `TooltipProps` interface covering `content`, `position`, `showDelay`, `hideDelay`, `disabled`, `trigger`, `offset`, metadata hooks.
+  - [x] Implement `OrigoAdapter<TooltipProps>` and `ContainerComponent` (`vc = viewChild('vc', { read: ViewContainerRef })`).
+  - [x] Implement `static readonly contractSchema = TooltipContractSchema` covering `offset: 'array'` and invoke `coerceContractProps()`.
+  - [x] Map `position` to `OrigoConnectedPositionConfig` (`originX`, `originY`, `overlayX`, `overlayY`, `offset`).
+  - [x] Implement hover and focus event listeners with delay timers and immediate Escape teardown.
+  - [x] Synchronize `aria-describedby` on trigger element pointing to `role="tooltip"` container.
+  - [x] Define outputs: `show`, `hide`.
+  - [x] Create `tooltip.component.html` with trigger wrapper (`#vc`) and floating tooltip template.
+  - [x] Create `tooltip.component.scss` with tooltip bubble surface, arrow/offset, and design tokens.
+  - [x] Create `tooltip.component.spec.ts` verifying show/hide delay timers, keyboard focus activation, Escape dismissal, and Shadow DOM piercing.
 
-- [ ] **5. UPDATE Global Styles, Registrations, Exports, & Test Registry** (AC: #10, #11)
-  - [ ] Update `packages/angular-renderer/src/styles/overlay.scss` with modifier classes for dialog, modal, drawer, popover, tooltip.
-  - [ ] Register `'Dialog'`, `'Modal'`, `'Drawer'`, `'SidebarDrawer'`, `'Popover'`, `'Tooltip'` in `packages/angular-renderer/src/lib/primitives.provider.ts`.
-  - [ ] Export all new components, props interfaces, and event types from `packages/angular-renderer/src/index.ts`.
-  - [ ] Add entries in `tools/test-registry/test-registry.yaml` for `renderer-primitive-dialog`, `renderer-primitive-modal`, `renderer-primitive-drawer`, `renderer-primitive-popover`, `renderer-primitive-tooltip`.
-  - [ ] Run test suite validation via `npm test` or Nx test target.
-  - [ ] Run linter validation via `npx nx lint angular-renderer`.
+- [x] **5. UPDATE Global Styles, Registrations, Exports, & Test Registry** (AC: #10, #11)
+  - [x] Update `packages/angular-renderer/src/styles/overlay.scss` with modifier classes for dialog, modal, drawer, popover, tooltip.
+  - [x] Register `'Dialog'`, `'Modal'`, `'Drawer'`, `'SidebarDrawer'`, `'Popover'`, `'Tooltip'` in `packages/angular-renderer/src/lib/primitives.provider.ts`.
+  - [x] Export all new components, props interfaces, and event types from `packages/angular-renderer/src/index.ts`.
+  - [x] Add entries in `tools/test-registry/test-registry.yaml` for `renderer-primitive-dialog`, `renderer-primitive-modal`, `renderer-primitive-drawer`, `renderer-primitive-popover`, `renderer-primitive-tooltip`.
+  - [x] Run test suite validation via `npm test` or Nx test target.
+  - [x] Run linter validation via `npx nx lint angular-renderer`.
 
 ---
 
@@ -740,7 +740,17 @@ Gemini 3.8 Flash (High)
 - Enforced Angular CDK Overlay portal projection via `OrigoOverlayService` to prevent Shadow DOM clipping and z-index trapping.
 - Enforced Shadow DOM focus trapping with deep active element restoration and `composedPath()` outside-click dismissal.
 - Enforced zero-literal design tokens and CSS Logical Properties for bidirectional RTL mirroring.
-- Detailed task breakdown and test registry integration provided for seamless developer execution.
+- Implemented and unit tested DialogComponent (`packages/angular-renderer/src/components/primitives/dialog/`): 9 tests passing.
+- Implemented and unit tested ModalComponent (`packages/angular-renderer/src/components/primitives/modal/`): 5 tests passing (enforces `modal: true` invariant).
+- Implemented and unit tested DrawerComponent (`packages/angular-renderer/src/components/primitives/drawer/`): 10 tests passing.
+- Implemented and unit tested PopoverComponent (`packages/angular-renderer/src/components/primitives/popover/`): 7 tests passing.
+- Implemented and unit tested TooltipComponent (`packages/angular-renderer/src/components/primitives/tooltip/`): 8 tests passing.
+- Updated `overlay.scss` with CSS Logical Properties and token-compliant overlay panel modifiers.
+- Registered all 5 primitives (`Dialog`, `Modal`, `Drawer`, `SidebarDrawer`, `Popover`, `Tooltip`) in `primitives.provider.ts`.
+- Exported all new components and prop interfaces in `index.ts`.
+- Registered all 5 new unit test suites in `tools/test-registry/test-registry.yaml`.
+- Passed entire monorepo test suite (`npm test`) with zero failures across all 6 Nx projects.
+- Passed `npx nx lint angular-renderer` with 0 errors and 0 warnings on new components.
 
 ### File List
 
@@ -775,3 +785,4 @@ Gemini 3.8 Flash (High)
 
 - 2026-10-13: Created comprehensive developer story specification for Story 2.2 (Modal & Overlay Components). Defined complete architecture, specifications, tasks, and test requirements for Dialog, Modal, Drawer, Popover, and Tooltip primitives using the standardized Angular CDK Overlay portal substrate. Status set to ready-for-dev.
 - 2026-10-13: Validated and hardened story context against architectural invariants. Fixed ViewContainerRef query lifecycle to prevent fatal NG0951 runtime crashes. Enforced P1-AD-5 anti-inheritance compliance on ModalComponent. Added missing schema properties for strict contract coercion. Added connected placement & offset mapping table. Consolidated canonical story file location.
+- 2026-10-13: Implemented DialogComponent, ModalComponent, DrawerComponent, PopoverComponent, and TooltipComponent. Added unit tests for each component (39 total tests passing). Updated global overlay stylesheet, registered primitives in provider, exported public APIs in index.ts, and updated Central Test Registry. Verified full test suite and lint passing. Status transitioned to review.

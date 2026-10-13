@@ -1,0 +1,30 @@
+:host {
+  display: inline-block;
+}
+
+.origo-tooltip {
+  display: inline-flex;
+  align-items: center;
+  box-sizing: border-box;
+  background-color: var(--origo-color-surface-inverse, var(--origo-color-surface-overlay));
+  color: var(--origo-color-text-inverse, var(--origo-color-text-primary));
+  border-radius: var(--origo-radius-sm);
+  box-shadow: var(--origo-shadow-md);
+  padding-inline: var(--origo-space-sm);
+  padding-block: var(--origo-space-xs);
+  font-size: var(--origo-font-size-sm);
+  line-height: var(--origo-line-height-tight);
+  max-inline-size: min(80vw, 280px);
+  pointer-events: none;
+  user-select: none;
+  word-break: break-word;
+
+  &__trigger-wrapper {
+    display: inline-flex;
+    align-items: center;
+  }
+
+  &__text {
+    display: inline;
+  }
+}

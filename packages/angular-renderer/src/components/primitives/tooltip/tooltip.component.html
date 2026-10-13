@@ -1,0 +1,27 @@
+<div
+  #triggerWrapper
+  class="origo-tooltip__trigger-wrapper"
+  [attr.aria-describedby]="isOpen() ? tooltipId : null"
+  (mouseenter)="onMouseEnter()"
+  (mouseleave)="onMouseLeave()"
+  (focusin)="onFocusIn()"
+  (focusout)="onFocusOut()"
+>
+  <ng-container #vc></ng-container>
+  <ng-content></ng-content>
+</div>
+
+<ng-template #tooltipTemplate>
+  <div
+    [id]="tooltipId"
+    role="tooltip"
+    class="origo-tooltip"
+    [class.origo-tooltip--top]="computedPosition() === 'top'"
+    [class.origo-tooltip--bottom]="computedPosition() === 'bottom'"
+    [class.origo-tooltip--left]="computedPosition() === 'left'"
+    [class.origo-tooltip--right]="computedPosition() === 'right'"
+    [attr.data-testid]="contract().id"
+  >
+    <span class="origo-tooltip__text">{{ computedContent() }}</span>
+  </div>
+</ng-template>

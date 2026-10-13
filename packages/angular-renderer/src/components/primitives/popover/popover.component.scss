@@ -1,0 +1,77 @@
+:host {
+  display: inline-block;
+}
+
+.origo-popover {
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+  background-color: var(--origo-color-surface-overlay, var(--origo-color-surface-primary));
+  color: var(--origo-color-text-primary);
+  border-radius: var(--origo-radius-md);
+  box-shadow: var(--origo-shadow-lg);
+  border: var(--origo-border-width-default) solid var(--origo-color-border-subtle);
+  overflow: hidden;
+  outline: none;
+  min-inline-size: var(--origo-overlay-min-width, 180px);
+  max-inline-size: min(90vw, 360px);
+
+  &__trigger-wrapper {
+    display: inline-flex;
+    align-items: center;
+    cursor: pointer;
+  }
+
+  &__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-inline: var(--origo-space-md);
+    padding-block: var(--origo-space-sm);
+    border-block-end: var(--origo-border-width-default) solid var(--origo-color-border-subtle);
+    background-color: var(--origo-color-surface-secondary);
+    gap: var(--origo-space-sm);
+  }
+
+  &__title {
+    margin: 0;
+    font-size: var(--origo-font-size-md);
+    font-weight: var(--origo-font-weight-semibold);
+    color: var(--origo-color-text-primary);
+    line-height: var(--origo-line-height-tight);
+  }
+
+  &__close {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    background: transparent;
+    color: var(--origo-color-text-secondary);
+    border-radius: var(--origo-radius-sm);
+    padding-inline: var(--origo-space-xs);
+    padding-block: var(--origo-space-xs);
+    cursor: pointer;
+    font-size: var(--origo-font-size-md);
+    line-height: 1;
+    margin-inline-start: auto;
+
+    &:hover {
+      background-color: var(--origo-color-action-hover);
+      color: var(--origo-color-text-primary);
+    }
+
+    &:focus-visible {
+      outline: var(--origo-border-width-focus) solid var(--origo-color-focus-ring);
+      outline-offset: var(--origo-space-xxs);
+    }
+  }
+
+  &__content {
+    padding-inline: var(--origo-space-md);
+    padding-block: var(--origo-space-md);
+    flex: 1 1 auto;
+    overflow-y: auto;
+    color: var(--origo-color-text-primary);
+  }
+}
