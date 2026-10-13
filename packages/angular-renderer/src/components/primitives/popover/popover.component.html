@@ -5,8 +5,7 @@
   [attr.aria-haspopup]="'dialog'"
   (click)="toggle()"
 >
-  <ng-content select="[slot=trigger]"></ng-content>
-  <ng-content></ng-content>
+  <ng-content select="[slot=trigger],[trigger]"></ng-content>
 </div>
 
 <ng-template #popoverTemplate>

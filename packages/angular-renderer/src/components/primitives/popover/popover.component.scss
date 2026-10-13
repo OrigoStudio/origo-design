@@ -13,8 +13,8 @@
   border: var(--origo-border-width-default) solid var(--origo-color-border-subtle);
   overflow: hidden;
   outline: none;
-  min-inline-size: var(--origo-overlay-min-width, 180px);
-  max-inline-size: min(90vw, 360px);
+  min-inline-size: var(--origo-overlay-min-width, var(--origo-size-dropdown-min-width, 11.25rem));
+  max-inline-size: min(90vw, var(--origo-overlay-max-width, 22.5rem));
 
   &__trigger-wrapper {
     display: inline-flex;

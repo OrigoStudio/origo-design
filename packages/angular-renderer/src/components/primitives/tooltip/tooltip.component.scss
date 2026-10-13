@@ -14,7 +14,7 @@
   padding-block: var(--origo-space-xs);
   font-size: var(--origo-font-size-sm);
   line-height: var(--origo-line-height-tight);
-  max-inline-size: min(80vw, 280px);
+  max-inline-size: min(80vw, var(--origo-tooltip-max-width, 17.5rem));
   pointer-events: none;
   user-select: none;
   word-break: break-word;

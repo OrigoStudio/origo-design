@@ -63,7 +63,7 @@
     padding-block: 0;
     overflow-y: auto;
     overflow-x: hidden;
-    min-inline-size: var(--origo-overlay-min-width, 180px);
+    min-inline-size: var(--origo-overlay-min-width, var(--origo-size-dropdown-min-width, 11.25rem));
   }
 
   // Modal Dialog modifier
@@ -75,7 +75,7 @@
     border: none;
     box-shadow: none;
     overflow: visible;
-    inline-size: min(90vw, 560px);
+    inline-size: min(90vw, var(--origo-dialog-default-width, 35rem));
     max-block-size: 90vh;
   }
 

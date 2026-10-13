@@ -47,6 +47,8 @@ export const DrawerContractSchema = {
   permissions: 'object',
   rules: 'object',
   metadata: 'object',
+  'aria-label': 'string',
+  'aria-describedby': 'string',
   visible: 'boolean',
   position: 'string',
   modal: 'boolean',

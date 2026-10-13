@@ -55,5 +55,15 @@ export interface OrigoOverlayRef<T = unknown> {
   close(result?: T): void;
   afterClosed(): Promise<T | undefined>;
   updatePosition(): void;
+  addPanelClass?(classes: string | string[]): void;
+  removePanelClass?(classes: string | string[]): void;
+  updateSize?(sizeConfig: {
+    width?: string | number;
+    height?: string | number;
+    minWidth?: string | number;
+    minHeight?: string | number;
+    maxWidth?: string | number;
+    maxHeight?: string | number;
+  }): void;
   dispose(): void;
 }

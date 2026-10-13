@@ -15,7 +15,7 @@
   border: var(--origo-border-width-default) solid var(--origo-color-border-subtle);
   overflow: hidden;
   outline: none;
-  transform: translate(var(--origo-dialog-translate-x, 0px), var(--origo-dialog-translate-y, 0px));
+  transform: translate(var(--origo-dialog-translate-x, 0), var(--origo-dialog-translate-y, 0));
 
   &--draggable {
     user-select: none;

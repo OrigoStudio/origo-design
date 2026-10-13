@@ -3,12 +3,12 @@ story_id: "2.2"
 story_key: 2-2-modal-and-overlay-components
 baseline_commit: 8f0124d
 epic: 2
-status: "review"
+status: "done"
 ---
 
 # Story 2.2: Modal & Overlay Components
 
-Status: review
+Status: done
 
 ## Story
 
@@ -576,6 +576,19 @@ So that I can gather input, confirm actions, present contextual details, and dis
   - [x] Add entries in `tools/test-registry/test-registry.yaml` for `renderer-primitive-dialog`, `renderer-primitive-modal`, `renderer-primitive-drawer`, `renderer-primitive-popover`, `renderer-primitive-tooltip`.
   - [x] Run test suite validation via `npm test` or Nx test target.
   - [x] Run linter validation via `npx nx lint angular-renderer`.
+
+### Review Findings
+
+- [x] [Review][Decision] Style attribute bindings [style.--origo-dialog-translate-x.px] on projected dialog element — dismissed per user decision (permitted for dynamic drag translation)
+- [x] [Review][Patch] Default <ng-content> in trigger wrapper swallows body content intended for popover panel [packages/angular-renderer/src/components/primitives/popover/popover.component.html:8-9]
+- [x] [Review][Patch] Dynamic maximize toggle fails to resize or re-style CDK overlay pane container [packages/angular-renderer/src/components/primitives/dialog/dialog.component.ts:268-283]
+- [x] [Review][Patch] Tooltip fails to synchronize visible state in WebExperienceAdapterService and lacks visibleChange output [packages/angular-renderer/src/components/primitives/tooltip/tooltip.component.ts:131-133,278-300]
+- [x] [Review][Patch] ARIA props omitted from contractSchema violating 100% property coverage rule [packages/angular-renderer/src/components/primitives/dialog/dialog.component.ts:58-81]
+- [x] [Review][Patch] Hardcoded pixel literals and fallback values violate Zero Literal SCSS policy [packages/angular-renderer/src/styles/overlay.scss:66,78]
+- [x] [Review][Patch] Drag pointer move/up listeners on document lack pointer capture and can leak if interrupted [packages/angular-renderer/src/components/primitives/dialog/dialog.component.ts:285-325]
+- [x] [Review][Patch] Asynchronous setTimeout in setupResizeObserver can instantiate observer after dialog closed [packages/angular-renderer/src/components/primitives/dialog/dialog.component.ts:327-355]
+- [x] [Review][Patch] Unused action output declared in PopoverComponent [packages/angular-renderer/src/components/primitives/popover/popover.component.ts:209]
+- [x] [Review][Defer] blockScroll property accepted in props but not wired to overlay or document scroll blocking [packages/angular-renderer/src/components/primitives/dialog/dialog.component.ts:49] — deferred, pre-existing
 
 ---
 

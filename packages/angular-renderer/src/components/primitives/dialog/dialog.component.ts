@@ -59,6 +59,8 @@ export const DialogContractSchema = {
   permissions: 'object',
   rules: 'object',
   metadata: 'object',
+  'aria-label': 'string',
+  'aria-describedby': 'string',
   visible: 'boolean',
   header: 'string',
   modal: 'boolean',
@@ -124,6 +126,7 @@ export class DialogComponent implements OrigoAdapter<DialogProps>, ContainerComp
   private overlayRef: OrigoOverlayRef | null = null;
   private isOpen = false;
   private resizeObserver: ResizeObserver | null = null;
+  private resizeTimeout: ReturnType<typeof setTimeout> | null = null;
 
   isMaximized = signal(false);
   dragPosition = signal<{ x: number; y: number }>({ x: 0, y: 0 });
@@ -269,16 +272,33 @@ export class DialogComponent implements OrigoAdapter<DialogProps>, ContainerComp
     const next = !this.isMaximized();
     this.isMaximized.set(next);
 
+    if (this.overlayRef?.isOpen) {
+      if (next) {
+        this.overlayRef.addPanelClass?.('origo-overlay-pane--maximized');
+        this.overlayRef.updateSize?.({
+          width: '100vw',
+          height: '100vh',
+          maxWidth: '100vw',
+          maxHeight: '100vh',
+        });
+      } else {
+        this.overlayRef.removePanelClass?.('origo-overlay-pane--maximized');
+        this.overlayRef.updateSize?.({
+          width: this.computedWidth(),
+          height: this.computedHeight(),
+          maxWidth: this.computedMaxWidth(),
+          maxHeight: this.computedMaxHeight(),
+        });
+      }
+      this.overlayRef.updatePosition();
+    }
+
     if (next) {
       this.maximize.emit(true);
       this.experienceAdapter.dispatchCapability(this.contract().id, 'maximize', true);
     } else {
       this.restore.emit();
       this.experienceAdapter.dispatchCapability(this.contract().id, 'restore', undefined);
-    }
-
-    if (this.overlayRef?.isOpen) {
-      this.overlayRef.updatePosition();
     }
   }
 
@@ -297,6 +317,7 @@ export class DialogComponent implements OrigoAdapter<DialogProps>, ContainerComp
       return;
     }
 
+    this.cleanupDragListeners();
     this.isDragging = true;
     this.dragStartCoords = { x: event.clientX, y: event.clientY };
     this.initialDragPos = { ...this.dragPosition() };
@@ -329,7 +350,12 @@ export class DialogComponent implements OrigoAdapter<DialogProps>, ContainerComp
       return;
     }
 
-    setTimeout(() => {
+    if (this.resizeTimeout) {
+      clearTimeout(this.resizeTimeout);
+    }
+
+    this.resizeTimeout = setTimeout(() => {
+      if (!this.isOpen) return;
       const el = this.dialogElement()?.nativeElement;
       if (!el) return;
 
@@ -372,6 +398,10 @@ export class DialogComponent implements OrigoAdapter<DialogProps>, ContainerComp
 
   private cleanup(): void {
     this.cleanupDrag();
+    if (this.resizeTimeout) {
+      clearTimeout(this.resizeTimeout);
+      this.resizeTimeout = null;
+    }
     if (this.resizeObserver) {
       this.resizeObserver.disconnect();
       this.resizeObserver = null;

@@ -60,6 +60,8 @@ export const PopoverContractSchema = {
   permissions: 'object',
   rules: 'object',
   metadata: 'object',
+  'aria-label': 'string',
+  'aria-describedby': 'string',
   visible: 'boolean',
   placement: 'string',
   dismissible: 'boolean',
@@ -263,6 +265,11 @@ export class PopoverComponent implements OrigoAdapter<PopoverProps>, ContainerCo
     } else {
       this.openPopover();
     }
+  }
+
+  onAction(data: unknown): void {
+    this.action.emit(data);
+    this.experienceAdapter.dispatchCapability(this.contract().id, 'action', data);
   }
 
   openPopover(): void {

@@ -50,6 +50,8 @@ export const TooltipContractSchema = {
   permissions: 'object',
   rules: 'object',
   metadata: 'object',
+  'aria-label': 'string',
+  'aria-describedby': 'string',
   content: 'string',
   position: 'string',
   showDelay: 'number',
@@ -128,6 +130,7 @@ export class TooltipComponent implements OrigoAdapter<TooltipProps>, ContainerCo
   triggerWrapper = viewChild<ElementRef<HTMLElement>>('triggerWrapper');
   tooltipTemplate = viewChild('tooltipTemplate', { read: TemplateRef });
 
+  visibleChange = output<boolean>();
   show = output<void>();
   hide = output<void>();
 
@@ -275,13 +278,17 @@ export class TooltipComponent implements OrigoAdapter<TooltipProps>, ContainerCo
     this.overlayRef.open(tpl, this.vcr);
     this.isTooltipOpen.set(true);
 
+    this.visibleChange.emit(true);
     this.show.emit();
+    this.experienceAdapter.updateState(this.contract().id, 'visible', true);
     this.experienceAdapter.dispatchCapability(this.contract().id, 'show', undefined);
 
     this.overlayRef.afterClosed().then(() => {
       if (this.isTooltipOpen()) {
         this.isTooltipOpen.set(false);
+        this.visibleChange.emit(false);
         this.hide.emit();
+        this.experienceAdapter.updateState(this.contract().id, 'visible', false);
         this.experienceAdapter.dispatchCapability(this.contract().id, 'hide', undefined);
       }
     });
@@ -295,7 +302,9 @@ export class TooltipComponent implements OrigoAdapter<TooltipProps>, ContainerCo
       this.overlayRef.close();
     }
 
+    this.visibleChange.emit(false);
     this.hide.emit();
+    this.experienceAdapter.updateState(this.contract().id, 'visible', false);
     this.experienceAdapter.dispatchCapability(this.contract().id, 'hide', undefined);
   }
 
