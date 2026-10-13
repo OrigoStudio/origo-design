@@ -1,3 +1,14 @@
+## 0.0.55 (2026-10-13)
+
+### 🚀 Features
+
+- implement navigation primitives including breadcrumbs, pagination, tabs, and stepper components ([7591e16](https://github.com/OrigoStudio/origo-design/commit/7591e16))
+- add stepper, pagination, tabs, and breadcrumbs primitive components to angular-renderer ([915495f](https://github.com/OrigoStudio/origo-design/commit/915495f))
+
+### ❤️ Thank You
+
+- Hardik Patel @hardikpatelse
+
 ## 0.0.54 (2026-10-13)
 
 ### 🚀 Features
