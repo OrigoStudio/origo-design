@@ -39,3 +39,6 @@ export * from './components/primitives/divider/divider.component';
 export * from './components/primitives/file-input/file-input.component';
 export * from './components/primitives/dropzone/dropzone.component';
 export * from './components/primitives/rich-text-editor/rich-text-editor.component';
+export * from './lib/overlay/overlay.models';
+export * from './lib/overlay/overlay-ref';
+export * from './lib/overlay/overlay.service';

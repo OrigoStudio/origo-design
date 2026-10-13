@@ -41,21 +41,22 @@
 # - Retrospective appends its action items to action_items; sprint-status surfaces open ones
 
 generated: 2026-10-07T19:00:21+05:30
-last_updated: 2026-10-09T10:49:40+05:30
+last_updated: 2026-10-13T12:21:00+05:30
 project: origo-design
 project_key: NOKEY
 tracking_system: file-system
 story_location: '{project-root}/_bmad-output/implementation-artifacts/stories'
 
 development_status:
-  epic-1: in-progress
+  epic-1: done
   1-1-core-buttons-and-actions: done
   1-2-core-input-controls: done
   1-3-core-selection-controls: done
   1-4-date-and-time-controls: done
   1-5-application-layout-primitives: done
-  1-6-file-input-and-rich-text-editor: review
-  epic-1-retrospective: optional
+  1-6-file-input-and-rich-text-editor: done
+  epic-1-retrospective: done
+  retro-1-overlay-portal-architecture: done
   epic-2: backlog
   2-1-navigation-components: backlog
   2-2-modal-and-overlay-components: backlog
@@ -93,4 +94,19 @@ development_status:
   epic-8-retrospective: optional
 
 action_items:
-  
+  - epic: 1
+    action: 'Author Modular SCSS & Design Token Guide (docs/guidelines/scss-and-tokens.md)'
+    owner: 'Charlie'
+    status: done
+  - epic: 1
+    action: 'Author Component Invariants & ShadowDOM Checklist (docs/guidelines/component-invariants.md)'
+    owner: 'Elena'
+    status: done
+  - epic: 1
+    action: 'Author Test Quality & ShadowDOM Interaction Guide (docs/guidelines/testing-primitives.md)'
+    owner: 'Dana'
+    status: done
+  - epic: 1
+    action: 'Prototype/Standardize Angular Overlay & Portal architecture for ShadowDOM'
+    owner: 'Charlie'
+    status: done

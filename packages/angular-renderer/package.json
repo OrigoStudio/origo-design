@@ -11,13 +11,18 @@
     "tslib": "^2.3.0",
     "@analogjs/vite-plugin-angular": "^2.7.1",
     "zone.js": "^0.16.3",
-    "@axe-core/playwright": "^4.13.0"
+    "@axe-core/playwright": "^4.13.0",
+    "rxjs": "~7.8.0"
   },
   "peerDependencies": {
+    "@angular/cdk": ">=18.0.0",
     "@angular/common": ">=18.0.0",
     "@angular/core": ">=18.0.0",
     "@angular/forms": ">=18.0.0",
     "@angular/platform-browser": ">=18.0.0"
+  },
+  "devDependencies": {
+    "@angular/cdk": "22.0.7"
   },
   "repository": {
     "type": "git",
