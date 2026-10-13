@@ -9,7 +9,6 @@ import {
   viewChild,
   ViewContainerRef,
 } from '@angular/core';
-import { DomSanitizer } from '@angular/platform-browser';
 import { InteractionContract } from '@origostudio/core';
 import {
   OrigoAdapter,
@@ -78,7 +77,6 @@ export class BreadcrumbsComponent implements OrigoAdapter<BreadcrumbsProps>, ICo
   itemClick = output<BreadcrumbItem>();
 
   private experienceAdapter = inject(WebExperienceAdapterService);
-  private sanitizer = inject(DomSanitizer);
 
   protected props = computed(() =>
     coerceContractProps<BreadcrumbsProps>(this.contract().props, BreadcrumbsContractSchema)

@@ -48,7 +48,11 @@
     }
   </div>
 
-  <div class="origo-tabs__panels" role="region">
+  <div
+    class="origo-tabs__panels"
+    role="region"
+    [attr.id]="computedActiveTab() ? 'tabpanel-' + computedActiveTab() : null"
+  >
     <ng-container #vc></ng-container>
     <ng-content></ng-content>
   </div>

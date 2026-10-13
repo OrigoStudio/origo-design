@@ -198,7 +198,7 @@ export class PaginationComponent implements OrigoAdapter<PaginationProps>, ICont
 
     const count = this.pageCount();
     const clampedIndex = Math.max(0, Math.min(targetIndex, Math.max(0, count - 1)));
-    if (clampedIndex === this.pageIndex() && targetIndex !== 0) return;
+    if (clampedIndex === this.pageIndex()) return;
 
     const rows = this.computedRows();
     const first = clampedIndex * rows;

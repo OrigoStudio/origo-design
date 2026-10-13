@@ -57,7 +57,11 @@
     }
   </div>
 
-  <div class="origo-stepper__panels" role="region">
+  <div
+    class="origo-stepper__panels"
+    role="region"
+    [attr.id]="activeStepKey() ? 'step-panel-' + activeStepKey() : null"
+  >
     <ng-container #vc></ng-container>
     <ng-content></ng-content>
   </div>

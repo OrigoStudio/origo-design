@@ -241,6 +241,7 @@ export class StepperComponent implements OrigoAdapter<StepperProps>, IContainerC
 
   goNext() {
     const steps = this.computedSteps();
+    if (steps.length === 0) return;
     const currIndex = this.activeStepIndex();
     if (currIndex < steps.length - 1) {
       const nextStep = steps[currIndex + 1];

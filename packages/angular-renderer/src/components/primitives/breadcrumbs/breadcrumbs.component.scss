@@ -42,12 +42,12 @@
   cursor: pointer;
   font-family: inherit;
   font-size: inherit;
-  color: var(--origo-color-surface-primary);
+  color: var(--origo-color-brand-primary);
   text-decoration: none;
   transition: color var(--origo-duration-fast) ease;
 
   &:hover:not(:disabled) {
-    color: var(--origo-color-surface-primary-hover);
+    color: var(--origo-color-brand-primary-hover);
     text-decoration: underline;
   }
 

@@ -3,12 +3,12 @@ story_id: "2.1"
 story_key: 2-1-navigation-components
 baseline_commit: e5aafb2
 epic: 2
-status: "review"
+status: "done"
 ---
 
 # Story 2.1: Navigation Components
 
-Status: review
+Status: done
 
 ## Story
 
@@ -266,6 +266,15 @@ So that users can easily move through the application.
     - [x] Add new entry `renderer-primitive-pagination` (`packages/angular-renderer/src/components/primitives/pagination/pagination.component.spec.ts`).
     - [x] Add new entry `renderer-primitive-stepper` (`packages/angular-renderer/src/components/primitives/stepper/stepper.component.spec.ts`).
   - [x] Run full test validation: `npm test` or Nx test target for `@origo/angular-renderer`.
+
+### Review Findings
+
+- [x] [Review][Decision] Closable tabs render `<button>` inside `<button>` in `TabsComponent` — Resolved: retained story-specified button-with-stopPropagation structure as intended.
+- [x] [Review][Patch] Missing panel container IDs referenced by `aria-controls` in Tabs and Stepper [packages/angular-renderer/src/components/primitives/tabs/tabs.component.html:51, packages/angular-renderer/src/components/primitives/stepper/stepper.component.html:60]
+- [x] [Review][Patch] Redundant page change emission on current page click in `PaginationComponent` [packages/angular-renderer/src/components/primitives/pagination/pagination.component.ts:200]
+- [x] [Review][Patch] Unhandled empty steps edge case in `StepperComponent.goNext()` [packages/angular-renderer/src/components/primitives/stepper/stepper.component.ts:243]
+- [x] [Review][Patch] Dead `DomSanitizer` injection in `BreadcrumbsComponent` [packages/angular-renderer/src/components/primitives/breadcrumbs/breadcrumbs.component.ts:80]
+- [x] [Review][Patch] Semantic token misuse: surface token applied to link text color in Breadcrumbs SCSS [packages/angular-renderer/src/components/primitives/breadcrumbs/breadcrumbs.component.scss:44]
 
 ---
 
