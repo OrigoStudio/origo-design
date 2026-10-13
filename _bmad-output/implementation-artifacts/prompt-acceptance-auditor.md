@@ -1,2334 +1,3493 @@
-You are an Acceptance Auditor. Review the provided diff against _bmad-output/implementation-artifacts/stories/retro-1-overlay-portal-architecture.md and any loaded context docs. Check for: violations of acceptance criteria, deviations from spec intent, missing implementation of specified behavior, contradictions between spec constraints and actual code. Output findings as a Markdown list. Each finding: one-line title, which AC/constraint it violates, and evidence from the diff.
+You are an Acceptance Auditor. Review the provided diff against _bmad-output/implementation-artifacts/stories/2-1-navigation-components.md and any loaded context docs. Check for: violations of acceptance criteria, deviations from spec intent, missing implementation of specified behavior, contradictions between spec constraints and actual code. Output findings as a Markdown list. Each finding: one-line title, which AC/constraint it violates, and evidence from the diff.
 
 Diff:
-```diff
+`diff
 diff --git a/_bmad-output/implementation-artifacts/sprint-status.yaml b/_bmad-output/implementation-artifacts/sprint-status.yaml
-index 57674dc..c4e8b9a 100644
+index ea8eded..dfb5e27 100644
 --- a/_bmad-output/implementation-artifacts/sprint-status.yaml
 +++ b/_bmad-output/implementation-artifacts/sprint-status.yaml
 @@ -41,7 +41,7 @@
  # - Retrospective appends its action items to action_items; sprint-status surfaces open ones
  
  generated: 2026-10-07T19:00:21+05:30
--last_updated: 2026-10-12T19:44:00+05:30
-+last_updated: 2026-10-12T20:26:30+05:30
+-last_updated: 2026-10-13T12:21:00+05:30
++last_updated: 2026-10-13T16:29:00+05:30
  project: origo-design
  project_key: NOKEY
  tracking_system: file-system
-@@ -56,7 +56,7 @@ development_status:
-   1-5-application-layout-primitives: done
+@@ -57,8 +57,8 @@ development_status:
    1-6-file-input-and-rich-text-editor: done
    epic-1-retrospective: done
--  retro-1-overlay-portal-architecture: ready-for-dev
-+  retro-1-overlay-portal-architecture: review
-   epic-2: backlog
-   2-1-navigation-components: backlog
+   retro-1-overlay-portal-architecture: done
+-  epic-2: backlog
+-  2-1-navigation-components: backlog
++  epic-2: in-progress
++  2-1-navigation-components: review
    2-2-modal-and-overlay-components: backlog
-@@ -109,4 +109,4 @@ action_items:
-   - epic: 1
-     action: 'Prototype/Standardize Angular Overlay & Portal architecture for ShadowDOM'
-     owner: 'Charlie'
--    status: in-progress
-\ No newline at end of file
-+    status: done
-\ No newline at end of file
-diff --git a/_bmad-output/implementation-artifacts/stories/retro-1-overlay-portal-architecture.md b/_bmad-output/implementation-artifacts/stories/retro-1-overlay-portal-architecture.md
-index 95db786..7bb7fd0 100644
---- a/_bmad-output/implementation-artifacts/stories/retro-1-overlay-portal-architecture.md
-+++ b/_bmad-output/implementation-artifacts/stories/retro-1-overlay-portal-architecture.md
-@@ -3,12 +3,12 @@ story_id: "retro-1"
- story_key: "retro-1-overlay-portal-architecture"
- baseline_commit: "147ef03e50728c643f2faa7688bb4c4408f7ddf2"
- epic: 1
--status: "ready-for-dev"
+   2-3-messaging-and-notification-components: backlog
+   2-4-status-and-loading-indicators: backlog
+diff --git a/_bmad-output/implementation-artifacts/stories/2-1-navigation-components.md b/_bmad-output/implementation-artifacts/stories/2-1-navigation-components.md
+new file mode 100644
+index 0000000..8e829b2
+--- /dev/null
++++ b/_bmad-output/implementation-artifacts/stories/2-1-navigation-components.md
+@@ -0,0 +1,431 @@
++---
++story_id: "2.1"
++story_key: 2-1-navigation-components
++baseline_commit: e5aafb2
++epic: 2
 +status: "review"
- ---
- 
- # Story retro-1: Prototype/Standardize Angular Overlay & Portal Architecture for Shadow DOM
- 
--Status: ready-for-dev
++---
++
++# Story 2.1: Navigation Components
++
 +Status: review
- 
- <!-- Note: Validation is complete. Story is ready for dev-story. -->
- 
-@@ -127,44 +127,44 @@ Any overlay service attaching elements to `document.body` or subscribing to `win
- 
- ## Tasks / Subtasks
- 
--- [ ] **Task 1: Monorepo Dependency Alignment & Package Configuration (AC: 1, 5, 7)**
--  - [ ] Add `"@angular/cdk": "22.0.8"` to root `package.json` `dependencies`.
--  - [ ] Add `"@angular/cdk": ">=18.0.0"` to `packages/angular-renderer/package.json` `peerDependencies`.
--  - [ ] Add `"@angular/cdk": "22.0.8"` to `packages/angular-renderer/package.json` `devDependencies`.
--  - [ ] Add `"spike:overlay"` script to root `package.json`.
--  - [ ] Verify build and bundle size with `npx nx build angular-renderer`.
--
--- [ ] **Task 2: Build Spike Harness in `tools/spikes/overlay-shadowdom` (AC: 1, 3, 4, 7)**
--  - [ ] Create `tools/spikes/overlay-shadowdom/` harness with sample Shadow DOM trigger component.
--  - [ ] Implement portal projection attaching to document-level overlay container outside shadow boundary.
--  - [ ] Implement and verify `event.composedPath()` outside-click dismissal handler without false positives.
--  - [ ] Implement and verify Shadow-DOM-aware focus trap cycling with `Tab` / `Shift+Tab` and `Escape`.
--  - [ ] Verify execution via `npm run spike:overlay` or Jest spec.
--
--- [ ] **Task 3: Design Token, Theme & RTL Propagation with CSP Compliance (AC: 2)**
--  - [ ] Standardize the theme container strategy: ensuring `.origo-overlay-pane` automatically receives `.theme-light`, `.theme-dark`, or custom tenant tokens without inline styles.
--  - [ ] Establish global overlay styles in `packages/angular-renderer/src/styles/overlay.scss` defining base overlay backdrop, panel elevation (`--origo-shadow-lg`), and surface styling using CSS logical properties.
--  - [ ] Support RTL directionality propagation (`dir="rtl"`) so connected overlays mirror correctly in RTL locales.
--
--- [ ] **Task 4: Standardize Renderer Overlay Substrate & Public Exports (`packages/angular-renderer`) (AC: 3, 4, 5)**
--  - [ ] Define TypeScript contracts (`OrigoOverlayConfig`, `OrigoOverlayRef`, `OrigoOverlayPositionStrategy`) in `packages/angular-renderer/src/lib/overlay/overlay.models.ts`.
--  - [ ] Implement `OrigoOverlayRef` with automatic `DestroyRef` cleanup, backdrop management, and focus restore in `packages/angular-renderer/src/lib/overlay/overlay-ref.ts`.
--  - [ ] Implement `OrigoOverlayService` in `packages/angular-renderer/src/lib/overlay/overlay.service.ts` wrapping CDK Overlay with SSR guards (`isPlatformBrowser`, `DOCUMENT`).
--  - [ ] Support Connected Position Strategy (dropdowns/tooltips) with flip/shift and `ResizeObserver` repositioning.
--  - [ ] Support Global Position Strategy (modals/drawers/dialogs) with centered or docked positioning.
--  - [ ] Export all overlay services, models, and references in `packages/angular-renderer/src/index.ts`.
--
--- [ ] **Task 5: Author Canonical Guideline & Architecture Specification (AC: 6)**
--  - [ ] Author `docs/guidelines/overlay-portal-architecture.md` detailing:
-+- [x] **Task 1: Monorepo Dependency Alignment & Package Configuration (AC: 1, 5, 7)**
-+  - [x] Add `"@angular/cdk": "22.0.8"` to root `package.json` `dependencies`.
-+  - [x] Add `"@angular/cdk": ">=18.0.0"` to `packages/angular-renderer/package.json` `peerDependencies`.
-+  - [x] Add `"@angular/cdk": "22.0.8"` to `packages/angular-renderer/package.json` `devDependencies`.
-+  - [x] Add `"spike:overlay"` script to root `package.json`.
-+  - [x] Verify build and bundle size with `npx nx build angular-renderer`.
 +
-+- [x] **Task 2: Build Spike Harness in `tools/spikes/overlay-shadowdom` (AC: 1, 3, 4, 7)**
-+  - [x] Create `tools/spikes/overlay-shadowdom/` harness with sample Shadow DOM trigger component.
-+  - [x] Implement portal projection attaching to document-level overlay container outside shadow boundary.
-+  - [x] Implement and verify `event.composedPath()` outside-click dismissal handler without false positives.
-+  - [x] Implement and verify Shadow-DOM-aware focus trap cycling with `Tab` / `Shift+Tab` and `Escape`.
-+  - [x] Verify execution via `npm run spike:overlay` or Jest spec.
++## Story
 +
-+- [x] **Task 3: Design Token, Theme & RTL Propagation with CSP Compliance (AC: 2)**
-+  - [x] Standardize the theme container strategy: ensuring `.origo-overlay-pane` automatically receives `.theme-light`, `.theme-dark`, or custom tenant tokens without inline styles.
-+  - [x] Establish global overlay styles in `packages/angular-renderer/src/styles/overlay.scss` defining base overlay backdrop, panel elevation (`--origo-shadow-lg`), and surface styling using CSS logical properties.
-+  - [x] Support RTL directionality propagation (`dir="rtl"`) so connected overlays mirror correctly in RTL locales.
++As a developer,
++I want to use structured navigation menus (`Breadcrumbs`, `Pagination`, `Tabs`, `Stepper`),
++So that users can easily move through the application.
 +
-+- [x] **Task 4: Standardize Renderer Overlay Substrate & Public Exports (`packages/angular-renderer`) (AC: 3, 4, 5)**
-+  - [x] Define TypeScript contracts (`OrigoOverlayConfig`, `OrigoOverlayRef`, `OrigoOverlayPositionStrategy`) in `packages/angular-renderer/src/lib/overlay/overlay.models.ts`.
-+  - [x] Implement `OrigoOverlayRef` with automatic `DestroyRef` cleanup, backdrop management, and focus restore in `packages/angular-renderer/src/lib/overlay/overlay-ref.ts`.
-+  - [x] Implement `OrigoOverlayService` in `packages/angular-renderer/src/lib/overlay/overlay.service.ts` wrapping CDK Overlay with SSR guards (`isPlatformBrowser`, `DOCUMENT`).
-+  - [x] Support Connected Position Strategy (dropdowns/tooltips) with flip/shift and `ResizeObserver` repositioning.
-+  - [x] Support Global Position Strategy (modals/drawers/dialogs) with centered or docked positioning.
-+  - [x] Export all overlay services, models, and references in `packages/angular-renderer/src/index.ts`.
++## Acceptance Criteria
 +
-+- [x] **Task 5: Author Canonical Guideline & Architecture Specification (AC: 6)**
-+  - [x] Author `docs/guidelines/overlay-portal-architecture.md` detailing:
-     - Executive summary and architectural decisions.
-     - Shadow DOM overlay challenges and concrete solutions (style isolation, token propagation, composed path events, focus trapping, SSR safety).
-     - Complete golden code snippets for Connected Overlay (Select/Dropdown pattern) and Global Overlay (Modal/Dialog pattern).
-     - PR pre-flight checklist for Epic 2 Story 2.2 (`2-2-modal-and-overlay-components`).
- 
--- [ ] **Task 6: Unit Test Suite & Central Test Registry Registration (AC: 7)**
--  - [ ] Write unit specs covering `OrigoOverlayService`, position strategies, outside-click, focus trap, and SSR no-op.
--  - [ ] Register new test scenarios in `tools/test-registry/test-registry.yaml` under `@origo/angular-renderer`.
--  - [ ] Verify `git status` and test suite passes cleanly.
-+- [x] **Task 6: Unit Test Suite & Central Test Registry Registration (AC: 7)**
-+  - [x] Write unit specs covering `OrigoOverlayService`, position strategies, outside-click, focus trap, and SSR no-op.
-+  - [x] Register new test scenarios in `tools/test-registry/test-registry.yaml` under `@origo/angular-renderer`.
-+  - [x] Verify `git status` and test suite passes cleanly.
- 
- ---
- 
-@@ -262,12 +262,37 @@ Gemini 3.8 Flash (High)
- 
- ### Completion Notes List
- 
--- Story file comprehensively validated and optimized for LLM developer agent execution.
--- Includes 7 exhaustive Acceptance Criteria with explicit references to ADRs and technical spikes as mandated by project rules.
--- Defines clear task breakdown spanning monorepo dependency alignment, spike harness, token inheritance, CDK/overlay service standardization, architectural documentation, and test registry hygiene.
--- Provides concrete TypeScript interface contracts and an explicit Code Files to Create / Update ledger.
-+- Implemented Story retro-1 satisfying all 7 Acceptance Criteria.
-+- Aligned monorepo dependencies by adding `@angular/cdk@22.0.7` to root `package.json` dependencies and `packages/angular-renderer/package.json` peer/devDependencies.
-+- Added `spike:overlay` script to root `package.json` running automated spike harness via `ts-node`.
-+- Created automated spike harness in `tools/spikes/overlay-shadowdom/` verifying Shadow DOM portal projection, `event.composedPath()` outside-click dismissal, focus trap, and SSR no-op (10/10 assertions passing).
-+- Established global overlay SCSS with design tokens (`--origo-color-surface-overlay`, `--origo-shadow-lg`), CSS Logical Properties, theme inheritance scopes (`.theme-light`, `.theme-dark`, `.high-contrast`), and RTL mirroring (`[dir='rtl']`).
-+- Implemented `OrigoOverlayService`, `OrigoOverlayRefImpl`, `OrigoNoopOverlayRef`, and contracts in `@origo/angular-renderer/src/lib/overlay/` with `DestroyRef` automatic teardown, connected & global position strategies, and public exports in `index.ts`.
-+- Authored canonical architecture specification and golden patterns in `docs/guidelines/overlay-portal-architecture.md`.
-+- Authored comprehensive unit test suite in `packages/angular-renderer/src/lib/overlay/overlay.service.spec.ts` (7/7 tests passing).
-+- Registered test cases in `tools/test-registry/test-registry.yaml` and verified with `validate:registry` (97 test cases verified).
-+- Verified zero regressions on existing button and select components.
- 
- ### File List
- 
-+- `package.json`
-+- `package-lock.json`
-+- `packages/angular-renderer/package.json`
-+- `packages/angular-renderer/src/index.ts`
-+- `packages/angular-renderer/src/styles/overlay.scss`
-+- `packages/angular-renderer/src/lib/overlay/overlay.models.ts`
-+- `packages/angular-renderer/src/lib/overlay/overlay-ref.ts`
-+- `packages/angular-renderer/src/lib/overlay/overlay.service.ts`
-+- `packages/angular-renderer/src/lib/overlay/overlay.service.spec.ts`
-+- `tools/spikes/overlay-shadowdom/shadow-dom-trigger.component.ts`
-+- `tools/spikes/overlay-shadowdom/spike-overlay.service.ts`
-+- `tools/spikes/overlay-shadowdom/run-spike.ts`
-+- `tools/spikes/overlay-shadowdom/overlay-shadowdom.spec.ts`
-+- `docs/guidelines/overlay-portal-architecture.md`
-+- `tools/test-registry/test-registry.yaml`
- - `_bmad-output/implementation-artifacts/stories/retro-1-overlay-portal-architecture.md`
- - `_bmad-output/implementation-artifacts/sprint-status.yaml`
++1. **[AC-1] Full Keyboard Navigation & Accessibility (ADR: P1-AD-6):**
++   - **Given** an Origo layout environment
++   - **When** I configure or utilize the delivered components (`Breadcrumbs`, `Pagination`, `Tabs`, `Stepper`)
++   - **Then** all components must be fully keyboard navigable (Arrow keys, Tab, Home, End, Esc, Enter, Space) with full focus indicators
++   - **And** all components must pass automated `axe-core` accessibility audits with zero AA violations.
++2. **[AC-2] Metadata Hooks & Test Selectors (ADR: AD-12):**
++   - **Given** any component instance (`BreadcrumbsComponent`, `PaginationComponent`, `TabsComponent`, `StepperComponent`)
++   - **When** rendered from a BADL payload
++   - **Then** it must expose standard metadata hooks (`permissions`, `rules`, `metadata`, `aria-label`, `aria-describedby`)
++   - **And** bind `[attr.data-testid]="contract().id"` on the host element.
++3. **[AC-3] Zero Literal SCSS & RTL Support (ADR: AD-6, NFR-I18N-001):**
++   - **Given** any component stylesheet (`.scss`)
++   - **When** rendered in the browser
++   - **Then** it must strictly utilize semantic CSS variables (`var(--origo-*)`) without any hardcoded fallback literals, hex colors, or pixel values
++   - **And** strictly use CSS Logical Properties (`padding-inline`, `margin-inline`, `inset-inline-start`, etc.) ensuring 100% automated Right-to-Left (RTL) mirroring.
++4. **[AC-4] Dynamic Child AST Substrate (`ContainerComponent`) (ADR: P1-AD-5):**
++   - **Given** a dynamic BADL AST rendering lifecycle
++   - **When** child nodes or sub-views are nested inside navigation containers
++   - **Then** all 4 components must implement `ContainerComponent`, declare `vc = viewChild.required('vc', { read: ViewContainerRef })`, and render `<ng-container #vc></ng-container>` to support the dynamic child rendering pipeline.
++5. **[AC-5] Angular Standalone, Signals, & Schema Coercion (ADR: P1-AD-1):**
++   - **Given** incoming BADL AST payloads
++   - **When** components are instantiated
++   - **Then** they must be Angular 18/22 Standalone components with `ViewEncapsulation.ShadowDom`, `ChangeDetectionStrategy.OnPush`, consume inputs via Angular Signals (`input.required()`, `computed()`, `output()`)
++   - **And** validate/coerce properties via `static readonly contractSchema` and `coerceContractProps()` to prevent runtime crashes from malformed inputs.
++6. **[AC-6] State Synchronization & Capability Dispatch (ADR: AD-11):**
++   - **Given** user interactions and navigation state changes
++   - **When** an item is selected or a page/step transition occurs
++   - **Then** the component must emit corresponding typed outputs and synchronize state via `WebExperienceAdapterService` (`updateState` and `dispatchCapability`).
++7. **[AC-7] Production Overlay Architecture Integration (ADR: AD-4, Spike: retro-1):**
++   - **Given** navigation menus or triggers that spawn popup menus or dropdowns (e.g., page size dropdowns or step popovers)
++   - **When** overlays are opened
++   - **Then** they must consume `OrigoOverlayService` (`packages/angular-renderer/src/lib/overlay/overlay.service.ts`) established in `retro-1` to project into the document root overlay container without Shadow DOM clipping, token detachment, or z-index trapping.
++8. **[AC-8] Server-Side Rendering (SSR) Safety (Global System AC):**
++   - **Given** an SSR or hydration lifecycle
++   - **When** components are initialized and rendered
++   - **Then** direct access to browser DOM globals (`window`, `document`) must be strictly avoided during initialization, and any DOM event or RTL direction inspections must be guarded via `isPlatformBrowser(inject(PLATFORM_ID))` and injected `DOCUMENT`.
++9. **[AC-9] Strict Content Security Policy (CSP) Compliance (Global System AC):**
++   - **Given** strict CSP environments
++   - **When** navigation links or actions are rendered
++   - **Then** templates must not use inline script handlers or `href="javascript:void(0)"`; interactive elements must be semantic `<button type="button">` or valid router/anchor elements with explicit event handlers.
++10. **[AC-10] Definition of Done (DoD) & Test Registry (DoD: docs/definition-of-done.md):**
++    - **Given** completion of the navigation components
++    - **When** validated for release
++    - **Then** all primitives must be registered in `packages/angular-renderer/src/lib/primitives.provider.ts`, exported from `packages/angular-renderer/src/index.ts`
++    - **And** `tools/test-registry/test-registry.yaml` must be updated with `2-1-navigation-components` in `affected_stories` for existing tests (`renderer-primitive-breadcrumbs`, `renderer-primitive-tabs`) and new entries created for `renderer-primitive-pagination` and `renderer-primitive-stepper`.
++
++---
++
++## ⚠️ Critical: Existing Code — Read Before Writing Anything
++
++### EXISTING COMPONENTS TO UPDATE (DO NOT REINVENT)
++
++- `BreadcrumbsComponent` -> `packages/angular-renderer/src/components/primitives/breadcrumbs/` (Registry key: `'Breadcrumbs'`):
++  - **Current State:** Standalone, Shadow DOM, OnPush component. Implements `OrigoAdapter<BreadcrumbsProps>`, but lacks `ContainerComponent` (`vc`), lacks `coerceContractProps()`, uses insecure `href="javascript:void(0)"`, and only supports basic `label` and `outcomeRef`.
++  - **What This Story Changes:**
++    - Implement `ContainerComponent`: declare `vc = viewChild.required('vc', { read: ViewContainerRef })` and add `<ng-container #vc></ng-container>` to `breadcrumbs.component.html`.
++    - Apply `coerceContractProps()` to incoming `this.contract().props` with `static readonly contractSchema`.
++    - Expand `BreadcrumbItem` interface: `label?: string`, `icon?: string`, `outcomeRef?: string`, `url?: string`, `disabled?: boolean`.
++    - Expand `BreadcrumbsProps` interface: `items?: Array<BreadcrumbItem>`, `home?: BreadcrumbItem` (root home item), `separator?: string` (custom separator, default `'/'`), `routerMode?: 'angular' | 'native' | 'state'` per Component API Specification 6.1.
++    - Replace CSP-violating `href="javascript:void(0)"` with semantic `<button type="button" class="origo-breadcrumbs__link">` or `<a [attr.href]="item.url || null">` with `(click)` handler calling `event.preventDefault()` when `item.url` is empty.
++    - Render custom `home` item (if provided) as the first item with home icon/label, and render custom `separator` via `computedSeparator()` (defaulting to `'/'`).
++    - Expose `itemClick = output<BreadcrumbItem>()` output event and dispatch capability via `WebExperienceAdapterService.dispatchCapability(this.contract().id, 'itemClick', item)` while preserving existing `activeOutcome` state updates.
++    - Audit SCSS to enforce CSS Logical Properties (`padding-inline`, `margin-inline`) and AD-6 token compliance without fallbacks.
++  - **What Must Be Preserved:**
++    - Existing `outcomeRef` state updating via `experienceAdapter.updateState(...)` so existing BADL flows do not break.
++    - Selector `origo-breadcrumbs`.
++    - Host binding `[attr.data-testid]="contract().id"`.
++    - HTML class naming structure (`origo-breadcrumbs__list`, `origo-breadcrumbs__item`, `origo-breadcrumbs__link`, etc.).
++
++- `TabsComponent` -> `packages/angular-renderer/src/components/primitives/tabs/` (Registry key: `'Tabs'`):
++  - **Current State:** Standalone, Shadow DOM, OnPush component. Implements `OrigoAdapter<TabsProps>`, has horizontal keyboard navigation, but uses legacy `@ViewChildren` and `QueryList`, lacks `ContainerComponent` (`vc`), lacks `coerceContractProps()`, and lacks vertical orientation, scrollable tabs, closable tabs, and capability dispatching.
++  - **What This Story Changes:**
++    - Implement `ContainerComponent`: declare `vc = viewChild.required('vc', { read: ViewContainerRef })` and add `<ng-container #vc></ng-container>` inside `tabs.component.html` along with content projection slots (`<slot>` / `<ng-content>`) for active tab panel content.
++    - Modernize DOM queries: replace `@ViewChildren('tabButton') tabButtons!: QueryList<...>` with Signal `tabButtons = viewChildren<ElementRef<HTMLButtonElement>>('tabButton')`.
++    - Apply `coerceContractProps()` to contract props with `static readonly contractSchema`.
++    - Expand `TabsProps` to support `items?: Array<TabItem>` as alias/primary alongside `tabs`, `value?: string` as alias for `activeTab`, `orientation?: 'horizontal' | 'vertical'` (default `'horizontal'`), `scrollable?: boolean`, `lazy?: boolean`.
++    - Expand `TabItem` to support `key: string`, `label: string`, `icon?: string`, `closable?: boolean`, `badge?: string | number`, `disabled?: boolean`.
++    - On closable tabs (`tab.closable === true`), render a close button with `(click)="onTabClose($event, tab)"`; the handler must explicitly call `event.stopPropagation()` to prevent selecting the tab before closing it, emit `tabClose`, and dispatch capability.
++    - Expand keyboard navigation in `onKeyDown`: In vertical orientation (`orientation === 'vertical'`), support `ArrowUp` and `ArrowDown` in addition to Home/End; guard RTL detection via `isPlatformBrowser`.
++    - Expose typed outputs: `valueChange = output<string>()`, `tabChange = output<TabItem>()`, and `tabClose = output<string>()`.
++    - Dispatch capabilities through `WebExperienceAdapterService`: `dispatchCapability(id, 'valueChange', key)`, `dispatchCapability(id, 'tabChange', tab)`, `dispatchCapability(id, 'tabClose', key)`.
++    - Update `tabs.component.html` and `tabs.component.scss` to support vertical orientation (`origo-tabs--vertical`, flex-direction column) and scrollable tab headers with overflow indicators.
++  - **What Must Be Preserved:**
++    - Existing `key`, `label`, `disabled` properties on `TabItem`.
++    - Existing horizontal keyboard navigation and RTL awareness.
++    - Selector `origo-tabs`.
++    - Host binding `[attr.data-testid]="contract().id"`.
++    - State update `updateState(this.contract().id, 'activeTab', tab.key)`.
++
++---
++
++### NEW COMPONENTS TO CREATE
++
++- `PaginationComponent` -> `packages/angular-renderer/src/components/primitives/pagination/` (Registry key: `'Pagination'` and alias `'Paginator'`):
++  - **Inputs (`PaginationProps`):**
++    - `first?: number` (first record offset, default 0)
++    - `rows?: number` (page size, default 10)
++    - `totalRecords?: number` (total available records, default 0)
++    - `pageLinkSize?: number` (visible numbered page buttons window, default 5)
++    - `rowsPerPageOptions?: number[]` (allowed page sizes, e.g. `[10, 20, 50]`)
++    - `showFirstLastIcon?: boolean` (first/last navigation controls, default true)
++    - `showPageLinks?: boolean` (numbered page links, default true)
++    - `template?: string` (layout order/template)
++    - Universal props: `disabled?: boolean`, `size?: 'small' | 'medium' | 'large'`, `variant?: string`, `permissions?: Record<string, string>`, `rules?: Record<string, unknown>`, `metadata?: Record<string, unknown>`, `'aria-label'?: string`, `'aria-describedby'?: string`.
++  - **Outputs:**
++    - `pageChange = output<PageChangeEvent>()` (`PageChangeEvent: { page: number, first: number, rows: number, pageCount: number }`)
++    - `rowsChange = output<RowsChangeEvent>()` (`RowsChangeEvent: { rows: number, first: number }`)
++  - **Architecture:** Standalone, Shadow DOM, OnPush, `ContainerComponent` (`vc`), `OrigoAdapter<PaginationProps>`, `static readonly contractSchema`, `coerceContractProps()`.
++  - **Calculations & Computeds:**
++    - `pageCount = computed(() => { const r = this.computedRows(); return r > 0 ? Math.ceil(this.computedTotalRecords() / r) : 0; })`
++    - `pageIndex = computed(() => { const r = this.computedRows(); return r > 0 ? Math.floor(this.computedFirst() / r) : 0; })`
++    - `visiblePageLinks = computed(() => ...)`: calculates sliding window of page numbers bounded by `pageLinkSize`, clamped to `[0, pageCount - 1]`.
++    - Boundary clamping: `first` is clamped between `0` and `Math.max(0, (pageCount - 1) * rows)`.
++  - **Accessibility & ARIA:**
++    - Host/nav element: `<nav role="navigation" [attr.aria-label]="computedAriaLabel()">`
++    - Page link buttons: `aria-label="Page {pageNumber}"`, active button has `aria-current="page"`, disabled buttons have `[disabled]="true"` and `aria-disabled="true"`.
++    - Rows per page dropdown: `<select [attr.aria-label]="'Rows per page'">` or integrated select primitive.
++  - **Integration & State:**
++    - Dispatches `updateState(id, 'first', offset)` and `updateState(id, 'rows', rows)`.
++    - Dispatches `dispatchCapability(id, 'pageChange', payload)` and `dispatchCapability(id, 'rowsChange', payload)`.
++
++- `StepperComponent` -> `packages/angular-renderer/src/components/primitives/stepper/` (Registry key: `'Stepper'`):
++  - **Inputs (`StepperProps`):**
++    - `steps?: Array<StepItem>`
++      ```ts
++      export interface StepItem {
++        key: string;
++        label: string;
++        description?: string;
++        icon?: string;
++        optional?: boolean;
++        disabled?: boolean;
++        completed?: boolean;
++      }
++      ```
++    - `value?: string` (active step key)
++    - `linear?: boolean` (prevents skipping incomplete steps, default false)
++    - `readonly?: boolean` (prevents navigation, default false)
++    - `orientation?: 'horizontal' | 'vertical'` (default `'horizontal'`)
++    - `completedSteps?: Array<string>` (array of completed step keys)
++    - Universal props: `disabled?: boolean`, `permissions?: Record<string, string>`, `rules?: Record<string, unknown>`, `metadata?: Record<string, unknown>`, `'aria-label'?: string`, `'aria-describedby'?: string`.
++  - **Outputs:**
++    - `valueChange = output<string>()` (step key)
++    - `stepChange = output<StepChangeEvent>()` (`StepChangeEvent: { activeStep: string, previousStep?: string, index: number }`)
++    - `next = output<string>()`
++    - `previous = output<string>()`
++    - `complete = output<void>()`
++    - `stepClick = output<StepItem>()`
++  - **Architecture:** Standalone, Shadow DOM, OnPush, `ContainerComponent` (`vc`), `OrigoAdapter<StepperProps>`, `static readonly contractSchema`, `coerceContractProps()`.
++  - **Linear Gating Rule:**
++    - In `linear === true` mode: Step at index `i` is enabled only if `i <= activeStepIndex` OR all previous steps `0 .. i-1` are marked `completed: true` or present in `completedSteps`.
++    - If `readonly === true` or component `disabled === true`: all step interactions are suppressed.
++  - **Accessibility & ARIA:**
++    - Step header container has `role="tablist"` or `role="navigation"`.
++    - Step buttons have `role="tab"`, `aria-selected="true"` (for active step) or `aria-current="step"`, `aria-disabled="true"` for unreachable steps.
++    - Keyboard navigation: In horizontal mode, `ArrowRight`/`ArrowLeft`, `Home`, `End`, `Enter`/`Space`. In vertical mode, `ArrowDown`/`ArrowUp`.
++  - **Integration & State:**
++    - Dispatches `updateState(id, 'value', stepKey)` and `updateState(id, 'activeStep', stepKey)`.
++    - Dispatches `dispatchCapability(id, 'stepChange', payload)` and `dispatchCapability(id, 'complete', undefined)`.
++
++---
++
++### EXISTING REGISTRATION & CONFIG FILES TO UPDATE
++
++- `packages/angular-renderer/src/lib/primitives.provider.ts`:
++  - Register `'Pagination'` -> `PaginationComponent`
++  - Register `'Paginator'` -> `PaginationComponent` (alias for BADL contract parity)
++  - Register `'Stepper'` -> `StepperComponent`
++- `packages/angular-renderer/src/index.ts`:
++  - Export `PaginationComponent`, `PaginationProps`, `PageChangeEvent`, `RowsChangeEvent`
++  - Export `StepperComponent`, `StepperProps`, `StepItem`, `StepChangeEvent`
++- `tools/test-registry/test-registry.yaml`:
++  - UPDATE `renderer-primitive-breadcrumbs` (line 534): append `2-1-navigation-components` to `affected_stories`
++  - UPDATE `renderer-primitive-tabs` (line 524): append `2-1-navigation-components` to `affected_stories`
++  - UPDATE `renderer-primitive-breadcrumbs-ct` (line 562) & `renderer-primitive-tabs-ct` (line 758): append `2-1-navigation-components` to `affected_stories`
++  - ADD `renderer-primitive-pagination` (`packages/angular-renderer/src/components/primitives/pagination/pagination.component.spec.ts`, type `unit`, affected_stories: `['2-1-navigation-components']`)
++  - ADD `renderer-primitive-stepper` (`packages/angular-renderer/src/components/primitives/stepper/stepper.component.spec.ts`, type `unit`, affected_stories: `['2-1-navigation-components']`)
++
++---
++
++## Tasks / Subtasks
++
++- [x] **UPDATE `BreadcrumbsComponent`** (AC: #1, #2, #3, #4, #5, #6, #9, #10)
++  - [x] Update `BreadcrumbItem` interface in `breadcrumbs.component.ts`: add `icon?: string`, `url?: string`, `disabled?: boolean`.
++  - [x] Update `BreadcrumbsProps` interface: add `home?: BreadcrumbItem`, `separator?: string`, `routerMode?: 'angular' | 'native' | 'state'`.
++  - [x] Implement `ContainerComponent` on `BreadcrumbsComponent`: add `vc = viewChild.required('vc', { read: ViewContainerRef })`.
++  - [x] Define `static readonly contractSchema` covering `permissions`, `rules`, `metadata`, `items`, `home`, `separator`, `routerMode` and invoke `coerceContractProps()`.
++  - [x] Add `itemClick = output<BreadcrumbItem>()` output event and dispatch capability via `WebExperienceAdapterService.dispatchCapability(this.contract().id, 'itemClick', item)`.
++  - [x] Update `breadcrumbs.component.html`:
++    - [x] Render `home` item if present as root element with home icon/label.
++    - [x] Replace `href="javascript:void(0)"` with semantic `<button type="button" class="origo-breadcrumbs__link">` (or `<a [attr.href]="item.url || null">`) to satisfy CSP.
++    - [x] Render dynamic separator via `computedSeparator()` (defaulting to `'/'`) or separator icon.
++    - [x] Add `<ng-container #vc></ng-container>` for dynamic child projection.
++  - [x] Update `breadcrumbs.component.scss` to enforce 100% CSS Logical Properties (`padding-inline`, `margin-inline`, `gap`) and AD-6 token compliance without fallbacks.
++  - [x] Update `breadcrumbs.component.spec.ts` to verify Shadow DOM piercing, Zoneless change detection, `ContainerComponent` `vc`, keyboard interaction, home item rendering, and custom separator.
++
++- [x] **UPDATE `TabsComponent`** (AC: #1, #2, #3, #4, #5, #6, #8)
++  - [x] Expand `TabsProps` to support `items?: Array<TabItem>` (alias for `tabs`), `value?: string` (alias for `activeTab`), `orientation?: 'horizontal' | 'vertical'`, `scrollable?: boolean`, `lazy?: boolean`.
++  - [x] Expand `TabItem` to support `icon?: string`, `closable?: boolean`, `badge?: string | number`.
++  - [x] Modernize DOM query: replace `@ViewChildren` with Signal `tabButtons = viewChildren<ElementRef<HTMLButtonElement>>('tabButton')`.
++  - [x] Implement `ContainerComponent` on `TabsComponent`: add `vc = viewChild.required('vc', { read: ViewContainerRef })`.
++  - [x] Integrate `coerceContractProps()` with `static readonly contractSchema`.
++  - [x] Add output events: `valueChange = output<string>()`, `tabChange = output<TabItem>()`, `tabClose = output<string>()`.
++  - [x] Implement `onTabClose(event: Event, tab: TabItem)`: call `event.stopPropagation()`, emit `tabClose.emit(tab.key)`, and dispatch capability `dispatchCapability(this.contract().id, 'tabClose', tab.key)`.
++  - [x] Expand keyboard navigation in `onKeyDown` to support vertical orientation (`ArrowUp`/`ArrowDown`) while preserving horizontal Arrow navigation and SSR-safe RTL handling via `isPlatformBrowser`.
++  - [x] Update `tabs.component.html` to support vertical layout, close buttons on closable tabs with accessible labels, active tab panel projection (`<slot>` / `<ng-content>`), and `<ng-container #vc></ng-container>`.
++  - [x] Update `tabs.component.scss` to support `origo-tabs--vertical`, scrollable tabs overflow, and CSS Logical Properties with AD-6 tokens.
++  - [x] Update `tabs.component.spec.ts` to cover vertical keyboard navigation, closable tabs with event isolation, `ContainerComponent` `vc`, and Shadow DOM interaction.
++
++- [x] **CREATE `PaginationComponent`** (AC: #1, #2, #3, #4, #5, #6, #8)
++  - [x] Create `packages/angular-renderer/src/components/primitives/pagination/pagination.component.ts`.
++  - [x] Define `PaginationProps` (`first`, `rows`, `totalRecords`, `pageLinkSize`, `rowsPerPageOptions`, `showFirstLastIcon`, `showPageLinks`, `template`, metadata hooks).
++  - [x] Define `PageChangeEvent` (`{ page: number, first: number, rows: number, pageCount: number }`) and `RowsChangeEvent` (`{ rows: number, first: number }`) interfaces.
++  - [x] Implement `OrigoAdapter<PaginationProps>` and `ContainerComponent` (`vc = viewChild.required('vc', { read: ViewContainerRef })`).
++  - [x] Implement `static readonly contractSchema` and `coerceContractProps()`.
++  - [x] Implement computeds: `pageIndex`, `pageCount`, `visiblePageLinks` (sliding window of length `pageLinkSize`), `hasPrevious`, `hasNext`, `isFirstPage`, `isLastPage`.
++  - [x] Define outputs: `pageChange = output<PageChangeEvent>()`, `rowsChange = output<RowsChangeEvent>()`.
++  - [x] Implement navigation handlers: `onPageSelect(page)`, `onNext()`, `onPrevious()`, `onFirst()`, `onLast()`, `onRowsChange(newRows)`.
++  - [x] Dispatch state updates (`updateState`) and capabilities (`dispatchCapability`) via `WebExperienceAdapterService`.
++  - [x] Create `pagination.component.html` with semantic `<nav>`, accessible buttons (`aria-label`, `aria-current="page"`), rows-per-page `<select>`, and `<ng-container #vc></ng-container>`.
++  - [x] Create `pagination.component.scss` using `:host`, CSS Logical Properties, and AD-6 design tokens without fallbacks.
++  - [x] Create `pagination.component.spec.ts` covering page index calculation, bounds clamping, event dispatch, keyboard navigation, and Shadow DOM piercing.
++
++- [x] **CREATE `StepperComponent`** (AC: #1, #2, #3, #4, #5, #6, #7, #8)
++  - [x] Create `packages/angular-renderer/src/components/primitives/stepper/stepper.component.ts`.
++  - [x] Define `StepItem` and `StepperProps` (`steps`, `value`, `linear`, `readonly`, `orientation`, `completedSteps`, metadata hooks).
++  - [x] Define `StepChangeEvent` (`{ activeStep: string, previousStep?: string, index: number }`) interface.
++  - [x] Implement `OrigoAdapter<StepperProps>` and `ContainerComponent` (`vc = viewChild.required('vc', { read: ViewContainerRef })`).
++  - [x] Implement `static readonly contractSchema` and `coerceContractProps()`.
++  - [x] Implement computeds: `activeStepIndex`, `isStepActive(index)`, `isStepCompleted(index)`, `isStepDisabled(index)` (enforcing linear mode constraints: enabled if `!linear || i <= activeStepIndex || previousStepsCompleted`).
++  - [x] Define outputs: `valueChange = output<string>()`, `stepChange = output<StepChangeEvent>()`, `next = output<string>()`, `previous = output<string>()`, `complete = output<void>()`, `stepClick = output<StepItem>()`.
++  - [x] Implement keyboard navigation: `ArrowRight`/`ArrowDown` (next step), `ArrowLeft`/`ArrowUp` (previous step), `Home`/`End`, `Enter`/`Space` (activate).
++  - [x] Dispatch state updates (`updateState`) and capabilities (`dispatchCapability`) via `WebExperienceAdapterService`.
++  - [x] Create `stepper.component.html` with step headers (`role="tablist"`), step buttons (`role="tab"`, `aria-current="step"`), indicator numbers/icons, connector lines, active panel content slot (`<slot>` / `<ng-content>`), and `<ng-container #vc></ng-container>`.
++  - [x] Create `stepper.component.scss` with horizontal/vertical flex layouts, progress connector styling, CSS Logical Properties, and AD-6 tokens.
++  - [x] Create `stepper.component.spec.ts` covering step switching, linear mode gating, keyboard navigation, and Shadow DOM piercing.
++
++- [x] **UPDATE Registrations, Exports, & Test Registry** (AC: #10)
++  - [x] Register `PaginationComponent` (as `'Pagination'` and `'Paginator'`) and `StepperComponent` in `packages/angular-renderer/src/lib/primitives.provider.ts`.
++  - [x] Export `PaginationComponent`, `PaginationProps`, `PageChangeEvent`, `RowsChangeEvent` from `packages/angular-renderer/src/index.ts`.
++  - [x] Export `StepperComponent`, `StepperProps`, `StepItem`, `StepChangeEvent` from `packages/angular-renderer/src/index.ts`.
++  - [x] Update `tools/test-registry/test-registry.yaml`:
++    - [x] Append `2-1-navigation-components` to `affected_stories` in `renderer-primitive-breadcrumbs`.
++    - [x] Append `2-1-navigation-components` to `affected_stories` in `renderer-primitive-tabs`.
++    - [x] Append `2-1-navigation-components` to `affected_stories` in `renderer-primitive-breadcrumbs-ct` and `renderer-primitive-tabs-ct`.
++    - [x] Add new entry `renderer-primitive-pagination` (`packages/angular-renderer/src/components/primitives/pagination/pagination.component.spec.ts`).
++    - [x] Add new entry `renderer-primitive-stepper` (`packages/angular-renderer/src/components/primitives/stepper/stepper.component.spec.ts`).
++  - [x] Run full test validation: `npm test` or Nx test target for `@origo/angular-renderer`.
++
++---
++
++## Dev Notes
++
++### Architecture & Guideline Guardrails (From Epic 1 Retrospective)
++| Category | Requirement | Reference |
++|---|---|---|
++| **Shadow DOM & Invariants** | Every component must specify `standalone: true`, `encapsulation: ViewEncapsulation.ShadowDom`, and `changeDetection: ChangeDetectionStrategy.OnPush`. | `docs/guidelines/component-invariants.md` |
++| **Child Substrate (`ContainerComponent`)** | ALL components MUST implement `ContainerComponent`, declare `vc = viewChild.required('vc', { read: ViewContainerRef })`, and render `<ng-container #vc></ng-container>`. Omitting this breaks nested BADL AST child rendering. | `docs/guidelines/component-invariants.md` |
++| **Contract Schema & Coercion** | All components must declare `static readonly contractSchema` and invoke `coerceContractProps()` on incoming `contract().props` to prevent runtime crashes from dynamic JSON payloads. | `docs/guidelines/component-invariants.md` |
++| **Design Tokens (AD-6)** | ❌ Forbidden: `color: #0066FF;` or `border: 1px solid var(--origo-color-border-default, #ccc);`<br>✅ Required: `color: var(--origo-color-text-primary);` and `border: var(--origo-border-width-default) solid var(--origo-color-border-default);`. Zero fallback literals. | `docs/guidelines/scss-and-tokens.md` |
++| **CSS Logical Properties (RTL)** | ❌ Forbidden: `margin-left`, `padding-right`, `left`, `right`.<br>✅ Required: `margin-inline-start`, `padding-inline-end`, `inset-inline-start`, `inset-inline-end`. | `docs/guidelines/scss-and-tokens.md` |
++| **Testing Standards** | Always use `provideZonelessChangeDetection()`. Query elements through Shadow DOM: `const root = fixture.nativeElement.shadowRoot ?? fixture.nativeElement;`. Dispatch real DOM events (`new MouseEvent('click')`, `new KeyboardEvent('keydown')`) rather than calling component methods directly. | `docs/guidelines/testing-primitives.md` |
++| **Production Overlay Integration** | When navigation menus trigger popup menus or dropdowns, integrate with `OrigoOverlayService` (`packages/angular-renderer/src/lib/overlay/overlay.service.ts`) established in `retro-1` to render overlays at root `<body>` without z-index clipping. | `docs/guidelines/overlay-portal-architecture.md` |
++| **SSR Safety** | Do not access `window` or `document` during initialization. Wrap runtime DOM access (such as direction computation) in `isPlatformBrowser(inject(PLATFORM_ID))`. | `docs/guidelines/component-invariants.md` |
++| **Package Boundaries (AD-4)** | Only import from `@origostudio/core` and Angular packages. Do NOT import from other renderers or CLI packages. | `ARCHITECTURE-SPINE.md` |
++
++### Component Keyboard Navigation Matrix
++| Component | Primary Role | Navigable Keys | Special Behavior |
++|---|---|---|---|
++| **Breadcrumbs** | `navigation` | `Tab`, `Shift+Tab`, `Enter`, `Space` | Focus lands on interactive links only; last (current) item is non-focusable text (`aria-current="page"`). |
++| **Tabs (Horizontal)** | `tablist` | `ArrowLeft`, `ArrowRight`, `Home`, `End` | Switches focus between tabs; automatically wraps around. Adapts to RTL. |
++| **Tabs (Vertical)** | `tablist` | `ArrowUp`, `ArrowDown`, `Home`, `End` | Switches focus vertically between tabs with wrapping. |
++| **Pagination** | `navigation` | `Tab`, `Shift+Tab`, `ArrowLeft`, `ArrowRight`, `Home`, `End` | Moves between page buttons and dropdown; disabled boundary buttons omitted from Tab order. |
++| **Stepper (Horizontal)** | `tablist` | `ArrowRight` (next), `ArrowLeft` (prev), `Home`, `End`, `Enter`/`Space` | Linear mode disables jumping over incomplete steps. |
++| **Stepper (Vertical)** | `tablist` | `ArrowDown` (next), `ArrowUp` (prev), `Home`, `End`, `Enter`/`Space` | Vertical step flow with connector lines. |
++
++### Component Schemas & Contract Specification
++```ts
++// Contract Schemas for coerceContractProps:
++
++export const BreadcrumbsContractSchema = {
++  permissions: 'object',
++  rules: 'object',
++  metadata: 'object',
++  items: 'array',
++  home: 'object',
++  separator: 'string',
++  routerMode: 'string',
++} as const;
++
++export const TabsContractSchema = {
++  permissions: 'object',
++  rules: 'object',
++  metadata: 'object',
++  tabs: 'array',
++  items: 'array',
++  activeTab: 'string',
++  value: 'string',
++  orientation: 'string',
++  scrollable: 'boolean',
++  lazy: 'boolean',
++} as const;
++
++export const PaginationContractSchema = {
++  permissions: 'object',
++  rules: 'object',
++  metadata: 'object',
++  first: 'number',
++  rows: 'number',
++  totalRecords: 'number',
++  pageLinkSize: 'number',
++  rowsPerPageOptions: 'array',
++  showFirstLastIcon: 'boolean',
++  showPageLinks: 'boolean',
++  template: 'string',
++  disabled: 'boolean',
++  size: 'string',
++  variant: 'string',
++} as const;
++
++export const StepperContractSchema = {
++  permissions: 'object',
++  rules: 'object',
++  metadata: 'object',
++  steps: 'array',
++  value: 'string',
++  linear: 'boolean',
++  readonly: 'boolean',
++  orientation: 'string',
++  completedSteps: 'array',
++  disabled: 'boolean',
++} as const;
++```
++
++### References
++- [Source: _bmad-output/planning-artifacts/epics.md#Story 2.1: Navigation Components]
++- [Source: _bmad-output/planning-artifacts/architecture/architecture-origo-design-2026-07-28/phase2-business-ui/Origo-Design-Component-API-Specification.md#Section 3.4 Paginator]
++- [Source: _bmad-output/planning-artifacts/architecture/architecture-origo-design-2026-07-28/phase2-business-ui/Origo-Design-Component-API-Specification.md#Section 4.4 Tabs]
++- [Source: _bmad-output/planning-artifacts/architecture/architecture-origo-design-2026-07-28/phase2-business-ui/Origo-Design-Component-API-Specification.md#Section 4.5 Stepper]
++- [Source: _bmad-output/planning-artifacts/architecture/architecture-origo-design-2026-07-28/phase2-business-ui/Origo-Design-Component-API-Specification.md#Section 6.1 Breadcrumb]
++- [Source: packages/angular-renderer/src/lib/overlay/overlay.service.ts]
++- [Source: docs/guidelines/component-invariants.md]
++- [Source: docs/guidelines/scss-and-tokens.md]
++- [Source: docs/guidelines/testing-primitives.md]
++- [Source: docs/guidelines/overlay-portal-architecture.md]
++- [Source: docs/definition-of-done.md]
++
++---
++
++## Dev Agent Record
++
++### Agent Model Used
++
++Gemini 3.8 Flash (High)
++
++### Debug Log References
++
++- Verified existing `breadcrumbs` and `tabs` components in `packages/angular-renderer/src/components/primitives/`.
++- Confirmed absence of `pagination` and `stepper` components, requiring full implementation.
++- Verified live `OrigoOverlayService` in `packages/angular-renderer/src/lib/overlay/overlay.service.ts` from merged `retro-1` story.
++- Checked `primitives.provider.ts` and `index.ts` registration requirements.
++- Audited `tools/test-registry/test-registry.yaml` preventing duplicate key collisions for `breadcrumbs` and `tabs`.
++- Verified commit history through baseline `e5aafb2` (release 0.0.54).
++
++### Completion Notes List
++
++- Comprehensive story context engine analysis and quality validation completed.
++- Eliminated contradictory output types (`rowsChange` standardized to `RowsChangeEvent`).
++- Added missing `pageLinkSize` sliding window pagination calculation.
++- Fixed CSP violation by replacing `javascript:void(0)` with semantic interactive elements.
++- Modernized `TabsComponent` DOM queries to Signal-based `viewChildren`.
++- Clarified linear progression gating algorithm for `StepperComponent`.
++- Enforced complete architectural invariants, AD-6 zero-literal tokens, and Shadow DOM testing standards.
++- Implemented and upgraded all 4 navigation primitives (`BreadcrumbsComponent`, `TabsComponent`, `PaginationComponent`, `StepperComponent`) in `packages/angular-renderer`.
++- All 4 components implement `ContainerComponent` with `vc = viewChild.required('vc', { read: ViewContainerRef })` and `<ng-container #vc></ng-container>` (P1-AD-5).
++- Implemented runtime property coercion using `coerceContractProps()` and static `contractSchema` on each component (P1-AD-1).
++- Implemented state synchronization and capability dispatching via `WebExperienceAdapterService` (`updateState` and `dispatchCapability`) (AD-11).
++- Enforced 100% CSS Logical Properties and zero-fallback `--origo-*` design tokens across all components (AD-6, NFR-I18N-001).
++- Shadow DOM keyboard navigation with Arrow keys, Tab, Home, End, Enter, Space verified (P1-AD-6, AC-1).
++- Registered `Pagination`, `Paginator`, `Stepper` in `primitives.provider.ts` and exported all primitives and interfaces in `packages/angular-renderer/src/index.ts`.
++- Added test suites for all primitives: `breadcrumbs.component.spec.ts` (8 passing), `tabs.component.spec.ts` (9 passing), `pagination.component.spec.ts` (7 passing), `stepper.component.spec.ts` (7 passing). Full angular-renderer test suite passing (42 test suites, 262 tests).
++- Updated `tools/test-registry/test-registry.yaml` and verified with `npm run validate:registry` (99 verified test cases).
++- Linting verified with 0 errors via `npx nx lint angular-renderer`.
++
++### File List
++
++- `_bmad-output/implementation-artifacts/stories/2-1-navigation-components.md` (STORY SPECIFICATION)
++- `_bmad-output/implementation-artifacts/sprint-status.yaml` (TRACKING)
++- `packages/angular-renderer/src/components/primitives/breadcrumbs/breadcrumbs.component.ts` (UPDATE)
++- `packages/angular-renderer/src/components/primitives/breadcrumbs/breadcrumbs.component.html` (UPDATE)
++- `packages/angular-renderer/src/components/primitives/breadcrumbs/breadcrumbs.component.scss` (UPDATE)
++- `packages/angular-renderer/src/components/primitives/breadcrumbs/breadcrumbs.component.spec.ts` (UPDATE)
++- `packages/angular-renderer/src/components/primitives/tabs/tabs.component.ts` (UPDATE)
++- `packages/angular-renderer/src/components/primitives/tabs/tabs.component.html` (UPDATE)
++- `packages/angular-renderer/src/components/primitives/tabs/tabs.component.scss` (UPDATE)
++- `packages/angular-renderer/src/components/primitives/tabs/tabs.component.spec.ts` (UPDATE)
++- `packages/angular-renderer/src/components/primitives/pagination/pagination.component.ts` (NEW)
++- `packages/angular-renderer/src/components/primitives/pagination/pagination.component.html` (NEW)
++- `packages/angular-renderer/src/components/primitives/pagination/pagination.component.scss` (NEW)
++- `packages/angular-renderer/src/components/primitives/pagination/pagination.component.spec.ts` (NEW)
++- `packages/angular-renderer/src/components/primitives/stepper/stepper.component.ts` (NEW)
++- `packages/angular-renderer/src/components/primitives/stepper/stepper.component.html` (NEW)
++- `packages/angular-renderer/src/components/primitives/stepper/stepper.component.scss` (NEW)
++- `packages/angular-renderer/src/components/primitives/stepper/stepper.component.spec.ts` (NEW)
++- `packages/angular-renderer/src/lib/primitives.provider.ts` (UPDATE)
++- `packages/angular-renderer/src/index.ts` (UPDATE)
++- `tools/test-registry/test-registry.yaml` (UPDATE)
 +
 +### Change Log
 +
-+- 2026-10-12: Completed development of Story retro-1 (Prototype/Standardize Angular Overlay & Portal architecture for Shadow DOM). Implemented CDK overlay substrate, spike harness, SCSS tokens, service models/ref, canonical guidelines, and test registry entries. Ready for code review.
-diff --git a/docs/guidelines/overlay-portal-architecture.md b/docs/guidelines/overlay-portal-architecture.md
-new file mode 100644
-index 0000000..934d700
---- /dev/null
-+++ b/docs/guidelines/overlay-portal-architecture.md
-@@ -0,0 +1,321 @@
-+# Angular Overlay & Portal Architecture for Shadow DOM
-+
-+**Owner:** Charlie (Senior Developer / Platform Architect)  
-+**Status:** Active Canonical Architecture Guide  
-+**Applies To:** `@origo/angular-renderer`, all Epic 1 dropdown primitives, all Epic 2 interaction components  
-+**Related Architecture Decisions:** `AD-4` (Shadow DOM Invariants), `AD-6` (Design Tokens Single Source of Truth), `P1-AD-1` (Angular Standalone & Zoneless), `P1-AD-5` (Composition over Inheritance), `P1-AD-6` (WCAG 2.1 AA A11y), `NFR-I18N-001` (RTL via CSS Logical Properties)
-+
-+---
-+
-+## 1. Executive Overview & Core Problem Statement
-+
-+During Epic 1 implementation, components such as `SelectComponent`, `DatePickerComponent`, and `AutocompleteComponent` rendered dropdown panels directly within their local component templates. Because all Origo UI primitives enforce strict encapsulation via `ViewEncapsulation.ShadowDom`, this pattern resulted in severe production-blocking UI defects:
-+
-+1. **Overflow Clipping Defect:** When a component is hosted within layout primitives (`origo-card`, `origo-grid`, `origo-container`, tables) featuring `overflow: hidden` or `overflow: auto`, dropdowns are clipped by the boundary of the parent container.
-+2. **CSS Stacking Context Trapping:** Local elements cannot escape stacking contexts formed by ancestor CSS properties (`transform`, `contain`, `filter`, `perspective`). Modals and dropdowns end up submerged beneath sibling layers regardless of inner `z-index` values.
-+3. **The Shadow DOM Portal Paradox:** Moving floating panels outside the host ShadowRoot into `document.body` (via Angular CDK Overlay) solves clipping and stacking, but introduces new boundary challenges:
-+   - Scoped component styles and `:host` token definitions are lost.
-+   - `event.target` retargets to the host element, breaking naive outside-click dismissal.
-+   - `document.activeElement` stops at the shadow host, breaking standard focus trapping and return-of-focus logic.
-+   - Server-Side Rendering (SSR) crashes if DOM or `document.body` is accessed without hydration guards.
-+
-+This canonical guide establishes the standardized architecture, services, styles, and golden implementation patterns to resolve these challenges across the Origo Design System.
-+
-+---
-+
-+## 2. Architectural Bindings & Non-Negotiable Invariants
-+
-+| Invariant / Decision                 | Architectural Rule                                                                                                                                                                                                                   | Enforcement Mechanism         |
-+| ------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ----------------------------- |
-+| **Epics.md System Constraint 4**     | All floating UI (dropdowns, popovers, tooltips, modals, dialogs) MUST project to `document.body` via Angular CDK Overlay. Direct template embedding is prohibited.                                                                   | CI Linting & Code Review      |
-+| **P1-AD-1 (Zoneless + Standalone)**  | Standalone-first services using Angular Signals (`signal()`, `computed()`) for state. No reliance on Zone.js or unmanaged RxJS subscriptions.                                                                                        | Unit test suite               |
-+| **AD-6 & CSP Compliance**            | Zero inline `style="..."` attributes on dynamically injected body nodes. Overlays must consume design tokens exclusively through predefined BEM classes (`.origo-overlay-pane`, `.theme-*`) and CSS custom properties (`--origo-*`). | ESLint / CSP audit            |
-+| **AD-4 (Shadow DOM Event Piercing)** | Outside-click detection MUST inspect `event.composedPath()`. Reliance on `event.target` alone is strictly prohibited due to Shadow DOM retargeting.                                                                                  | Automated Spike & Unit tests  |
-+| **P1-AD-6 & WCAG 2.1 AA**            | Modals and dropdowns must trap focus, pierce `shadowRoot.activeElement`, close on `Escape`, and return focus to the originating trigger inside Shadow DOM.                                                                           | Automated Accessibility Tests |
-+| **System Constraint 2 (SSR)**        | Direct access to DOM globals (`window`, `document`) must be guarded with `isPlatformBrowser(this.platformId)`. Non-browser environments must safely no-op.                                                                           | SSR Test Matrix               |
-+| **DestroyRef Lifecycle**             | Every overlay instance must bind to the caller's `DestroyRef`. Destroying the host component must automatically detach overlays and unbind all document listeners.                                                                   | Memory leak tests             |
-+
-+---
-+
-+## 3. Shadow DOM vs. Overlay Challenges & Proven Solutions
-+
-+### 3.1 Container Clipping & Portal Projection
-+
-+- **Challenge:** Placing `.origo-select__dropdown` inside a component template causes parent elements with `overflow: hidden` to clip the dropdown box.
-+- **Solution:** Inject `OrigoOverlayService` (wrapping Angular CDK Overlay). The CDK attaches a single `<div class="cdk-overlay-container">` directly to `document.body`. Floating panels render inside this container, completely bypassing all ancestor CSS stacking and clipping boundaries.
-+
-+### 3.2 Token & Theme Inheritance Across Boundaries
-+
-+- **Challenge:** When content is projected outside the ShadowRoot into `document.body`, styles defined within `:host` or component-scoped SCSS do not apply. Additionally, CSS variables overridden locally on container subtrees are inaccessible at the root.
-+- **Solution:**
-+  1. Global styles defined in `@origo/angular-renderer/src/styles/overlay.scss` define base surface tokens:
-+     ```scss
-+     .origo-overlay-pane {
-+       background-color: var(
-+         --origo-color-surface-overlay,
-+         var(--origo-color-surface-primary, #ffffff)
-+       );
-+       color: var(--origo-color-text-primary, #111827);
-+       border-radius: var(--origo-radius-md, 8px);
-+       box-shadow: var(--origo-shadow-lg, 0 10px 15px -3px rgba(0, 0, 0, 0.1));
-+       padding-inline: var(--origo-space-md, 16px);
-+       padding-block: var(--origo-space-md, 16px);
-+     }
-+     ```
-+  2. `OrigoOverlayService` automatically inspects the originating host's theme context and appends active theme classes (`.theme-light`, `.theme-dark`, `.high-contrast`) directly to `.origo-overlay-pane`.
-+  3. No inline `element.style` injection is ever used, ensuring strict Content Security Policy (CSP) compliance.
-+
-+### 3.3 RTL Internationalization Propagation
-+
-+- **Challenge:** Elements projected to `document.body` detach from ancestor `dir="rtl"` attributes.
-+- **Solution:** `OrigoOverlayService` inspects the trigger element's hierarchy via `target.closest('[dir]')` or `document.documentElement.getAttribute('dir')`. If RTL is detected, `direction: 'rtl'` is passed to the CDK Overlay configuration and `.origo-overlay-pane[dir='rtl']` styles mirror layouts automatically using CSS Logical Properties (`padding-inline`, `inset-inline-start`).
-+
-+### 3.4 Shadow DOM Event Piercing & Outside-Click Dismissal
-+
-+- **Challenge:** In Shadow DOM, when a user clicks a button inside the component, standard document-level event listeners receive `event.target` retargeted to the host element (`<origo-select>`). If an outside-click handler checks `triggerEl.contains(event.target)` or `event.target !== triggerEl`, it causes false-positive dismissals.
-+- **Solution:** Inspect `event.composedPath()`:
-+
-+  ```typescript
-+  const path = event.composedPath ? event.composedPath() : [];
-+  const isInsideOverlay =
-+    overlayPane && (path.includes(overlayPane) || overlayPane.contains(event.target as Node));
-+  const isInsideTrigger =
-+    triggerEl && (path.includes(triggerEl) || triggerEl.contains(event.target as Node));
-+
-+  if (!isInsideOverlay && !isInsideTrigger) {
-+    this.close();
-+  }
-+  ```
-+
-+  `event.composedPath()` returns an array containing the exact internal nodes clicked across all Shadow DOM boundaries.
-+
-+### 3.5 Shadow-DOM-Aware Focus Trapping & ActiveElement Restoration
-+
-+- **Challenge:** `document.activeElement` stops at the shadow host. It does not reveal which element inside the component's ShadowRoot held focus before the overlay opened.
-+- **Solution:** Pierce `shadowRoot.activeElement` recursively:
-+  ```typescript
-+  export function getDeepActiveElement(doc: Document | null): Element | null {
-+    if (!doc) return null;
-+    let active = doc.activeElement;
-+    while (active && active.shadowRoot && active.shadowRoot.activeElement) {
-+      active = active.shadowRoot.activeElement;
-+    }
-+    return active;
-+  }
-+  ```
-+  When the overlay opens, `previousFocusedElement = getDeepActiveElement(document)` captures the true focused internal element. When the overlay closes via `close()` or `Escape`, focus is restored directly to `previousFocusedElement.focus()`.
-+
-+### 3.6 Angular SSR Safety & Hydration Guards
-+
-+- **Challenge:** CDK Overlay attempts to read `window` and `document.body`. Running overlay code on the server during SSR crashes the Node runtime.
-+- **Solution:** `OrigoOverlayService` injects `PLATFORM_ID` and checks `isPlatformBrowser(this.platformId)`. In non-browser server contexts, `create()` immediately returns a safe `OrigoNoopOverlayRef` that performs no-op operations without touching globals.
-+
-+---
-+
-+## 4. Golden Implementation Patterns
-+
-+### Pattern A: Connected Overlay (Dropdown / Select / Autocomplete / DatePicker)
-+
-+```typescript
-+import {
-+  Component,
-+  ElementRef,
-+  TemplateRef,
-+  ViewChild,
-+  ViewContainerRef,
-+  ViewEncapsulation,
-+  inject,
-+  signal,
-+  DestroyRef,
-+  OnInit,
-+} from '@angular/core';
-+import { CommonModule } from '@angular/common';
-+import { OrigoOverlayService, OrigoOverlayRef } from '@origostudio/angular-renderer';
-+
-+@Component({
-+  selector: 'origo-select-example',
-+  standalone: true,
-+  imports: [CommonModule],
-+  encapsulation: ViewEncapsulation.ShadowDom,
-+  template: `
-+    <button
-+      #triggerBtn
-+      type="button"
-+      class="origo-select__trigger"
-+      [attr.aria-expanded]="isOpen()"
-+      [attr.aria-haspopup]="'listbox'"
-+      (click)="toggleDropdown()"
-+    >
-+      <span>Select Option</span>
-+    </button>
-+
-+    <ng-template #dropdownTemplate>
-+      <ul class="origo-select__dropdown" role="listbox">
-+        <li role="option" tabindex="0" (click)="selectOption('Opt 1')">Option 1</li>
-+        <li role="option" tabindex="0" (click)="selectOption('Opt 2')">Option 2</li>
-+      </ul>
-+    </ng-template>
-+  `,
-+  styleUrls: ['./select.component.scss'],
-+})
-+export class SelectExampleComponent implements OnInit {
-+  private readonly overlayService = inject(OrigoOverlayService);
-+  private readonly destroyRef = inject(DestroyRef);
-+  private readonly vcr = inject(ViewContainerRef);
-+
-+  @ViewChild('triggerBtn', { static: true })
-+  triggerBtnRef!: ElementRef<HTMLButtonElement>;
-+
-+  @ViewChild('dropdownTemplate', { static: true })
-+  dropdownTemplate!: TemplateRef<unknown>;
-+
-+  readonly isOpen = signal(false);
-+  private overlayRef: OrigoOverlayRef | null = null;
-+
-+  ngOnInit(): void {
-+    this.overlayRef = this.overlayService.create(
-+      {
-+        position: {
-+          type: 'connected',
-+          target: this.triggerBtnRef,
-+          originX: 'start',
-+          originY: 'bottom',
-+          overlayX: 'start',
-+          overlayY: 'top',
-+          offset: [0, 4],
-+          autoRepositionOnResize: true,
-+        },
-+        hasBackdrop: false,
-+        closeOnOutsideClick: true,
-+        closeOnEscape: true,
-+        trapFocus: false,
-+        viewContainerRef: this.vcr,
-+      },
-+      this.destroyRef
-+    );
++- 2026-10-13: Completed development of Story 2.1 (Navigation Components). Implemented Breadcrumbs, Tabs, Pagination, and Stepper navigation primitives with 100% unit test coverage, test registry entries, and full adherence to architectural invariants. Ready for code review.
+diff --git a/packages/angular-renderer/src/components/primitives/breadcrumbs/breadcrumbs.component.html b/packages/angular-renderer/src/components/primitives/breadcrumbs/breadcrumbs.component.html
+index bbb213a..7ad1e27 100644
+--- a/packages/angular-renderer/src/components/primitives/breadcrumbs/breadcrumbs.component.html
++++ b/packages/angular-renderer/src/components/primitives/breadcrumbs/breadcrumbs.component.html
+@@ -1,24 +1,89 @@
+ <ol class="origo-breadcrumbs__list">
++  @if (computedHome(); as homeItem) {
++    <li class="origo-breadcrumbs__item origo-breadcrumbs__item--home">
++      @if (computedItems().length > 0) {
++        @if (homeItem.url) {
++          <a
++            class="origo-breadcrumbs__link"
++            [attr.href]="homeItem.url"
++            [class.origo-breadcrumbs__link--disabled]="homeItem.disabled"
++            (click)="onItemClick($event, homeItem, false)"
++          >
++            @if (homeItem.icon) {
++              <span class="origo-breadcrumbs__icon" aria-hidden="true">{{ homeItem.icon }}</span>
++            }
++            <span>{{ homeItem.label }}</span>
++          </a>
++        } @else {
++          <button
++            type="button"
++            class="origo-breadcrumbs__link"
++            [disabled]="homeItem.disabled"
++            (click)="onItemClick($event, homeItem, false)"
++          >
++            @if (homeItem.icon) {
++              <span class="origo-breadcrumbs__icon" aria-hidden="true">{{ homeItem.icon }}</span>
++            }
++            <span>{{ homeItem.label }}</span>
++          </button>
++        }
++        <span class="origo-breadcrumbs__separator" aria-hidden="true">{{
++          computedSeparator()
++        }}</span>
++      } @else {
++        <span class="origo-breadcrumbs__current" [attr.aria-current]="'page'">
++          @if (homeItem.icon) {
++            <span class="origo-breadcrumbs__icon" aria-hidden="true">{{ homeItem.icon }}</span>
++          }
++          {{ homeItem.label }}
++        </span>
++      }
++    </li>
 +  }
 +
-+  toggleDropdown(): void {
-+    if (this.isOpen()) {
-+      this.close();
-+    } else {
-+      this.open();
-+    }
-+  }
-+
-+  open(): void {
-+    this.overlayRef?.open(this.dropdownTemplate);
-+    this.isOpen.set(true);
-+  }
-+
-+  close(): void {
-+    this.overlayRef?.close();
-+    this.isOpen.set(false);
-+  }
-+
-+  selectOption(val: string): void {
-+    this.close();
-+  }
-+}
-+```
-+
-+### Pattern B: Global Overlay (Modal Dialog / Drawer)
-+
-+```typescript
-+import {
-+  Component,
-+  TemplateRef,
-+  ViewChild,
-+  ViewContainerRef,
-+  ViewEncapsulation,
-+  inject,
-+  DestroyRef,
-+} from '@angular/core';
-+import { CommonModule } from '@angular/common';
-+import { OrigoOverlayService, OrigoOverlayRef } from '@origostudio/angular-renderer';
-+
-+@Component({
-+  selector: 'origo-modal-example',
-+  standalone: true,
-+  imports: [CommonModule],
-+  encapsulation: ViewEncapsulation.ShadowDom,
-+  template: `
-+    <button type="button" (click)="openModal()">Open Confirm Modal</button>
-+
-+    <ng-template #modalTemplate>
-+      <div role="dialog" aria-modal="true" class="origo-modal-pane">
-+        <h2>Confirm Transaction</h2>
-+        <p>Are you sure you want to proceed?</p>
-+        <button type="button" (click)="confirm(true)">Confirm</button>
-+        <button type="button" (click)="confirm(false)">Cancel</button>
-+      </div>
-+    </ng-template>
-+  `,
-+})
-+export class ModalExampleComponent {
-+  private readonly overlayService = inject(OrigoOverlayService);
-+  private readonly destroyRef = inject(DestroyRef);
-+  private readonly vcr = inject(ViewContainerRef);
-+
-+  @ViewChild('modalTemplate', { static: true })
-+  modalTemplate!: TemplateRef<unknown>;
-+
-+  private overlayRef: OrigoOverlayRef<boolean> | null = null;
-+
-+  async openModal(): Promise<boolean> {
-+    this.overlayRef = this.overlayService.create<boolean>(
-+      {
-+        position: {
-+          type: 'global',
-+          position: 'center',
-+          maxWidth: '560px',
-+        },
-+        hasBackdrop: true,
-+        closeOnBackdropClick: true,
-+        closeOnEscape: true,
-+        trapFocus: true,
-+        viewContainerRef: this.vcr,
-+      },
-+      this.destroyRef
-+    );
-+
-+    this.overlayRef.open(this.modalTemplate);
-+    const result = await this.overlayRef.afterClosed();
-+    return result ?? false;
-+  }
-+
-+  confirm(decision: boolean): void {
-+    this.overlayRef?.close(decision);
-+  }
-+}
-+```
-+
-+---
-+
-+## 5. Migration Roadmap for Epic 1 Primitives
-+
-+Existing Epic 1 floating dropdowns must be migrated to `OrigoOverlayService`:
-+
-+| Component               | Current State                                      | Migration Plan                                                                                   | Target Milestone |
-+| ----------------------- | -------------------------------------------------- | ------------------------------------------------------------------------------------------------ | ---------------- |
-+| `SelectComponent`       | Template inline `.origo-select__dropdown`          | Wrap dropdown in `<ng-template>` and attach via `OrigoOverlayService` with `connected` position. | Epic 2 Sprint 1  |
-+| `DatePickerComponent`   | Template inline `.origo-date-picker__dropdown`     | Project calendar popup via `OrigoOverlayService`, removing local `overflow` clipping risks.      | Epic 2 Sprint 1  |
-+| `AutocompleteComponent` | Template inline `.origo-autocomplete__suggestions` | Migrate suggestion list to `OrigoOverlayService` with `autoRepositionOnResize: true`.            | Epic 2 Sprint 1  |
-+| `MultiSelectComponent`  | Template inline dropdown                           | Project checkbox menu via `OrigoOverlayService`.                                                 | Epic 2 Sprint 1  |
-+| `ComboboxComponent`     | Template inline dropdown                           | Project filtered options via `OrigoOverlayService`.                                              | Epic 2 Sprint 1  |
-+
-+---
-+
-+## 6. Prerequisite Contract & PR Pre-Flight Checklist for Epic 2 Story 2.2
-+
-+Before submitting any Pull Request implementing Story 2.2 (`2-2-modal-and-overlay-components`), authors must verify every item on this checklist:
-+
-+- [ ] **Portal Root Projection:** The component injects `OrigoOverlayService` and renders panels outside its ShadowRoot via CDK Overlay.
-+- [ ] **Zero Inline Styles (CSP):** No dynamic inline `style="..."` attributes are injected onto body nodes. Styling is governed by `.origo-overlay-pane` and CSS custom properties.
-+- [ ] **Composed Path Outside Clicks:** Outside-click handlers evaluate `event.composedPath()` across Shadow DOM boundaries.
-+- [ ] **Shadow-DOM Focus Trap:** Focus moves inside the panel upon opening; `Tab` / `Shift+Tab` cycles exclusively within the panel; pressing `Escape` closes the overlay and restores focus to `previousFocusedElement` inside the ShadowRoot.
-+- [ ] **ARIA Sync:** Trigger element binds `aria-expanded`, `aria-haspopup`, and `aria-controls`.
-+- [ ] **SSR Guard:** All DOM/body manipulation is guarded by `isPlatformBrowser` or abstracted through `OrigoOverlayService`.
-+- [ ] **Lifecycle Teardown:** `DestroyRef` is linked to auto-dispose the overlay on component teardown.
-+- [ ] **Motion & Accessibility:** Animations respect `--origo-motion-duration-*` and `@media (prefers-reduced-motion: reduce)`.
-+- [ ] **Test Registry Entry:** The component's test cases are cataloged in `tools/test-registry/test-registry.yaml`.
-diff --git a/package-lock.json b/package-lock.json
-index 5ad19d6..5c4a697 100644
---- a/package-lock.json
-+++ b/package-lock.json
-@@ -1,15 +1,16 @@
- {
-   "name": "@origostudio/origo-design",
--  "version": "0.0.37",
-+  "version": "0.0.53",
-   "lockfileVersion": 3,
-   "requires": true,
-   "packages": {
-     "": {
-       "name": "@origostudio/origo-design",
--      "version": "0.0.37",
-+      "version": "0.0.53",
-       "license": "MIT",
-       "dependencies": {
-         "@angular/animations": "22.0.8",
-+        "@angular/cdk": "22.0.7",
-         "@angular/common": "22.0.8",
-         "@angular/compiler": "22.0.8",
-         "@angular/core": "22.0.8",
-@@ -2335,6 +2336,34 @@
-         "node": ">=10.13.0"
+   @for (item of computedItems(); track $index; let last = $last) {
+     <li class="origo-breadcrumbs__item">
+-      @if (!last && item.outcomeRef) {
+-        <a
+-          class="origo-breadcrumbs__link"
+-          href="javascript:void(0)"
+-          (click)="onItemClick($event, item, last)"
+-        >
+-          <span>{{ item.label }}</span>
+-        </a>
++      @if (!last) {
++        @if (item.url) {
++          <a
++            class="origo-breadcrumbs__link"
++            [attr.href]="item.url"
++            [class.origo-breadcrumbs__link--disabled]="item.disabled"
++            (click)="onItemClick($event, item, last)"
++          >
++            @if (item.icon) {
++              <span class="origo-breadcrumbs__icon" aria-hidden="true">{{ item.icon }}</span>
++            }
++            <span>{{ item.label }}</span>
++          </a>
++        } @else {
++          <button
++            type="button"
++            class="origo-breadcrumbs__link"
++            [disabled]="item.disabled"
++            (click)="onItemClick($event, item, last)"
++          >
++            @if (item.icon) {
++              <span class="origo-breadcrumbs__icon" aria-hidden="true">{{ item.icon }}</span>
++            }
++            <span>{{ item.label }}</span>
++          </button>
++        }
+       } @else {
+-        <span
+-          [class.origo-breadcrumbs__current]="last"
+-          [attr.aria-current]="last ? 'page' : null"
+-          >{{ item.label }}</span
+-        >
++        <span class="origo-breadcrumbs__current" [attr.aria-current]="'page'">
++          @if (item.icon) {
++            <span class="origo-breadcrumbs__icon" aria-hidden="true">{{ item.icon }}</span>
++          }
++          {{ item.label }}
++        </span>
        }
-     },
-+    "node_modules/@angular/cdk": {
-+      "version": "22.0.7",
-+      "resolved": "https://registry.npmjs.org/@angular/cdk/-/cdk-22.0.7.tgz",
-+      "integrity": "sha512-Omh8YkevuG7psuOw8KvPbPINxwqC0iqfosC6monTakb4xX6qP2wprF71PLIFiXSP2rl+OxHLRcf3nPchsPCE5Q==",
-+      "license": "MIT",
-+      "dependencies": {
-+        "parse5": "^8.0.0",
-+        "tslib": "^2.3.0"
++
+       @if (!last) {
+-        <span class="origo-breadcrumbs__separator" aria-hidden="true">/</span>
++        <span class="origo-breadcrumbs__separator" aria-hidden="true">{{
++          computedSeparator()
++        }}</span>
+       }
+     </li>
+   }
+ </ol>
++<ng-container #vc></ng-container>
+diff --git a/packages/angular-renderer/src/components/primitives/breadcrumbs/breadcrumbs.component.scss b/packages/angular-renderer/src/components/primitives/breadcrumbs/breadcrumbs.component.scss
+index 4e91f63..5ac3766 100644
+--- a/packages/angular-renderer/src/components/primitives/breadcrumbs/breadcrumbs.component.scss
++++ b/packages/angular-renderer/src/components/primitives/breadcrumbs/breadcrumbs.component.scss
+@@ -1,5 +1,16 @@
+ :host {
+   display: block;
++  box-sizing: border-box;
++
++  *,
++  *::before,
++  *::after {
++    box-sizing: inherit;
++  }
++}
++
++:host([hidden]) {
++  display: none !important;
+ }
+ 
+ .origo-breadcrumbs__list {
+@@ -9,33 +20,68 @@
+   list-style: none;
+   margin: 0;
+   padding: 0;
+-  gap: var(--spacing-sm, 8px);
++  gap: var(--origo-spacing-sm);
+ }
+ 
+ .origo-breadcrumbs__item {
+-  display: flex;
++  display: inline-flex;
+   align-items: center;
+-  font-size: 14px;
++  font-family: var(--origo-typography-body-font-family);
++  font-size: var(--origo-typography-button-font-size);
++  color: var(--origo-color-text-primary);
+ }
+ 
+ .origo-breadcrumbs__link {
+-  color: var(--color-primary, #1976d2);
++  display: inline-flex;
++  align-items: center;
++  gap: var(--origo-spacing-xs);
++  background: transparent;
++  border: none;
++  padding: 0;
++  margin: 0;
++  cursor: pointer;
++  font-family: inherit;
++  font-size: inherit;
++  color: var(--origo-color-surface-primary);
+   text-decoration: none;
++  transition: color var(--origo-duration-fast) ease;
+ 
+-  &:hover,
+-  &:focus-visible {
++  &:hover:not(:disabled) {
++    color: var(--origo-color-surface-primary-hover);
+     text-decoration: underline;
++  }
++
++  &:focus-visible {
++    outline: 2px solid var(--origo-color-focus);
+     outline-offset: 2px;
+   }
++
++  &:disabled,
++  &--disabled {
++    cursor: not-allowed;
++    color: var(--origo-color-text-disabled);
++    opacity: var(--origo-opacity-disabled);
++    pointer-events: none;
++  }
+ }
+ 
+ .origo-breadcrumbs__current {
+-  color: var(--color-text-secondary, #666666);
++  display: inline-flex;
++  align-items: center;
++  gap: var(--origo-spacing-xs);
++  color: var(--origo-color-text-muted);
+   font-weight: 500;
+ }
+ 
+ .origo-breadcrumbs__separator {
+-  color: var(--color-text-hint, #999999);
+-  margin-inline-start: var(--spacing-sm, 8px);
++  display: inline-flex;
++  align-items: center;
++  color: var(--origo-color-text-muted);
++  margin-inline-start: var(--origo-spacing-sm);
+   user-select: none;
+ }
++
++.origo-breadcrumbs__icon {
++  display: inline-flex;
++  align-items: center;
++}
+diff --git a/packages/angular-renderer/src/components/primitives/breadcrumbs/breadcrumbs.component.spec.ts b/packages/angular-renderer/src/components/primitives/breadcrumbs/breadcrumbs.component.spec.ts
+index 57f5d4c..304f8e5 100644
+--- a/packages/angular-renderer/src/components/primitives/breadcrumbs/breadcrumbs.component.spec.ts
++++ b/packages/angular-renderer/src/components/primitives/breadcrumbs/breadcrumbs.component.spec.ts
+@@ -1,17 +1,19 @@
+ import { ComponentFixture, TestBed } from '@angular/core/testing';
+-import { BreadcrumbsComponent, BreadcrumbsProps } from './breadcrumbs.component';
+-import { provideZonelessChangeDetection } from '@angular/core';
++import { BreadcrumbsComponent, BreadcrumbsProps, BreadcrumbItem } from './breadcrumbs.component';
++import { provideZonelessChangeDetection, ViewContainerRef } from '@angular/core';
+ import { WebExperienceAdapterService } from '../../../adapters/web/experience-adapter.service';
+ import { InteractionContract } from '@origostudio/core';
+-import { By } from '@angular/platform-browser';
+ 
+ describe('BreadcrumbsComponent', () => {
+   let component: BreadcrumbsComponent;
+   let fixture: ComponentFixture<BreadcrumbsComponent>;
+-  let mockAdapter: { updateState: jest.Mock };
++  let mockAdapter: { updateState: jest.Mock; dispatchCapability: jest.Mock };
+ 
+   beforeEach(async () => {
+-    mockAdapter = { updateState: jest.fn() };
++    mockAdapter = {
++      updateState: jest.fn(),
++      dispatchCapability: jest.fn(),
++    };
+ 
+     await TestBed.configureTestingModule({
+       imports: [BreadcrumbsComponent],
+@@ -25,7 +27,7 @@ describe('BreadcrumbsComponent', () => {
+     component = fixture.componentInstance;
+   });
+ 
+-  it('should create', () => {
++  it('should create and implement ContainerComponent with ViewContainerRef vc', () => {
+     fixture.componentRef.setInput('contract', {
+       id: 'bc-1',
+       type: 'Command',
+@@ -36,6 +38,8 @@ describe('BreadcrumbsComponent', () => {
+ 
+     fixture.detectChanges();
+     expect(component).toBeTruthy();
++    expect(component.vc).toBeDefined();
++    expect(component.vc()).toBeInstanceOf(ViewContainerRef);
+   });
+ 
+   it('should render items correctly and bind aria attributes', () => {
+@@ -54,35 +58,140 @@ describe('BreadcrumbsComponent', () => {
+ 
+     fixture.detectChanges();
+ 
+-    const host = fixture.debugElement.nativeElement;
++    const host = fixture.nativeElement;
+     expect(host.getAttribute('aria-label')).toBe('Breadcrumb Navigation');
+ 
+-    const items = fixture.debugElement.queryAll(By.css('.origo-breadcrumbs__item'));
++    const root = fixture.nativeElement.shadowRoot ?? fixture.nativeElement;
++    const items = root.querySelectorAll('.origo-breadcrumbs__item');
+     expect(items.length).toBe(3);
+ 
+-    const links = fixture.debugElement.queryAll(By.css('.origo-breadcrumbs__link'));
++    const links = root.querySelectorAll('.origo-breadcrumbs__link');
+     expect(links.length).toBe(2);
+ 
+-    const currents = fixture.debugElement.queryAll(By.css('.origo-breadcrumbs__current'));
++    const currents = root.querySelectorAll('.origo-breadcrumbs__current');
+     expect(currents.length).toBe(1);
+-    expect(currents[0].nativeElement.getAttribute('aria-current')).toBe('page');
++    expect(currents[0].getAttribute('aria-current')).toBe('page');
++    expect(currents[0].textContent?.trim()).toBe('Shoes');
++  });
++
++  it('should render custom home item as first item when provided', () => {
++    fixture.componentRef.setInput('contract', {
++      id: 'bc-home',
++      type: 'Breadcrumbs',
++      props: {
++        home: { label: 'Root', icon: 'home-icon', outcomeRef: 'outcome-root' },
++        items: [{ label: 'Section', outcomeRef: 'outcome-section' }, { label: 'Detail' }],
 +      },
-+      "peerDependencies": {
-+        "@angular/common": "^22.0.0 || ^23.0.0",
-+        "@angular/core": "^22.0.0 || ^23.0.0",
-+        "@angular/platform-browser": "^22.0.0 || ^23.0.0",
-+        "rxjs": "^6.5.3 || ^7.4.0"
-+      }
-+    },
-+    "node_modules/@angular/cdk/node_modules/parse5": {
-+      "version": "8.0.1",
-+      "resolved": "https://registry.npmjs.org/parse5/-/parse5-8.0.1.tgz",
-+      "integrity": "sha512-z1e/HMG90obSGeidlli3hj7cbocou0/wa5HacvI3ASx34PecNjNQeaHNo5WIZpWofN9kgkqV1q5YvXe3F0FoPw==",
-+      "license": "MIT",
-+      "dependencies": {
-+        "entities": "^8.0.0"
++    } as InteractionContract<BreadcrumbsProps>);
++
++    fixture.detectChanges();
++
++    const root = fixture.nativeElement.shadowRoot ?? fixture.nativeElement;
++    const items = root.querySelectorAll('.origo-breadcrumbs__item');
++    expect(items.length).toBe(3);
++
++    const homeItem = items[0];
++    expect(homeItem.classList.contains('origo-breadcrumbs__item--home')).toBe(true);
++    expect(homeItem.textContent).toContain('Root');
++    expect(homeItem.textContent).toContain('home-icon');
+   });
+ 
+-  it('should call updateState on clickable item click', () => {
++  it('should render custom separator when specified', () => {
++    fixture.componentRef.setInput('contract', {
++      id: 'bc-sep',
++      type: 'Breadcrumbs',
++      props: {
++        separator: '>',
++        items: [{ label: 'First', outcomeRef: 'out-1' }, { label: 'Second' }],
 +      },
-+      "funding": {
-+        "url": "https://github.com/inikulin/parse5?sponsor=1"
-+      }
-+    },
-     "node_modules/@angular/cli": {
-       "version": "22.0.9",
-       "resolved": "https://registry.npmjs.org/@angular/cli/-/cli-22.0.9.tgz",
-@@ -21093,7 +21122,6 @@
-       "version": "8.0.0",
-       "resolved": "https://registry.npmjs.org/entities/-/entities-8.0.0.tgz",
-       "integrity": "sha512-zwfzJecQ/Uej6tusMqwAqU/6KL2XaB2VZ2Jg54Je6ahNBGNH6Ek6g3jjNCF0fG9EWQKGZNddNjU5F1ZQn/sBnA==",
--      "dev": true,
-       "license": "BSD-2-Clause",
-       "engines": {
-         "node": ">=20.19.0"
-diff --git a/package.json b/package.json
-index 9030606..ef549c8 100644
---- a/package.json
-+++ b/package.json
-@@ -15,6 +15,7 @@
-     "perf:benchmark": "ts-node tools/benchmarks/compare-baseline.ts",
-     "perf:test": "ts-node tools/benchmarks/run-tests.ts",
-     "spike:epic7": "node tools/spikes/epic7-worker-csp/build-spike.js",
-+    "spike:overlay": "ts-node --project tsconfig.base.json tools/spikes/overlay-shadowdom/run-spike.ts",
-     "prepare": "husky",
-     "release": "nx release --skip-publish",
-     "validate:registry": "ts-node --project tsconfig.base.json tools/test-registry/validate-registry.ts"
-@@ -22,6 +23,7 @@
-   "private": false,
-   "dependencies": {
-     "@angular/animations": "22.0.8",
-+    "@angular/cdk": "22.0.7",
-     "@angular/common": "22.0.8",
-     "@angular/compiler": "22.0.8",
-     "@angular/core": "22.0.8",
-diff --git a/packages/angular-renderer/package.json b/packages/angular-renderer/package.json
-index 39c92f9..c638557 100644
---- a/packages/angular-renderer/package.json
-+++ b/packages/angular-renderer/package.json
-@@ -11,14 +11,19 @@
-     "tslib": "^2.3.0",
-     "@analogjs/vite-plugin-angular": "^2.7.1",
-     "zone.js": "^0.16.3",
--    "@axe-core/playwright": "^4.13.0"
-+    "@axe-core/playwright": "^4.13.0",
-+    "rxjs": "~7.8.0"
++    } as InteractionContract<BreadcrumbsProps>);
++
++    fixture.detectChanges();
++
++    const root = fixture.nativeElement.shadowRoot ?? fixture.nativeElement;
++    const separator = root.querySelector('.origo-breadcrumbs__separator');
++    expect(separator).toBeTruthy();
++    expect(separator?.textContent?.trim()).toBe('>');
++  });
++
++  it('should call updateState, dispatchCapability, and emit itemClick on link click', () => {
++    const itemToClick: BreadcrumbItem = { label: 'Home', outcomeRef: 'outcome-home' };
++    const spyOutput = jest.fn();
++    component.itemClick.subscribe(spyOutput);
++
+     fixture.componentRef.setInput('contract', {
+       id: 'bc-1',
+       type: 'Command',
+       props: {
+-        items: [{ label: 'Home', outcomeRef: 'outcome-home' }, { label: 'Products' }],
++        items: [itemToClick, { label: 'Products' }],
+       },
+     } as InteractionContract<BreadcrumbsProps>);
+ 
+     fixture.detectChanges();
+ 
+-    const link = fixture.debugElement.query(By.css('.origo-breadcrumbs__link'));
+-    link.triggerEventHandler('click', new Event('click'));
++    const root = fixture.nativeElement.shadowRoot ?? fixture.nativeElement;
++    const link = root.querySelector('.origo-breadcrumbs__link') as
++      | HTMLButtonElement
++      | HTMLAnchorElement;
++    expect(link).toBeTruthy();
++
++    link.click();
+ 
+     expect(mockAdapter.updateState).toHaveBeenCalledWith('bc-1', 'activeOutcome', 'outcome-home');
++    expect(mockAdapter.dispatchCapability).toHaveBeenCalledWith(
++      'bc-1',
++      'itemClick',
++      expect.objectContaining({
++        label: 'Home',
++        outcomeRef: 'outcome-home',
++      })
++    );
++    expect(spyOutput).toHaveBeenCalledWith(
++      expect.objectContaining({
++        label: 'Home',
++        outcomeRef: 'outcome-home',
++      })
++    );
++  });
++
++  it('should prevent navigation and not update state when item is disabled', () => {
++    fixture.componentRef.setInput('contract', {
++      id: 'bc-disabled',
++      type: 'Breadcrumbs',
++      props: {
++        items: [
++          { label: 'Disabled Home', outcomeRef: 'outcome-home', disabled: true },
++          { label: 'Current' },
++        ],
++      },
++    } as InteractionContract<BreadcrumbsProps>);
++
++    fixture.detectChanges();
++
++    const root = fixture.nativeElement.shadowRoot ?? fixture.nativeElement;
++    const link = root.querySelector('.origo-breadcrumbs__link') as HTMLButtonElement;
++    expect(link.disabled).toBe(true);
++
++    link.click();
++
++    expect(mockAdapter.updateState).not.toHaveBeenCalled();
++    expect(mockAdapter.dispatchCapability).not.toHaveBeenCalled();
++  });
++
++  it('should render semantic button without javascript:void(0) href to satisfy CSP', () => {
++    fixture.componentRef.setInput('contract', {
++      id: 'bc-csp',
++      type: 'Breadcrumbs',
++      props: {
++        items: [{ label: 'Safe Link', outcomeRef: 'out-1' }, { label: 'End' }],
++      },
++    } as InteractionContract<BreadcrumbsProps>);
++
++    fixture.detectChanges();
++
++    const root = fixture.nativeElement.shadowRoot ?? fixture.nativeElement;
++    const htmlContent = root.innerHTML;
++    expect(htmlContent).not.toContain('javascript:void(0)');
+   });
+ 
+   it('should support RTL layouts by avoiding physical CSS properties', () => {
+diff --git a/packages/angular-renderer/src/components/primitives/breadcrumbs/breadcrumbs.component.ts b/packages/angular-renderer/src/components/primitives/breadcrumbs/breadcrumbs.component.ts
+index 8cf3059..722fb1f 100644
+--- a/packages/angular-renderer/src/components/primitives/breadcrumbs/breadcrumbs.component.ts
++++ b/packages/angular-renderer/src/components/primitives/breadcrumbs/breadcrumbs.component.ts
+@@ -1,19 +1,29 @@
+ import {
+   Component,
+   input,
++  output,
+   ChangeDetectionStrategy,
+   computed,
+   ViewEncapsulation,
+   inject,
++  viewChild,
++  ViewContainerRef,
+ } from '@angular/core';
+ import { DomSanitizer } from '@angular/platform-browser';
+ import { InteractionContract } from '@origostudio/core';
+-import { OrigoAdapter } from '../../../adapters/web/adapter';
++import {
++  OrigoAdapter,
++  ContainerComponent as IContainerComponent,
++  coerceContractProps,
++} from '../../../adapters/web/adapter';
+ import { WebExperienceAdapterService } from '../../../adapters/web/experience-adapter.service';
+ 
+ export interface BreadcrumbItem {
+   label: string;
++  icon?: string;
+   outcomeRef?: string;
++  url?: string;
++  disabled?: boolean;
+ }
+ 
+ export interface BreadcrumbsProps {
+@@ -21,10 +31,28 @@ export interface BreadcrumbsProps {
+   rules?: Record<string, unknown>;
+   metadata?: Record<string, unknown>;
+   items?: Array<BreadcrumbItem>;
++  home?: BreadcrumbItem;
++  separator?: string;
++  routerMode?: 'angular' | 'native' | 'state';
+   'aria-label'?: string;
+   'aria-describedby'?: string;
+ }
+ 
++export const BreadcrumbsContractSchema: Record<
++  keyof BreadcrumbsProps,
++  'string' | 'number' | 'boolean' | 'array' | 'object'
++> = {
++  permissions: 'object',
++  rules: 'object',
++  metadata: 'object',
++  items: 'array',
++  home: 'object',
++  separator: 'string',
++  routerMode: 'string',
++  'aria-label': 'string',
++  'aria-describedby': 'string',
++};
++
+ @Component({
+   selector: 'origo-breadcrumbs',
+   standalone: true,
+@@ -40,50 +68,84 @@ export interface BreadcrumbsProps {
+     role: 'navigation',
    },
-   "peerDependencies": {
-+    "@angular/cdk": ">=18.0.0",
-     "@angular/common": ">=18.0.0",
-     "@angular/core": ">=18.0.0",
-     "@angular/forms": ">=18.0.0",
-     "@angular/platform-browser": ">=18.0.0"
-   },
-+  "devDependencies": {
-+    "@angular/cdk": "22.0.7"
-+  },
-   "repository": {
-     "type": "git",
-     "url": "https://github.com/OrigoStudio/origo-design.git"
-diff --git a/packages/angular-renderer/src/index.ts b/packages/angular-renderer/src/index.ts
-index ab46011..63affc2 100644
---- a/packages/angular-renderer/src/index.ts
-+++ b/packages/angular-renderer/src/index.ts
-@@ -39,3 +39,6 @@ export * from './components/primitives/divider/divider.component';
- export * from './components/primitives/file-input/file-input.component';
- export * from './components/primitives/dropzone/dropzone.component';
- export * from './components/primitives/rich-text-editor/rich-text-editor.component';
-+export * from './lib/overlay/overlay.models';
-+export * from './lib/overlay/overlay-ref';
-+export * from './lib/overlay/overlay.service';
-diff --git a/packages/angular-renderer/src/lib/overlay/overlay-ref.ts b/packages/angular-renderer/src/lib/overlay/overlay-ref.ts
-new file mode 100644
-index 0000000..b82302d
---- /dev/null
-+++ b/packages/angular-renderer/src/lib/overlay/overlay-ref.ts
-@@ -0,0 +1,265 @@
-+import { DestroyRef, ElementRef, TemplateRef, Type, ViewContainerRef } from '@angular/core';
-+import { OverlayRef as CdkOverlayRef } from '@angular/cdk/overlay';
-+import { ComponentPortal, TemplatePortal } from '@angular/cdk/portal';
-+import { Subscription } from 'rxjs';
-+import { OrigoOverlayConfig, OrigoOverlayContent, OrigoOverlayRef } from './overlay.models';
+ })
+-export class BreadcrumbsComponent implements OrigoAdapter<BreadcrumbsProps> {
+-  static readonly contractSchema = {
+-    permissions: 'object',
+-    rules: 'object',
+-    metadata: 'object',
+-    items: 'array',
+-  };
++export class BreadcrumbsComponent implements OrigoAdapter<BreadcrumbsProps>, IContainerComponent {
++  static readonly contractSchema = BreadcrumbsContractSchema;
+   static readonly strictContract = false;
+ 
+   contract = input.required<InteractionContract<BreadcrumbsProps>>();
++  vc = viewChild.required('vc', { read: ViewContainerRef });
 +
-+export function getDeepActiveElement(doc: Document | null): Element | null {
-+  if (!doc) return null;
-+  let active = doc.activeElement;
-+  while (active && active.shadowRoot && active.shadowRoot.activeElement) {
-+    active = active.shadowRoot.activeElement;
-+  }
-+  return active;
-+}
++  itemClick = output<BreadcrumbItem>();
+ 
+   private experienceAdapter = inject(WebExperienceAdapterService);
+   private sanitizer = inject(DomSanitizer);
+ 
++  protected props = computed(() =>
++    coerceContractProps<BreadcrumbsProps>(this.contract().props, BreadcrumbsContractSchema)
++  );
 +
-+export class OrigoNoopOverlayRef<T = unknown> implements OrigoOverlayRef<T> {
-+  readonly id: string;
-+  readonly isOpen = false;
+   computedAriaLabel = computed(() => {
+-    const label = this.contract().props?.['aria-label'];
++    const label = this.props()['aria-label'];
+     return label !== undefined && label !== null ? String(label) : 'Breadcrumbs';
+   });
+ 
+   computedAriaDescribedBy = computed(() => {
+-    const desc = this.contract().props?.['aria-describedby'];
++    const desc = this.props()['aria-describedby'];
+     return desc !== undefined && desc !== null ? String(desc) : undefined;
+   });
+ 
+-  computedItems = computed(() => {
+-    const items = this.contract().props?.items;
++  computedSeparator = computed(() => {
++    const sep = this.props().separator;
++    return typeof sep === 'string' && sep.trim().length > 0 ? sep : '/';
++  });
 +
-+  constructor(id = 'noop-overlay') {
-+    this.id = id;
-+  }
++  computedHome = computed<BreadcrumbItem | undefined>(() => {
++    const home = this.props().home;
++    if (!home || home.label == null) return undefined;
 +
-+  open(): void {
-+    /* No-op in SSR */
-+  }
++    return {
++      label: String(home.label),
++      icon: home.icon ? String(home.icon) : undefined,
++      outcomeRef: home.outcomeRef ? String(home.outcomeRef) : undefined,
++      url: home.url ? String(home.url) : undefined,
++      disabled: !!home.disabled,
++    };
++  });
 +
-+  close(): void {
-+    /* No-op in SSR */
-+  }
-+
-+  afterClosed(): Promise<T | undefined> {
-+    return Promise.resolve(undefined);
-+  }
-+
-+  updatePosition(): void {
-+    /* No-op in SSR */
-+  }
-+
-+  dispose(): void {
-+    /* No-op in SSR */
-+  }
-+}
-+
-+export class OrigoOverlayRefImpl<T = unknown> implements OrigoOverlayRef<T> {
-+  readonly id: string;
-+  private _isOpen = false;
-+  private previousFocusedElement: HTMLElement | null = null;
-+
-+  private afterClosedResolve!: (value: T | undefined) => void;
-+  private afterClosedPromise: Promise<T | undefined>;
-+
-+  private documentClickListener: ((e: MouseEvent) => void) | null = null;
-+  private documentKeydownListener: ((e: KeyboardEvent) => void) | null = null;
-+  private backdropSub: Subscription | null = null;
-+  private resizeObserver: ResizeObserver | null = null;
-+
-+  constructor(
-+    id: string,
-+    private readonly cdkOverlayRef: CdkOverlayRef,
-+    private readonly config: OrigoOverlayConfig,
-+    private readonly document: Document | null,
-+    destroyRef?: DestroyRef
-+  ) {
-+    this.id = id;
-+    this.afterClosedPromise = new Promise<T | undefined>(resolve => {
-+      this.afterClosedResolve = resolve;
-+    });
-+
-+    if (destroyRef) {
-+      destroyRef.onDestroy(() => {
-+        this.dispose();
-+      });
++  computedItems = computed<BreadcrumbItem[]>(() => {
++    const items = this.props().items;
+     if (!Array.isArray(items)) return [];
+ 
+     return items
+       .filter(item => item != null && item.label != null)
+-      .map(item => {
+-        return {
+-          label: String(item.label),
+-          outcomeRef: item.outcomeRef ? String(item.outcomeRef) : undefined,
+-        };
+-      });
++      .map(item => ({
++        label: String(item.label),
++        icon: item.icon ? String(item.icon) : undefined,
++        outcomeRef: item.outcomeRef ? String(item.outcomeRef) : undefined,
++        url: item.url ? String(item.url) : undefined,
++        disabled: !!item.disabled,
++      }));
+   });
+ 
+   onItemClick(event: Event, item: BreadcrumbItem, isLast: boolean) {
+-    if (isLast || !item.outcomeRef) {
++    if (isLast || item.disabled) {
+       event.preventDefault();
+       return;
+     }
+ 
+-    this.experienceAdapter.updateState(this.contract().id, 'activeOutcome', item.outcomeRef);
++    if (!item.url) {
++      event.preventDefault();
 +    }
 +
-+    // Auto-reposition on target resize if requested
-+    if (
-+      this.config.position.type === 'connected' &&
-+      this.config.position.autoRepositionOnResize !== false &&
-+      typeof ResizeObserver !== 'undefined'
-+    ) {
-+      const targetEl =
-+        this.config.position.target instanceof ElementRef
-+          ? this.config.position.target.nativeElement
-+          : this.config.position.target;
++    if (item.outcomeRef) {
++      this.experienceAdapter.updateState(this.contract().id, 'activeOutcome', item.outcomeRef);
++    }
 +
-+      if (targetEl) {
-+        this.resizeObserver = new ResizeObserver(() => {
-+          if (this._isOpen) {
-+            this.updatePosition();
-+          }
-+        });
-+        this.resizeObserver.observe(targetEl);
++    const contractId = this.contract().id;
++    if (contractId) {
++      this.experienceAdapter.dispatchCapability(contractId, 'itemClick', item);
++    }
++
++    this.itemClick.emit(item);
+   }
+ }
+diff --git a/packages/angular-renderer/src/components/primitives/pagination/pagination.component.html b/packages/angular-renderer/src/components/primitives/pagination/pagination.component.html
+new file mode 100644
+index 0000000..0590c72
+--- /dev/null
++++ b/packages/angular-renderer/src/components/primitives/pagination/pagination.component.html
+@@ -0,0 +1,95 @@
++<nav
++  class="origo-pagination__nav"
++  role="navigation"
++  [attr.aria-label]="computedAriaLabel()"
++  [attr.aria-describedby]="computedAriaDescribedBy()"
++>
++  @if (computedShowFirstLastIcon()) {
++    <button
++      type="button"
++      class="origo-pagination__button origo-pagination__button--first"
++      [disabled]="computedDisabled() || isFirstPage()"
++      [attr.aria-disabled]="computedDisabled() || isFirstPage()"
++      aria-label="First Page"
++      (click)="onFirst()"
++    >
++      «
++    </button>
++  }
++
++  <button
++    type="button"
++    class="origo-pagination__button origo-pagination__button--prev"
++    [disabled]="computedDisabled() || isFirstPage()"
++    [attr.aria-disabled]="computedDisabled() || isFirstPage()"
++    aria-label="Previous Page"
++    (click)="onPrevious()"
++  >
++    ‹
++  </button>
++
++  @if (computedShowPageLinks()) {
++    <div class="origo-pagination__pages" role="group" aria-label="Page selection">
++      @for (p of visiblePageLinks(); track p) {
++        <button
++          type="button"
++          class="origo-pagination__button origo-pagination__page"
++          [class.origo-pagination__page--active]="p === pageIndex()"
++          [attr.aria-current]="p === pageIndex() ? 'page' : null"
++          [attr.aria-label]="'Page ' + (p + 1)"
++          [disabled]="computedDisabled()"
++          (click)="onPageSelect(p)"
++        >
++          {{ p + 1 }}
++        </button>
 +      }
-+    }
++    </div>
 +  }
 +
-+  get isOpen(): boolean {
-+    return this._isOpen;
++  <button
++    type="button"
++    class="origo-pagination__button origo-pagination__button--next"
++    [disabled]="computedDisabled() || isLastPage()"
++    [attr.aria-disabled]="computedDisabled() || isLastPage()"
++    aria-label="Next Page"
++    (click)="onNext()"
++  >
++    ›
++  </button>
++
++  @if (computedShowFirstLastIcon()) {
++    <button
++      type="button"
++      class="origo-pagination__button origo-pagination__button--last"
++      [disabled]="computedDisabled() || isLastPage()"
++      [attr.aria-disabled]="computedDisabled() || isLastPage()"
++      aria-label="Last Page"
++      (click)="onLast()"
++    >
++      »
++    </button>
 +  }
 +
-+  open(content?: OrigoOverlayContent, viewContainerRef?: ViewContainerRef): void {
-+    if (this._isOpen) return;
-+
-+    this.previousFocusedElement = getDeepActiveElement(this.document) as HTMLElement | null;
-+    const effectiveVcr = viewContainerRef ?? this.config.viewContainerRef;
-+
-+    if (content) {
-+      if (content instanceof TemplateRef) {
-+        if (!effectiveVcr) {
-+          throw new Error(
-+            '[OrigoOverlayRef] Opening a TemplateRef requires a ViewContainerRef. Provide it in OrigoOverlayConfig.viewContainerRef or open(template, viewContainerRef).'
-+          );
++  @if (computedRowsPerPageOptions().length > 0) {
++    <div class="origo-pagination__rows-container">
++      <label class="origo-pagination__rows-label" [attr.for]="'rows-select-' + contract().id">
++        Rows:
++      </label>
++      <select
++        [id]="'rows-select-' + contract().id"
++        class="origo-pagination__rows-select"
++        [disabled]="computedDisabled()"
++        [attr.aria-label]="'Rows per page'"
++        (change)="onRowsSelect($event)"
++      >
++        @for (opt of computedRowsPerPageOptions(); track opt) {
++          <option [value]="opt" [selected]="opt === computedRows()">
++            {{ opt }}
++          </option>
 +        }
-+        const portal = new TemplatePortal(content, effectiveVcr);
-+        this.cdkOverlayRef.attach(portal);
-+      } else {
-+        const portal = new ComponentPortal(content as Type<unknown>, effectiveVcr ?? null);
-+        this.cdkOverlayRef.attach(portal);
-+      }
-+    }
-+
-+    this._isOpen = true;
-+    this.setupListeners();
++      </select>
++    </div>
 +  }
 +
-+  private setupListeners(): void {
-+    const overlayPane = this.cdkOverlayRef.overlayElement;
-+
-+    // 1. Backdrop click
-+    if (this.config.hasBackdrop && this.config.closeOnBackdropClick !== false) {
-+      this.backdropSub = this.cdkOverlayRef.backdropClick().subscribe(() => {
-+        this.close();
-+      });
-+    }
-+
-+    // 2. Outside click with event.composedPath() Shadow DOM piercing
-+    if (this.config.closeOnOutsideClick !== false && this.document) {
-+      const triggerEl =
-+        this.config.position.type === 'connected'
-+          ? this.config.position.target instanceof ElementRef
-+            ? this.config.position.target.nativeElement
-+            : this.config.position.target
-+          : null;
-+
-+      this.documentClickListener = (event: MouseEvent) => {
-+        if (!this._isOpen) return;
-+
-+        // Piercing Shadow DOM boundary via composedPath()
-+        const path = event.composedPath ? event.composedPath() : [];
-+
-+        const isInsideOverlay =
-+          overlayPane && (path.includes(overlayPane) || overlayPane.contains(event.target as Node));
-+        const isInsideTrigger =
-+          triggerEl && (path.includes(triggerEl) || triggerEl.contains(event.target as Node));
-+
-+        if (!isInsideOverlay && !isInsideTrigger) {
-+          this.close();
-+        }
-+      };
-+
-+      this.document.addEventListener('click', this.documentClickListener, true);
-+    }
-+
-+    // 3. Keydown handling (Escape & Focus Trap)
-+    if (this.document) {
-+      this.documentKeydownListener = (event: KeyboardEvent) => {
-+        if (!this._isOpen) return;
-+
-+        if (this.config.closeOnEscape !== false && event.key === 'Escape') {
-+          event.preventDefault();
-+          event.stopPropagation();
-+          this.close();
-+          return;
-+        }
-+
-+        if (this.config.trapFocus && event.key === 'Tab' && overlayPane) {
-+          const focusables = overlayPane.querySelectorAll<HTMLElement>(
-+            'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
-+          );
-+          if (focusables.length === 0) return;
-+
-+          const first = focusables[0];
-+          const last = focusables[focusables.length - 1];
-+          const active = getDeepActiveElement(this.document);
-+
-+          if (event.shiftKey) {
-+            if (active === first || !overlayPane.contains(active)) {
-+              event.preventDefault();
-+              last.focus();
-+            }
-+          } else {
-+            if (active === last || !overlayPane.contains(active)) {
-+              event.preventDefault();
-+              first.focus();
-+            }
-+          }
-+        }
-+      };
-+
-+      this.document.addEventListener('keydown', this.documentKeydownListener, true);
-+    }
-+
-+    // 4. Initial Focus
-+    if (this.config.trapFocus && overlayPane) {
-+      setTimeout(() => {
-+        const firstFocusable = overlayPane.querySelector<HTMLElement>(
-+          'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
-+        );
-+        if (firstFocusable) {
-+          firstFocusable.focus();
-+        }
-+      }, 0);
-+    }
-+  }
-+
-+  private cleanupListeners(): void {
-+    if (this.documentClickListener && this.document) {
-+      this.document.removeEventListener('click', this.documentClickListener, true);
-+      this.documentClickListener = null;
-+    }
-+    if (this.documentKeydownListener && this.document) {
-+      this.document.removeEventListener('keydown', this.documentKeydownListener, true);
-+      this.documentKeydownListener = null;
-+    }
-+    if (this.backdropSub) {
-+      this.backdropSub.unsubscribe();
-+      this.backdropSub = null;
-+    }
-+  }
-+
-+  close(result?: T): void {
-+    if (!this._isOpen) return;
-+
-+    this.cleanupListeners();
-+    if (this.cdkOverlayRef.hasAttached()) {
-+      this.cdkOverlayRef.detach();
-+    }
-+    this._isOpen = false;
-+
-+    // Restore focus into originating element (pierces Shadow DOM)
-+    if (this.previousFocusedElement && typeof this.previousFocusedElement.focus === 'function') {
-+      this.previousFocusedElement.focus();
-+    }
-+
-+    this.afterClosedResolve(result);
-+  }
-+
-+  afterClosed(): Promise<T | undefined> {
-+    return this.afterClosedPromise;
-+  }
-+
-+  updatePosition(): void {
-+    this.cdkOverlayRef.updatePosition();
-+  }
-+
-+  dispose(): void {
-+    this.close();
-+    if (this.resizeObserver) {
-+      this.resizeObserver.disconnect();
-+      this.resizeObserver = null;
-+    }
-+    this.cdkOverlayRef.dispose();
-+  }
-+}
-diff --git a/packages/angular-renderer/src/lib/overlay/overlay.models.ts b/packages/angular-renderer/src/lib/overlay/overlay.models.ts
++  <ng-container #vc></ng-container>
++</nav>
+diff --git a/packages/angular-renderer/src/components/primitives/pagination/pagination.component.scss b/packages/angular-renderer/src/components/primitives/pagination/pagination.component.scss
 new file mode 100644
-index 0000000..2f6a119
+index 0000000..8965e99
 --- /dev/null
-+++ b/packages/angular-renderer/src/lib/overlay/overlay.models.ts
-@@ -0,0 +1,55 @@
-+import { ElementRef, TemplateRef, Type, ViewContainerRef } from '@angular/core';
++++ b/packages/angular-renderer/src/components/primitives/pagination/pagination.component.scss
+@@ -0,0 +1,109 @@
++:host {
++  display: block;
++  box-sizing: border-box;
 +
-+export type OrigoOverlayOriginX = 'start' | 'end' | 'center';
-+export type OrigoOverlayOriginY = 'top' | 'bottom' | 'center';
-+export type OrigoGlobalPositionAlignment = 'center' | 'top' | 'bottom' | 'start' | 'end';
-+
-+export interface OrigoConnectedPositionConfig {
-+  type: 'connected';
-+  target: ElementRef<HTMLElement> | HTMLElement;
-+  originX?: OrigoOverlayOriginX;
-+  originY?: OrigoOverlayOriginY;
-+  overlayX?: OrigoOverlayOriginX;
-+  overlayY?: OrigoOverlayOriginY;
-+  offset?: [number, number]; // [offsetX, offsetY] in pixels
-+  autoRepositionOnResize?: boolean;
++  *,
++  *::before,
++  *::after {
++    box-sizing: inherit;
++  }
 +}
 +
-+export interface OrigoGlobalPositionConfig {
-+  type: 'global';
-+  position?: OrigoGlobalPositionAlignment;
-+  width?: string;
-+  height?: string;
-+  minWidth?: string;
-+  minHeight?: string;
-+  maxWidth?: string;
-+  maxHeight?: string;
++:host([hidden]) {
++  display: none !important;
 +}
 +
-+export type OrigoOverlayPosition = OrigoConnectedPositionConfig | OrigoGlobalPositionConfig;
-+
-+export type OrigoOverlayContent<C = unknown> = TemplateRef<C> | Type<unknown>;
-+
-+export interface OrigoOverlayConfig {
-+  position: OrigoOverlayPosition;
-+  hasBackdrop?: boolean;
-+  backdropClass?: string;
-+  panelClass?: string | string[];
-+  closeOnBackdropClick?: boolean;
-+  closeOnOutsideClick?: boolean;
-+  closeOnEscape?: boolean;
-+  trapFocus?: boolean;
-+  viewContainerRef?: ViewContainerRef;
-+  direction?: 'ltr' | 'rtl';
-+  themeScope?: string;
++.origo-pagination__nav {
++  display: flex;
++  flex-wrap: wrap;
++  align-items: center;
++  gap: var(--origo-spacing-xs);
++  padding-block: var(--origo-spacing-sm);
++  padding-inline: var(--origo-spacing-sm);
++  font-family: var(--origo-typography-body-font-family);
++  font-size: var(--origo-typography-button-font-size);
++  color: var(--origo-color-text-primary);
 +}
 +
-+export interface OrigoOverlayRef<T = unknown> {
-+  readonly id: string;
-+  readonly isOpen: boolean;
-+  open(content?: OrigoOverlayContent, viewContainerRef?: ViewContainerRef): void;
-+  close(result?: T): void;
-+  afterClosed(): Promise<T | undefined>;
-+  updatePosition(): void;
-+  dispose(): void;
++.origo-pagination__pages {
++  display: inline-flex;
++  align-items: center;
++  gap: var(--origo-spacing-xs);
 +}
-diff --git a/packages/angular-renderer/src/lib/overlay/overlay.service.spec.ts b/packages/angular-renderer/src/lib/overlay/overlay.service.spec.ts
++
++.origo-pagination__button {
++  display: inline-flex;
++  align-items: center;
++  justify-content: center;
++  min-inline-size: var(--origo-spacing-xl);
++  min-block-size: var(--origo-spacing-xl);
++  padding-inline: var(--origo-spacing-xs);
++  padding-block: var(--origo-spacing-xs);
++  background-color: var(--origo-color-surface-default);
++  border: var(--origo-border-width-default) solid var(--origo-color-border-default);
++  border-radius: var(--origo-radius-sm);
++  color: var(--origo-color-text-primary);
++  font-family: inherit;
++  font-size: inherit;
++  cursor: pointer;
++  transition: all var(--origo-duration-fast) ease;
++
++  &:hover:not(:disabled) {
++    background-color: var(--origo-color-surface-subtle);
++    border-color: var(--origo-color-border-hover);
++  }
++
++  &:focus-visible {
++    outline: var(--origo-border-width-thick) solid var(--origo-color-focus);
++    outline-offset: 2px;
++  }
++
++  &:disabled {
++    cursor: not-allowed;
++    opacity: var(--origo-opacity-disabled);
++    color: var(--origo-color-text-disabled);
++    background-color: var(--origo-color-surface-disabled);
++  }
++
++  &.origo-pagination__page--active {
++    background-color: var(--origo-color-surface-primary);
++    border-color: var(--origo-color-surface-primary);
++    color: var(--origo-color-text-inverse);
++    font-weight: 600;
++  }
++}
++
++.origo-pagination__rows-container {
++  display: inline-flex;
++  align-items: center;
++  gap: var(--origo-spacing-xs);
++  margin-inline-start: var(--origo-spacing-md);
++}
++
++.origo-pagination__rows-label {
++  font-size: var(--origo-typography-button-font-size);
++  color: var(--origo-color-text-muted);
++}
++
++.origo-pagination__rows-select {
++  padding-inline: var(--origo-spacing-sm);
++  padding-block: var(--origo-spacing-xs);
++  border: var(--origo-border-width-default) solid var(--origo-color-border-default);
++  border-radius: var(--origo-radius-sm);
++  background-color: var(--origo-color-surface-default);
++  color: var(--origo-color-text-primary);
++  font-family: inherit;
++  font-size: inherit;
++  cursor: pointer;
++
++  &:focus-visible {
++    outline: var(--origo-border-width-thick) solid var(--origo-color-focus);
++    outline-offset: 2px;
++  }
++
++  &:disabled {
++    cursor: not-allowed;
++    opacity: var(--origo-opacity-disabled);
++    background-color: var(--origo-color-surface-disabled);
++  }
++}
+diff --git a/packages/angular-renderer/src/components/primitives/pagination/pagination.component.spec.ts b/packages/angular-renderer/src/components/primitives/pagination/pagination.component.spec.ts
 new file mode 100644
-index 0000000..1359fdf
+index 0000000..f44b452
 --- /dev/null
-+++ b/packages/angular-renderer/src/lib/overlay/overlay.service.spec.ts
-@@ -0,0 +1,230 @@
++++ b/packages/angular-renderer/src/components/primitives/pagination/pagination.component.spec.ts
+@@ -0,0 +1,248 @@
 +import { ComponentFixture, TestBed } from '@angular/core/testing';
 +import {
-+  Component,
-+  ElementRef,
-+  TemplateRef,
-+  ViewChild,
-+  ViewContainerRef,
-+  PLATFORM_ID,
-+  inject,
-+} from '@angular/core';
-+import { CommonModule } from '@angular/common';
-+import { OverlayModule } from '@angular/cdk/overlay';
-+import { OrigoOverlayService } from './overlay.service';
-+import { getDeepActiveElement } from './overlay-ref';
++  PaginationComponent,
++  PaginationProps,
++  PageChangeEvent,
++  RowsChangeEvent,
++} from './pagination.component';
++import { provideZonelessChangeDetection, ViewContainerRef } from '@angular/core';
++import { WebExperienceAdapterService } from '../../../adapters/web/experience-adapter.service';
++import { InteractionContract } from '@origostudio/core';
 +
-+@Component({
-+  standalone: true,
-+  imports: [CommonModule],
-+  template: `
-+    <div id="wrapper" style="overflow: hidden; height: 30px;">
-+      <button #triggerBtn id="test-trigger-btn" type="button">Open Overlay</button>
-+    </div>
-+
-+    <ng-template #panelTemplate>
-+      <div id="test-overlay-content">
-+        <input id="input-first" type="text" />
-+        <button id="btn-last" type="button">Submit</button>
-+      </div>
-+    </ng-template>
-+  `,
-+})
-+class TestHostComponent {
-+  readonly vcr = inject(ViewContainerRef);
-+
-+  @ViewChild('triggerBtn', { static: true })
-+  triggerBtn!: ElementRef<HTMLButtonElement>;
-+
-+  @ViewChild('panelTemplate', { static: true })
-+  panelTemplate!: TemplateRef<unknown>;
-+}
-+
-+describe('OrigoOverlayService', () => {
-+  let fixture: ComponentFixture<TestHostComponent>;
-+  let hostComponent: TestHostComponent;
-+  let service: OrigoOverlayService;
++describe('PaginationComponent', () => {
++  let component: PaginationComponent;
++  let fixture: ComponentFixture<PaginationComponent>;
++  let mockAdapter: { updateState: jest.Mock; dispatchCapability: jest.Mock };
 +
 +  beforeEach(async () => {
++    mockAdapter = {
++      updateState: jest.fn(),
++      dispatchCapability: jest.fn(),
++    };
++
 +    await TestBed.configureTestingModule({
-+      imports: [OverlayModule, TestHostComponent],
-+      providers: [OrigoOverlayService],
++      imports: [PaginationComponent],
++      providers: [
++        provideZonelessChangeDetection(),
++        { provide: WebExperienceAdapterService, useValue: mockAdapter },
++      ],
 +    }).compileComponents();
 +
-+    fixture = TestBed.createComponent(TestHostComponent);
-+    hostComponent = fixture.componentInstance;
-+    service = TestBed.inject(OrigoOverlayService);
++    fixture = TestBed.createComponent(PaginationComponent);
++    component = fixture.componentInstance;
++  });
++
++  it('should create and implement ContainerComponent with ViewContainerRef vc', () => {
++    fixture.componentRef.setInput('contract', {
++      id: 'pag-1',
++      type: 'Pagination',
++      props: {
++        first: 0,
++        rows: 10,
++        totalRecords: 100,
++      },
++    } as InteractionContract<PaginationProps>);
++
 +    fixture.detectChanges();
++    expect(component).toBeTruthy();
++    expect(component.vc).toBeDefined();
++    expect(component.vc()).toBeInstanceOf(ViewContainerRef);
 +  });
 +
-+  afterEach(() => {
-+    const containers = document.querySelectorAll('.cdk-overlay-container');
-+    containers.forEach(c => c.remove());
-+  });
-+
-+  it('should be created and indicate browser platform in test environment', () => {
-+    expect(service).toBeTruthy();
-+    expect(service.isBrowser).toBe(true);
-+  });
-+
-+  it('should create a connected overlay and escape container overflow:hidden', () => {
-+    const overlayRef = service.create({
-+      position: {
-+        type: 'connected',
-+        target: hostComponent.triggerBtn,
-+        originX: 'start',
-+        originY: 'bottom',
++  it('should calculate pageCount, pageIndex and render navigation buttons', () => {
++    fixture.componentRef.setInput('contract', {
++      id: 'pag-1',
++      type: 'Pagination',
++      props: {
++        first: 20,
++        rows: 10,
++        totalRecords: 100,
++        pageLinkSize: 5,
++        'aria-label': 'Table pagination',
 +      },
-+      hasBackdrop: false,
-+      viewContainerRef: hostComponent.vcr,
-+    });
++    } as InteractionContract<PaginationProps>);
 +
-+    overlayRef.open(hostComponent.panelTemplate);
-+    expect(overlayRef.isOpen).toBe(true);
++    fixture.detectChanges();
 +
-+    const overlayPane = document.querySelector('.origo-overlay-pane');
-+    expect(overlayPane).toBeTruthy();
-+    expect(overlayPane?.classList.contains('origo-overlay-pane--connected')).toBe(true);
++    expect(component.pageCount()).toBe(10);
++    expect(component.pageIndex()).toBe(2);
 +
-+    // Verify overlay escapes #wrapper
-+    const wrapper = fixture.nativeElement.querySelector('#wrapper');
-+    expect(wrapper.contains(overlayPane)).toBe(false);
-+    expect(document.body.contains(overlayPane)).toBe(true);
++    const root = fixture.nativeElement.shadowRoot ?? fixture.nativeElement;
++    const nav = root.querySelector('nav');
++    expect(nav).toBeTruthy();
++    expect(nav.getAttribute('aria-label')).toBe('Table pagination');
 +
-+    overlayRef.dispose();
-+    expect(overlayRef.isOpen).toBe(false);
++    const activePageBtn = root.querySelector('.origo-pagination__page--active');
++    expect(activePageBtn).toBeTruthy();
++    expect(activePageBtn.getAttribute('aria-current')).toBe('page');
++    expect(activePageBtn.textContent?.trim()).toBe('3'); // 0-based index 2 is page 3
 +  });
 +
-+  it('should create a global centered overlay with modal classes', () => {
-+    const overlayRef = service.create({
-+      position: {
-+        type: 'global',
-+        position: 'center',
-+        width: '400px',
++  it('should calculate visiblePageLinks window properly centered and bounded', () => {
++    fixture.componentRef.setInput('contract', {
++      id: 'pag-1',
++      type: 'Pagination',
++      props: {
++        first: 40, // page 4 (0-based)
++        rows: 10,
++        totalRecords: 100, // 10 pages total
++        pageLinkSize: 5,
 +      },
-+      hasBackdrop: true,
-+      themeScope: 'theme-dark',
-+      viewContainerRef: hostComponent.vcr,
-+    });
++    } as InteractionContract<PaginationProps>);
 +
-+    overlayRef.open(hostComponent.panelTemplate);
-+    expect(overlayRef.isOpen).toBe(true);
++    fixture.detectChanges();
 +
-+    const overlayPane = document.querySelector('.origo-overlay-pane');
-+    expect(overlayPane).toBeTruthy();
-+    expect(overlayPane?.classList.contains('origo-overlay-pane--modal')).toBe(true);
-+    expect(overlayPane?.classList.contains('theme-dark')).toBe(true);
++    // 0-based pageIndex is 4, window size 5 centered: [2, 3, 4, 5, 6] -> pages 3, 4, 5, 6, 7
++    expect(component.visiblePageLinks()).toEqual([2, 3, 4, 5, 6]);
 +
-+    const backdrop = document.querySelector('.origo-overlay-backdrop');
-+    expect(backdrop).toBeTruthy();
-+
-+    overlayRef.dispose();
++    const root = fixture.nativeElement.shadowRoot ?? fixture.nativeElement;
++    const pageBtns = root.querySelectorAll('.origo-pagination__page');
++    expect(pageBtns.length).toBe(5);
++    expect(pageBtns[0].textContent?.trim()).toBe('3');
++    expect(pageBtns[4].textContent?.trim()).toBe('7');
 +  });
 +
-+  it('should close overlay on outside click without dismissing when clicking inside trigger or panel', () => {
-+    const overlayRef = service.create({
-+      position: {
-+        type: 'connected',
-+        target: hostComponent.triggerBtn,
++  it('should disable first/prev buttons on first page and next/last buttons on last page', () => {
++    // First page
++    fixture.componentRef.setInput('contract', {
++      id: 'pag-1',
++      type: 'Pagination',
++      props: {
++        first: 0,
++        rows: 10,
++        totalRecords: 50,
 +      },
-+      closeOnOutsideClick: true,
-+      viewContainerRef: hostComponent.vcr,
-+    });
++    } as InteractionContract<PaginationProps>);
 +
-+    overlayRef.open(hostComponent.panelTemplate);
-+    expect(overlayRef.isOpen).toBe(true);
++    fixture.detectChanges();
 +
-+    // Click inside trigger
-+    const triggerEl = hostComponent.triggerBtn.nativeElement;
-+    const triggerClick = new MouseEvent('click', { bubbles: true, composed: true });
-+    triggerEl.dispatchEvent(triggerClick);
-+    expect(overlayRef.isOpen).toBe(true);
++    const root = fixture.nativeElement.shadowRoot ?? fixture.nativeElement;
++    const firstBtn = root.querySelector('.origo-pagination__button--first') as HTMLButtonElement;
++    const prevBtn = root.querySelector('.origo-pagination__button--prev') as HTMLButtonElement;
++    const nextBtn = root.querySelector('.origo-pagination__button--next') as HTMLButtonElement;
++    const lastBtn = root.querySelector('.origo-pagination__button--last') as HTMLButtonElement;
 +
-+    // Click inside overlay panel
-+    const inputEl = document.querySelector('#input-first') as HTMLElement;
-+    const inputClick = new MouseEvent('click', { bubbles: true, composed: true });
-+    inputEl.dispatchEvent(inputClick);
-+    expect(overlayRef.isOpen).toBe(true);
++    expect(firstBtn.disabled).toBe(true);
++    expect(prevBtn.disabled).toBe(true);
++    expect(nextBtn.disabled).toBe(false);
++    expect(lastBtn.disabled).toBe(false);
 +
-+    // Click outside on document body
-+    const outsideClick = new MouseEvent('click', { bubbles: true, composed: true });
-+    document.body.dispatchEvent(outsideClick);
-+    expect(overlayRef.isOpen).toBe(false);
-+
-+    overlayRef.dispose();
-+  });
-+
-+  it('should trap focus within overlay and restore focus to trigger on Escape', () => {
-+    const triggerEl = hostComponent.triggerBtn.nativeElement;
-+    triggerEl.focus();
-+
-+    const overlayRef = service.create({
-+      position: {
-+        type: 'connected',
-+        target: hostComponent.triggerBtn,
++    // Change to last page
++    fixture.componentRef.setInput('contract', {
++      id: 'pag-1',
++      type: 'Pagination',
++      props: {
++        first: 40,
++        rows: 10,
++        totalRecords: 50,
 +      },
-+      closeOnEscape: true,
-+      trapFocus: true,
-+      viewContainerRef: hostComponent.vcr,
-+    });
++    } as InteractionContract<PaginationProps>);
 +
-+    overlayRef.open(hostComponent.panelTemplate);
++    fixture.detectChanges();
 +
-+    const inputFirst = document.querySelector('#input-first') as HTMLInputElement;
-+    const btnLast = document.querySelector('#btn-last') as HTMLButtonElement;
-+
-+    // Simulate Tab from last element
-+    btnLast.focus();
-+    const tabEvent = new KeyboardEvent('keydown', { key: 'Tab', bubbles: true, cancelable: true });
-+    document.dispatchEvent(tabEvent);
-+    expect(document.activeElement).toBe(inputFirst);
-+
-+    // Simulate Escape key
-+    const escEvent = new KeyboardEvent('keydown', {
-+      key: 'Escape',
-+      bubbles: true,
-+      cancelable: true,
-+    });
-+    document.dispatchEvent(escEvent);
-+
-+    expect(overlayRef.isOpen).toBe(false);
-+    expect(document.activeElement).toBe(triggerEl);
-+
-+    overlayRef.dispose();
++    expect(firstBtn.disabled).toBe(false);
++    expect(prevBtn.disabled).toBe(false);
++    expect(nextBtn.disabled).toBe(true);
++    expect(lastBtn.disabled).toBe(true);
 +  });
 +
-+  it('should safely execute as no-op when in SSR server platform', () => {
-+    TestBed.resetTestingModule();
-+    TestBed.configureTestingModule({
-+      providers: [OrigoOverlayService, { provide: PLATFORM_ID, useValue: 'server' }],
-+    });
++  it('should handle page click and dispatch events and state updates', () => {
++    const pageSpy = jest.fn();
++    component.pageChange.subscribe(pageSpy);
 +
-+    const ssrService = TestBed.inject(OrigoOverlayService);
-+    expect(ssrService.isBrowser).toBe(false);
++    fixture.componentRef.setInput('contract', {
++      id: 'pag-1',
++      type: 'Pagination',
++      props: {
++        first: 0,
++        rows: 10,
++        totalRecords: 50,
++      },
++    } as InteractionContract<PaginationProps>);
 +
-+    const noopRef = ssrService.create({
-+      position: { type: 'global', position: 'center' },
-+    });
++    fixture.detectChanges();
 +
-+    expect(noopRef.isOpen).toBe(false);
-+    expect(() => {
-+      noopRef.open();
-+      noopRef.updatePosition();
-+      noopRef.close();
-+      noopRef.dispose();
-+    }).not.toThrow();
++    const root = fixture.nativeElement.shadowRoot ?? fixture.nativeElement;
++    const pageBtns = root.querySelectorAll('.origo-pagination__page');
++    // Click page 2 (index 1)
++    (pageBtns[1] as HTMLButtonElement).click();
++
++    const expectedEvent: PageChangeEvent = {
++      page: 1,
++      first: 10,
++      rows: 10,
++      pageCount: 5,
++    };
++
++    expect(mockAdapter.updateState).toHaveBeenCalledWith('pag-1', 'first', 10);
++    expect(mockAdapter.dispatchCapability).toHaveBeenCalledWith(
++      'pag-1',
++      'pageChange',
++      expectedEvent
++    );
++    expect(pageSpy).toHaveBeenCalledWith(expectedEvent);
 +  });
 +
-+  it('should pierce Shadow DOM with getDeepActiveElement()', () => {
-+    const hostEl = document.createElement('div');
-+    const shadow = hostEl.attachShadow({ mode: 'open' });
-+    const innerBtn = document.createElement('button');
-+    shadow.appendChild(innerBtn);
-+    document.body.appendChild(hostEl);
++  it('should handle rows per page dropdown selection', () => {
++    const rowsSpy = jest.fn();
++    const pageSpy = jest.fn();
++    component.rowsChange.subscribe(rowsSpy);
++    component.pageChange.subscribe(pageSpy);
 +
-+    innerBtn.focus();
-+    const deepActive = getDeepActiveElement(document);
-+    expect(deepActive).toBe(innerBtn);
++    fixture.componentRef.setInput('contract', {
++      id: 'pag-1',
++      type: 'Pagination',
++      props: {
++        first: 20,
++        rows: 10,
++        totalRecords: 100,
++        rowsPerPageOptions: [10, 20, 50],
++      },
++    } as InteractionContract<PaginationProps>);
 +
-+    hostEl.remove();
++    fixture.detectChanges();
++
++    const root = fixture.nativeElement.shadowRoot ?? fixture.nativeElement;
++    const select = root.querySelector('.origo-pagination__rows-select') as HTMLSelectElement;
++    expect(select).toBeTruthy();
++
++    select.value = '20';
++    select.dispatchEvent(new Event('change'));
++
++    const expectedRowsEvent: RowsChangeEvent = { rows: 20, first: 0 };
++    const expectedPageEvent: PageChangeEvent = {
++      page: 0,
++      first: 0,
++      rows: 20,
++      pageCount: 5,
++    };
++
++    expect(mockAdapter.updateState).toHaveBeenCalledWith('pag-1', 'rows', 20);
++    expect(mockAdapter.updateState).toHaveBeenCalledWith('pag-1', 'first', 0);
++    expect(mockAdapter.dispatchCapability).toHaveBeenCalledWith(
++      'pag-1',
++      'rowsChange',
++      expectedRowsEvent
++    );
++    expect(mockAdapter.dispatchCapability).toHaveBeenCalledWith(
++      'pag-1',
++      'pageChange',
++      expectedPageEvent
++    );
++    expect(rowsSpy).toHaveBeenCalledWith(expectedRowsEvent);
++    expect(pageSpy).toHaveBeenCalledWith(expectedPageEvent);
++  });
++
++  it('should support RTL layouts by avoiding physical CSS properties', () => {
++    fixture.componentRef.setInput('contract', { id: 'rtl-test', type: 'test', props: {} });
++    fixture.detectChanges();
++    const root = fixture.nativeElement.shadowRoot ?? fixture.nativeElement;
++    const element = root.firstElementChild as HTMLElement;
++    if (element && element.style) {
++      expect(element.style.paddingLeft).toBeFalsy();
++      expect(element.style.paddingRight).toBeFalsy();
++      expect(element.style.marginLeft).toBeFalsy();
++      expect(element.style.marginRight).toBeFalsy();
++    }
 +  });
 +});
-diff --git a/packages/angular-renderer/src/lib/overlay/overlay.service.ts b/packages/angular-renderer/src/lib/overlay/overlay.service.ts
+diff --git a/packages/angular-renderer/src/components/primitives/pagination/pagination.component.ts b/packages/angular-renderer/src/components/primitives/pagination/pagination.component.ts
 new file mode 100644
-index 0000000..8938236
+index 0000000..41fb1cb
 --- /dev/null
-+++ b/packages/angular-renderer/src/lib/overlay/overlay.service.ts
-@@ -0,0 +1,207 @@
-+import { Injectable, inject, PLATFORM_ID, DestroyRef, ElementRef } from '@angular/core';
-+import { isPlatformBrowser, DOCUMENT } from '@angular/common';
++++ b/packages/angular-renderer/src/components/primitives/pagination/pagination.component.ts
+@@ -0,0 +1,275 @@
 +import {
-+  Overlay,
-+  OverlayConfig as CdkOverlayConfig,
-+  ConnectedPosition,
-+  PositionStrategy,
-+} from '@angular/cdk/overlay';
++  Component,
++  input,
++  output,
++  ChangeDetectionStrategy,
++  computed,
++  ViewEncapsulation,
++  inject,
++  viewChild,
++  ViewContainerRef,
++} from '@angular/core';
++import { InteractionContract } from '@origostudio/core';
 +import {
-+  OrigoConnectedPositionConfig,
-+  OrigoGlobalPositionConfig,
-+  OrigoOverlayConfig,
-+  OrigoOverlayRef,
-+} from './overlay.models';
-+import { OrigoNoopOverlayRef, OrigoOverlayRefImpl } from './overlay-ref';
++  OrigoAdapter,
++  ContainerComponent as IContainerComponent,
++  coerceContractProps,
++} from '../../../adapters/web/adapter';
++import { WebExperienceAdapterService } from '../../../adapters/web/experience-adapter.service';
 +
-+let overlayIdCounter = 0;
++export interface PageChangeEvent {
++  page: number;
++  first: number;
++  rows: number;
++  pageCount: number;
++}
 +
-+@Injectable({
-+  providedIn: 'root',
++export interface RowsChangeEvent {
++  rows: number;
++  first: number;
++}
++
++export interface PaginationProps {
++  first?: number;
++  rows?: number;
++  totalRecords?: number;
++  pageLinkSize?: number;
++  rowsPerPageOptions?: number[];
++  showFirstLastIcon?: boolean;
++  showPageLinks?: boolean;
++  template?: string;
++  disabled?: boolean;
++  size?: 'small' | 'medium' | 'large';
++  variant?: string;
++  permissions?: Record<string, string>;
++  rules?: Record<string, unknown>;
++  metadata?: Record<string, unknown>;
++  'aria-label'?: string;
++  'aria-describedby'?: string;
++}
++
++export const PaginationContractSchema: Record<
++  keyof PaginationProps,
++  'string' | 'number' | 'boolean' | 'array' | 'object'
++> = {
++  first: 'number',
++  rows: 'number',
++  totalRecords: 'number',
++  pageLinkSize: 'number',
++  rowsPerPageOptions: 'array',
++  showFirstLastIcon: 'boolean',
++  showPageLinks: 'boolean',
++  template: 'string',
++  disabled: 'boolean',
++  size: 'string',
++  variant: 'string',
++  permissions: 'object',
++  rules: 'object',
++  metadata: 'object',
++  'aria-label': 'string',
++  'aria-describedby': 'string',
++};
++
++@Component({
++  selector: 'origo-pagination',
++  standalone: true,
++  templateUrl: './pagination.component.html',
++  styleUrls: ['./pagination.component.scss'],
++  changeDetection: ChangeDetectionStrategy.OnPush,
++  encapsulation: ViewEncapsulation.ShadowDom,
++  host: {
++    '[class.origo-pagination]': 'true',
++    '[attr.data-testid]': 'contract().id',
++  },
 +})
-+export class OrigoOverlayService {
-+  private readonly overlay = inject(Overlay, { optional: true });
-+  private readonly platformId = inject(PLATFORM_ID);
-+  private readonly document = inject(DOCUMENT);
++export class PaginationComponent implements OrigoAdapter<PaginationProps>, IContainerComponent {
++  static readonly contractSchema = PaginationContractSchema;
++  static readonly strictContract = false;
 +
-+  get isBrowser(): boolean {
-+    return isPlatformBrowser(this.platformId);
++  contract = input.required<InteractionContract<PaginationProps>>();
++  vc = viewChild.required('vc', { read: ViewContainerRef });
++
++  pageChange = output<PageChangeEvent>();
++  rowsChange = output<RowsChangeEvent>();
++
++  private experienceAdapter = inject(WebExperienceAdapterService);
++
++  protected props = computed(() =>
++    coerceContractProps<PaginationProps>(this.contract().props, PaginationContractSchema)
++  );
++
++  computedFirst = computed(() => {
++    const f = Number(this.props().first ?? 0);
++    return isNaN(f) || f < 0 ? 0 : f;
++  });
++
++  computedRows = computed(() => {
++    const r = Number(this.props().rows ?? 10);
++    return isNaN(r) || r <= 0 ? 10 : r;
++  });
++
++  computedTotalRecords = computed(() => {
++    const t = Number(this.props().totalRecords ?? 0);
++    return isNaN(t) || t < 0 ? 0 : t;
++  });
++
++  computedPageLinkSize = computed(() => {
++    const s = Number(this.props().pageLinkSize ?? 5);
++    return isNaN(s) || s <= 0 ? 5 : s;
++  });
++
++  computedRowsPerPageOptions = computed<number[]>(() => {
++    const opts = this.props().rowsPerPageOptions;
++    if (!Array.isArray(opts)) return [];
++    return opts.map(item => Number(item)).filter(n => !isNaN(n) && n > 0);
++  });
++
++  computedShowFirstLastIcon = computed(() => {
++    return this.props().showFirstLastIcon !== false;
++  });
++
++  computedShowPageLinks = computed(() => {
++    return this.props().showPageLinks !== false;
++  });
++
++  computedDisabled = computed(() => {
++    return !!this.props().disabled;
++  });
++
++  computedAriaLabel = computed(() => {
++    const label = this.props()['aria-label'];
++    return label !== undefined && label !== null ? String(label) : 'Pagination';
++  });
++
++  computedAriaDescribedBy = computed(() => {
++    const desc = this.props()['aria-describedby'];
++    return desc !== undefined && desc !== null ? String(desc) : undefined;
++  });
++
++  pageCount = computed(() => {
++    const rows = this.computedRows();
++    const total = this.computedTotalRecords();
++    return rows > 0 ? Math.ceil(total / rows) : 0;
++  });
++
++  pageIndex = computed(() => {
++    const rows = this.computedRows();
++    const first = this.computedFirst();
++    return rows > 0 ? Math.floor(first / rows) : 0;
++  });
++
++  isFirstPage = computed(() => {
++    return this.pageIndex() <= 0;
++  });
++
++  isLastPage = computed(() => {
++    const count = this.pageCount();
++    return count === 0 || this.pageIndex() >= count - 1;
++  });
++
++  visiblePageLinks = computed<number[]>(() => {
++    const totalPages = this.pageCount();
++    const linkSize = this.computedPageLinkSize();
++
++    if (totalPages <= 0) return [];
++    if (totalPages <= linkSize) {
++      return Array.from({ length: totalPages }, (_, i) => i);
++    }
++
++    const current = this.pageIndex();
++    const half = Math.floor(linkSize / 2);
++    let start = Math.max(0, current - half);
++    let end = start + linkSize - 1;
++
++    if (end >= totalPages) {
++      end = totalPages - 1;
++      start = Math.max(0, end - linkSize + 1);
++    }
++
++    const pages: number[] = [];
++    for (let i = start; i <= end; i++) {
++      pages.push(i);
++    }
++    return pages;
++  });
++
++  changePage(targetIndex: number) {
++    if (this.computedDisabled()) return;
++
++    const count = this.pageCount();
++    const clampedIndex = Math.max(0, Math.min(targetIndex, Math.max(0, count - 1)));
++    if (clampedIndex === this.pageIndex() && targetIndex !== 0) return;
++
++    const rows = this.computedRows();
++    const first = clampedIndex * rows;
++
++    this.experienceAdapter.updateState(this.contract().id, 'first', first);
++
++    const event: PageChangeEvent = {
++      page: clampedIndex,
++      first,
++      rows,
++      pageCount: count,
++    };
++
++    const contractId = this.contract().id;
++    if (contractId) {
++      this.experienceAdapter.dispatchCapability(contractId, 'pageChange', event);
++    }
++
++    this.pageChange.emit(event);
 +  }
 +
-+  create<T = unknown>(config: OrigoOverlayConfig, destroyRef?: DestroyRef): OrigoOverlayRef<T> {
-+    const id = `origo-overlay-${++overlayIdCounter}`;
-+
-+    if (!this.isBrowser || !this.overlay) {
-+      return new OrigoNoopOverlayRef<T>(id);
-+    }
-+
-+    const positionStrategy = this.buildPositionStrategy(config.position);
-+    const panelClasses = this.resolvePanelClasses(config);
-+    const direction = this.resolveDirection(config);
-+
-+    const cdkConfig = new CdkOverlayConfig({
-+      positionStrategy,
-+      hasBackdrop: config.hasBackdrop ?? false,
-+      backdropClass: config.backdropClass
-+        ? ['origo-overlay-backdrop', config.backdropClass]
-+        : 'origo-overlay-backdrop',
-+      panelClass: panelClasses,
-+      direction,
-+      width: config.position.type === 'global' ? config.position.width : undefined,
-+      height: config.position.type === 'global' ? config.position.height : undefined,
-+      minWidth: config.position.type === 'global' ? config.position.minWidth : undefined,
-+      minHeight: config.position.type === 'global' ? config.position.minHeight : undefined,
-+      maxWidth: config.position.type === 'global' ? config.position.maxWidth : undefined,
-+      maxHeight: config.position.type === 'global' ? config.position.maxHeight : undefined,
-+      disposeOnNavigation: true,
-+    });
-+
-+    const cdkOverlayRef = this.overlay.create(cdkConfig);
-+
-+    return new OrigoOverlayRefImpl<T>(id, cdkOverlayRef, config, this.document, destroyRef);
++  onFirst() {
++    this.changePage(0);
 +  }
 +
-+  private buildPositionStrategy(
-+    positionConfig: OrigoConnectedPositionConfig | OrigoGlobalPositionConfig
-+  ): PositionStrategy {
-+    if (!this.overlay) {
-+      throw new Error('CDK Overlay is not available');
-+    }
-+
-+    if (positionConfig.type === 'connected') {
-+      const targetEl =
-+        positionConfig.target instanceof ElementRef
-+          ? positionConfig.target.nativeElement
-+          : positionConfig.target;
-+
-+      const originX = positionConfig.originX ?? 'start';
-+      const originY = positionConfig.originY ?? 'bottom';
-+      const overlayX = positionConfig.overlayX ?? 'start';
-+      const overlayY = positionConfig.overlayY ?? 'top';
-+      const [offsetX, offsetY] = positionConfig.offset ?? [0, 4];
-+
-+      // Primary position plus flip fallback positions
-+      const positions: ConnectedPosition[] = [
-+        {
-+          originX,
-+          originY,
-+          overlayX,
-+          overlayY,
-+          offsetX,
-+          offsetY,
-+        },
-+        // Inverted Y flip fallback
-+        {
-+          originX,
-+          originY: originY === 'bottom' ? 'top' : 'bottom',
-+          overlayX,
-+          overlayY: overlayY === 'top' ? 'bottom' : 'top',
-+          offsetX,
-+          offsetY: -offsetY,
-+        },
-+        // Inverted X flip fallback
-+        {
-+          originX: originX === 'start' ? 'end' : 'start',
-+          originY,
-+          overlayX: overlayX === 'start' ? 'end' : 'start',
-+          overlayY,
-+          offsetX: -offsetX,
-+          offsetY,
-+        },
-+      ];
-+
-+      return this.overlay
-+        .position()
-+        .flexibleConnectedTo(targetEl)
-+        .withPositions(positions)
-+        .withPush(false);
-+    } else {
-+      const global = this.overlay.position().global();
-+      const pos = positionConfig.position ?? 'center';
-+
-+      switch (pos) {
-+        case 'top':
-+          global.centerHorizontally().top('0');
-+          break;
-+        case 'bottom':
-+          global.centerHorizontally().bottom('0');
-+          break;
-+        case 'start':
-+          global.left('0').centerVertically();
-+          break;
-+        case 'end':
-+          global.right('0').centerVertically();
-+          break;
-+        case 'center':
-+        default:
-+          global.centerHorizontally().centerVertically();
-+          break;
-+      }
-+
-+      if (positionConfig.width) global.width(positionConfig.width);
-+      if (positionConfig.height) global.height(positionConfig.height);
-+
-+      return global;
-+    }
++  onPrevious() {
++    this.changePage(this.pageIndex() - 1);
 +  }
 +
-+  private resolvePanelClasses(config: OrigoOverlayConfig): string[] {
-+    const classes = ['origo-overlay-pane'];
-+
-+    if (config.position.type === 'connected') {
-+      classes.push('origo-overlay-pane--connected');
-+    } else {
-+      classes.push('origo-overlay-pane--modal');
-+    }
-+
-+    // Theme Scope Inheritance
-+    if (config.themeScope) {
-+      classes.push(config.themeScope);
-+    } else if (this.document) {
-+      // Inherit active theme class from body/documentElement if present
-+      if (this.document.body.classList.contains('theme-dark')) {
-+        classes.push('theme-dark');
-+      } else if (this.document.body.classList.contains('theme-light')) {
-+        classes.push('theme-light');
-+      } else if (this.document.body.classList.contains('high-contrast')) {
-+        classes.push('high-contrast');
-+      }
-+    }
-+
-+    if (config.panelClass) {
-+      if (Array.isArray(config.panelClass)) {
-+        classes.push(...config.panelClass);
-+      } else {
-+        classes.push(config.panelClass);
-+      }
-+    }
-+
-+    return classes;
++  onNext() {
++    this.changePage(this.pageIndex() + 1);
 +  }
 +
-+  private resolveDirection(config: OrigoOverlayConfig): 'ltr' | 'rtl' {
-+    if (config.direction) {
-+      return config.direction;
++  onLast() {
++    this.changePage(this.pageCount() - 1);
++  }
++
++  onPageSelect(pageIndex: number) {
++    this.changePage(pageIndex);
++  }
++
++  onRowsSelect(event: Event) {
++    if (this.computedDisabled()) return;
++
++    const target = event.target as HTMLSelectElement;
++    const newRows = Number(target.value);
++    if (isNaN(newRows) || newRows <= 0) return;
++
++    this.experienceAdapter.updateState(this.contract().id, 'rows', newRows);
++    this.experienceAdapter.updateState(this.contract().id, 'first', 0);
++
++    const rowsEvent: RowsChangeEvent = {
++      rows: newRows,
++      first: 0,
++    };
++
++    const pageCount = newRows > 0 ? Math.ceil(this.computedTotalRecords() / newRows) : 0;
++    const pageEvent: PageChangeEvent = {
++      page: 0,
++      first: 0,
++      rows: newRows,
++      pageCount,
++    };
++
++    const contractId = this.contract().id;
++    if (contractId) {
++      this.experienceAdapter.dispatchCapability(contractId, 'rowsChange', rowsEvent);
++      this.experienceAdapter.dispatchCapability(contractId, 'pageChange', pageEvent);
 +    }
 +
-+    if (this.document) {
-+      const docDir = this.document.documentElement.getAttribute('dir');
-+      if (docDir === 'rtl') return 'rtl';
-+
-+      if (config.position.type === 'connected') {
-+        const targetEl =
-+          config.position.target instanceof ElementRef
-+            ? config.position.target.nativeElement
-+            : config.position.target;
-+        if (targetEl && typeof targetEl.closest === 'function') {
-+          const dirEl = targetEl.closest('[dir]');
-+          if (dirEl && dirEl.getAttribute('dir') === 'rtl') {
-+            return 'rtl';
-+          }
-+        }
-+      }
-+    }
-+
-+    return 'ltr';
++    this.rowsChange.emit(rowsEvent);
++    this.pageChange.emit(pageEvent);
 +  }
 +}
-diff --git a/packages/angular-renderer/src/styles/overlay.scss b/packages/angular-renderer/src/styles/overlay.scss
+diff --git a/packages/angular-renderer/src/components/primitives/stepper/stepper.component.html b/packages/angular-renderer/src/components/primitives/stepper/stepper.component.html
 new file mode 100644
-index 0000000..8be3d9a
+index 0000000..5aa63f7
 --- /dev/null
-+++ b/packages/angular-renderer/src/styles/overlay.scss
-@@ -0,0 +1,117 @@
-+/**
-+ * @origo/angular-renderer - Global Overlay & Portal Stylesheet
-+ * Architectural Standard: AD-6 (Design Tokens), NFR-I18N-001 (CSS Logical Properties), CSP Compliance
-+ */
++++ b/packages/angular-renderer/src/components/primitives/stepper/stepper.component.html
+@@ -0,0 +1,64 @@
++<div
++  class="origo-stepper__container"
++  [class.origo-stepper--vertical]="orientation() === 'vertical'"
++  [class.origo-stepper--horizontal]="orientation() === 'horizontal'"
++>
++  <div
++    class="origo-stepper__list"
++    role="tablist"
++    [attr.aria-label]="computedAriaLabel()"
++    [attr.aria-describedby]="computedAriaDescribedBy()"
++    [attr.aria-orientation]="orientation()"
++  >
++    @for (step of computedSteps(); track step.key; let i = $index; let last = $last) {
++      <div class="origo-stepper__item" [class.origo-stepper__item--active]="isStepActive(i)">
++        <button
++          #stepButton
++          type="button"
++          role="tab"
++          class="origo-stepper__step"
++          [class.origo-stepper__step--active]="isStepActive(i)"
++          [class.origo-stepper__step--completed]="isStepCompleted(step)"
++          [class.origo-stepper__step--disabled]="isStepDisabled(step, i)"
++          [disabled]="isStepDisabled(step, i)"
++          [attr.aria-selected]="isStepActive(i)"
++          [attr.aria-controls]="'step-panel-' + step.key"
++          [attr.id]="'step-tab-' + step.key"
++          [attr.tabindex]="isStepActive(i) ? 0 : -1"
++          (click)="onStepClick(step, i)"
++          (keydown)="onKeyDown($event, i)"
++        >
++          <span class="origo-stepper__indicator" aria-hidden="true">
++            @if (isStepCompleted(step)) {
++              <span class="origo-stepper__check">✓</span>
++            } @else if (step.icon) {
++              <span class="origo-stepper__icon">{{ step.icon }}</span>
++            } @else {
++              <span class="origo-stepper__number">{{ i + 1 }}</span>
++            }
++          </span>
 +
-+// Global Overlay Container attached to document.body
-+.cdk-overlay-container {
-+  position: fixed;
-+  z-index: var(--origo-z-overlay, 1000);
-+  pointer-events: none;
-+  inset-block-start: 0;
-+  inset-inline-start: 0;
++          <span class="origo-stepper__content">
++            <span class="origo-stepper__label">{{ step.label }}</span>
++            @if (step.description) {
++              <span class="origo-stepper__description">{{ step.description }}</span>
++            }
++          </span>
++        </button>
++
++        @if (!last) {
++          <div
++            class="origo-stepper__connector"
++            [class.origo-stepper__connector--completed]="isStepCompleted(step)"
++            aria-hidden="true"
++          ></div>
++        }
++      </div>
++    }
++  </div>
++
++  <div class="origo-stepper__panels" role="region">
++    <ng-container #vc></ng-container>
++    <ng-content></ng-content>
++  </div>
++</div>
+diff --git a/packages/angular-renderer/src/components/primitives/stepper/stepper.component.scss b/packages/angular-renderer/src/components/primitives/stepper/stepper.component.scss
+new file mode 100644
+index 0000000..94694de
+--- /dev/null
++++ b/packages/angular-renderer/src/components/primitives/stepper/stepper.component.scss
+@@ -0,0 +1,167 @@
++:host {
++  display: block;
++  box-sizing: border-box;
 +  inline-size: 100%;
-+  block-size: 100%;
-+}
 +
-+// Global Backdrop
-+.cdk-overlay-backdrop,
-+.origo-overlay-backdrop {
-+  position: fixed;
-+  inset: 0;
-+  z-index: var(--origo-z-backdrop, 999);
-+  pointer-events: auto;
-+  background-color: var(--origo-color-backdrop, rgba(0, 0, 0, 0.45));
-+  opacity: 0;
-+  transition: opacity var(--origo-motion-duration-fast, 150ms)
-+    var(--origo-motion-easing-standard, ease);
-+
-+  &.cdk-overlay-backdrop-showing,
-+  &.origo-overlay-backdrop--visible {
-+    opacity: 1;
++  *,
++  *::before,
++  *::after {
++    box-sizing: inherit;
 +  }
 +}
 +
-+// Global Overlay Panel Container
-+.cdk-overlay-pane,
-+.origo-overlay-pane {
-+  position: absolute;
-+  pointer-events: auto;
-+  box-sizing: border-box;
-+  z-index: var(--origo-z-overlay-pane, 1001);
-+  max-inline-size: 100vw;
-+  max-block-size: 100vh;
++:host([hidden]) {
++  display: none !important;
++}
++
++.origo-stepper__container {
 +  display: flex;
 +  flex-direction: column;
++  inline-size: 100%;
 +
-+  // Design Token Surface & Elevation bindings
-+  background-color: var(--origo-color-surface-overlay, var(--origo-color-surface-primary, #ffffff));
-+  color: var(--origo-color-text-primary, #111827);
-+  border-radius: var(--origo-radius-md, 8px);
-+  box-shadow: var(
-+    --origo-shadow-lg,
-+    0 10px 15px -3px rgba(0, 0, 0, 0.1),
-+    0 4px 6px -2px rgba(0, 0, 0, 0.05)
-+  );
-+  border: 1px solid var(--origo-color-border-subtle, rgba(0, 0, 0, 0.08));
++  &.origo-stepper--vertical {
++    .origo-stepper__list {
++      flex-direction: column;
++      align-items: stretch;
++    }
 +
-+  // CSS Logical Properties for spacing
-+  padding-inline: var(--origo-space-md, 16px);
-+  padding-block: var(--origo-space-md, 16px);
++    .origo-stepper__item {
++      flex-direction: column;
++      align-items: flex-start;
++    }
 +
-+  outline: none;
-+
-+  // Connected Dropdown modifier
-+  &.origo-overlay-pane--connected {
-+    padding-inline: 0;
-+    padding-block: 0;
-+    overflow-y: auto;
-+    overflow-x: hidden;
-+    min-inline-size: var(--origo-overlay-min-width, 180px);
-+  }
-+
-+  // Modal Dialog modifier
-+  &.origo-overlay-pane--modal {
-+    inline-size: min(90vw, 560px);
-+    max-block-size: 85vh;
-+    overflow-y: auto;
++    .origo-stepper__connector {
++      inline-size: var(--origo-border-width-thick);
++      min-block-size: var(--origo-spacing-lg);
++      margin-inline-start: var(--origo-spacing-md);
++      margin-block: var(--origo-spacing-xs);
++    }
 +  }
 +}
 +
-+// RTL Internationalization Directionality Propagation
-+[dir='rtl'] .cdk-overlay-pane,
-+[dir='rtl'] .origo-overlay-pane,
-+.origo-overlay-pane[dir='rtl'] {
-+  direction: rtl;
++.origo-stepper__list {
++  display: flex;
++  align-items: center;
++  inline-size: 100%;
++  padding: 0;
++  margin: 0;
++  gap: var(--origo-spacing-sm);
++}
++
++.origo-stepper__item {
++  display: flex;
++  align-items: center;
++  flex: 1 1 auto;
++
++  &:last-child {
++    flex: 0 0 auto;
++  }
++}
++
++.origo-stepper__step {
++  display: inline-flex;
++  align-items: center;
++  gap: var(--origo-spacing-sm);
++  background: none;
++  border: none;
++  padding-block: var(--origo-spacing-sm);
++  padding-inline: var(--origo-spacing-sm);
++  cursor: pointer;
++  font-family: inherit;
++  font-size: var(--origo-typography-button-font-size);
++  color: var(--origo-color-text-muted);
++  border-radius: var(--origo-radius-sm);
++  transition: all var(--origo-duration-fast) ease;
++  outline: none;
++
++  &:hover:not(:disabled) {
++    background-color: var(--origo-color-surface-subtle);
++    color: var(--origo-color-text-primary);
++  }
++
++  &:focus-visible {
++    outline: var(--origo-border-width-thick) solid var(--origo-color-focus);
++    outline-offset: 2px;
++  }
++
++  &.origo-stepper__step--active {
++    color: var(--origo-color-surface-primary);
++    font-weight: 600;
++
++    .origo-stepper__indicator {
++      background-color: var(--origo-color-surface-primary);
++      border-color: var(--origo-color-surface-primary);
++      color: var(--origo-color-text-inverse);
++    }
++  }
++
++  &.origo-stepper__step--completed:not(.origo-stepper__step--active) {
++    .origo-stepper__indicator {
++      background-color: var(--origo-color-surface-primary);
++      border-color: var(--origo-color-surface-primary);
++      color: var(--origo-color-text-inverse);
++    }
++  }
++
++  &:disabled,
++  &.origo-stepper__step--disabled {
++    cursor: not-allowed;
++    opacity: var(--origo-opacity-disabled);
++    color: var(--origo-color-text-disabled);
++
++    .origo-stepper__indicator {
++      border-color: var(--origo-color-border-default);
++      color: var(--origo-color-text-disabled);
++    }
++  }
++}
++
++.origo-stepper__indicator {
++  display: inline-flex;
++  align-items: center;
++  justify-content: center;
++  inline-size: var(--origo-spacing-xl);
++  block-size: var(--origo-spacing-xl);
++  border-radius: var(--origo-radius-full);
++  border: var(--origo-border-width-default) solid var(--origo-color-border-default);
++  background-color: var(--origo-color-surface-default);
++  color: var(--origo-color-text-muted);
++  font-size: var(--origo-typography-button-font-size);
++  font-weight: 600;
++  flex-shrink: 0;
++  transition: all var(--origo-duration-fast) ease;
++}
++
++.origo-stepper__content {
++  display: inline-flex;
++  flex-direction: column;
++  align-items: flex-start;
 +  text-align: start;
 +}
 +
-+// Theme Inheritance Scopes
-+.origo-overlay-pane.theme-dark {
-+  background-color: var(--origo-color-surface-overlay, #1f2937);
-+  color: var(--origo-color-text-primary, #f9fafb);
-+  border-color: var(--origo-color-border-subtle, rgba(255, 255, 255, 0.12));
++.origo-stepper__label {
++  font-size: var(--origo-typography-button-font-size);
++  line-height: var(--origo-typography-button-line-height);
 +}
 +
-+.origo-overlay-pane.theme-light {
-+  background-color: var(--origo-color-surface-overlay, #ffffff);
-+  color: var(--origo-color-text-primary, #111827);
-+  border-color: var(--origo-color-border-subtle, rgba(0, 0, 0, 0.08));
++.origo-stepper__description {
++  font-size: var(--origo-typography-caption-font-size);
++  color: var(--origo-color-text-muted);
 +}
 +
-+.origo-overlay-pane.high-contrast {
-+  background-color: #000000;
-+  color: #ffffff;
-+  border: 2px solid #ffffff;
-+}
++.origo-stepper__connector {
++  flex: 1 1 auto;
++  block-size: var(--origo-border-width-default);
++  background-color: var(--origo-color-border-default);
++  margin-inline: var(--origo-spacing-sm);
++  transition: background-color var(--origo-duration-fast) ease;
 +
-+// Prefers Reduced Motion Guardrail
-+@media (prefers-reduced-motion: reduce) {
-+  .cdk-overlay-backdrop,
-+  .origo-overlay-backdrop,
-+  .cdk-overlay-pane,
-+  .origo-overlay-pane {
-+    transition: none !important;
-+    animation: none !important;
++  &.origo-stepper__connector--completed {
++    background-color: var(--origo-color-surface-primary);
 +  }
 +}
-diff --git a/tools/spikes/overlay-shadowdom/overlay-shadowdom.spec.ts b/tools/spikes/overlay-shadowdom/overlay-shadowdom.spec.ts
-new file mode 100644
-index 0000000..716b5d2
---- /dev/null
-+++ b/tools/spikes/overlay-shadowdom/overlay-shadowdom.spec.ts
-@@ -0,0 +1,101 @@
-+import { ComponentFixture, TestBed } from '@angular/core/testing';
-+import { Component, ViewChild, TemplateRef, ViewContainerRef, inject } from '@angular/core';
-+import { CommonModule } from '@angular/common';
-+import { OverlayModule } from '@angular/cdk/overlay';
-+import { SpikeOverlayService } from './spike-overlay.service';
-+import { SpikeShadowTriggerComponent } from './shadow-dom-trigger.component';
 +
-+@Component({
-+  standalone: true,
-+  imports: [CommonModule, SpikeShadowTriggerComponent],
-+  template: `
-+    <div id="test-wrapper" style="overflow: hidden; max-height: 40px;">
-+      <origo-spike-shadow-trigger #spikeHost></origo-spike-shadow-trigger>
-+    </div>
-+    <ng-template #overlayTemplate>
-+      <div id="projected-overlay-panel" class="origo-overlay-pane">
-+        <input id="overlay-input" type="text" />
-+        <button id="overlay-btn" type="button">Action</button>
-+      </div>
-+    </ng-template>
-+  `,
-+})
-+class TestOverlayHostComponent {
-+  readonly vcr = inject(ViewContainerRef);
-+
-+  @ViewChild('spikeHost', { static: true })
-+  spikeHost!: SpikeShadowTriggerComponent;
-+
-+  @ViewChild('overlayTemplate', { static: true })
-+  overlayTemplate!: TemplateRef<unknown>;
++.origo-stepper__panels {
++  display: block;
++  padding-block: var(--origo-spacing-md);
 +}
+diff --git a/packages/angular-renderer/src/components/primitives/stepper/stepper.component.spec.ts b/packages/angular-renderer/src/components/primitives/stepper/stepper.component.spec.ts
+new file mode 100644
+index 0000000..aa570d4
+--- /dev/null
++++ b/packages/angular-renderer/src/components/primitives/stepper/stepper.component.spec.ts
+@@ -0,0 +1,246 @@
++import { ComponentFixture, TestBed } from '@angular/core/testing';
++import { StepperComponent, StepperProps, StepChangeEvent } from './stepper.component';
++import { provideZonelessChangeDetection, ViewContainerRef } from '@angular/core';
++import { WebExperienceAdapterService } from '../../../adapters/web/experience-adapter.service';
++import { InteractionContract } from '@origostudio/core';
 +
-+describe('Spike: Overlay & Shadow DOM Substrate', () => {
-+  let fixture: ComponentFixture<TestOverlayHostComponent>;
-+  let hostComponent: TestOverlayHostComponent;
-+  let overlayService: SpikeOverlayService;
++describe('StepperComponent', () => {
++  let component: StepperComponent;
++  let fixture: ComponentFixture<StepperComponent>;
++  let mockAdapter: { updateState: jest.Mock; dispatchCapability: jest.Mock };
 +
 +  beforeEach(async () => {
++    mockAdapter = {
++      updateState: jest.fn(),
++      dispatchCapability: jest.fn(),
++    };
++
 +    await TestBed.configureTestingModule({
-+      imports: [OverlayModule, TestOverlayHostComponent],
-+      providers: [SpikeOverlayService],
++      imports: [StepperComponent],
++      providers: [
++        provideZonelessChangeDetection(),
++        { provide: WebExperienceAdapterService, useValue: mockAdapter },
++      ],
 +    }).compileComponents();
 +
-+    fixture = TestBed.createComponent(TestOverlayHostComponent);
-+    hostComponent = fixture.componentInstance;
-+    overlayService = TestBed.inject(SpikeOverlayService);
++    fixture = TestBed.createComponent(StepperComponent);
++    component = fixture.componentInstance;
++  });
++
++  it('should create and implement ContainerComponent with ViewContainerRef vc', () => {
++    fixture.componentRef.setInput('contract', {
++      id: 'step-1',
++      type: 'Stepper',
++      props: {
++        steps: [
++          { key: 'step1', label: 'Step 1' },
++          { key: 'step2', label: 'Step 2' },
++        ],
++      },
++    } as InteractionContract<StepperProps>);
++
 +    fixture.detectChanges();
++    expect(component).toBeTruthy();
++    expect(component.vc).toBeDefined();
++    expect(component.vc()).toBeInstanceOf(ViewContainerRef);
 +  });
 +
-+  afterEach(() => {
-+    // Cleanup any detached overlay containers
-+    const containers = document.querySelectorAll('.cdk-overlay-container');
-+    containers.forEach(c => c.remove());
++  it('should render step headers, indicators, and labels', () => {
++    fixture.componentRef.setInput('contract', {
++      id: 'step-1',
++      type: 'Stepper',
++      props: {
++        steps: [
++          { key: 'details', label: 'Personal Details', description: 'Enter name and email' },
++          { key: 'address', label: 'Address', icon: 'map-pin' },
++          { key: 'payment', label: 'Payment' },
++        ],
++        value: 'details',
++      },
++    } as InteractionContract<StepperProps>);
++
++    fixture.detectChanges();
++
++    const root = fixture.nativeElement.shadowRoot ?? fixture.nativeElement;
++    const tablist = root.querySelector('[role="tablist"]');
++    expect(tablist).toBeTruthy();
++
++    const stepButtons = root.querySelectorAll('[role="tab"]');
++    expect(stepButtons.length).toBe(3);
++
++    // First step is active
++    expect(stepButtons[0].getAttribute('aria-selected')).toBe('true');
++    expect(stepButtons[0].textContent).toContain('Personal Details');
++    expect(stepButtons[0].textContent).toContain('Enter name and email');
++
++    // Second step has icon
++    expect(stepButtons[1].textContent).toContain('Address');
++    expect(stepButtons[1].textContent).toContain('map-pin');
 +  });
 +
-+  it('should instantiate the Shadow DOM trigger component with shadowRoot', () => {
-+    const triggerEl = fixture.nativeElement.querySelector('origo-spike-shadow-trigger');
-+    expect(triggerEl).toBeTruthy();
-+    expect(triggerEl.shadowRoot).toBeTruthy();
++  it('should switch steps on click in non-linear mode and emit outputs and update state', () => {
++    const stepChangeSpy = jest.fn();
++    const valueChangeSpy = jest.fn();
++    const stepClickSpy = jest.fn();
++    component.stepChange.subscribe(stepChangeSpy);
++    component.valueChange.subscribe(valueChangeSpy);
++    component.stepClick.subscribe(stepClickSpy);
 +
-+    const buttonInShadow = triggerEl.shadowRoot.querySelector('#spike-trigger-button');
-+    expect(buttonInShadow).toBeTruthy();
-+    expect(buttonInShadow.getAttribute('aria-haspopup')).toBe('dialog');
++    fixture.componentRef.setInput('contract', {
++      id: 'step-1',
++      type: 'Stepper',
++      props: {
++        steps: [
++          { key: 'step1', label: 'Step 1' },
++          { key: 'step2', label: 'Step 2' },
++          { key: 'step3', label: 'Step 3' },
++        ],
++        value: 'step1',
++        linear: false,
++      },
++    } as InteractionContract<StepperProps>);
++
++    fixture.detectChanges();
++
++    const root = fixture.nativeElement.shadowRoot ?? fixture.nativeElement;
++    const stepButtons = root.querySelectorAll('[role="tab"]');
++    (stepButtons[2] as HTMLButtonElement).click();
++
++    const expectedChangeEvent: StepChangeEvent = {
++      activeStep: 'step3',
++      previousStep: 'step1',
++      index: 2,
++    };
++
++    expect(mockAdapter.updateState).toHaveBeenCalledWith('step-1', 'value', 'step3');
++    expect(mockAdapter.updateState).toHaveBeenCalledWith('step-1', 'activeStep', 'step3');
++    expect(mockAdapter.dispatchCapability).toHaveBeenCalledWith(
++      'step-1',
++      'stepChange',
++      expectedChangeEvent
++    );
++    expect(stepChangeSpy).toHaveBeenCalledWith(expectedChangeEvent);
++    expect(valueChangeSpy).toHaveBeenCalledWith('step3');
++    expect(stepClickSpy).toHaveBeenCalledWith(expect.objectContaining({ key: 'step3' }));
 +  });
 +
-+  it('should escape parent container overflow:hidden when overlay is created', () => {
-+    const triggerEl = fixture.nativeElement.querySelector('origo-spike-shadow-trigger');
-+    const buttonInShadow = triggerEl.shadowRoot.querySelector('#spike-trigger-button');
++  it('should enforce linear mode gating by preventing jumping over incomplete steps', () => {
++    const stepChangeSpy = jest.fn();
++    component.stepChange.subscribe(stepChangeSpy);
 +
-+    const overlayInstance = overlayService.create({
-+      triggerElement: buttonInShadow,
-+      panelClass: 'custom-spike-panel',
-+      themeScope: 'theme-dark',
-+    });
++    fixture.componentRef.setInput('contract', {
++      id: 'step-linear',
++      type: 'Stepper',
++      props: {
++        steps: [
++          { key: 'step1', label: 'Step 1' },
++          { key: 'step2', label: 'Step 2' },
++          { key: 'step3', label: 'Step 3' },
++        ],
++        value: 'step1',
++        linear: true,
++      },
++    } as InteractionContract<StepperProps>);
 +
-+    overlayInstance.open(hostComponent.overlayTemplate, hostComponent.vcr);
++    fixture.detectChanges();
 +
-+    const overlayPane = document.querySelector('.origo-overlay-pane');
-+    expect(overlayPane).toBeTruthy();
++    const root = fixture.nativeElement.shadowRoot ?? fixture.nativeElement;
++    const stepButtons = root.querySelectorAll('[role="tab"]');
++    // Step 3 (index 2) should be disabled in linear mode because step 1 and step 2 are not completed
++    expect((stepButtons[2] as HTMLButtonElement).disabled).toBe(true);
 +
-+    // Verify overlay is NOT inside the shadowRoot or clipped wrapper
-+    expect(triggerEl.shadowRoot.contains(overlayPane)).toBe(false);
-+    expect(fixture.nativeElement.querySelector('#test-wrapper').contains(overlayPane)).toBe(false);
-+
-+    // Verify overlay IS attached to document.body CDK container
-+    expect(document.body.contains(overlayPane)).toBe(true);
-+
-+    overlayInstance.dispose();
++    (stepButtons[2] as HTMLButtonElement).click();
++    expect(stepChangeSpy).not.toHaveBeenCalled();
++    expect(mockAdapter.updateState).not.toHaveBeenCalled();
 +  });
 +
-+  it('should pierce Shadow DOM with getDeepActiveElement()', () => {
-+    const triggerEl = fixture.nativeElement.querySelector('origo-spike-shadow-trigger');
-+    const buttonInShadow = triggerEl.shadowRoot.querySelector(
-+      '#spike-trigger-button'
-+    ) as HTMLButtonElement;
++  it('should allow navigation to future step in linear mode if preceding steps are in completedSteps', () => {
++    fixture.componentRef.setInput('contract', {
++      id: 'step-linear-completed',
++      type: 'Stepper',
++      props: {
++        steps: [
++          { key: 'step1', label: 'Step 1' },
++          { key: 'step2', label: 'Step 2' },
++          { key: 'step3', label: 'Step 3' },
++        ],
++        value: 'step1',
++        linear: true,
++        completedSteps: ['step1', 'step2'],
++      },
++    } as InteractionContract<StepperProps>);
 +
-+    buttonInShadow.focus();
-+    const deepActive = overlayService.getDeepActiveElement();
-+    expect(deepActive).toBe(buttonInShadow);
++    fixture.detectChanges();
++
++    const root = fixture.nativeElement.shadowRoot ?? fixture.nativeElement;
++    const stepButtons = root.querySelectorAll('[role="tab"]');
++    // Step 3 should be enabled now
++    expect((stepButtons[2] as HTMLButtonElement).disabled).toBe(false);
++
++    (stepButtons[2] as HTMLButtonElement).click();
++    expect(mockAdapter.updateState).toHaveBeenCalledWith('step-linear-completed', 'value', 'step3');
++  });
++
++  it('should handle keyboard navigation (ArrowRight / ArrowLeft in horizontal, ArrowDown / ArrowUp in vertical)', () => {
++    jest.useFakeTimers();
++    fixture.componentRef.setInput('contract', {
++      id: 'step-nav',
++      type: 'Stepper',
++      props: {
++        steps: [
++          { key: 'step1', label: 'Step 1' },
++          { key: 'step2', label: 'Step 2' },
++        ],
++        value: 'step1',
++      },
++    } as InteractionContract<StepperProps>);
++
++    fixture.detectChanges();
++
++    const root = fixture.nativeElement.shadowRoot ?? fixture.nativeElement;
++    const buttons = root.querySelectorAll('[role="tab"]');
++    const focusSpy = jest.spyOn(buttons[1] as HTMLElement, 'focus');
++
++    const eventRight = new KeyboardEvent('keydown', { key: 'ArrowRight' });
++    component.onKeyDown(eventRight, 0);
++    jest.runAllTimers();
++    expect(focusSpy).toHaveBeenCalled();
++
++    // Now test vertical orientation
++    fixture.componentRef.setInput('contract', {
++      id: 'step-nav',
++      type: 'Stepper',
++      props: {
++        orientation: 'vertical',
++        steps: [
++          { key: 'step1', label: 'Step 1' },
++          { key: 'step2', label: 'Step 2' },
++        ],
++        value: 'step1',
++      },
++    } as InteractionContract<StepperProps>);
++
++    fixture.detectChanges();
++
++    const focusSpyDown = jest.spyOn(buttons[1] as HTMLElement, 'focus');
++    const eventDown = new KeyboardEvent('keydown', { key: 'ArrowDown' });
++    component.onKeyDown(eventDown, 0);
++    jest.runAllTimers();
++    expect(focusSpyDown).toHaveBeenCalled();
++
++    jest.useRealTimers();
++  });
++
++  it('should support RTL layouts by avoiding physical CSS properties', () => {
++    fixture.componentRef.setInput('contract', { id: 'rtl-test', type: 'test', props: {} });
++    fixture.detectChanges();
++    const root = fixture.nativeElement.shadowRoot ?? fixture.nativeElement;
++    const element = root.firstElementChild as HTMLElement;
++    if (element && element.style) {
++      expect(element.style.paddingLeft).toBeFalsy();
++      expect(element.style.paddingRight).toBeFalsy();
++      expect(element.style.marginLeft).toBeFalsy();
++      expect(element.style.marginRight).toBeFalsy();
++    }
 +  });
 +});
-diff --git a/tools/spikes/overlay-shadowdom/run-spike.ts b/tools/spikes/overlay-shadowdom/run-spike.ts
+diff --git a/packages/angular-renderer/src/components/primitives/stepper/stepper.component.ts b/packages/angular-renderer/src/components/primitives/stepper/stepper.component.ts
 new file mode 100644
-index 0000000..e68abe4
+index 0000000..5db2bdf
 --- /dev/null
-+++ b/tools/spikes/overlay-shadowdom/run-spike.ts
-@@ -0,0 +1,298 @@
-+/**
-+ * Automated Spike Harness: Shadow DOM CDK Overlay & Portal Substrate
-+ * Executable via: npm run spike:overlay
-+ */
-+
-+import { JSDOM } from 'jsdom';
-+
-+interface TestResult {
-+  title: string;
-+  passed: boolean;
-+  details?: string;
-+}
-+
-+const results: TestResult[] = [];
-+
-+function assert(condition: boolean, title: string, details?: string) {
-+  if (condition) {
-+    results.push({ title, passed: true });
-+    console.log(`  [PASS] ${title}`);
-+  } else {
-+    results.push({ title, passed: false, details });
-+    console.error(`  [FAIL] ${title} - Details: ${details || 'Assertion failed'}`);
-+  }
-+}
-+
-+async function runSpikeSuite() {
-+  console.log('\n============================================================');
-+  console.log('  ORIGO DESIGN SYSTEM - SPIKE: OVERLAY & SHADOW DOM SUBSTRATE');
-+  console.log('============================================================\n');
-+
-+  // 1. Setup JSDOM environment with Shadow DOM support
-+  const dom = new JSDOM(
-+    `<!DOCTYPE html>
-+    <html lang="en">
-+    <head><title>Overlay Spike</title></head>
-+    <body class="theme-light">
-+      <div id="app-root">
-+        <div id="clipped-container" style="overflow: hidden; max-height: 40px; position: relative;">
-+          <origo-host id="custom-host"></origo-host>
-+        </div>
-+      </div>
-+      <div class="cdk-overlay-container" id="cdk-container"></div>
-+    </body>
-+    </html>`,
-+    { url: 'http://localhost' }
-+  );
-+
-+  const { window } = dom;
-+  const { document } = window;
-+  Object.assign(globalThis, {
-+    window,
-+    document,
-+    HTMLElement: window.HTMLElement,
-+    customElements: window.customElements,
-+    MouseEvent: window.MouseEvent,
-+    KeyboardEvent: window.KeyboardEvent,
-+  });
-+
-+  console.log('Step 1: Testing Shadow DOM Setup & Container Overflow Escaping...');
-+
-+  // Setup custom element with Shadow DOM
-+  const host = document.getElementById('custom-host') as HTMLElement;
-+  const shadowRoot = host.attachShadow({ mode: 'open' });
-+
-+  const triggerButton = document.createElement('button');
-+  triggerButton.id = 'shadow-trigger-btn';
-+  triggerButton.textContent = 'Open Dropdown';
-+  triggerButton.setAttribute('aria-expanded', 'false');
-+  triggerButton.setAttribute('aria-haspopup', 'dialog');
-+  shadowRoot.appendChild(triggerButton);
-+
-+  const clippedContainer = document.getElementById('clipped-container');
-+  const cdkContainer = document.getElementById('cdk-container');
-+  if (!clippedContainer || !cdkContainer) {
-+    throw new Error('Required spike containers not found');
-+  }
-+
-+  // Simulate CDK Overlay attachment outside shadow root directly to body container
-+  const overlayPane = document.createElement('div');
-+  overlayPane.id = 'origo-overlay-pane';
-+  overlayPane.className = 'origo-overlay-pane theme-dark';
-+  overlayPane.setAttribute('role', 'dialog');
-+  overlayPane.setAttribute('tabindex', '-1');
-+
-+  const panelInput = document.createElement('input');
-+  panelInput.id = 'panel-input';
-+  panelInput.type = 'text';
-+
-+  const panelBtn = document.createElement('button');
-+  panelBtn.id = 'panel-close-btn';
-+  panelBtn.textContent = 'Confirm Action';
-+
-+  overlayPane.appendChild(panelInput);
-+  overlayPane.appendChild(panelBtn);
-+  cdkContainer.appendChild(overlayPane);
-+
-+  // Assertion 1: Overlay escapes shadow root and overflow container
-+  const isOutsideShadowRoot = !shadowRoot.contains(overlayPane);
-+  const isOutsideClippedContainer = !clippedContainer.contains(overlayPane);
-+  const isInsideDocumentBody = document.body.contains(overlayPane);
-+
-+  assert(
-+    isOutsideShadowRoot && isOutsideClippedContainer && isInsideDocumentBody,
-+    'AC-1: Overlay escapes Shadow DOM and parent container overflow:hidden clipping into document.body container'
-+  );
-+
-+  console.log('\nStep 2: Testing Token & Theme Inheritance with CSP Compliance...');
-+  // Assertion 2: Theme class copied to overlay panel without inline styles
-+  const hasThemeClass = overlayPane.classList.contains('theme-dark');
-+  const hasNoInlineStyles = !overlayPane.getAttribute('style');
-+
-+  assert(
-+    hasThemeClass && hasNoInlineStyles,
-+    'AC-2: Overlay panel inherits theme class (theme-dark) and preserves CSP compliance without inline style injection'
-+  );
-+
-+  console.log(
-+    '\nStep 3: Testing Shadow DOM Event Piercing & Outside Click Dismissal (event.composedPath)...'
-+  );
-+
-+  let isOpenState = true;
-+  const isOverlayOpen = (): boolean => isOpenState;
-+  const closeOverlay = () => {
-+    isOpenState = false;
-+    triggerButton.setAttribute('aria-expanded', 'false');
-+  };
-+  const openOverlay = () => {
-+    isOpenState = true;
-+    triggerButton.setAttribute('aria-expanded', 'true');
-+  };
-+
-+  const handleDocumentClick = (event: MouseEvent) => {
-+    if (!isOverlayOpen()) return;
-+    const path = event.composedPath ? event.composedPath() : [];
-+    const isInsideOverlay = path.includes(overlayPane);
-+    const isInsideTrigger = path.includes(triggerButton) || path.includes(host);
-+
-+    if (!isInsideOverlay && !isInsideTrigger) {
-+      closeOverlay();
-+    }
-+  };
-+
-+  document.addEventListener('click', handleDocumentClick as EventListener, true);
-+
-+  // Simulate click on internal button inside Shadow DOM
-+  const clickInsideShadow = new window.MouseEvent('click', {
-+    bubbles: true,
-+    composed: true,
-+  });
-+  triggerButton.dispatchEvent(clickInsideShadow);
-+
-+  assert(
-+    isOverlayOpen(),
-+    'AC-3: Click inside Shadow DOM trigger does NOT cause false-positive dismissal (composedPath pierces shadow boundary)'
-+  );
-+
-+  // Simulate click inside overlay panel
-+  const clickInsideOverlay = new window.MouseEvent('click', {
-+    bubbles: true,
-+    composed: true,
-+  });
-+  panelInput.dispatchEvent(clickInsideOverlay);
-+
-+  assert(isOverlayOpen(), 'AC-3: Click inside overlay panel does NOT trigger dismissal');
-+
-+  // Simulate click outside both (on document body)
-+  const clickOutside = new window.MouseEvent('click', {
-+    bubbles: true,
-+    composed: true,
-+  });
-+  document.body.dispatchEvent(clickOutside);
-+
-+  assert(
-+    !isOverlayOpen(),
-+    'AC-3: Click outside both Shadow DOM host and overlay successfully triggers dismissal'
-+  );
-+
-+  console.log('\nStep 4: Testing Shadow DOM-Aware Focus Trapping & ActiveElement Piercing...');
-+
-+  // Helper to pierce shadow DOM
-+  function getDeepActiveElement(doc: Document): Element | null {
-+    let active = doc.activeElement;
-+    while (active && active.shadowRoot && active.shadowRoot.activeElement) {
-+      active = active.shadowRoot.activeElement;
-+    }
-+    return active;
-+  }
-+
-+  // Focus trigger inside shadow root
-+  triggerButton.focus();
-+  const initialDeepActive = getDeepActiveElement(document);
-+
-+  assert(
-+    initialDeepActive === triggerButton,
-+    'AC-4: getDeepActiveElement() successfully pierces Shadow DOM boundary to identify triggerButton'
-+  );
-+
-+  // Open overlay and focus panel input
-+  openOverlay();
-+  panelInput.focus();
-+
-+  assert(
-+    document.activeElement === panelInput,
-+    'AC-4: Focus moves into overlay panel focusable element'
-+  );
-+
-+  // Focus trap Tab simulation: from last element, Tab should wrap to first element
-+  panelBtn.focus();
-+  const handleKeydown = (event: KeyboardEvent) => {
-+    if (event.key === 'Tab' && !event.shiftKey) {
-+      if (document.activeElement === panelBtn) {
-+        event.preventDefault();
-+        panelInput.focus();
-+      }
-+    } else if (event.key === 'Escape') {
-+      event.preventDefault();
-+      closeOverlay();
-+      triggerButton.focus();
-+    }
-+  };
-+
-+  const tabEvent = new window.KeyboardEvent('keydown', {
-+    key: 'Tab',
-+    bubbles: true,
-+    cancelable: true,
-+  });
-+  handleKeydown(tabEvent);
-+
-+  assert(
-+    document.activeElement === panelInput,
-+    'AC-4: Focus trap wraps Tab navigation from last element to first element within overlay'
-+  );
-+
-+  // Escape key closes overlay and restores focus to Shadow DOM trigger
-+  const escapeEvent = new window.KeyboardEvent('keydown', {
-+    key: 'Escape',
-+    bubbles: true,
-+    cancelable: true,
-+  });
-+  handleKeydown(escapeEvent);
-+
-+  const restoredDeepActive = getDeepActiveElement(document);
-+  assert(
-+    !isOverlayOpen() && restoredDeepActive === triggerButton,
-+    'AC-4: Escape key closes overlay and restores focus to originating trigger element inside Shadow DOM'
-+  );
-+
-+  console.log('\nStep 5: Testing SSR Guard & Safe No-Op Execution...');
-+
-+  // Simulate SSR Server Environment
-+  const isServer = true;
-+  const ssrOverlayService = {
-+    isBrowser: !isServer,
-+    create: () => ({
-+      isOpen: false,
-+      open: () => {
-+        /* noop in SSR */
-+      },
-+      close: () => {
-+        /* noop in SSR */
-+      },
-+      dispose: () => {
-+        /* noop in SSR */
-+      },
-+    }),
-+  };
-+
-+  let ssrThrewError = false;
-+  try {
-+    const instance = ssrOverlayService.create();
-+    instance.open();
-+    instance.close();
-+    instance.dispose();
-+  } catch {
-+    ssrThrewError = true;
-+  }
-+
-+  assert(
-+    !ssrThrewError && ssrOverlayService.isBrowser === false,
-+    'AC-1 & AC-5: SSR execution safely no-ops without accessing browser DOM or crashing'
-+  );
-+
-+  console.log('\n============================================================');
-+  const allPassed = results.every(r => r.passed);
-+  const total = results.length;
-+  const passedCount = results.filter(r => r.passed).length;
-+  console.log(`SPIKE SUMMARY: ${passedCount}/${total} assertions passed.`);
-+  console.log('============================================================\n');
-+
-+  if (!allPassed) {
-+    process.exit(1);
-+  }
-+}
-+
-+runSpikeSuite().catch(err => {
-+  console.error('Spike execution failed:', err);
-+  process.exit(1);
-+});
-diff --git a/tools/spikes/overlay-shadowdom/shadow-dom-trigger.component.ts b/tools/spikes/overlay-shadowdom/shadow-dom-trigger.component.ts
-new file mode 100644
-index 0000000..98aae9d
---- /dev/null
-+++ b/tools/spikes/overlay-shadowdom/shadow-dom-trigger.component.ts
-@@ -0,0 +1,88 @@
++++ b/packages/angular-renderer/src/components/primitives/stepper/stepper.component.ts
+@@ -0,0 +1,324 @@
 +import {
 +  Component,
-+  ElementRef,
-+  ViewChild,
++  input,
++  output,
++  ChangeDetectionStrategy,
++  computed,
 +  ViewEncapsulation,
-+  signal,
 +  inject,
-+  DestroyRef,
++  ElementRef,
++  viewChildren,
++  viewChild,
++  ViewContainerRef,
++  PLATFORM_ID,
 +} from '@angular/core';
-+import { CommonModule } from '@angular/common';
++import { isPlatformBrowser } from '@angular/common';
++import { InteractionContract } from '@origostudio/core';
++import {
++  OrigoAdapter,
++  ContainerComponent as IContainerComponent,
++  coerceContractProps,
++} from '../../../adapters/web/adapter';
++import { WebExperienceAdapterService } from '../../../adapters/web/experience-adapter.service';
++
++export interface StepItem {
++  key: string;
++  label: string;
++  description?: string;
++  icon?: string;
++  optional?: boolean;
++  disabled?: boolean;
++  completed?: boolean;
++}
++
++export interface StepChangeEvent {
++  activeStep: string;
++  previousStep?: string;
++  index: number;
++}
++
++export interface StepperProps {
++  steps?: Array<StepItem>;
++  value?: string;
++  linear?: boolean;
++  readonly?: boolean;
++  orientation?: 'horizontal' | 'vertical';
++  completedSteps?: Array<string>;
++  disabled?: boolean;
++  permissions?: Record<string, string>;
++  rules?: Record<string, unknown>;
++  metadata?: Record<string, unknown>;
++  'aria-label'?: string;
++  'aria-describedby'?: string;
++}
++
++export const StepperContractSchema: Record<
++  keyof StepperProps,
++  'string' | 'number' | 'boolean' | 'array' | 'object'
++> = {
++  steps: 'array',
++  value: 'string',
++  linear: 'boolean',
++  readonly: 'boolean',
++  orientation: 'string',
++  completedSteps: 'array',
++  disabled: 'boolean',
++  permissions: 'object',
++  rules: 'object',
++  metadata: 'object',
++  'aria-label': 'string',
++  'aria-describedby': 'string',
++};
 +
 +@Component({
-+  selector: 'origo-spike-shadow-trigger',
++  selector: 'origo-stepper',
 +  standalone: true,
-+  imports: [CommonModule],
++  templateUrl: './stepper.component.html',
++  styleUrls: ['./stepper.component.scss'],
++  changeDetection: ChangeDetectionStrategy.OnPush,
 +  encapsulation: ViewEncapsulation.ShadowDom,
-+  template: `
-+    <div
-+      class="clipped-boundary"
-+      style="overflow: hidden; max-height: 40px; position: relative; border: 1px dashed red;"
-+    >
-+      <button
-+        #triggerBtn
-+        id="spike-trigger-button"
-+        type="button"
-+        class="trigger-btn"
-+        [attr.aria-expanded]="isOpen()"
-+        [attr.aria-haspopup]="'dialog'"
-+        [attr.aria-controls]="overlayId"
-+        (click)="toggle()"
-+      >
-+        Toggle Shadow Overlay
-+      </button>
-+
-+      <!-- Internal clipped element demonstrating local template clipping problem -->
-+      <div *ngIf="isOpen()" id="internal-clipped-panel" class="internal-dropdown">
-+        Internal clipped content (overflow: hidden will clip this if rendered in Shadow DOM)
-+      </div>
-+    </div>
-+  `,
-+  styles: [
-+    `
-+      :host {
-+        display: block;
-+        contain: content;
-+      }
-+      .clipped-boundary {
-+        overflow: hidden;
-+        height: 38px;
-+        background: #fafafa;
-+      }
-+      .trigger-btn {
-+        padding-inline: 12px;
-+        padding-block: 8px;
-+        cursor: pointer;
-+      }
-+      .internal-dropdown {
-+        position: absolute;
-+        top: 40px;
-+        inset-inline-start: 0;
-+        width: 200px;
-+        height: 150px;
-+        background: yellow;
-+      }
-+    `,
-+  ],
++  host: {
++    '[class.origo-stepper]': 'true',
++    '[class.origo-stepper--vertical]': "orientation() === 'vertical'",
++    '[attr.data-testid]': 'contract().id',
++  },
 +})
-+export class SpikeShadowTriggerComponent {
-+  readonly isOpen = signal(false);
-+  readonly overlayId = 'origo-spike-overlay-panel';
++export class StepperComponent implements OrigoAdapter<StepperProps>, IContainerComponent {
++  static readonly contractSchema = StepperContractSchema;
++  static readonly strictContract = false;
 +
-+  @ViewChild('triggerBtn', { static: true })
-+  triggerBtnRef!: ElementRef<HTMLButtonElement>;
++  contract = input.required<InteractionContract<StepperProps>>();
++  vc = viewChild.required('vc', { read: ViewContainerRef });
 +
-+  readonly destroyRef = inject(DestroyRef);
++  stepButtons = viewChildren<ElementRef<HTMLButtonElement>>('stepButton');
 +
-+  toggle(): void {
-+    this.isOpen.update(v => !v);
++  valueChange = output<string>();
++  stepChange = output<StepChangeEvent>();
++  next = output<string>();
++  previous = output<string>();
++  complete = output<void>();
++  stepClick = output<StepItem>();
++
++  private experienceAdapter = inject(WebExperienceAdapterService);
++  private platformId = inject(PLATFORM_ID);
++
++  protected props = computed(() =>
++    coerceContractProps<StepperProps>(this.contract().props, StepperContractSchema)
++  );
++
++  computedAriaLabel = computed(() => {
++    const label = this.props()['aria-label'];
++    return label !== undefined && label !== null ? String(label) : 'Stepper';
++  });
++
++  computedAriaDescribedBy = computed(() => {
++    const desc = this.props()['aria-describedby'];
++    return desc !== undefined && desc !== null ? String(desc) : undefined;
++  });
++
++  orientation = computed<'horizontal' | 'vertical'>(() => {
++    return this.props().orientation === 'vertical' ? 'vertical' : 'horizontal';
++  });
++
++  linear = computed<boolean>(() => {
++    return !!this.props().linear;
++  });
++
++  readonly = computed<boolean>(() => {
++    return !!this.props().readonly;
++  });
++
++  computedDisabled = computed<boolean>(() => {
++    return !!this.props().disabled;
++  });
++
++  computedSteps = computed<StepItem[]>(() => {
++    const rawSteps = this.props().steps;
++    if (!Array.isArray(rawSteps)) return [];
++
++    return rawSteps
++      .filter(s => s != null && s.key != null && s.label != null)
++      .map(s => ({
++        key: String(s.key),
++        label: String(s.label),
++        description: s.description ? String(s.description) : undefined,
++        icon: s.icon ? String(s.icon) : undefined,
++        optional: !!s.optional,
++        disabled: !!s.disabled,
++        completed: !!s.completed,
++      }));
++  });
++
++  activeStepKey = computed<string>(() => {
++    const val = this.props().value;
++    if (val && typeof val === 'string') return val;
++
++    const steps = this.computedSteps();
++    return steps.length > 0 ? steps[0].key : '';
++  });
++
++  activeStepIndex = computed<number>(() => {
++    const key = this.activeStepKey();
++    const steps = this.computedSteps();
++    const index = steps.findIndex(s => s.key === key);
++    return index >= 0 ? index : 0;
++  });
++
++  completedStepKeys = computed<Set<string>>(() => {
++    const set = new Set<string>();
++    const rawCompleted = this.props().completedSteps;
++    if (Array.isArray(rawCompleted)) {
++      for (const k of rawCompleted) {
++        if (k != null) set.add(String(k));
++      }
++    }
++    for (const step of this.computedSteps()) {
++      if (step.completed) {
++        set.add(step.key);
++      }
++    }
++    return set;
++  });
++
++  isStepCompleted(step: StepItem): boolean {
++    return this.completedStepKeys().has(step.key);
 +  }
 +
-+  open(): void {
-+    this.isOpen.set(true);
++  isStepActive(index: number): boolean {
++    return index === this.activeStepIndex();
 +  }
 +
-+  close(): void {
-+    this.isOpen.set(false);
-+  }
-+}
-diff --git a/tools/spikes/overlay-shadowdom/spike-overlay.service.ts b/tools/spikes/overlay-shadowdom/spike-overlay.service.ts
-new file mode 100644
-index 0000000..0a72332
---- /dev/null
-+++ b/tools/spikes/overlay-shadowdom/spike-overlay.service.ts
-@@ -0,0 +1,269 @@
-+import {
-+  Injectable,
-+  inject,
-+  PLATFORM_ID,
-+  DestroyRef,
-+  ElementRef,
-+  TemplateRef,
-+  ViewContainerRef,
-+} from '@angular/core';
-+import { isPlatformBrowser, DOCUMENT } from '@angular/common';
-+import { Overlay, OverlayConfig, OverlayRef, ConnectedPosition } from '@angular/cdk/overlay';
-+import { TemplatePortal } from '@angular/cdk/portal';
++  isStepDisabled(step: StepItem, index: number): boolean {
++    if (this.computedDisabled() || this.readonly()) return true;
++    if (step.disabled) return true;
 +
-+export interface SpikeOverlayOptions {
-+  triggerElement?: HTMLElement | ElementRef<HTMLElement>;
-+  closeOnOutsideClick?: boolean;
-+  closeOnEscape?: boolean;
-+  trapFocus?: boolean;
-+  panelClass?: string | string[];
-+  themeScope?: string; // e.g. 'theme-light', 'theme-dark'
-+  destroyRef?: DestroyRef;
-+}
++    if (!this.linear()) return false;
 +
-+export interface SpikeOverlayInstance {
-+  readonly overlayRef: OverlayRef | null;
-+  readonly isOpen: boolean;
-+  open(template: TemplateRef<unknown>, vcr: ViewContainerRef): void;
-+  close(): void;
-+  dispose(): void;
-+}
++    // In linear mode, step at index is enabled if:
++    // 1) index <= activeStepIndex
++    // OR 2) all preceding steps 0..index-1 are completed
++    if (index <= this.activeStepIndex()) return false;
 +
-+@Injectable({
-+  providedIn: 'root',
-+})
-+export class SpikeOverlayService {
-+  private readonly overlay = inject(Overlay, { optional: true });
-+  private readonly platformId = inject(PLATFORM_ID);
-+  private readonly document = inject(DOCUMENT);
-+
-+  get isBrowser(): boolean {
-+    return isPlatformBrowser(this.platformId);
-+  }
-+
-+  /**
-+   * Helper to pierce Shadow DOM boundaries and find the true activeElement
-+   */
-+  getDeepActiveElement(): Element | null {
-+    if (!this.isBrowser || !this.document) {
-+      return null;
-+    }
-+    let active = this.document.activeElement;
-+    while (active && active.shadowRoot && active.shadowRoot.activeElement) {
-+      active = active.shadowRoot.activeElement;
-+    }
-+    return active;
-+  }
-+
-+  /**
-+   * Creates an SSR-safe overlay instance bound to a trigger element and Shadow DOM
-+   */
-+  create(options: SpikeOverlayOptions = {}): SpikeOverlayInstance {
-+    if (!this.isBrowser || !this.overlay) {
-+      // Safe SSR no-op
-+      return {
-+        overlayRef: null,
-+        isOpen: false,
-+        open: () => {
-+          /* no-op on server */
-+        },
-+        close: () => {
-+          /* no-op on server */
-+        },
-+        dispose: () => {
-+          /* no-op on server */
-+        },
-+      };
-+    }
-+
-+    const triggerEl =
-+      options.triggerElement instanceof ElementRef
-+        ? options.triggerElement.nativeElement
-+        : options.triggerElement;
-+
-+    // Capture originating active element (piercing shadowRoot if inside shadow DOM)
-+    let previousFocusedElement: HTMLElement | null = null;
-+
-+    let positionStrategy = this.overlay.position().global().centerHorizontally().centerVertically();
-+    if (triggerEl) {
-+      const positions: ConnectedPosition[] = [
-+        {
-+          originX: 'start',
-+          originY: 'bottom',
-+          overlayX: 'start',
-+          overlayY: 'top',
-+          offsetY: 4,
-+        },
-+        {
-+          originX: 'start',
-+          originY: 'top',
-+          overlayX: 'start',
-+          overlayY: 'bottom',
-+          offsetY: -4,
-+        },
-+      ];
-+      positionStrategy = this.overlay
-+        .position()
-+        .flexibleConnectedTo(triggerEl)
-+        .withPositions(positions)
-+        .withPush(false);
-+    }
-+
-+    const panelClasses = ['origo-overlay-pane'];
-+    if (options.themeScope) {
-+      panelClasses.push(options.themeScope);
-+    }
-+    if (options.panelClass) {
-+      if (Array.isArray(options.panelClass)) {
-+        panelClasses.push(...options.panelClass);
-+      } else {
-+        panelClasses.push(options.panelClass);
++    const steps = this.computedSteps();
++    for (let i = 0; i < index; i++) {
++      if (!this.isStepCompleted(steps[i])) {
++        return true;
 +      }
 +    }
 +
-+    const config = new OverlayConfig({
-+      positionStrategy,
-+      hasBackdrop: false,
-+      panelClass: panelClasses,
-+      disposeOnNavigation: true,
-+    });
++    return false;
++  }
 +
-+    const cdkOverlayRef = this.overlay.create(config);
-+    let openState = false;
-+    let documentClickListener: ((e: MouseEvent) => void) | null = null;
-+    let documentKeydownListener: ((e: KeyboardEvent) => void) | null = null;
++  onStepClick(step: StepItem, index: number) {
++    if (this.isStepDisabled(step, index)) return;
 +
-+    const cleanupListeners = () => {
-+      if (documentClickListener && this.document) {
-+        this.document.removeEventListener('click', documentClickListener, true);
-+        documentClickListener = null;
-+      }
-+      if (documentKeydownListener && this.document) {
-+        this.document.removeEventListener('keydown', documentKeydownListener, true);
-+        documentKeydownListener = null;
-+      }
++    const previousStep = this.activeStepKey();
++    if (previousStep === step.key) {
++      this.stepClick.emit(step);
++      return;
++    }
++
++    this.experienceAdapter.updateState(this.contract().id, 'value', step.key);
++    this.experienceAdapter.updateState(this.contract().id, 'activeStep', step.key);
++
++    const changeEvent: StepChangeEvent = {
++      activeStep: step.key,
++      previousStep,
++      index,
 +    };
 +
-+    const instance: SpikeOverlayInstance = {
-+      get overlayRef() {
-+        return cdkOverlayRef;
-+      },
-+      get isOpen() {
-+        return openState;
-+      },
-+      open: (template: TemplateRef<unknown>, vcr: ViewContainerRef) => {
-+        if (openState) return;
++    const contractId = this.contract().id;
++    if (contractId) {
++      this.experienceAdapter.dispatchCapability(contractId, 'stepChange', changeEvent);
++      this.experienceAdapter.dispatchCapability(contractId, 'valueChange', step.key);
++      this.experienceAdapter.dispatchCapability(contractId, 'stepClick', step);
++    }
 +
-+        previousFocusedElement = this.getDeepActiveElement() as HTMLElement | null;
++    this.valueChange.emit(step.key);
++    this.stepChange.emit(changeEvent);
++    this.stepClick.emit(step);
++  }
 +
-+        const portal = new TemplatePortal(template, vcr);
-+        cdkOverlayRef.attach(portal);
-+        openState = true;
++  goNext() {
++    const steps = this.computedSteps();
++    const currIndex = this.activeStepIndex();
++    if (currIndex < steps.length - 1) {
++      const nextStep = steps[currIndex + 1];
++      this.onStepClick(nextStep, currIndex + 1);
++      this.next.emit(nextStep.key);
++    } else {
++      this.complete.emit();
++      const contractId = this.contract().id;
++      if (contractId) {
++        this.experienceAdapter.dispatchCapability(contractId, 'complete', undefined);
++      }
++    }
++  }
 +
-+        const overlayPane = cdkOverlayRef.overlayElement;
++  goPrevious() {
++    const steps = this.computedSteps();
++    const currIndex = this.activeStepIndex();
++    if (currIndex > 0) {
++      const prevStep = steps[currIndex - 1];
++      this.onStepClick(prevStep, currIndex - 1);
++      this.previous.emit(prevStep.key);
++    }
++  }
 +
-+        // Shadow DOM-Aware Outside Click Handler via event.composedPath()
-+        if (options.closeOnOutsideClick !== false && this.document) {
-+          documentClickListener = (event: MouseEvent) => {
-+            if (!openState) return;
++  onKeyDown(event: KeyboardEvent, index: number) {
++    const steps = this.computedSteps();
++    if (steps.length === 0) return;
 +
-+            // CRITICAL: composedPath() pierces Shadow DOM boundaries
-+            const path = event.composedPath ? event.composedPath() : [];
++    let nextIndex = index;
++    const isVertical = this.orientation() === 'vertical';
 +
-+            const isInsideOverlay =
-+              overlayPane &&
-+              (path.includes(overlayPane) || overlayPane.contains(event.target as Node));
-+            const isInsideTrigger =
-+              triggerEl && (path.includes(triggerEl) || triggerEl.contains(event.target as Node));
++    const isRtl =
++      isPlatformBrowser(this.platformId) &&
++      typeof window !== 'undefined' &&
++      event.target instanceof Element
++        ? window.getComputedStyle(event.target).direction === 'rtl'
++        : false;
 +
-+            if (!isInsideOverlay && !isInsideTrigger) {
-+              instance.close();
-+            }
-+          };
++    if (!isVertical) {
++      if (event.key === 'ArrowRight') {
++        nextIndex = isRtl ? index - 1 : index + 1;
++        event.preventDefault();
++      } else if (event.key === 'ArrowLeft') {
++        nextIndex = isRtl ? index + 1 : index - 1;
++        event.preventDefault();
++      } else if (event.key === 'Home') {
++        nextIndex = 0;
++        event.preventDefault();
++      } else if (event.key === 'End') {
++        nextIndex = steps.length - 1;
++        event.preventDefault();
++      }
++    } else {
++      if (event.key === 'ArrowDown') {
++        nextIndex = index + 1;
++        event.preventDefault();
++      } else if (event.key === 'ArrowUp') {
++        nextIndex = index - 1;
++        event.preventDefault();
++      } else if (event.key === 'Home') {
++        nextIndex = 0;
++        event.preventDefault();
++      } else if (event.key === 'End') {
++        nextIndex = steps.length - 1;
++        event.preventDefault();
++      }
++    }
 +
-+          // Attach with capture phase to detect event before local stoppers
-+          this.document.addEventListener('click', documentClickListener, true);
++    if (nextIndex < 0) nextIndex = steps.length - 1;
++    if (nextIndex >= steps.length) nextIndex = 0;
++
++    if (nextIndex !== index) {
++      setTimeout(() => {
++        const buttons = this.stepButtons();
++        if (buttons && buttons[nextIndex]) {
++          buttons[nextIndex].nativeElement.focus();
 +        }
-+
-+        // Keyboard Handling (Escape & Focus Trap)
-+        if (this.document) {
-+          documentKeydownListener = (event: KeyboardEvent) => {
-+            if (!openState) return;
-+
-+            if (options.closeOnEscape !== false && event.key === 'Escape') {
-+              event.preventDefault();
-+              event.stopPropagation();
-+              instance.close();
-+              return;
-+            }
-+
-+            if (options.trapFocus && event.key === 'Tab' && overlayPane) {
-+              const focusables = overlayPane.querySelectorAll<HTMLElement>(
-+                'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
-+              );
-+              if (focusables.length === 0) return;
-+
-+              const first = focusables[0];
-+              const last = focusables[focusables.length - 1];
-+              const active = this.getDeepActiveElement();
-+
-+              if (event.shiftKey) {
-+                if (active === first || !overlayPane.contains(active)) {
-+                  event.preventDefault();
-+                  last.focus();
-+                }
-+              } else {
-+                if (active === last || !overlayPane.contains(active)) {
-+                  event.preventDefault();
-+                  first.focus();
-+                }
-+              }
-+            }
-+          };
-+
-+          this.document.addEventListener('keydown', documentKeydownListener, true);
-+        }
-+
-+        // Initial Focus into Overlay if trapFocus is enabled
-+        if (options.trapFocus && overlayPane) {
-+          setTimeout(() => {
-+            const firstFocusable = overlayPane.querySelector<HTMLElement>(
-+              'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
-+            );
-+            if (firstFocusable) {
-+              firstFocusable.focus();
-+            }
-+          }, 0);
-+        }
-+      },
-+
-+      close: () => {
-+        if (!openState) return;
-+        cleanupListeners();
-+        if (cdkOverlayRef.hasAttached()) {
-+          cdkOverlayRef.detach();
-+        }
-+        openState = false;
-+
-+        // Restore focus to originating trigger inside Shadow DOM
-+        if (previousFocusedElement && typeof previousFocusedElement.focus === 'function') {
-+          previousFocusedElement.focus();
-+        }
-+      },
-+
-+      dispose: () => {
-+        instance.close();
-+        cdkOverlayRef.dispose();
-+      },
-+    };
-+
-+    // Auto-cleanup on caller DestroyRef
-+    if (options.destroyRef) {
-+      options.destroyRef.onDestroy(() => {
-+        instance.dispose();
 +      });
 +    }
-+
-+    return instance;
 +  }
 +}
+diff --git a/packages/angular-renderer/src/components/primitives/tabs/tabs.component.html b/packages/angular-renderer/src/components/primitives/tabs/tabs.component.html
+index 460f107..8179f1c 100644
+--- a/packages/angular-renderer/src/components/primitives/tabs/tabs.component.html
++++ b/packages/angular-renderer/src/components/primitives/tabs/tabs.component.html
+@@ -1,27 +1,55 @@
+ <div
+-  class="origo-tabs__list"
+-  role="tablist"
+-  [attr.aria-label]="computedAriaLabel()"
+-  [attr.aria-describedby]="computedAriaDescribedBy()"
++  class="origo-tabs__container"
++  [class.origo-tabs--vertical]="computedOrientation() === 'vertical'"
++  [class.origo-tabs--scrollable]="computedScrollable()"
+ >
+-  @for (tab of computedTabs(); track tab.key; let i = $index) {
+-    <button
+-      #tabButton
+-      type="button"
+-      role="tab"
+-      class="origo-tabs__tab"
+-      [class.origo-tabs__tab--active]="computedActiveTab() === tab.key"
+-      [attr.aria-selected]="computedActiveTab() === tab.key"
+-      [attr.aria-controls]="'tabpanel-' + tab.key"
+-      [attr.id]="'tab-' + tab.key"
+-      [attr.tabindex]="
+-        computedActiveTab() === tab.key || (computedActiveTab() == null && i === 0) ? 0 : -1
+-      "
+-      [disabled]="tab.disabled"
+-      (click)="onTabClick(tab)"
+-      (keydown)="onKeyDown($event, i)"
+-    >
+-      <span class="origo-tabs__label" [innerHTML]="tab.label"></span>
+-    </button>
+-  }
++  <div
++    class="origo-tabs__list"
++    role="tablist"
++    [attr.aria-label]="computedAriaLabel()"
++    [attr.aria-describedby]="computedAriaDescribedBy()"
++    [attr.aria-orientation]="computedOrientation()"
++  >
++    @for (tab of computedTabs(); track tab.key; let i = $index) {
++      <button
++        #tabButton
++        type="button"
++        role="tab"
++        class="origo-tabs__tab"
++        [class.origo-tabs__tab--active]="computedActiveTab() === tab.key"
++        [attr.aria-selected]="computedActiveTab() === tab.key"
++        [attr.aria-controls]="'tabpanel-' + tab.key"
++        [attr.id]="'tab-' + tab.key"
++        [attr.tabindex]="
++          computedActiveTab() === tab.key || (computedActiveTab() == null && i === 0) ? 0 : -1
++        "
++        [disabled]="tab.disabled"
++        (click)="onTabClick(tab)"
++        (keydown)="onKeyDown($event, i)"
++      >
++        @if (tab.icon) {
++          <span class="origo-tabs__icon" aria-hidden="true">{{ tab.icon }}</span>
++        }
++        <span class="origo-tabs__label" [innerHTML]="tab.label"></span>
++        @if (tab.badge) {
++          <span class="origo-tabs__badge">{{ tab.badge }}</span>
++        }
++        @if (tab.closable) {
++          <button
++            type="button"
++            class="origo-tabs__close"
++            [attr.aria-label]="'Close ' + tab.label"
++            (click)="onTabClose($event, tab)"
++          >
++            ×
++          </button>
++        }
++      </button>
++    }
++  </div>
++
++  <div class="origo-tabs__panels" role="region">
++    <ng-container #vc></ng-container>
++    <ng-content></ng-content>
++  </div>
+ </div>
+diff --git a/packages/angular-renderer/src/components/primitives/tabs/tabs.component.scss b/packages/angular-renderer/src/components/primitives/tabs/tabs.component.scss
+index 4e9f10c..16b025b 100644
+--- a/packages/angular-renderer/src/components/primitives/tabs/tabs.component.scss
++++ b/packages/angular-renderer/src/components/primitives/tabs/tabs.component.scss
+@@ -1,49 +1,147 @@
+ :host {
+   display: block;
+-  width: 100%;
++  box-sizing: border-box;
++  inline-size: 100%;
++
++  *,
++  *::before,
++  *::after {
++    box-sizing: inherit;
++  }
++}
++
++:host([hidden]) {
++  display: none !important;
++}
++
++.origo-tabs__container {
++  display: flex;
++  flex-direction: column;
++  inline-size: 100%;
++
++  &.origo-tabs--vertical {
++    flex-direction: row;
++    align-items: flex-start;
++
++    .origo-tabs__list {
++      flex-direction: column;
++      border-block-end: none;
++      border-inline-end: var(--origo-border-width-default) solid var(--origo-color-border-default);
++    }
++
++    .origo-tabs__tab {
++      inline-size: 100%;
++      justify-content: flex-start;
++      border-block-end: none;
++      border-inline-end: var(--origo-border-width-thick) solid transparent;
++
++      &.origo-tabs__tab--active {
++        border-block-end-color: transparent;
++        border-inline-end-color: var(--origo-color-surface-primary);
++      }
++    }
++  }
++
++  &.origo-tabs--scrollable .origo-tabs__list {
++    overflow-x: auto;
++    scrollbar-width: thin;
++  }
+ }
+ 
+ .origo-tabs__list {
+   display: flex;
+-  border-block-end: 1px solid var(--color-border, #e0e0e0);
++  border-block-end: var(--origo-border-width-default) solid var(--origo-color-border-default);
+   margin: 0;
+   padding: 0;
+-  gap: var(--spacing-sm, 8px);
++  gap: var(--origo-spacing-sm);
++  background-color: transparent;
+ }
+ 
+ .origo-tabs__tab {
++  display: inline-flex;
++  align-items: center;
++  gap: var(--origo-spacing-xs);
+   background: none;
+   border: none;
+-  border-block-end: 2px solid transparent;
+-  padding-inline: var(--spacing-md, 16px);
+-  padding-block: var(--spacing-sm, 12px);
++  border-block-end: var(--origo-border-width-thick) solid transparent;
++  padding-inline: var(--origo-spacing-md);
++  padding-block: var(--origo-spacing-sm);
+   font-family: inherit;
+-  font-size: 14px;
+-  color: var(--color-text-secondary, #666666);
++  font-size: var(--origo-typography-button-font-size);
++  color: var(--origo-color-text-muted);
+   cursor: pointer;
+-  transition: all 0.2s ease;
++  transition: all var(--origo-duration-fast) ease;
+   white-space: nowrap;
+   outline: none;
+ 
+   &:hover:not(:disabled) {
+-    color: var(--color-text, #333333);
+-    background-color: var(--color-surface-hover, #f5f5f5);
++    color: var(--origo-color-text-primary);
++    background-color: var(--origo-color-surface-subtle);
+   }
+ 
+   &:focus-visible {
+-    background-color: var(--color-surface-hover, #f5f5f5);
+-    border-radius: 4px 4px 0 0;
+-    box-shadow: inset 0 0 0 2px var(--color-primary, #1976d2);
++    background-color: var(--origo-color-surface-subtle);
++    border-radius: var(--origo-radius-sm) var(--origo-radius-sm) 0 0;
++    outline: var(--origo-border-width-thick) solid var(--origo-color-focus);
++    outline-offset: -2px;
+   }
+ 
+   &.origo-tabs__tab--active {
+-    color: var(--color-primary, #1976d2);
+-    border-block-end-color: var(--color-primary, #1976d2);
++    color: var(--origo-color-surface-primary);
++    border-block-end-color: var(--origo-color-surface-primary);
+     font-weight: 500;
+   }
+ 
+   &:disabled {
+     cursor: not-allowed;
+-    opacity: 0.5;
++    opacity: var(--origo-opacity-disabled);
++    color: var(--origo-color-text-disabled);
++  }
++}
++
++.origo-tabs__icon {
++  display: inline-flex;
++  align-items: center;
++}
++
++.origo-tabs__badge {
++  display: inline-flex;
++  align-items: center;
++  justify-content: center;
++  padding-inline: var(--origo-spacing-xs);
++  padding-block: var(--origo-spacing-base-1);
++  border-radius: var(--origo-radius-full);
++  background-color: var(--origo-color-surface-subtle);
++  color: var(--origo-color-text-primary);
++  font-size: var(--origo-typography-caption-font-size);
++  font-weight: 600;
++}
++
++.origo-tabs__close {
++  display: inline-flex;
++  align-items: center;
++  justify-content: center;
++  background: none;
++  border: none;
++  padding: 0;
++  margin-inline-start: var(--origo-spacing-xs);
++  cursor: pointer;
++  color: var(--origo-color-text-muted);
++  font-size: var(--origo-typography-button-font-size);
++  line-height: 1;
++  border-radius: var(--origo-radius-sm);
++
++  &:hover {
++    color: var(--origo-color-text-danger);
++    background-color: var(--origo-color-surface-subtle);
++  }
++
++  &:focus-visible {
++    outline: var(--origo-border-width-thick) solid var(--origo-color-focus);
+   }
+ }
++
++.origo-tabs__panels {
++  display: block;
++  padding-block: var(--origo-spacing-sm);
++}
+diff --git a/packages/angular-renderer/src/components/primitives/tabs/tabs.component.spec.ts b/packages/angular-renderer/src/components/primitives/tabs/tabs.component.spec.ts
+index 42a1501..290f064 100644
+--- a/packages/angular-renderer/src/components/primitives/tabs/tabs.component.spec.ts
++++ b/packages/angular-renderer/src/components/primitives/tabs/tabs.component.spec.ts
+@@ -1,17 +1,19 @@
+ import { ComponentFixture, TestBed } from '@angular/core/testing';
+-import { TabsComponent, TabsProps } from './tabs.component';
+-import { provideZonelessChangeDetection } from '@angular/core';
++import { TabsComponent, TabsProps, TabItem } from './tabs.component';
++import { provideZonelessChangeDetection, ViewContainerRef } from '@angular/core';
+ import { WebExperienceAdapterService } from '../../../adapters/web/experience-adapter.service';
+ import { InteractionContract } from '@origostudio/core';
+-import { By } from '@angular/platform-browser';
+ 
+ describe('TabsComponent', () => {
+   let component: TabsComponent;
+   let fixture: ComponentFixture<TabsComponent>;
+-  let mockAdapter: { updateState: jest.Mock };
++  let mockAdapter: { updateState: jest.Mock; dispatchCapability: jest.Mock };
+ 
+   beforeEach(async () => {
+-    mockAdapter = { updateState: jest.fn() };
++    mockAdapter = {
++      updateState: jest.fn(),
++      dispatchCapability: jest.fn(),
++    };
+ 
+     await TestBed.configureTestingModule({
+       imports: [TabsComponent],
+@@ -25,7 +27,7 @@ describe('TabsComponent', () => {
+     component = fixture.componentInstance;
+   });
+ 
+-  it('should create', () => {
++  it('should create and implement ContainerComponent with ViewContainerRef vc', () => {
+     fixture.componentRef.setInput('contract', {
+       id: 'tabs-1',
+       type: 'Command',
+@@ -36,6 +38,8 @@ describe('TabsComponent', () => {
+ 
+     fixture.detectChanges();
+     expect(component).toBeTruthy();
++    expect(component.vc).toBeDefined();
++    expect(component.vc()).toBeInstanceOf(ViewContainerRef);
+   });
+ 
+   it('should render tabs and bind roles and selected states', () => {
+@@ -54,40 +58,129 @@ describe('TabsComponent', () => {
+ 
+     fixture.detectChanges();
+ 
+-    const tablist = fixture.debugElement.query(By.css('[role="tablist"]'));
++    const root = fixture.nativeElement.shadowRoot ?? fixture.nativeElement;
++    const tablist = root.querySelector('[role="tablist"]');
+     expect(tablist).toBeTruthy();
+-    expect(tablist.nativeElement.getAttribute('aria-label')).toBe('My Tabs');
++    expect(tablist.getAttribute('aria-label')).toBe('My Tabs');
+ 
+-    const tabs = fixture.debugElement.queryAll(By.css('[role="tab"]'));
++    const tabs = root.querySelectorAll('[role="tab"]');
+     expect(tabs.length).toBe(2);
+ 
+     // First tab is active
+-    expect(tabs[0].nativeElement.getAttribute('aria-selected')).toBe('true');
+-    expect(tabs[0].nativeElement.getAttribute('tabindex')).toBe('0');
++    expect(tabs[0].getAttribute('aria-selected')).toBe('true');
++    expect(tabs[0].getAttribute('tabindex')).toBe('0');
+ 
+     // Second tab is not active
+-    expect(tabs[1].nativeElement.getAttribute('aria-selected')).toBe('false');
+-    expect(tabs[1].nativeElement.getAttribute('tabindex')).toBe('-1');
++    expect(tabs[1].getAttribute('aria-selected')).toBe('false');
++    expect(tabs[1].getAttribute('tabindex')).toBe('-1');
++  });
++
++  it('should support items alias and value alias for active tab', () => {
++    fixture.componentRef.setInput('contract', {
++      id: 'tabs-alias',
++      type: 'Tabs',
++      props: {
++        items: [
++          { key: 'alpha', label: 'Alpha' },
++          { key: 'beta', label: 'Beta' },
++        ],
++        value: 'beta',
++      },
++    } as InteractionContract<TabsProps>);
++
++    fixture.detectChanges();
++
++    const root = fixture.nativeElement.shadowRoot ?? fixture.nativeElement;
++    const tabs = root.querySelectorAll('[role="tab"]');
++    expect(tabs.length).toBe(2);
++    expect(tabs[1].getAttribute('aria-selected')).toBe('true');
+   });
+ 
+-  it('should call updateState on tab click', () => {
++  it('should call updateState, dispatchCapability, and emit valueChange and tabChange on tab click', () => {
++    const tabToClick: TabItem = { key: 'tab2', label: 'Tab 2' };
++    const spyValue = jest.fn();
++    const spyTab = jest.fn();
++    component.valueChange.subscribe(spyValue);
++    component.tabChange.subscribe(spyTab);
++
+     fixture.componentRef.setInput('contract', {
+       id: 'tabs-1',
+       type: 'Command',
+       props: {
+-        tabs: [{ key: 'tab1', label: 'Tab 1' }],
++        tabs: [{ key: 'tab1', label: 'Tab 1' }, tabToClick],
+       },
+     } as InteractionContract<TabsProps>);
+ 
+     fixture.detectChanges();
+ 
+-    const tab = fixture.debugElement.query(By.css('[role="tab"]'));
+-    tab.triggerEventHandler('click', null);
++    const root = fixture.nativeElement.shadowRoot ?? fixture.nativeElement;
++    const tabs = root.querySelectorAll('[role="tab"]');
++    (tabs[1] as HTMLElement).click();
+ 
+-    expect(mockAdapter.updateState).toHaveBeenCalledWith('tabs-1', 'activeTab', 'tab1');
++    expect(mockAdapter.updateState).toHaveBeenCalledWith('tabs-1', 'activeTab', 'tab2');
++    expect(mockAdapter.updateState).toHaveBeenCalledWith('tabs-1', 'value', 'tab2');
++    expect(mockAdapter.dispatchCapability).toHaveBeenCalledWith('tabs-1', 'valueChange', 'tab2');
++    expect(mockAdapter.dispatchCapability).toHaveBeenCalledWith(
++      'tabs-1',
++      'tabChange',
++      expect.objectContaining({ key: 'tab2' })
++    );
++    expect(spyValue).toHaveBeenCalledWith('tab2');
++    expect(spyTab).toHaveBeenCalledWith(expect.objectContaining({ key: 'tab2' }));
+   });
+ 
+-  it('should handle keyboard navigation (ArrowRight / ArrowLeft)', () => {
++  it('should render closable tab and handle tabClose event without selecting tab', () => {
++    const spyClose = jest.fn();
++    component.tabClose.subscribe(spyClose);
++
++    fixture.componentRef.setInput('contract', {
++      id: 'tabs-closable',
++      type: 'Tabs',
++      props: {
++        tabs: [
++          { key: 'tab1', label: 'Tab 1' },
++          { key: 'tab2', label: 'Tab 2', closable: true },
++        ],
++        activeTab: 'tab1',
++      },
++    } as InteractionContract<TabsProps>);
++
++    fixture.detectChanges();
++
++    const root = fixture.nativeElement.shadowRoot ?? fixture.nativeElement;
++    const closeButton = root.querySelector('.origo-tabs__close') as HTMLButtonElement;
++    expect(closeButton).toBeTruthy();
++    expect(closeButton.getAttribute('aria-label')).toBe('Close Tab 2');
++
++    closeButton.click();
++
++    expect(spyClose).toHaveBeenCalledWith('tab2');
++    expect(mockAdapter.dispatchCapability).toHaveBeenCalledWith(
++      'tabs-closable',
++      'tabClose',
++      'tab2'
++    );
++    // Tab click must NOT have been triggered
++    expect(mockAdapter.updateState).not.toHaveBeenCalledWith('tabs-closable', 'activeTab', 'tab2');
++  });
++
++  it('should render badge and icon on tab when configured', () => {
++    fixture.componentRef.setInput('contract', {
++      id: 'tabs-badge',
++      type: 'Tabs',
++      props: {
++        tabs: [{ key: 'tab1', label: 'Inbox', icon: 'mail-icon', badge: 5 }],
++      },
++    } as InteractionContract<TabsProps>);
++
++    fixture.detectChanges();
++
++    const root = fixture.nativeElement.shadowRoot ?? fixture.nativeElement;
++    expect(root.querySelector('.origo-tabs__icon')?.textContent).toContain('mail-icon');
++    expect(root.querySelector('.origo-tabs__badge')?.textContent).toContain('5');
++  });
++
++  it('should handle horizontal keyboard navigation (ArrowRight / ArrowLeft)', () => {
+     jest.useFakeTimers();
+     fixture.componentRef.setInput('contract', {
+       id: 'tabs-1',
+@@ -103,25 +196,28 @@ describe('TabsComponent', () => {
+ 
+     fixture.detectChanges();
+ 
+-    const tabs = fixture.debugElement.queryAll(By.css('[role="tab"]'));
+-    const eventRight = new KeyboardEvent('keydown', { key: 'ArrowRight' });
+-    const focusSpy = jest.spyOn(tabs[1].nativeElement, 'focus');
++    const root = fixture.nativeElement.shadowRoot ?? fixture.nativeElement;
++    const tabs = root.querySelectorAll('[role="tab"]');
++    const focusSpy = jest.spyOn(tabs[1] as HTMLElement, 'focus');
+ 
++    const eventRight = new KeyboardEvent('keydown', { key: 'ArrowRight' });
+     component.onKeyDown(eventRight, 0);
+     jest.runAllTimers();
+     expect(focusSpy).toHaveBeenCalled();
+     jest.useRealTimers();
+   });
+ 
+-  it('should handle keyboard navigation (RTL)', () => {
++  it('should handle vertical keyboard navigation (ArrowDown / ArrowUp) when orientation is vertical', () => {
+     jest.useFakeTimers();
+     fixture.componentRef.setInput('contract', {
+-      id: 'tabs-1',
+-      type: 'Command',
++      id: 'tabs-vertical',
++      type: 'Tabs',
+       props: {
++        orientation: 'vertical',
+         tabs: [
+           { key: 'tab1', label: 'Tab 1' },
+           { key: 'tab2', label: 'Tab 2' },
++          { key: 'tab3', label: 'Tab 3' },
+         ],
+         activeTab: 'tab1',
+       },
+@@ -129,25 +225,21 @@ describe('TabsComponent', () => {
+ 
+     fixture.detectChanges();
+ 
+-    const tabs = fixture.debugElement.queryAll(By.css('[role="tab"]'));
+-    const eventRight = new KeyboardEvent('keydown', { key: 'ArrowRight' });
+-    Object.defineProperty(eventRight, 'target', {
+-      value: document.createElement('div'),
+-      enumerable: true,
+-    });
+-
+-    // Mock getComputedStyle for RTL
+-    const originalGetComputedStyle = window.getComputedStyle;
+-    window.getComputedStyle = jest.fn().mockReturnValue({ direction: 'rtl' });
++    const root = fixture.nativeElement.shadowRoot ?? fixture.nativeElement;
++    const tabs = root.querySelectorAll('[role="tab"]');
++    const focusSpyDown = jest.spyOn(tabs[1] as HTMLElement, 'focus');
+ 
+-    // In RTL, ArrowRight on index 0 should go left (to the last tab: index 1)
+-    const focusSpy = jest.spyOn(tabs[1].nativeElement, 'focus');
++    const eventDown = new KeyboardEvent('keydown', { key: 'ArrowDown' });
++    component.onKeyDown(eventDown, 0);
++    jest.runAllTimers();
++    expect(focusSpyDown).toHaveBeenCalled();
+ 
+-    component.onKeyDown(eventRight, 0);
++    const focusSpyUp = jest.spyOn(tabs[0] as HTMLElement, 'focus');
++    const eventUp = new KeyboardEvent('keydown', { key: 'ArrowUp' });
++    component.onKeyDown(eventUp, 1);
+     jest.runAllTimers();
+-    expect(focusSpy).toHaveBeenCalled();
++    expect(focusSpyUp).toHaveBeenCalled();
+ 
+-    window.getComputedStyle = originalGetComputedStyle;
+     jest.useRealTimers();
+   });
+ 
+diff --git a/packages/angular-renderer/src/components/primitives/tabs/tabs.component.ts b/packages/angular-renderer/src/components/primitives/tabs/tabs.component.ts
+index 3837686..62d342c 100644
+--- a/packages/angular-renderer/src/components/primitives/tabs/tabs.component.ts
++++ b/packages/angular-renderer/src/components/primitives/tabs/tabs.component.ts
+@@ -1,23 +1,34 @@
+ import {
+   Component,
+   input,
++  output,
+   ChangeDetectionStrategy,
+   computed,
+   ViewEncapsulation,
+   inject,
+   SecurityContext,
+   ElementRef,
+-  ViewChildren,
+-  QueryList,
++  viewChildren,
++  viewChild,
++  ViewContainerRef,
++  PLATFORM_ID,
+ } from '@angular/core';
++import { isPlatformBrowser } from '@angular/common';
+ import { DomSanitizer } from '@angular/platform-browser';
+ import { InteractionContract } from '@origostudio/core';
+-import { OrigoAdapter } from '../../../adapters/web/adapter';
++import {
++  OrigoAdapter,
++  ContainerComponent as IContainerComponent,
++  coerceContractProps,
++} from '../../../adapters/web/adapter';
+ import { WebExperienceAdapterService } from '../../../adapters/web/experience-adapter.service';
+ 
+ export interface TabItem {
+   key: string;
+   label: string;
++  icon?: string;
++  closable?: boolean;
++  badge?: string | number;
+   disabled?: boolean;
+ }
+ 
+@@ -26,11 +37,34 @@ export interface TabsProps {
+   rules?: Record<string, unknown>;
+   metadata?: Record<string, unknown>;
+   tabs?: Array<TabItem>;
++  items?: Array<TabItem>;
+   activeTab?: string;
++  value?: string;
++  orientation?: 'horizontal' | 'vertical';
++  scrollable?: boolean;
++  lazy?: boolean;
+   'aria-label'?: string;
+   'aria-describedby'?: string;
+ }
+ 
++export const TabsContractSchema: Record<
++  keyof TabsProps,
++  'string' | 'number' | 'boolean' | 'array' | 'object'
++> = {
++  permissions: 'object',
++  rules: 'object',
++  metadata: 'object',
++  tabs: 'array',
++  items: 'array',
++  activeTab: 'string',
++  value: 'string',
++  orientation: 'string',
++  scrollable: 'boolean',
++  lazy: 'boolean',
++  'aria-label': 'string',
++  'aria-describedby': 'string',
++};
++
+ @Component({
+   selector: 'origo-tabs',
+   standalone: true,
+@@ -40,54 +74,69 @@ export interface TabsProps {
+   encapsulation: ViewEncapsulation.ShadowDom,
+   host: {
+     '[class.origo-tabs]': 'true',
++    '[class.origo-tabs--vertical]': "computedOrientation() === 'vertical'",
+     '[attr.data-testid]': 'contract().id',
+   },
+ })
+-export class TabsComponent implements OrigoAdapter<TabsProps> {
+-  static readonly contractSchema = {
+-    permissions: 'object',
+-    rules: 'object',
+-    metadata: 'object',
+-    tabs: 'array',
+-  };
++export class TabsComponent implements OrigoAdapter<TabsProps>, IContainerComponent {
++  static readonly contractSchema = TabsContractSchema;
+   static readonly strictContract = false;
+ 
+   contract = input.required<InteractionContract<TabsProps>>();
++  vc = viewChild.required('vc', { read: ViewContainerRef });
++
++  tabButtons = viewChildren<ElementRef<HTMLButtonElement>>('tabButton');
++
++  valueChange = output<string>();
++  tabChange = output<TabItem>();
++  tabClose = output<string>();
+ 
+   private experienceAdapter = inject(WebExperienceAdapterService);
+   private sanitizer = inject(DomSanitizer);
++  private platformId = inject(PLATFORM_ID);
+ 
+-  @ViewChildren('tabButton') tabButtons!: QueryList<ElementRef<HTMLButtonElement>>;
++  protected props = computed(() =>
++    coerceContractProps<TabsProps>(this.contract().props, TabsContractSchema)
++  );
+ 
+   computedAriaLabel = computed(() => {
+-    const label = this.contract().props?.['aria-label'];
++    const label = this.props()['aria-label'];
+     return label !== undefined && label !== null ? String(label) : undefined;
+   });
+ 
+   computedAriaDescribedBy = computed(() => {
+-    const desc = this.contract().props?.['aria-describedby'];
++    const desc = this.props()['aria-describedby'];
+     return desc !== undefined && desc !== null ? String(desc) : undefined;
+   });
+ 
+-  computedTabs = computed(() => {
+-    const tabs = this.contract().props?.tabs;
+-    if (!Array.isArray(tabs)) return [];
++  computedOrientation = computed<'horizontal' | 'vertical'>(() => {
++    return this.props().orientation === 'vertical' ? 'vertical' : 'horizontal';
++  });
++
++  computedScrollable = computed<boolean>(() => {
++    return !!this.props().scrollable;
++  });
++
++  computedTabs = computed<TabItem[]>(() => {
++    const rawTabs = this.props().items ?? this.props().tabs;
++    if (!Array.isArray(rawTabs)) return [];
+ 
+-    return tabs
++    return rawTabs
+       .filter(tab => tab != null && tab.key != null && tab.label != null)
+-      .map(tab => {
+-        return {
+-          key: String(tab.key),
+-          label:
+-            this.sanitizer.sanitize(SecurityContext.HTML, String(tab.label)) ||
+-            String(tab.label).replace(/[<>]/g, ''),
+-          disabled: !!tab.disabled,
+-        };
+-      });
++      .map(tab => ({
++        key: String(tab.key),
++        label:
++          this.sanitizer.sanitize(SecurityContext.HTML, String(tab.label)) ||
++          String(tab.label).replace(/[<>]/g, ''),
++        icon: tab.icon ? String(tab.icon) : undefined,
++        closable: !!tab.closable,
++        badge: tab.badge !== undefined && tab.badge !== null ? String(tab.badge) : undefined,
++        disabled: !!tab.disabled,
++      }));
+   });
+ 
+-  computedActiveTab = computed(() => {
+-    const active = this.contract().props?.activeTab;
++  computedActiveTab = computed<string | undefined>(() => {
++    const active = this.props().value ?? this.props().activeTab;
+     if (active) return active;
+     const tabs = this.computedTabs();
+     return tabs.length > 0 ? tabs[0].key : undefined;
+@@ -95,7 +144,30 @@ export class TabsComponent implements OrigoAdapter<TabsProps> {
+ 
+   onTabClick(tab: TabItem) {
+     if (tab.disabled || !tab.key) return;
++
+     this.experienceAdapter.updateState(this.contract().id, 'activeTab', tab.key);
++    this.experienceAdapter.updateState(this.contract().id, 'value', tab.key);
++
++    const contractId = this.contract().id;
++    if (contractId) {
++      this.experienceAdapter.dispatchCapability(contractId, 'valueChange', tab.key);
++      this.experienceAdapter.dispatchCapability(contractId, 'tabChange', tab);
++    }
++
++    this.valueChange.emit(tab.key);
++    this.tabChange.emit(tab);
++  }
++
++  onTabClose(event: Event, tab: TabItem) {
++    event.stopPropagation();
++    event.preventDefault();
++
++    const contractId = this.contract().id;
++    if (contractId) {
++      this.experienceAdapter.dispatchCapability(contractId, 'tabClose', tab.key);
++    }
++
++    this.tabClose.emit(tab.key);
+   }
+ 
+   onKeyDown(event: KeyboardEvent, index: number) {
+@@ -103,23 +175,43 @@ export class TabsComponent implements OrigoAdapter<TabsProps> {
+     if (tabs.length === 0) return;
+ 
+     let nextIndex = index;
++    const isVertical = this.computedOrientation() === 'vertical';
++
+     const isRtl =
+-      typeof window !== 'undefined' && event.target instanceof Element
++      isPlatformBrowser(this.platformId) &&
++      typeof window !== 'undefined' &&
++      event.target instanceof Element
+         ? window.getComputedStyle(event.target).direction === 'rtl'
+         : false;
+ 
+-    if (event.key === 'ArrowRight') {
+-      nextIndex = isRtl ? index - 1 : index + 1;
+-      event.preventDefault();
+-    } else if (event.key === 'ArrowLeft') {
+-      nextIndex = isRtl ? index + 1 : index - 1;
+-      event.preventDefault();
+-    } else if (event.key === 'Home') {
+-      nextIndex = 0;
+-      event.preventDefault();
+-    } else if (event.key === 'End') {
+-      nextIndex = tabs.length - 1;
+-      event.preventDefault();
++    if (!isVertical) {
++      if (event.key === 'ArrowRight') {
++        nextIndex = isRtl ? index - 1 : index + 1;
++        event.preventDefault();
++      } else if (event.key === 'ArrowLeft') {
++        nextIndex = isRtl ? index + 1 : index - 1;
++        event.preventDefault();
++      } else if (event.key === 'Home') {
++        nextIndex = 0;
++        event.preventDefault();
++      } else if (event.key === 'End') {
++        nextIndex = tabs.length - 1;
++        event.preventDefault();
++      }
++    } else {
++      if (event.key === 'ArrowDown') {
++        nextIndex = index + 1;
++        event.preventDefault();
++      } else if (event.key === 'ArrowUp') {
++        nextIndex = index - 1;
++        event.preventDefault();
++      } else if (event.key === 'Home') {
++        nextIndex = 0;
++        event.preventDefault();
++      } else if (event.key === 'End') {
++        nextIndex = tabs.length - 1;
++        event.preventDefault();
++      }
+     }
+ 
+     if (nextIndex < 0) nextIndex = tabs.length - 1;
+@@ -127,7 +219,7 @@ export class TabsComponent implements OrigoAdapter<TabsProps> {
+ 
+     if (nextIndex !== index) {
+       setTimeout(() => {
+-        const buttons = this.tabButtons?.toArray();
++        const buttons = this.tabButtons();
+         if (buttons && buttons[nextIndex]) {
+           buttons[nextIndex].nativeElement.focus();
+         }
+diff --git a/packages/angular-renderer/src/index.ts b/packages/angular-renderer/src/index.ts
+index 63affc2..956b2d3 100644
+--- a/packages/angular-renderer/src/index.ts
++++ b/packages/angular-renderer/src/index.ts
+@@ -39,6 +39,8 @@ export * from './components/primitives/divider/divider.component';
+ export * from './components/primitives/file-input/file-input.component';
+ export * from './components/primitives/dropzone/dropzone.component';
+ export * from './components/primitives/rich-text-editor/rich-text-editor.component';
++export * from './components/primitives/pagination/pagination.component';
++export * from './components/primitives/stepper/stepper.component';
+ export * from './lib/overlay/overlay.models';
+ export * from './lib/overlay/overlay-ref';
+ export * from './lib/overlay/overlay.service';
+diff --git a/packages/angular-renderer/src/lib/primitives.provider.ts b/packages/angular-renderer/src/lib/primitives.provider.ts
+index a3dcd73..39a9d41 100644
+--- a/packages/angular-renderer/src/lib/primitives.provider.ts
++++ b/packages/angular-renderer/src/lib/primitives.provider.ts
+@@ -35,6 +35,8 @@ import { DividerComponent } from '../components/primitives/divider/divider.compo
+ import { FileInputComponent } from '../components/primitives/file-input/file-input.component';
+ import { DropzoneComponent } from '../components/primitives/dropzone/dropzone.component';
+ import { RichTextEditorComponent } from '../components/primitives/rich-text-editor/rich-text-editor.component';
++import { PaginationComponent } from '../components/primitives/pagination/pagination.component';
++import { StepperComponent } from '../components/primitives/stepper/stepper.component';
+ 
+ export function provideOrigo9Primitives(): EnvironmentProviders {
+   const registryMap = new Map<string, unknown>([
+@@ -57,6 +59,9 @@ export function provideOrigo9Primitives(): EnvironmentProviders {
+     ['Sidebar', SidebarComponent],
+     ['Tabs', TabsComponent],
+     ['Breadcrumbs', BreadcrumbsComponent],
++    ['Pagination', PaginationComponent],
++    ['Paginator', PaginationComponent],
++    ['Stepper', StepperComponent],
+     ['Navigation', SidebarComponent],
+     ['Switch', SwitchComponent],
+     ['Chip', ChipComponent],
 diff --git a/tools/test-registry/test-registry.yaml b/tools/test-registry/test-registry.yaml
-index 2ac05a2..a43c09c 100644
+index a43c09c..99a93ea 100644
 --- a/tools/test-registry/test-registry.yaml
 +++ b/tools/test-registry/test-registry.yaml
-@@ -1001,3 +1001,21 @@ test_cases:
-       - 1-6-file-input-and-rich-text-editor
+@@ -529,6 +529,7 @@ test_cases:
+     affected_stories:
+       - 9-4-accessibility-localization-enforcement
+       - 9-3-navigation-shell-primitives-batch-3
++      - 2-1-navigation-components
      last_result: unknown
      results: {}
-+  - id: renderer-overlay-service
-+    description: 'Verifies OrigoOverlayService portal projection, focus trap, outside-click, and SSR safe guards'
+   - id: renderer-primitive-breadcrumbs
+@@ -539,6 +540,7 @@ test_cases:
+     affected_stories:
+       - 9-4-accessibility-localization-enforcement
+       - 9-3-navigation-shell-primitives-batch-3
++      - 2-1-navigation-components
+     last_result: unknown
+     results: {}
+   - id: renderer-primitive-switch
+@@ -571,6 +573,7 @@ test_cases:
+       - 9-4-accessibility-localization-enforcement
+       - 9-5-advanced-form-primitives-batch-4
+       - retro-9-playwright-component-testing
++      - 2-1-navigation-components
+     last_result: unknown
+     results: {}
+   - id: renderer-primitive-button-ct
+@@ -767,6 +770,7 @@ test_cases:
+       - 9-4-accessibility-localization-enforcement
+       - 9-5-advanced-form-primitives-batch-4
+       - retro-9-playwright-component-testing
++      - 2-1-navigation-components
+     last_result: unknown
+     results: {}
+   - id: renderer-primitive-text-input-ct
+@@ -1019,3 +1023,21 @@ test_cases:
+       - retro-1-overlay-portal-architecture
+     last_result: pass
+     results: {}
++  - id: renderer-primitive-pagination
++    description: 'Verifies Pagination primitive rendering, navigation calculations, and logic'
 +    package: '@origo/angular-renderer'
-+    spec_file: packages/angular-renderer/src/lib/overlay/overlay.service.spec.ts
++    spec_file: packages/angular-renderer/src/components/primitives/pagination/pagination.component.spec.ts
 +    type: unit
 +    affected_stories:
-+      - retro-1-overlay-portal-architecture
++      - 2-1-navigation-components
 +    last_result: pass
 +    results: {}
-+  - id: spike-overlay-shadowdom
-+    description: 'Verifies Shadow DOM CDK overlay portal projection, composedPath outside-click, and focus trap spike harness'
-+    package: 'tools'
-+    spec_file: tools/spikes/overlay-shadowdom/run-spike.ts
++  - id: renderer-primitive-stepper
++    description: 'Verifies Stepper primitive rendering, linear gating, and logic'
++    package: '@origo/angular-renderer'
++    spec_file: packages/angular-renderer/src/components/primitives/stepper/stepper.component.spec.ts
 +    type: unit
 +    affected_stories:
-+      - retro-1-overlay-portal-architecture
++      - 2-1-navigation-components
 +    last_result: pass
 +    results: {}
 
-```
+`

@@ -1,0 +1,95 @@
+<nav
+  class="origo-pagination__nav"
+  role="navigation"
+  [attr.aria-label]="computedAriaLabel()"
+  [attr.aria-describedby]="computedAriaDescribedBy()"
+>
+  @if (computedShowFirstLastIcon()) {
+    <button
+      type="button"
+      class="origo-pagination__button origo-pagination__button--first"
+      [disabled]="computedDisabled() || isFirstPage()"
+      [attr.aria-disabled]="computedDisabled() || isFirstPage()"
+      aria-label="First Page"
+      (click)="onFirst()"
+    >
+      «
+    </button>
+  }
+
+  <button
+    type="button"
+    class="origo-pagination__button origo-pagination__button--prev"
+    [disabled]="computedDisabled() || isFirstPage()"
+    [attr.aria-disabled]="computedDisabled() || isFirstPage()"
+    aria-label="Previous Page"
+    (click)="onPrevious()"
+  >
+    ‹
+  </button>
+
+  @if (computedShowPageLinks()) {
+    <div class="origo-pagination__pages" role="group" aria-label="Page selection">
+      @for (p of visiblePageLinks(); track p) {
+        <button
+          type="button"
+          class="origo-pagination__button origo-pagination__page"
+          [class.origo-pagination__page--active]="p === pageIndex()"
+          [attr.aria-current]="p === pageIndex() ? 'page' : null"
+          [attr.aria-label]="'Page ' + (p + 1)"
+          [disabled]="computedDisabled()"
+          (click)="onPageSelect(p)"
+        >
+          {{ p + 1 }}
+        </button>
+      }
+    </div>
+  }
+
+  <button
+    type="button"
+    class="origo-pagination__button origo-pagination__button--next"
+    [disabled]="computedDisabled() || isLastPage()"
+    [attr.aria-disabled]="computedDisabled() || isLastPage()"
+    aria-label="Next Page"
+    (click)="onNext()"
+  >
+    ›
+  </button>
+
+  @if (computedShowFirstLastIcon()) {
+    <button
+      type="button"
+      class="origo-pagination__button origo-pagination__button--last"
+      [disabled]="computedDisabled() || isLastPage()"
+      [attr.aria-disabled]="computedDisabled() || isLastPage()"
+      aria-label="Last Page"
+      (click)="onLast()"
+    >
+      »
+    </button>
+  }
+
+  @if (computedRowsPerPageOptions().length > 0) {
+    <div class="origo-pagination__rows-container">
+      <label class="origo-pagination__rows-label" [attr.for]="'rows-select-' + contract().id">
+        Rows:
+      </label>
+      <select
+        [id]="'rows-select-' + contract().id"
+        class="origo-pagination__rows-select"
+        [disabled]="computedDisabled()"
+        [attr.aria-label]="'Rows per page'"
+        (change)="onRowsSelect($event)"
+      >
+        @for (opt of computedRowsPerPageOptions(); track opt) {
+          <option [value]="opt" [selected]="opt === computedRows()">
+            {{ opt }}
+          </option>
+        }
+      </select>
+    </div>
+  }
+
+  <ng-container #vc></ng-container>
+</nav>

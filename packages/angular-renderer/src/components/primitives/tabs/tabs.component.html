@@ -1,27 +1,59 @@
 <div
-  class="origo-tabs__list"
-  role="tablist"
-  [attr.aria-label]="computedAriaLabel()"
-  [attr.aria-describedby]="computedAriaDescribedBy()"
+  class="origo-tabs__container"
+  [class.origo-tabs--vertical]="computedOrientation() === 'vertical'"
+  [class.origo-tabs--scrollable]="computedScrollable()"
 >
-  @for (tab of computedTabs(); track tab.key; let i = $index) {
-    <button
-      #tabButton
-      type="button"
-      role="tab"
-      class="origo-tabs__tab"
-      [class.origo-tabs__tab--active]="computedActiveTab() === tab.key"
-      [attr.aria-selected]="computedActiveTab() === tab.key"
-      [attr.aria-controls]="'tabpanel-' + tab.key"
-      [attr.id]="'tab-' + tab.key"
-      [attr.tabindex]="
-        computedActiveTab() === tab.key || (computedActiveTab() == null && i === 0) ? 0 : -1
-      "
-      [disabled]="tab.disabled"
-      (click)="onTabClick(tab)"
-      (keydown)="onKeyDown($event, i)"
-    >
-      <span class="origo-tabs__label" [innerHTML]="tab.label"></span>
-    </button>
-  }
+  <div
+    class="origo-tabs__list"
+    role="tablist"
+    [attr.aria-label]="computedAriaLabel()"
+    [attr.aria-describedby]="computedAriaDescribedBy()"
+    [attr.aria-orientation]="computedOrientation()"
+  >
+    @for (tab of computedTabs(); track tab.key; let i = $index) {
+      <button
+        #tabButton
+        type="button"
+        role="tab"
+        class="origo-tabs__tab"
+        [class.origo-tabs__tab--active]="computedActiveTab() === tab.key"
+        [attr.aria-selected]="computedActiveTab() === tab.key"
+        [attr.aria-controls]="'tabpanel-' + tab.key"
+        [attr.id]="'tab-' + tab.key"
+        [attr.tabindex]="
+          computedActiveTab() === tab.key || (computedActiveTab() == null && i === 0) ? 0 : -1
+        "
+        [disabled]="tab.disabled"
+        (click)="onTabClick(tab)"
+        (keydown)="onKeyDown($event, i)"
+      >
+        @if (tab.icon) {
+          <span class="origo-tabs__icon" aria-hidden="true">{{ tab.icon }}</span>
+        }
+        <span class="origo-tabs__label" [innerHTML]="tab.label"></span>
+        @if (tab.badge) {
+          <span class="origo-tabs__badge">{{ tab.badge }}</span>
+        }
+        @if (tab.closable) {
+          <button
+            type="button"
+            class="origo-tabs__close"
+            [attr.aria-label]="'Close ' + tab.label"
+            (click)="onTabClose($event, tab)"
+          >
+            ×
+          </button>
+        }
+      </button>
+    }
+  </div>
+
+  <div
+    class="origo-tabs__panels"
+    role="region"
+    [attr.id]="computedActiveTab() ? 'tabpanel-' + computedActiveTab() : null"
+  >
+    <ng-container #vc></ng-container>
+    <ng-content></ng-content>
+  </div>
 </div>

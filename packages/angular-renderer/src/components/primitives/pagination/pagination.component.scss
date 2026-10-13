@@ -1,0 +1,109 @@
+:host {
+  display: block;
+  box-sizing: border-box;
+
+  *,
+  *::before,
+  *::after {
+    box-sizing: inherit;
+  }
+}
+
+:host([hidden]) {
+  display: none !important;
+}
+
+.origo-pagination__nav {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--origo-spacing-xs);
+  padding-block: var(--origo-spacing-sm);
+  padding-inline: var(--origo-spacing-sm);
+  font-family: var(--origo-typography-body-font-family);
+  font-size: var(--origo-typography-button-font-size);
+  color: var(--origo-color-text-primary);
+}
+
+.origo-pagination__pages {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--origo-spacing-xs);
+}
+
+.origo-pagination__button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-inline-size: var(--origo-spacing-xl);
+  min-block-size: var(--origo-spacing-xl);
+  padding-inline: var(--origo-spacing-xs);
+  padding-block: var(--origo-spacing-xs);
+  background-color: var(--origo-color-surface-default);
+  border: var(--origo-border-width-default) solid var(--origo-color-border-default);
+  border-radius: var(--origo-radius-sm);
+  color: var(--origo-color-text-primary);
+  font-family: inherit;
+  font-size: inherit;
+  cursor: pointer;
+  transition: all var(--origo-duration-fast) ease;
+
+  &:hover:not(:disabled) {
+    background-color: var(--origo-color-surface-subtle);
+    border-color: var(--origo-color-border-hover);
+  }
+
+  &:focus-visible {
+    outline: var(--origo-border-width-thick) solid var(--origo-color-focus);
+    outline-offset: 2px;
+  }
+
+  &:disabled {
+    cursor: not-allowed;
+    opacity: var(--origo-opacity-disabled);
+    color: var(--origo-color-text-disabled);
+    background-color: var(--origo-color-surface-disabled);
+  }
+
+  &.origo-pagination__page--active {
+    background-color: var(--origo-color-surface-primary);
+    border-color: var(--origo-color-surface-primary);
+    color: var(--origo-color-text-inverse);
+    font-weight: 600;
+  }
+}
+
+.origo-pagination__rows-container {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--origo-spacing-xs);
+  margin-inline-start: var(--origo-spacing-md);
+}
+
+.origo-pagination__rows-label {
+  font-size: var(--origo-typography-button-font-size);
+  color: var(--origo-color-text-muted);
+}
+
+.origo-pagination__rows-select {
+  padding-inline: var(--origo-spacing-sm);
+  padding-block: var(--origo-spacing-xs);
+  border: var(--origo-border-width-default) solid var(--origo-color-border-default);
+  border-radius: var(--origo-radius-sm);
+  background-color: var(--origo-color-surface-default);
+  color: var(--origo-color-text-primary);
+  font-family: inherit;
+  font-size: inherit;
+  cursor: pointer;
+
+  &:focus-visible {
+    outline: var(--origo-border-width-thick) solid var(--origo-color-focus);
+    outline-offset: 2px;
+  }
+
+  &:disabled {
+    cursor: not-allowed;
+    opacity: var(--origo-opacity-disabled);
+    background-color: var(--origo-color-surface-disabled);
+  }
+}

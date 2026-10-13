@@ -35,6 +35,8 @@ import { DividerComponent } from '../components/primitives/divider/divider.compo
 import { FileInputComponent } from '../components/primitives/file-input/file-input.component';
 import { DropzoneComponent } from '../components/primitives/dropzone/dropzone.component';
 import { RichTextEditorComponent } from '../components/primitives/rich-text-editor/rich-text-editor.component';
+import { PaginationComponent } from '../components/primitives/pagination/pagination.component';
+import { StepperComponent } from '../components/primitives/stepper/stepper.component';
 
 export function provideOrigo9Primitives(): EnvironmentProviders {
   const registryMap = new Map<string, unknown>([
@@ -57,6 +59,9 @@ export function provideOrigo9Primitives(): EnvironmentProviders {
     ['Sidebar', SidebarComponent],
     ['Tabs', TabsComponent],
     ['Breadcrumbs', BreadcrumbsComponent],
+    ['Pagination', PaginationComponent],
+    ['Paginator', PaginationComponent],
+    ['Stepper', StepperComponent],
     ['Navigation', SidebarComponent],
     ['Switch', SwitchComponent],
     ['Chip', ChipComponent],

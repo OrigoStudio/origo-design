@@ -1,24 +1,89 @@
 <ol class="origo-breadcrumbs__list">
+  @if (computedHome(); as homeItem) {
+    <li class="origo-breadcrumbs__item origo-breadcrumbs__item--home">
+      @if (computedItems().length > 0) {
+        @if (homeItem.url) {
+          <a
+            class="origo-breadcrumbs__link"
+            [attr.href]="homeItem.url"
+            [class.origo-breadcrumbs__link--disabled]="homeItem.disabled"
+            (click)="onItemClick($event, homeItem, false)"
+          >
+            @if (homeItem.icon) {
+              <span class="origo-breadcrumbs__icon" aria-hidden="true">{{ homeItem.icon }}</span>
+            }
+            <span>{{ homeItem.label }}</span>
+          </a>
+        } @else {
+          <button
+            type="button"
+            class="origo-breadcrumbs__link"
+            [disabled]="homeItem.disabled"
+            (click)="onItemClick($event, homeItem, false)"
+          >
+            @if (homeItem.icon) {
+              <span class="origo-breadcrumbs__icon" aria-hidden="true">{{ homeItem.icon }}</span>
+            }
+            <span>{{ homeItem.label }}</span>
+          </button>
+        }
+        <span class="origo-breadcrumbs__separator" aria-hidden="true">{{
+          computedSeparator()
+        }}</span>
+      } @else {
+        <span class="origo-breadcrumbs__current" [attr.aria-current]="'page'">
+          @if (homeItem.icon) {
+            <span class="origo-breadcrumbs__icon" aria-hidden="true">{{ homeItem.icon }}</span>
+          }
+          {{ homeItem.label }}
+        </span>
+      }
+    </li>
+  }
+
   @for (item of computedItems(); track $index; let last = $last) {
     <li class="origo-breadcrumbs__item">
-      @if (!last && item.outcomeRef) {
-        <a
-          class="origo-breadcrumbs__link"
-          href="javascript:void(0)"
-          (click)="onItemClick($event, item, last)"
-        >
-          <span>{{ item.label }}</span>
-        </a>
-      } @else {
-        <span
-          [class.origo-breadcrumbs__current]="last"
-          [attr.aria-current]="last ? 'page' : null"
-          >{{ item.label }}</span
-        >
-      }
       @if (!last) {
-        <span class="origo-breadcrumbs__separator" aria-hidden="true">/</span>
+        @if (item.url) {
+          <a
+            class="origo-breadcrumbs__link"
+            [attr.href]="item.url"
+            [class.origo-breadcrumbs__link--disabled]="item.disabled"
+            (click)="onItemClick($event, item, last)"
+          >
+            @if (item.icon) {
+              <span class="origo-breadcrumbs__icon" aria-hidden="true">{{ item.icon }}</span>
+            }
+            <span>{{ item.label }}</span>
+          </a>
+        } @else {
+          <button
+            type="button"
+            class="origo-breadcrumbs__link"
+            [disabled]="item.disabled"
+            (click)="onItemClick($event, item, last)"
+          >
+            @if (item.icon) {
+              <span class="origo-breadcrumbs__icon" aria-hidden="true">{{ item.icon }}</span>
+            }
+            <span>{{ item.label }}</span>
+          </button>
+        }
+      } @else {
+        <span class="origo-breadcrumbs__current" [attr.aria-current]="'page'">
+          @if (item.icon) {
+            <span class="origo-breadcrumbs__icon" aria-hidden="true">{{ item.icon }}</span>
+          }
+          {{ item.label }}
+        </span>
+      }
+
+      @if (!last) {
+        <span class="origo-breadcrumbs__separator" aria-hidden="true">{{
+          computedSeparator()
+        }}</span>
       }
     </li>
   }
 </ol>
+<ng-container #vc></ng-container>
