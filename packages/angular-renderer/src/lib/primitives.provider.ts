@@ -42,9 +42,18 @@ import { ModalComponent } from '../components/primitives/modal/modal.component';
 import { DrawerComponent } from '../components/primitives/drawer/drawer.component';
 import { PopoverComponent } from '../components/primitives/popover/popover.component';
 import { TooltipComponent } from '../components/primitives/tooltip/tooltip.component';
+import { AlertComponent } from '../components/primitives/alert/alert.component';
+import { ToastComponent } from '../components/primitives/toast/toast.component';
+import { SnackbarComponent } from '../components/primitives/snackbar/snackbar.component';
+import { BannerComponent } from '../components/primitives/banner/banner.component';
 
 export function provideOrigo9Primitives(): EnvironmentProviders {
   const registryMap = new Map<string, unknown>([
+    ['Alert', AlertComponent],
+    ['Message', AlertComponent],
+    ['Toast', ToastComponent],
+    ['Snackbar', SnackbarComponent],
+    ['Banner', BannerComponent],
     ['Dialog', DialogComponent],
     ['Modal', ModalComponent],
     ['Drawer', DrawerComponent],

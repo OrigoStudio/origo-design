@@ -144,6 +144,56 @@ export class OrigoOverlayService {
             global.right('0').centerVertically();
           }
           break;
+        case 'top-start':
+          global.top('0');
+          if (direction === 'rtl') {
+            global.right('0');
+          } else {
+            global.left('0');
+          }
+          break;
+        case 'top-end':
+          global.top('0');
+          if (direction === 'rtl') {
+            global.left('0');
+          } else {
+            global.right('0');
+          }
+          break;
+        case 'top-center':
+          global.top('0').centerHorizontally();
+          break;
+        case 'bottom-start':
+          global.bottom('0');
+          if (direction === 'rtl') {
+            global.right('0');
+          } else {
+            global.left('0');
+          }
+          break;
+        case 'bottom-end':
+          global.bottom('0');
+          if (direction === 'rtl') {
+            global.left('0');
+          } else {
+            global.right('0');
+          }
+          break;
+        case 'bottom-center':
+          global.bottom('0').centerHorizontally();
+          break;
+        case 'top-left':
+          global.top('0').left('0');
+          break;
+        case 'top-right':
+          global.top('0').right('0');
+          break;
+        case 'bottom-left':
+          global.bottom('0').left('0');
+          break;
+        case 'bottom-right':
+          global.bottom('0').right('0');
+          break;
         case 'center':
         default:
           global.centerHorizontally().centerVertically();

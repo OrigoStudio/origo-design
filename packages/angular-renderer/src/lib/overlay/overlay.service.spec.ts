@@ -11,6 +11,7 @@ import {
 import { CommonModule } from '@angular/common';
 import { OverlayModule } from '@angular/cdk/overlay';
 import { OrigoOverlayService } from './overlay.service';
+import { OrigoGlobalPositionAlignment } from './overlay.models';
 import { getDeepActiveElement } from './overlay-ref';
 
 @Component({
@@ -118,6 +119,43 @@ describe('OrigoOverlayService', () => {
     expect(backdrop).toBeTruthy();
 
     overlayRef.dispose();
+  });
+
+  it('should create global corner position overlays in LTR and RTL without error', () => {
+    const positions: OrigoGlobalPositionAlignment[] = [
+      'top-start',
+      'top-end',
+      'top-center',
+      'bottom-start',
+      'bottom-end',
+      'bottom-center',
+      'top-left',
+      'top-right',
+      'bottom-left',
+      'bottom-right',
+    ];
+
+    for (const pos of positions) {
+      // Test LTR
+      const refLtr = service.create({
+        position: { type: 'global', position: pos },
+        direction: 'ltr',
+        viewContainerRef: hostComponent.vcr,
+      });
+      refLtr.open(hostComponent.panelTemplate);
+      expect(refLtr.isOpen).toBe(true);
+      refLtr.dispose();
+
+      // Test RTL
+      const refRtl = service.create({
+        position: { type: 'global', position: pos },
+        direction: 'rtl',
+        viewContainerRef: hostComponent.vcr,
+      });
+      refRtl.open(hostComponent.panelTemplate);
+      expect(refRtl.isOpen).toBe(true);
+      refRtl.dispose();
+    }
   });
 
   it('should close overlay on outside click without dismissing when clicking inside trigger or panel', () => {

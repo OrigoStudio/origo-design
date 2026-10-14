@@ -1,0 +1,152 @@
+:host {
+  display: contents;
+}
+
+.origo-toast {
+  display: flex;
+  flex-direction: column;
+  gap: var(--origo-space-sm, 0.5rem);
+  inline-size: var(--origo-size-toast-width, 24rem);
+  max-inline-size: 90vw;
+  box-sizing: border-box;
+  pointer-events: none;
+
+  &__item {
+    pointer-events: auto;
+    display: flex;
+    align-items: flex-start;
+    gap: var(--origo-space-sm, 0.75rem);
+    padding-inline: var(--origo-space-md, 1rem);
+    padding-block: var(--origo-space-md, 0.75rem);
+    border-radius: var(--origo-radius-md, 0.375rem);
+    box-shadow: var(--origo-shadow-lg, 0 10px 15px -3px rgba(0, 0, 0, 0.1));
+    border: var(--origo-border-width-default, 1px) solid transparent;
+    box-sizing: border-box;
+    transition: all var(--origo-motion-duration-fast, 150ms) ease;
+
+    // Severity: Info
+    &--info {
+      background-color: var(--origo-color-surface-subtle, #eff6ff);
+      border-color: var(--origo-color-border-info, #bfdbfe);
+      border-inline-start: var(--origo-border-width-accent, 4px) solid
+        var(--origo-color-text-info, #1e40af);
+      color: var(--origo-color-text-info, #1e40af);
+
+      .origo-toast__icon {
+        color: var(--origo-color-text-info, #1e40af);
+      }
+    }
+
+    // Severity: Success
+    &--success {
+      background-color: var(--origo-color-surface-success, #ecfdf5);
+      border-color: var(--origo-color-border-success, #a7f3d0);
+      border-inline-start: var(--origo-border-width-accent, 4px) solid
+        var(--origo-color-text-success, #065f46);
+      color: var(--origo-color-text-success, #065f46);
+
+      .origo-toast__icon {
+        color: var(--origo-color-text-success, #065f46);
+      }
+    }
+
+    // Severity: Warning
+    &--warning {
+      background-color: var(--origo-color-surface-warning, #fffbeb);
+      border-color: var(--origo-color-border-warning, #fde68a);
+      border-inline-start: var(--origo-border-width-accent, 4px) solid
+        var(--origo-color-text-warning, #92400e);
+      color: var(--origo-color-text-warning, #92400e);
+
+      .origo-toast__icon {
+        color: var(--origo-color-text-warning, #92400e);
+      }
+    }
+
+    // Severity: Error
+    &--error {
+      background-color: var(--origo-color-surface-danger, #fef2f2);
+      border-color: var(--origo-color-border-danger, #fecaca);
+      border-inline-start: var(--origo-border-width-accent, 4px) solid
+        var(--origo-color-text-danger, #991b1b);
+      color: var(--origo-color-text-danger, #991b1b);
+
+      .origo-toast__icon {
+        color: var(--origo-color-text-danger, #991b1b);
+      }
+    }
+  }
+
+  &__icon {
+    flex-shrink: 0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    inline-size: var(--origo-size-icon-md, 1.25rem);
+    block-size: var(--origo-size-icon-md, 1.25rem);
+    margin-block-start: var(--origo-space-2xs, 0.125rem);
+  }
+
+  &__svg-icon {
+    inline-size: 100%;
+    block-size: 100%;
+  }
+
+  &__custom-icon {
+    font-size: var(--origo-font-size-md, 1.125rem);
+    line-height: 1;
+  }
+
+  &__content {
+    flex: 1 1 auto;
+    min-inline-size: 0;
+  }
+
+  &__summary {
+    font-family: var(--origo-font-family-base, inherit);
+    font-weight: var(--origo-font-weight-semibold, 600);
+    font-size: var(--origo-font-size-md, 0.9375rem);
+    line-height: var(--origo-line-height-normal, 1.375);
+    margin-block-end: var(--origo-space-2xs, 0.25rem);
+  }
+
+  &__detail {
+    font-family: var(--origo-font-family-base, inherit);
+    font-size: var(--origo-font-size-sm, 0.875rem);
+    line-height: var(--origo-line-height-normal, 1.4);
+  }
+
+  &__close-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    margin-inline-start: var(--origo-space-xs, 0.5rem);
+    inline-size: var(--origo-size-icon-md, 1.5rem);
+    block-size: var(--origo-size-icon-md, 1.5rem);
+    border: none;
+    background: transparent;
+    border-radius: var(--origo-radius-sm, 0.25rem);
+    color: inherit;
+    cursor: pointer;
+    padding-inline: 0;
+    padding-block: 0;
+    opacity: 0.75;
+    transition: opacity var(--origo-motion-duration-fast, 150ms) ease;
+
+    &:hover {
+      opacity: 1;
+      background-color: rgba(0, 0, 0, 0.05);
+    }
+
+    &:focus-visible {
+      outline: var(--origo-border-width-focus, 2px) solid currentColor;
+      outline-offset: 2px;
+    }
+  }
+
+  &__close-svg {
+    inline-size: var(--origo-size-icon-sm, 1rem);
+    block-size: var(--origo-size-icon-sm, 1rem);
+  }
+}

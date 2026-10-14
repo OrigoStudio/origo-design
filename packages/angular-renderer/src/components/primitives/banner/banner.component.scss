@@ -1,0 +1,199 @@
+:host {
+  display: block;
+  box-sizing: border-box;
+
+  &.origo-banner--sticky {
+    position: sticky;
+    inset-block-start: 0;
+    z-index: var(--origo-z-sticky, 100);
+  }
+
+  &.origo-banner--hidden {
+    display: none !important;
+  }
+}
+
+.origo-banner {
+  box-sizing: border-box;
+  padding-inline: var(--origo-space-lg, 1.5rem);
+  padding-block: var(--origo-space-sm, 0.75rem);
+  border-block-end: var(--origo-border-width-default, 1px) solid transparent;
+  transition: all var(--origo-motion-duration-fast, 150ms) ease;
+
+  &--fluid {
+    inline-size: 100%;
+  }
+
+  // Severity: Info
+  &--info {
+    --origo-banner-bg: var(--origo-color-surface-subtle, #eff6ff);
+    --origo-banner-border: var(--origo-color-border-info, #bfdbfe);
+    --origo-banner-text: var(--origo-color-text-info, #1e40af);
+  }
+
+  // Severity: Success
+  &--success {
+    --origo-banner-bg: var(--origo-color-surface-success, #ecfdf5);
+    --origo-banner-border: var(--origo-color-border-success, #a7f3d0);
+    --origo-banner-text: var(--origo-color-text-success, #065f46);
+  }
+
+  // Severity: Warning
+  &--warning {
+    --origo-banner-bg: var(--origo-color-surface-warning, #fffbeb);
+    --origo-banner-border: var(--origo-color-border-warning, #fde68a);
+    --origo-banner-text: var(--origo-color-text-warning, #92400e);
+  }
+
+  // Severity: Error
+  &--error {
+    --origo-banner-bg: var(--origo-color-surface-danger, #fef2f2);
+    --origo-banner-border: var(--origo-color-border-danger, #fecaca);
+    --origo-banner-text: var(--origo-color-text-danger, #991b1b);
+  }
+
+  // Variant: Standard (Subtle background + border)
+  &--standard {
+    background-color: var(--origo-banner-bg);
+    border-block-end-color: var(--origo-banner-border);
+    color: var(--origo-banner-text);
+  }
+
+  // Variant: Outlined (Transparent + bordered)
+  &--outlined {
+    background-color: transparent;
+    border-block-end-color: var(--origo-banner-border);
+    border-block-start: var(--origo-border-width-default, 1px) solid var(--origo-banner-border);
+    color: var(--origo-banner-text);
+  }
+
+  // Variant: Filled (Solid color + inverse text)
+  &--filled {
+    background-color: var(--origo-banner-text);
+    border-block-end-color: var(--origo-banner-text);
+    color: var(--origo-color-text-inverse, #ffffff);
+
+    .origo-banner__icon {
+      color: var(--origo-color-text-inverse, #ffffff);
+    }
+
+    .origo-banner__close-btn {
+      color: var(--origo-color-text-inverse, #ffffff);
+      &:hover {
+        background-color: rgba(255, 255, 255, 0.2);
+      }
+    }
+  }
+
+  &__body {
+    display: flex;
+    align-items: center;
+    gap: var(--origo-space-md, 1rem);
+    inline-size: 100%;
+    box-sizing: border-box;
+  }
+
+  &__icon {
+    flex-shrink: 0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    inline-size: var(--origo-size-icon-md, 1.25rem);
+    block-size: var(--origo-size-icon-md, 1.25rem);
+    color: var(--origo-banner-text);
+  }
+
+  &__svg-icon {
+    inline-size: 100%;
+    block-size: 100%;
+  }
+
+  &__custom-icon {
+    font-size: var(--origo-font-size-md, 1.125rem);
+    line-height: 1;
+  }
+
+  &__content {
+    flex: 1 1 auto;
+    display: flex;
+    align-items: center;
+    gap: var(--origo-space-xs, 0.5rem);
+    flex-wrap: wrap;
+    font-family: var(--origo-font-family-base, inherit);
+    font-size: var(--origo-font-size-sm, 0.875rem);
+    line-height: var(--origo-line-height-normal, 1.4);
+  }
+
+  &__title {
+    font-weight: var(--origo-font-weight-semibold, 600);
+    margin-inline-end: var(--origo-space-2xs, 0.25rem);
+  }
+
+  &__message {
+    font-weight: var(--origo-font-weight-normal, 400);
+  }
+
+  &__actions {
+    display: flex;
+    align-items: center;
+    gap: var(--origo-space-xs, 0.5rem);
+    flex-shrink: 0;
+  }
+
+  &__action-btn {
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    font-family: var(--origo-font-family-base, inherit);
+    font-weight: var(--origo-font-weight-semibold, 600);
+    font-size: var(--origo-font-size-sm, 0.875rem);
+    padding-inline: var(--origo-space-sm, 0.5rem);
+    padding-block: var(--origo-space-xs, 0.25rem);
+    border-radius: var(--origo-radius-sm, 0.25rem);
+    color: inherit;
+    text-decoration: underline;
+
+    &:hover {
+      opacity: 0.85;
+    }
+
+    &:focus-visible {
+      outline: var(--origo-border-width-focus, 2px) solid currentColor;
+      outline-offset: 2px;
+    }
+  }
+
+  &__close-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    margin-inline-start: var(--origo-space-xs, 0.5rem);
+    inline-size: var(--origo-size-icon-md, 1.5rem);
+    block-size: var(--origo-size-icon-md, 1.5rem);
+    border: none;
+    background: transparent;
+    border-radius: var(--origo-radius-sm, 0.25rem);
+    color: inherit;
+    cursor: pointer;
+    padding-inline: 0;
+    padding-block: 0;
+    opacity: 0.75;
+    transition: opacity var(--origo-motion-duration-fast, 150ms) ease;
+
+    &:hover {
+      opacity: 1;
+      background-color: rgba(0, 0, 0, 0.05);
+    }
+
+    &:focus-visible {
+      outline: var(--origo-border-width-focus, 2px) solid currentColor;
+      outline-offset: 2px;
+    }
+  }
+
+  &__close-svg {
+    inline-size: var(--origo-size-icon-sm, 1rem);
+    block-size: var(--origo-size-icon-sm, 1rem);
+  }
+}
