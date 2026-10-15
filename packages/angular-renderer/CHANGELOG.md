@@ -1,3 +1,14 @@
+## 0.0.57 (2026-10-15)
+
+### 🚀 Features
+
+- implement messaging and notification primitive components in angular-renderer ([84687eb](https://github.com/OrigoStudio/origo-design/commit/84687eb))
+- add angular primitive components including overlays, dialogs, and notifications ([9c962b8](https://github.com/OrigoStudio/origo-design/commit/9c962b8))
+
+### ❤️ Thank You
+
+- Hardik Patel @hardikpatelse
+
 ## 0.0.56 (2026-10-13)
 
 ### 🚀 Features
