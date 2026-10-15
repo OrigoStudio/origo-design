@@ -77,7 +77,6 @@ export class ProgressBarComponent implements OrigoAdapter<ProgressBarProps> {
 
   private experienceAdapter = inject(WebExperienceAdapterService, { optional: true });
   private hasCompleted = false;
-  private isMounted = false;
   private lastReportedValue: number | null = null;
   private lastContractId: string | null = null;
 
@@ -154,19 +153,8 @@ export class ProgressBarComponent implements OrigoAdapter<ProgressBarProps> {
 
       if (this.lastContractId !== contractId) {
         this.lastContractId = contractId;
-        this.isMounted = false;
         this.hasCompleted = currentMode === 'determinate' && val >= max && max > 0;
         this.lastReportedValue = val;
-        return;
-      }
-
-      if (!this.isMounted) {
-        // First run on mount: initialize completion state without emitting
-        this.isMounted = true;
-        this.lastReportedValue = val;
-        if (currentMode === 'determinate' && val >= max && max > 0) {
-          this.hasCompleted = true;
-        }
         return;
       }
 

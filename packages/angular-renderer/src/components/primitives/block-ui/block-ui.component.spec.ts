@@ -3,6 +3,7 @@ import { BlockUIComponent, BlockUIProps } from './block-ui.component';
 import { InteractionContract } from '@origostudio/core';
 import { WebExperienceAdapterService } from '../../../adapters/web/experience-adapter.service';
 import { OrigoOverlayService } from '../../../lib/overlay/overlay.service';
+import { OrigoOverlayRef } from '../../../lib/overlay/overlay.models';
 
 describe('BlockUIComponent', () => {
   let component: BlockUIComponent;
@@ -171,7 +172,7 @@ describe('BlockUIComponent', () => {
       open: jest.fn(),
       close: jest.fn(),
       dispose: mockDispose,
-    } as any);
+    } as unknown as OrigoOverlayRef);
 
     fixture.componentRef.setInput('contract', createContract({ blocked: true, fullScreen: true }));
     fixture.detectChanges();

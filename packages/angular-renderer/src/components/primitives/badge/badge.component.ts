@@ -10,6 +10,7 @@ import {
   ViewContainerRef,
   ElementRef,
   signal,
+  AfterContentInit,
   AfterContentChecked,
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
@@ -74,7 +75,7 @@ export const BadgeContractSchema = {
   },
 })
 export class BadgeComponent
-  implements OrigoAdapter<BadgeProps>, ContainerComponent, AfterContentChecked
+  implements OrigoAdapter<BadgeProps>, ContainerComponent, AfterContentInit, AfterContentChecked
 {
   static readonly contractSchema = BadgeContractSchema;
   static readonly strictContract = false;
@@ -167,7 +168,15 @@ export class BadgeComponent
     return classes.join(' ');
   });
 
+  ngAfterContentInit() {
+    this.checkProjectedContent(true);
+  }
+
   ngAfterContentChecked() {
+    this.checkProjectedContent(false);
+  }
+
+  private checkProjectedContent(synchronous: boolean) {
     const wrapper = this.contentWrapper();
     if (wrapper) {
       const el = wrapper.nativeElement;
@@ -185,9 +194,13 @@ export class BadgeComponent
         }
       }
       if (this._hasProjectedContent() !== hasChildren) {
-        queueMicrotask(() => {
+        if (synchronous) {
           this._hasProjectedContent.set(hasChildren);
-        });
+        } else {
+          queueMicrotask(() => {
+            this._hasProjectedContent.set(hasChildren);
+          });
+        }
       }
     }
   }
