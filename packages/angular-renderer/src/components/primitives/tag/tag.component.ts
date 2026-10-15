@@ -166,7 +166,12 @@ export class TagComponent implements OrigoAdapter<TagProps> {
   }
 
   onRemoveKeyDown(event: KeyboardEvent) {
-    if (event.key === 'Enter' || event.key === ' ') {
+    if (
+      event.key === 'Enter' ||
+      event.key === ' ' ||
+      event.key === 'Backspace' ||
+      event.key === 'Delete'
+    ) {
       event.preventDefault();
       event.stopPropagation();
       this.onRemove(event as unknown as MouseEvent);

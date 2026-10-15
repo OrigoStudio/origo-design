@@ -170,6 +170,32 @@
     justify-content: center;
     pointer-events: auto !important;
     overflow: hidden;
+
+    .origo-block-ui__mask--fullscreen {
+      background: transparent !important;
+      position: relative;
+      inline-size: 100%;
+      block-size: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .origo-block-ui__mask-content {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: var(--origo-space-sm, 0.5rem);
+      color: var(--origo-color-text-inverse, #ffffff);
+    }
+
+    .origo-block-ui__message {
+      font-size: var(--origo-font-size-sm, 0.875rem);
+      font-weight: var(--origo-font-weight-medium, 500);
+      color: inherit;
+      text-align: center;
+    }
   }
 }
 

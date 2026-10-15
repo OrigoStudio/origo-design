@@ -15,6 +15,8 @@
         }
         @if (message()) {
           <span class="origo-block-ui__message">{{ message() }}</span>
+        } @else if (!showSpinner()) {
+          <span class="sr-only">Loading...</span>
         }
       </div>
     </div>
@@ -33,6 +35,8 @@
       }
       @if (message()) {
         <span class="origo-block-ui__message">{{ message() }}</span>
+      } @else if (!showSpinner()) {
+        <span class="sr-only">Loading...</span>
       }
     </div>
   </div>

@@ -13,6 +13,7 @@ import {
   PLATFORM_ID,
   effect,
   untracked,
+  HostListener,
 } from '@angular/core';
 import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { InteractionContract } from '@origostudio/core';
@@ -146,10 +147,12 @@ export class BlockUIComponent implements OrigoAdapter<BlockUIProps>, ContainerCo
       }
       this.lastBlockedState = blocked;
 
+      const tpl = this.fullScreenOverlayTemplate();
+
       if (isPlatformBrowser(this.platformId) && fullScreen) {
         if (blocked) {
-          if (!this.overlayRef) {
-            untracked(() => this.openFullScreenOverlay());
+          if (!this.overlayRef && tpl) {
+            untracked(() => this.openFullScreenOverlay(tpl));
           }
         } else {
           if (this.overlayRef) {
@@ -170,10 +173,15 @@ export class BlockUIComponent implements OrigoAdapter<BlockUIProps>, ContainerCo
     });
   }
 
-  private openFullScreenOverlay() {
-    const tpl = this.fullScreenOverlayTemplate();
-    if (!tpl) return;
+  @HostListener('keydown', ['$event'])
+  onKeyDown(event: KeyboardEvent) {
+    if (this.isBlocked() && !this.isFullScreen()) {
+      event.preventDefault();
+      event.stopPropagation();
+    }
+  }
 
+  private openFullScreenOverlay(tpl: TemplateRef<unknown>) {
     this.overlayRef = this.overlayService.create(
       {
         position: {
@@ -183,6 +191,7 @@ export class BlockUIComponent implements OrigoAdapter<BlockUIProps>, ContainerCo
           height: '100vh',
         },
         hasBackdrop: false,
+        trapFocus: true,
         panelClass: ['origo-overlay-pane', 'origo-overlay-pane--block-ui'],
         viewContainerRef: this.vcr,
       },

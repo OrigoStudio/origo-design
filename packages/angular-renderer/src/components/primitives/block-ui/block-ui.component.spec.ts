@@ -118,7 +118,7 @@ describe('BlockUIComponent', () => {
     expect(dispatchSpy).toHaveBeenCalledWith('block-ui-1', 'blockedChange', { blocked: true });
   });
 
-  it('should trigger OrigoOverlayService in fullScreen mode', () => {
+  it('should trigger OrigoOverlayService in fullScreen mode with trapFocus', () => {
     const createOverlaySpy = jest.spyOn(overlayService, 'create');
 
     fixture.componentRef.setInput(
@@ -132,9 +132,52 @@ describe('BlockUIComponent', () => {
       expect.objectContaining({
         position: expect.objectContaining({ type: 'global', width: '100vw', height: '100vh' }),
         panelClass: expect.arrayContaining(['origo-overlay-pane--block-ui']),
+        trapFocus: true,
       }),
       expect.anything()
     );
+  });
+
+  it('should suppress keyboard interactions when locally blocked', () => {
+    fixture.componentRef.setInput('contract', createContract({ blocked: true, fullScreen: false }));
+    fixture.detectChanges();
+
+    const event = new KeyboardEvent('keydown', { key: 'Tab', cancelable: true });
+    const preventDefaultSpy = jest.spyOn(event, 'preventDefault');
+    const stopPropagationSpy = jest.spyOn(event, 'stopPropagation');
+
+    fixture.nativeElement.dispatchEvent(event);
+
+    expect(preventDefaultSpy).toHaveBeenCalled();
+    expect(stopPropagationSpy).toHaveBeenCalled();
+  });
+
+  it('should render fallback sr-only message when spinner is false and message is empty', () => {
+    fixture.componentRef.setInput(
+      'contract',
+      createContract({ blocked: true, spinner: false, message: '' })
+    );
+    fixture.detectChanges();
+
+    const shadowRoot = fixture.nativeElement.shadowRoot;
+    const srOnly = shadowRoot.querySelector('.sr-only');
+    expect(srOnly).toBeTruthy();
+    expect(srOnly.textContent?.trim()).toBe('Loading...');
+  });
+
+  it('should dispose overlay on component destruction', () => {
+    const mockDispose = jest.fn();
+    jest.spyOn(overlayService, 'create').mockReturnValue({
+      open: jest.fn(),
+      close: jest.fn(),
+      dispose: mockDispose,
+    } as any);
+
+    fixture.componentRef.setInput('contract', createContract({ blocked: true, fullScreen: true }));
+    fixture.detectChanges();
+
+    fixture.destroy();
+    expect(mockDispose).toHaveBeenCalled();
   });
 
   it('should be safe with undefined or null props', () => {

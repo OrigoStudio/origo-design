@@ -55,15 +55,14 @@ export const ProgressBarContractSchema = {
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.ShadowDom,
   host: {
-    '[class.origo-progress-bar-host]': 'true',
+    '[class]': 'computedHostClasses()',
     '[attr.data-testid]': 'contract().id',
     role: 'progressbar',
     '[attr.aria-valuenow]': "mode() === 'determinate' ? clampedValue() : null",
-    '[attr.aria-valuemin]': "'0'",
+    '[attr.aria-valuemin]': "mode() === 'determinate' ? '0' : null",
     '[attr.aria-valuemax]': "mode() === 'determinate' ? safeMax() : null",
     '[attr.aria-label]': "computedLabel() || 'Progress'",
     '[attr.aria-describedby]': 'ariaDescribedBy()',
-    '[class]': 'computedSeverityClass()',
     '[style.--origo-progress-height]': 'computedHeight()',
   },
 })
@@ -80,6 +79,7 @@ export class ProgressBarComponent implements OrigoAdapter<ProgressBarProps> {
   private hasCompleted = false;
   private isMounted = false;
   private lastReportedValue: number | null = null;
+  private lastContractId: string | null = null;
 
   readonly coercedProps = computed(() =>
     coerceContractProps<ProgressBarProps>(this.contract()?.props, ProgressBarContractSchema)
@@ -91,11 +91,14 @@ export class ProgressBarComponent implements OrigoAdapter<ProgressBarProps> {
 
   readonly safeMax = computed(() => {
     const m = this.coercedProps().max;
-    return m !== undefined && m !== null && Number(m) > 0 ? Number(m) : 100;
+    if (typeof m === 'boolean') return 100;
+    const num = Number(m);
+    return !isNaN(num) && num > 0 ? num : 100;
   });
 
   readonly clampedValue = computed(() => {
     const v = this.coercedProps().value;
+    if (typeof v === 'boolean') return 0;
     const num = v !== undefined && v !== null ? Number(v) : 0;
     return Math.min(Math.max(isNaN(num) ? 0 : num, 0), this.safeMax());
   });
@@ -118,7 +121,10 @@ export class ProgressBarComponent implements OrigoAdapter<ProgressBarProps> {
   readonly unit = computed(() => this.coercedProps().unit ?? '%');
 
   readonly formattedValue = computed(() => {
-    return `${Math.round(this.percentage())}${this.unit()}`;
+    if (this.unit() === '%') {
+      return `${Math.round(this.percentage())}%`;
+    }
+    return `${this.clampedValue()}${this.unit()}`;
   });
 
   readonly computedHeight = computed(() => {
@@ -131,12 +137,28 @@ export class ProgressBarComponent implements OrigoAdapter<ProgressBarProps> {
     return `origo-progress-bar--severity-${normalized}`;
   });
 
+  readonly computedHostClasses = computed(() => {
+    const classes = ['origo-progress-bar-host', this.computedSeverityClass()];
+    if (this.mode() === 'indeterminate') {
+      classes.push('origo-progress-bar--indeterminate');
+    }
+    return classes.join(' ');
+  });
+
   constructor() {
     effect(() => {
       const val = this.clampedValue();
       const max = this.safeMax();
       const currentMode = this.mode();
-      const contractId = this.contract()?.id;
+      const contractId = this.contract()?.id ?? null;
+
+      if (this.lastContractId !== contractId) {
+        this.lastContractId = contractId;
+        this.isMounted = false;
+        this.hasCompleted = currentMode === 'determinate' && val >= max && max > 0;
+        this.lastReportedValue = val;
+        return;
+      }
 
       if (!this.isMounted) {
         // First run on mount: initialize completion state without emitting
@@ -146,6 +168,10 @@ export class ProgressBarComponent implements OrigoAdapter<ProgressBarProps> {
           this.hasCompleted = true;
         }
         return;
+      }
+
+      if (currentMode === 'indeterminate') {
+        this.hasCompleted = false;
       }
 
       // Subsequent changes
@@ -172,7 +198,7 @@ export class ProgressBarComponent implements OrigoAdapter<ProgressBarProps> {
             }
           });
         }
-      } else if (val < max) {
+      } else if (val < max || currentMode === 'indeterminate') {
         this.hasCompleted = false;
       }
     });

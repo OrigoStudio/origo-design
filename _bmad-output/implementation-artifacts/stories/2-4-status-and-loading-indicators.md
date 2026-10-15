@@ -301,6 +301,26 @@ So that I can visually communicate system processing states, background task pro
   - [x] 8.4 Run full monorepo test suite (`npm test`) and lint checks (`npx nx lint angular-renderer`) to verify zero regressions.
   - [x] 8.5 Update `sprint-status.yaml` marking `2-4-status-and-loading-indicators` as `ready-for-dev`.
 
+### Review Findings
+
+- [ ] [Review][Patch] Full-screen BlockUI overlay styling isolation in Shadow DOM and double backdrop opacity [packages/angular-renderer/src/styles/overlay.scss:155]
+- [ ] [Review][Patch] Untracked ViewChild in BlockUI constructor effect causes full-screen overlay to fail opening on initial mount [packages/angular-renderer/src/components/primitives/block-ui/block-ui.component.ts:149]
+- [ ] [Review][Patch] Absence of keyboard focus trapping and keyboard suppression in BlockUI blocked state [packages/angular-renderer/src/components/primitives/block-ui/block-ui.component.ts:57]
+- [ ] [Review][Patch] ProgressBar formattedValue computes incorrect value when using non-percentage units [packages/angular-renderer/src/components/primitives/progress-bar/progress-bar.component.ts:120]
+- [ ] [Review][Patch] Invalid aria-valuemin on indeterminate ProgressBar violating W3C specification [packages/angular-renderer/src/components/primitives/progress-bar/progress-bar.component.ts:60]
+- [ ] [Review][Patch] Conflicting host and template [class] string bindings risk clobbering boolean class bindings [packages/angular-renderer/src/components/primitives/skeleton/skeleton.component.html:5]
+- [ ] [Review][Patch] ProgressBar stale completion and event state across contract identity changes and mode switches [packages/angular-renderer/src/components/primitives/progress-bar/progress-bar.component.ts:135]
+- [ ] [Review][Patch] Duplicate screen reader announcement on Spinner due to redundant aria-label on host [packages/angular-renderer/src/components/primitives/spinner/spinner.component.ts:62]
+- [ ] [Review][Patch] Hardcoded dash animation duration on Spinner circle causes phase-drift and stutter [packages/angular-renderer/src/components/primitives/spinner/spinner.component.scss:64]
+- [ ] [Review][Patch] Tag remove button missing Backspace and Delete keyboard operability [packages/angular-renderer/src/components/primitives/tag/tag.component.ts:168]
+- [ ] [Review][Patch] Hardcoded color literal in Tag remove button hover state [packages/angular-renderer/src/components/primitives/tag/tag.component.scss:77]
+- [ ] [Review][Patch] Signal mutation in Badge ngAfterContentChecked risks NG0100 error [packages/angular-renderer/src/components/primitives/badge/badge.component.ts:170]
+- [ ] [Review][Patch] Badge click event bubbling and unsafe KeyboardEvent casting [packages/angular-renderer/src/components/primitives/badge/badge.component.ts:193]
+- [ ] [Review][Patch] Hardcoded physical gradient in Skeleton shimmer ignores RTL reading direction [packages/angular-renderer/src/components/primitives/skeleton/skeleton.component.scss:31]
+- [ ] [Review][Patch] Test suite coverage gaps for RTL mirroring, SSR safety, and overlay teardown [packages/angular-renderer/src/components/primitives/block-ui/block-ui.component.spec.ts:121]
+- [ ] [Review][Patch] ProgressBar boundary clamping boolean check [packages/angular-renderer/src/components/primitives/progress-bar/progress-bar.component.ts:96]
+- [ ] [Review][Patch] BlockUI fallback screen reader announcement when spinner=false and message is empty [packages/angular-renderer/src/components/primitives/block-ui/block-ui.component.html:12]
+
 ---
 
 ## Dev Notes

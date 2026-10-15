@@ -185,13 +185,16 @@ export class BadgeComponent
         }
       }
       if (this._hasProjectedContent() !== hasChildren) {
-        this._hasProjectedContent.set(hasChildren);
+        queueMicrotask(() => {
+          this._hasProjectedContent.set(hasChildren);
+        });
       }
     }
   }
 
   onClick(event: MouseEvent) {
     if (this.isInteractive()) {
+      event.stopPropagation();
       this.click.emit(event);
       if (this.contract()?.id) {
         this.experienceAdapter?.dispatchCapability(this.contract().id, 'click', { event });
@@ -202,7 +205,12 @@ export class BadgeComponent
   onKeyDown(event: KeyboardEvent) {
     if (this.isInteractive() && (event.key === 'Enter' || event.key === ' ')) {
       event.preventDefault();
-      this.onClick(event as unknown as MouseEvent);
+      event.stopPropagation();
+      const syntheticMouseEvent = new MouseEvent('click', {
+        bubbles: false,
+        cancelable: true,
+      });
+      this.onClick(syntheticMouseEvent);
     }
   }
 }

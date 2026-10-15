@@ -2,6 +2,8 @@
   class="origo-skeleton"
   [class.origo-skeleton--circle]="shape() === 'circle'"
   [class.origo-skeleton--rectangle]="shape() === 'rectangle'"
-  [class]="'origo-skeleton--animation-' + animation()"
+  [class.origo-skeleton--animation-shimmer]="animation() === 'shimmer'"
+  [class.origo-skeleton--animation-pulse]="animation() === 'pulse'"
+  [class.origo-skeleton--animation-none]="animation() === 'none'"
   [style.border-radius]="computedBorderRadius()"
 ></div>

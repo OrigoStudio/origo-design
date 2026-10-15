@@ -135,4 +135,32 @@ describe('BadgeComponent', () => {
     const wrapper = shadowRoot.querySelector('.origo-badge-wrapper');
     expect(wrapper.classList.contains('origo-badge-wrapper--overlay')).toBe(true);
   });
+
+  it('should trigger click output via Enter/Space with synthetic MouseEvent', () => {
+    const clickSpy = jest.fn();
+    component.click.subscribe(clickSpy);
+
+    fixture.componentRef.setInput('contract', createContract({ value: 12, interactive: true }));
+    fixture.detectChanges();
+
+    const shadowRoot = fixture.nativeElement.shadowRoot;
+    const badgeEl = shadowRoot.querySelector('.origo-badge') as HTMLElement;
+
+    const event = new KeyboardEvent('keydown', { key: 'Enter' });
+    badgeEl.dispatchEvent(event);
+    expect(clickSpy).toHaveBeenCalledTimes(1);
+    const emittedEvent = clickSpy.mock.calls[0][0];
+    expect(emittedEvent instanceof MouseEvent).toBe(true);
+  });
+
+  it('should support RTL direction on host and wrapper', () => {
+    fixture.componentRef.setInput('contract', createContract({ value: 3 }));
+    fixture.nativeElement.setAttribute('dir', 'rtl');
+    fixture.detectChanges();
+
+    expect(fixture.nativeElement.getAttribute('dir')).toBe('rtl');
+    const shadowRoot = fixture.nativeElement.shadowRoot;
+    const badgeEl = shadowRoot.querySelector('.origo-badge');
+    expect(badgeEl).toBeTruthy();
+  });
 });

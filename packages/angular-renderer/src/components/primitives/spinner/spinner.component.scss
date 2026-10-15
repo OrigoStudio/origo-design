@@ -61,7 +61,7 @@
   stroke-linecap: round;
   stroke-dasharray: 90, 150;
   stroke-dashoffset: 0;
-  animation: origo-spinner-dash 1.5s ease-in-out infinite;
+  animation: origo-spinner-dash calc(var(--origo-spinner-duration, 1s) * 1.5) ease-in-out infinite;
 }
 
 .sr-only {

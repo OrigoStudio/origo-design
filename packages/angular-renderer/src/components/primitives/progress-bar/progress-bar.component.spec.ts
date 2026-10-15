@@ -138,4 +138,38 @@ describe('ProgressBarComponent', () => {
     const host = fixture.nativeElement;
     expect(host.classList.contains('origo-progress-bar--severity-success')).toBe(true);
   });
+
+  it('should format value with custom units properly without mathematical corruption', () => {
+    fixture.componentRef.setInput(
+      'contract',
+      createContract({ value: 50, max: 200, unit: 'MB', showValue: true })
+    );
+    fixture.detectChanges();
+
+    expect(component.formattedValue()).toBe('50MB');
+    expect(component.percentage()).toBe(25);
+  });
+
+  it('should omit aria-valuemin, aria-valuenow, and aria-valuemax in indeterminate mode', () => {
+    fixture.componentRef.setInput('contract', createContract({ mode: 'indeterminate' }));
+    fixture.detectChanges();
+
+    const host = fixture.nativeElement;
+    expect(host.getAttribute('role')).toBe('progressbar');
+    expect(host.getAttribute('aria-valuenow')).toBeNull();
+    expect(host.getAttribute('aria-valuemin')).toBeNull();
+    expect(host.getAttribute('aria-valuemax')).toBeNull();
+  });
+
+  it('should support RTL mirroring direction on host', () => {
+    fixture.componentRef.setInput('contract', createContract({ value: 40, max: 100 }));
+    fixture.nativeElement.setAttribute('dir', 'rtl');
+    fixture.detectChanges();
+
+    expect(fixture.nativeElement.getAttribute('dir')).toBe('rtl');
+    const shadowRoot = fixture.nativeElement.shadowRoot;
+    const fillEl = shadowRoot.querySelector('.origo-progress-bar__fill') as HTMLElement;
+    expect(fillEl).toBeTruthy();
+    expect(fillEl.style.inlineSize).toBe('40%');
+  });
 });

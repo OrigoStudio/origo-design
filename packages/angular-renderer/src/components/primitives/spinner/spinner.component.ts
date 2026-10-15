@@ -57,14 +57,11 @@ export const SpinnerContractSchema = {
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.ShadowDom,
   host: {
-    '[class.origo-spinner-host]': 'true',
+    '[class]': 'computedHostClasses()',
     '[attr.data-testid]': 'contract().id',
     role: 'status',
     'aria-live': 'polite',
-    '[attr.aria-label]': 'computedLabel()',
     '[attr.aria-describedby]': 'ariaDescribedBy()',
-    '[class.origo-spinner--fluid]': 'isFluid()',
-    '[class]': 'computedVariantClass()',
     '[style.--origo-spinner-size]': 'computedSize()',
     '[style.--origo-spinner-duration]': 'computedDuration()',
   },
@@ -119,5 +116,11 @@ export class SpinnerComponent implements OrigoAdapter<SpinnerProps> {
     const v = this.coercedProps().variant?.toLowerCase() || 'primary';
     const normalized = v === 'warn' || v === 'warning' ? 'warning' : v;
     return `origo-spinner--variant-${normalized}`;
+  });
+
+  readonly computedHostClasses = computed(() => {
+    const classes = ['origo-spinner-host', this.computedVariantClass()];
+    if (this.isFluid()) classes.push('origo-spinner--fluid');
+    return classes.join(' ');
   });
 }
