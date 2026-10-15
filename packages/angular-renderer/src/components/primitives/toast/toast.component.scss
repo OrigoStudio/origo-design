@@ -136,7 +136,7 @@
 
     &:hover {
       opacity: 1;
-      background-color: rgba(0, 0, 0, 0.05);
+      background-color: var(--origo-color-surface-hover, rgba(0, 0, 0, 0.05));
     }
 
     &:focus-visible {

@@ -38,7 +38,8 @@
       var(--origo-color-border-success, #34d399);
   }
 
-  &--warn .origo-snackbar__bar {
+  &--warn .origo-snackbar__bar,
+  &--warning .origo-snackbar__bar {
     background-color: var(--origo-color-surface-inverse, #1f2937);
     border-inline-start: var(--origo-border-width-accent, 4px) solid
       var(--origo-color-border-warning, #fbbf24);
@@ -102,7 +103,7 @@
 
     &:hover {
       opacity: 1;
-      background-color: rgba(255, 255, 255, 0.1);
+      background-color: var(--origo-color-surface-hover, rgba(255, 255, 255, 0.1));
     }
 
     &:focus-visible {

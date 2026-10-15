@@ -30,7 +30,7 @@ export interface BannerAction {
 
 export interface BannerProps {
   visible?: boolean;
-  severity?: 'info' | 'success' | 'warn' | 'error';
+  severity?: 'info' | 'success' | 'warn' | 'warning' | 'error';
   title?: string;
   message?: string;
   text?: string;
@@ -99,7 +99,12 @@ export class BannerComponent implements OrigoAdapter<BannerProps>, ContainerComp
   private platformId = inject(PLATFORM_ID);
 
   private autoDismissTimer: ReturnType<typeof setTimeout> | null = null;
-  readonly isVisible = signal(true);
+  private readonly manuallyClosed = signal(false);
+
+  readonly isVisible = computed(() => {
+    if (this.manuallyClosed()) return false;
+    return this.coercedProps().visible !== false;
+  });
 
   readonly coercedProps = computed(() =>
     coerceContractProps<BannerProps>(this.contract()?.props, BannerContractSchema)
@@ -148,7 +153,6 @@ export class BannerComponent implements OrigoAdapter<BannerProps>, ContainerComp
     effect(() => {
       const props = this.coercedProps();
       const contractVisible = props.visible !== false;
-      this.isVisible.set(contractVisible);
 
       this.clearTimer();
 
@@ -169,14 +173,18 @@ export class BannerComponent implements OrigoAdapter<BannerProps>, ContainerComp
 
   onClose(): void {
     this.clearTimer();
-    this.isVisible.set(false);
+    this.manuallyClosed.set(true);
     this.visibleChange.emit(false);
     this.close.emit();
-    this.experienceAdapter.updateState(this.contract().id, 'visible', false);
+    if (this.contract()?.id) {
+      this.experienceAdapter.updateState(this.contract().id, 'visible', false);
+    }
   }
 
   onActionClick(act: BannerAction): void {
     this.action.emit({ action: act.action, data: act });
-    this.experienceAdapter.dispatchCapability(this.contract().id, act.action, act);
+    if (this.contract()?.id) {
+      this.experienceAdapter.dispatchCapability(this.contract().id, act.action, act);
+    }
   }
 }

@@ -186,6 +186,29 @@ describe('SnackbarComponent', () => {
     expect(document.querySelector('.origo-snackbar')).toBeNull();
   });
 
+  it('should apply role="alert", aria-live="assertive", aria-atomic="true", and warning class for warning/error severities', () => {
+    fixture.componentRef.setInput('contract', {
+      id: 'test-snackbar-warn',
+      type: 'Snackbar',
+      props: {
+        visible: true,
+        message: 'Storage quota almost full',
+        severity: 'warning',
+        'aria-describedby': 'quota-desc',
+      },
+    });
+    fixture.detectChanges();
+
+    const portal = document.querySelector('.origo-snackbar');
+    expect(portal).toBeTruthy();
+    expect(portal?.classList.contains('origo-snackbar--warning')).toBe(true);
+    expect(portal?.getAttribute('role')).toBe('alert');
+    expect(portal?.getAttribute('aria-live')).toBe('assertive');
+    expect(portal?.getAttribute('aria-atomic')).toBe('true');
+    expect(portal?.getAttribute('aria-describedby')).toBe('quota-desc');
+    expect(portal?.getAttribute('data-testid')).toBe('test-snackbar-warn');
+  });
+
   it('should safely execute without errors on SSR server platform', () => {
     TestBed.resetTestingModule();
     TestBed.configureTestingModule({

@@ -116,7 +116,15 @@ export class SnackbarComponent implements OrigoAdapter<SnackbarProps> {
     return (this.coercedProps().position as SnackbarPosition) || 'bottom-center';
   });
 
-  readonly severity = computed(() => this.coercedProps().severity || 'info');
+  readonly normalizedSeverity = computed(() => {
+    const s = this.coercedProps().severity?.toLowerCase();
+    if (s === 'warn' || s === 'warning') return 'warning';
+    if (s === 'error') return 'error';
+    if (s === 'success') return 'success';
+    return 'info';
+  });
+
+  readonly severity = computed(() => this.normalizedSeverity());
 
   readonly isClosable = computed(() => this.coercedProps().closable === true);
 
@@ -127,6 +135,18 @@ export class SnackbarComponent implements OrigoAdapter<SnackbarProps> {
 
   readonly ariaLabel = computed(() => this.coercedProps()['aria-label'] || 'Status notification');
 
+  readonly ariaDescribedBy = computed(() => this.coercedProps()['aria-describedby']);
+
+  readonly role = computed(() => {
+    const s = this.normalizedSeverity();
+    return s === 'error' || s === 'warning' ? 'alert' : 'status';
+  });
+
+  readonly ariaLive = computed(() => {
+    const s = this.normalizedSeverity();
+    return s === 'error' || s === 'warning' ? 'assertive' : 'polite';
+  });
+
   constructor() {
     this.destroyRef.onDestroy(() => {
       this.clearTimer();
@@ -136,22 +156,25 @@ export class SnackbarComponent implements OrigoAdapter<SnackbarProps> {
       }
     });
 
-    effect(() => {
-      const contractVisible = this.coercedProps().visible === true;
-      if (this.lastContractVisible === null) {
-        this.lastContractVisible = contractVisible;
-        if (contractVisible) {
-          this.openSnackbar();
+    effect(
+      () => {
+        const contractVisible = this.coercedProps().visible === true;
+        if (this.lastContractVisible === null) {
+          this.lastContractVisible = contractVisible;
+          if (contractVisible) {
+            this.openSnackbar();
+          }
+        } else if (this.lastContractVisible !== contractVisible) {
+          this.lastContractVisible = contractVisible;
+          if (contractVisible) {
+            this.openSnackbar();
+          } else {
+            this.closeSnackbar(false);
+          }
         }
-      } else if (this.lastContractVisible !== contractVisible) {
-        this.lastContractVisible = contractVisible;
-        if (contractVisible) {
-          this.openSnackbar();
-        } else {
-          this.closeSnackbar(false);
-        }
-      }
-    });
+      },
+      { allowSignalWrites: true }
+    );
   }
 
   @HostListener('document:keydown.escape')
@@ -166,7 +189,9 @@ export class SnackbarComponent implements OrigoAdapter<SnackbarProps> {
     this.isVisible.set(true);
     this.visibleChange.emit(true);
     this.open.emit();
-    this.experienceAdapter.updateState(this.contract().id, 'visible', true);
+    if (this.contract()?.id) {
+      this.experienceAdapter.updateState(this.contract().id, 'visible', true);
+    }
 
     if (isPlatformBrowser(this.platformId)) {
       this.ensureOverlay();
@@ -189,13 +214,17 @@ export class SnackbarComponent implements OrigoAdapter<SnackbarProps> {
     if (notify) {
       this.visibleChange.emit(false);
       this.close.emit();
-      this.experienceAdapter.updateState(this.contract().id, 'visible', false);
+      if (this.contract()?.id) {
+        this.experienceAdapter.updateState(this.contract().id, 'visible', false);
+      }
     }
   }
 
   onAction(): void {
     this.actionClick.emit();
-    this.experienceAdapter.dispatchCapability(this.contract().id, 'action', {});
+    if (this.contract()?.id) {
+      this.experienceAdapter.dispatchCapability(this.contract().id, 'action', {});
+    }
     this.closeSnackbar();
   }
 

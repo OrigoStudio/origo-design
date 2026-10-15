@@ -192,6 +192,30 @@ describe('ToastComponent', () => {
     expect(items.length).toBe(1);
   });
 
+  it('should sync with OrigoToastService emissions and handle clear()', () => {
+    fixture.componentRef.setInput('contract', {
+      id: 'test-toast-svc',
+      type: 'Toast',
+      props: {},
+    });
+    fixture.detectChanges();
+
+    toastService.info('Message 1', 'Detail 1');
+    fixture.detectChanges();
+    expect(document.querySelectorAll('.origo-toast__item').length).toBe(1);
+
+    // Emitting a second message should not duplicate Message 1
+    toastService.success('Message 2', 'Detail 2');
+    fixture.detectChanges();
+    expect(document.querySelectorAll('.origo-toast__item').length).toBe(2);
+
+    // Calling clear should remove all items and dispose overlay
+    toastService.clear();
+    fixture.detectChanges();
+    expect(document.querySelectorAll('.origo-toast__item').length).toBe(0);
+    expect(document.querySelector('.origo-overlay-pane--toast')).toBeNull();
+  });
+
   it('should safely execute without errors on SSR server platform', () => {
     TestBed.resetTestingModule();
     TestBed.configureTestingModule({

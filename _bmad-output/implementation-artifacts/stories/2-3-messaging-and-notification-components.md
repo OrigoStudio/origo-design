@@ -3,12 +3,12 @@ story_id: "2.3"
 story_key: 2-3-messaging-and-notification-components
 baseline_commit: f3967d8
 epic: 2
-status: "review"
+status: "done"
 ---
 
 # Story 2.3: Messaging & Notification Components
 
-Status: review
+Status: done
 
 <!-- Note: Validated against quality competition checklist. Ready for dev-story implementation. -->
 
@@ -235,6 +235,23 @@ So that I can deliver accessible, contextual, transient, and system-wide feedbac
     - `renderer-primitive-banner`
   - [x] 6.4 Run full monorepo test suite (`npm test`) and lint checks (`npx nx lint angular-renderer`) to verify zero regressions.
   - [x] 6.5 Update `sprint-status.yaml` marking `2-3-messaging-and-notification-components` as `review`.
+
+### Review Findings
+
+- [x] [Review][Patch] Quadratic Toast Duplication on Reactive Service Sync [packages/angular-renderer/src/components/primitives/toast/toast.component.ts:163]
+- [x] [Review][Patch] ToastComponent Ignores OrigoToastService.clear() [packages/angular-renderer/src/components/primitives/toast/toast.component.ts:163]
+- [x] [Review][Patch] Orphaned CDK Overlay Container Retained When Toasts Empty & Ignored Repositioning [packages/angular-renderer/src/components/primitives/toast/toast.component.ts:176]
+- [x] [Review][Patch] Missing allowSignalWrites: true or Untracked Signal Mutation in Constructor Effects [packages/angular-renderer/src/components/primitives/alert/alert.component.ts:142]
+- [x] [Review][Patch] Initial visible: false Contract Causes Visibility Flash in Alert and Banner [packages/angular-renderer/src/components/primitives/alert/alert.component.ts:98]
+- [x] [Review][Patch] Missing :host([hidden]) and Host Resets in Alert and Banner SCSS [packages/angular-renderer/src/components/primitives/alert/alert.component.scss:1]
+- [x] [Review][Patch] Hardcoded rgba(...) Color Literals in Stylesheets [packages/angular-renderer/src/components/primitives/alert/alert.component.scss:83]
+- [x] [Review][Patch] Duplicate Tracking Keys in Action @for Loops [packages/angular-renderer/src/components/primitives/alert/alert.component.html:68]
+- [x] [Review][Patch] Missing warning Severity Mapping and Style in Snackbar [packages/angular-renderer/src/components/primitives/snackbar/snackbar.component.ts:98]
+- [x] [Review][Patch] Missing aria-atomic="true" and Non-Dynamic Live Region in Snackbar and Banner [packages/angular-renderer/src/components/primitives/snackbar/snackbar.component.html:4]
+- [x] [Review][Patch] Overlay Panels Append -portal to data-testid and Omit aria-describedby [packages/angular-renderer/src/components/primitives/toast/toast.component.html:6]
+- [x] [Review][Patch] BannerProps.severity TypeScript Union Omits warning [packages/angular-renderer/src/components/primitives/banner/banner.component.ts:25]
+- [x] [Review][Patch] Missing WebExperienceAdapterService State Synchronization in ToastComponent [packages/angular-renderer/src/components/primitives/toast/toast.component.ts:53]
+- [x] [Review][Patch] Indiscriminate Document-Level Escape Listener in SnackbarComponent [packages/angular-renderer/src/components/primitives/snackbar/snackbar.component.ts:157]
 
 ---
 
@@ -780,3 +797,4 @@ Gemini 3.8 Flash (High)
 
 - 2026-10-14: Created and hardened comprehensive developer story specification for Story 2.3 (Messaging & Notification Components). Validated against quality competition checklist. Enforced pointer-events pass-through on global overlay containers, single-overlay stacking model for multi-toast lists, robust multi-timer lifecycle map for pause-on-hover, complete contract schemas with alias resolution (`visible`, `text`, `actionLabel`, `life`), keyboard navigation matrix, test isolation in `afterEach()`, and registered 5 test suites. Status set to ready-for-dev.
 - 2026-10-14: Completed full implementation and test suites for Story 2.3 (AlertComponent, ToastComponent + OrigoToastService, SnackbarComponent, BannerComponent). Updated primitives provider, exports, and test registry. Passed all 51 tests across 6 test suites, passed registry validation (109 test cases verified), and passed Nx linting with zero errors/warnings in new primitives. Transitioned status to review.
+- 2026-10-15: Completed code review adversarial audit (Blind Hunter, Edge Case Hunter, Acceptance Auditor). Triage resolved 1 decision-needed (dismissed in favor of accessible button-focused keyboard dismissal) and applied 14 patches: reactive service toast sync via computed, OrigoToastService.clear() support, overlay container disposal on empty queue, dynamic ARIA live/atomic/role bindings, tokenized hover styles and :host([hidden]) resets, tracked $index loops, warning severity in BannerProps and Snackbar, and WebExperienceAdapterService integration. 100% unit tests passing and test registry validated. Status transitioned to done.

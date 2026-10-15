@@ -65,7 +65,7 @@
 
     @if (actions().length > 0) {
       <div class="origo-alert__actions">
-        @for (act of actions(); track act.action) {
+        @for (act of actions(); track $index) {
           <button
             type="button"
             class="origo-alert__action-btn origo-alert__action-btn--{{ act.variant || 'text' }}"

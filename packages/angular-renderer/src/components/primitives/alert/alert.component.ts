@@ -94,7 +94,12 @@ export class AlertComponent implements OrigoAdapter<AlertProps>, ContainerCompon
   private platformId = inject(PLATFORM_ID);
 
   private autoDismissTimer: ReturnType<typeof setTimeout> | null = null;
-  readonly isVisible = signal(true);
+  private readonly manuallyClosed = signal(false);
+
+  readonly isVisible = computed(() => {
+    if (this.manuallyClosed()) return false;
+    return this.coercedProps().visible !== false;
+  });
 
   readonly coercedProps = computed(() =>
     coerceContractProps<AlertProps>(this.contract()?.props, AlertContractSchema)
@@ -142,7 +147,6 @@ export class AlertComponent implements OrigoAdapter<AlertProps>, ContainerCompon
     effect(() => {
       const props = this.coercedProps();
       const contractVisible = props.visible !== false;
-      this.isVisible.set(contractVisible);
 
       this.clearTimer();
 
@@ -163,14 +167,18 @@ export class AlertComponent implements OrigoAdapter<AlertProps>, ContainerCompon
 
   onClose(): void {
     this.clearTimer();
-    this.isVisible.set(false);
+    this.manuallyClosed.set(true);
     this.visibleChange.emit(false);
     this.close.emit();
-    this.experienceAdapter.updateState(this.contract().id, 'visible', false);
+    if (this.contract()?.id) {
+      this.experienceAdapter.updateState(this.contract().id, 'visible', false);
+    }
   }
 
   onActionClick(act: AlertAction): void {
     this.action.emit({ action: act.action, data: act });
-    this.experienceAdapter.dispatchCapability(this.contract().id, act.action, act);
+    if (this.contract()?.id) {
+      this.experienceAdapter.dispatchCapability(this.contract().id, act.action, act);
+    }
   }
 }

@@ -14,6 +14,7 @@ import {
   PLATFORM_ID,
   ViewContainerRef,
   AfterViewInit,
+  ChangeDetectorRef,
 } from '@angular/core';
 import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { InteractionContract } from '@origostudio/core';
@@ -28,6 +29,7 @@ import {
 import { OrigoToastService } from './toast.service';
 import { OrigoOverlayService } from '../../../lib/overlay/overlay.service';
 import { OrigoOverlayRef } from '../../../lib/overlay/overlay.models';
+import { WebExperienceAdapterService } from '../../../adapters/web/experience-adapter.service';
 
 interface ActiveToastTimer {
   timeoutId: ReturnType<typeof setTimeout>;
@@ -67,8 +69,11 @@ export class ToastComponent implements OrigoAdapter<ToastProps>, AfterViewInit {
   private destroyRef = inject(DestroyRef);
   private vcr = inject(ViewContainerRef);
   private platformId = inject(PLATFORM_ID);
+  private cdr = inject(ChangeDetectorRef);
+  private readonly experienceAdapter = inject(WebExperienceAdapterService, { optional: true });
 
   private overlayRef: OrigoOverlayRef | null = null;
+  private currentOverlayPosition: ToastPosition | null = null;
   private readonly timers = new Map<string, ActiveToastTimer>();
   private readonly scheduledMessageIds = new Set<string>();
 
@@ -94,6 +99,8 @@ export class ToastComponent implements OrigoAdapter<ToastProps>, AfterViewInit {
   });
 
   readonly preventDuplicates = computed(() => this.coercedProps().preventDuplicates === true);
+
+  readonly ariaDescribedBy = computed(() => this.coercedProps()['aria-describedby']);
 
   private readonly contractMessages = computed<ToastMessage[]>(() => {
     const props = this.coercedProps();
@@ -126,9 +133,29 @@ export class ToastComponent implements OrigoAdapter<ToastProps>, AfterViewInit {
     return result;
   });
 
+  private readonly serviceMessages = computed<ToastMessage[]>(() => {
+    const serviceMessages = this.toastService.messages();
+    const currentGroup = this.coercedProps().group;
+    return serviceMessages
+      .filter(msg => !currentGroup || msg.group === currentGroup)
+      .map(m => ({
+        ...m,
+        id: m.id ?? `service-toast-${m.summary || ''}`,
+        severity: (m.severity as ToastSeverity) || 'info',
+        summary: m.summary ?? '',
+        detail: m.detail ?? m.message ?? m.content ?? '',
+        closable: m.closable !== undefined ? m.closable : this.defaultClosable(),
+        life: m.life !== undefined ? m.life : this.defaultLife(),
+      }));
+  });
+
   readonly activeMessages = computed<ToastMessage[]>(() => {
     const dismissed = this.dismissedIds();
-    const all = [...this.contractMessages(), ...this.imperativeMessages()];
+    const all = [
+      ...this.contractMessages(),
+      ...this.serviceMessages(),
+      ...this.imperativeMessages(),
+    ];
     const filtered = all.filter(m => m.id && !dismissed.has(m.id));
 
     if (!this.preventDuplicates()) {
@@ -159,27 +186,47 @@ export class ToastComponent implements OrigoAdapter<ToastProps>, AfterViewInit {
       }
     });
 
-    // Reactive effect to sync with OrigoToastService
-    effect(() => {
-      const serviceMessages = this.toastService.messages();
-      const currentGroup = this.coercedProps().group;
-
-      for (const msg of serviceMessages) {
-        if (!currentGroup || msg.group === currentGroup) {
-          this.addToast(msg);
-        }
-      }
-    });
-
-    // Reactive effect to schedule timers for active messages
+    // Reactive effect to schedule timers for active messages and manage overlay
     effect(() => {
       const msgs = this.activeMessages();
+      const pos = this.position();
+      this.cdr.markForCheck();
       if (!isPlatformBrowser(this.platformId)) return;
 
-      if (msgs.length > 0) {
-        this.ensureOverlay();
+      if (msgs.length === 0) {
+        this.clearAllTimers();
+        this.scheduledMessageIds.clear();
+        if (this.overlayRef) {
+          this.overlayRef.dispose();
+          this.overlayRef = null;
+          this.currentOverlayPosition = null;
+        }
+        if (this.contract()?.id) {
+          this.experienceAdapter?.updateState(this.contract().id, 'visible', false);
+        }
+        return;
       }
 
+      if (this.overlayRef && this.currentOverlayPosition !== pos) {
+        this.overlayRef.dispose();
+        this.overlayRef = null;
+      }
+
+      this.ensureOverlay();
+      if (this.contract()?.id) {
+        this.experienceAdapter?.updateState(this.contract().id, 'visible', true);
+      }
+
+      // Cleanup timers for messages no longer active
+      const activeIds = new Set(msgs.map(m => m.id).filter((id): id is string => !!id));
+      for (const id of Array.from(this.scheduledMessageIds)) {
+        if (!activeIds.has(id)) {
+          this.clearTimer(id);
+          this.scheduledMessageIds.delete(id);
+        }
+      }
+
+      // Schedule timers for newly active messages
       for (const msg of msgs) {
         if (msg.id && !this.scheduledMessageIds.has(msg.id)) {
           this.scheduledMessageIds.add(msg.id);
@@ -205,16 +252,18 @@ export class ToastComponent implements OrigoAdapter<ToastProps>, AfterViewInit {
     const template = this.toastTemplate();
     if (!template) return;
 
+    const pos = this.position();
     this.overlayRef = this.overlayService.create({
       position: {
         type: 'global',
-        position: this.position(),
+        position: pos,
       },
       hasBackdrop: false,
       panelClass: ['origo-overlay-pane--toast', 'origo-toast-portal'],
       viewContainerRef: this.vcr,
     });
 
+    this.currentOverlayPosition = pos;
     this.overlayRef.open(template, this.vcr);
   }
 
@@ -295,6 +344,9 @@ export class ToastComponent implements OrigoAdapter<ToastProps>, AfterViewInit {
       this.imperativeMessages.update(msgs => msgs.filter(m => m.id !== id));
       this.toastService.remove(id);
       this.close.emit(target);
+      if (this.contract()?.id) {
+        this.experienceAdapter?.dispatchCapability(this.contract().id, 'close', target);
+      }
     }
   }
 

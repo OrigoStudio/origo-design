@@ -3,7 +3,8 @@
     class="origo-toast"
     role="region"
     aria-label="Notifications"
-    [attr.data-testid]="contract().id + '-portal'"
+    [attr.aria-describedby]="ariaDescribedBy()"
+    [attr.data-testid]="contract().id"
   >
     @for (msg of activeMessages(); track msg.id) {
       <div

@@ -8,6 +8,7 @@
     [attr.aria-label]="ariaLabel()"
     [attr.aria-describedby]="ariaDescribedBy()"
     [attr.aria-live]="ariaLive()"
+    aria-atomic="true"
   >
     <div class="origo-banner__body">
       <div class="origo-banner__icon" aria-hidden="true">
@@ -68,7 +69,7 @@
 
       @if (actions().length > 0) {
         <div class="origo-banner__actions">
-          @for (act of actions(); track act.action) {
+          @for (act of actions(); track $index) {
             <button
               type="button"
               class="origo-banner__action-btn origo-banner__action-btn--{{ act.variant || 'text' }}"
