@@ -1,0 +1,95 @@
+:host {
+  display: block;
+  inline-size: 100%;
+  box-sizing: border-box;
+  --origo-progress-fill-color: var(--origo-color-primary, #2563eb);
+}
+
+:host([hidden]) {
+  display: none !important;
+}
+
+// Severity Mappings
+:host(.origo-progress-bar--severity-primary) {
+  --origo-progress-fill-color: var(--origo-color-primary, #2563eb);
+}
+
+:host(.origo-progress-bar--severity-info) {
+  --origo-progress-fill-color: var(--origo-color-text-info, #1e40af);
+}
+
+:host(.origo-progress-bar--severity-success) {
+  --origo-progress-fill-color: var(--origo-color-text-success, #065f46);
+}
+
+:host(.origo-progress-bar--severity-warn),
+:host(.origo-progress-bar--severity-warning) {
+  --origo-progress-fill-color: var(--origo-color-text-warning, #92400e);
+}
+
+:host(.origo-progress-bar--severity-error) {
+  --origo-progress-fill-color: var(--origo-color-text-danger, #991b1b);
+}
+
+.origo-progress-bar {
+  display: flex;
+  flex-direction: column;
+  gap: var(--origo-space-xs, 0.25rem);
+}
+
+.origo-progress-bar__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: var(--origo-font-size-sm, 0.875rem);
+  color: var(--origo-color-text-secondary, #64748b);
+}
+
+.origo-progress-bar__label {
+  font-weight: var(--origo-font-weight-medium, 500);
+}
+
+.origo-progress-bar__value {
+  font-variant-numeric: tabular-nums;
+}
+
+.origo-progress-bar__track {
+  inline-size: 100%;
+  block-size: var(--origo-progress-height, var(--origo-size-progress-height, 0.5rem));
+  background-color: var(--origo-color-surface-secondary, #e2e8f0);
+  border-radius: var(--origo-radius-full, 9999px);
+  overflow: hidden;
+  position: relative;
+}
+
+.origo-progress-bar__fill {
+  block-size: 100%;
+  border-radius: var(--origo-radius-full, 9999px);
+  background-color: var(--origo-progress-fill-color, var(--origo-color-primary, #2563eb));
+  transition: inline-size var(--origo-motion-duration-normal, 250ms)
+    var(--origo-motion-easing-standard, ease);
+}
+
+.origo-progress-bar__fill--indeterminate {
+  inline-size: 40% !important;
+  position: absolute;
+  inset-block-start: 0;
+  animation: origo-progress-indeterminate 1.5s infinite ease-in-out;
+}
+
+@keyframes origo-progress-indeterminate {
+  0% {
+    inset-inline-start: -40%;
+  }
+  100% {
+    inset-inline-start: 100%;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .origo-progress-bar__fill {
+    transition: none !important;
+    animation: none !important;
+    opacity: 0.85;
+  }
+}

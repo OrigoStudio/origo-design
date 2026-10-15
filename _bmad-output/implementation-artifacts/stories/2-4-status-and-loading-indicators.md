@@ -3,12 +3,12 @@ story_id: "2.4"
 story_key: 2-4-status-and-loading-indicators
 baseline_commit: 14e07c7
 epic: 2
-status: "ready-for-dev"
+status: "review"
 ---
 
 # Story 2.4: Status & Loading Indicators
 
-Status: ready-for-dev
+Status: review
 
 <!-- Note: Validated against quality competition checklist. Ready for dev-story implementation. -->
 
@@ -200,88 +200,88 @@ So that I can visually communicate system processing states, background task pro
 
 ## Tasks / Subtasks
 
-- [ ] Task 1: Overlay Infrastructure & Global Overlay Pane Styling for BlockUI (AC: 1, 8, 11)
-  - [ ] 1.1 Add `.origo-overlay-pane--block-ui` modifier class to `packages/angular-renderer/src/styles/overlay.scss` with:
+- [x] Task 1: Overlay Infrastructure & Global Overlay Pane Styling for BlockUI (AC: 1, 8, 11)
+  - [x] 1.1 Add `.origo-overlay-pane--block-ui` modifier class to `packages/angular-renderer/src/styles/overlay.scss` with:
     - `inline-size: 100vw !important; block-size: 100vh !important; inset-block-start: 0 !important; inset-inline-start: 0 !important;`
     - `background-color: var(--origo-color-backdrop, rgba(0, 0, 0, 0.45));`
     - `display: flex; align-items: center; justify-content: center; pointer-events: auto;`
     - Clean backdrop and elevation tokens.
-  - [ ] 1.2 Verify reduced motion queries in `overlay.scss` disable transitions for block-ui overlays.
+  - [x] 1.2 Verify reduced motion queries in `overlay.scss` disable transitions for block-ui overlays.
 
-- [ ] Task 2: Implement SpinnerComponent (`origo-spinner`) (AC: 1, 2, 3, 9, 10, 11)
-  - [ ] 2.1 Create component files under `packages/angular-renderer/src/components/primitives/spinner/`:
+- [x] Task 2: Implement SpinnerComponent (`origo-spinner`) (AC: 1, 2, 3, 9, 10, 11)
+  - [x] 2.1 Create component files under `packages/angular-renderer/src/components/primitives/spinner/`:
     - `spinner.component.ts`
     - `spinner.component.html`
     - `spinner.component.scss`
     - `spinner.component.spec.ts`
-  - [ ] 2.2 Define `SpinnerProps` interface and `static readonly contractSchema` supporting `size`, `strokeWidth`, `label`, `variant`, `animationDuration`, `fill`, `fluid`, metadata hooks.
-  - [ ] 2.3 Implement Standalone, Shadow DOM, OnPush, Signals reactivity, and scalable SVG circle with rotating CSS keyframe animation.
-  - [ ] 2.4 Bind ARIA attributes: `role="status"`, `aria-live="polite"`, `<span class="sr-only">{{ computedLabel() }}</span>`.
-  - [ ] 2.5 Author unit test suite in `spinner.component.spec.ts` asserting SVG rendering across shadow boundaries, size variations, variant token bindings, ARIA roles, and null-safe contract handling.
+  - [x] 2.2 Define `SpinnerProps` interface and `static readonly contractSchema` supporting `size`, `strokeWidth`, `label`, `variant`, `animationDuration`, `fill`, `fluid`, metadata hooks.
+  - [x] 2.3 Implement Standalone, Shadow DOM, OnPush, Signals reactivity, and scalable SVG circle with rotating CSS keyframe animation.
+  - [x] 2.4 Bind ARIA attributes: `role="status"`, `aria-live="polite"`, `<span class="sr-only">{{ computedLabel() }}</span>`.
+  - [x] 2.5 Author unit test suite in `spinner.component.spec.ts` asserting SVG rendering across shadow boundaries, size variations, variant token bindings, ARIA roles, and null-safe contract handling.
 
-- [ ] Task 3: Implement ProgressBarComponent (`origo-progress-bar`) (AC: 1, 2, 4, 9, 10, 11)
-  - [ ] 3.1 Create component files under `packages/angular-renderer/src/components/primitives/progress-bar/`:
+- [x] Task 3: Implement ProgressBarComponent (`origo-progress-bar`) (AC: 1, 2, 4, 9, 10, 11)
+  - [x] 3.1 Create component files under `packages/angular-renderer/src/components/primitives/progress-bar/`:
     - `progress-bar.component.ts`
     - `progress-bar.component.html`
     - `progress-bar.component.scss`
     - `progress-bar.component.spec.ts`
-  - [ ] 3.2 Define `ProgressBarProps` interface and `static readonly contractSchema` supporting `value`, `mode`, `showValue`, `max`, `label`, `unit`, `severity`, `height`, metadata hooks.
-  - [ ] 3.3 Implement Standalone, Shadow DOM, OnPush, Signals reactivity, safe max resolution (`safeMax = max > 0 ? max : 100`), input clamping (`0` to `safeMax`), determinate progress percentage calculation, and indeterminate sliding animation.
-  - [ ] 3.4 Implement `complete = output<void>()`, `valueChange = output<number>()`, and capability/state dispatching upon reaching `max` with `hasCompleted` boundary guard to prevent duplicate or infinite emissions.
-  - [ ] 3.5 Bind ARIA `role="progressbar"`, `aria-valuenow`, `aria-valuemin`, `aria-valuemax`, `aria-label`, omitting `aria-valuenow` in indeterminate mode.
-  - [ ] 3.6 Author unit test suite in `progress-bar.component.spec.ts` asserting determinate progress widths, zero-division fallback, indeterminate animation states, completion events boundary guard, severity token classes, and RTL mirroring.
+  - [x] 3.2 Define `ProgressBarProps` interface and `static readonly contractSchema` supporting `value`, `mode`, `showValue`, `max`, `label`, `unit`, `severity`, `height`, metadata hooks.
+  - [x] 3.3 Implement Standalone, Shadow DOM, OnPush, Signals reactivity, safe max resolution (`safeMax = max > 0 ? max : 100`), input clamping (`0` to `safeMax`), determinate progress percentage calculation, and indeterminate sliding animation.
+  - [x] 3.4 Implement `complete = output<void>()`, `valueChange = output<number>()`, and capability/state dispatching upon reaching `max` with `hasCompleted` boundary guard to prevent duplicate or infinite emissions.
+  - [x] 3.5 Bind ARIA `role="progressbar"`, `aria-valuenow`, `aria-valuemin`, `aria-valuemax`, `aria-label`, omitting `aria-valuenow` in indeterminate mode.
+  - [x] 3.6 Author unit test suite in `progress-bar.component.spec.ts` asserting determinate progress widths, zero-division fallback, indeterminate animation states, completion events boundary guard, severity token classes, and RTL mirroring.
 
-- [ ] Task 4: Implement SkeletonComponent (`origo-skeleton`) (AC: 1, 2, 5, 9, 10, 11)
-  - [ ] 4.1 Create component files under `packages/angular-renderer/src/components/primitives/skeleton/`:
+- [x] Task 4: Implement SkeletonComponent (`origo-skeleton`) (AC: 1, 2, 5, 9, 10, 11)
+  - [x] 4.1 Create component files under `packages/angular-renderer/src/components/primitives/skeleton/`:
     - `skeleton.component.ts`
     - `skeleton.component.html`
     - `skeleton.component.scss`
     - `skeleton.component.spec.ts`
-  - [ ] 4.2 Define `SkeletonProps` interface and `static readonly contractSchema` supporting `shape`, `width`, `height`, `size`, `borderRadius`, `animation`, metadata hooks.
-  - [ ] 4.3 Implement Standalone, Shadow DOM, OnPush, Signals reactivity, dimension resolution (`size` overriding `width`/`height`), geometric shape rendering (`rectangle`, `circle`), and shimmer/pulse CSS animations.
-  - [ ] 4.4 Bind `aria-hidden="true"` and reduced motion guardrails (disabling shimmer animation).
-  - [ ] 4.5 Author unit test suite in `skeleton.component.spec.ts` asserting circle/rectangle shapes, dimension styles, animation class bindings, and shadow DOM encapsulation.
+  - [x] 4.2 Define `SkeletonProps` interface and `static readonly contractSchema` supporting `shape`, `width`, `height`, `size`, `borderRadius`, `animation`, metadata hooks.
+  - [x] 4.3 Implement Standalone, Shadow DOM, OnPush, Signals reactivity, dimension resolution (`size` overriding `width`/`height`), geometric shape rendering (`rectangle`, `circle`), and shimmer/pulse CSS animations.
+  - [x] 4.4 Bind `aria-hidden="true"` and reduced motion guardrails (disabling shimmer animation).
+  - [x] 4.5 Author unit test suite in `skeleton.component.spec.ts` asserting circle/rectangle shapes, dimension styles, animation class bindings, and shadow DOM encapsulation.
 
-- [ ] Task 5: Implement BadgeComponent (`origo-badge`) (AC: 1, 2, 6, 9, 10, 11)
-  - [ ] 5.1 Create component files under `packages/angular-renderer/src/components/primitives/badge/`:
+- [x] Task 5: Implement BadgeComponent (`origo-badge`) (AC: 1, 2, 6, 9, 10, 11)
+  - [x] 5.1 Create component files under `packages/angular-renderer/src/components/primitives/badge/`:
     - `badge.component.ts`
     - `badge.component.html`
     - `badge.component.scss`
     - `badge.component.spec.ts`
-  - [ ] 5.2 Define `BadgeProps` interface and `static readonly contractSchema` supporting `value`, `severity`, `size`, `shape`, `max`, `dot`, `interactive`, metadata hooks.
-  - [ ] 5.3 Implement Standalone, Shadow DOM, OnPush, and `ContainerComponent` with optional `vc = viewChild('vc')` and `<ng-content>`.
-  - [ ] 5.4 Implement corner overlay positioning when wrapping content vs inline-block when standalone, including RTL logical coordinate mirroring (`[dir='rtl'] & { transform: translate(-50%, -50%); }`).
-  - [ ] 5.5 Implement numeric threshold formatting (e.g., `max: 99` displaying `99+`) and dot mode with accessible label.
-  - [ ] 5.6 Author unit test suite in `badge.component.spec.ts` asserting value formatting, dot rendering, container wrapping vs standalone, click event emission, RTL mirroring, and keyboard accessibility.
+  - [x] 5.2 Define `BadgeProps` interface and `static readonly contractSchema` supporting `value`, `severity`, `size`, `shape`, `max`, `dot`, `interactive`, metadata hooks.
+  - [x] 5.3 Implement Standalone, Shadow DOM, OnPush, and `ContainerComponent` with optional `vc = viewChild('vc')` and `<ng-content>`.
+  - [x] 5.4 Implement corner overlay positioning when wrapping content vs inline-block when standalone, including RTL logical coordinate mirroring (`[dir='rtl'] & { transform: translate(-50%, -50%); }`).
+  - [x] 5.5 Implement numeric threshold formatting (e.g., `max: 99` displaying `99+`) and dot mode with accessible label.
+  - [x] 5.6 Author unit test suite in `badge.component.spec.ts` asserting value formatting, dot rendering, container wrapping vs standalone, click event emission, RTL mirroring, and keyboard accessibility.
 
-- [ ] Task 6: Implement TagComponent (`origo-tag`) (AC: 1, 2, 7, 9, 10, 11)
-  - [ ] 6.1 Create component files under `packages/angular-renderer/src/components/primitives/tag/`:
+- [x] Task 6: Implement TagComponent (`origo-tag`) (AC: 1, 2, 7, 9, 10, 11)
+  - [x] 6.1 Create component files under `packages/angular-renderer/src/components/primitives/tag/`:
     - `tag.component.ts`
     - `tag.component.html`
     - `tag.component.scss`
     - `tag.component.spec.ts`
-  - [ ] 6.2 Define `TagProps` interface and `static readonly contractSchema` supporting `value`, `severity`, `icon`, `rounded`, `removable`, `variant`, `interactive`, metadata hooks.
-  - [ ] 6.3 Implement Standalone, Shadow DOM, OnPush, Signals reactivity, pill shaping, and severity color mappings.
-  - [ ] 6.4 Implement removal action button with `$event.stopPropagation()` to isolate remove from tag click (`remove = output<void>()`, `updateState(id, 'visible', false)`), and interactive click emission (`click = output<MouseEvent>()`).
-  - [ ] 6.5 Bind ARIA labels and keyboard handlers for removal (`Enter`, `Space`, `Backspace`, `Delete`).
-  - [ ] 6.6 Author unit test suite in `tag.component.spec.ts` asserting label rendering, icon placement, removal events with click isolation, keyboard activation, and outlined vs filled variants.
+  - [x] 6.2 Define `TagProps` interface and `static readonly contractSchema` supporting `value`, `severity`, `icon`, `rounded`, `removable`, `variant`, `interactive`, metadata hooks.
+  - [x] 6.3 Implement Standalone, Shadow DOM, OnPush, Signals reactivity, pill shaping, and severity color mappings.
+  - [x] 6.4 Implement removal action button with `$event.stopPropagation()` to isolate remove from tag click (`remove = output<void>()`, `updateState(id, 'visible', false)`), and interactive click emission (`click = output<MouseEvent>()`).
+  - [x] 6.5 Bind ARIA labels and keyboard handlers for removal (`Enter`, `Space`, `Backspace`, `Delete`).
+  - [x] 6.6 Author unit test suite in `tag.component.spec.ts` asserting label rendering, icon placement, removal events with click isolation, keyboard activation, and outlined vs filled variants.
 
-- [ ] Task 7: Implement BlockUIComponent (`origo-block-ui` / `origo-loading-overlay`) (AC: 1, 2, 8, 9, 10, 11)
-  - [ ] 7.1 Create component files under `packages/angular-renderer/src/components/primitives/block-ui/`:
+- [x] Task 7: Implement BlockUIComponent (`origo-block-ui` / `origo-loading-overlay`) (AC: 1, 2, 8, 9, 10, 11)
+  - [x] 7.1 Create component files under `packages/angular-renderer/src/components/primitives/block-ui/`:
     - `block-ui.component.ts`
     - `block-ui.component.html`
     - `block-ui.component.scss`
     - `block-ui.component.spec.ts`
-  - [ ] 7.2 Define `BlockUIProps` interface and `static readonly contractSchema` supporting `blocked`, `loading`, `fullScreen`, `message`, `spinner`, `baseZIndex`, metadata hooks.
-  - [ ] 7.3 Implement Standalone, Shadow DOM, OnPush, and `ContainerComponent` with optional `vc = viewChild('vc')` and `<ng-content>`.
-  - [ ] 7.4 Implement local container mask with `pointer-events: none` on wrapped content and `pointer-events: auto` on mask, and fullScreen projection via `OrigoOverlayService`.
-  - [ ] 7.5 Register `DestroyRef.onDestroy(() => this.overlayRef?.dispose())` to prevent orphaned full-screen overlays upon component teardown or route changes.
-  - [ ] 7.6 Embed `SpinnerComponent` and message text within the blocking mask.
-  - [ ] 7.7 Bind `aria-busy="true"` on blocked state and emit `blockedChange = output<boolean>()`.
-  - [ ] 7.8 Author unit test suite in `block-ui.component.spec.ts` asserting local vs fullScreen blocking, pointer-events blocking, message and spinner rendering, dynamic `blocked` toggle, SSR safety guards, and overlay teardown.
+  - [x] 7.2 Define `BlockUIProps` interface and `static readonly contractSchema` supporting `blocked`, `loading`, `fullScreen`, `message`, `spinner`, `baseZIndex`, metadata hooks.
+  - [x] 7.3 Implement Standalone, Shadow DOM, OnPush, and `ContainerComponent` with optional `vc = viewChild('vc')` and `<ng-content>`.
+  - [x] 7.4 Implement local container mask with `pointer-events: none` on wrapped content and `pointer-events: auto` on mask, and fullScreen projection via `OrigoOverlayService`.
+  - [x] 7.5 Register `DestroyRef.onDestroy(() => this.overlayRef?.dispose())` to prevent orphaned full-screen overlays upon component teardown or route changes.
+  - [x] 7.6 Embed `SpinnerComponent` and message text within the blocking mask.
+  - [x] 7.7 Bind `aria-busy="true"` on blocked state and emit `blockedChange = output<boolean>()`.
+  - [x] 7.8 Author unit test suite in `block-ui.component.spec.ts` asserting local vs fullScreen blocking, pointer-events blocking, message and spinner rendering, dynamic `blocked` toggle, SSR safety guards, and overlay teardown.
 
-- [ ] Task 8: Monorepo Registration, Exports & Central Test Registry (AC: 12)
-  - [ ] 8.1 Register primitives in `packages/angular-renderer/src/lib/primitives.provider.ts`:
+- [x] Task 8: Monorepo Registration, Exports & Central Test Registry (AC: 12)
+  - [x] 8.1 Register primitives in `packages/angular-renderer/src/lib/primitives.provider.ts`:
     - `'Spinner'`: `SpinnerComponent`
     - `'ProgressBar'`: `ProgressBarComponent`
     - `'Progress'`: `ProgressBarComponent`
@@ -290,16 +290,16 @@ So that I can visually communicate system processing states, background task pro
     - `'Tag'`: `TagComponent`
     - `'BlockUI'`: `BlockUIComponent`
     - `'LoadingOverlay'`: `BlockUIComponent`
-  - [ ] 8.2 Export all new components and model interfaces in `packages/angular-renderer/src/index.ts`.
-  - [ ] 8.3 Register test suites in `tools/test-registry/test-registry.yaml`:
+  - [x] 8.2 Export all new components and model interfaces in `packages/angular-renderer/src/index.ts`.
+  - [x] 8.3 Register test suites in `tools/test-registry/test-registry.yaml`:
     - `renderer-primitive-spinner`
     - `renderer-primitive-progress-bar`
     - `renderer-primitive-skeleton`
     - `renderer-primitive-badge`
     - `renderer-primitive-tag`
     - `renderer-primitive-block-ui`
-  - [ ] 8.4 Run full monorepo test suite (`npm test`) and lint checks (`npx nx lint angular-renderer`) to verify zero regressions.
-  - [ ] 8.5 Update `sprint-status.yaml` marking `2-4-status-and-loading-indicators` as `ready-for-dev`.
+  - [x] 8.4 Run full monorepo test suite (`npm test`) and lint checks (`npx nx lint angular-renderer`) to verify zero regressions.
+  - [x] 8.5 Update `sprint-status.yaml` marking `2-4-status-and-loading-indicators` as `ready-for-dev`.
 
 ---
 
@@ -856,6 +856,18 @@ Gemini 3.8 Flash (High)
 - Comprehensive technical guidance and developer guardrails established for `SpinnerComponent`, `ProgressBarComponent`, `SkeletonComponent`, `BadgeComponent`, `TagComponent`, and `BlockUIComponent`.
 - Complete BDD Acceptance Criteria linking architectural decisions (`P1-AD-1`, `P1-AD-4`, `P1-AD-5`, `P1-AD-6`, `AD-4`, `AD-6`, `NFR-I18N-001`, `Global System AC-1/AC-2/AC-4`, `DoD`) and technical spike (`retro-1`).
 - Detailed task breakdown with granular subtasks, test isolation rules, and registry update instructions.
+- Implemented all 6 status and loading indicator primitives (`SpinnerComponent`, `ProgressBarComponent`, `SkeletonComponent`, `BadgeComponent`, `TagComponent`, `BlockUIComponent`) adhering to Angular 18/22 Standalone, Shadow DOM, OnPush change detection, Signals reactivity (`input.required`), and 100% CSS Logical Properties.
+- Built scalable SVG circular spinner with accessible `role="status"`, `aria-live="polite"`, and screen-reader label.
+- Built linear progress bar with safe division fallback, clamping (0..safeMax), debounced completion boundary guard, `valueChange` output, and indeterminate sliding keyframe animation.
+- Built skeleton placeholder with rectangle/circle geometry, size override, shimmer/pulse animations, accessible `aria-hidden="true"`, and reduced-motion guard.
+- Built badge indicator with `ContainerComponent` viewChild support, corner-overlay vs standalone positioning, RTL-safe transform translation (-50%, -50%), and numeric threshold formatting (`99+`).
+- Built tag chip with pill styling, filled/outlined variants, event-isolated remove button (`$event.stopPropagation()`), keyboard shortcuts (Enter/Space/Backspace/Delete), and `remove`/`click` outputs.
+- Built BlockUI indicator with local container blocking, pointer-events isolation, CDK Overlay projection via `OrigoOverlayService` with guaranteed memory cleanup on destroy.
+- Added `.origo-overlay-pane--block-ui` modifier to global overlay SCSS styles.
+- Registered all components and aliases (`Progress`, `LoadingOverlay`) in `primitives.provider.ts` and exported in library public API `index.ts`.
+- Added 6 test suites to `tools/test-registry/test-registry.yaml`, verified with `npm run validate:registry` (115/115 passed).
+- Linting passed with 0 errors (`npx nx lint angular-renderer`).
+- Full test suite passed with 58/58 suites and 388/388 tests (`npx nx test angular-renderer`).
 
 ### File List
 
@@ -888,3 +900,15 @@ Gemini 3.8 Flash (High)
 - `packages/angular-renderer/src/styles/overlay.scss` (UPDATE)
 - `tools/test-registry/test-registry.yaml` (UPDATE)
 - `_bmad-output/implementation-artifacts/sprint-status.yaml` (UPDATE)
+- `_bmad-output/implementation-artifacts/stories/2-4-status-and-loading-indicators.md` (UPDATE)
+
+## Change Log
+
+- **2026-10-15**: Completed implementation of Story 2.4 (Status & Loading Indicators):
+  - Created 6 standalone primitives: `SpinnerComponent`, `ProgressBarComponent`, `SkeletonComponent`, `BadgeComponent`, `TagComponent`, `BlockUIComponent`.
+  - Added global `.origo-overlay-pane--block-ui` CSS modifier for full-screen overlay projection.
+  - Registered primitives and aliases in `primitives.provider.ts` and `index.ts`.
+  - Added comprehensive unit tests and verified via `tools/test-registry/test-registry.yaml`.
+  - Ran linting and verified 100% test pass across `packages/angular-renderer` (388 tests, 0 failures).
+  - Moved story status to `review`.
+

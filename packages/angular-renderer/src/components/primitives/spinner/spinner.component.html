@@ -1,0 +1,11 @@
+<svg class="origo-spinner__svg" viewBox="0 0 50 50" aria-hidden="true" focusable="false">
+  <circle
+    class="origo-spinner__circle"
+    cx="25"
+    cy="25"
+    r="20"
+    [attr.fill]="computedFill()"
+    [attr.stroke-width]="computedStrokeWidth()"
+  ></circle>
+</svg>
+<span class="sr-only">{{ computedLabel() }}</span>

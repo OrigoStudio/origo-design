@@ -46,6 +46,12 @@ import { AlertComponent } from '../components/primitives/alert/alert.component';
 import { ToastComponent } from '../components/primitives/toast/toast.component';
 import { SnackbarComponent } from '../components/primitives/snackbar/snackbar.component';
 import { BannerComponent } from '../components/primitives/banner/banner.component';
+import { SpinnerComponent } from '../components/primitives/spinner/spinner.component';
+import { ProgressBarComponent } from '../components/primitives/progress-bar/progress-bar.component';
+import { SkeletonComponent } from '../components/primitives/skeleton/skeleton.component';
+import { BadgeComponent } from '../components/primitives/badge/badge.component';
+import { TagComponent } from '../components/primitives/tag/tag.component';
+import { BlockUIComponent } from '../components/primitives/block-ui/block-ui.component';
 
 export function provideOrigo9Primitives(): EnvironmentProviders {
   const registryMap = new Map<string, unknown>([
@@ -99,6 +105,14 @@ export function provideOrigo9Primitives(): EnvironmentProviders {
     ['FileInput', FileInputComponent],
     ['Dropzone', DropzoneComponent],
     ['RichTextEditor', RichTextEditorComponent],
+    ['Spinner', SpinnerComponent],
+    ['ProgressBar', ProgressBarComponent],
+    ['Progress', ProgressBarComponent],
+    ['Skeleton', SkeletonComponent],
+    ['Badge', BadgeComponent],
+    ['Tag', TagComponent],
+    ['BlockUI', BlockUIComponent],
+    ['LoadingOverlay', BlockUIComponent],
     ['vbox', VBoxComponent], // For backward compatibility with 'vbox' in preview-root
   ]);
 

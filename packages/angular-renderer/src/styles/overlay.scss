@@ -150,6 +150,27 @@
       pointer-events: auto;
     }
   }
+
+  // Full-screen BlockUI / Loading Overlay modifier
+  &.origo-overlay-pane--block-ui {
+    inline-size: 100vw !important;
+    block-size: 100vh !important;
+    max-inline-size: 100vw !important;
+    max-block-size: 100vh !important;
+    inset-block-start: 0 !important;
+    inset-inline-start: 0 !important;
+    border-radius: 0 !important;
+    border: none !important;
+    box-shadow: none !important;
+    padding-inline: 0 !important;
+    padding-block: 0 !important;
+    background-color: var(--origo-color-backdrop, rgba(0, 0, 0, 0.45)) !important;
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
+    pointer-events: auto !important;
+    overflow: hidden;
+  }
 }
 
 // RTL Internationalization Directionality Propagation

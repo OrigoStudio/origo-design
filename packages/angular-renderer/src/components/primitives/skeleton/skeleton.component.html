@@ -1,0 +1,7 @@
+<div
+  class="origo-skeleton"
+  [class.origo-skeleton--circle]="shape() === 'circle'"
+  [class.origo-skeleton--rectangle]="shape() === 'rectangle'"
+  [class]="'origo-skeleton--animation-' + animation()"
+  [style.border-radius]="computedBorderRadius()"
+></div>

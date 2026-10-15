@@ -1,0 +1,19 @@
+<div class="origo-progress-bar">
+  @if (computedLabel() || showValue()) {
+    <div class="origo-progress-bar__header">
+      @if (computedLabel()) {
+        <span class="origo-progress-bar__label">{{ computedLabel() }}</span>
+      }
+      @if (showValue()) {
+        <span class="origo-progress-bar__value">{{ formattedValue() }}</span>
+      }
+    </div>
+  }
+  <div class="origo-progress-bar__track">
+    <div
+      class="origo-progress-bar__fill"
+      [class.origo-progress-bar__fill--indeterminate]="mode() === 'indeterminate'"
+      [style.inline-size]="mode() === 'determinate' ? percentage() + '%' : null"
+    ></div>
+  </div>
+</div>

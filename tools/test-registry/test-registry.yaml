@@ -1131,3 +1131,57 @@ test_cases:
       - 2-3-messaging-and-notification-components
     last_result: pass
     results: {}
+  - id: renderer-primitive-spinner
+    description: 'Verifies Spinner primitive scalable SVG circular geometry, rotating CSS keyframe, ARIA live region, and size/variant styling'
+    package: '@origo/angular-renderer'
+    spec_file: packages/angular-renderer/src/components/primitives/spinner/spinner.component.spec.ts
+    type: unit
+    affected_stories:
+      - 2-4-status-and-loading-indicators
+    last_result: pass
+    results: {}
+  - id: renderer-primitive-progress-bar
+    description: 'Verifies ProgressBar primitive determinate/indeterminate modes, safeMax division protection, boundary-guarded complete emission, and severity styling'
+    package: '@origo/angular-renderer'
+    spec_file: packages/angular-renderer/src/components/primitives/progress-bar/progress-bar.component.spec.ts
+    type: unit
+    affected_stories:
+      - 2-4-status-and-loading-indicators
+    last_result: pass
+    results: {}
+  - id: renderer-primitive-skeleton
+    description: 'Verifies Skeleton primitive geometric shapes (rectangle, circle), dimension resolution, and shimmer/pulse animations'
+    package: '@origo/angular-renderer'
+    spec_file: packages/angular-renderer/src/components/primitives/skeleton/skeleton.component.spec.ts
+    type: unit
+    affected_stories:
+      - 2-4-status-and-loading-indicators
+    last_result: pass
+    results: {}
+  - id: renderer-primitive-badge
+    description: 'Verifies Badge primitive standalone vs corner-overlay positioning, numeric threshold formatting (99+), dot mode, and RTL offsets'
+    package: '@origo/angular-renderer'
+    spec_file: packages/angular-renderer/src/components/primitives/badge/badge.component.spec.ts
+    type: unit
+    affected_stories:
+      - 2-4-status-and-loading-indicators
+    last_result: pass
+    results: {}
+  - id: renderer-primitive-tag
+    description: 'Verifies Tag primitive semantic chip pill styling, isolated remove button events, keyboard navigation, and filled/outlined variants'
+    package: '@origo/angular-renderer'
+    spec_file: packages/angular-renderer/src/components/primitives/tag/tag.component.spec.ts
+    type: unit
+    affected_stories:
+      - 2-4-status-and-loading-indicators
+    last_result: pass
+    results: {}
+  - id: renderer-primitive-block-ui
+    description: 'Verifies BlockUI primitive container interaction blocking, fullScreen overlay projection via OrigoOverlayService, and lifecycle disposal'
+    package: '@origo/angular-renderer'
+    spec_file: packages/angular-renderer/src/components/primitives/block-ui/block-ui.component.spec.ts
+    type: unit
+    affected_stories:
+      - 2-4-status-and-loading-indicators
+    last_result: pass
+    results: {}
