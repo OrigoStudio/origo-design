@@ -1086,3 +1086,48 @@ test_cases:
       - 2-2-modal-and-overlay-components
     last_result: pass
     results: {}
+  - id: renderer-primitive-alert
+    description: 'Verifies Alert and Message primitives severity rendering, actions, and auto-dismissal'
+    package: '@origo/angular-renderer'
+    spec_file: packages/angular-renderer/src/components/primitives/alert/alert.component.spec.ts
+    type: unit
+    affected_stories:
+      - 2-3-messaging-and-notification-components
+    last_result: pass
+    results: {}
+  - id: renderer-primitive-toast
+    description: 'Verifies Toast primitive portal projection, vertical stacking, and timer lifecycle'
+    package: '@origo/angular-renderer'
+    spec_file: packages/angular-renderer/src/components/primitives/toast/toast.component.spec.ts
+    type: unit
+    affected_stories:
+      - 2-3-messaging-and-notification-components
+    last_result: pass
+    results: {}
+  - id: renderer-service-toast
+    description: 'Verifies OrigoToastService reactive notification dispatch, deduplication, and groups'
+    package: '@origo/angular-renderer'
+    spec_file: packages/angular-renderer/src/components/primitives/toast/toast.service.spec.ts
+    type: unit
+    affected_stories:
+      - 2-3-messaging-and-notification-components
+    last_result: pass
+    results: {}
+  - id: renderer-primitive-snackbar
+    description: 'Verifies Snackbar primitive bottom-center portal action bar, action triggers, and auto-dismiss'
+    package: '@origo/angular-renderer'
+    spec_file: packages/angular-renderer/src/components/primitives/snackbar/snackbar.component.spec.ts
+    type: unit
+    affected_stories:
+      - 2-3-messaging-and-notification-components
+    last_result: pass
+    results: {}
+  - id: renderer-primitive-banner
+    description: 'Verifies Banner primitive full-width layout, sticky pinning, actions, and live announcements'
+    package: '@origo/angular-renderer'
+    spec_file: packages/angular-renderer/src/components/primitives/banner/banner.component.spec.ts
+    type: unit
+    affected_stories:
+      - 2-3-messaging-and-notification-components
+    last_result: pass
+    results: {}

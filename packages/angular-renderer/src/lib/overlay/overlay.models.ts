@@ -2,7 +2,22 @@ import { ElementRef, TemplateRef, Type, ViewContainerRef } from '@angular/core';
 
 export type OrigoOverlayOriginX = 'start' | 'end' | 'center';
 export type OrigoOverlayOriginY = 'top' | 'bottom' | 'center';
-export type OrigoGlobalPositionAlignment = 'center' | 'top' | 'bottom' | 'start' | 'end';
+export type OrigoGlobalPositionAlignment =
+  | 'center'
+  | 'top'
+  | 'bottom'
+  | 'start'
+  | 'end'
+  | 'top-start'
+  | 'top-center'
+  | 'top-end'
+  | 'bottom-start'
+  | 'bottom-center'
+  | 'bottom-end'
+  | 'top-left'
+  | 'top-right'
+  | 'bottom-left'
+  | 'bottom-right';
 
 export interface OrigoConnectedPositionConfig {
   type: 'connected';

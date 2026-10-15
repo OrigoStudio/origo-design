@@ -120,6 +120,36 @@
     overflow: visible;
     pointer-events: none;
   }
+
+  // Floating Toast Stack modifier
+  &.origo-overlay-pane--toast {
+    padding-inline: var(--origo-space-md);
+    padding-block: var(--origo-space-md);
+    background: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+    overflow: visible;
+    pointer-events: none !important;
+
+    .origo-toast__item {
+      pointer-events: auto;
+    }
+  }
+
+  // Floating Snackbar modifier
+  &.origo-overlay-pane--snackbar {
+    padding-inline: var(--origo-space-md);
+    padding-block: var(--origo-space-md);
+    background: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+    overflow: visible;
+    pointer-events: none !important;
+
+    .origo-snackbar__bar {
+      pointer-events: auto;
+    }
+  }
 }
 
 // RTL Internationalization Directionality Propagation
