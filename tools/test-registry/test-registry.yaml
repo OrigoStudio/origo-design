@@ -1185,3 +1185,30 @@ test_cases:
       - 2-4-status-and-loading-indicators
     last_result: pass
     results: {}
+  - id: renderer-primitive-accordion
+    description: 'Verifies Accordion primitive collapsible panels, single/multiple expand modes, lazy content instantiation, WAI-ARIA region semantics, and keyboard navigation'
+    package: '@origo/angular-renderer'
+    spec_file: packages/angular-renderer/src/components/primitives/accordion/accordion.component.spec.ts
+    type: unit
+    affected_stories:
+      - 2-5-utility-and-interaction-behaviors
+    last_result: pass
+    results: {}
+  - id: renderer-primitive-carousel
+    description: 'Verifies Carousel primitive multi-item paging, circular modulo navigation, autoplay lifecycle with SSR safety, keyboard arrow controls, touch swipe gestures, and RTL translations'
+    package: '@origo/angular-renderer'
+    spec_file: packages/angular-renderer/src/components/primitives/carousel/carousel.component.spec.ts
+    type: unit
+    affected_stories:
+      - 2-5-utility-and-interaction-behaviors
+    last_result: pass
+    results: {}
+  - id: renderer-primitive-slider
+    description: 'Verifies Slider primitive single/dual-handle range intervals, step granularity snapping, pointer drag capture, keyboard step navigation, collision z-index elevation, and value tooltip bubbles'
+    package: '@origo/angular-renderer'
+    spec_file: packages/angular-renderer/src/components/primitives/slider/slider.component.spec.ts
+    type: unit
+    affected_stories:
+      - 2-5-utility-and-interaction-behaviors
+    last_result: pass
+    results: {}

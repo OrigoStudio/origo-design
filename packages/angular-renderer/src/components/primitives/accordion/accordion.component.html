@@ -1,0 +1,92 @@
+<div
+  class="origo-accordion__container"
+  role="presentation"
+  [attr.aria-label]="computedAriaLabel()"
+  [attr.aria-describedby]="computedAriaDescribedBy()"
+>
+  @for (item of computedItems(); track item.key; let idx = $index) {
+    <div
+      class="origo-accordion__item"
+      [class.origo-accordion__item--expanded]="isExpanded(item)"
+      [class.origo-accordion__item--disabled]="computedDisabled() || !!item.disabled"
+    >
+      <div class="origo-accordion__header">
+        <button
+          #headerButton
+          type="button"
+          class="origo-accordion__header-btn"
+          [id]="getHeaderId(item, idx)"
+          [attr.aria-expanded]="isExpanded(item)"
+          [attr.aria-controls]="getPanelId(item, idx)"
+          [attr.aria-disabled]="computedDisabled() || !!item.disabled"
+          [disabled]="computedDisabled() || !!item.disabled"
+          (click)="togglePanel(item)"
+          (keydown)="onHeaderKeydown($event, idx)"
+        >
+          @if (item.icon) {
+            <span class="origo-accordion__icon" [innerHTML]="item.icon"></span>
+          }
+          <span class="origo-accordion__header-text">{{ item.header }}</span>
+          @if (item.badge !== undefined && item.badge !== null) {
+            <span class="origo-accordion__badge">{{ item.badge }}</span>
+          }
+          <span class="origo-accordion__chevron" aria-hidden="true">
+            @if (isExpanded(item)) {
+              @if (computedCollapseIcon()) {
+                <span [innerHTML]="computedCollapseIcon()"></span>
+              } @else {
+                <svg
+                  viewBox="0 0 24 24"
+                  width="16"
+                  height="16"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <polyline points="18 15 12 9 6 15"></polyline>
+                </svg>
+              }
+            } @else {
+              @if (computedExpandIcon()) {
+                <span [innerHTML]="computedExpandIcon()"></span>
+              } @else {
+                <svg
+                  viewBox="0 0 24 24"
+                  width="16"
+                  height="16"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <polyline points="6 9 12 15 18 9"></polyline>
+                </svg>
+              }
+            }
+          </span>
+        </button>
+      </div>
+
+      <div
+        class="origo-accordion__panel-content"
+        [class.origo-accordion__panel-content--expanded]="isExpanded(item)"
+        [id]="getPanelId(item, idx)"
+        role="region"
+        [attr.aria-labelledby]="getHeaderId(item, idx)"
+      >
+        <div class="origo-accordion__panel-body">
+          @if (isPanelRendered(item)) {
+            @if (item.content) {
+              <div class="origo-accordion__body-text">{{ item.content }}</div>
+            }
+            <ng-template #vc></ng-template>
+            <ng-content></ng-content>
+          }
+        </div>
+      </div>
+    </div>
+  }
+</div>

@@ -1,0 +1,186 @@
+:host {
+  display: block;
+  box-sizing: border-box;
+}
+
+:host([hidden]) {
+  display: none !important;
+}
+
+.sr-only {
+  position: absolute;
+  inline-size: 1px;
+  block-size: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
+.origo-carousel__container {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  inline-size: 100%;
+  box-sizing: border-box;
+  background-color: var(--origo-color-surface-primary, #ffffff);
+  border-radius: var(--origo-radius-md, 6px);
+}
+
+.origo-carousel__content {
+  display: flex;
+  align-items: center;
+  position: relative;
+  inline-size: 100%;
+  overflow: hidden;
+}
+
+.origo-carousel__viewport {
+  overflow: hidden;
+  position: relative;
+  inline-size: 100%;
+  touch-action: pan-y;
+  outline: none;
+
+  &:focus-visible {
+    outline: 2px solid var(--origo-color-border-focus, #3b82f6);
+    outline-offset: -2px;
+  }
+}
+
+.origo-carousel__track {
+  display: flex;
+  flex-direction: row;
+  inline-size: 100%;
+  transition: transform 300ms cubic-bezier(0.25, 1, 0.5, 1);
+  will-change: transform;
+}
+
+:host(.origo-carousel--vertical) {
+  .origo-carousel__content {
+    flex-direction: column;
+  }
+
+  .origo-carousel__viewport {
+    touch-action: pan-x;
+  }
+
+  .origo-carousel__track {
+    flex-direction: column;
+  }
+
+  .origo-carousel__item {
+    inline-size: 100%;
+    flex: 0 0 calc(100% / var(--carousel-num-visible, 1));
+  }
+}
+
+.origo-carousel__item {
+  flex: 0 0 calc(100% / var(--carousel-num-visible, 1));
+  box-sizing: border-box;
+  padding-inline: var(--origo-spacing-xs, 4px);
+  padding-block: var(--origo-spacing-xs, 4px);
+  cursor: pointer;
+}
+
+.origo-carousel__item-title {
+  font-weight: 600;
+  font-size: 1rem;
+  color: var(--origo-color-text-primary, #1e293b);
+  margin-block-end: var(--origo-spacing-xs, 4px);
+}
+
+.origo-carousel__item-content {
+  color: var(--origo-color-text-secondary, #475569);
+  font-size: 0.875rem;
+}
+
+.origo-carousel__item-image {
+  max-inline-size: 100%;
+  block-size: auto;
+  border-radius: var(--origo-radius-sm, 4px);
+  display: block;
+}
+
+.origo-carousel__item-text {
+  color: var(--origo-color-text-primary, #1e293b);
+  padding: var(--origo-spacing-sm, 8px);
+}
+
+.origo-carousel__nav-prev,
+.origo-carousel__nav-next {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  inline-size: 2.25rem;
+  block-size: 2.25rem;
+  border: 1px solid var(--origo-color-border-subtle, #e2e8f0);
+  background: var(--origo-color-surface-primary, #ffffff);
+  color: var(--origo-color-text-primary, #1e293b);
+  border-radius: var(--origo-radius-full, 9999px);
+  cursor: pointer;
+  z-index: 2;
+  flex-shrink: 0;
+  margin-inline: var(--origo-spacing-xs, 4px);
+  transition:
+    background-color 150ms ease,
+    border-color 150ms ease,
+    opacity 150ms ease;
+
+  &:hover:not([disabled]) {
+    background-color: var(--origo-color-surface-hover, #f8fafc);
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--origo-color-border-focus, #3b82f6);
+    outline-offset: 1px;
+  }
+
+  &[disabled] {
+    opacity: 0.4;
+    cursor: not-allowed;
+    color: var(--origo-color-text-disabled, #94a3b8);
+  }
+}
+
+.origo-carousel__indicators {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--origo-spacing-xs, 6px);
+  padding-block: var(--origo-spacing-sm, 8px);
+}
+
+.origo-carousel__indicator {
+  inline-size: 8px;
+  block-size: 8px;
+  border-radius: var(--origo-radius-full, 9999px);
+  border: none;
+  background-color: var(--origo-color-border-subtle, #cbd5e1);
+  padding: 0;
+  cursor: pointer;
+  transition:
+    background-color 200ms ease,
+    transform 200ms ease;
+
+  &--active {
+    background-color: var(--origo-color-primary, #3b82f6);
+    transform: scale(1.25);
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--origo-color-border-focus, #3b82f6);
+    outline-offset: 2px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .origo-carousel__track,
+  .origo-carousel__indicator,
+  .origo-carousel__nav-prev,
+  .origo-carousel__nav-next {
+    transition: none !important;
+  }
+}

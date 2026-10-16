@@ -61,3 +61,6 @@ export * from './components/primitives/skeleton/skeleton.component';
 export * from './components/primitives/badge/badge.component';
 export * from './components/primitives/tag/tag.component';
 export * from './components/primitives/block-ui/block-ui.component';
+export * from './components/primitives/accordion/accordion.component';
+export * from './components/primitives/carousel/carousel.component';
+export * from './components/primitives/slider/slider.component';

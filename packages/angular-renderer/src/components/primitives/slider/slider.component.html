@@ -1,0 +1,144 @@
+<div
+  class="origo-slider__container"
+  [class.origo-slider__container--vertical]="computedOrientation() === 'vertical'"
+  [class.origo-slider__container--disabled]="computedDisabled()"
+  [class.origo-slider__container--readonly]="computedReadonly()"
+>
+  <div #track class="origo-slider__track" (pointerdown)="onTrackPointerDown($event)">
+    <div
+      class="origo-slider__progress"
+      [style.inset-inline-start]="
+        computedOrientation() === 'horizontal'
+          ? computedRange()
+            ? lowerPercent() + '%'
+            : '0%'
+          : null
+      "
+      [style.inline-size]="
+        computedOrientation() === 'horizontal'
+          ? computedRange()
+            ? upperPercent() - lowerPercent() + '%'
+            : singlePercent() + '%'
+          : null
+      "
+      [style.inset-block-end]="
+        computedOrientation() === 'vertical'
+          ? computedRange()
+            ? lowerPercent() + '%'
+            : '0%'
+          : null
+      "
+      [style.block-size]="
+        computedOrientation() === 'vertical'
+          ? computedRange()
+            ? upperPercent() - lowerPercent() + '%'
+            : singlePercent() + '%'
+          : null
+      "
+    ></div>
+
+    @if (!computedRange()) {
+      <div
+        class="origo-slider__thumb"
+        role="slider"
+        tabindex="0"
+        [style.inset-inline-start]="
+          computedOrientation() === 'horizontal' ? singlePercent() + '%' : null
+        "
+        [style.inset-block-end]="
+          computedOrientation() === 'vertical' ? singlePercent() + '%' : null
+        "
+        [attr.aria-valuemin]="computedMin()"
+        [attr.aria-valuemax]="computedSafeMax()"
+        [attr.aria-valuenow]="currentValue()"
+        [attr.aria-orientation]="computedOrientation()"
+        [attr.aria-label]="computedAriaLabel() || 'Slider'"
+        [attr.aria-describedby]="computedAriaDescribedBy()"
+        [attr.aria-disabled]="computedDisabled()"
+        (keydown)="onThumbKeydown($event, 'single')"
+        (pointerdown)="onThumbPointerDown($event, 'single')"
+        (focus)="onThumbFocus('single')"
+        (blur)="onThumbBlur()"
+        (mouseenter)="onThumbMouseEnter('single')"
+        (mouseleave)="onThumbMouseLeave()"
+      >
+        @if (isTooltipVisible('single')) {
+          <div
+            class="origo-slider__tooltip"
+            [class]="'origo-slider__tooltip--' + computedTooltipPosition()"
+          >
+            {{ currentValue() }}
+          </div>
+        }
+      </div>
+    } @else {
+      <!-- Lower Thumb -->
+      <div
+        class="origo-slider__thumb origo-slider__thumb--lower"
+        role="slider"
+        tabindex="0"
+        [style.inset-inline-start]="
+          computedOrientation() === 'horizontal' ? lowerPercent() + '%' : null
+        "
+        [style.inset-block-end]="computedOrientation() === 'vertical' ? lowerPercent() + '%' : null"
+        [style.z-index]="lowerZIndex()"
+        [attr.aria-valuemin]="computedMin()"
+        [attr.aria-valuemax]="valUpper()"
+        [attr.aria-valuenow]="valLower()"
+        [attr.aria-orientation]="computedOrientation()"
+        aria-label="Minimum value"
+        [attr.aria-describedby]="computedAriaDescribedBy()"
+        [attr.aria-disabled]="computedDisabled()"
+        (keydown)="onThumbKeydown($event, 'lower')"
+        (pointerdown)="onThumbPointerDown($event, 'lower')"
+        (focus)="onThumbFocus('lower')"
+        (blur)="onThumbBlur()"
+        (mouseenter)="onThumbMouseEnter('lower')"
+        (mouseleave)="onThumbMouseLeave()"
+      >
+        @if (isTooltipVisible('lower')) {
+          <div
+            class="origo-slider__tooltip"
+            [class]="'origo-slider__tooltip--' + computedTooltipPosition()"
+          >
+            {{ valLower() }}
+          </div>
+        }
+      </div>
+
+      <!-- Upper Thumb -->
+      <div
+        class="origo-slider__thumb origo-slider__thumb--upper"
+        role="slider"
+        tabindex="0"
+        [style.inset-inline-start]="
+          computedOrientation() === 'horizontal' ? upperPercent() + '%' : null
+        "
+        [style.inset-block-end]="computedOrientation() === 'vertical' ? upperPercent() + '%' : null"
+        [style.z-index]="upperZIndex()"
+        [attr.aria-valuemin]="valLower()"
+        [attr.aria-valuemax]="computedSafeMax()"
+        [attr.aria-valuenow]="valUpper()"
+        [attr.aria-orientation]="computedOrientation()"
+        aria-label="Maximum value"
+        [attr.aria-describedby]="computedAriaDescribedBy()"
+        [attr.aria-disabled]="computedDisabled()"
+        (keydown)="onThumbKeydown($event, 'upper')"
+        (pointerdown)="onThumbPointerDown($event, 'upper')"
+        (focus)="onThumbFocus('upper')"
+        (blur)="onThumbBlur()"
+        (mouseenter)="onThumbMouseEnter('upper')"
+        (mouseleave)="onThumbMouseLeave()"
+      >
+        @if (isTooltipVisible('upper')) {
+          <div
+            class="origo-slider__tooltip"
+            [class]="'origo-slider__tooltip--' + computedTooltipPosition()"
+          >
+            {{ valUpper() }}
+          </div>
+        }
+      </div>
+    }
+  </div>
+</div>

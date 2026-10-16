@@ -52,6 +52,9 @@ import { SkeletonComponent } from '../components/primitives/skeleton/skeleton.co
 import { BadgeComponent } from '../components/primitives/badge/badge.component';
 import { TagComponent } from '../components/primitives/tag/tag.component';
 import { BlockUIComponent } from '../components/primitives/block-ui/block-ui.component';
+import { AccordionComponent } from '../components/primitives/accordion/accordion.component';
+import { CarouselComponent } from '../components/primitives/carousel/carousel.component';
+import { SliderComponent } from '../components/primitives/slider/slider.component';
 
 export function provideOrigo9Primitives(): EnvironmentProviders {
   const registryMap = new Map<string, unknown>([
@@ -113,6 +116,10 @@ export function provideOrigo9Primitives(): EnvironmentProviders {
     ['Tag', TagComponent],
     ['BlockUI', BlockUIComponent],
     ['LoadingOverlay', BlockUIComponent],
+    ['Accordion', AccordionComponent],
+    ['Carousel', CarouselComponent],
+    ['Slider', SliderComponent],
+    ['RangeSlider', SliderComponent],
     ['vbox', VBoxComponent], // For backward compatibility with 'vbox' in preview-root
   ]);
 

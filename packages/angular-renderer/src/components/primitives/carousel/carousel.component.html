@@ -1,0 +1,116 @@
+<div
+  class="origo-carousel__container"
+  role="region"
+  [attr.aria-roledescription]="'carousel'"
+  [attr.aria-label]="computedAriaLabel()"
+  [attr.aria-describedby]="computedAriaDescribedBy()"
+>
+  <span class="sr-only" aria-live="polite">
+    Slide {{ currentPage() + 1 }} of {{ totalPages() }}
+  </span>
+
+  <div class="origo-carousel__content">
+    @if (computedShowNavigators() && totalPages() > 1) {
+      <button
+        type="button"
+        class="origo-carousel__nav-prev"
+        [attr.aria-label]="'Previous slide'"
+        [disabled]="!computedCircular() && currentPage() === 0"
+        (click)="stepPrev()"
+      >
+        <svg
+          viewBox="0 0 24 24"
+          width="20"
+          height="20"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        >
+          <polyline points="15 18 9 12 15 6"></polyline>
+        </svg>
+      </button>
+    }
+
+    <div
+      #viewport
+      class="origo-carousel__viewport"
+      tabindex="0"
+      (keydown)="onKeydown($event)"
+      (pointerdown)="onPointerDown($event)"
+      (pointerup)="onPointerUp($event)"
+      (pointercancel)="onPointerCancel()"
+      (mouseenter)="onMouseEnter()"
+      (mouseleave)="onMouseLeave()"
+      (focusin)="onFocusIn()"
+      (focusout)="onFocusOut()"
+    >
+      <div class="origo-carousel__track" [style.transform]="computedTrackTransform()">
+        @for (item of computedItems(); track $index; let idx = $index) {
+          <div
+            class="origo-carousel__item"
+            role="group"
+            aria-roledescription="slide"
+            [attr.aria-label]="'Slide ' + (idx + 1) + ' of ' + totalItems()"
+            (click)="onItemClick(item, idx)"
+          >
+            @if (getItemImage(item); as img) {
+              <img class="origo-carousel__item-image" [src]="img" alt="" />
+            }
+            @if (getItemTitle(item); as title) {
+              <div class="origo-carousel__item-title">{{ title }}</div>
+            }
+            @if (getItemContent(item); as content) {
+              <div class="origo-carousel__item-content">{{ content }}</div>
+            }
+            @if (!getItemImage(item) && !getItemTitle(item) && !getItemContent(item)) {
+              <div class="origo-carousel__item-text">{{ item }}</div>
+            }
+            <ng-template #vc></ng-template>
+            <ng-content></ng-content>
+          </div>
+        }
+      </div>
+    </div>
+
+    @if (computedShowNavigators() && totalPages() > 1) {
+      <button
+        type="button"
+        class="origo-carousel__nav-next"
+        [attr.aria-label]="'Next slide'"
+        [disabled]="!computedCircular() && currentPage() >= totalPages() - 1"
+        (click)="stepNext()"
+      >
+        <svg
+          viewBox="0 0 24 24"
+          width="20"
+          height="20"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        >
+          <polyline points="9 18 15 12 9 6"></polyline>
+        </svg>
+      </button>
+    }
+  </div>
+
+  @if (computedShowIndicators() && totalPages() > 1) {
+    <div class="origo-carousel__indicators" role="tablist" aria-label="Slides">
+      @for (page of pagesArray(); track page) {
+        <button
+          type="button"
+          class="origo-carousel__indicator"
+          role="tab"
+          [class.origo-carousel__indicator--active]="page === currentPage()"
+          [attr.aria-selected]="page === currentPage()"
+          [attr.aria-label]="'Go to slide ' + (page + 1)"
+          (click)="setPage(page)"
+        ></button>
+      }
+    </div>
+  }
+</div>
