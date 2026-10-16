@@ -110,8 +110,11 @@ export class AccordionComponent implements OrigoAdapter<AccordionProps>, IContai
           } else if (rawVal.length > 0) {
             initial.add(String(rawVal[0]));
           }
-        } else if (typeof rawVal === 'string' && rawVal.trim() !== '') {
-          initial.add(rawVal);
+        } else if (
+          (typeof rawVal === 'string' || typeof rawVal === 'number') &&
+          String(rawVal).trim() !== ''
+        ) {
+          initial.add(String(rawVal));
         }
       }
 

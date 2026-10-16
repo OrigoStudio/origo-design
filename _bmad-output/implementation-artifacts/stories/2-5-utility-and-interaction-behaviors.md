@@ -3,12 +3,12 @@ story_id: "2.5"
 story_key: 2-5-utility-and-interaction-behaviors
 baseline_commit: 03679f9
 epic: 2
-status: "review"
+status: "done"
 ---
 
 # Story 2.5: Utility & Interaction Behaviors
 
-Status: review
+Status: done
 
 <!-- Note: Validated against quality competition checklist. Ready for dev-story implementation. -->
 
@@ -368,7 +368,16 @@ So that I can provide rich, accessible, performant collapsible sections, respons
   - [x] 4.4 Run full monorepo test suite (`npm test`) and lint checks (`npx nx lint angular-renderer`) to verify zero regressions.
   - [x] 4.5 Update `sprint-status.yaml` marking `2-5-utility-and-interaction-behaviors` as `review`.
 
+### Review Findings
+
+- [x] [Review][Decision] Restore Git Pre-commit Quality Gate in Husky Hook — Resolved: Intentionally kept commented out for fast local commits with lint-staged and perf:benchmark.
+- [x] [Review][Patch] Prevent Division by Zero in CarouselComponent.totalPages [packages/angular-renderer/src/components/primitives/carousel/carousel.component.ts:243-249]
+- [x] [Review][Patch] Fix Memory Leak by Cleaning Up Resize Event Listener in CarouselComponent [packages/angular-renderer/src/components/primitives/carousel/carousel.component.ts:150-176]
+- [x] [Review][Patch] Prevent Forced Reflow during Pointer Drag in SliderComponent [packages/angular-renderer/src/components/primitives/slider/slider.component.ts:491]
+- [x] [Review][Patch] Support Numeric Value Initialization in AccordionComponent [packages/angular-renderer/src/components/primitives/accordion/accordion.component.ts:113]
+
 ---
+
 
 ## Dev Notes
 

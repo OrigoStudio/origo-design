@@ -147,7 +147,7 @@ export class CarouselComponent implements OrigoAdapter<CarouselProps>, IContaine
       });
 
       // Responsive options breakpoint watcher
-      effect(() => {
+      effect(onCleanup => {
         const options = this.props().responsiveOptions;
         if (Array.isArray(options) && options.length > 0 && typeof window !== 'undefined') {
           const checkBreakpoints = () => {
@@ -171,7 +171,7 @@ export class CarouselComponent implements OrigoAdapter<CarouselProps>, IContaine
 
           checkBreakpoints();
           window.addEventListener('resize', checkBreakpoints);
-          this.destroyRef.onDestroy(() => window.removeEventListener('resize', checkBreakpoints));
+          onCleanup(() => window.removeEventListener('resize', checkBreakpoints));
         }
       });
 
@@ -243,8 +243,8 @@ export class CarouselComponent implements OrigoAdapter<CarouselProps>, IContaine
   totalPages = computed(() => {
     const n = this.totalItems();
     if (n <= 0) return 1;
-    const v = this.effectiveNumVisible();
-    const s = this.effectiveNumScroll();
+    const v = Math.max(1, this.effectiveNumVisible());
+    const s = Math.max(1, this.effectiveNumScroll());
     return Math.max(1, Math.ceil((n - v + s) / s));
   });
 

@@ -95,6 +95,7 @@ export class SliderComponent implements OrigoAdapter<SliderProps> {
 
   private moveListener: ((e: PointerEvent) => void) | null = null;
   private upListener: ((e: PointerEvent) => void) | null = null;
+  private cachedIsRtl = false;
 
   constructor() {
     effect(() => {
@@ -310,6 +311,9 @@ export class SliderComponent implements OrigoAdapter<SliderProps> {
     this.activeThumb.set(type);
     this.isDragging.set(true);
 
+    const track = this.trackEl()?.nativeElement;
+    this.cachedIsRtl = track ? this.isRtlElement(track) : false;
+
     const startVal = this.getCurrentValuePayload();
     this.slideStart.emit(startVal);
     const contractId = this.contract().id;
@@ -321,7 +325,7 @@ export class SliderComponent implements OrigoAdapter<SliderProps> {
       this.cleanupDragListeners();
 
       this.moveListener = (e: PointerEvent) => {
-        const newVal = this.getValueFromPointer(e);
+        const newVal = this.getValueFromPointer(e, this.cachedIsRtl);
         if (type === 'single') {
           this.setSingleValue(newVal, false);
         } else if (type === 'lower') {
@@ -473,7 +477,7 @@ export class SliderComponent implements OrigoAdapter<SliderProps> {
     return this.computedRange() ? [this.valLower(), this.valUpper()] : this.currentValue();
   }
 
-  private getValueFromPointer(event: PointerEvent): number {
+  private getValueFromPointer(event: PointerEvent, cachedRtl?: boolean): number {
     const track = this.trackEl()?.nativeElement;
     if (!track) return this.computedMin();
 
@@ -488,7 +492,7 @@ export class SliderComponent implements OrigoAdapter<SliderProps> {
       ratio = (rect.bottom - event.clientY) / safeHeight;
     } else {
       const safeWidth = rect.width > 0 ? rect.width : 1;
-      const isRtl = this.isRtlElement(track);
+      const isRtl = cachedRtl !== undefined ? cachedRtl : this.isRtlElement(track);
       if (isRtl) {
         ratio = (rect.right - event.clientX) / safeWidth;
       } else {
