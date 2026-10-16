@@ -1,0 +1,108 @@
+:host {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  vertical-align: middle;
+  box-sizing: border-box;
+  inline-size: var(--origo-spinner-size, 2rem);
+  block-size: var(--origo-spinner-size, 2rem);
+  --origo-spinner-color: var(--origo-color-primary, #2563eb);
+}
+
+:host([hidden]) {
+  display: none !important;
+}
+
+:host(.origo-spinner--fluid) {
+  inline-size: 100%;
+  block-size: 100%;
+}
+
+// Semantic Variant Color Mappings
+:host(.origo-spinner--variant-primary) {
+  --origo-spinner-color: var(--origo-color-primary, #2563eb);
+}
+
+:host(.origo-spinner--variant-secondary) {
+  --origo-spinner-color: var(--origo-color-text-secondary, #64748b);
+}
+
+:host(.origo-spinner--variant-accent),
+:host(.origo-spinner--variant-info) {
+  --origo-spinner-color: var(--origo-color-text-info, #1e40af);
+}
+
+:host(.origo-spinner--variant-success) {
+  --origo-spinner-color: var(--origo-color-text-success, #065f46);
+}
+
+:host(.origo-spinner--variant-warn),
+:host(.origo-spinner--variant-warning) {
+  --origo-spinner-color: var(--origo-color-text-warning, #92400e);
+}
+
+:host(.origo-spinner--variant-error) {
+  --origo-spinner-color: var(--origo-color-text-danger, #991b1b);
+}
+
+:host(.origo-spinner--variant-contrast) {
+  --origo-spinner-color: var(--origo-color-text-inverse, #ffffff);
+}
+
+.origo-spinner__svg {
+  display: block;
+  inline-size: 100%;
+  block-size: 100%;
+  animation: origo-spinner-rotate var(--origo-spinner-duration, 1s) linear infinite;
+}
+
+.origo-spinner__circle {
+  stroke: var(--origo-spinner-color, var(--origo-color-primary, #2563eb));
+  stroke-linecap: round;
+  stroke-dasharray: 90, 150;
+  stroke-dashoffset: 0;
+  animation: origo-spinner-dash calc(var(--origo-spinner-duration, 1s) * 1.5) ease-in-out infinite;
+}
+
+.sr-only {
+  position: absolute;
+  inline-size: 1px;
+  block-size: 1px;
+  padding-inline: 0;
+  padding-block: 0;
+  margin-inline: -1px;
+  margin-block: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
+@keyframes origo-spinner-rotate {
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes origo-spinner-dash {
+  0% {
+    stroke-dasharray: 1, 200;
+    stroke-dashoffset: 0;
+  }
+  50% {
+    stroke-dasharray: 90, 150;
+    stroke-dashoffset: -35px;
+  }
+  100% {
+    stroke-dasharray: 90, 150;
+    stroke-dashoffset: -125px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .origo-spinner__svg,
+  .origo-spinner__circle {
+    animation: none !important;
+    opacity: 0.8;
+  }
+}

@@ -1,0 +1,76 @@
+:host {
+  display: block;
+  position: relative;
+  inline-size: 100%;
+  box-sizing: border-box;
+}
+
+:host([hidden]) {
+  display: none !important;
+}
+
+.origo-block-ui {
+  position: relative;
+  inline-size: 100%;
+  block-size: 100%;
+  box-sizing: border-box;
+}
+
+.origo-block-ui__content {
+  inline-size: 100%;
+  block-size: 100%;
+  box-sizing: border-box;
+  transition: filter var(--origo-motion-duration-fast, 150ms) ease;
+}
+
+.origo-block-ui__content--blocked {
+  pointer-events: none !important;
+  user-select: none !important;
+  filter: blur(1px);
+}
+
+.origo-block-ui__mask {
+  position: absolute;
+  inset: 0;
+  inline-size: 100%;
+  block-size: 100%;
+  background-color: var(--origo-color-backdrop, rgba(0, 0, 0, 0.45));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: auto;
+  border-radius: inherit;
+  box-sizing: border-box;
+  transition: opacity var(--origo-motion-duration-fast, 150ms) ease;
+}
+
+.origo-block-ui__mask--fullscreen {
+  position: fixed;
+  inset: 0;
+  inline-size: 100vw;
+  block-size: 100vh;
+}
+
+.origo-block-ui__mask-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--origo-space-sm, 0.5rem);
+  color: var(--origo-color-text-inverse, #ffffff);
+}
+
+.origo-block-ui__message {
+  font-size: var(--origo-font-size-sm, 0.875rem);
+  font-weight: var(--origo-font-weight-medium, 500);
+  color: inherit;
+  text-align: center;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .origo-block-ui__mask,
+  .origo-block-ui__content {
+    transition: none !important;
+    filter: none !important;
+  }
+}

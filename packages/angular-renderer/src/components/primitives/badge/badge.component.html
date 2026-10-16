@@ -1,0 +1,19 @@
+<div class="origo-badge-wrapper" [class.origo-badge-wrapper--overlay]="hasContent()">
+  <div #contentWrapper class="origo-badge__content">
+    <ng-container #vc></ng-container>
+    <ng-content></ng-content>
+  </div>
+  <span
+    [class]="computedBadgeClasses()"
+    [attr.aria-label]="computedAriaLabel()"
+    [attr.aria-describedby]="ariaDescribedBy()"
+    [attr.tabindex]="isInteractive() ? 0 : null"
+    [attr.role]="isInteractive() ? 'button' : 'status'"
+    (click)="onClick($event)"
+    (keydown)="onKeyDown($event)"
+  >
+    @if (!isDot()) {
+      {{ displayValue() }}
+    }
+  </span>
+</div>

@@ -1,0 +1,158 @@
+:host {
+  display: inline-flex;
+  vertical-align: middle;
+  box-sizing: border-box;
+}
+
+:host([hidden]) {
+  display: none !important;
+}
+
+.origo-badge-wrapper {
+  display: inline-flex;
+  position: relative;
+  vertical-align: middle;
+}
+
+.origo-badge__content {
+  display: inline-flex;
+}
+
+.origo-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  font-weight: var(--origo-font-weight-semibold, 600);
+  line-height: 1;
+  white-space: nowrap;
+  text-align: center;
+  font-variant-numeric: tabular-nums;
+  user-select: none;
+  border-radius: var(--origo-radius-full, 9999px);
+  transition:
+    background-color var(--origo-motion-duration-fast, 150ms) ease,
+    color var(--origo-motion-duration-fast, 150ms) ease;
+}
+
+// Positioning as overlay when wrapping content
+.origo-badge-wrapper--overlay .origo-badge {
+  position: absolute;
+  inset-block-start: 0;
+  inset-inline-end: 0;
+  transform: translate(50%, -50%);
+  z-index: 1;
+}
+
+// RTL Coordinate Inversion
+:host([dir='rtl']) .origo-badge-wrapper--overlay .origo-badge,
+[dir='rtl'] .origo-badge-wrapper--overlay .origo-badge {
+  transform: translate(-50%, -50%);
+}
+
+// Sizes
+.origo-badge--size-small {
+  font-size: 0.625rem;
+  min-inline-size: 1rem;
+  block-size: 1rem;
+  padding-inline: 0.25rem;
+  padding-block: 0.125rem;
+}
+
+.origo-badge--size-medium {
+  font-size: 0.75rem;
+  min-inline-size: 1.25rem;
+  block-size: 1.25rem;
+  padding-inline: 0.375rem;
+  padding-block: 0.125rem;
+}
+
+.origo-badge--size-large {
+  font-size: 0.875rem;
+  min-inline-size: 1.5rem;
+  block-size: 1.5rem;
+  padding-inline: 0.5rem;
+  padding-block: 0.25rem;
+}
+
+// Shapes
+.origo-badge--shape-rounded {
+  border-radius: var(--origo-radius-full, 9999px);
+}
+
+.origo-badge--shape-circle {
+  border-radius: 50%;
+  padding-inline: 0;
+  padding-block: 0;
+}
+
+.origo-badge--shape-square {
+  border-radius: var(--origo-radius-xs, 0.125rem);
+}
+
+// Dot Mode
+.origo-badge--dot {
+  min-inline-size: 0.5rem !important;
+  block-size: 0.5rem !important;
+  inline-size: 0.5rem !important;
+  padding-inline: 0 !important;
+  padding-block: 0 !important;
+  border-radius: 50% !important;
+}
+
+// Severity Variants
+.origo-badge--severity-primary {
+  background-color: var(--origo-color-primary, #2563eb);
+  color: var(--origo-color-text-inverse, #ffffff);
+}
+
+.origo-badge--severity-secondary {
+  background-color: var(--origo-color-surface-secondary, #e2e8f0);
+  color: var(--origo-color-text-secondary, #64748b);
+}
+
+.origo-badge--severity-info {
+  background-color: var(--origo-color-text-info, #1e40af);
+  color: var(--origo-color-text-inverse, #ffffff);
+}
+
+.origo-badge--severity-success {
+  background-color: var(--origo-color-text-success, #065f46);
+  color: var(--origo-color-text-inverse, #ffffff);
+}
+
+.origo-badge--severity-warn,
+.origo-badge--severity-warning {
+  background-color: var(--origo-color-text-warning, #92400e);
+  color: var(--origo-color-text-inverse, #ffffff);
+}
+
+.origo-badge--severity-error {
+  background-color: var(--origo-color-text-danger, #991b1b);
+  color: var(--origo-color-text-inverse, #ffffff);
+}
+
+.origo-badge--severity-contrast {
+  background-color: var(--origo-color-surface-inverse, #0f172a);
+  color: var(--origo-color-text-inverse, #ffffff);
+}
+
+// Interactive Mode
+.origo-badge--interactive {
+  cursor: pointer;
+
+  &:hover {
+    filter: brightness(0.92);
+  }
+
+  &:focus-visible {
+    outline: var(--origo-border-width-focus, 2px) solid var(--origo-color-primary, #2563eb);
+    outline-offset: 2px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .origo-badge {
+    transition: none !important;
+  }
+}

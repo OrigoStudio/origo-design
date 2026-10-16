@@ -1,0 +1,86 @@
+:host {
+  display: inline-block;
+  vertical-align: middle;
+  box-sizing: border-box;
+}
+
+:host([hidden]) {
+  display: none !important;
+}
+
+.origo-skeleton {
+  inline-size: 100%;
+  block-size: 100%;
+  background-color: var(--origo-color-surface-subtle, #f1f5f9);
+  position: relative;
+  overflow: hidden;
+  box-sizing: border-box;
+}
+
+.origo-skeleton--circle {
+  border-radius: 50% !important;
+}
+
+// Shimmer Animation
+.origo-skeleton--animation-shimmer::after {
+  content: '';
+  position: absolute;
+  inset-block: 0;
+  inset-inline-start: -100%;
+  inline-size: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    var(--origo-color-surface-hover, rgba(255, 255, 255, 0.6)) 50%,
+    transparent 100%
+  );
+  animation: origo-skeleton-shimmer 1.5s infinite;
+}
+
+:host([dir='rtl']) .origo-skeleton--animation-shimmer::after,
+:host-context([dir='rtl']) .origo-skeleton--animation-shimmer::after {
+  background: linear-gradient(
+    -90deg,
+    transparent 0%,
+    var(--origo-color-surface-hover, rgba(255, 255, 255, 0.6)) 50%,
+    transparent 100%
+  );
+}
+
+// Pulse Animation
+.origo-skeleton--animation-pulse {
+  animation: origo-skeleton-pulse 1.5s ease-in-out infinite;
+}
+
+// None Animation
+.origo-skeleton--animation-none {
+  animation: none !important;
+}
+
+@keyframes origo-skeleton-shimmer {
+  0% {
+    inset-inline-start: -100%;
+  }
+  100% {
+    inset-inline-start: 100%;
+  }
+}
+
+@keyframes origo-skeleton-pulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.4;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .origo-skeleton,
+  .origo-skeleton--animation-shimmer::after,
+  .origo-skeleton--animation-pulse {
+    animation: none !important;
+    opacity: 1;
+  }
+}
