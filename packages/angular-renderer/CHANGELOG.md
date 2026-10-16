@@ -1,3 +1,14 @@
+## 0.0.59 (2026-10-16)
+
+### 🚀 Features
+
+- implement utility and interaction primitive components with accessibility and semantic theming ([44f3fc2](https://github.com/OrigoStudio/origo-design/commit/44f3fc2))
+- add accordion, carousel, and slider primitives to angular-renderer package ([bcef83f](https://github.com/OrigoStudio/origo-design/commit/bcef83f))
+
+### ❤️ Thank You
+
+- Hardik Patel @hardikpatelse
+
 ## 0.0.58 (2026-10-16)
 
 ### 🚀 Features
