@@ -1,3 +1,15 @@
+## 0.0.58 (2026-10-16)
+
+### 🚀 Features
+
+- implement badge and block-ui components with unit tests for angular-renderer ([445abb2](https://github.com/OrigoStudio/origo-design/commit/445abb2))
+- add primitive status and loading indicator components to angular renderer ([e62c5f9](https://github.com/OrigoStudio/origo-design/commit/e62c5f9))
+- implement primitive status and loading components including skeleton, badge, and spinner in angular-renderer ([f3501b1](https://github.com/OrigoStudio/origo-design/commit/f3501b1))
+
+### ❤️ Thank You
+
+- Hardik Patel @hardikpatelse
+
 ## 0.0.57 (2026-10-15)
 
 ### 🚀 Features
